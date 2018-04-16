@@ -1,0 +1,118 @@
+.trend-feeling {
+  .top {
+    margin: 30px 18px 18px;
+    font-size: 24px;
+    font-weight: 400;
+    border-bottom: 1px solid #cccccc;
+  }
+  .bottom {
+    padding: 0 18px;
+    .ant-row {
+      margin-top: 40px;
+    }
+
+    .box {
+      width: 270px;
+      height: 200px;
+      margin: 0 auto;
+      display: block;
+      .box-color-1 {
+        .box-hover-1, .box-hover-2, .box-hover-3 {
+          background-color: #e13138;
+        }
+      }
+      .box-color-2 {
+        .box-hover-1, .box-hover-2, .box-hover-3 {
+          background-color: #35c6ea;
+        }
+      }
+      .box-color-3 {
+        .box-hover-1, .box-hover-2, .box-hover-3 {
+          background-color: #f7659c;
+        }
+      }
+      .box-color-4 {
+        .box-hover-1, .box-hover-2, .box-hover-3 {
+          background-color: #ff5c30;
+        }
+      }
+      .box-color-5 {
+        .box-hover-1, .box-hover-2, .box-hover-3 {
+          background-color: #8cd049;
+        }
+      }
+      .box-color-6 {
+        .box-hover-1, .box-hover-2, .box-hover-3 {
+          background-color: #1879fd;
+        }
+      }
+      .box-color-7 {
+        .box-hover-1, .box-hover-2, .box-hover-3 {
+          background-color: #66CCCC;
+        }
+      }
+      .box-hover {
+        position: relative;
+        height: 170px;
+        .box-hover-1 {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          position: absolute;
+          height: 100%;
+          width: 270px;
+          border-radius: 10px;
+          z-index: 5;
+          top: 0;
+          left: 0;
+          transition: all .4s;
+        }
+        .box-hover-2 {
+          position: absolute;
+          height: 100%;
+          width: 262px;
+          border-radius: 10px;
+          z-index: 4;
+          top: 4px;
+          left: 4px;
+          opacity: 0.4;
+          transition: all .4s;
+        }
+        .box-hover-3 {
+          position: absolute;
+          height: 100%;
+          width: 254px;
+          border-radius: 10px;
+          z-index: 3;
+          top: 8px;
+          left: 8px;
+          opacity: 0.2;
+          transition: all .4s;
+        }
+      }
+      .box-hover:hover {
+        .box-hover-1 {
+          top: -8px;
+        }
+        .box-hover-2 {
+          top: 0;
+          width: 254px;
+          left: 8px;
+        }
+        .box-hover-3 {
+          top: 8px;
+          width: 238px;
+          left: 16px;
+        }
+      }
+      .name {
+        display: block;
+        font-size: 16px;
+        padding-top: 6px;
+        height: 30px;
+        line-height: 30px;
+        text-align: center;
+      }
+    }
+  }
+}

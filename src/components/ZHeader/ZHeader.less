@@ -1,0 +1,95 @@
+.z-header {
+  .top {
+    display: flex;
+    justify-content: space-between;
+    .left {
+      width: 30%;
+      display: flex;
+      align-items: center;
+      margin-left: -30px;
+      cursor: pointer;
+      .logo {
+        width: 60px;
+      }
+      .name {
+        font-size: 22px;
+        margin-left: 10px;
+      }
+      .ant-menu-item {
+        font-size: 14px!important;
+      }
+    }
+    .right {
+      position: relative;
+      width: 50%;
+      display: flex;
+      justify-content: flex-end;
+      margin-right: 10px;
+      .search {
+        margin-right: 20px;
+      }
+      .qq {
+        margin-right: 18px;
+        font-size: 20px;
+        cursor: pointer;
+      }
+      .notify {
+        margin-right: 24px;
+        font-size: 20px;
+        cursor: pointer;
+      }
+      .user-info {
+        display: flex;
+        cursor: pointer;
+        .avatar {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
+      }
+      .user-item {
+        position: absolute;
+        z-index: 99;
+        background-color: #ffffff;
+        color: #000000;
+        top: 64px;
+        width: 140px;
+        box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+        li {
+          height: 30px;
+          line-height: 30px;
+        }
+        .setting {
+          border-bottom: 1px solid #000000;
+        }
+        .item {
+          text-align: center;
+          cursor: pointer;
+          &:hover {
+            background-color: #42b9f5;
+          }
+        }
+        .esc {
+          border-top: 1px solid #000000;
+          text-align: center;
+          cursor: pointer;
+          &:hover {
+            background-color: #42b9f5;
+          }
+        }
+
+      }
+      .item-change-theme {
+        position: fixed;
+        top: 40%;
+        right: 0;
+        z-index: 99;
+        .close {
+          font-size: 24px;
+          color: #000;
+          cursor: pointer;
+        }
+      }
+    }
+  }
+}

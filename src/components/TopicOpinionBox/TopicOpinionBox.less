@@ -1,0 +1,81 @@
+.topic-opinion-box {
+  width: 100%;
+  height: 263px;
+  background-color: #ffffff;
+  box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+  border-radius: 5px;
+  .box-top {
+    height: 36px;
+    line-height: 36px;
+    border-bottom: 1px solid #eeeeee;
+    background-color: #ebebeb;
+    color: #404040;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    .icon {
+      width: 20px;
+      vertical-align: top;
+      margin-left: 10px;
+      margin-top: 8px;
+    }
+    .name {
+      font-size: 16px;
+      padding-left: 14px;
+    }
+  }
+  .box-bottom {
+    border-bottom: 0;
+    margin: 0 10px;
+    font-size: 14px;
+    .list-types {
+      height: 30px;
+      .type-item {
+        display: inline-block;
+        width: 100px;
+        height: 30px;
+        line-height: 30px;
+        margin-right: 4px;
+        text-align: center;
+        cursor: pointer;
+      }
+      .type-item-active {
+        display: inline-block;
+        width: 100px;
+        height: 30px;
+        line-height: 30px;
+        color: #42b9f5;
+        border-bottom: 1px solid #42b9f5;
+        margin-right: 4px;
+        text-align: center;
+        cursor: pointer;
+      }
+    }
+    .list-values {
+      .values-item {
+        height: 30px;
+        line-height: 30px;
+        padding-left: 20px;
+        font-size: 14px;
+        width: 100%;
+        border-bottom: 1px solid #eeeeee;
+        .title {
+          display: inline-block;
+          height: 24px;
+          width: 60%;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          cursor: pointer;
+        }
+        .pubdate {
+          display: inline-block;
+          height: 24px;
+          width: 40%;
+          white-space: nowrap;
+          overflow: hidden;
+          text-align: center;
+        }
+      }
+    }
+  }
+}

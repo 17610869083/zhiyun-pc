@@ -1,0 +1,82 @@
+.historyBox{
+     margin: 10px 10px 0 10px;
+     background: #ffffff;
+     padding-top: 10px;
+     .historyHeader{
+         display: flex;
+         align-items: center;
+         width: 100%;
+         margin-left:48px;
+         height: 80px;
+     .titleInput{
+          width: 30%;
+          margin-right:10px;
+     }
+     .datePicker{
+          margin:0 10px;
+     }
+
+    }
+    .historySummary{
+         display: flex;
+         align-items: center;
+         font-size: 18px;
+         padding-left:48px;
+         border-top:1px solid #D9D9D9;
+         height: 80px;
+         .source{
+             width: 14%;
+         }
+         .summary{
+            width: 14%;
+            cursor:pointer;
+         }
+         .blueSummary{
+             color:#007aff;
+         }
+    }
+    .ant-table{
+        font-size:16px;
+        .ant-table-tbody tr:nth-of-type(even){
+            background: #F5F5F5;
+        }
+        .ant-table-thead> tr> th{
+             text-align: center;
+        }
+        .ant-table-tbody tr td:nth-child(2){
+           font-weight: 600;
+        }
+        .ant-table-tbody tr td:nth-child(6),.ant-table-tbody tr td:nth-child(3),.ant-table-tbody tr td:nth-child(4),.ant-table-tbody tr td:nth-child(5){
+           text-align: center;
+           width: 20%;
+        }
+        .fa{
+            font-size: 20px;
+            margin-left: 10px;
+            margin-right: 10px;
+            cursor: pointer;
+            &:hover {
+              color: #108EE9;
+            }
+        }
+        .anticon-loading{
+            font-size: 20px;
+        }
+
+    }
+    .ant-tabs-bar{
+        button{
+            margin: 0 10px;
+        }
+    }
+
+}
+.smallInput{
+    width: 83%;
+}
+.bigInput{
+    width: 99.5%;
+}
+.conent{
+    margin-top: 10px;
+}

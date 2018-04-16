@@ -1,0 +1,66 @@
+.media-opinion-box {
+  width: 100%;
+  background-color: #ffffff;
+  box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+  border-radius: 5px;
+  .box-top {
+    height: 36px;
+    line-height: 36px;
+    color: #404040;
+    border-bottom: 1px solid #eeeeee;
+    background-color: #ebebeb;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    .icon {
+      width: 20px;
+      vertical-align: top;
+      margin-left: 10px;
+      margin-top: 8px;
+    }
+    .name {
+      font-size: 16px;
+      padding-left: 14px;
+    }
+  }
+  .box-bottom {
+    .left {
+    }
+    .right {
+      font-size: 14px;
+      .pos-neg-count {
+        width: 80%;
+        margin-top: 50px;
+        .top {
+          display: flex;
+          justify-content: space-between;
+        }
+        .bottom {
+          .outer {
+            height: 10px;
+            background-color: #cccccc;
+            border-radius: 4px;
+            .inner {
+              height: 10px;
+              border-radius: 4px;
+            }
+          }
+        }
+        &:nth-child(1) {
+          .inner {
+            background-color: #20aafc;
+          }
+        }
+        &:nth-child(2) {
+          .inner {
+            background-color: #ff5858;
+          }
+        }
+        &:nth-child(3) {
+          .inner {
+            background-color: #55ce63;
+          }
+        }
+      }
+    }
+  }
+}

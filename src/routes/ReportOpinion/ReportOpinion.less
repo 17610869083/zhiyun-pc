@@ -1,0 +1,161 @@
+
+.route-report-opinion {
+  position: relative;
+  margin: 20px 30px;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+  .top {
+    background: #ffffff;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+    height: 60px;
+    line-height: 50px;
+     padding:0 20px 0 20px;
+     display: flex;
+     justify-content: space-between;
+     align-items: center;
+
+    .upload-report-btn {
+    }
+    .delete-multiple-btn {
+      margin-left: 20px;
+    }
+  }
+   .paginationBox{
+    display: flex;
+    justify-content: center;
+    margin:20px;
+    ul{
+       margin-bottom: 20px;
+    }
+    }
+  .report {
+    background: #ffffff;
+ 
+    .middle {
+      margin-top: 20px;
+      .reportConent{
+          display: flex;
+          align-items: center;
+          padding:0 4%;
+          height: 90px;
+          .checkBox{
+             width: 10%;
+          }
+          .reportMessage{
+              width: 24%;
+              font-size: 18px;
+              color:#000000;
+              .reportName{
+                font-size: 18px;
+                color:#108ee9;
+                cursor: pointer;
+                margin-bottom: 10px;
+               }
+          }
+          .reportDate{
+            font-size: 18px;
+            color:#000000;
+            width: 34%;
+       }
+          .reportCunt{
+              width: 20%;
+              font-size: 18px;
+              color:#000000;
+          }
+          .reportOperation-other{
+              width: 10%;
+              text-align: center;
+              font-size: 18px;
+              color:#000000;
+          }
+          .reportOperation{
+               width: 10%;
+               display: flex;
+               align-items: center;
+               justify-content: space-between;
+               .deleteReport{
+                   cursor:pointer;
+                 
+                   .fa{
+                    font-size: 18px;
+                 }
+               }
+               .reportAsWord{
+                   
+                   cursor:pointer;
+                  .fa{
+                     font-size: 18px;
+                  }
+               }
+          }
+
+      }
+      .opinion-detail-item{
+          text-align: center;
+      }
+      .opinion-detail-item:nth-child(odd){
+           background: #f7f7f7;
+      }
+
+      .ant-table {
+        font-size: 16px;
+        width: 100%;
+        .thead{
+          height:32px;
+          padding: 3px 8px;
+        
+        }
+        .ant-table-thead >tr>th{
+           text-align: center;
+           height:32px;
+           padding: 3px 8px;
+           background: #EEEEEE;
+        }
+        .flexBox{
+           display: flex;
+           justify-content: space-between;
+           align-items: center;
+           width: 56%;
+           margin: 0 auto;
+           .icon{
+             cursor: pointer;
+              width: 30px;
+              height: 30px;
+              line-height: 30px;
+              background: #E5E5E5;
+              border-radius: 4px;
+              margin-left: 5px;
+              .fa{
+                  font-size: 15px;
+                  margin: 0;
+              }
+           }
+        }
+
+        .ant-table-tbody tr:nth-of-type(even){
+            background: #F5F5F5;
+        }
+        .ant-table-tbody tr td:nth-child(2){
+           font-weight: 600;
+        }
+        .ant-table-tbody tr td:nth-child(3),.ant-table-tbody tr td:nth-child(4){
+           text-align: center;
+           width: 20%;
+        }
+        .ant-table-tbody tr td:nth-child(5){
+            display: none;
+        }
+
+
+        .fa {
+          font-size: 20px;
+          margin-left: 10px;
+          margin-right: 10px;
+          cursor: pointer;
+          &:hover {
+            color: #108EE9;
+          }
+        }
+      }
+    }
+  }
+}

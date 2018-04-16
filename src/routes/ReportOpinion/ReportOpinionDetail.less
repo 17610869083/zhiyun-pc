@@ -1,0 +1,124 @@
+.report-opinion-detail {
+  .detail {
+    background-color: #FFFFFF;
+    margin: 20px;
+    box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+    font-size: 14px;
+    .top {
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-left: 20px;
+      border-bottom: 1px solid #eeeeee;
+      .left {
+        display: flex;
+        justify-content: flex-start;
+        .operate-all {
+          margin-left: 30px;
+          cursor: pointer;
+          display: flex;
+          align-items: center;
+          span {
+            margin-left: 6px;
+          }
+        }
+      }
+      .right-btn {
+        margin-right: 20px;
+      }
+    }
+    .bottom {
+      background-color: #ffffff;
+      .opinion-detail-wrapper {
+        .opinion-detail-item {
+          border-bottom: 1px solid #eeeeee;
+          padding-left: 20px;
+          padding-right: 20px;
+          &:nth-child(even) {
+            background: #f7f7f7;
+          }
+          .item-top {
+            width: 80%;
+            display: flex;
+            padding-top: 10px;
+            padding-bottom: 10px;
+            .negative {
+              margin-left: 20px;
+              .inner-type {
+                width: 32px;
+                height: 20px;
+                border-radius: 4px;
+                line-height: 20px;
+              }
+            }
+            .title {
+              margin-left: 20px;
+              font-size: 14px;
+              cursor: pointer;
+            }
+          }
+          .item-middle {
+            display: flex;
+            padding-bottom: 10px;
+            .left {
+              width: 80%;
+              margin-left: 120px;
+              .summary {
+                font-size: 12px;
+              }
+              .similar-info {
+                color: #42b9f5;
+                padding-left: 20px;
+              }
+            }
+            .right {
+              width: 20%;
+              text-align: center;
+              .base-operate {
+                height: 30px;
+                .fa {
+                  cursor: pointer;
+                  padding: 10px;
+                  font-size: 20px;
+                }
+              }
+            }
+          }
+          .item-bottom {
+            display: flex;
+            margin-left: 40px;
+            .key {
+              display: flex;
+              .keywords {
+                margin-left: 10px;
+              }
+            }
+            .resource {
+              margin-left: 80px;
+              .source {
+                color: #42b9f5;
+                padding-left: 6px;
+              }
+            }
+            .pubdate {
+              margin-left: 80px;
+              .date {
+                padding-left: 6px;
+              }
+            }
+          }
+        }
+      }
+    }
+    .pagintion-wrapper {
+      margin: 20px;
+      display: flex;
+      justify-content: center;
+
+      .pagintion {
+        margin-bottom: 20px;
+      }
+    }
+  }
+}
