@@ -7,17 +7,17 @@
   0 2px 2px 0 rgba(0,0,0,0.14),
   0 1px 5px 0px rgba(0,0,0,0.12);
   border-radius:4px;
-  min-height: 440px;
- 
+  min-height: 370px;
+
   .container {
     .top {
       margin-top: 10px;
       .title {
-        font-size: 18px;
         margin:0 20px;
         height: 50px;
+        width: 830px;
         line-height: 50px;
-        border-bottom:1px solid #e4ebf7;
+        border-bottom:1px solid #1b2133;
         .txt {
           color: #000000;
           margin-left: 14px;
@@ -25,16 +25,28 @@
       }
       .row {
         .col {
-          display: flex;
-          justify-content: center;
+          // display: flex;
+          // justify-content: right;
+          position: absolute;
+          right: -40px;
+          top: 29px;
           align-items: center;
-          //border-right: 2px solid #e9f1f3;
-          //&:last-child {
-          //  border-right: none;
-          //}
+        }
+        .col1{
+          position: absolute;
+          right: -40px;
+          top: 215px;     //194
+          align-items: center;
+        }
+        .col2{
+          position: absolute;
+          right: -40px;
+          top: 122px;  //90
+          align-items: center;
+        }
           .opinion-info {
             display: flex;
-            justify-content: center;
+            justify-content: right;
             align-items: center;
             .count {
               .number {
@@ -42,11 +54,11 @@
               }
               .test {
                 font-size: 16px;
-                color: #73e681;
+                color: #c0ccd1;
               }
             }
             .icon-wrapper {
-              margin-left: 50px;
+              margin-left: 28px;
               margin-top: 10px;
               width: 54px;
               height: 54px;
@@ -60,7 +72,9 @@
       }
     }
     .bottom {
-      max-width: 100%;
+      max-width: 85%;
+    }
+    canvas{
+      width: 850px !important;
     }
   }
-}

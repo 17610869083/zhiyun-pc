@@ -17,7 +17,8 @@ import {api_newest_opinion,
     api_weibo_opinion,
     api_count_opinion,
     api_today_opinion,
-    api_main_topic_opinion
+    api_main_topic_opinion,
+    api_get_userinfo
 } from '../../services/api';
 
 import {formatOpinionCount} from '../../utils/format'
@@ -39,7 +40,8 @@ class HomePage extends React.Component {
             weiboNegative: [],
             opinionCountArr: [],
             todayOpinionCount: {},
-            topicOpinion: []
+            topicOpinion: [],
+            alertMsg:''
         }
     }
 
@@ -120,6 +122,19 @@ class HomePage extends React.Component {
                             });
                     });
             });
+request(api_get_userinfo)
+    .then(res => {
+      if (res.data.alerMsg !== '') {
+        this.setState({
+          alertMsg: res.data.alerMsg
+        })
+      }  else {
+        this.refs.disp.style.display = 'none';
+      }
+    })
+}
+    informs(){
+      this.refs.disp.style.display = 'none';
     }
 
     render() {
@@ -130,10 +145,12 @@ class HomePage extends React.Component {
             todayWarningOpinion,yesterdayWarningOpinion,beforeYesterdayWarningOpinion,
             weiboAll,weiboNegative,
             opinionCountArr,
-            topicOpinion
+            topicOpinion,
+            alertMsg
         } = this.state;
-
         return (
+            <div>
+              <div className="informs" ref="disp">{alertMsg}<i onClick={ this.informs.bind(this) }>X</i></div>
             <div className="home-page">
                 <div className="container">
                     <Row gutter={16} className="row">
@@ -183,6 +200,7 @@ class HomePage extends React.Component {
                     </Row>
                 </div>
             </div>
+         </div>
         )
     }
 }

@@ -17,7 +17,7 @@ class TodayOpinionBox extends React.PureComponent {
         const ratio =  yesterdayNegative === 0 ? 0 : Number.parseInt((todayNegative - yesterdayNegative)/yesterdayNegative*100, 10);
         return (
             <div className="today-opinion-box">
-                 <div className="today-opinion-top" 
+                 <div className="today-opinion-top"
                   style={this.props.status==='setting'?{display:'block'}:{display:'none'}}>
                  <Icon type="close-circle" className="delModule" style={{color: 'rgba(0,0,0,0.65)',fontSize: '18px'}}
                  onClick={this.delTodayOpinionBox.bind(this)}
@@ -58,10 +58,10 @@ class TodayOpinionBox extends React.PureComponent {
                          <Col span={6}>
                              <div className="opinion-info">
                                  <div className="content">
-                                     <div className="icon-wrapper" style={{backgroundColor: '#e70078'}}>
+                                     <div className="icon-wrapper" style={{backgroundColor: '#e70000'}}>
                                          <IconFont type="icon-jinggao" style={{color: '#ffffff',fontSize: '50px'}}/>
                                      </div>
-                                     <div className="count" style={{backgroundColor: '#ff2b99'}}>
+                                     <div className="count" style={{backgroundColor: '#ff3f3f'}}>
                                          <div className="number">{todayNegative}</div>
                                          <div className="name">今日负面</div>
                                      </div>

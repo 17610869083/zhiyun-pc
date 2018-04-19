@@ -65,7 +65,7 @@ class NewHome extends React.Component {
         request(api_homepage_message)
             .then(res => {
                if(res.data){
-                   this.props.homeModule(res.data); 
+                   this.props.homeModule(res.data);
                    this.setState({
                            homeMessage:res.data,
                            todayOpinion:res.data.todayOpinion,
@@ -80,7 +80,7 @@ class NewHome extends React.Component {
                            HotWord:res.data.HotWord
                        })
                }
-               
+
         // 昨日和今日舆情
         request(api_today_opinion)
             .then((res) => {
@@ -186,10 +186,10 @@ class NewHome extends React.Component {
                 method: 'POST',
                 headers: {
                       "Content-Type": "application/x-www-form-urlencoded"
-                }, 
+                },
                body:`widget=${JSON.stringify(homeMessage)}`
                 })
-            this.props.homeModule(homeMessage)    
+            this.props.homeModule(homeMessage)
     }
     delMediaDistributionBox(type){
             let homeMessage=this.state.homeMessage;
@@ -197,15 +197,15 @@ class NewHome extends React.Component {
            this.setState({
                  mediaDistribution:type,
                  homeMessage:homeMessage
-            }) 
+            })
             request(api_save_widget,{
                 method: 'POST',
                 headers: {
                       "Content-Type": "application/x-www-form-urlencoded"
-                }, 
+                },
                body:`widget=${JSON.stringify(homeMessage)}`
-                })     
-                this.props.homeModule(homeMessage)                                       
+                })
+                this.props.homeModule(homeMessage)
     }
     delTodayBox(type){
             let homeMessage=this.state.homeMessage;
@@ -214,15 +214,15 @@ class NewHome extends React.Component {
                  todayOpinion:type,
                  homeMessage:homeMessage
             })
-            
+
             request(api_save_widget,{
                 method: 'POST',
                 headers: {
                       "Content-Type": "application/x-www-form-urlencoded"
-                }, 
+                },
                body:`widget=${JSON.stringify(homeMessage)}`
                 })
-             this.props.homeModule(homeMessage) ;    
+             this.props.homeModule(homeMessage) ;
     }
     delTrendBox(type){
            let homeMessage=this.state.homeMessage;
@@ -235,7 +235,7 @@ class NewHome extends React.Component {
             method: 'POST',
             headers: {
                   "Content-Type": "application/x-www-form-urlencoded"
-            }, 
+            },
            body:`widget=${JSON.stringify(homeMessage)}`
             })
             this.props.homeModule(homeMessage) ;
@@ -251,7 +251,7 @@ class NewHome extends React.Component {
                 method: 'POST',
                 headers: {
                       "Content-Type": "application/x-www-form-urlencoded"
-                }, 
+                },
                body:`widget=${JSON.stringify(homeMessage)}`
                 })
                 this.props.homeModule(homeMessage) ;
@@ -267,7 +267,7 @@ class NewHome extends React.Component {
                 method: 'POST',
                 headers: {
                       "Content-Type": "application/x-www-form-urlencoded"
-                }, 
+                },
                body:`widget=${JSON.stringify(homeMessage)}`
                 })
                 this.props.homeModule(homeMessage) ;
@@ -283,10 +283,10 @@ class NewHome extends React.Component {
                 method: 'POST',
                 headers: {
                       "Content-Type": "application/x-www-form-urlencoded"
-                }, 
+                },
                body:`widget=${JSON.stringify(homeMessage)}`
                 })
-                this.props.homeModule(homeMessage) ;    
+                this.props.homeModule(homeMessage) ;
     }
     delWeiboBox(type){
             let homeMessage=this.state.homeMessage;
@@ -299,10 +299,10 @@ class NewHome extends React.Component {
                 method: 'POST',
                 headers: {
                       "Content-Type": "application/x-www-form-urlencoded"
-                }, 
+                },
                body:`widget=${JSON.stringify(homeMessage)}`
                 })
-                this.props.homeModule(homeMessage) ;   
+                this.props.homeModule(homeMessage) ;
     }
     delTopicBox(type){
             let homeMessage=this.state.homeMessage;
@@ -315,7 +315,7 @@ class NewHome extends React.Component {
                 method: 'POST',
                 headers: {
                       "Content-Type": "application/x-www-form-urlencoded"
-                }, 
+                },
                body:`widget=${JSON.stringify(homeMessage)}`
                 })
                 this.props.homeModule(homeMessage) ;
@@ -331,7 +331,7 @@ class NewHome extends React.Component {
                 method: 'POST',
                 headers: {
                       "Content-Type": "application/x-www-form-urlencoded"
-                }, 
+                },
                body:`widget=${JSON.stringify(homeMessage)}`
                 })
                 this.props.homeModule(homeMessage);
@@ -347,11 +347,11 @@ class NewHome extends React.Component {
             method: 'POST',
             headers: {
                   "Content-Type": "application/x-www-form-urlencoded"
-            }, 
+            },
            body:`widget=${JSON.stringify(homeMessage)}`
             })
             this.props.homeModule(homeMessage) ;
-    }    
+    }
     render() {
         const {
             todayOpinionCount,
@@ -362,13 +362,13 @@ class NewHome extends React.Component {
             opinionCountArr,
             topicOpinionArr
         } = this.state;
-        const {ModuleList} = this.props; 
+        const {ModuleList} = this.props;
         const moduleList = this.state.homeMessage.length!==0?homeModuleList(this.state.homeMessage).map((item,index)=>
         <li key={index}>{this.state.delMoudleList[item]}
         <Icon type="plus-circle-o" className="addModule"
         onClick={this.addModule.bind(this,item)}
         ></Icon>
-        </li>):'';   
+        </li>):'';
         return (
             <div className="home-pages" style={this.props.type!==undefined?{'backgroundColor':'#ffffff'}:{'backgroundColor':'#e4ebf7'}}>
                 <div className="layout" style={this.props.type!==undefined?{display:'block',width:'8%'}:{display:'none'}}>
@@ -376,12 +376,12 @@ class NewHome extends React.Component {
                      <ul>
                         {moduleList}
                      </ul>
-                </div>   
+                </div>
                 <div className="container" style={this.props.type!==undefined?{width:'92%'}:{width:'100%'}}>
                     <Row gutter={16} className="row"
                      style={ModuleList.todayOpinion===1?{display:'none'}:{display:'block'}}
                     >
-                        <Col span={24}         
+                        <Col span={24}
                         >
                             <TodayOpinionBox data={todayOpinionCount}
                               status={this.props.type!==undefined?'setting':''}
@@ -429,7 +429,7 @@ class NewHome extends React.Component {
                                 beforeYesterdayOpinion={beforeYesterdayWarningOpinion}
                                 status={this.props.type!==undefined?'setting':''}
                                 delNewestWarningBox={this.delNewestWarningBox.bind(this)}
-                            />                       
+                            />
                         </Col>
                         <Col span={12}
                            style={ModuleList.weiboOpinion===1?{display:'none'}:{display:'block'}}
@@ -457,8 +457,8 @@ class NewHome extends React.Component {
                             delCountBox={this.delCountBox.bind(this)}
                             />
                         </Col>
-                   
-                        <Col span={12} 
+
+                        <Col span={12}
                         style={ModuleList.HotWord===1?{display:'none'}:{display:'block'}}
                         >
                             <HotWordBox data={this.state.hotWordData}

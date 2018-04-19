@@ -49,7 +49,7 @@ class OpinionTrendBox extends React.Component {
         const {monthCount} = this.state;
         return (
             <div className="opinion-trend-box">
-          
+
                 <div className="container">
                     <div className="top">
                         <div className="title">
@@ -61,29 +61,29 @@ class OpinionTrendBox extends React.Component {
                                 <div className="opinion-info">
                                     <div className="count">
                                         <div className="number">{monthCount[0].value}</div>
-                                        <div className="test">月 舆情总量</div>
+                                        <div className="test">舆情总量</div>
                                     </div>
                                     <div className="icon-wrapper" style={{backgroundColor: '#009efb'}}>
                                         <IconFont type="icon-yuqing" style={{color: '#ffffff',fontSize: '40px'}}/>
                                     </div>
                                 </div>
                             </Col>
-                            <Col span={8} className="col">
+                            <Col span={8} className="col col1">
                                 <div className="opinion-info">
                                     <div className="count">
                                         <div className="number">{monthCount[1].value}</div>
-                                        <div className="test">月 负面总量</div>
+                                        <div className="test">负面总量</div>
                                     </div>
                                     <div className="icon-wrapper" style={{backgroundColor: '#ff6600'}}>
                                         <IconFont type="icon-jinggao-white" style={{fontSize: '40px'}}/>
                                     </div>
                                 </div>
                             </Col>
-                            <Col span={8} className="col">
+                            <Col span={8} className="col col2">
                                 <div className="opinion-info">
                                     <div className="count">
                                         <div className="number">{monthCount[2].value}</div>
-                                        <div className="test">月 预警总量</div>
+                                        <div className="test">预警总量</div>
                                     </div>
                                     <div className="icon-wrapper" style={{backgroundColor: '#ffab00'}}>
                                         <IconFont type="icon-shandian-white" style={{fontSize: '40px'}}/>

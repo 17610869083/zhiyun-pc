@@ -1,6 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {Checkbox, Icon, Input, Menu, Dropdown, Popconfirm, message, Popover, Button, 
+import {Checkbox, Icon, Input, Menu, Dropdown, Popconfirm, message, Popover, Button,
     Spin, Alert, Select,Pagination,Modal} from 'antd';
 import { history } from '../../utils/history';
 import './OpinionDetail.less';
@@ -21,7 +21,7 @@ import {sessionSetArticleItem,sessionGetArticleItem} from '../../utils/localStor
 import Store from '../../redux/store/index';
 import deleteImg from '../../assets/operate-img/delete.png';
 import exportImg from '../../assets/operate-img/export.png';
-import closeEyeImg from '../../assets/operate-img/close-eye.png';
+// import closeEyeImg from '../../assets/operate-img/close-eye.png';
 import starImg from '../../assets/operate-img/star.png';
 import infoBaseImg from '../../assets/operate-img/info-base.png';
 import weixin from '../../assets/icon-img/weixin.png';
@@ -89,7 +89,7 @@ class OpinionDetail extends React.Component {
                         this.setState({
                             topicMessage:res.data
                         })
-                          
+
                     }
              })
 
@@ -99,7 +99,7 @@ class OpinionDetail extends React.Component {
             keyword:'',type:0});
 
         sessionSetArticleItem('sidArr',sessionGetArticleItem('sidArr') ===null?'':
-        sessionGetArticleItem('sidArr'));        
+        sessionGetArticleItem('sidArr'));
     }
 
     componentWillReceiveProps() {
@@ -122,11 +122,11 @@ class OpinionDetail extends React.Component {
                         this.setState({
                             topicMessage:res.data
                         })
-                          
+
                     }
              })
              }
-      
+
 
   }
     // ------全选
@@ -138,7 +138,7 @@ class OpinionDetail extends React.Component {
         });
     }
     onChangeItem(index, event) {
-        
+
         const arr = this.state.checkedArray;
         arr[index] = event.target.checked;
         const isEveryChecked = arr.every(item => {
@@ -158,7 +158,7 @@ class OpinionDetail extends React.Component {
        sessionSetArticleItem('sidArr',sessionGetArticleItem('sidArr') === '' ?''.concat(sid+','):
        sessionGetArticleItem('sidArr').concat(sid+',')
        )
-    
+
     }
 
     // 删除舆情
@@ -422,7 +422,7 @@ class OpinionDetail extends React.Component {
     //导出功能的跳转
     onExportSkip(){
         let propsType=this.props.propsType;
-        let taskname=propsType==='AllopinionList'?'导出汇总舆情数据':Store.getState().getTopicLocationSucceededReducer.res.topicname;       
+        let taskname=propsType==='AllopinionList'?'导出汇总舆情数据':Store.getState().getTopicLocationSucceededReducer.res.topicname;
         let propsParamData=this.props.param;
         let arr=this.checkedTrue().join(',');
         if(arr.length===0){
@@ -438,7 +438,7 @@ class OpinionDetail extends React.Component {
                 method: 'POST',
                 headers: {
                       "Content-Type": "application/x-www-form-urlencoded"
-                }, 
+                },
                body:`page=${propsParamData.page}&sids=${propsParamData.sid}&pagesize=${propsParamData.pagesize}&datetag=${propsParamData.datetag}&taskname=${taskname}&documenttype=excel&createdate=${time}&taskstate=0&source=monitor&order=${propsParamData.order}&begin=${propsParamData.begin}&end=${propsParamData.end}&neg=${propsParamData.neg}&carry=${propsParamData.carry}&similer=${propsParamData.similer}&seltype=conten&keyword=`
                 })
 
@@ -447,7 +447,7 @@ class OpinionDetail extends React.Component {
                 method: 'POST',
                 headers: {
                       "Content-Type": "application/x-www-form-urlencoded"
-                }, 
+                },
                body:`topicName=${this.state.topicMessage.topicname}&topicid=${this.state.topicMessage.topicid}&sids=${propsParamData.sid}&page=${propsParamData.page}&pagesize=${propsParamData.pagesize}&datetag=${propsParamData.datetag}&taskname=${this.state.topicMessage.topicname}&documenttype=excel&createdate=${time}&taskstate=0&source=topic&order=${propsParamData.order}&begin=${propsParamData.begin}&end=${propsParamData.end}&neg=${propsParamData.neg}&carry=${propsParamData.carry}&similer=${propsParamData.similer}&seltype=conten&keyword=`
                 })
          }else{
@@ -456,9 +456,9 @@ class OpinionDetail extends React.Component {
                 method: 'POST',
                 headers: {
                       "Content-Type": "application/x-www-form-urlencoded"
-                }, 
+                },
                body:`typeid=${this.state.clfMessage.typeid}&clfname=${this.state.clfMessage.clfname}&clfid=${this.state.clfMessage.clfid}&sids=${propsParamData.sid}&page=${propsParamData.page}&pagesize=${propsParamData.pagesize}&datetag=${propsParamData.datetag}&taskname=${this.state.clfMessage.clfname}&documenttype=excel&createdate=${time}&taskstate=0&source=clf&order=${propsParamData.order}&begin=${propsParamData.begin}&end=${propsParamData.end}&neg=${propsParamData.neg}&carry=${propsParamData.carry}&similer=${propsParamData.similer}&seltype=conten&keyword=`
-               }) 
+               })
          }
 
          history.push({
@@ -497,7 +497,7 @@ class OpinionDetail extends React.Component {
             this.props.opinionSearchRequest(param);
         }else{
             this.props.onDataChange(pagenumber);
-        }       
+        }
         this.props.paginationPage(pagenumber);
     }
     showModal(){
@@ -519,11 +519,11 @@ class OpinionDetail extends React.Component {
          this.setState({
                visible:false,
                downloadVisible:true
-         })  
+         })
          let propsType=this.props.propsType;
          let propsParamData=this.props.param;
          let arr=this.checkedTrue().join(',');
-   
+
          if(arr.length===0){
              propsParamData.sid='all';
          }else{
@@ -535,16 +535,16 @@ class OpinionDetail extends React.Component {
                  method: 'POST',
                  headers: {
                        "Content-Type": "application/x-www-form-urlencoded"
-                 }, 
+                 },
                 body:`page=${propsParamData.page}&sids=${propsParamData.sid}&pagesize=${propsParamData.pagesize}&datetag=${propsParamData.datetag}&taskname=${this.state.fileName}&documenttype=excel&createdate=${time}&taskstate=0&source=monitor&order=${propsParamData.order}&begin=${propsParamData.begin}&end=${propsParamData.end}&neg=${propsParamData.neg}&carry=${propsParamData.carry}&similer=${propsParamData.similer}&seltype=conten&keyword=`
                  })
- 
+
           }else if(propsType==='TopicList'){
              request(api_allopinion_exportskip,{
                  method: 'POST',
                  headers: {
                        "Content-Type": "application/x-www-form-urlencoded"
-                 }, 
+                 },
                 body:`topicName=${this.state.fileName}&topicid=${this.state.topicMessage.topicid}&sids=${propsParamData.sid}&page=${propsParamData.page}&pagesize=${propsParamData.pagesize}&datetag=${propsParamData.datetag}&taskname=${this.state.fileName}&documenttype=excel&createdate=${time}&taskstate=0&source=topic&order=${propsParamData.order}&begin=${propsParamData.begin}&end=${propsParamData.end}&neg=${propsParamData.neg}&carry=${propsParamData.carry}&similer=${propsParamData.similer}&seltype=conten&keyword=`
                  })
           }else{
@@ -552,15 +552,15 @@ class OpinionDetail extends React.Component {
                  method: 'POST',
                  headers: {
                        "Content-Type": "application/x-www-form-urlencoded"
-                 }, 
+                 },
                 body:`typeid=${this.state.clfMessage.typeid}&clfname=${this.state.fileName}&clfid=${this.state.clfMessage.clfid}&sids=${propsParamData.sid}&page=${propsParamData.page}&pagesize=${propsParamData.pagesize}&datetag=${propsParamData.datetag}&taskname=${this.state.fileName}&documenttype=excel&createdate=${time}&taskstate=0&source=clf&order=${propsParamData.order}&begin=${propsParamData.begin}&end=${propsParamData.end}&neg=${propsParamData.neg}&carry=${propsParamData.carry}&similer=${propsParamData.similer}&seltype=conten&keyword=`
-                }) 
+                })
           }
     }
     handleCancel(){
         this.setState({
             visible:false
-        })  
+        })
     }
     fileNameChange(e){
         const {value} =e.target;
@@ -587,7 +587,7 @@ class OpinionDetail extends React.Component {
         const docList = this.props.docList ? this.props.docList : [{carry: '新闻'}];
         const OpinionDetailItems =docList[0]!==undefined && docList[0]['negative']!==undefined? docList.map((item, index) =>
             <li key={item.sid} className="opinion-detail-item">
-            
+
             <div className="cheackBox">
                    <Checkbox checked={this.state.checkedArray[index]}
                               onChange={this.onChangeItem.bind(this,index)}
@@ -600,16 +600,16 @@ class OpinionDetail extends React.Component {
                             {opinionTrend(item.negative)}
                         </div>
                     </div>
-             <div className="imgBox" style={this.state.isSummaryShow ? {display: 'block'} : {display: 'none'}}>  
+             <div className="imgBox" style={this.state.isSummaryShow ? {display: 'block'} : {display: 'none'}}>
             <Tooltip title={item.carry==='综合'?'其它':item.carry} placement="bottomRight">
             <img src={this.state.carryAll[item.carry]} alt="" className="carryImg"  />
              </Tooltip>
-             </div> 
+             </div>
 
             </div>
             <div className="content">
-                <div className="item-top">    
-                    <div className="title" 
+                <div className="item-top">
+                    <div className="title"
                     title={item.title} onClick={this.clickItemTitle.bind(this, item.sid)}
                     style={clickTitleColor(sessionGetArticleItem('sidArr'),item.sid)?{color:'#ffffff'}:
                     {color:'#000000'}
@@ -617,28 +617,55 @@ class OpinionDetail extends React.Component {
                     >{(item.title && item.title.length>35)?item.title.slice(0,35)+'...':item.title}
                     </div>
                 </div>
-                
+
                 <div className="item-middle">
                     <div className="Summary">摘要：</div>
                     <div className="left" style={this.state.isSummaryShow ? {display: 'block'} : {display: 'none'}}>
                         <div >
                             <span className="summary"  dangerouslySetInnerHTML={{__html: setHighlightTags(item.summary,item.nztags.split(' '))}}>
-                            </span>                  
+                            </span>
                         </div>
                     </div>
                 </div>
                 <div className="item-bottom"  style={this.state.isSummaryShow ? {display: 'flex'} : {display: 'none'}}>
                     <div className="item-left">
                     <div className="key">
+                        <div className="pubdate">
+                            <span className="date">{item.pubdate.split(' ')[1]}  {item.pubdate.split(' ')[0]}</span>
+                            {
+                              //<span className="date">{item.pubdate.split(' ')[0]}</span>
+                            }
+                        </div>
+                        <div className="similar-info">相似信息：{item.similerInfo && (item.similerInfo.similerCount?item.similerInfo.similerCount:0)}条</div>
                         <div className="title">关键词：</div>
                         <div className="keywords">
                             {item.nztags}
-                        </div> 
+                        </div>
+                        <div className="resource">
+                              <a href={item.url} target="_black">
+                                  <span className="source"
+                                  title={item.source}
+                                  >{item.source && item.source.length>=4?item.source.slice(0,3)+'...':item.source}</span>
+                              </a>
+                          </div>
                     </div>
-                    <div className="similar-info">相似信息：{item.similerInfo && (item.similerInfo.similerCount?item.similerInfo.similerCount:0)}条</div>
                     </div>
                     <div className="cirleBox">
-                        <div> 
+                    <div>
+                        <Tooltip title='删除' placement="bottom">
+                        <Popconfirm title="确定要删除这条信息吗？" onConfirm={this.deleteConfirm.bind(this, item.sid)} onCancel={this.deleteCancel.bind(this)} okText="是" cancelText="否">
+                        <img src={deleteImg} alt=""/>
+                        </Popconfirm>
+                        </Tooltip>
+                    </div>
+                    <div>
+                        <Tooltip title='删除' placement="bottom">
+                        <Popconfirm title="确定要删除这条信息吗？" onConfirm={this.deleteConfirm.bind(this, item.sid)} onCancel={this.deleteCancel.bind(this)} okText="是" cancelText="否">
+                        <img src={deleteImg} alt=""/>
+                        </Popconfirm>
+                        </Tooltip>
+                    </div>
+                        <div>
                             <Tooltip title='删除' placement="bottom">
                             <Popconfirm title="确定要删除这条信息吗？" onConfirm={this.deleteConfirm.bind(this, item.sid)} onCancel={this.deleteCancel.bind(this)} okText="是" cancelText="否">
                             <img src={deleteImg} alt=""/>
@@ -671,25 +698,12 @@ class OpinionDetail extends React.Component {
                             </Popover>
                             </Tooltip>
                         </div>
-                       
                     </div>
                 </div>
                 </div>
-                <div className="resource">
-                        <a href={item.url} target="_black">
-                            <Icon type="link" />
-                            <span className="source"
-                            title={item.source}
-                            >{item.source && item.source.length>=4?item.source.slice(0,3)+'...':item.source}</span>
-                        </a>
-                    </div>
-                <div className="pubdate">
-
-                        <div className="date">{item.pubdate.split(' ')[1]}</div>
-                        <div className="date">{item.pubdate.split(' ')[0]}</div>
-                        
-                </div>
-                
+                {
+                  //时间
+                }
             </li>
         ):<BlankPage desc={this.props.propsType==='TopicList'?
         '<span>空空如也，赶紧去<a href="index.html#/topic/addtopic">添加</a>关键词</span>':
@@ -751,7 +765,7 @@ class OpinionDetail extends React.Component {
                 }
             </Menu>
         );
-        
+
         return (
             <div className="opinion-detail" >
                 <div className="top">
@@ -763,62 +777,64 @@ class OpinionDetail extends React.Component {
                         <Popconfirm title="是否删除您选择的舆情？" onConfirm={this.deleteOpinionLists.bind(this)} onCancel={this.deleteCancel.bind(this)} okText="是" cancelText="否">
                         <Tooltip title='删除' placement="bottom">
                             <div className="operate-all" >
-                                <img src={deleteImg} alt="delete" className="delete-img"/>                               
+                                <img src={deleteImg} alt="delete" className="delete-img"/>
                             </div>
                             </Tooltip>
                         </Popconfirm>
                         <Tooltip title='未勾选默认导出5000条' placement="bottom">
                         <div className="operate-all" onClick={this.showModal.bind(this)}>
-                            <img src={exportImg} alt="export" className="export-img"/>                      
+                            <img src={exportImg} alt="export" className="export-img"/>
                         </div>
                         </Tooltip>
-                        <Dropdown overlay={ChangeTrendMenu} trigger={['click']} 
+                        <Dropdown overlay={ChangeTrendMenu} trigger={['click']}
                         getPopupContainer={ () => document.querySelector('.opinion-detail')}>
                          <Tooltip title='倾向' placement="bottom">
                             <div className="operate-all" >
                                 <img src={remove} alt="plus" className="plus-img"/>
-                                
+
                             </div>
                         </Tooltip>
                         </Dropdown>
-                        <Tooltip title='显示摘要' placement="bottom">
-                        <div className="operate-all" onClick={this.triggerSummaryShow.bind(this)}>
-                            <img src={this.state.isSummaryShow?openEyeImg:closeEyeImg} alt="close" className="close-img"/>                        
-                        </div>
-                        </Tooltip>
-                        <Dropdown overlay={putinReportMenu} trigger={['click']} 
+                        {
+                          // <Tooltip title='显示摘要' placement="bottom">
+                          // <div className="operate-all" onClick={this.triggerSummaryShow.bind(this)}>
+                          //     <img src={this.state.isSummaryShow?openEyeImg:closeEyeImg} alt="close" className="close-img"/>
+                          // </div>
+                          // </Tooltip>
+                        }
+                        <Dropdown overlay={putinReportMenu} trigger={['click']}
                         getPopupContainer={ () => document.querySelector('.opinion-detail')}
                         >
                             <Tooltip title='素材库' placement="bottom">
                             <div className="operate-all" onClick={this.props.getCollectionOpinionListRequested.bind(this)}>
-                                <img src={infoBaseImg} alt="infoBase" className="close-img"/>                            
+                                <img src={infoBaseImg} alt="infoBase" className="close-img"/>
                             </div>
                             </Tooltip>
                         </Dropdown>
                         <Tooltip title='收藏' placement="bottom">
-                        <Dropdown overlay={collectionMenu} trigger={['click']} 
+                        <Dropdown overlay={collectionMenu} trigger={['click']}
                         getPopupContainer={ () => document.querySelector('.opinion-detail')}
-                        >       
+                        >
                             <div className="operate-all" onClick={this.props.getMaterialOpinionListRequested.bind(this)}>
-                                <img src={starImg} alt="star" className="close-img"/>    
+                                <img src={starImg} alt="star" className="close-img"/>
                             </div>
-                            
+
                         </Dropdown>
                         </Tooltip>
                     </div>
-                    <Pagination 
+                    <Pagination
                        simple
                        defaultCurrent={1}
                        pageSize={this.props.pageSize}
                        onChange={this.onPaginationChange.bind(this)}
                        total={ this.props.pageInfo && this.props.pageInfo.count}
-                       getPopupContainer={ () => document.querySelector('.all-opinion')} 
-                       current={page} 
-                                                       
+                       getPopupContainer={ () => document.querySelector('.all-opinion')}
+                       current={page}
+
                         />
-                        
-                    <div className="inputSearch" 
-                    style={this.props.propsType==='AllopinionList' ?{visibility:'visible'}: {visibility:'hidden'}}>   
+
+                    <div className="inputSearch"
+                    style={this.props.propsType==='AllopinionList' ?{visibility:'visible'}: {visibility:'hidden'}}>
                     <div className="right">
                         <InputGroup compact>
                             <Select defaultValue="content" onChange={this.handleSearchChange.bind(this)}>
@@ -831,23 +847,23 @@ class OpinionDetail extends React.Component {
                                 placeholder="请输入您要搜索的内容"
                                 onChange={this.searchInput.bind(this)}
                             />
-                            
+
                         </InputGroup>
-                        
+
                         {/* <div className="workingModel">
                             <span className="selectFont leftBorder" onClick={this.operation.bind(this)}>操作模式</span>
                             <span className="selectFont" onClick={this.Streamline.bind(this)}>精简模式</span>
                         </div> */}
                     </div>
                     <Button className="search" onClick={this.handleSearchBtn.bind(this)}>搜索</Button>
-                    </div> 
+                    </div>
                 </div>
                 <div className="bottom">
                     {this.state.loading ? Loading : (null)}
                     <ul className="opinion-detail-wrapper">
-                   
+
                         {OpinionDetailItems}
-                 
+
                     </ul>
 
                 </div>
@@ -857,12 +873,12 @@ class OpinionDetail extends React.Component {
                   onCancel={this.handleCancel.bind(this)}
                   footer={null}
                   className="fileMdal"
-                > 
-                <Input value={this.state.fileName} 
+                >
+                <Input value={this.state.fileName}
                 onChange={this.fileNameChange.bind(this)}
                 maxLength={'20'}
                 ></Input>
-                <Button type="primary" 
+                <Button type="primary"
                 style={{margin:'20px 0 0 214px',width:'60px',height:'30px'}}
                 onClick={this.handleOk.bind(this)}
                 >确定
@@ -874,7 +890,7 @@ class OpinionDetail extends React.Component {
                   onOk={this.downloadHandleOk.bind(this)}
                   onCancel={this.downloadHandleCancel.bind(this)}
                   cancelText='留在此页'
-                > 
+                >
                 <p>是否去下载</p>
                 </Modal>
             </div>
@@ -892,7 +908,7 @@ const mapStateToProps = state => {
         getTopicMessageSucceeded:state.getTopicMessageSucceeded.data,
         getRouterReducer:state.getRouterReducer,
         page:state.paginationPageReducer ,
-        searchKeyword:state.searchKeywordSyncReducer.ks      
+        searchKeyword:state.searchKeywordSyncReducer.ks
     }
 };
 
@@ -914,7 +930,7 @@ const mapDispatchToProps = dispatch => {
             dispatch(getMaterialOpinionListRequested());
         },
         exportSkip:key=>{
-            dispatch(exportSkip(key)); 
+            dispatch(exportSkip(key));
         },
         paginationPage :req => {
             dispatch(paginationPage(req));

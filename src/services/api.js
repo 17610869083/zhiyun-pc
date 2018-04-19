@@ -1,19 +1,19 @@
 // host
-const host = 'http://web.is8.com.cn/om/webpart/';
+const host = 'http://119.90.61.155/om3/webpart/';
 //const host = 'http://119.90.61.155/om3/webpart/';
 
 //-------------------登录
-export const api_login = 'http://web.is8.com.cn/om/common/login/loginDo?action=login2';
-//export const api_login = 'http://119.90.61.155/om3/common/login/loginDo?action=login2';
+//export const api_login = 'http://web.is8.com.cn/om/common/login/loginDo?action=login2';
+export const api_login = 'http://119.90.61.155/om3/common/login/loginDo?action=login2';
 
-export const api_logout = 'http://web.is8.com.cn/om/common/login/loginDo?action=loginOut';
-//export const api_logout = 'http://119.90.61.155/om3/common/login/loginDo?action=loginOut';
+//export const api_logout = 'http://web.is8.com.cn/om/common/login/loginDo?action=loginOut';
+export const api_logout = 'http://119.90.61.155/om3/common/login/loginDo?action=loginOut';
 
 // export const api_logout = 'http://web.is8.com.cn:8031/om/common/login/loginDo?action=loginOut';
 
 /**
- * 首页模块           
- */                     
+ * 首页模块
+ */
 //修改用户信息
 const api_revise_userinfo=host+'self/myInfo?action=saveUserinfo';
 
@@ -28,7 +28,7 @@ const api_save_widget = host+'main/DocSearchDo?action=saveWidget';
 //新首页舆情走势
 const api_new_total = host + 'echart/echartDo?action=yqzc';
 //新首页相关热词
-const api_hot_word = host+'echart/echartDo?action=getHotJson';      
+const api_hot_word = host+'echart/echartDo?action=getHotJson';
 // 昨日和今日舆情
 const api_today_opinion = host + 'main/DocSearchDo?action=mainCountDay';
 
@@ -75,7 +75,7 @@ const api_get_doc_detail = host + 'docDetail/docDetailDo?action=getDetail';
 // 获取相似舆情
 const api_get_doc_similar = host + 'docDetail/docDetailDo?action=getSimiler';
 
-// 主题添加                                 
+// 主题添加
 
 const api_topic_add=host+'oTopic/TopicDo?action=addTopic';
 
@@ -98,7 +98,7 @@ const api_topic_typeAdd=host+'oTopic/TopicDo?action=addTopicCat';
 const api_topic_typeDel=host+'oTopic/TopicDo?action=delCat';
 
 //专题统计表
-const api_topic_table=host+'oTopic/TopicDo?action=topicCarryCount';   
+const api_topic_table=host+'oTopic/TopicDo?action=topicCarryCount';
 
 //专题时间轴
 
@@ -146,7 +146,7 @@ const api_classify_revise=host+'oTopic/TopicDo?action=editTopicCat';
 //单个规则删除
 const api_topic_ruleid=host+'oTopic/TopicDo?action=delRule';
 
-const api_clf_ruleid=host+'oClf/clfDo?action=delRule';     
+const api_clf_ruleid=host+'oClf/clfDo?action=delRule';
 // 获取素材库素材详细信息
 const api_material_opinion_detail = host + 'oWork/reportDo?action=catDocList';
 // 添加素材库
@@ -266,7 +266,7 @@ export const api_sorted_cat_list = host + 'oClf/clfDo?action=gradeCatList';
 export const api_sorted_cat_add = host + 'oClf/clfDo?action=addGradeCat';
 // 分类文件夹修改
 export const api_sorted_cat_edit = host + 'oClf/clfDo?action=editGradeCat';
-// 分类文件夹添加    
+// 分类文件夹添加
 export const api_sorted_cat_delete = host + 'oClf/clfDo?action=delCat';
 // 左侧导航
 export const api_sorted_menu_list = host + 'oClf/clfDo?action=getGradeMemu';
@@ -303,7 +303,7 @@ export const  edit_disuse_extend=host+'setting/DisuseExtendDo?action=editDisuseE
 //舆情报告
 export const public_sentiment_report=host+'exp/ExportData?action=getDocByDocument';
 //预览报告
-export const preview_report=host+'exp/PreviewAction'; 
+export const preview_report=host+'exp/PreviewAction';
 
 //报告搜索
 export const report_search=host+'exp/ExportData?action=search';
@@ -312,15 +312,15 @@ export const report_search=host+'exp/ExportData?action=search';
 export const public_opinion_entry=host+'appMan/appManDo?action=oDataAddSave';
 //单条舆情查询
 export const docdetail_remove=host+'docDetail/docDetailDo?action=docEdit' ;
-//单条舆情修改 
-export const api_docedit_save=host+'docDetail/docDetailDo?action=docEditSave'; 
+//单条舆情修改
+export const api_docedit_save=host+'docDetail/docDetailDo?action=docEditSave';
 
 //排除停用添加规则
-export const api_save_disuse_extend =host+'setting/DisuseExtendDo?action=saveDisuseExtend' ;   
+export const api_save_disuse_extend =host+'setting/DisuseExtendDo?action=saveDisuseExtend' ;
 //内容页邮件获取
-export const api_email_push=host+'docDetail/docDetailDo?action=docPush'; 
-//内容页邮件推送  
-export const api_docsend_push =host+'docDetail/docDetailDo?action=docSendPush' 
+export const api_email_push=host+'docDetail/docDetailDo?action=docPush';
+//内容页邮件推送
+export const api_docsend_push =host+'docDetail/docDetailDo?action=docSendPush'
 //报告历史列表
 export const api_show_taskList=host+'exp/ExportData?action=showTaskList';
 //系统设置消息通知 预警设置
@@ -343,6 +343,3 @@ export const api_update_eamil_push_state=host+'mail/EmailDo?action=updateEamilPu
 export const api_del_report=host+'oWork/reportDo?action=delReport' ;
 //导出细分接口
 export const api_export_small=host+'exp/ExportData?action=getListBySource';
-
-
-
