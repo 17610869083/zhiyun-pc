@@ -57,7 +57,7 @@ export function formatMediaChart(data) {
             left: '6%',
             right: 0
         },
-        color: ['#20aafc','#ff5858','#55ce63','#d48265','#91c7ae','#749f83',  '#ca8622', '#bda29a','#6e7074', '#546570', '#c4ccd3'],
+        color: ['#20aafc','#ff5858','#e70000','#ffbc34','#91c7ae','#749f83',  '#ca8622', '#bda29a','#6e7074', '#546570', '#c4ccd3'],
         xAxis: data.xAxis[0],
         yAxis: [
             {
@@ -217,19 +217,19 @@ export function opinionTypeToColor(str) {
     };
 }
 // 文章详情标红
-export function setHighlightTags(content, tags) { 
-   const tagLength = tags.length;   
+export function setHighlightTags(content, tags) {
+   const tagLength = tags.length;
     tags.pop();
     let result = "";
     if (tagLength > 0  ) {
-        tags.forEach(item => {          
+        tags.forEach(item => {
             result = content.replace(item, `<span style="color: red;">${item}</span>`);
         })
-        
+
     } else {
         result = content;
     }
-   
+
     return result;
 }
 
@@ -248,7 +248,7 @@ export function URLToObject(url) {
         reg_para = /([^&=]+)=([\w\W]*?)(&|$)/g,
         arr_url = reg_url.exec(url),
         ret = {};
-    if (arr_url && arr_url[1]) {      
+    if (arr_url && arr_url[1]) {
         let str_para = arr_url[1], result;
         while ((result = reg_para.exec(str_para)) != null) {
             if(result[2]==='weibo'){
@@ -271,7 +271,7 @@ export function reportToTableData(data) {
             name: item.reportname,
             date: getLocalTime(item['reportdate']['time']),
             count: item.itemcount ,
-            pageinfo: data.pageinfo          
+            pageinfo: data.pageinfo
         };
         list.push(obj);
     });
@@ -327,16 +327,16 @@ export function urlTokey() {
             break;
         case 'warnsetting':
             key = '14';
-            break; 
+            break;
         case 'excludesetting':
             key = '15';
-            break; 
+            break;
         case 'publicopinion':
             key = '16';
-            break; 
+            break;
         case 'topicreportlist':
             key = '17';
-            break;         
+            break;
         default:
             break;
     }
@@ -344,18 +344,18 @@ export function urlTokey() {
 }
 
 //转换日期格式
-export  function formatDateTime(date) {  
-    let y = date.getFullYear();  
-    let m = date.getMonth() + 1;  
-    m = m < 10 ? ('0' + m) : m;  
-    let d = date.getDate();  
-    d = d < 10 ? ('0' + d) : d;  
-    let h = date.getHours();  
-    let minute = date.getMinutes(); 
-    let  second = date.getSeconds(); 
-    minute = minute < 10 ? ('0' + minute) : minute;  
-    return y + '-' + m + '-' + d+' '+h+':'+minute+':'+second;  
-};  
+export  function formatDateTime(date) {
+    let y = date.getFullYear();
+    let m = date.getMonth() + 1;
+    m = m < 10 ? ('0' + m) : m;
+    let d = date.getDate();
+    d = d < 10 ? ('0' + d) : d;
+    let h = date.getHours();
+    let minute = date.getMinutes();
+    let  second = date.getSeconds();
+    minute = minute < 10 ? ('0' + minute) : minute;
+    return y + '-' + m + '-' + d+' '+h+':'+minute+':'+second;
+};
 //定时请求数据
 export function responseTime(data){
     for(let i in data){
@@ -388,25 +388,25 @@ export function topicData(data,type){
          rulearr[i]['id']=data[i].id;
    }
   }
-return rulearr     
+return rulearr
 }
 //时间戳转换为xx-xx-xx格式
-export function  getLocalTime(data){   
-        var date = new Date(data);  
-        var y = date.getFullYear();    
-        var m = date.getMonth() + 1;    
-        m = m < 10 ? ('0' + m) : m;    
-        var d = date.getDate();    
-        d = d < 10 ? ('0' + d) : d;    
-        var h = date.getHours();  
-        h = h < 10 ? ('0' + h) : h;  
-        var minute = date.getMinutes();  
-        var second = date.getSeconds();  
-        minute = minute < 10 ? ('0' + minute) : minute;    
-        second = second < 10 ? ('0' + second) : second;   
-        return y + '-' + m + '-' + d+' '+h+':'+minute+':'+second;    
-    };  
-    
+export function  getLocalTime(data){
+        var date = new Date(data);
+        var y = date.getFullYear();
+        var m = date.getMonth() + 1;
+        m = m < 10 ? ('0' + m) : m;
+        var d = date.getDate();
+        d = d < 10 ? ('0' + d) : d;
+        var h = date.getHours();
+        h = h < 10 ? ('0' + h) : h;
+        var minute = date.getMinutes();
+        var second = date.getSeconds();
+        minute = minute < 10 ? ('0' + minute) : minute;
+        second = second < 10 ? ('0' + second) : second;
+        return y + '-' + m + '-' + d+' '+h+':'+minute+':'+second;
+    };
+
 //推送信息转换
 export function getMeailMessage(data){
          if(data.simpleEmail!==undefined){
@@ -415,7 +415,7 @@ export function getMeailMessage(data){
                `
                 return content
             }
-}    
+}
 
 //yy-mm-dd hh:xx:xx 转换为毫秒
 
@@ -426,11 +426,11 @@ export function getSecondTime(time){
 export function clickTitleColor(str,sid){
          if(str === null){
               return false
-         }else{             
+         }else{
             let sidArr = str.split(',');
-            sidArr.pop();           
-            sidArr.map(item => {               
-                   if(item === sid ){                 
+            sidArr.pop();
+            sidArr.map(item => {
+                   if(item === sid ){
                         return true;
                    }else{
                         return false;

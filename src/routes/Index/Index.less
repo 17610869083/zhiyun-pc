@@ -12,13 +12,16 @@
       .ant-menu-submenu {
         border-bottom: 1px solid rgba(228,235,247,0.1);
       }
+      .ant-menu-sub{
+        background-color: #004955;
+      }
       .ant-menu-item-selected {
-        background-color: #e4ebf7;
+        background-color: #0D8DA1;
         span {
           color: #0c1224;
         }
         .anticon {
-          color: #007aff;
+          color: #01C2E0;
         }
       }
       .logo-wrapper {
@@ -51,7 +54,7 @@
         .suspensionBox{
              position: fixed;
              right:18px;
-             top:0px;            
+             top:0px;
              height: 100%;
              display: flex;
              align-items: center;
@@ -62,13 +65,13 @@
               width: 36px;
               background: #000000;
               opacity: 0.7;
-              border-radius:10px 0 0 10px; 
+              border-radius:10px 0 0 10px;
               padding:20px 0;
               z-index: 300;
               .suspensionList{
                 height: 40px;
                 line-height: 40px;
-                text-align: center;             
+                text-align: center;
                 cursor: pointer;
                 .qqBox,.phoneBox,.weixinBox{
                   padding:10px 0 0 10px;
@@ -111,11 +114,22 @@
                  opacity:0.7;
                  transition: all .3s ease-in-out 0s;
               }
-              }
-             }
-
+            }
+          }
         }
       }
     }
+  }
+  .shadow{
+    box-shadow: 0 0 30px #00CAE9;
+    border-radius: 50%;
+    width: 12px;
+    background-color: #0C1224;
+    z-index: -100;
+    height: 10px;
+    display: inline-block;
+    position: absolute;
+    top: 16px;
+    left: 25px;
   }
 }

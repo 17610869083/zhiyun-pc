@@ -48,10 +48,10 @@ class TodayOpinionBox extends React.PureComponent {
                          <Col span={6}>
                              <div className="opinion-info">
                                  <div className="content">
-                                     <div className="icon-wrapper" style={{backgroundColor: '#e70078'}}>
+                                     <div className="icon-wrapper" style={{backgroundColor: '#e70000'}}>
                                          <IconFont type="icon-jinggao" style={{color: '#ffffff',fontSize: '50px'}}/>
                                      </div>
-                                     <div className="count" style={{backgroundColor: '#ff2b99'}}>
+                                     <div className="count" style={{backgroundColor: '#ff3f3f'}}>
                                          <div className="number">{todayNegative}</div>
                                          <div className="name">今日负面</div>
                                      </div>

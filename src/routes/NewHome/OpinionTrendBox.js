@@ -22,7 +22,7 @@ class OpinionTrendBox extends React.Component {
                 {'neutral': ""},
                 {'negative': ""},
                 {'warn': ""},
-                {'all': ""}               
+                {'all': ""}
             ],
             dateObj:{
                 'week':7,
@@ -41,14 +41,14 @@ class OpinionTrendBox extends React.Component {
                 this.setState({
                     mediaChartOption: mediaChartOption,
                     monthCount:res.data.total
-                });      
+                });
                       setTimeout(()=>{
                         let echarts_instance = this.echarts_react.getEchartsInstance();
                         echarts_instance.resize();
                       },10)
 
          }
-        })       
+        })
     }
     trendChange(date,state){
         request(api_new_total + '&day='+this.state.dateObj[date])
@@ -69,7 +69,7 @@ class OpinionTrendBox extends React.Component {
     render() {
         const {monthCount} = this.state;
         return (
-            <div className="opinion-trend-box">        
+            <div className="opinion-trend-box">
                 <div className="container">
                     <div className="top">
                         <div className="title">
@@ -77,21 +77,21 @@ class OpinionTrendBox extends React.Component {
                             <span className="txt">舆情走势</span>
                             <span className="btnBox">
                             <Button onClick={this.trendChange.bind(this,'day',1)}
-                            style={this.state.buttonState===1?{color:'#108ee9',borderColor:'#108ee9'}:{}}
+                            style={this.state.buttonState===1?{color:'#108ee9',borderColor:'#108ee9',backgroundColor:'#1780cc',color:'#fff'}:{}}
                             >日</Button>
                             <Button onClick={this.trendChange.bind(this,'week',2)}
-                             style={this.state.buttonState===2?{color:'#108ee9',borderColor:'#108ee9'}:{}}
+                             style={this.state.buttonState===2?{color:'#108ee9',borderColor:'#108ee9',backgroundColor:'#1780cc',color:'#fff'}:{}}
                             >周</Button>
                             <Button onClick={this.trendChange.bind(this,'month',3)}
-                             style={this.state.buttonState===3?{color:'#108ee9',borderColor:'#108ee9'}:{}}
+                             style={this.state.buttonState===3?{color:'#108ee9',borderColor:'#108ee9',backgroundColor:'#1780cc',color:'#fff'}:{}}
                             >月</Button>
-                            </span>             
+                            </span>
                             <Icon type="close-circle" className="delModule"
                             style={this.props.status==='setting'?{'visibility':'visible'}:{'visibility':'hidden'}}
                             onClick={this.delOpinionTrendBox.bind(this)}
                             ></Icon>
-                        </div>                        
-                    </div>  
+                        </div>
+                    </div>
                     <div className="bottom">
                             <ReactEchartsCore
                             echarts={echarts}
@@ -107,7 +107,7 @@ class OpinionTrendBox extends React.Component {
                                     </div>
                                     <div className="count">
                                         <div className="test">舆情总量</div>
-                                        <div className="number">{monthCount[4]['all']}</div>                                        
+                                        <div className="number">{monthCount[4]['all']}</div>
                                     </div>
 
                                 </div>
@@ -117,7 +117,7 @@ class OpinionTrendBox extends React.Component {
                                     </div>
                                     <div className="count">
                                         <div className="test">负面总量</div>
-                                        <div className="number">{monthCount[2]['negative']}</div>                                       
+                                        <div className="number">{monthCount[2]['negative']}</div>
                                     </div>
                                 </div>
                                 <div className="opinion-info">
@@ -126,14 +126,14 @@ class OpinionTrendBox extends React.Component {
                                     </div>
                                     <div className="count">
                                         <div className="test">预警总量</div>
-                                        <div className="number">{monthCount[3]['warn']}</div>                                       
+                                        <div className="number">{monthCount[3]['warn']}</div>
                                     </div>
                                 </div>
                                 </div>
                     </div>
                     </div>
                 </div>
-            
+
         )
     }
 }

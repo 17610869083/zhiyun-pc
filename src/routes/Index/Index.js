@@ -41,7 +41,7 @@ class Index extends React.Component {
             status:false,
             qqStatus:false,
             phoneStatus:false,
-            weixinStatus:false 
+            weixinStatus:false
         };
         this.toggle = () => {
             this.setState({
@@ -57,16 +57,16 @@ class Index extends React.Component {
                 status:true,
                 qqStatus:true
              })
-           
+
     }
     hideQQ(e){
             this.setState({
                 status:false,
                 qqStatus:false
-             }) 
-             
+             })
+
     }
-    showPhone(e){       
+    showPhone(e){
             this.setState({
                 status:true,
                 phoneStatus:true
@@ -82,9 +82,9 @@ class Index extends React.Component {
             this.setState({
                 status:true,
                 weixinStatus:true
-             }) 
+             })
     }
-    hideWeixin(e){ 
+    hideWeixin(e){
             this.setState({
                 status:false,
                 weixinStatus:false
@@ -129,42 +129,42 @@ class Index extends React.Component {
                         >
                             <Menu.Item key="1" style={{fontSize: '14px'}}>
                                 <Link to="/home">
-                                    <Icon type="home"/>
+                                      <Icon type="home" style={{ boxShadow:'0 0 30px #01C2E0',color:'#01C2E0',height:'0'}}/>
                                     <span>首页</span>
                                 </Link>
                             </Menu.Item>
                             <Menu.Item key="4" style={{fontSize: '14px'}}>
                                 <Link to="/allopinion">
-                                    <Icon type="database" />
+                                    <Icon type="database" style={{ boxShadow:'0 0 30px #01C2E0',color:'#01C2E0',color:'#01C2E0',height:'0' }}/>
                                     <span>舆情监测</span>
                                 </Link>
                             </Menu.Item>
                             <Menu.Item key="7" style={{fontSize: '14px'}}>
                                 <Link to="/sortedopinion/list">
-                                    <Icon type="layout" />
+                                    <Icon type="layout" style={{ boxShadow:'0 0 30px #01C2E0',color:'#01C2E0',color:'#01C2E0',height:'0',height:'0' }}/>
                                     <span>分类舆情</span>
                                 </Link>
                             </Menu.Item>
                             <Menu.Item key="6" style={{fontSize: '14px'}}>
                                 <Link to="/topic/topiclist">
-                                    <Icon type="solution" />
+                                    <Icon type="solution" style={{ boxShadow:'0 0 30px #01C2E0',color:'#01C2E0',height:'0' }}/>
                                     <span>专题舆情</span>
                                 </Link>
                             </Menu.Item>
 
                             <SubMenu
                                 key="sub1"
-                                title={<span><Icon type="mail" style={{fontSize: '14px'}}/><span style={{fontSize: '14px'}}>舆情报告</span></span>}>
+                                title={<span><Icon type="mail" style={{fontSize: '14px',boxShadow:'0 0 30px #01C2E0',color:'#01C2E0',height:'0'}}/><span style={{fontSize: '14px'}}>舆情报告</span></span>}>
                                 <Menu.Item key="8" >
                                     <Link to="/reportopinion/list">
                                         <span>简报列表</span>
                                     </Link>
                                 </Menu.Item>
-                                {/* <Menu.Item key="17" >
-                                    <Link to="/topicreportlist">
-                                        <span>专题报告列表</span>
-                                    </Link>
-                                </Menu.Item> */}
+                                { /*<Menu.Item key="17" >
+                                       <Link to="/topicreportlist">
+                                           <span>专题报告列表</span>
+                                       </Link>
+                                   </Menu.Item>*/}
                                 <Menu.Item key="9" >
                                     <Link to="/materiaopinion">
                                         <span>素材库</span>
@@ -181,7 +181,7 @@ class Index extends React.Component {
                                     </Link>
                                 </Menu.Item>
                             </SubMenu>
-                            <SubMenu key="sub2" title={<span><Icon type="appstore" style={{fontSize: '14px'}}/><span style={{fontSize: '14px'}}>系统设置</span></span>}>
+                            <SubMenu key="sub2" title={<span><Icon type="appstore" style={{fontSize: '14px',boxShadow:'0 0 30px #01C2E0',color:'#01C2E0',height:'0'}}/><span style={{fontSize: '14px'}}>系统设置</span></span>}>
                                 <Menu.Item key="13">
                                     <Link to="/noticesetting">
                                         <span>通知设置</span>
@@ -207,34 +207,34 @@ class Index extends React.Component {
                             </SubMenu>
                             <Menu.Item key="3" style={{fontSize: '14px'}}>
                                 <Link to="/bigscreen">
-                                    <Icon type="pie-chart" />
+                                    <Icon type="pie-chart" style={{ boxShadow:'0 0 30px #01C2E0',color:'#01C2E0',height:'0' }}/>
                                     <span>大屏展示</span>
                                 </Link>
                             </Menu.Item>
                             <Menu.Item key="push" style={{fontSize: '14px'}}>
                                 <a href="http://hualong.v6plus.com/login" target="blank">
-                                    <Icon type="upload" />
+                                    <Icon type="upload" style={{ boxShadow:'0 0 30px #01C2E0',color:'#01C2E0',height:'0' }}/>
                                     <span>上报平台</span>
                                 </a>
                             </Menu.Item>
                             <Menu.Item key="fuck" style={{fontSize: '14px'}}>
                                 <a href="http://103.94.42.70:5000/" target="blank">
-                                    <Icon type="camera-o" />
+                                    <Icon type="camera-o" style={{ boxShadow:'0 0 30px #01C2E0',color:'#01C2E0',height:'0' }}/>
                                     <span>取证系统</span>
                                 </a>
-                                
+
                             </Menu.Item>
                             <Menu.Item key="2" style={{fontSize: '14px'}}>
                                 {/* <Link to="/trendfeeling"> */}
                                     <a href="http://114.242.25.234:30005/gxwhongce2/" target="blank">
-                                    <Icon type="chrome" />
+                                    <Icon type="chrome" style={{ boxShadow:'0 0 30px #01C2E0',color:'#01C2E0',height:'0' }}/>
                                     <span>态势感知</span>
                                     </a>
                                 {/* </Link> */}
                             </Menu.Item>
                             <Menu.Item key="protect" style={{fontSize: '14px'}}>
                                 <a href="http://situation.imp.safesail.cn/?from=singlemessage" target="blank">
-                                    <Icon type="laptop" />
+                                    <Icon type="laptop" style={{ boxShadow:'0 0 30px #01C2E0',color:'#01C2E0',height:'0' }}/>
                                     <span>网站防护</span>
                                 </a>
                             </Menu.Item>
@@ -245,13 +245,13 @@ class Index extends React.Component {
                                 </Menu.Item> */}
                                 <Menu.Item key="guide" style={{fontSize: '14px'}}>
                                 <a href="http://yd.is8.com.cn/" target="blank">
-                                    <Icon type="exception" />
+                                    <Icon type="exception" style={{ boxShadow:'0 0 30px #01C2E0',color:'#01C2E0',height:'0' }}/>
                                     <span>引导系统</span>
                                 </a>
                             </Menu.Item>
                             <Menu.Item key="new" style={{fontSize: '14px'}}>
                                 <Link to="/newhome">
-                                    <Icon type="chrome" />
+                                    <Icon type="chrome" style={{ boxShadow:'0 0 30px #01C2E0',color:'#01C2E0',height:'0' }}/>
                                     <span>新首页</span>
                                 </Link>
                             </Menu.Item>
@@ -259,9 +259,9 @@ class Index extends React.Component {
                     </Sider>
                     <Layout className="right-layout">
                         <Header className="header" style={{backgroundColor:themeColor.topColor.backgroundColor,height:'66px'}}>
-                            <ZHeader/> 
+                            <ZHeader/>
                         </Header>
-                        <Content className="main" ref={(main)=>{ this.main = main}}>                          
+                        <Content className="main" ref={(main)=>{ this.main = main}}>
                             <Switch>
                                 <Route path="/trendfeeling" component={TrendFeeling}/>
                                 <Route path="/bigscreen" component={BigScreen} />
@@ -283,13 +283,14 @@ class Index extends React.Component {
                                 <Route path="/sortedopinion" component={SortedOpinion}/>
                                 <Route path="/topic/addtopic" component={TopicAdd}/>
                                 <Route path="/sortedopinion/addrule" component={SortedAdd}/>
-                                <Route path="/topicreportlist" component={TopicReportList}/>                           
-                            </Switch> 
+                                <Route path="/topicreportlist" component={TopicReportList}/>
+                                <Route path="/newhome" component={NewHome}/>newhome
+                            </Switch>
                             <div className="suspensionBox">
                                  <div >
                                  <ul className="suspension">
                                    <li
-                                        className="suspensionList"                                        
+                                        className="suspensionList"
                                         onMouseLeave={this.hideQQ.bind(this)}
                                     ><i className="fa fa-qq suspensionIcon" aria-hidden="true"
                                         onMouseEnter={this.showQQ.bind(this)}
@@ -300,15 +301,15 @@ class Index extends React.Component {
                                             <p>在线沟通，请点我</p>
                                             <p>
                                                 <Button type="primary" onClick={() => {window.open('tencent://message/?uin=601703164&')}}>在线咨询</Button>
-                                            </p>   
+                                            </p>
                                             </div>
-                                   </li> 
+                                   </li>
                                    <li
-                                    className="suspensionList"                
+                                    className="suspensionList"
                                    ><i className="fa fa-phone suspensionIcon" aria-hidden="true"
                                             onMouseEnter={this.showPhone.bind(this)}
                                             onMouseLeave={this.hidePhone.bind(this)}
-                                   ></i>                                 
+                                   ></i>
                                            <div className={this.state.phoneStatus?'phoneBox active':'phoneBox'}
                                             >
                                             <p>咨询热线：</p>
@@ -316,31 +317,31 @@ class Index extends React.Component {
                                             <p>服务热线：</p>
                                             <p>400-618-1863</p>
                                             </div>
-                                   </li>  
+                                   </li>
 
                                    <li
-                                   className="suspensionList"                                                               
+                                   className="suspensionList"
                                    ><i className="fa fa-weixin suspensionIcon" aria-hidden="true"
                                 onMouseEnter={this.showWeixin.bind(this)}
-                                onMouseLeave={this.hideWeixin.bind(this)} 
+                                onMouseLeave={this.hideWeixin.bind(this)}
                                    ></i>
-                                            <div className={this.state.weixinStatus?'weixinBox active':'weixinBox'}                                                                      
+                                            <div className={this.state.weixinStatus?'weixinBox active':'weixinBox'}
                                            >
                                             <img src={CRcode} alt="" width="70px" height="70px"/>
                                             <p className="appDownload">官方app下载</p>
                                             </div>
-                                   </li> 
-                                 
+                                   </li>
+
                                    <li
                                     className="suspensionList"
                                     onClick={this.backTop.bind(this)}
-                                   >    
+                                   >
                                        <i className="fa fa-arrow-up suspensionIcon" aria-hidden="true">
-                                       </i>                                     
-                                   </li>                                   
+                                       </i>
+                                   </li>
                                  </ul>
-                                 </div>                                
-                            </div>                                               
+                                 </div>
+                            </div>
                         </Content>
                     </Layout>
                 </Layout>
@@ -358,7 +359,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
      return{
         exportSkip:key=>{
-            dispatch(exportSkip(key)); 
+            dispatch(exportSkip(key));
         }
      }
 };
