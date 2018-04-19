@@ -5,32 +5,32 @@ import { Route, Switch, Link } from 'react-router-dom';
 import './Index.less';
 import {urlTokey} from '../../utils/format';
 import {history} from '../../utils/history';
-import ZHeader from '../../components/ZHeader/Zheader';
-import BigScreen from '../BigScreen/BigScreen'
-import TrendFeeling from '../TopicOpinion/TrendFeeling/TrendFeeling';
-import AllOpinion from '../AllOpinion/AllOpinion';
-import DetailOpinion from '../DetailOpinion/DetailOpinion';
-import TopicOpinion from '../TopicOpinion/TopicOpinion';
-import ReportOpinion from '../ReportOpinion/ReportOpinion';
-import ReportOpinionDetail from '../ReportOpinion/ReportOpinionDetail';
-import MaterialOpinion from '../MaterialOpinion/MaterialOpinion';
-import CollectionOpinion from '../CollectionOpinion/CollectionOpinion';
-import HistoryOpinion from '../HistoryOpinion/HistoryOpinion';
-import WarningOpinion from '../WarningOpinion/WarningOpinion';
-import EditOpinionDetail from '../../components/EditOpinionDetail/EditOpinionDetail';
-import TopicEditOpinionDetail from '../SystemSetting/TopicEditOpinionDetail/TopicEditOpinionDetail';
-import NoticeSetting from '../SystemSetting/NoticeSetting/NoticeSetting';
-import WarnSetting from '../SystemSetting/WarnSetting/WarnSetting';
-import ExcludeSetting from '../SystemSetting/ExcludeSetting/ExcludeSetting';
 import {exportSkip} from '../../redux/actions/createActions';
-import SortedOpinion from '../../routes/SortedOpinion';
-import TopicAdd from '../TopicOpinion/TopicAdd/TopicAdd';
-import SortedAdd from '../SortedOpinion/SortedAdd';
-import TopicReportList from '../TopicReportList/TopicReportList';
 import logo from '../../assets/img/logo2.png';
 import CRcode from '../LoginPage/crcode.jpg';
-import NewHome from '../NewHome';
-import Home from '../HomePage';
+import AsyncComponent from '../../components/AsyncComponent/AsyncComponent'
+const Home = AsyncComponent ( () => import('../HomePage'))
+const NewHome = AsyncComponent ( () => import('../NewHome'))
+const TopicReportList = AsyncComponent ( () => import('../TopicReportList/TopicReportList'))
+const SortedAdd = AsyncComponent ( () => import('../SortedOpinion/SortedAdd'))
+const TopicAdd = AsyncComponent ( () => import('../TopicOpinion/TopicAdd/TopicAdd'))
+const SortedOpinion = AsyncComponent ( () => import('../../routes/SortedOpinion'))
+const ExcludeSetting = AsyncComponent ( () => import('../SystemSetting/ExcludeSetting/ExcludeSetting'))
+const WarnSetting = AsyncComponent ( () => import('../SystemSetting/WarnSetting/WarnSetting'))
+const NoticeSetting = AsyncComponent ( () => import('../SystemSetting/NoticeSetting/NoticeSetting'))
+const TopicEditOpinionDetail = AsyncComponent ( () => import('../SystemSetting/TopicEditOpinionDetail/TopicEditOpinionDetail'))
+const EditOpinionDetail = AsyncComponent ( () => import('../../components/EditOpinionDetail/EditOpinionDetail'))
+const WarningOpinion = AsyncComponent ( () => import('../WarningOpinion/WarningOpinion'))
+const HistoryOpinion = AsyncComponent ( () => import('../HistoryOpinion/HistoryOpinion'))
+const CollectionOpinion = AsyncComponent ( () => import('../CollectionOpinion/CollectionOpinion'))
+const MaterialOpinion = AsyncComponent ( () => import('../MaterialOpinion/MaterialOpinion'))
+const ReportOpinionDetail = AsyncComponent ( () => import('../ReportOpinion/ReportOpinionDetail'))
+const ReportOpinion = AsyncComponent ( () => import('../ReportOpinion/ReportOpinion'))
+const TopicOpinion = AsyncComponent ( () => import('../TopicOpinion/TopicOpinion'))
+const AllOpinion = AsyncComponent ( () => import('../AllOpinion/AllOpinion'))
+const TrendFeeling = AsyncComponent ( () => import('../TopicOpinion/TrendFeeling/TrendFeeling'))
+const BigScreen = AsyncComponent ( () => import('../BigScreen/BigScreen'))
+const ZHeader = AsyncComponent ( () => import('../../components/ZHeader/Zheader'))
 const { Header, Sider, Content } = Layout;
 const SubMenu = Menu.SubMenu;
 class Index extends React.Component {
@@ -266,7 +266,6 @@ class Index extends React.Component {
                                 <Route path="/trendfeeling" component={TrendFeeling}/>
                                 <Route path="/bigscreen" component={BigScreen} />
                                 <Route path="/allopinion" component={AllOpinion}/>
-                                <Route path="/detail/:id" component={DetailOpinion}/>
                                 <Route path="/topic" component={TopicOpinion}/>
                                 <Route path="/test" component={EditOpinionDetail}/>
                                 <Route path="/reportopinion/list" component={ReportOpinion}/>
@@ -275,7 +274,8 @@ class Index extends React.Component {
                                 <Route path="/collectionopinion" component={CollectionOpinion}/>
                                 <Route path="/historyopinion" component={HistoryOpinion}/>
                                 <Route path="/warningopinion" component={WarningOpinion}/>
-                                <Route path="/home" exact  component={Home}/>
+                                <Route path="/home" exact component={Home}/>
+                                <Route path="/newhome" component={NewHome}/>
                                 <Route path="/noticesetting" component={NoticeSetting}/>
                                 <Route path="/warnsetting" component={WarnSetting}/>
                                 <Route path="/excludesetting" component={ExcludeSetting}/>

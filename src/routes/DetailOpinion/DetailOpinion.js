@@ -18,11 +18,9 @@ import {
     api_docsend_push
 } from '../../services/api';
 import EditOpinionDetail from '../../components/EditOpinionDetail/EditOpinionDetail';
-
 import {Tag, Popconfirm, message, Icon, Modal, Menu, Dropdown,Select,Input} from 'antd';
 import {history} from '../../utils/history';
 import {setHighlightTags, opinionTypeToColor,getMeailMessage} from '../../utils/format';
-
 import pushImg from '../../assets/operate-img/push.png';
 import deleteImg from '../../assets/operate-img/delete.png';
 import negativeImg from '../../assets/operate-img/negative.png';
@@ -49,15 +47,16 @@ class DetailOpinion extends React.Component {
             emailData:[],
             selectValue:[],
             emailInput:'',
-            contents:''
+            contents:'',
+            sid:''
         }
     }
     componentDidUpdate(prevProps,prevState){
         if(prevState.num!==this.state.num){
             const id = this.props.match.params.id;
+            console.log(id)
             request(api_get_doc_detail + '&sid=' + id, {}).then((res) => {
                     const keywords = res.data.nstags ? (res.data.nstags.split(' ')) : [''];
-                   
                     const content = setHighlightTags(res.data.content, keywords);
                     this.setState({
                         data: res.data,
@@ -132,7 +131,6 @@ class DetailOpinion extends React.Component {
 
 
     }
-
     // 确定设为预警
     warningConfirm(sid) {
         request(api_edit_doc_neg + '&neg=2&sid=["' + sid + '"]', {}).then((res) => {
@@ -197,7 +195,7 @@ class DetailOpinion extends React.Component {
  
     editModalHandleOk() {
         let editData=Store.getState().addMessageReducer;
-        const id = this.props.match.params.id; 
+        const id = this.state.id; 
         request(api_docedit_save,{
             method: 'POST',
             headers: {
@@ -286,7 +284,7 @@ class DetailOpinion extends React.Component {
     }
     // 加入收藏
     clickCollectionMenuItem(e) {
-        const id = this.props.match.params.id;
+        const id = this.state.sid;
         const collectionId = e.key;
         request(api_push_collection + '&catid=' + collectionId + '&sid=["' + id + '"]', {}).then((res) => {
             if (res.data.code === 1) {
@@ -300,7 +298,7 @@ class DetailOpinion extends React.Component {
     }
     // 加入报告
     clickReportMenuItem(e) {
-        const id = this.props.match.params.id;
+        const id = this.state.sid;
         const reportId = e.key;
         request(api_put_into_report + '&reportid=' + reportId + '&sid=["' + id + '"]', {}).then((res) => {
             if (res.data.code === 1) {
@@ -308,17 +306,16 @@ class DetailOpinion extends React.Component {
             }
         });
     }
-
-    componentDidMount() {      
-        const id = this.props.match.params.id;
+    componentDidMount() { 
+        const id = this.props.location.pathname.split('detail/')[1]
         request(api_get_doc_detail + '&sid=' + id, {}).then((res) => {
                 const keywords = (res.data.nstags) ? (res.data.nstags.split(' ')) : [''];
-           
                 const content = setHighlightTags(res.data.content, keywords);
                 this.setState({
                     data: res.data,
                     keywords: keywords,
-                    content: content
+                    content: content,
+                    sid:id
                 });
                 request(api_get_doc_similar + '&sid=' + id, {}).then((res) => {
                     const similar = (res.data.similerCount) ? (res.data.similerDocList) : [''];
@@ -382,7 +379,7 @@ class DetailOpinion extends React.Component {
     }
 
     searchEmail(){
-        const sid = this.props.match.params.id;
+        const sid = this.state.sid;
         request(api_email_push+'&sid='+sid).then(res=>{
                this.setState({
                      emailData:res.data
@@ -417,7 +414,7 @@ class DetailOpinion extends React.Component {
         }
         const conent=getMeailMessage(this.state.emailData);     
         const data = this.state.data;
-        const sid = this.props.match.params.id;
+        const sid = this.state.id;
         const Keywords = this.state.keywords.map((item, index) =>
             <span key={index} className="value-item">{item}</span>
         );
@@ -438,23 +435,6 @@ class DetailOpinion extends React.Component {
                 </div>
             </li>
         ):'';
-        // const putinReportMenu = (
-        //     <Menu>
-        //         <Menu.Item>
-        //             <Icon type="folder-add" />
-        //             <span>新建收藏夹</span>
-        //         </Menu.Item>
-        //         <Menu.Divider />
-        //         <Menu.Item>
-        //             <Icon type="folder" />
-        //             <span>收藏夹一号</span>
-        //         </Menu.Item>
-        //         <Menu.Item>
-        //             <Icon type="folder" />
-        //             <span>收藏夹二号</span>
-        //         </Menu.Item>
-        //         </Menu>)
-
         // 收藏列表
         const CollectionMenu = (
             <Menu
@@ -484,13 +464,10 @@ class DetailOpinion extends React.Component {
 
             </Menu>
         );
-
-
         return (            
             <div className="detail-opinion">
                {/* <Icon type="rollback" className="arrowLeft" title="回到上一页" onClick={this.preUrl.bind(this)}/> */}
                 <div className="wrapper">
-                
                     <div className="Top">
                         <div className="title-wrapper">
                             <div className="negative">

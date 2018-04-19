@@ -149,12 +149,11 @@ class OpinionDetail extends React.Component {
             checkedAll: isEveryChecked
         });
     }
-
     clickItemTitle(sid,e) {
-        window.open(window.location.origin + window.location.pathname + '#/detail/' + sid);
-       //  history.push({
-       //      pathname:`/detail/${sid}`
-       // });
+       window.open(window.location.origin + window.location.pathname + '#/detail/' + sid);
+    //     history.push({
+    //         pathname:`/detail/${sid}`
+    //    });
        sessionSetArticleItem('sidArr',sessionGetArticleItem('sidArr') === '' ?''.concat(sid+','):
        sessionGetArticleItem('sidArr').concat(sid+',')
        )
