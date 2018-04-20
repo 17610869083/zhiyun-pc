@@ -630,16 +630,12 @@ class OpinionDetail extends React.Component {
                     <div className="item-left">
                     <div className="key">
                         <div className="pubdate">
-                            <span className="date">{item.pubdate.split(' ')[1]}  {item.pubdate.split(' ')[0]}</span>
+                            <span className="date">{item.pubdate.split(' ')[0]} &nbsp;&nbsp;{item.pubdate.split(' ')[1]}</span>
                             {
                               //<span className="date">{item.pubdate.split(' ')[0]}</span>
                             }
                         </div>
                         <div className="similar-info">相似信息：{item.similerInfo && (item.similerInfo.similerCount?item.similerInfo.similerCount:0)}条</div>
-                        <div className="title">关键词：</div>
-                        <div className="keywords">
-                            {item.nztags}
-                        </div>
                         <div className="resource">
                               <a href={item.url} target="_black">
                                   <span className="source"
@@ -647,6 +643,11 @@ class OpinionDetail extends React.Component {
                                   >{item.source && item.source.length>=4?item.source.slice(0,3)+'...':item.source}</span>
                               </a>
                           </div>
+                        <div className="title">关键词：</div>
+                        <div className="keywords">
+                            {item.nztags}
+                        </div>
+
                     </div>
                     </div>
                     <div className="cirleBox">

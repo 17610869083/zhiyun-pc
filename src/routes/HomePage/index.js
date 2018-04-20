@@ -124,7 +124,7 @@ class HomePage extends React.Component {
             });
 request(api_get_userinfo)
     .then(res => {
-      if (res.data.alerMsg !== '') {
+      if (res.data !== '') {
         this.setState({
           alertMsg: res.data.alerMsg
         })

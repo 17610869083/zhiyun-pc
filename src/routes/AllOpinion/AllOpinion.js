@@ -107,7 +107,7 @@ class AllOpinion extends React.Component {
             endTime:''
         }
     }
-    
+
     timeClick(value) {
         this.setState({
             timeValue: value
@@ -462,7 +462,7 @@ class AllOpinion extends React.Component {
             this.setState({
                 timeValue: '7day',
                 trendValue: 1
-            })  
+            })
         }
          else if (pathname === '#/allopinion?datetag=today&neg=2') {
             this.setState({
@@ -489,7 +489,7 @@ class AllOpinion extends React.Component {
             this.setState({
                 mediaValue: '微博',
                 trendValue:1
-            })  
+            })
         }
          else {
             this.setState({
@@ -514,11 +514,11 @@ class AllOpinion extends React.Component {
     componentWillMount() {
         if(this.props.location.search!=="?type=search"){
             this.homepageMore(window.location.hash);
-        }             
+        }
     }
     componentDidMount(){
         ReactDOM.findDOMNode(this).scrollIntoView();
-        
+
     }
     componentWillUnmount(){
         this.props.paginationPage(1);
@@ -527,7 +527,7 @@ class AllOpinion extends React.Component {
            this.setState({
                  endTime:dateString
            })
-    } 
+    }
     searchType(data){
           this.setState({
                type:data
@@ -592,7 +592,7 @@ class AllOpinion extends React.Component {
                 className={item.value === this.state.mediaValue ? 'item active' : 'item'}
             ><span className="item-inner">{item.key==='docSearch'?'其它':item.value}<span className="count"> ({item.count})</span></span></div>
         );
-       
+
         const param = {
             datetag: this.state.timeValue,
             neg: this.state.trendValue,
@@ -607,7 +607,7 @@ class AllOpinion extends React.Component {
          return (
             <div className="all-opinion" id="anchor">
                 <div className="close-open">
-                   <div className="count"> 信息列表 </div>                   
+                   <div className="count"> 信息列表 </div>
                     <div className="close" onClick={this.triggerTopShow.bind(this)}>
                         <Icon type={this.state.isTopShow ? 'down' : 'right'} />
                         <span className="closeBtn">{this.state.isTopShow ? '隐藏' : '显示'}</span>
@@ -621,26 +621,26 @@ class AllOpinion extends React.Component {
                         </div>
                         <div className="other">
                              <Form onSubmit={this.handleSubmit.bind(this)}>
-                                <FormItem  
+                                <FormItem
                                     {...formItemLayout}
-                                > 
+                                >
                                     {getFieldDecorator('range-time-picker'
-                                    )( 
+                                    )(
                                 <DatePicker showTime placeholder="开始日期" format="YYYY-MM-DD HH:mm:ss"
                                 className="DatePicker"
-                               
-                                />                    
-                                    )}                            
-                                 </FormItem> 
-                                <FormItem  
+
+                                />
+                                    )}
+                                 </FormItem>
+                                <FormItem
                                     {...formItemLayout}
-                                > 
+                                >
                                    {getFieldDecorator('range-endtime-picker'
                                      )(
                                 <DatePicker showTime placeholder="结束日期" format="YYYY-MM-DD HH:mm:ss"
-                                className="DatePicker"                                                        
-                                />               
-                                    )}                           
+                                className="DatePicker"
+                                />
+                                    )}
                                 </FormItem>
                                 <Button type="primary" htmlType="submit" style={{marginTop:'2px'}}>
                                  确定
@@ -667,18 +667,18 @@ class AllOpinion extends React.Component {
                         </div>
                     </div>
                     <div className="media-items">
-                        <div className="left">媒体排行：</div>
+                        <div className="left">媒体：</div>
                         <div className="right">
                             {Media}
                         </div>
                     </div>
                 </div>
                 <div className="middle">
-                 <div className="count">根据您的条件，为您筛选出<span className="number">{pageInfo.count}</span>条数据！</div> 
-                    <OpinionDetail docList={docList} 
+                 <div className="count">根据您的条件，为您筛选出<span className="number">{pageInfo.count}</span>条数据！</div>
+                    <OpinionDetail docList={docList}
                     onDataChange={this.dataChanged.bind(this)}
-                    param={param} 
-                    pageSize={this.state.pagesize}  
+                    param={param}
+                    pageSize={this.state.pagesize}
                     propsType='AllopinionList'
                     pageInfo={pageInfo}
                     current={page}
@@ -693,9 +693,9 @@ class AllOpinion extends React.Component {
                                     defaultPageSize={20}
                                     onChange={this.onPaginationChange.bind(this)}
                                     onShowSizeChange={this.onShowSizeChange.bind(this)}
-                                    total={pageInfo.count}                                 
-                                    getPopupContainer={ () => document.querySelector('.all-opinion')} 
-                                    current={page}                                 
+                                    total={pageInfo.count}
+                                    getPopupContainer={ () => document.querySelector('.all-opinion')}
+                                    current={page}
                         />
                     </div>
                 </div>
@@ -731,4 +731,3 @@ const mapDispatchToProps = dispatch => {
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)((Form.create()(AllOpinion)));
-
