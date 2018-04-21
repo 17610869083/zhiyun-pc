@@ -43,11 +43,11 @@ class OpinionTrendBox extends React.Component {
                     monthCount:res.data.total
                 });
                 setTimeout(()=>{
-                    if(this.echarts_react) {   
-                     console.log(123)             
+                    if(this.echarts_react) {
+                     console.log(123)
                     let echarts_instance = this.echarts_react.getEchartsInstance();
                     echarts_instance.resize();
-                    } 
+                    }
                 },10)
          }
         })
@@ -79,13 +79,13 @@ class OpinionTrendBox extends React.Component {
                             <span className="txt">舆情走势</span>
                             <span className="btnBox">
                             <Button onClick={this.trendChange.bind(this,'day',1)}
-                            style={this.state.buttonState===1?{color:'#108ee9',borderColor:'#108ee9',backgroundColor:'#1780cc'}:{}}
+                            style={this.state.buttonState===1?{color:'#fff',borderColor:'#108ee9',backgroundColor:'#1780cc'}:{}}
                             >日</Button>
                             <Button onClick={this.trendChange.bind(this,'week',2)}
-                             style={this.state.buttonState===2?{color:'#108ee9',borderColor:'#108ee9',backgroundColor:'#1780cc'}:{}}
+                             style={this.state.buttonState===2?{color:'#fff',borderColor:'#108ee9',backgroundColor:'#1780cc'}:{}}
                             >周</Button>
                             <Button onClick={this.trendChange.bind(this,'month',3)}
-                             style={this.state.buttonState===3?{color:'#108ee9',borderColor:'#108ee9',backgroundColor:'#1780cc'}:{}}
+                             style={this.state.buttonState===3?{color:'#fff',borderColor:'#108ee9',backgroundColor:'#1780cc'}:{}}
                             >月</Button>
                             </span>
                             <Icon type="close-circle" className="delModule"
