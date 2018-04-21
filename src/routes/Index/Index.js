@@ -8,6 +8,8 @@ import {history} from '../../utils/history';
 import {exportSkip} from '../../redux/actions/createActions';
 import logo from '../../assets/img/logo2.png';
 import CRcode from '../LoginPage/crcode.jpg';
+import {api_get_channel} from '../../services/api';
+import request from '../../utils/request';
 import AsyncComponent from '../../components/AsyncComponent/AsyncComponent'
 const Home = AsyncComponent ( () => import('../HomePage'))
 const NewHome = AsyncComponent ( () => import('../NewHome'))
@@ -41,13 +43,24 @@ class Index extends React.Component {
             status:false,
             qqStatus:false,
             phoneStatus:false,
-            weixinStatus:false
+            weixinStatus:false,
+            channelList:[{channelname:'首页'}]            
         };
         this.toggle = () => {
             this.setState({
                 collapsed: !this.state.collapsed,
             });
         };
+    }
+    componentWillMount(){
+        request(api_get_channel)
+        .then(res => {
+              if(res.data.code===1){
+                  this.setState({
+                    channelList:res.data.channelList
+                  })
+              }
+        })
     }
     goBackIndex() {
         history.push('/home');
@@ -95,6 +108,9 @@ class Index extends React.Component {
     }
     render() {
         const {themeColor} =this.props;
+        const menuList = this.state.channelList.map( (item,index) =>{
+               return <Menu.Item key={index}><span>{item.channelname}</span></Menu.Item>
+        })
         return (
             <div className="root-container">
                 <Layout className="layout">
@@ -135,23 +151,22 @@ class Index extends React.Component {
                             </Menu.Item>
                             <Menu.Item key="4" style={{fontSize: '14px'}}>
                                 <Link to="/allopinion">
-                                    <Icon type="database" style={{ boxShadow:'0 0 30px #01C2E0',color:'#01C2E0',color:'#01C2E0',height:'0' }}/>
+                                    <Icon type="database" style={{ boxShadow:'0 0 30px #01C2E0',color:'#01C2E0',height:'0' }}/>
                                     <span>舆情监测</span>
                                 </Link>
                             </Menu.Item>
                             <Menu.Item key="7" style={{fontSize: '14px'}}>
                                 <Link to="/sortedopinion/list">
-                                    <Icon type="layout" style={{ boxShadow:'0 0 30px #01C2E0',color:'#01C2E0',color:'#01C2E0',height:'0',height:'0' }}/>
+                                    <Icon type="layout" style={{ boxShadow:'0 0 30px #01C2E0',color:'#01C2E0',height:'0' }}/>
                                     <span>分类舆情</span>
                                 </Link>
                             </Menu.Item>
                             <Menu.Item key="6" style={{fontSize: '14px'}}>
                                 <Link to="/topic/topiclist">
-                                    <Icon type="solution" style={{ boxShadow:'0 0 30px #01C2E0',color:'#01C2E0',height:'0' }}/>
+                                    <Icon type="solution" style={{ boxShadow:'0 0 30px #01C2E0',height:'0' }}/>
                                     <span>专题舆情</span>
                                 </Link>
                             </Menu.Item>
-
                             <SubMenu
                                 key="sub1"
                                 title={<span><Icon type="mail" style={{fontSize: '14px',boxShadow:'0 0 30px #01C2E0',color:'#01C2E0',height:'0'}}/><span style={{fontSize: '14px'}}>舆情报告</span></span>}>
@@ -222,7 +237,6 @@ class Index extends React.Component {
                                     <Icon type="camera-o" style={{ boxShadow:'0 0 30px #01C2E0',color:'#01C2E0',height:'0' }}/>
                                     <span>取证系统</span>
                                 </a>
-
                             </Menu.Item>
                             <Menu.Item key="2" style={{fontSize: '14px'}}>
                                 {/* <Link to="/trendfeeling"> */}

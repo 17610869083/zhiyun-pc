@@ -743,6 +743,7 @@ class HistoryOpinion extends React.Component{
          
         >
          <iframe src={this.state.downloadUrl} 
+         title="load"
          width="100%"  height="500px"  
          id="Iframe"       
          ></iframe>

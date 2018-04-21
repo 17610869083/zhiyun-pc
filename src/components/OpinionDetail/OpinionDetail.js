@@ -36,7 +36,6 @@ import app from '../../assets/icon-img/app.png';
 import twitter from '../../assets/icon-img/twitter.png';
 import warning from '../../assets/icon-img/warning.png';
 import remove from '../../assets/icon-img/remove.png';
-import openEyeImg from '../../assets/icon-img/open-eye.png';
 import BlankPage from '../../base/Exception/BlankPage';
 const InputGroup = Input.Group;
 const Option = Select.Option;

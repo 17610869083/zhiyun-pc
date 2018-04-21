@@ -122,21 +122,20 @@ class HomePage extends React.Component {
                             });
                     });
             });
-request(api_get_userinfo)
-    .then(res => {
-      if (res.data.alerMsg !== '') {
-        this.setState({
-          alertMsg: res.data.alerMsg
-        })
-      }  else {
-        this.refs.disp.style.display = 'none';
-      }
-    })
-}
+            request(api_get_userinfo)
+                .then(res => {
+                if (res.data.alerMsg !== '') {
+                    this.setState({
+                    alertMsg: res.data.alerMsg
+                    })
+                }  
+                })
+            }
     informs(){
-      this.refs.disp.style.display = 'none';
+        this.setState({
+            alertMsg:''
+        })
     }
-
     render() {
         const {
             todayOpinionCount,
@@ -150,7 +149,7 @@ request(api_get_userinfo)
         } = this.state;
         return (
             <div>
-              <div className="informs" ref="disp">{alertMsg}<i onClick={ this.informs.bind(this) }>X</i></div>
+            <div className="informs" style={alertMsg===''?{display:'none'}:{display:'block'}}>{alertMsg}<i onClick={ this.informs.bind(this) }>X</i></div>
             <div className="home-page">
                 <div className="container">
                     <Row gutter={16} className="row">

@@ -27,51 +27,6 @@ class NewestOpinionBox extends React.Component {
             pathname: '/allopinion?datetag=today'
         });
     }
-    // componentWillReceiveProps(){
-    //      this.setState({
-    //           opinionList:this.props.opinionList
-    //      })
-    // }
-    // componentDidMount(){
-    //     this.timers=setInterval(()=>{
-    //         var opinionList =this.state.opinionList;
-    //         var num=opinionList.shift();
-    //         opinionList.push(num);
-    //             this.setState({
-    //                 opinionList:opinionList
-    //             })
-    //             // if(this.state.mouseover===1){
-    //             //       clearInterval(this.timers)
-    //             // }
-                
-    //     },5000);
-    // }
-    // componentWillUnmount(){
-    //        clearInterval(this.timers);
-    // }
-    // clearIntervalTime = (e) =>{
-    //  this.setState({
-    //          mouseover:1
-    //    })
-    // }
-    // setIntervalTime = (e) => {    
-    //     this.setState({
-    //           mouseover:0
-    //     })
-    //     this.timers=setInterval(()=>{
-    //         var opinionList =this.state.opinionList;
-    //         var num=opinionList.shift();
-    //         opinionList.push(num);
-    //             this.setState({
-    //                 opinionList:opinionList
-    //             })
-    //             if(this.state.mouseover===1){
-    //                   clearInterval(this.timers)
-    //             }
-                
-    //     },5000);
-     //}
-
      delNewestOpinionBox(){
            this.props.delNewestBox(1);
      }

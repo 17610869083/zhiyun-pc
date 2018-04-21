@@ -1,6 +1,6 @@
 // host
 const host = 'http://119.90.61.155/om3/webpart/';
-//const host = 'http://119.90.61.155/om3/webpart/';
+//const host = 'http://web.is8.com.cn/om/webpart/';
 
 //-------------------登录
 //export const api_login = 'http://web.is8.com.cn/om/common/login/loginDo?action=login2';
@@ -24,6 +24,8 @@ const api_newest_warning_opinion = host + 'main/DocSearchDo?action=mainAlert';
 const api_homepage_message= host+'main/DocSearchDo?action=widget';
 //新首页模块保存
 const api_save_widget = host+'main/DocSearchDo?action=saveWidget';
+//首页左侧导航栏
+const api_get_channel = host +'homePage/oMainDo?action=getChannel';
 
 //新首页舆情走势
 const api_new_total = host + 'echart/echartDo?action=yqzc';
@@ -209,7 +211,8 @@ export {
     api_carrier_pie,
     api_hot_word,
     api_homepage_message,
-    api_save_widget
+    api_save_widget,
+    api_get_channel
 }
 
 // 获取收藏夹列表

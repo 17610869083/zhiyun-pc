@@ -177,7 +177,7 @@ class NewHome extends React.Component {
 
     delHotWordBox(type){
              let homeMessage=this.state.homeMessage;
-             homeMessage.HotWord=1;
+             homeMessage.HotWord=1;    
              this.setState({
                  HotWord:type,
                  homeMessage:homeMessage
@@ -193,7 +193,7 @@ class NewHome extends React.Component {
     }
     delMediaDistributionBox(type){
             let homeMessage=this.state.homeMessage;
-            homeMessage.mediaDistribution=1;
+            homeMessage.mediaDistribution=1; 
            this.setState({
                  mediaDistribution:type,
                  homeMessage:homeMessage
@@ -209,7 +209,7 @@ class NewHome extends React.Component {
     }
     delTodayBox(type){
             let homeMessage=this.state.homeMessage;
-            homeMessage.todayOpinion=1;
+            homeMessage.todayOpinion=1;  
            this.setState({
                  todayOpinion:type,
                  homeMessage:homeMessage
@@ -226,7 +226,7 @@ class NewHome extends React.Component {
     }
     delTrendBox(type){
            let homeMessage=this.state.homeMessage;
-           homeMessage.opinionTrend=1;
+           homeMessage.opinionTrend=1; 
            this.setState({
                  opinionTrend:type,
                  homeMessage:homeMessage
@@ -242,7 +242,7 @@ class NewHome extends React.Component {
     }
     delNewestBox(type){
             let homeMessage=this.state.homeMessage;
-            homeMessage.newestOpinion=1;
+            homeMessage.newestOpinion=1;     
             this.setState({
                 newestOpinion:type,
                 homeMessage:homeMessage
@@ -290,7 +290,7 @@ class NewHome extends React.Component {
     }
     delWeiboBox(type){
             let homeMessage=this.state.homeMessage;
-            homeMessage.weiboOpinion=1;
+            homeMessage.weiboOpinion=1;                                     
             this.setState({
                 weiboOpinion:type,
                 homeMessage:homeMessage
@@ -322,7 +322,7 @@ class NewHome extends React.Component {
     }
     delCountBox(type){
             let homeMessage=this.state.homeMessage;
-            homeMessage.opinionCount=1;
+            homeMessage.opinionCount=1;     
             this.setState({
                 opinionCount:type,
                 homeMessage:homeMessage

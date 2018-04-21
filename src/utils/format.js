@@ -265,11 +265,12 @@ export function URLToObject(url) {
 export function reportToTableData(data) {
     const list = [];
     data.reportList.forEach((item,index) => {
+        console.log(getLocalTime(item.reportdate))
         const obj = {
             id: item.id,
             key: index,
             name: item.reportname,
-            date: getLocalTime(item['reportdate']['time']),
+            date: getLocalTime(item.reportdate),
             count: item.itemcount ,
             pageinfo: data.pageinfo
         };

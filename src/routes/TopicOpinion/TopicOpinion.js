@@ -22,7 +22,7 @@ class TopicOpinion extends React.Component {
         super(props);
         this.state = {
             current: 'topiclist',
-            isAddTopicShow: false,
+            // isAddTopicShow: false,
             topicLists:[],
             visible:false,
             visibleOne:false,
@@ -68,22 +68,22 @@ class TopicOpinion extends React.Component {
           }
           },100)   
     }
-    componentDidUpdate(prevProps,prevState){      
-        if(prevProps.location!==this.props.location){
-    	  if(this.props.location.pathname==='/topic/addtopic'){
-    	  	      this.setState({isAddTopicShow:true})
-          }else if (this.props.location.pathname==='/topic/topiclist'){
-                   this.setState({
-                       isAddTopicShow:false,
-                       current:'topiclist'
-                 })
-          }
-          else{
-    	  	      this.setState({isAddTopicShow:false}) 
-    	  }
-       }
+    // componentDidUpdate(prevProps,prevState){      
+    //     if(prevProps.location!==this.props.location){
+    // 	  if(this.props.location.pathname==='/topic/addtopic'){
+    // 	  	      this.setState({isAddTopicShow:true})
+    //       }else if (this.props.location.pathname==='/topic/topiclist'){
+    //                this.setState({
+    //                    isAddTopicShow:false,
+    //                    current:'topiclist'
+    //              })
+    //       }
+    //       else{
+    // 	  	      this.setState({isAddTopicShow:false}) 
+    // 	  }
+    //    }
 
-     }
+    //  }
     // 添加专题
     handleAddTopic() {
         this.setState({
@@ -310,95 +310,100 @@ class TopicOpinion extends React.Component {
         );
         return (
             <div className="topic-opinion">
+            <i className="fas fa-address-book"></i>
              {TopicList}
                 <div className="topic-opinion-wrapper">
-                    <div className="left-boxes">
-                        <div className="first-box">
-                            <div className="add-topic-class">
-                                <div className={this.state.addTopic===0?'add-topic':'add-class'} onClick={this.handleAddTopic.bind(this)}>
-                                    +添加专题
-                                </div>
-                                <div className={this.state.addClass===1?'add-class':'add-topic'} onClick={this.handleCancelAddTopic.bind(this)}>
-                                    添加分类
-         <Modal
-          title="添加分类"
-          visible={this.state.visible}
-          onOk={this.handleOk.bind(this)}
-          onCancel={this.handleCancel.bind(this)}
-        >
-          <p className="textCenter">输入分类名</p>
-          <Input className="gapInput" onChange={this.onChange.bind(this)}  
-           value={this.state.inputValue}
-           maxLength={'20'}
-           />
-        </Modal>
-         <Modal
-          title="删除分类"
-          visible={this.state.visibleOne}
-          onOk={this.delOkOne.bind(this)}
-          onCancel={this.delCancelOne.bind(this)}
-        >
-          <p className="textCenter">确认删除此分类吗?</p>
-        </Modal>
-        <Modal
-          title="删除专题"
-          visible={this.state.visibleTwo}
-          onOk={this.delOkTwo.bind(this)}
-          onCancel={this.delCancelTwo.bind(this)}
-        >
-          <p className="textCenter">确认删除此专题吗?</p>
-        </Modal>
-        <Modal
-          title="重命名分类"
-          visible={this.state.visibleThree}
-          onOk={this.delOkThree.bind(this)}
-          onCancel={this.delCancelThree.bind(this)}
-        >
-          <p className="textCenter">输入新的分类名</p>
-          <Input className="gapInput" onChange={this.onChange.bind(this)}   value={this.state.inputValue}/>
-        </Modal>
-                                </div>
+                <div className="topic-info">
+                    <Menu
+                        onClick={this.handleClick.bind(this)}
+                        selectedKeys={[this.state.current]}
+                        mode="horizontal"
+                        theme="light"
+                    >
+                        <Menu.Item key="topiclist" style={{fontSize:'16px'}}>
+                            <Icon type="bars" />信息列表
+                        </Menu.Item>
+                        <Menu.Item key="count" style={{fontSize:'16px'}}>
+                            <Icon type="area-chart" />统计分析
+                        </Menu.Item>
+                        <Menu.Item key="report" style={{fontSize:'16px'}}>
+                            <Icon type="book" />专题报告
+                        </Menu.Item>
+                        <Menu.Item key="setting" style={{fontSize:'16px'}}>
+                            <Icon type="setting" />修改专题设置
+                        </Menu.Item>
+                        <Menu.Item key="addtopic" style={{fontSize:'16px'}}>
+                        {/* style={this.state.isAddTopicShow ? {display: 'block',fontSize:'16px'} : {display: 'none',fontSize:'16px'}} */}
+                            <Icon type="plus" />添加专题
+                        </Menu.Item>
+                        <Menu.Item key="addsort" style={{fontSize:'16px'}}>
+                        {/* style={this.state.isAddTopicShow ? {display: 'block',fontSize:'16px'} : {display: 'none',fontSize:'16px'}} */}
+                            <Icon type="plus" />添加分类
+                        </Menu.Item>
+                    </Menu>
+                    <div className="topic-wrapper">
+                        <Switch>      
+                            <Route path="/topic/topiclist" component={TopicList} />
+                            <Route path="/topic/addtopic" component={TopicAdd} />
+                            <Route path="/topic/report" component={TopicReport}/>
+                            <Route path="/topic/echarts" component={TopicReportEcharts}/>
+                            <Route path="/topic/count" component={TopicCount} />
+                            <Route path="/topic/setting" component={TopicSetting} />
+                        </Switch>
+                    </div>
+                </div>
+                <div className="left-boxes">
+                    <div className="first-box">
+                        <div className="add-topic-class">
+                            <div className={this.state.addTopic===0?'add-topic':'add-class'} onClick={this.handleAddTopic.bind(this)}>
+                                +添加专题
                             </div>
-
-                            <div className="classes">
-                            {LeftTopicLists}
+                            <div className={this.state.addClass===1?'add-class':'add-topic'} onClick={this.handleCancelAddTopic.bind(this)}>
+                                添加分类
+                                    <Modal
+                                    title="添加分类"
+                                    visible={this.state.visible}
+                                    onOk={this.handleOk.bind(this)}
+                                    onCancel={this.handleCancel.bind(this)}
+                                    >
+                                    <p className="textCenter">输入分类名</p>
+                                    <Input className="gapInput" onChange={this.onChange.bind(this)}  
+                                    value={this.state.inputValue}
+                                    maxLength={'20'}
+                                    />
+                                    </Modal>
+                                    <Modal
+                                    title="删除分类"
+                                    visible={this.state.visibleOne}
+                                    onOk={this.delOkOne.bind(this)}
+                                    onCancel={this.delCancelOne.bind(this)}
+                                    >
+                                    <p className="textCenter">确认删除此分类吗?</p>
+                                    </Modal>
+                                    <Modal
+                                    title="删除专题"
+                                    visible={this.state.visibleTwo}
+                                    onOk={this.delOkTwo.bind(this)}
+                                    onCancel={this.delCancelTwo.bind(this)}
+                                    >
+                                    <p className="textCenter">确认删除此专题吗?</p>
+                                    </Modal>
+                                    <Modal
+                                    title="重命名分类"
+                                    visible={this.state.visibleThree}
+                                    onOk={this.delOkThree.bind(this)}
+                                    onCancel={this.delCancelThree.bind(this)}
+                                    >
+                                    <p className="textCenter">输入新的分类名</p>
+                                    <Input className="gapInput" onChange={this.onChange.bind(this)}   value={this.state.inputValue}/>
+                                    </Modal>
                             </div>
                         </div>
-                    </div>
-                    <div className="topic-info">
-                        <Menu
-                            onClick={this.handleClick.bind(this)}
-                            selectedKeys={[this.state.current]}
-                            mode="horizontal"
-                            theme="light"
-                        >
-                            <Menu.Item key="topiclist" style={{fontSize:'16px'}}>
-                                <Icon type="bars" />信息列表
-                            </Menu.Item>
-                            <Menu.Item key="count" style={{fontSize:'16px'}}>
-                                <Icon type="area-chart" />统计分析
-                            </Menu.Item>
-                            <Menu.Item key="report" style={{fontSize:'16px'}}>
-                                <Icon type="book" />专题报告
-                            </Menu.Item>
-                            <Menu.Item key="setting" style={{fontSize:'16px'}}>
-                                <Icon type="setting" />修改专题设置
-                            </Menu.Item>
-                            <Menu.Item key="addtopic" style={this.state.isAddTopicShow ? {display: 'block',fontSize:'16px'} : {display: 'none',fontSize:'16px'}}>
-                                <Icon type="plus" />添加专题
-                            </Menu.Item>
-                        </Menu>
-                        <div className="topic-wrapper">
-                            <Switch>      
-                             <Route path="/topic/topiclist" component={TopicList} />
-                                <Route path="/topic/addtopic" component={TopicAdd} />
-                                <Route path="/topic/report" component={TopicReport}/>
-                                <Route path="/topic/echarts" component={TopicReportEcharts}/>
-                                <Route path="/topic/count" component={TopicCount} />
-                                <Route path="/topic/setting" component={TopicSetting} />
-                            </Switch>
+                        <div className="classes">
+                        {LeftTopicLists}
                         </div>
                     </div>
+                </div>
                 </div>
             </div>
         )
