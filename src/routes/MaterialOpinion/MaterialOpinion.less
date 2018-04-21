@@ -11,6 +11,7 @@
     display: flex;
     .left-boxes {
       width: 200px;
+      margin-left: 20px;
       .first-box {
         background-color: #FFFFFF;
         .top {
@@ -19,7 +20,7 @@
           text-align: center;
           border:1px solid #008cee;
           color:#008cee;
-         
+
           cursor: pointer;
           .btn {
             width: 100%;
@@ -78,18 +79,32 @@
     .opinion-list {
       box-shadow: 0 5px 10px rgba(0,0,0,0.1);
       flex: 1 0 200px;
-      margin-left: 20px;
+      .ant-checkbox + span{
+        padding-left: 26px;
+      }
+      // .ant-checkbox-inner:nth-child(1){
+      //   bottom: 22px;
+      // }
+      // .ant-checkbox-inner{
+      //   top: 22px;
+      // }
+
+      // margin-left: 20px;
       .top {
-        height: 60px;
+        height: 44px;
         display: flex;
         align-items: center;
         justify-content: space-between;
         padding-left: 20px;
         border-bottom: 1px solid #eeeeee;
-        background: #F7F7F7;
+        background: #0c1224;
+        color: #fff;
         .left {
           display: flex;
           justify-content: flex-start;
+          .colors{
+            color: #0d8da1;
+          }
           .operate-all {
             margin-left: 30px;
             cursor: pointer;
@@ -106,23 +121,28 @@
       }
       .bottom {
         background-color: #ffffff;
+        margin-top: 20px;
         .opinion-detail-wrapper {
           .opinion-detail-item {
             border-bottom: 1px solid #eeeeee;
             padding-left: 20px;
             padding-right: 20px;
-            min-height: 85px;
+            // min-height: 85px;
             display: flex;
             align-items: center;
             &:nth-child(even) {
               background: #f7f7f7;
             }
+            label{
+              left: -10px;
+            }
             .item-top {
               width: 76%;
               display: flex;
-              padding-top: 10px;
+              padding-top: 5px;
               padding-bottom: 10px;
               flex-direction: column;
+              border-left: 1px solid #ccc;
               .content{
                  display: flex;
                 }
@@ -139,9 +159,10 @@
                 }
               }
               .title {
-                margin-left: 20px;
+                margin-left: 15px;
                 font-size: 16px;
                 cursor: pointer;
+                color: #000;
               }
             }
             .item-middle {
@@ -181,10 +202,10 @@
                 }
               }
               .resource {
-               
+
                 .source {
-                  color: #42b9f5;
-                  padding-left: 6px;
+                  color: #ccc;
+                  padding-left: 25px;
                 }
               }
             }
