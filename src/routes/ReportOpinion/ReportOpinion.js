@@ -65,7 +65,7 @@ class TopicReport extends React.Component {
                        method: 'POST',
                        headers: {
                                 "Content-Type": "application/x-www-form-urlencoded"
-                            }, 
+                            },
                         body:`source=work&taskname=${record.name}&taskstate=0&documenttype=doc&createdate=${time}&reportid=${record.id}`
                             })
                             this.props.exportSkip('11');
@@ -77,7 +77,7 @@ class TopicReport extends React.Component {
                             });
                                     }
                             })
-        
+
 
     }
     // 删除报告
@@ -190,7 +190,7 @@ class TopicReport extends React.Component {
             method: 'POST',
             headers: {
                      "Content-Type": "application/x-www-form-urlencoded"
-                 }, 
+                 },
              body: `reportid=[${sidArr}]`
         }).then(res=>{
              if(res.data.code===1){
@@ -200,8 +200,8 @@ class TopicReport extends React.Component {
                     arr: new Array(40).fill(false)
                 })
              }
-             
-            
+
+
 
         })
         this.setState({
@@ -261,7 +261,7 @@ class TopicReport extends React.Component {
         this.props.exportSkip(record.name)
         history.push({
             pathname: '/reportopinion/detail',
-            search: `?id=${record.id}` 
+            search: `?id=${record.id}`
         });
     }
     onChange(index,e){
@@ -295,7 +295,7 @@ class TopicReport extends React.Component {
             this.props.getReportListRequested({pagesize:pageSize,page:current});
     }
 
-    showModal(record){         
+    showModal(record){
          request(api_check_report + '&reportid='+record.id).then(res=>{
                 if(res.data.code==='1'){
                       message.error('当前报告内容为空，请添加后再生成报告')
@@ -306,7 +306,7 @@ class TopicReport extends React.Component {
                         fileName:record.name,
                         report:record
                        })
-                       
+
                      }
             })
     }
@@ -321,13 +321,13 @@ class TopicReport extends React.Component {
             fileNameVisible:false,
             downloadVisible:true
          })
-         
+
         let time=formatDateTime(new Date());
         request(api_allopinion_exportskip,{
             method: 'POST',
             headers: {
                      "Content-Type": "application/x-www-form-urlencoded"
-                 }, 
+                 },
              body:`source=work&taskname=${this.state.fileName}&taskstate=0&documenttype=doc&createdate=${time}&reportid=${this.state.report.id}`
                  })
                  this.props.exportSkip('11');
@@ -374,7 +374,7 @@ class TopicReport extends React.Component {
         const { getFieldDecorator } = this.props.form;
         const { reportData } = this.props;
         const pageInfo=reportData[0]!==undefined?reportData[0]['pageinfo']:{rowcount:10,page:1}
-        const dataNewList =reportData[0]!==undefined?reportData.map((item, index) =>       
+        const dataNewList =reportData[0]!==undefined?reportData.map((item, index) =>
         <li key={item.id} className="opinion-detail-item">
              <div className="reportConent">
                 <div className="checkBox">
@@ -387,11 +387,11 @@ class TopicReport extends React.Component {
                     <div className="reportName" onClick={this.linkToReportDetail.bind(this, item)}
                     title="点击进入报告"
                     >{item.name}</div>
-                    
+
                 </div>
-                <div className="reportDate">{item.date}</div>
+                <div className="reportDates">{item.date}</div>
                 <div className="reportCunt">
-                  <div className="reportName">
+                  <div className="reportNames">
                   {item.count===''?0:item.count}条素材
                   </div>
                 </div>
@@ -424,13 +424,22 @@ class TopicReport extends React.Component {
                 xs: { span: 24 },
                 sm: { span: 14 },
             },
-        };        
+        };
         return (
-           <div>                  
+           <div>
             <div className="route-report-opinion">
             <div className="top">
             <div>
-            <Button type="primary" onClick={this.createReport.bind(this)}>新建简报</Button>
+            <Button type="primary" onClick={this.deleteMultipleReport.bind(this)}>批量删除</Button>
+            <Modal
+                title="批量删除简报"
+                visible={this.state.deleteMultipleModalVisible}
+                onOk={this.handleDeleteMultipleOk.bind(this)}
+                onCancel={this.handleDeleteMultipleCancel.bind(this)}
+            >
+                <div>确定删除您选中的 <span style={{color: 'red'}}>{this.state.sidArr.length}</span> 份简报？</div>
+            </Modal>
+            <Button type="primary" className="new-multiple-btn" onClick={this.createReport.bind(this)}>新建简报</Button>
             <Modal
                 title="新建简报"
                 visible={this.state.createReportModalVisible}
@@ -444,34 +453,25 @@ class TopicReport extends React.Component {
                         {getFieldDecorator('newReportName', {
                                initialValue:this.state.reportValue
                         })(
-                            <Input 
+                            <Input
                             onChange={this.reportChange.bind(this)}
                             maxLength={'14'}/>
                         )}
                     </FormItem>
                 </Form>
             </Modal>
-            <Button type="primary" className="delete-multiple-btn" onClick={this.deleteMultipleReport.bind(this)}>批量删除</Button>
-            <Modal
-                title="批量删除简报"
-                visible={this.state.deleteMultipleModalVisible}
-                onOk={this.handleDeleteMultipleOk.bind(this)}
-                onCancel={this.handleDeleteMultipleCancel.bind(this)}
-            >
-                <div>确定删除您选中的 <span style={{color: 'red'}}>{this.state.sidArr.length}</span> 份简报？</div>
-            </Modal>
             </div>
         </div>
                 <div className="report">
 
                     <div className="middle">
-                        {/* <Table  
+                        {/* <Table
                             bordered
                             rowSelection={rowSelection}
                             columns={columns}
                             style={{fontSize: '22px'}}
                             dataSource={dataNew}
-                       
+
                             // /> */}
                             <ul>
                                 <li className="opinion-detail-item">
@@ -519,12 +519,12 @@ class TopicReport extends React.Component {
                   onCancel={this.handleCancelFileName.bind(this)}
                   footer={null}
                   className="fileMdal"
-                > 
-                <Input value={this.state.fileName} 
+                >
+                <Input value={this.state.fileName}
                 onChange={this.fileNameChange.bind(this)}
                 maxLength={'20'}
                 ></Input>
-                <Button type="primary" 
+                <Button type="primary"
                 style={{margin:'20px 0 0 214px',width:'60px',height:'30px'}}
                 onClick={this.handleOkFileName.bind(this)}
                 >确定
@@ -536,7 +536,7 @@ class TopicReport extends React.Component {
                   onOk={this.downloadHandleOk.bind(this)}
                   onCancel={this.downloadHandleCancel.bind(this)}
                   cancelText='留在此页'
-                > 
+                >
                 <p>是否去下载</p>
                 </Modal>
                 <Modal
@@ -545,7 +545,7 @@ class TopicReport extends React.Component {
                     onOk={this.handleOk.bind(this)}
                     onCancel={this.handleCancel.bind(this)}
                         >
-                        <Input 
+                        <Input
                             value={this.state.chooseItemName}
                             maxLength={'15'}
                             onChange={this.chooseNameChange.bind(this)}
@@ -568,7 +568,7 @@ const mapDispatchToProps = dispatch => {
             dispatch(getReportListRequested(req));
         },
         exportSkip:key=>{
-            dispatch(exportSkip(key)); 
+            dispatch(exportSkip(key));
         },
         reportMessage:data=>{
             dispatch(reportMessage(data));

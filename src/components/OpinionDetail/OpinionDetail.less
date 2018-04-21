@@ -6,6 +6,21 @@
           height: 322px;
           overflow: auto;
        }
+       // 分液器样式【上】
+       .ant-pagination-item-link{
+         background-color: #0c1224;
+       }
+       .ant-pagination-prev a, .ant-pagination-next a{
+         color: #fff;
+       }
+       .ant-pagination-simple .ant-pagination-simple-pager input{
+         background-color: #0c1224;
+         color: #fff;
+         border: 1px solid #0c1224;
+       }
+       .ant-pagination-simple .ant-pagination-simple-pager{
+         color: #00c8e7;
+       }
       .right {
       display: flex;
 
@@ -32,7 +47,7 @@
     align-items: center;
     padding-left: 5px;
     border-bottom: 1px solid #eeeeee;
-    background: #fff;
+    background: #0c1224;
     justify-content: space-between;
     .inputSearch{
       display: flex;
@@ -42,6 +57,7 @@
         background: #007aff;
         color:#ffffff;
         margin-left: 8px;
+        border-color: #0c1224;
       }
     }
     .left {
@@ -100,9 +116,9 @@
         justify-content:flex-start;
         border-bottom: 1px solid #E4EbF7;
         overflow: hidden;
-        &:nth-child(even) {
-          background: #f7f7f7;
-        }
+        // &:nth-child(even) {
+        //   background: #f7f7f7;
+        // }
         .cheackBox{
           width:33px;
           border-right:1px solid#E4EbF7;
@@ -144,10 +160,11 @@
           border-top:none;
           border-bottom: none;
           box-sizing: border-box;
-          width: 120px;
+          width: 90px;
           height: 20px;
           display:flex;
           align-items:center;
+          margin-right: 35px;
           .source {
             color: #8d8d8d;
             padding-left: 6px;
@@ -162,7 +179,7 @@
           display:flex;
           align-items:center;
           .date {
-          width: 125px;
+          width: 130px;
           margin-top: -9px;
           }
         }
@@ -181,7 +198,7 @@
                margin-right: 27%;
                padding-bottom: 6px;
                div{
-                   background: #E5E5E5;
+                   // background: #E5E5E5;
                    width: 24px;
                    height: 24px;
                    margin-left: 14px;
@@ -200,7 +217,7 @@
             .similar-info {
               // color: #007aff;
               margin-right: 20px;
-              margin-left: 50px;
+              margin-left: 79px;
             }
             .key {
               display: flex;
@@ -209,10 +226,9 @@
               .keywords {
                 margin-left: 10px;
                 color:#ff0000;
+                width: 120px;
               }
-
             }
-
           }
        }
         .item-top {
