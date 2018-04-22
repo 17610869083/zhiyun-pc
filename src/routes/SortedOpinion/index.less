@@ -109,8 +109,27 @@
   }
   .sorted-opinion-option {
     width: 100%;
-    margin-left: 20px;
+    margin-right: 20px;
     font-size: 14px;
+    .ant-menu-item-active{
+      color: #fff;
+    }
+    .ant-menu-horizontal > .ant-menu-item, .ant-menu-horizontal > .ant-menu-submenu{
+      border-bottom: none;
+      top: 10px;
+    }
+    .ant-menu-horizontal{
+      background-color: #0c1224;
+      color: #fff;
+    }
+    .ant-menu-item-selected{
+      color: #000;
+      border-bottom: none;
+      background-color: #fff;
+      border-radius: 7px 7px 0 0;
+      height: 36px;
+    }
+
     .topic-wrapper {
       margin-top: 20px;
       background-color: #FFFFFF;

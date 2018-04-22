@@ -239,7 +239,7 @@ class SortedOpinion extends React.Component {
         for(let i = 0 ;i<this.props.sortedMenu.length;i++){
                   if(this.props.sortedMenu[i]['clflist'][0]!==undefined){
                     clfid=this.props.sortedMenu[i]['clflist'][0]['clfid'];
-                    break;                  
+                    break;
                    }
         }
         this.timer = setTimeout(() => {
@@ -260,7 +260,7 @@ class SortedOpinion extends React.Component {
              }
     }
     componentDidUpdate(prevProps,prevState){
-          
+
         if(prevProps.location!==this.props.location){
     	  if(this.props.location.pathname==='/sortedopinion/addrule'){
     	  	      this.setState({isAddTopicShow:true})
@@ -271,7 +271,7 @@ class SortedOpinion extends React.Component {
                  })
           }
           else{
-    	  	this.setState({isAddTopicShow:false}) 
+    	  	this.setState({isAddTopicShow:false})
     	  }
        }
 
@@ -305,10 +305,10 @@ class SortedOpinion extends React.Component {
                 <ul className="clf-ul" ref={'clf-ul-'+item.catid} style={{display: 'block'}}>
                     {
                         item.clflist && item.clflist.map(sortItem =>
-                            <li className={clfId === sortItem.clfid ? 'clf-item-active' : 'clf-item'} 
+                            <li className={clfId === sortItem.clfid ? 'clf-item-active' : 'clf-item'}
                                 key={sortItem.clfid}
                             >
-                                <span className="name" 
+                                <span className="name"
                                 onClick={this.changeSortRoute.bind(this,sortItem.clfid)}
                                 title={sortItem.clfname}
                                 >{sortItem.clfname}</span>
@@ -323,17 +323,32 @@ class SortedOpinion extends React.Component {
 
         return (
             <div className="sorted-opinion-container">
-                <div className="sorted-menu">
-                    <div className="operation">
-                        <Button type="primary"
-                                className="operation-btn1"
-                                onClick={this.showAddSortNavigate.bind(this)}>添加话题</Button>
-                        <Button type="primary"
-                                className="operation-btn2"
-                                onClick={this.showSortModal.bind(this)}>添加分类</Button>
-                    </div>
-                    {SortedMenu}
-                </div>
+            <div className="sorted-opinion-option">
+                <Menu
+                    onClick={this.handleMenuClick.bind(this)}
+                    selectedKeys={[this.state.current]}
+                    mode="horizontal"
+                >
+                    <Menu.Item key="sortlist" style={{fontSize:'16px'}}>
+                        <Icon type="bars" />信息列表
+                    </Menu.Item>
+                    <Menu.Item key="setting" style={{fontSize:'16px'}}>
+                        <Icon type="setting" />修改分类设置
+                    </Menu.Item>
+                    <Menu.Item key="addtopic" style={this.state.isAddTopicShow ? {display: 'block',fontSize:'16px'} : {display: 'none',fontSize:'16px'}}>
+                        <Icon type="plus" />添加话题
+                    </Menu.Item>
+                </Menu>
+                {this.state.flag ?
+                    <div className="topic-wrapper">
+                        <Switch>
+                            <Route path="/sortedopinion/list" component={SortedList} />
+                            <Route path="/sortedopinion/addrule" component={SortedAdd} />
+                            <Route path="/sortedopinion/setting" component={SortedSetting} />
+                        </Switch>
+                    </div> : <Spin size="large" />
+                }
+            </div>
                 <div className="modals">
                     <Modal
                         title="添加分类"
@@ -362,31 +377,16 @@ class SortedOpinion extends React.Component {
                         />
                     </Modal>
                 </div>
-                <div className="sorted-opinion-option">
-                    <Menu
-                        onClick={this.handleMenuClick.bind(this)}
-                        selectedKeys={[this.state.current]}
-                        mode="horizontal"
-                    >
-                        <Menu.Item key="sortlist" style={{fontSize:'16px'}}>
-                            <Icon type="bars" />信息列表
-                        </Menu.Item>
-                        <Menu.Item key="setting" style={{fontSize:'16px'}}>
-                            <Icon type="setting" />修改分类设置
-                        </Menu.Item>
-                        <Menu.Item key="addtopic" style={this.state.isAddTopicShow ? {display: 'block',fontSize:'16px'} : {display: 'none',fontSize:'16px'}}>
-                            <Icon type="plus" />添加话题
-                        </Menu.Item>
-                    </Menu>
-                    {this.state.flag ?
-                        <div className="topic-wrapper">
-                            <Switch>
-                                <Route path="/sortedopinion/list" component={SortedList} />
-                                <Route path="/sortedopinion/addrule" component={SortedAdd} />
-                                <Route path="/sortedopinion/setting" component={SortedSetting} />
-                            </Switch>
-                        </div> : <Spin size="large" />
-                    }
+                <div className="sorted-menu">
+                    <div className="operation">
+                        <Button type="primary"
+                                className="operation-btn1"
+                                onClick={this.showAddSortNavigate.bind(this)}>添加话题</Button>
+                        <Button type="primary"
+                                className="operation-btn2"
+                                onClick={this.showSortModal.bind(this)}>添加分类</Button>
+                    </div>
+                    {SortedMenu}
                 </div>
             </div>
         )
