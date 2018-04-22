@@ -36,9 +36,9 @@ class TopicOpinion extends React.Component {
             materialCurrent:0,
             addTopic:0,
             addClass:1
-        };  
-       
-    }   
+        };
+
+    }
     handleClick(e) {
         history.push({
             pathname:`/topic/${e.key}`,
@@ -66,9 +66,9 @@ class TopicOpinion extends React.Component {
               })
             this.props.setlocationPathname(firstTopicid);
           }
-          },100)   
+          },100)
     }
-    // componentDidUpdate(prevProps,prevState){      
+    // componentDidUpdate(prevProps,prevState){
     //     if(prevProps.location!==this.props.location){
     // 	  if(this.props.location.pathname==='/topic/addtopic'){
     // 	  	      this.setState({isAddTopicShow:true})
@@ -79,7 +79,7 @@ class TopicOpinion extends React.Component {
     //              })
     //       }
     //       else{
-    // 	  	      this.setState({isAddTopicShow:false}) 
+    // 	  	      this.setState({isAddTopicShow:false})
     // 	  }
     //    }
 
@@ -112,9 +112,9 @@ class TopicOpinion extends React.Component {
     	  	visibleTwo:true,
     	  	topicId:topicID,
     	  	childRen:e.target.parentNode.parentNode.children.length
-    	  });  
+    	  });
     }
-    queryTopic(topicid,e){ 
+    queryTopic(topicid,e){
         this.setState({
             materialCurrent: topicid,
             current: 'topiclist',
@@ -144,7 +144,7 @@ class TopicOpinion extends React.Component {
                     search:`?catid=${this.state.inputValue}`
               });
                }
-               this.props.topicNavMessageRequested(new Date()) 
+               this.props.topicNavMessageRequested(new Date())
     	 })
     	 this.setState({
     	 	  visible:false,
@@ -182,7 +182,7 @@ class TopicOpinion extends React.Component {
     	 	  	   	  search:`?catid=${this.state.catid}`
     	 	  	   });
                }
-               this.props.topicNavMessageRequested(new Date())  
+               this.props.topicNavMessageRequested(new Date())
     	})
     	}
 
@@ -208,12 +208,12 @@ class TopicOpinion extends React.Component {
     	  	   	    	search:`?delTopicId=${this.state.topicId}`
     	  	   	    	});
                  }
-                 this.props.topicNavMessageRequested(new Date())  
+                 this.props.topicNavMessageRequested(new Date())
     	  });
     }
     delCancelTwo(){
     	this.setState({visibleTwo:false})
-    	
+
     }
     delOkThree(){
         this.setState({
@@ -277,22 +277,22 @@ class TopicOpinion extends React.Component {
                 <Menu.Item key="1">删除</Menu.Item>
                 <Menu.Item key="2">重命名</Menu.Item>
             </Menu>
-       );   	
+       );
         let {topicNavMessageSucceededState} =this.props;
-        const LeftTopicLists=topicNavMessageSucceededState!==1&&topicNavMessageSucceededState.map((item,index)=>            
+        const LeftTopicLists=topicNavMessageSucceededState!==1&&topicNavMessageSucceededState.map((item,index)=>
           <div className="a-class" key={index}>
           <div className="class-name" >
           <div className="leftBox" onClick={this.dropDown.bind(this)} data-index='1' title={item.catname}>
           <img src={file} alt="" className="file"/>
-          {item.catname} 
-          </div> 
-          <Dropdown overlay={delItems} trigger={['click']}> 
-            <img src={setting} alt="" className="icon-setting" onClick={this.onCatid.bind(this)} data-catid={item.catid}/>         
-          </Dropdown> 
-          </div>      
+          {item.catname}
+          </div>
+          <Dropdown overlay={delItems} trigger={['click']}>
+            <img src={setting} alt="" className="icon-setting" onClick={this.onCatid.bind(this)} data-catid={item.catid}/>
+          </Dropdown>
+          </div>
            <ul className="topics" style={{height:item.topicList&&item.topicList.length*30+'px'}}>
-              {item.topicList && item.topicList.map((iitem,iindex) => 
-                 <li  key={iitem.topicid} 
+              {item.topicList && item.topicList.map((iitem,iindex) =>
+                 <li  key={iitem.topicid}
                  className={this.state.materialCurrent === iitem.topicid ? 'a-topic  backGroundBlue' : 'a-topic'}
                   >
                   <span className="topicTitle" onClick={this.queryTopic.bind(this,iitem.topicid)}
@@ -306,7 +306,7 @@ class TopicOpinion extends React.Component {
              )}
              </ul>
          </div>
-        
+
         );
         return (
             <div className="topic-opinion">
@@ -342,7 +342,7 @@ class TopicOpinion extends React.Component {
                         </Menu.Item>
                     </Menu>
                     <div className="topic-wrapper">
-                        <Switch>      
+                        <Switch>
                             <Route path="/topic/topiclist" component={TopicList} />
                             <Route path="/topic/addtopic" component={TopicAdd} />
                             <Route path="/topic/report" component={TopicReport}/>
@@ -367,7 +367,7 @@ class TopicOpinion extends React.Component {
                                     onCancel={this.handleCancel.bind(this)}
                                     >
                                     <p className="textCenter">输入分类名</p>
-                                    <Input className="gapInput" onChange={this.onChange.bind(this)}  
+                                    <Input className="gapInput" onChange={this.onChange.bind(this)}
                                     value={this.state.inputValue}
                                     maxLength={'20'}
                                     />
@@ -412,7 +412,7 @@ class TopicOpinion extends React.Component {
 
 const mapStateToProps = state => {
     return {
-        topicNavMessageSucceededState:state.getTopicMessageSucceeded.data     
+        topicNavMessageSucceededState:state.getTopicMessageSucceeded.data
     }
 };
 

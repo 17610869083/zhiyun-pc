@@ -40,8 +40,8 @@
         .classes {
           background: #F7F7F7;
           }
-          .a-class {          
-            box-sizing: border-box;           
+          .a-class {
+            box-sizing: border-box;
             .class-name {
               height: 36px;
               line-height: 36px;
@@ -82,9 +82,9 @@
               .a-topic {
                 position: relative;
                 height: 30px;
-                line-height: 30px;              
+                line-height: 30px;
                 padding-left: 2px;
-                margin-top: 1px;               
+                margin-top: 1px;
                 cursor: pointer;
                 .topicTitle{
                    width: 146px;
@@ -108,7 +108,7 @@
                   color: #008cee;
                   border-left:2px solid #008cee;
                   padding-left:0;
-                 
+
                 }
               }
             }
@@ -120,10 +120,27 @@
     .topic-info {
       width: 84%;
       font-size: 14px;
+      .ant-menu-horizontal > .ant-menu-item, .ant-menu-horizontal > .ant-menu-submenu{
+        border-bottom: none;
+        top: 10px;
+        color: #fff;
+        border-radius: 7px 7px 0 0;
+      }
       .topic-wrapper {
         margin-top: 20px;
       }
+      .ant-menu-horizontal{
+        background-color: #0c1224;
+        color: #fff;
+        .ant-menu-item-selected{
+          background-color: #fff;
+          color: #000;
+          border-bottom: none;
+          height: 36px;
+        }
+      }
     }
+
   }
 
 .textCenter{
@@ -135,4 +152,3 @@
 .a-class:first-child .class-name .icon-setting{display: none;}
 #rcDialogTitle3{color:#f7f7f7;}
 .ant-modal-title{color:#f7f7f7;}
-
