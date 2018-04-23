@@ -149,7 +149,7 @@ class HomePage extends React.Component {
         } = this.state;
         return (
             <div>
-            <div className="informs" style={alertMsg===''?{display:'none'}:{display:'block'}}>{alertMsg}<i onClick={ this.informs.bind(this) }>X</i></div>
+          
             <div className="home-page">
                 <div className="container">
                     <Row gutter={16} className="row">

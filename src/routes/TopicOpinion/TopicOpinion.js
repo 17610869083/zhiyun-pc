@@ -34,7 +34,7 @@ class TopicOpinion extends React.Component {
             materialCurrent:0,
             addTopic:0,
             addClass:1,
-            isTopShow:false
+            isTopShow:true
         };  
        
     }   
@@ -74,8 +74,7 @@ class TopicOpinion extends React.Component {
             this.setState({
                 topicLists:topicMessage,
                 topicId:firstTopicid,
-                materialCurrent:firstTopicid,
-                isTopShow:this.props.search
+                materialCurrent:firstTopicid
               })
             this.props.setlocationPathname(firstTopicid);
           }

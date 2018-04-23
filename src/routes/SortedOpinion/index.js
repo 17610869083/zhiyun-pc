@@ -1,6 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import { Menu,Icon,Button,Modal,Input,message,Dropdown,Spin } from 'antd';
+import { Menu,Icon,Modal,Input,message,Dropdown,Spin } from 'antd';
 import { Route, Switch} from 'react-router-dom';
 import {history} from '../../utils/history';
 import SortedList from './SortedList';
@@ -49,7 +49,7 @@ class SortedOpinion extends React.Component {
             clfUlShowIndex: 0,
             clfsname:'',
             flag: true,
-            isTopShow:false
+            isTopShow:true
         }
     }
     // 删除分类项目

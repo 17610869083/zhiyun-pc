@@ -265,7 +265,6 @@ export function URLToObject(url) {
 export function reportToTableData(data) {
     const list = [];
     data.reportList.forEach((item,index) => {
-        console.log(getLocalTime(item.reportdate))
         const obj = {
             id: item.id,
             key: index,
@@ -312,31 +311,31 @@ export function urlTokey() {
             key = '7';
             break;
         case 'reportopinion':
-            key = '8';
+            key = 'reportopinion';
             break;
         case 'materiaopinion':
-            key = '9';
+            key = 'materiaopinion';
             break;
         case 'collectionopinion':
-            key = '10';
+            key = 'collectionopinion';
             break;
         case 'historyopinion':
-            key = '11';
+            key = 'historyopinion';
             break;
         case 'noticesetting':
-            key = '13';
+            key = 'noticesetting';
             break;
         case 'warnsetting':
-            key = '14';
+            key = 'warnsetting';
             break;
         case 'excludesetting':
-            key = '15';
+            key = 'excludesetting';
             break;
         case 'publicopinion':
-            key = '16';
+            key = 'publicopinion';
             break;
         case 'topicreportlist':
-            key = '17';
+            key = 'topicreportlist';
             break;
         default:
             break;

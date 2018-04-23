@@ -3,15 +3,14 @@ import {connect} from 'react-redux';
 import { Layout, Menu, Icon,Button} from 'antd';
 import { Route, Switch, Link } from 'react-router-dom';
 import './Index.less';
-import {urlTokey} from '../../utils/format';
 import {history} from '../../utils/history';
 import {exportSkip} from '../../redux/actions/createActions';
 import logo from '../../assets/img/logo2.png';
 import CRcode from '../LoginPage/crcode.jpg';
 import {api_get_channel} from '../../services/api';
 import request from '../../utils/request';
+import {urlTokey} from '../../utils/format';
 import AsyncComponent from '../../components/AsyncComponent/AsyncComponent'
-const Home = AsyncComponent ( () => import('../HomePage'))
 const NewHome = AsyncComponent ( () => import('../NewHome'))
 const TopicReportList = AsyncComponent ( () => import('../TopicReportList/TopicReportList'))
 const SortedAdd = AsyncComponent ( () => import('../SortedOpinion/SortedAdd'))
@@ -44,7 +43,7 @@ class Index extends React.Component {
             qqStatus:false,
             phoneStatus:false,
             weixinStatus:false,
-            channelList:[{channelname:'首页'}]            
+            channelList:[{channelname:'首页',channelurl:'/webpart/index.html#/home',key:"1"}]            
         };
         this.toggle = () => {
             this.setState({
@@ -108,9 +107,73 @@ class Index extends React.Component {
     }
     render() {
         const {themeColor} =this.props;
-        const menuList = this.state.channelList.map( (item,index) =>{
-               return <Menu.Item key={index}><span>{item.channelname}</span></Menu.Item>
-        })
+        let menuList=[];
+        this.state.channelList.map( (item,index) =>{ 
+             if(item.channelurl==='/reportopinion/list'){
+                menuList.push(<SubMenu
+                        key={item.key}
+                        title={<span><Icon type={item.type} style={{fontSize: '14px',boxShadow:'0 0 30px #01C2E0',color:'#01C2E0',height:'0'}}/><span style={{fontSize: '14px'}}>舆情报告</span></span>}>
+                        <Menu.Item key="reportopinion" >
+                            <Link to="/reportopinion/list">
+                                <span>简报列表</span>
+                            </Link>
+                        </Menu.Item>
+                        <Menu.Item key="materiaopinion" >
+                            <Link to="/materiaopinion">
+                                <span>素材库</span>
+                            </Link>
+                        </Menu.Item>
+                        <Menu.Item key="collectionopinion" >
+                            <Link to="/collectionopinion">
+                                <span>我的收藏</span>
+                            </Link>
+                        </Menu.Item>
+                        <Menu.Item key="historyopinion" >
+                            <Link to="/historyopinion">
+                                <span>我的报告库</span>
+                            </Link>
+                        </Menu.Item>
+                    </SubMenu>)
+                    }else if (item.channelurl==='../systemMan/systemManDo?action=userList'){
+                        menuList.push(<SubMenu key={item.key} 
+                        title={<span><Icon type={item.type} style={{fontSize: '14px',boxShadow:'0 0 30px #01C2E0',color:'#01C2E0',height:'0'}}/><span style={{fontSize: '14px'}}>系统设置</span></span>}>
+                        <Menu.Item key="noticesetting">
+                            <Link to="/noticesetting">
+                                <span>通知设置</span>
+                            </Link>
+                        </Menu.Item>
+
+                        <Menu.Item key="warnsetting">
+                            <Link to="/warnsetting">
+                                <span>预警设置</span>
+                            </Link>
+                        </Menu.Item>
+                        <Menu.Item key="excludesetting">
+                            <Link to="/excludesetting">
+                                <span>排除停用</span>
+                            </Link>
+                        </Menu.Item>
+                        <Menu.Item key="publicopinion">
+                            <Link to="/publicopinion">
+                                <span>舆情录入</span>
+                            </Link>
+                        </Menu.Item>
+                    </SubMenu>)
+                    }else {
+                    menuList.push(<Menu.Item key={item.key} style={{fontSize: '14px'}}>
+                      {item.channelurl.indexOf('http')!==-1?
+                       <a href={item.channelurl} target="blank">
+                    <Icon type={item.type} style={{ boxShadow:'0 0 30px #01C2E0',color:'#01C2E0',height:'0' }}/>
+                    <span>{item.channelname}</span>
+                       </a>:<Link to={item.channelurl}>
+                      <Icon type={item.type} style={{ boxShadow:'0 0 30px #01C2E0',color:'#01C2E0',height:'0'}}/>
+                      <span>{item.channelname}</span>
+                      </Link> 
+                      }
+                      </Menu.Item>)
+                      } 
+                      return 3
+                })
         return (
             <div className="root-container">
                 <Layout className="layout">
@@ -127,23 +190,19 @@ class Index extends React.Component {
                             </div>
                             <div className="trigger-wrapper" onClick={this.toggle}>
                                 <i className="fa fa-bars" aria-hidden="true" style={{fontSize: '14px', color: '#ffffff'}}/>
-                                {/*<Icon*/}
-                                    {/*className="trigger"*/}
-                                    {/*type={this.state.collapsed ? 'menu-unfold' : 'menu-fold'}*/}
-                                    {/*style={{fontSize: '14px', color: '#ffffff'}}*/}
-                                {/*/>*/}
                             </div>
                         </div>
                         <Menu
-                            defaultSelectedKeys={['2']}
+                            defaultSelectedKeys={['1']}
                             mode="inline"
                             theme="dark"
                             inlineCollapsed={this.state.collapsed}
-                            selectedKeys={[urlTokey()]}
                             style={{backgroundColor: '#0c1224'}}
                             className="selectMenu"
+                            selectedKeys={[urlTokey()]}
                         >
-                            <Menu.Item key="1" style={{fontSize: '14px'}}>
+                            {menuList} 
+                            {/* <Menu.Item key="1" style={{fontSize: '14px'}}>
                                 <Link to="/home">
                                       <Icon type="home" style={{ boxShadow:'0 0 30px #01C2E0',color:'#01C2E0',height:'0'}}/>
                                     <span>首页</span>
@@ -175,11 +234,6 @@ class Index extends React.Component {
                                         <span>简报列表</span>
                                     </Link>
                                 </Menu.Item>
-                                { /*<Menu.Item key="17" >
-                                       <Link to="/topicreportlist">
-                                           <span>专题报告列表</span>
-                                       </Link>
-                                   </Menu.Item>*/}
                                 <Menu.Item key="9" >
                                     <Link to="/materiaopinion">
                                         <span>素材库</span>
@@ -213,7 +267,6 @@ class Index extends React.Component {
                                         <span>排除停用</span>
                                     </Link>
                                 </Menu.Item>
-
                                 <Menu.Item key="16">
                                     <Link to="/publicopinion">
                                         <span>舆情录入</span>
@@ -239,12 +292,10 @@ class Index extends React.Component {
                                 </a>
                             </Menu.Item>
                             <Menu.Item key="2" style={{fontSize: '14px'}}>
-                                {/* <Link to="/trendfeeling"> */}
                                     <a href="http://114.242.25.234:30005/gxwhongce2/" target="blank">
                                     <Icon type="chrome" style={{ boxShadow:'0 0 30px #01C2E0',color:'#01C2E0',height:'0' }}/>
                                     <span>态势感知</span>
                                     </a>
-                                {/* </Link> */}
                             </Menu.Item>
                             <Menu.Item key="protect" style={{fontSize: '14px'}}>
                                 <a href="http://situation.imp.safesail.cn/?from=singlemessage" target="blank">
@@ -252,23 +303,12 @@ class Index extends React.Component {
                                     <span>网站防护</span>
                                 </a>
                             </Menu.Item>
-                            {/* <Menu.Item key="12" style={{fontSize: '14px'}}>
-                                    <Icon type="setting" />
-                                    <span>词库设置</span>
-
-                                </Menu.Item> */}
                                 <Menu.Item key="guide" style={{fontSize: '14px'}}>
                                 <a href="http://yd.is8.com.cn/" target="blank">
                                     <Icon type="exception" style={{ boxShadow:'0 0 30px #01C2E0',color:'#01C2E0',height:'0' }}/>
                                     <span>引导系统</span>
                                 </a>
-                            </Menu.Item>
-                            <Menu.Item key="new" style={{fontSize: '14px'}}>
-                                <Link to="/newhome">
-                                    <Icon type="chrome" style={{ boxShadow:'0 0 30px #01C2E0',color:'#01C2E0',height:'0' }}/>
-                                    <span>新首页</span>
-                                </Link>
-                            </Menu.Item>
+                            </Menu.Item> */}
                         </Menu>
                     </Sider>
                     <Layout className="right-layout">
@@ -288,8 +328,7 @@ class Index extends React.Component {
                                 <Route path="/collectionopinion" component={CollectionOpinion}/>
                                 <Route path="/historyopinion" component={HistoryOpinion}/>
                                 <Route path="/warningopinion" component={WarningOpinion}/>
-                                <Route path="/home" exact component={Home}/>
-                                <Route path="/newhome" component={NewHome}/>
+                                <Route path="/home" exact component={NewHome}/>
                                 <Route path="/noticesetting" component={NoticeSetting}/>
                                 <Route path="/warnsetting" component={WarnSetting}/>
                                 <Route path="/excludesetting" component={ExcludeSetting}/>
@@ -298,7 +337,6 @@ class Index extends React.Component {
                                 <Route path="/topic/addtopic" component={TopicAdd}/>
                                 <Route path="/sortedopinion/addrule" component={SortedAdd}/>
                                 <Route path="/topicreportlist" component={TopicReportList}/>
-                                <Route path="/newhome" component={NewHome}/>newhome
                             </Switch>
                             <div className="suspensionBox">
                                  <div >

@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {connect} from 'react-redux';
-import {Icon,Form,DatePicker,Pagination,message,Button} from 'antd';
+import {Form,DatePicker,Pagination,message,Button} from 'antd';
 import {getSortedContentRequested,paginationPage} from '../../redux/actions/createActions';
 import OpinionDetail from '../../components/OpinionDetail/OpinionDetail';
 import './SortedList.less';
@@ -305,8 +305,7 @@ class SortedList extends React.Component {
         const {docList,pageInfo,carryCount,page} = this.props;
         const {
             datetag,neg,carry,similer,order,
-            datetagArray,negArray,carryArray,similerArray,orderArray,
-            isTopShow
+            datetagArray,negArray,carryArray,similerArray,orderArray
         } = this.state;
         const { getFieldDecorator } = this.props.form;
 

@@ -59,9 +59,7 @@ class UserInfo extends React.Component {
         this.props.UserInfoMessage(this.props.data)
     }
     render() {
-
         const {username} = this.props.data;
-
         return (
             <div className="user-info-detail">
                 <div className="item">
