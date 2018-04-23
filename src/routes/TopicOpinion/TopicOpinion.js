@@ -11,10 +11,9 @@ import TopicReportEcharts from './TopicReport/TopicReportEcharts';
 import {api_topic_del,api_topic_typeAdd,api_topic_typeDel,api_classify_revise} from '../../services/api';
 import request from '../../utils/request';
 import './TopicOpinion.less';
-import {setlocationPathname,getTopicLocationRequested,topicNavMessageRequested} from '../../redux/actions/createActions';
+import {setlocationPathname,getTopicLocationRequested,topicNavMessageRequested,searchState} from '../../redux/actions/createActions';
 import {connect} from 'react-redux';
 import setting from '../../assets/icon-img/setting.png';
-import file from '../../assets/icon-img/file.png';
 import delect from '../../assets/icon-img/delect.png';
 import { setTimeout } from 'timers';
 class TopicOpinion extends React.Component {
@@ -22,7 +21,6 @@ class TopicOpinion extends React.Component {
         super(props);
         this.state = {
             current: 'topiclist',
-            // isAddTopicShow: false,
             topicLists:[],
             visible:false,
             visibleOne:false,
@@ -35,18 +33,32 @@ class TopicOpinion extends React.Component {
             status:false,
             materialCurrent:0,
             addTopic:0,
-            addClass:1
+            addClass:1,
+            isTopShow:false
         };  
        
     }   
     handleClick(e) {
+        if(e.key==='addsort'){
+            this.setState({
+                current: 'topiclist',
+                isAddTopicShow: false,
+                visible:true,
+                addClass:0,
+                addTopic:1
+            });
+            return
+        }
         history.push({
             pathname:`/topic/${e.key}`,
             search:`?topicid=${this.state.topicId}`
-    });
+        });
         this.setState({
             current: e.key,
         });
+    }
+    componentWillUnmount(){
+        this.props.searchState({data:true})
     }
     componentWillMount(){
           this.props.topicNavMessageRequested(new Date());
@@ -62,28 +74,13 @@ class TopicOpinion extends React.Component {
             this.setState({
                 topicLists:topicMessage,
                 topicId:firstTopicid,
-                materialCurrent:firstTopicid
+                materialCurrent:firstTopicid,
+                isTopShow:this.props.search
               })
             this.props.setlocationPathname(firstTopicid);
           }
           },100)   
     }
-    // componentDidUpdate(prevProps,prevState){      
-    //     if(prevProps.location!==this.props.location){
-    // 	  if(this.props.location.pathname==='/topic/addtopic'){
-    // 	  	      this.setState({isAddTopicShow:true})
-    //       }else if (this.props.location.pathname==='/topic/topiclist'){
-    //                this.setState({
-    //                    isAddTopicShow:false,
-    //                    current:'topiclist'
-    //              })
-    //       }
-    //       else{
-    // 	  	      this.setState({isAddTopicShow:false}) 
-    // 	  }
-    //    }
-
-    //  }
     // 添加专题
     handleAddTopic() {
         this.setState({
@@ -93,17 +90,9 @@ class TopicOpinion extends React.Component {
         });
         history.push(`/topic/addtopic`);
     }
-
     // 关别添加分类选项
     handleCancelAddTopic() {
-        this.setState({
-            current: 'topiclist',
-            isAddTopicShow: false,
-            visible:true,
-            addClass:0,
-            addTopic:1
-        });
-        history.push(`/topic/topiclist`);
+
     }
     delTopic(e){
         e.stopPropagation();
@@ -271,6 +260,12 @@ class TopicOpinion extends React.Component {
     stopPropagation(e){
           e.stopPropagation();
     }
+    triggerTopShow() {
+        this.setState({
+            isTopShow: !this.state.isTopShow
+        })
+        this.props.searchState({data:!this.state.isTopShow})
+    }
     render() {
     	const delItems = (
             <Menu onClick={this.onDelitem.bind(this)}>
@@ -283,7 +278,6 @@ class TopicOpinion extends React.Component {
           <div className="a-class" key={index}>
           <div className="class-name" >
           <div className="leftBox" onClick={this.dropDown.bind(this)} data-index='1' title={item.catname}>
-          <img src={file} alt="" className="file"/>
           {item.catname} 
           </div> 
           <Dropdown overlay={delItems} trigger={['click']}> 
@@ -310,37 +304,50 @@ class TopicOpinion extends React.Component {
         );
         return (
             <div className="topic-opinion">
-            <i className="fas fa-address-book"></i>
              {TopicList}
                 <div className="topic-opinion-wrapper">
                 <div className="topic-info">
+                    <div className="topic-top">
+                    <div>
                     <Menu
                         onClick={this.handleClick.bind(this)}
                         selectedKeys={[this.state.current]}
                         mode="horizontal"
-                        theme="light"
+                        style={{backgroundColor: '#0c1224',paddingTop:'10px',color:'#fff',border:'none'}}
                     >
                         <Menu.Item key="topiclist" style={{fontSize:'16px'}}>
-                            <Icon type="bars" />信息列表
+                            {/* <Icon type="bars" /> */}
+                            信息列表
                         </Menu.Item>
                         <Menu.Item key="count" style={{fontSize:'16px'}}>
-                            <Icon type="area-chart" />统计分析
+                            {/* <Icon type="area-chart" /> */}
+                            统计分析
                         </Menu.Item>
                         <Menu.Item key="report" style={{fontSize:'16px'}}>
-                            <Icon type="book" />专题报告
+                            {/* <Icon type="book" /> */}
+                            专题报告
                         </Menu.Item>
                         <Menu.Item key="setting" style={{fontSize:'16px'}}>
-                            <Icon type="setting" />修改专题设置
+                            {/* <Icon type="setting" /> */}
+                            修改专题设置
                         </Menu.Item>
                         <Menu.Item key="addtopic" style={{fontSize:'16px'}}>
                         {/* style={this.state.isAddTopicShow ? {display: 'block',fontSize:'16px'} : {display: 'none',fontSize:'16px'}} */}
-                            <Icon type="plus" />添加专题
+                            {/* <Icon type="plus" /> */}
+                            添加专题
                         </Menu.Item>
-                        <Menu.Item key="addsort" style={{fontSize:'16px'}}>
+                        <Menu.Item key="addsort" style={{fontSize:'16px'}} onClick={this.handleCancelAddTopic.bind(this)}>
                         {/* style={this.state.isAddTopicShow ? {display: 'block',fontSize:'16px'} : {display: 'none',fontSize:'16px'}} */}
-                            <Icon type="plus" />添加分类
+                            {/* <Icon type="plus" /> */}
+                            添加分类
                         </Menu.Item>
                     </Menu>
+                    </div>
+                    <div className="close"  onClick={this.triggerTopShow.bind(this)}>
+                    <span>{this.state.isTopShow ? '显示' : '隐藏'}</span>
+                    <Icon type={this.state.isTopShow ? 'down' : 'right'} />
+                    </div>
+                    </div>
                     <div className="topic-wrapper">
                         <Switch>      
                             <Route path="/topic/topiclist" component={TopicList} />
@@ -355,49 +362,7 @@ class TopicOpinion extends React.Component {
                 <div className="left-boxes">
                     <div className="first-box">
                         <div className="add-topic-class">
-                            <div className={this.state.addTopic===0?'add-topic':'add-class'} onClick={this.handleAddTopic.bind(this)}>
-                                +添加专题
-                            </div>
-                            <div className={this.state.addClass===1?'add-class':'add-topic'} onClick={this.handleCancelAddTopic.bind(this)}>
-                                添加分类
-                                    <Modal
-                                    title="添加分类"
-                                    visible={this.state.visible}
-                                    onOk={this.handleOk.bind(this)}
-                                    onCancel={this.handleCancel.bind(this)}
-                                    >
-                                    <p className="textCenter">输入分类名</p>
-                                    <Input className="gapInput" onChange={this.onChange.bind(this)}  
-                                    value={this.state.inputValue}
-                                    maxLength={'20'}
-                                    />
-                                    </Modal>
-                                    <Modal
-                                    title="删除分类"
-                                    visible={this.state.visibleOne}
-                                    onOk={this.delOkOne.bind(this)}
-                                    onCancel={this.delCancelOne.bind(this)}
-                                    >
-                                    <p className="textCenter">确认删除此分类吗?</p>
-                                    </Modal>
-                                    <Modal
-                                    title="删除专题"
-                                    visible={this.state.visibleTwo}
-                                    onOk={this.delOkTwo.bind(this)}
-                                    onCancel={this.delCancelTwo.bind(this)}
-                                    >
-                                    <p className="textCenter">确认删除此专题吗?</p>
-                                    </Modal>
-                                    <Modal
-                                    title="重命名分类"
-                                    visible={this.state.visibleThree}
-                                    onOk={this.delOkThree.bind(this)}
-                                    onCancel={this.delCancelThree.bind(this)}
-                                    >
-                                    <p className="textCenter">输入新的分类名</p>
-                                    <Input className="gapInput" onChange={this.onChange.bind(this)}   value={this.state.inputValue}/>
-                                    </Modal>
-                            </div>
+                        专题
                         </div>
                         <div className="classes">
                         {LeftTopicLists}
@@ -405,6 +370,43 @@ class TopicOpinion extends React.Component {
                     </div>
                 </div>
                 </div>
+                <Modal
+                    title="添加分类"
+                    visible={this.state.visible}
+                    onOk={this.handleOk.bind(this)}
+                    onCancel={this.handleCancel.bind(this)}
+                    >
+                    <p className="textCenter">输入分类名</p>
+                    <Input className="gapInput" onChange={this.onChange.bind(this)}  
+                    value={this.state.inputValue}
+                    maxLength={'20'}
+                    />
+                    </Modal>
+                    <Modal
+                    title="删除分类"
+                    visible={this.state.visibleOne}
+                    onOk={this.delOkOne.bind(this)}
+                    onCancel={this.delCancelOne.bind(this)}
+                    >
+                    <p className="textCenter">确认删除此分类吗?</p>
+                    </Modal>
+                    <Modal
+                    title="删除专题"
+                    visible={this.state.visibleTwo}
+                    onOk={this.delOkTwo.bind(this)}
+                    onCancel={this.delCancelTwo.bind(this)}
+                    >
+                    <p className="textCenter">确认删除此专题吗?</p>
+                    </Modal>
+                    <Modal
+                    title="重命名分类"
+                    visible={this.state.visibleThree}
+                    onOk={this.delOkThree.bind(this)}
+                    onCancel={this.delCancelThree.bind(this)}
+                    >
+                    <p className="textCenter">输入新的分类名</p>
+                    <Input className="gapInput" onChange={this.onChange.bind(this)}   value={this.state.inputValue}/>
+                </Modal>
             </div>
         )
     }
@@ -412,7 +414,8 @@ class TopicOpinion extends React.Component {
 
 const mapStateToProps = state => {
     return {
-        topicNavMessageSucceededState:state.getTopicMessageSucceeded.data     
+        topicNavMessageSucceededState:state.getTopicMessageSucceeded.data ,
+        search:state.searchStateReducer.data
     }
 };
 
@@ -426,6 +429,9 @@ const mapDispatchToProps = dispatch => {
         },
         topicNavMessageRequested:req=>{
             dispatch(topicNavMessageRequested(req));
+        },
+        searchState: req =>{
+            dispatch(searchState(req))
         }
     }
 };

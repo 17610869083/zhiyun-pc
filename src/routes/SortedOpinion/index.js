@@ -13,14 +13,12 @@ import {
     api_sorted_cat_delete,
     api_sorted_grade_delete
 } from '../../services/api';
-import file from '../../assets/icon-img/file.png';
 import delect from '../../assets/icon-img/delect.png';
 import setting from '../../assets/icon-img/setting.png';
 import './index.less';
-import {changeClfId, getSortedContentRequested, getCollectionLocationRequested,getSortedMenuRequested} from "../../redux/actions/createActions";
+import {changeClfId, getSortedContentRequested, getCollectionLocationRequested,getSortedMenuRequested,searchState} from "../../redux/actions/createActions";
 import { setTimeout } from 'timers';
 const confirm = Modal.confirm;
-
 class SortedOpinion extends React.Component {
     constructor() {
         super();
@@ -50,7 +48,8 @@ class SortedOpinion extends React.Component {
             clfUlShow: true,
             clfUlShowIndex: 0,
             clfsname:'',
-            flag: true
+            flag: true,
+            isTopShow:false
         }
     }
     // 删除分类项目
@@ -73,12 +72,6 @@ class SortedOpinion extends React.Component {
         });
     }
 
-    //------------ 添加分类
-    showSortModal() {
-        this.setState({
-            sortVisible: true
-        })
-    }
     handleSortOk() {
         if (this.state.sortInputValue === '') {
             message.warning('不能为空！');
@@ -109,7 +102,6 @@ class SortedOpinion extends React.Component {
     onChangeSortInputValue(e) {
         this.setState({ sortInputValue: e.target.value });
     }
-
     // 删除和重命名
     operateItems(e) {
         const catid = this.state.catid;
@@ -180,9 +172,11 @@ class SortedOpinion extends React.Component {
         this.setState({
             current: e.key
         });
-
-
-        if (e.key === 'sortlist') {
+        if(e.key=== 'addsort'){
+            this.setState({
+                sortVisible: true
+            })
+        }else if (e.key === 'sortlist') {
             history.push({
                 pathname: `/sortedopinion/list`,
                 search: `?cifid=${this.props.clfId}`,
@@ -200,15 +194,15 @@ class SortedOpinion extends React.Component {
 
     }
     // 添加分类
-    showAddSortNavigate() {
-        this.setState({
-            isAddTopicShow: true,
-            current: 'addtopic'
-        });
-        history.push({
-            pathname: '/sortedopinion/addrule'
-        })
-    }
+    // showAddSortNavigate() {
+    //     this.setState({
+    //         isAddTopicShow: true,
+    //         current: 'addtopic'
+    //     });
+    //     history.push({
+    //         pathname: '/sortedopinion/addrule'
+    //     })
+    // }
 
     // 切换分类路由
     changeSortRoute(clfId,e) {
@@ -232,6 +226,9 @@ class SortedOpinion extends React.Component {
         } else {
             ref.style.display = 'block';
         }
+    }
+    componentWillUnmount(){
+        this.props.searchState({data:true})
     }
     componentWillMount() {
         this.props.getSortedMenuRequested();
@@ -276,7 +273,12 @@ class SortedOpinion extends React.Component {
        }
 
      }
-
+     triggerTopShow(){
+        this.setState({
+            isTopShow: !this.state.isTopShow
+        })
+        this.props.searchState({data:!this.state.isTopShow})
+     }
     render() {
         const {
             sortVisible,renameSortVisible,
@@ -292,7 +294,6 @@ class SortedOpinion extends React.Component {
             <ul key={item.catid} className="sort-menu-ul">
                 <li className="catname" onClick={this.toggleClfUl.bind(this,item.catid)}>
                     <div className="name">
-                        <img src={file} alt="file" className="file"/>
                         <span >{item.catname}</span>
                     </div>
                     <div className="setting" style={item.cattype === 1 ? {display: 'block'} : {display: 'none'}}>
@@ -325,12 +326,7 @@ class SortedOpinion extends React.Component {
             <div className="sorted-opinion-container">
                 <div className="sorted-menu">
                     <div className="operation">
-                        <Button type="primary"
-                                className="operation-btn1"
-                                onClick={this.showAddSortNavigate.bind(this)}>添加话题</Button>
-                        <Button type="primary"
-                                className="operation-btn2"
-                                onClick={this.showSortModal.bind(this)}>添加分类</Button>
+                        分类
                     </div>
                     {SortedMenu}
                 </div>
@@ -363,21 +359,33 @@ class SortedOpinion extends React.Component {
                     </Modal>
                 </div>
                 <div className="sorted-opinion-option">
+                    <div className="topic-top">
+                    <div>
                     <Menu
                         onClick={this.handleMenuClick.bind(this)}
                         selectedKeys={[this.state.current]}
                         mode="horizontal"
+                        style={{backgroundColor: '#0c1224',paddingTop:'10px',color:'#fff',border:'none'}}
                     >
                         <Menu.Item key="sortlist" style={{fontSize:'16px'}}>
-                            <Icon type="bars" />信息列表
+                            信息列表
                         </Menu.Item>
                         <Menu.Item key="setting" style={{fontSize:'16px'}}>
-                            <Icon type="setting" />修改分类设置
+                            修改分类设置
                         </Menu.Item>
-                        <Menu.Item key="addtopic" style={this.state.isAddTopicShow ? {display: 'block',fontSize:'16px'} : {display: 'none',fontSize:'16px'}}>
-                            <Icon type="plus" />添加话题
+                        <Menu.Item key="addtopic" style={{fontSize:'16px'}}>
+                            添加话题
+                        </Menu.Item>
+                        <Menu.Item key="addsort" style={{fontSize:'16px'}}>
+                            添加分类
                         </Menu.Item>
                     </Menu>
+                    </div>
+                    <div className="close" onClick={this.triggerTopShow.bind(this)}>
+                        <span>{this.state.isTopShow ? '显示' : '隐藏'}</span>
+                        <Icon type={this.state.isTopShow ? 'down' : 'right'} />
+                    </div>
+                    </div>
                     {this.state.flag ?
                         <div className="topic-wrapper">
                             <Switch>
@@ -397,7 +405,8 @@ const mapStateToProps = state => {
     return {
         loadingState: state.getSortedContentSucceeded.data.state,
         clfId: state.changeClfId.id,
-        sortedMenu: state.getSortedMenuSucceeded.res
+        sortedMenu: state.getSortedMenuSucceeded.res,
+        search:state.searchStateReducer.data
     }
 };
 
@@ -414,6 +423,9 @@ const mapDispatchToProps = dispatch => {
         },
         getSortedMenuRequested: req => {
             dispatch(getSortedMenuRequested(req));
+        },
+        searchState: req =>{
+            dispatch(searchState(req))
         }
     }
 };

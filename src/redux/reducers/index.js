@@ -9,6 +9,7 @@ import onSearchContentReducer from './onSearchContentReducer';
 import addMessageReducer from './addMessageReducer';
 import paginationPageReducer from './paginationPageReducer';
 import homeModuleReducer from './homeModuleReducer';
+import searchStateReducer from './searchStateReducer';
 import {getUserInfoReducer, userFetchSuccess} from './userInfo';
 import {opinionSearchRequestedReducer,
     opinionSearchSucceededReducer,
@@ -83,7 +84,8 @@ const reducer = combineReducers({
     getTopicMessageRequested,
     getTopicMessageSucceeded,
     paginationPageReducer,
-    homeModuleReducer
+    homeModuleReducer,
+    searchStateReducer
 });
 
 export default reducer;

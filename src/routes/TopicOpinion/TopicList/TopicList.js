@@ -344,13 +344,6 @@ class TopicList extends React.Component {
         })
         ReactDOM.findDOMNode(this).scrollIntoView(); 
     }
-
-    triggerTopShow() {
-        this.setState({
-            isTopShow: !this.state.isTopShow
-        })
-    }
-
     dataChanged(data) {
         request(api_topic_message_list, {
             method: 'POST',
@@ -485,7 +478,9 @@ class TopicList extends React.Component {
                 key={index}
                 onClick={this.mediaClick.bind(this, index, item.value)}
                 className={index === this.state.mediaIndex ? 'item active' : 'item'}
-            ><span className="item-inner">{item.key==='docSearch'?'其它':item.value}<span className="count"> ({item.count})</span></span></div>
+            ><p className="item-inner">{item.key==='docSearch'?'其它':item.value}</p>
+            <p className="count">{item.count}</p>
+            </div>
         );
 
         const param = {
@@ -501,15 +496,7 @@ class TopicList extends React.Component {
         };
         return (
             <div className="topic-list-opinion">
-                <div className="close-open">
-                    <div className="count"> 信息列表： </div>    
-                    
-                    <div className="close" onClick={this.triggerTopShow.bind(this)}>
-                        <Icon type={this.state.isTopShow ? 'down' : 'right'} />
-                        <span>{this.state.isTopShow ? '隐藏' : '显示'}</span>
-                    </div>
-                </div>
-                <div className="sort-top" style={this.state.isTopShow ? {display: 'block'} : {display: 'none'}}>
+                <div className="sort-top" style={this.props.search ? {display: 'block'} : {display: 'none'}}>
                     <div className="sort-items">
                         <div className="left">时间：</div>
                         <div className="right">
@@ -557,7 +544,7 @@ class TopicList extends React.Component {
                         </div>
                     </div>
                     <div className="media-items">
-                        <div className="left">媒体排行：</div>
+                        <div className="left">媒体：</div>
                         <div className="right">
                             {Media}
                         </div>
@@ -596,7 +583,8 @@ const mapStateToProps = state => {
     return {
         themeColor: state.changeThemeReducer,
         keyword: state.onSearchContentReducer.keyword,
-        page:state.paginationPageReducer
+        page:state.paginationPageReducer,
+        search:state.searchStateReducer.data
     }
 };
 const mapDispatchToProps = dispatch => {

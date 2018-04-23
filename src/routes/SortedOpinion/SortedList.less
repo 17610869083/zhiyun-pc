@@ -1,5 +1,4 @@
 .sorted-opinion-list-container {
-  margin: 10px 0;
   font-size: 14px;
   background: #e4ebf7;
   position: relative;
@@ -27,24 +26,27 @@
   }
   .sort-top {
     background-color: #ffffff;
-    padding: 0 22px;
-    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+    padding:0 22px;
+    box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+    .sort-items:last-child{
+      border-bottom: none;
+    }
     .sort-items {
       display: flex;
-      min-height: 40px;
+      min-height:40px;
       line-height: 40px;
       border-bottom: 1px solid #E4EBF7;
       .left {
         padding-left: 10px;
         width: 100px;
-        color: #0c1124;
+        color:#0c1124;
         font-size: 14px;
       }
       .right {
         .item {
           display: inline-block;
-          min-width: 130px;
-          color: #898989;
+          min-width: 100px;
+          color:#898989;
           font-size: 12px;
           cursor: pointer;
           .count {
@@ -55,9 +57,9 @@
           .item-inner {
             border-radius: 5px;
             padding: 2px;
-            color: #007aff;
+            color: #00c8e7;
             .count {
-              color: #007aff;
+              color: #00c8e7;
             }
           }
         }
@@ -65,18 +67,19 @@
       .other {
         margin-top: 4px;
         height: 30px;
-        form{
+         form{
           display: flex;
           .ant-form-item{
             margin: 0 5px;
            }
          }
+
       }
     }
     .media-items {
       display: flex;
-      min-height: 40px;
-      line-height: 40px;
+      height: 60px;
+      padding-top: 16px;
       .left {
         padding-left: 10px;
         width: 100px;
@@ -86,7 +89,7 @@
       .right {
         .item {
           display: inline-block;
-          margin-right: 10px;
+          margin-right: 40px;
           color: #898989;
           font-size: 12px;
           cursor: pointer;
@@ -96,16 +99,15 @@
         }
         .active {
           .item-inner {
-            border-radius: 5px;
-            padding: 2px;
-            color: #007aff;
-            .count {
-              color: #007aff;
-            }
+            color: #00c8e7;
           }
+            .count {
+              color: #00c8e7;
+            }
         }
       }
     }
+
   }
   .middle {
     margin-top: 10px;

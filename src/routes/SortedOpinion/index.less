@@ -3,9 +3,18 @@
   display: flex;
   margin: 20px;
   .sorted-menu {
-    width: 200px;
+    width: 11%;
+    margin-right: 20px;
+    position: fixed;
+    left:85.6%;
     .operation {
-      display: flex;
+      width: 100%;
+      height: 44px;
+      background: #1b2133;
+      line-height: 44px;
+      padding-left: 20px;
+      color:#fff;
+      font-size: 18px;
       .operation-btn1 {
         width: 100px;
         height: 40px;
@@ -33,9 +42,10 @@
         align-items: center;
         height: 36px;
         cursor: pointer;
-        color: #008CEE;
-        background-color: #F2F2F2;
+        color: #fff;
+        background-color: #0d8da1;
         border-bottom: 1px solid #008CEE;
+        padding-left: 20px;
         .name {
           width: 144px;
           text-overflow: ellipsis;
@@ -108,12 +118,39 @@
     }
   }
   .sorted-opinion-option {
-    width: 100%;
+    width: 84%;
     margin-left: 20px;
     font-size: 14px;
     .topic-wrapper {
-      margin-top: 20px;
       background-color: #FFFFFF;
     }
+    .topic-top{
+      display: flex;
+      justify-content: space-between;
+      background: #0c1224;
+      align-items: center;
+      color:#fff;
+      .ant-menu-item-selected{
+       background-color: #fff;
+       color: #000;
+       border-bottom: none;
+       border-radius: 7px 7px 0 0;
+       margin-left: 10px;
+     }
+     .close{
+      cursor: pointer;
+      margin-right: 18px;
+      moz-user-select: -moz-none; 
+      -moz-user-select: none; 
+      -o-user-select:none; 
+      -khtml-user-select:none; 
+      -webkit-user-select:none; 
+      -ms-user-select:none; 
+      user-select:none;
+      span{
+        margin-right: 16px;
+      }
+  }
+   }
   }
 }

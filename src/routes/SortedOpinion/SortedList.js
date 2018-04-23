@@ -344,7 +344,9 @@ class SortedList extends React.Component {
                 key={item.value}
                 onClick={this.mediaClick.bind(this, item.value)}
                 className={item.value === carry ? 'item active' : 'item'}
-            ><span className="item-inner">{item.value}<span className="count"> ({item.count})</span></span></div>
+            ><p className="item-inner">{item.value}</p>
+             <p className="count"> {item.count}</p>
+            </div>
         );
         // 去重
         const Filter = similerArray.map((item) =>
@@ -375,15 +377,7 @@ class SortedList extends React.Component {
         };
         return (
             <div className="sorted-opinion-list-container">
-                <div className="close-open">
-                    <div className="count">信息列表：</div>
-                    
-                    <div className="close" onClick={this.triggerTopShow.bind(this)}>
-                        <Icon type={isTopShow ? 'down' : 'right'} />
-                        <span>{isTopShow ? '隐藏' : '显示'}</span>
-                    </div>
-                </div>
-                <div className="sort-top" style={this.state.isTopShow ? {display: 'block'} : {display: 'none'}}>
+                <div className="sort-top" style={this.props.search ? {display: 'block'} : {display: 'none'}}>
                     <div className="sort-items">
                         <div className="left">时间：</div>
                         <div className="right">
@@ -474,7 +468,8 @@ const mapStateToProps = state => {
         carryCount: state.getSortedContentSucceeded.data.carryCount,
         pageInfo: state.getSortedContentSucceeded.data.pageInfo,
         clfId: state.changeClfId.id,
-        page:state.paginationPageReducer
+        page:state.paginationPageReducer,
+        search:state.searchStateReducer.data
     }
 };
 const mapDispatchToProps = dispatch => {
