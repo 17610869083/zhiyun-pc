@@ -140,7 +140,7 @@ class MaterialOpinion extends React.Component {
                 arr.push(item.sid);
             }
         });
-        
+
         return arr;
     }
     checkedIdTrue() {
@@ -150,7 +150,7 @@ class MaterialOpinion extends React.Component {
                 arr.push(item.id);
             }
         });
-        
+
         return arr;
     }
     showRemoveModal() {
@@ -222,7 +222,7 @@ class MaterialOpinion extends React.Component {
         this.setState({
             current: itemId,
             materialCurrent:index
-            
+
         });
         this.props.getMaterialOpinionDetailRequested(itemId);
     }
@@ -403,12 +403,13 @@ class MaterialOpinion extends React.Component {
         const docList = this.props.docList ? this.props.docList : [{carry: '新闻'}];
         const OpinionDetailItems =docList.length!==0? docList.map((item, index) =>
             <li key={item.sid} className="opinion-detail-item">
+                <Checkbox
+                    checked={this.state.arr[index]}
+                    onChange={this.onChange.bind(this,index)}
+                />
                 <div className="item-top">
-                <div className="content">   
-                    <Checkbox
-                        checked={this.state.arr[index]}
-                        onChange={this.onChange.bind(this,index)}
-                    />
+                <div className="content">
+
                     <div className="negative">
                         <div className="inner-type" style={opinionColor(item.negative)}>
                             {opinionTrend(item.negative)}
@@ -421,7 +422,6 @@ class MaterialOpinion extends React.Component {
                     <div className="item-bottom">
                     <div className="resource">
                         <a href="">
-                            <Icon type="link" />
                             <span className="source">{item.source}</span>
                         </a>
                     </div>
@@ -462,9 +462,64 @@ class MaterialOpinion extends React.Component {
         return (
             <div className="materia-opinion-wrapper">
                 <div className="materia-opinion">
+                    <div className="opinion-list">
+                        <div className="top">
+                            <div className="left">
+                                <div className="choose-all">
+                                    <Checkbox
+                                        checked={this.state.checkedAll}
+                                        onChange={this.onAllChange.bind(this)}
+                                        className="colors"
+                                    >全选</Checkbox>
+                                </div>
+                                <div className="operate-all">
+                                    <span onClick={this.showRemoveModal.bind(this)}>移出素材库</span>
+                                    <Modal
+                                        title="移出素材库"
+                                        visible={this.state.removeModalVisible}
+                                        onOk={this.handleRemoveOk.bind(this)}
+                                        onCancel={this.handleRemoveCancel.bind(this)}
+                                    >
+                                        <div>确定将这 <b>{this.state.checkedLength}</b> 项从素材库移出吗？</div>
+                                    </Modal>
+                                </div>
+                                <div className="operate-all" onClick={this.getReportListRequested.bind(this)}>
+                                    <Dropdown overlay={addMultipleReportMenu} trigger={['click']}
+                                     getPopupContainer={ () => document.querySelector('.materia-opinion-wrapper')}
+                                    >
+                                        <span>加入简报</span>
+                                    </Dropdown>
+                                </div>
+                            </div>
+                            <div className="right">
+                                <Search
+                                    style={{width: '200px',marginRight: '20px'}}
+                                    placeholder="请输入您要搜索的内容"
+                                    onSearch={this.handleSearchBtn.bind(this)}
+                                />
+                            </div>
+                        </div>
+                        <div className="bottom">
+                            <ul className="opinion-detail-wrapper">
+                                {this.props.docList ? OpinionDetailItems : <div>暂无数据！</div>}
+                            </ul>
+                        </div>
+                        <div className="pagintion-wrapper">
+                            <Pagination showSizeChanger
+                                        className="pagintion"
+                                        defaultCurrent={1}
+                                        defaultPageSize={20}
+                                        onChange={this.onPaginationChange.bind(this)}
+                                        onShowSizeChange={this.onShowSizeChange.bind(this)}
+                                        total={pageInfo===undefined?0:pageInfo.rowcount}
+                                        current={parseInt(pageInfo===undefined?0:pageInfo.page,10)}
+                                        getPopupContainer={ () => document.querySelector('.materia-opinion-wrapper')}
+                            />
+                        </div>
+                    </div>
                     <div className="left-boxes">
                         <div className="first-box">
-                      
+
                             <div className="top" onClick={this.showAddMaterial.bind(this)}>
                             +新增素材库
                                 <Modal
@@ -483,7 +538,7 @@ class MaterialOpinion extends React.Component {
                                                 }],
                                                 initialValue:this.state.MaterialValue
                                             })(
-                                                <Input 
+                                                <Input
                                                 maxLength={'14'}
                                                 onChange={this.MaterialChange.bind(this)}
                                                 />
@@ -536,61 +591,6 @@ class MaterialOpinion extends React.Component {
                             </div>
                         </div>
                     </div>
-                    <div className="opinion-list">
-                        <div className="top">
-                            <div className="left">
-                                <div className="choose-all">
-                                    <Checkbox
-                                        checked={this.state.checkedAll}
-                                        onChange={this.onAllChange.bind(this)}
-                                    >全选</Checkbox>
-                                </div>
-                                <div className="operate-all">
-                                    <span onClick={this.showRemoveModal.bind(this)}>移出素材库</span>
-                                    <Modal
-                                        title="移出素材库"
-                                        visible={this.state.removeModalVisible}
-                                        onOk={this.handleRemoveOk.bind(this)}
-                                        onCancel={this.handleRemoveCancel.bind(this)}
-                                    >
-                                        <div>确定将这 <b>{this.state.checkedLength}</b> 项从素材库移出吗？</div>
-                                    </Modal>
-                                </div>
-                                <div className="operate-all" onClick={this.getReportListRequested.bind(this)}>
-                                    <Dropdown overlay={addMultipleReportMenu} trigger={['click']}
-                                     getPopupContainer={ () => document.querySelector('.materia-opinion-wrapper')}
-                                    >
-                                        <span>加入简报</span>
-                                    </Dropdown>
-                                </div>
-                            </div>
-                            <div className="right">
-                                <Search
-                                    style={{width: '200px',marginRight: '20px'}}
-                                    placeholder="请输入您要搜索的内容"
-                                    onSearch={this.handleSearchBtn.bind(this)}
-                                />
-                            </div>
-                        </div>
-                        <div className="bottom">
-                            <ul className="opinion-detail-wrapper">
-                                {this.props.docList ? OpinionDetailItems : <div>暂无数据！</div>}
-                            </ul>
-                        </div>
-                        <div className="pagintion-wrapper">
-                            <Pagination showSizeChanger
-                                        className="pagintion"
-                                        defaultCurrent={1}
-                                        defaultPageSize={20}
-                                        onChange={this.onPaginationChange.bind(this)}
-                                        onShowSizeChange={this.onShowSizeChange.bind(this)}
-                                        total={pageInfo===undefined?0:pageInfo.rowcount}
-                                        current={parseInt(pageInfo===undefined?0:pageInfo.page,10)}
-                                        getPopupContainer={ () => document.querySelector('.materia-opinion-wrapper')}
-                            />
-                        </div>
-                    </div>
-
                 </div>
             </div>
         )

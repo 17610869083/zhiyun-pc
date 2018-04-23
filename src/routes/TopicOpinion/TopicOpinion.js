@@ -79,7 +79,7 @@ class TopicOpinion extends React.Component {
               })
             this.props.setlocationPathname(firstTopicid);
           }
-          },100)   
+          },100)
     }
     // 添加专题
     handleAddTopic() {
@@ -101,9 +101,9 @@ class TopicOpinion extends React.Component {
     	  	visibleTwo:true,
     	  	topicId:topicID,
     	  	childRen:e.target.parentNode.parentNode.children.length
-    	  });  
+    	  });
     }
-    queryTopic(topicid,e){ 
+    queryTopic(topicid,e){
         this.setState({
             materialCurrent: topicid,
             current: 'topiclist',
@@ -133,7 +133,7 @@ class TopicOpinion extends React.Component {
                     search:`?catid=${this.state.inputValue}`
               });
                }
-               this.props.topicNavMessageRequested(new Date()) 
+               this.props.topicNavMessageRequested(new Date())
     	 })
     	 this.setState({
     	 	  visible:false,
@@ -171,7 +171,7 @@ class TopicOpinion extends React.Component {
     	 	  	   	  search:`?catid=${this.state.catid}`
     	 	  	   });
                }
-               this.props.topicNavMessageRequested(new Date())  
+               this.props.topicNavMessageRequested(new Date())
     	})
     	}
 
@@ -197,12 +197,12 @@ class TopicOpinion extends React.Component {
     	  	   	    	search:`?delTopicId=${this.state.topicId}`
     	  	   	    	});
                  }
-                 this.props.topicNavMessageRequested(new Date())  
+                 this.props.topicNavMessageRequested(new Date())
     	  });
     }
     delCancelTwo(){
     	this.setState({visibleTwo:false})
-    	
+
     }
     delOkThree(){
         this.setState({
@@ -272,9 +272,9 @@ class TopicOpinion extends React.Component {
                 <Menu.Item key="1">删除</Menu.Item>
                 <Menu.Item key="2">重命名</Menu.Item>
             </Menu>
-       );   	
+       );
         let {topicNavMessageSucceededState} =this.props;
-        const LeftTopicLists=topicNavMessageSucceededState!==1&&topicNavMessageSucceededState.map((item,index)=>            
+        const LeftTopicLists=topicNavMessageSucceededState!==1&&topicNavMessageSucceededState.map((item,index)=>
           <div className="a-class" key={index}>
           <div className="class-name" >
           <div className="leftBox" onClick={this.dropDown.bind(this)} data-index='1' title={item.catname}>
@@ -285,8 +285,8 @@ class TopicOpinion extends React.Component {
           </Dropdown> 
           </div>      
            <ul className="topics" style={{height:item.topicList&&item.topicList.length*30+'px'}}>
-              {item.topicList && item.topicList.map((iitem,iindex) => 
-                 <li  key={iitem.topicid} 
+              {item.topicList && item.topicList.map((iitem,iindex) =>
+                 <li  key={iitem.topicid}
                  className={this.state.materialCurrent === iitem.topicid ? 'a-topic  backGroundBlue' : 'a-topic'}
                   >
                   <span className="topicTitle" onClick={this.queryTopic.bind(this,iitem.topicid)}
@@ -300,7 +300,7 @@ class TopicOpinion extends React.Component {
              )}
              </ul>
          </div>
-        
+
         );
         return (
             <div className="topic-opinion">
@@ -349,7 +349,7 @@ class TopicOpinion extends React.Component {
                     </div>
                     </div>
                     <div className="topic-wrapper">
-                        <Switch>      
+                        <Switch>
                             <Route path="/topic/topiclist" component={TopicList} />
                             <Route path="/topic/addtopic" component={TopicAdd} />
                             <Route path="/topic/report" component={TopicReport}/>

@@ -236,7 +236,7 @@ class SortedOpinion extends React.Component {
         for(let i = 0 ;i<this.props.sortedMenu.length;i++){
                   if(this.props.sortedMenu[i]['clflist'][0]!==undefined){
                     clfid=this.props.sortedMenu[i]['clflist'][0]['clfid'];
-                    break;                  
+                    break;
                    }
         }
         this.timer = setTimeout(() => {
@@ -257,7 +257,7 @@ class SortedOpinion extends React.Component {
              }
     }
     componentDidUpdate(prevProps,prevState){
-          
+
         if(prevProps.location!==this.props.location){
     	  if(this.props.location.pathname==='/sortedopinion/addrule'){
     	  	      this.setState({isAddTopicShow:true})
@@ -268,7 +268,7 @@ class SortedOpinion extends React.Component {
                  })
           }
           else{
-    	  	this.setState({isAddTopicShow:false}) 
+    	  	this.setState({isAddTopicShow:false})
     	  }
        }
 
@@ -306,10 +306,10 @@ class SortedOpinion extends React.Component {
                 <ul className="clf-ul" ref={'clf-ul-'+item.catid} style={{display: 'block'}}>
                     {
                         item.clflist && item.clflist.map(sortItem =>
-                            <li className={clfId === sortItem.clfid ? 'clf-item-active' : 'clf-item'} 
+                            <li className={clfId === sortItem.clfid ? 'clf-item-active' : 'clf-item'}
                                 key={sortItem.clfid}
                             >
-                                <span className="name" 
+                                <span className="name"
                                 onClick={this.changeSortRoute.bind(this,sortItem.clfid)}
                                 title={sortItem.clfname}
                                 >{sortItem.clfname}</span>
