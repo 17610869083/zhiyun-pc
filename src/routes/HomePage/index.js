@@ -27,114 +27,96 @@ import {formatOpinionCount} from '../../utils/format'
 class HomePage extends React.Component {
 
     constructor() {
-        super();
-        this.state = {
-            opinionList: [],
-            todayOpinion: [],
-            yesterdayOpinion: [],
-            beforeYesterdayOpinion: [],
-            todayWarningOpinion: [],
-            yesterdayWarningOpinion: [],
-            beforeYesterdayWarningOpinion: [],
-            weiboAll: [],
-            weiboNegative: [],
-            opinionCountArr: [],
-            todayOpinionCount: {},
-            topicOpinion: [],
-            alertMsg:''
-        }
+      super();
+      this.state = {
+        opinionList: [],
+        todayOpinion: [],
+        yesterdayOpinion: [],
+        beforeYesterdayOpinion: [],
+        todayWarningOpinion: [],
+        yesterdayWarningOpinion: [],
+        beforeYesterdayWarningOpinion: [],
+        weiboAll: [],
+        weiboNegative: [],
+        opinionCountArr: [],
+        todayOpinionCount: {},
+        topicOpinion: [],
+        alertMsg: ''
+      }
     }
 
     componentDidMount() {
-        // 昨日和今日舆情
-        request(api_today_opinion)
-            .then((res) => {
-                this.setState({
-                    todayOpinionCount: res.data
-                });
-                // 最新舆情
-                request(api_newest_opinion)
-                    .then((res) => {
-                        if (res.data && res.data.code === 1) {
-                            const opinionList = res.data.doclist.slice(0,7);
-                            this.setState({
-                                opinionList: opinionList
-                            })
-                        }
+      // 昨日和今日舆情
+      request(api_today_opinion).then((res) => {
+        this.setState({todayOpinionCount: res.data});
+        // 最新舆情
+        request(api_newest_opinion).then((res) => {
+          if (res.data && res.data.code === 1) {
+            const opinionList = res.data.doclist.slice(0, 7);
+            this.setState({opinionList: opinionList})
+          }
 
-                        // 负面舆情
-                        request(api_newest_negative_opinion)
-                            .then((res) => {
-                                if (res.data) {
-                                    const todayOpinion = res.data['24hour'].docList ? res.data['24hour'].docList : [];
-                                    const yesterdayOpinion = res.data['yestoday'].docList ? res.data['yestoday'].docList : [];
-                                    const beforeYesterdayOpinion = res.data['bfyestoday'].docList ? res.data['bfyestoday'].docList : [];
-                                    this.setState({
-                                        todayOpinion: todayOpinion,
-                                        yesterdayOpinion: yesterdayOpinion,
-                                        beforeYesterdayOpinion: beforeYesterdayOpinion
-                                    })
-                                }
-
-                                // 预警舆情
-                                request(api_newest_warning_opinion)
-                                    .then((res) => {
-                                        if (res.data) {
-                                            const todayOpinion = res.data['24hour'].docList ? res.data['24hour'].docList : [];
-                                            const yesterdayOpinion = res.data['yestoday'].docList ? res.data['yestoday'].docList : [];
-                                            const beforeYesterdayOpinion = res.data['bfyestoday'].docList ? res.data['bfyestoday'].docList : [];
-                                            this.setState({
-                                                todayWarningOpinion: todayOpinion,
-                                                yesterdayWarningOpinion: yesterdayOpinion,
-                                                beforeYesterdayWarningOpinion: beforeYesterdayOpinion
-                                            })
-                                        }
-
-                                        // 微博舆情
-                                        request(api_weibo_opinion)
-                                            .then((res) => {
-                                                if (res.data.all) {
-                                                    this.setState({
-                                                        weiboAll: res.data.all,
-                                                        weiboNegative: res.data.negative
-                                                    })
-                                                }
-
-                                                // 舆情统计
-                                                request(api_count_opinion)
-                                                    .then((res) => {
-                                                        const {opinionCountArr} = formatOpinionCount(res.data);
-                                                        this.setState({
-                                                            opinionCountArr: opinionCountArr
-                                                        });
-
-                                                        // 专题舆情
-                                                        request(api_main_topic_opinion)
-                                                            .then((res) => {
-                                                                const topicOpinion = Object.values(res.data);
-                                                                this.setState({
-                                                                    topicOpinion: topicOpinion
-                                                                });
-                                                            });
-                                                    });
-                                            });
-                                    });
-                            });
-                    });
-            });
-            request(api_get_userinfo)
-                .then(res => {
-                if (res.data.alerMsg !== '') {
-                    this.setState({
-                    alertMsg: res.data.alerMsg
-                    })
-                }  
-                })
+          // 负面舆情
+          request(api_newest_negative_opinion).then((res) => {
+            if (res.data) {
+              const todayOpinion = res.data['24hour'].docList
+                ? res.data['24hour'].docList
+                : [];
+              const yesterdayOpinion = res.data['yestoday'].docList
+                ? res.data['yestoday'].docList
+                : [];
+              const beforeYesterdayOpinion = res.data['bfyestoday'].docList
+                ? res.data['bfyestoday'].docList
+                : [];
+              this.setState({todayOpinion: todayOpinion, yesterdayOpinion: yesterdayOpinion, beforeYesterdayOpinion: beforeYesterdayOpinion})
             }
-    informs(){
-        this.setState({
-            alertMsg:''
-        })
+
+            // 预警舆情
+            request(api_newest_warning_opinion).then((res) => {
+              if (res.data) {
+                const todayOpinion = res.data['24hour'].docList
+                  ? res.data['24hour'].docList
+                  : [];
+                const yesterdayOpinion = res.data['yestoday'].docList
+                  ? res.data['yestoday'].docList
+                  : [];
+                const beforeYesterdayOpinion = res.data['bfyestoday'].docList
+                  ? res.data['bfyestoday'].docList
+                  : [];
+                this.setState({todayWarningOpinion: todayOpinion, yesterdayWarningOpinion: yesterdayOpinion, beforeYesterdayWarningOpinion: beforeYesterdayOpinion})
+              }
+
+              // 微博舆情
+              request(api_weibo_opinion).then((res) => {
+                if (res.data.all) {
+                  this.setState({weiboAll: res.data.all, weiboNegative: res.data.negative})
+                }
+
+                // 舆情统计
+                request(api_count_opinion).then((res) => {
+                  const {opinionCountArr} = formatOpinionCount(res.data);
+                  this.setState({opinionCountArr: opinionCountArr});
+
+                  // 专题舆情
+                  request(api_main_topic_opinion).then((res) => {
+                    console.log(res);
+                    const topicOpinion = Object.values(res.data);
+                    this.setState({topicOpinion: topicOpinion});
+                  });
+                });
+              });
+            });
+          });
+        });
+      });
+      request(api_get_userinfo).then(res => {
+        if (res.data.alerMsg !== '') {
+          this.setState({alertMsg: res.data.alerMsg})
+        }
+      })
+    }
+    informs() {
+      this.setState({alertMsg: ''})
     }
     render() {
         const {

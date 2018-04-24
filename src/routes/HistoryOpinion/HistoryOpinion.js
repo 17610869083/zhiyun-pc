@@ -10,7 +10,7 @@ import {download_report,del_report,
 import {getLocalTime,responseTime} from '../../utils/format';
 
 const TabPane = Tabs.TabPane;
-                 
+
 class HistoryOpinion extends React.Component{
     constructor(props) {
         super(props);
@@ -59,7 +59,7 @@ class HistoryOpinion extends React.Component{
                       if(res.data && res.data.code!==-1){
                        this.setState({
                           reportTaskList :res.data.taskList,
-                          reportPageCount:parseInt(res.data.pageCount,10) 
+                          reportPageCount:parseInt(res.data.pageCount,10)
                        })
                     }
                   })
@@ -68,24 +68,24 @@ class HistoryOpinion extends React.Component{
                         if(res.data && res.data.code!==-1){
                         this.setState({
                             reportTaskList:responseTime(res.data.taskList)
-                        })  
+                        })
                         }
                     })
-                },7000)           
+                },7000)
             request(public_sentiment_report+'&documenttype=excel').then(res=>{
                 if(res.data && res.data.code!==-1){
                     this.setState({
                          tasklist:res.data.taskList,
-                         pageCount:parseInt(res.data.pageCount,10) 
-                    })  
-                }                                  
-             }) 
+                         pageCount:parseInt(res.data.pageCount,10)
+                    })
+                }
+             })
              setTimeout(()=>{
                 request(public_sentiment_report+'&documenttype=excel').then(res=>{
                     if(res.data && res.data.code!==-1){
                     this.setState({
                          tasklist:responseTime(res.data.taskList)
-                    })  
+                    })
                    }
                 })
             },7000)
@@ -107,28 +107,28 @@ class HistoryOpinion extends React.Component{
              return;
         }
         document.querySelector('.title'+this.state.reportId).innerHTML=e.target.value!==''?e.target.value:e.target.placeholder;
-        let taskname=e.target.value!==''?e.target.value:e.target.placeholder;      
+        let taskname=e.target.value!==''?e.target.value:e.target.placeholder;
         request(api_removetitle_report,{
             method: 'POST',
             headers: {
                   "Content-Type": "application/x-www-form-urlencoded"
-            }, 
+            },
            body:`taskname=${taskname}&taskid=${this.state.reportId}`
           }).then(res=>{
                  if(this.state.type==='1'){
                     request(public_sentiment_report+'&documenttype=excel').then(res=>{
                         this.setState({
                              tasklist:res.data.taskList,
-                             pageCount:parseInt(res.data.pageCount,10) 
-                        })                                    
-                    }) 
+                             pageCount:parseInt(res.data.pageCount,10)
+                        })
+                    })
                  }else{
                     request(public_sentiment_report+'&documenttype=doc').then(res=>{
                         this.setState({
                             reportTaskList:res.data.taskList,
-                             pageCount:parseInt(res.data.pageCount,10) 
-                        })                                    
-                    }) 
+                             pageCount:parseInt(res.data.pageCount,10)
+                        })
+                    })
                  }
           })
     }
@@ -146,7 +146,7 @@ class HistoryOpinion extends React.Component{
             method: 'POST',
             headers: {
                   "Content-Type": "application/x-www-form-urlencoded"
-            }, 
+            },
            body:`taskid=${this.state.delId}`
           }).then(res=>{
             if(this.state.type==='1'){
@@ -155,20 +155,20 @@ class HistoryOpinion extends React.Component{
                          tasklist:res.data.taskList,
                          pageCount:parseInt(res.data.pageCount,10) ,
                          visible:false
-                    })                                    
-                }) 
+                    })
+                })
             }else{
                 request(public_sentiment_report+'&documenttype=doc').then(res=>{
                     this.setState({
                         reportTaskList:res.data.taskList,
                          pageCount:parseInt(res.data.pageCount,10) ,
                          visible:false
-                    })                                    
-                }) 
+                    })
+                })
             }
 
           })
-          
+
     }
     handleCancel(){
         this.setState({
@@ -198,7 +198,7 @@ class HistoryOpinion extends React.Component{
             request(public_sentiment_report+'&documenttype=doc').then(res=>{
                 this.setState({
                    reportTaskList :res.data.taskList,
-                   reportPageCount:parseInt(res.data.pageCount,10) 
+                   reportPageCount:parseInt(res.data.pageCount,10)
                 })
            })
          }
@@ -243,14 +243,14 @@ class HistoryOpinion extends React.Component{
             method: 'POST',
             headers: {
                   "Content-Type": "application/x-www-form-urlencoded"
-            }, 
+            },
            body:`taskid=${taskId}`
           })
 
- 
+
     }
     //下载
-    down(e){        
+    down(e){
            let tasklist=e.target.dataset.source;
            let id=e.target.dataset.id;
            let finishdate=getLocalTime(parseInt(e.target.dataset.finishdate,10));
@@ -258,7 +258,7 @@ class HistoryOpinion extends React.Component{
                 method: 'POST',
                 headers: {
                       "Content-Type": "application/x-www-form-urlencoded"
-                }, 
+                },
                body:`source=${tasklist}&taskid=${id}&finishDate=${finishdate}`
               }).then(res=>{
                  let downloadUrl= 'http://web.is8.com.cn'+res.data.downloadUrl;
@@ -271,14 +271,14 @@ class HistoryOpinion extends React.Component{
                 method: 'POST',
                 headers: {
                       "Content-Type": "application/x-www-form-urlencoded"
-                }, 
+                },
                body:`documenttype=excel&pages=${e}`
              }).then(res=>{
                    if(res.data.taskList!==undefined){
                          this.setState({
                             tasklist:res.data.taskList,
                             page:e
-                         }) 
+                         })
                    }
              })
         }else if(this.state.queryState==='3'){
@@ -288,7 +288,7 @@ class HistoryOpinion extends React.Component{
                     this.setState({
                        tasklist:res.data.taskList,
                        page:e
-                    }) 
+                    })
                   }
               })
         }
@@ -297,14 +297,14 @@ class HistoryOpinion extends React.Component{
                 method: 'POST',
                 headers: {
                       "Content-Type": "application/x-www-form-urlencoded"
-                }, 
+                },
                body:`taskname=${this.state.titleInputValue}&pages=${e}&sdate=${this.state.startTime}&edate=${this.state.endTime}`
              }).then(res=>{
                    if(res.data.taskList!==undefined){
                          this.setState({
                             tasklist:res.data.taskList,
                             page:e
-                         }) 
+                         })
                    }
              })
         }
@@ -316,14 +316,14 @@ class HistoryOpinion extends React.Component{
            method: 'POST',
            headers: {
                  "Content-Type": "application/x-www-form-urlencoded"
-           }, 
+           },
           body:`documenttype=doc&pages=${e}`
          }).then(res=>{
               if(res.data.taskList!==undefined){
                     this.setState({
                         reportTaskList:res.data.taskList,
                         reportPage:e
-                    }) 
+                    })
               }
         })
     }else if(this.state.queryState==='3'){
@@ -333,7 +333,7 @@ class HistoryOpinion extends React.Component{
               this.setState({
                 reportTaskList:res.data.taskList,
                 reportPage:e
-              }) 
+              })
             }
         })
     }else{
@@ -341,14 +341,14 @@ class HistoryOpinion extends React.Component{
             method: 'POST',
             headers: {
                   "Content-Type": "application/x-www-form-urlencoded"
-            }, 
+            },
            body:`taskname=${this.state.titleInputValue}&pages=${e}&sdate=${this.state.startTime}&edate=${this.state.endTime}`
          }).then(res=>{
                if(res.data.taskList!==undefined){
                      this.setState({
                         reportTaskList:res.data.taskList,
                         reportPage:e
-                     }) 
+                     })
                }
          })
        }
@@ -359,7 +359,7 @@ class HistoryOpinion extends React.Component{
             method: 'POST',
             headers: {
                   "Content-Type": "application/x-www-form-urlencoded"
-            }, 
+            },
            body:`taskid=${id}&source=${e.target.dataset.source}`
            }).then(res=>{
              if(res.data.code==='1'){
@@ -369,10 +369,8 @@ class HistoryOpinion extends React.Component{
                     visiblePreview:true,
                     downloadUrl:'http://web.is8.com.cn/om'+res.data.downloadUrl
                    })
-             }       
-
+             }
            })
-         
     }
 
     //查询报告
@@ -384,14 +382,14 @@ class HistoryOpinion extends React.Component{
             method: 'POST',
             headers: {
                   "Content-Type": "application/x-www-form-urlencoded"
-            }, 
+            },
             body:`taskname=${this.state.titleInputValue}&sdate=${this.state.startTime}&edate=${this.state.endTime}`
           }).then(res=>{
                 if(res.data){
                      this.setState({
                         [tasklist] :res.data.taskList,
                         [pageCount]:parseInt(res.data.pageCount,10),
-                        queryState:'2'                      
+                        queryState:'2'
                      })
                 }
           })
@@ -403,7 +401,7 @@ class HistoryOpinion extends React.Component{
                  titleInputValue:value
            })
     }
-    
+
     startTime= (date, dateString) =>{
             this.setState({
                 startTime:dateString
@@ -421,7 +419,7 @@ class HistoryOpinion extends React.Component{
             method: 'POST',
             headers: {
                   "Content-Type": "application/x-www-form-urlencoded"
-            }, 
+            },
             body:`taskids=${batchdelID}`
           }).then(res=>{
                  message.success(res.data.mess)
@@ -432,9 +430,8 @@ class HistoryOpinion extends React.Component{
                              tasklist:res.data.taskList,
                              pageCount:parseInt(res.data.pageCount,10) ,
                              selectedRowKeys:[]
-                         })    
-                    
-                     }) 
+                         })
+                     })
 
                     }else{
                         request(public_sentiment_report+'&documenttype=doc').then(res=>{
@@ -445,7 +442,6 @@ class HistoryOpinion extends React.Component{
                             })
                           })
                     }
-
                  }
           })
    }
@@ -467,13 +463,13 @@ class HistoryOpinion extends React.Component{
              sourceSummary:type,
              queryState:'3',
              page:1
-          })         
+          })
           request(api_export_small +`&source=${type}&pages=1`).then(res=>{
                       this.setState({
                            tasklist :res.data.taskList,
                            pageCount:parseInt(res.data.pageCount,10)
                       })
-                     
+
           })
    }
 
@@ -488,7 +484,7 @@ class HistoryOpinion extends React.Component{
                       reportTaskList :res.data.taskList,
                       reportPageCount:parseInt(res.data.pageCount,10)
                  })
-                
+
      })
    }
     render(){
@@ -510,23 +506,23 @@ class HistoryOpinion extends React.Component{
     title: '标题',
     dataIndex: 'name',
     width:'20%',
-    render: text =><span> 
+    render: text =><span>
         <i className={this.state.type==='1'?'fa fa-file-excel-o':'fa fa-file-word-o'} aria-hidden="true"></i>
         <span className={'title'+text.Id} onBlur={this.blur.bind(this)}
         data-id={text.Id}
-    
+
         >{text.taskname}</span></span>,
   }, {
     title: '来源类型',
     dataIndex: 'type',
     width:'20%',
-    render: text =><span>{this.state.sourceType[text.source]}</span> 
+    render: text =><span>{this.state.sourceType[text.source]}</span>
   },{
     title: '操作',
     dataIndex: 'operation',
     width:'20%',
     render:text=>(
-        
+
         <div>
         <Tooltip title="下载报告">
         <i className="fa fa-download" aria-hidden="true" style={text[0]['taskstate']==='2'?{color:'black'}:{color:'gray',cursor:'text'}}
@@ -574,12 +570,12 @@ class HistoryOpinion extends React.Component{
     title: '生成状态',
     dataIndex: 'status',
     width:'20%',
-    render:text=>(     
-        status.call(this,text) 
+    render:text=>(
+        status.call(this,text)
     )
   }];
   //判断生成报告的三种状态
-  function status(data){ 
+  function status(data){
         if(data[0].taskstate==='3'){
          return   <span>失败<i className="fa fa-repeat" aria-hidden="true" title="再次生成" onClick={this.Regenerate.bind(this)}
                    data-source={data[0].source}
@@ -592,8 +588,8 @@ class HistoryOpinion extends React.Component{
         }else{
          return  <Icon type="loading" />
         }
-    } 
-  const data=[]; 
+    }
+  const data=[];
   this.state.tasklist.map((item,index)=>
     data.push({
     key:index,
@@ -602,7 +598,7 @@ class HistoryOpinion extends React.Component{
     name: item,
     address:getLocalTime(item.createdate),
     status: [item,index]
-         }) 
+         })
       )
   const reportData=[];
   this.state.reportTaskList.forEach((item,index)=>{
@@ -613,15 +609,15 @@ class HistoryOpinion extends React.Component{
         name: item,
         address:getLocalTime(item.createdate),
         status: [item,index]
-             })   
-  })  
+             })
+  })
   const {selectedRowKeys} =this.state;
   const rowSelection = {
     selectedRowKeys,
     onChange: (selectedRowKeys, selectedRows) => {
       let batchdelID=[];
       for(let i in selectedRows){
-        batchdelID.push(selectedRows[i]['name']['Id'])  
+        batchdelID.push(selectedRows[i]['name']['Id'])
       }
          this.setState({
             batchdelID:batchdelID,
@@ -631,16 +627,16 @@ class HistoryOpinion extends React.Component{
     getCheckboxProps: record => ({
        disabled: record.name === 'Disabled User'
     })
-    
-  }; 
+
+  };
     return(
         <div className="historyBox">
-           
+
            <div>
-           <Tabs tabBarExtraContent={operations}  
+           <Tabs tabBarExtraContent={operations}
            defaultActiveKey="1"
            activeKey={this.state.type}
-           onTabClick={this.onTabClick.bind(this)}        
+           onTabClick={this.onTabClick.bind(this)}
            >
            <TabPane tab="舆情摘要" key="1">
            <div className="historyHeader">
@@ -669,8 +665,8 @@ class HistoryOpinion extends React.Component{
                 onClick={this.searchSummary.bind(this,'clf')}
                 >分类摘要</div>
            </div>
-                <Table rowSelection={rowSelection} 
-                columns={columns} 
+                <Table rowSelection={rowSelection}
+                columns={columns}
                 dataSource={data}
                 bordered
                 pagination={{
@@ -701,8 +697,8 @@ class HistoryOpinion extends React.Component{
                 onClick={this.searchReportSummary.bind(this,'topicReport_doc')}
                 >专题报告</div>
            </div>
-                <Table rowSelection={rowSelection} 
-                columns={columns} 
+                <Table rowSelection={rowSelection}
+                columns={columns}
                 dataSource={reportData}
                 bordered
                 pagination={{
@@ -740,12 +736,12 @@ class HistoryOpinion extends React.Component{
           onOk={this.handleOkPreview.bind(this)}
           onCancel={this.handleCancelPreview.bind(this)}
           width="50%"
-         
+
         >
-         <iframe src={this.state.downloadUrl} 
+         <iframe src={this.state.downloadUrl}
          title="load"
-         width="100%"  height="500px"  
-         id="Iframe"       
+         width="100%"  height="500px"
+         id="Iframe"
          ></iframe>
         </Modal>
         </div>

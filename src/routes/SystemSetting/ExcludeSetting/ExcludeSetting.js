@@ -29,7 +29,7 @@ class ExcludeSetting extends React.Component{
                    this.setState({
                      allKeywords:res.data.show2000List
                    })
-              }                 
+              }
         })
       }
       tabsChange(key){
@@ -47,7 +47,7 @@ class ExcludeSetting extends React.Component{
                        if(res.data.show2020List){
                             this.setState({
                               negativeExclusion:res.data.show2020List,
-                      
+
                             })
                        }
                   })
@@ -62,13 +62,13 @@ class ExcludeSetting extends React.Component{
                    if(res.data.show1020List){
                         this.setState({
                           negativeDiscontinuation:res.data.show1020List,
-                       
+
                         })
                    }
               })
             }
 
-      } 
+      }
       componentDidUpdate(prevProps,prevState){
         if(prevState.delMessage!==this.state.delMessage){
             request(exclude_discontinuation,{
@@ -81,11 +81,9 @@ class ExcludeSetting extends React.Component{
                 if(res.data.show2000List){
                        this.setState({
                            allKeywords:res.data.show2000List,
-                           
                        })
-                }    
-                
-                
+                }
+
                 request(exclude_discontinuation,{
                   method:'POST',
                   headers: {
@@ -97,8 +95,8 @@ class ExcludeSetting extends React.Component{
                          this.setState({
                           negativeExclusion:res.data.show2020List
                          })
-                  } 
-                  
+                  }
+
                   request(exclude_discontinuation,{
                     method:'POST',
                     headers: {
@@ -110,7 +108,7 @@ class ExcludeSetting extends React.Component{
                            this.setState({
                             negativeDiscontinuation:res.data.show1020List
                            })
-                    }                   
+                    }
                 })
               })
         })
@@ -127,8 +125,8 @@ class ExcludeSetting extends React.Component{
                        this.setState({
                         allKeywords:res.data.show2000List
                        })
-                }   
-                
+                }
+
                 request(exclude_discontinuation,{
                   method:'POST',
                   headers: {
@@ -140,8 +138,8 @@ class ExcludeSetting extends React.Component{
                          this.setState({
                           negativeExclusion:res.data.show2020List
                          })
-                  }  
-                  
+                  }
+
                   request(exclude_discontinuation,{
                     method:'POST',
                     headers: {
@@ -153,16 +151,16 @@ class ExcludeSetting extends React.Component{
                            this.setState({
                             negativeDiscontinuation:res.data.show1020List
                            })
-                    }                   
+                    }
                   })
-                  
+
               })
           })
         }
        }
 
       saveMessage(data){
-            
+
            this.setState({
                saveMessage:data
            })
@@ -173,7 +171,7 @@ class ExcludeSetting extends React.Component{
       }
 
       showModal(){
-           
+
       }
 
       addRule(){
@@ -196,10 +194,10 @@ class ExcludeSetting extends React.Component{
       onCreateTopic(){
 
       }
-      
+
       render(){
            return (
-               <div className="excludeBox">                   
+               <div className="excludeBox">
                    <Tabs defaultActiveKey="2000" onChange={this.tabsChange.bind(this)}>
                    <TabPane tab="全局排除" key="2000" style={{marginLeft:'3%'}}>
                    <p><i className="fa fa-bell" aria-hidden="true" style={{marginRight:'5px'}}></i>全局排除条件
@@ -211,13 +209,13 @@ class ExcludeSetting extends React.Component{
                      <div className="mediaType" >
                      <span style={{marginRight:'29px',float:'left'}}>关键词组合</span>
                      <Col span={14}>
-                     <SystemTopic num1={this.state.allKeywords} name="email"                    
+                     <SystemTopic num1={this.state.allKeywords} name="email"
                           onDelwayRule={this.onDelwayRule.bind(this)}
                           onCreateTopic={this.onCreateTopic.bind(this)}
                           type={this.state.type}
-                          saveMessage={this.saveMessage.bind(this)}  
-                          mode='excludeSetting'            
-                       /> 
+                          saveMessage={this.saveMessage.bind(this)}
+                          mode='excludeSetting'
+                       />
                      </Col>
                      </div>
                      </Row>
@@ -233,16 +231,16 @@ class ExcludeSetting extends React.Component{
                    </p>
                      <Row>
                      <div className="mediaType" >
-                     
+
                      <span style={{marginRight:'29px',float:'left'}}>关键词组合</span>
                      <Col span={14}>
-                     <SystemTopic num1={this.state.negativeExclusion} name="email" 
+                     <SystemTopic num1={this.state.negativeExclusion} name="email"
                           onDelwayRule={this.onDelwayRule.bind(this)}
                           onCreateTopic={this.onCreateTopic.bind(this)}
                           type={this.state.type}
                           saveMessage={this.saveMessage.bind(this)}
-                          mode='excludeSetting'                        
-                     /> 
+                          mode='excludeSetting'
+                     />
                      </Col>
                      </div>
                      </Row>
@@ -260,16 +258,16 @@ class ExcludeSetting extends React.Component{
 
                      <Row>
                      <div className="mediaType" >
-                     
+
                      <span style={{marginRight:'29px',float:'left'}}>关键词组合</span>
                      <Col span={14}>
-                     <SystemTopic num1={this.state.negativeDiscontinuation} name="email" 
+                     <SystemTopic num1={this.state.negativeDiscontinuation} name="email"
                            onDelwayRule={this.onDelwayRule.bind(this)}
                            onCreateTopic={this.onCreateTopic.bind(this)}
                            type={this.state.type}
                            saveMessage={this.saveMessage.bind(this)}
                            mode='excludeSetting'
-                     /> 
+                     />
                      </Col>
                      </div>
                      </Row>
@@ -280,6 +278,6 @@ class ExcludeSetting extends React.Component{
                    </Tabs>
                </div>
            )
-      } 
+      }
 }
 export default ExcludeSetting;

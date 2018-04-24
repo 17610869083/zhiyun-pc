@@ -200,9 +200,6 @@ class TopicReport extends React.Component {
                     arr: new Array(40).fill(false)
                 })
              }
-
-
-
         })
         this.setState({
             deleteMultipleModalVisible: false

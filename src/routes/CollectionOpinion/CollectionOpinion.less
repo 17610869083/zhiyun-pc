@@ -17,8 +17,9 @@
           height: 40px;
           line-height: 40px;
           text-align: center;
-          border:1px solid #008cee;
-          color:#008cee;
+          background-color: #0c1224;
+          // border:1px solid #008cee;
+          color:#fff;
           cursor: pointer;
           .btn {
             width: 100%;
@@ -51,7 +52,7 @@
             .collection-list-item-active {
               height: 40px;
               line-height: 40px;
-              background-color: #007aff;
+              background-color: #0d8da1;
               color: #ffffff;
               display: flex;
               justify-content: space-between;
@@ -76,15 +77,21 @@
     .opinion-list {
       box-shadow: 0 5px 10px rgba(0,0,0,0.1);
       flex: 1 0 200px;
-      margin-left: 20px;
+      margin-right: 20px;
+      .ant-checkbox + span{
+        padding-left: 35px;
+        color: #0d8da1;
+      }
       .top {
-        height: 60px;
+        height: 40px;
         display: flex;
         align-items: center;
         justify-content: space-between;
-        padding-left: 20px;
+        padding-left: 10px;
         border-bottom: 1px solid #eeeeee;
         background: #F7F7F7;
+        color:#fff;
+        background-color: #0c1224;
         .left {
           display: flex;
           justify-content: flex-start;
@@ -107,7 +114,7 @@
         .opinion-detail-wrapper {
           .opinion-detail-item {
             border-bottom: 1px solid #eeeeee;
-            padding-left: 20px;
+            padding-left: 10px;
             padding-right: 20px;
             min-height: 85px;
             display: flex;
@@ -120,7 +127,15 @@
               display: flex;
               padding-top: 10px;
               padding-bottom: 10px;
+              border-left: 1px solid #ccc;
+              margin-left: 10px;
               flex-direction: column;
+              .ant-checkbox-wrapper{
+                top: 30px;
+              }
+              .laba{
+                top: 30px;
+              }
               .conent{
                  display: flex;
               }
@@ -142,7 +157,7 @@
                 cursor: pointer;
               }
             }
-            .item-middle {    
+            .item-middle {
               margin-left: 10%;
               .left {
                 width: 80%;
@@ -155,7 +170,7 @@
                   padding-left: 20px;
                 }
               }
-              .right {               
+              .right {
                 text-align: center;
                 .base-operate {
                   height: 30px;
@@ -176,7 +191,7 @@
                   margin-left: 10px;
                 }
               }
-              .resource {              
+              .resource {
                 .source {
                   color: #42b9f5;
                   padding-left: 6px;

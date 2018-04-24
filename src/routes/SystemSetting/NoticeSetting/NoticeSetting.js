@@ -15,22 +15,22 @@ class NoticeSetting extends React.Component{
                 addInput:[''],
                 valueInput:[''],
                 styleBtn:1,
-                timeBtn:1,                
+                timeBtn:1,
                 disBlock: {visibility: 'visible',color:'#ff0000',marginTop:'7px'},
                 disNone: {visibility: 'hidden'},
                 pushState:'0',
                 startEveryDay:0,
                 endEveryDay:0,
                 emailConfig:'' ,
-                frequency:0               
+                frequency:0
             }
        }
     onChange(e){
          console.log(e)
-    } 
+    }
     componentDidMount(){
           request(user_message).then(res=>{
-                 
+
                  if(res.data.emailConfig!==undefined){
                  this.setState({
                         valueInput:res.data.emailAddressList,
@@ -47,7 +47,7 @@ class NoticeSetting extends React.Component{
           this.setState({
             valueInput:this.state.valueInput.concat({email:''})
           })
-          
+
     }
     delInput(index,id,e){
         let valueInput=this.state.valueInput;
@@ -60,7 +60,7 @@ class NoticeSetting extends React.Component{
           method: 'POST',
           headers: {
                 "Content-Type": "application/x-www-form-urlencoded"
-          }, 
+          },
           body:`id=${id}`
         }).then(res=>{
              message.success(res.data.message)
@@ -83,7 +83,7 @@ class NoticeSetting extends React.Component{
           method: 'POST',
           headers: {
                 "Content-Type": "application/x-www-form-urlencoded"
-          }, 
+          },
           body:`emailAddressList=${JSON.stringify(this.state.valueInput)}&emailConfig=${JSON.stringify(delemailConfig)}`
         })
          message.success('邮箱推送关闭')
@@ -124,8 +124,8 @@ class NoticeSetting extends React.Component{
       this.props.form.validateFields((err, values) => {
         if (!err) {
             let frequency=parseInt(values.frequency[0],10);
-            let startTime=values['startTime'].format('HH:mm');   
-            let endTime=values['endTime'].format('HH:mm');   
+            let startTime=values['startTime'].format('HH:mm');
+            let endTime=values['endTime'].format('HH:mm');
             let warningNum,negativeNum,emailConfig;
             if(values.service.length===2){
                    warningNum='1';
@@ -136,7 +136,7 @@ class NoticeSetting extends React.Component{
             }else{
                    warningNum='0';
                    negativeNum='1';
-            } 
+            }
             if(this.state.emailConfig!==''){
                 emailConfig={
                 endEveryDay:endTime,
@@ -147,7 +147,7 @@ class NoticeSetting extends React.Component{
                 startEveryDay:startTime,
                 userId:this.state.emailConfig.userId,
                 warning:warningNum,
-                weekendOpen:values.weekendOpen.toString() 
+                weekendOpen:values.weekendOpen.toString()
                 }
             }else{
               emailConfig={
@@ -158,15 +158,15 @@ class NoticeSetting extends React.Component{
                 startEveryDay:startTime,
                 userId:this.state.emailConfig.userId,
                 warning:warningNum,
-                weekendOpen:values.weekendOpen.toString() 
+                weekendOpen:values.weekendOpen.toString()
                 }
-            }   
+            }
 
             request(save_mail_Config,{
               method: 'POST',
               headers: {
                     "Content-Type": "application/x-www-form-urlencoded"
-              }, 
+              },
               body:`emailAddressList=${JSON.stringify(this.state.valueInput)}&emailConfig=${JSON.stringify(emailConfig)}`
             })
         }
@@ -176,26 +176,26 @@ class NoticeSetting extends React.Component{
            const {getFieldDecorator}=this.props.form;
            const input=this.state.valueInput.map((item,index)=>
            <Row key={index} className="inputBox">
-            <Col span={5}></Col> 
-            <Col span={5}>  
+            <Col span={5}></Col>
+            <Col span={5}>
             <div className="inputBoxs">
             <FormItem className="timePickerBox">
                 {getFieldDecorator('userEmail'+index,{
                     rules: [{ required:'string', message: 'Please input your username!' }],
                              initialValue:item.email
-                 })( 
+                 })(
                   <Input  style={{width:'240px'}} placeholder="请输入正确的邮箱地址"
                   onChange={this.changeValue.bind(this,index)}
                  />
-                  )} 
-            </FormItem >    
-            <Icon type="minus-circle" onClick={this.delInput.bind(this,index,item.id)} className="closeBtn" 
+                  )}
+            </FormItem >
+            <Icon type="minus-circle" onClick={this.delInput.bind(this,index,item.id)} className="closeBtn"
             style={this.state.valueInput.length>1?this.state.disBlock:this.state.disNone}
             ></Icon>
             </div>
             </Col>
             </Row>
-            ); 
+            );
             const plainOptions = [
               { label: '开启预警', value: 'warning' },
               { label: '开启负面', value: 'negative'},
@@ -213,30 +213,30 @@ class NoticeSetting extends React.Component{
                 value: '10分钟',
                 label: '10分钟'
               }
-            ];  
+            ];
             const style={'background': '#808080',
-              'border':'none'}; 
+              'border':'none'};
             const style1={
               'background': '#108ee9',
               'border':'none'
-            }  
+            }
             let frequency=[this.state.frequency+'分钟'];
             const startConfig = {
               rules: [{ type: 'object', required: true, message: 'Please select time!' }],
               initialValue:moment(this.state.startEveryDay,format)
-            };  
+            };
             const endConfig = {
               rules: [{ type: 'object', required: true, message: 'Please select time!' }],
               initialValue:moment(this.state.endEveryDay,format)
-            };  
+            };
             return(
-                   
+
                  <div className="noticeBox">
                       <div>
                     <p className="backgroundBox"> 推送开关</p>
                             <Row>
                                <Col span={5}></Col>
-                               
+
                                <Col >
                                <Button type="primary" className="sizingButton" style={this.state.pushState==='1'?style1:style}
                                onClick={this.openWarn.bind(this)}
@@ -250,7 +250,7 @@ class NoticeSetting extends React.Component{
                             </Row>
                       </div>
                       <Form onSubmit={this.settingSubmit.bind(this)}>
-                      <div className="slider" ref="slider" 
+                      <div className="slider" ref="slider"
                       style={this.state.pushState==='0'?{height:'0px'}:{height:(450+this.state.valueInput.length*50)+'px'}}>
                       <p className="backgroundBox">  推送方式</p>
                             <Row >
@@ -267,17 +267,17 @@ class NoticeSetting extends React.Component{
                                     })(
                                          <CheckboxGroup options={plainOptions}/>
                                     )}
-                                </FormItem>   
+                                </FormItem>
                                 </div>
-                               </Col>                                                        
-                            </Row>    
+                               </Col>
+                            </Row>
                             {input}
                             <Row>
                                 <Col span={5}></Col>
                                 <Col>
                                 <Button type="primary" className="mlBox" onClick={this.addInput.bind(this)}>+新增地址</Button>
                                 </Col>
-                            </Row>                
+                            </Row>
                             <p className="backgroundBox">推送时间设置</p>
                             <Row >
                                <Col span={3}></Col>
@@ -288,7 +288,7 @@ class NoticeSetting extends React.Component{
                                     {getFieldDecorator('startTime', startConfig)(
                                         <TimePicker  format={format} onChange={this.timePicker.bind(this)}/>
                                     )}
-                                </FormItem>                              
+                                </FormItem>
                                <div className="timePicker">--</div>
                                <FormItem className="timePickerBox">
                                     {getFieldDecorator('endTime', endConfig)(
@@ -300,7 +300,7 @@ class NoticeSetting extends React.Component{
                             </Row>
                             <Row>
                              <Col span={3}></Col>
-                             <Col span={2}><span style={{fontSize:'14px'}}>推送频次：</span></Col> 
+                             <Col span={2}><span style={{fontSize:'14px'}}>推送频次：</span></Col>
                              <Col span={15}>
                              <div className="inputBoxs">
                              <Button type="primary" className="sizingButton"
@@ -315,10 +315,10 @@ class NoticeSetting extends React.Component{
                                {getFieldDecorator('frequency', {
                                  rules: [{ required:'array', message: 'Please input your username!' }],
                                          initialValue:frequency
-                               })( 
+                               })(
                                <Cascader options={options}  placeholder="推送时间"  />
-                              )} 
-                           </FormItem >                             
+                              )}
+                           </FormItem >
                              <span style={{fontSize:'14px',marginLeft:'10px',marginTop:'5px'}}>推送一次</span>
                              </div>
                              </Col>
@@ -332,27 +332,27 @@ class NoticeSetting extends React.Component{
                                {getFieldDecorator('weekendOpen', {
                                  rules: [{ required: true, message: 'Please input your username!' }],
                                          initialValue:parseInt(this.state.emailConfig.weekendOpen,10)
-                               })( 
+                               })(
                                 <RadioGroup name="radiogroup"  >
                                 <Radio value={1}>推送</Radio>
                                 <Radio value={2}>不推送</Radio>
                                 </RadioGroup>
-                              )} 
+                              )}
                            </FormItem >
                              </div>
                              </Col>
                             </Row>
-                      
+
                       <Row>
                       <Col span={5}></Col>
                       <Col ><Button type="primary" htmlType="submit" style={{marginTop:'20px'}}
-                      >保存</Button></Col>                     
+                      >保存</Button></Col>
                       </Row>
                       </div>
                       </Form>
                  </div>
-               
+
             )
-      } 
+      }
 }
 export default Form.create()(NoticeSetting);;

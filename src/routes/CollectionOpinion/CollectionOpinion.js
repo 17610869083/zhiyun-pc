@@ -275,7 +275,7 @@ class CollectionOpinion extends React.Component {
 
     // 每页显示数量
     onShowSizeChange(current, pageSize) {
-        console.log(pageSize);
+        // console.log(pageSize);
         this.props.getCollectionOpinionDetailRequested(`${this.state.current}&page=${this.state.currentPage}&pagesize=${pageSize}`);
         this.setState({pageSize: pageSize})
     }
@@ -439,12 +439,12 @@ class CollectionOpinion extends React.Component {
         const docList = this.props.docList ? this.props.docList : [{carry: '新闻'}];
         const OpinionDetailItems =docList.length!==0? docList.map((item, index) =>
             <li key={item.sid} className="opinion-detail-item">
+                <Checkbox className="labe"
+                    checked={this.state.arr[index]}
+                    onChange={this.onChange.bind(this,index)}
+                />
                 <div className="item-top">
                 <div className="conent">
-                    <Checkbox
-                        checked={this.state.arr[index]}
-                        onChange={this.onChange.bind(this,index)}
-                    />
                     <div className="negative">
                         <div className="inner-type" style={opinionColor(item.negative)}>
                             {opinionTrend(item.negative)}
@@ -461,7 +461,7 @@ class CollectionOpinion extends React.Component {
                             <span className="source">{item.source}</span>
                         </a>
                     </div>
-        
+
                 </div>
                 </div>
 
@@ -508,150 +508,115 @@ class CollectionOpinion extends React.Component {
             </Menu>
         );
 
-        return (
-            <div className="collection-opinion-wrapper">
-                <div className="collection-opinion">
-                    <div className="left-boxes">
-                        <div className="first-box">
-                            <div className="top" onClick={this.showAddCollection.bind(this)}>
-                            +新增收藏夹
-                               
-                                
-                                <Modal
-                                    title="新增收藏夹"
-                                    visible={this.state.addCollectionVisible}
-                                    onOk={this.handleAddCollectionOk.bind(this)}
-                                    onCancel={this.handleAddCollectionCancel.bind(this)}
-                                >
-                                    <Form onSubmit={this.handleAddCollectionSubmit.bind(this)}>
-                                        <FormItem
-                                            {...formItemLayout}
-                                            label="收藏夹名称">
-                                            {getFieldDecorator('CollectionName', {
-                                                rules: [{
-                                                    required: true, message: '名称不能为空！',
-                                                }],
-                                                initialValue:this.state.CollectionValue
-                                            })(
-                                                <Input 
-                                                onChange={this.CollectionChange.bind(this)}
-                                                 maxLength={'14'}
-                                                />
-                                            )}
-                                        </FormItem>
-                                    </Form>
-                                </Modal>
-                            </div>
-                            <div className="bottom">
-                                <ul className="collection-list">
-                                    {
-                                        favCatList.map((item, index) =>
-                                            <li key={item.id} className={this.state.CollectionCurrent === index ? 'collection-list-item-active' : 'collection-list-item'}>
-                                                <span className="collection-name" 
-                                                onClick={this.handleMeterialNavigation.bind(this, item.id, index)}
-                                                title={item.catname}
-                                                >{item.catname}</span>
-                                                <span>
-                                                    {
-                                                        item.type === 1 ?
-                                                            <Dropdown overlay={CollectionSetMenu} trigger={['click']}
-                                                            getPopupContainer={ () => document.querySelector('.collection-opinion-wrapper')}
-                                                            >
-                                                                <Icon type="setting"
-                                                                      style={{fontSize: '18px'}}
-                                                                      className="collection-icon"
-                                                                      onClick={this.onClickCollectionListItem.bind(this,item.id)}
-                                                                />
-                                                            </Dropdown> : null
-                                                    }
-                                                </span>
-                                            </li>
-                                        )
-                                    }
-                                </ul>
-                                <Modal
-                                    title="收藏夹重命名"
-                                    visible={this.state.renameCollectionVisible}
-                                    onOk={this.handleRenameCollectionOk.bind(this)}
-                                    onCancel={this.handleRenameCollectionCancel.bind(this)}
-                                >
-                                    <Input
-                                        placeholder="给收藏夹起一个新的名字吧"
-                                        prefix={<Icon type="folder-open" />}
-                                        value={this.state.CollectionName}
-                                        onChange={this.onChangeCollectionName.bind(this)}
-                                        maxLength={'15'}
-                                    />
-                                </Modal>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="opinion-list">
-                        <div className="top">
-                            <div className="left">
-                                <div className="choose-all">
-                                    <Checkbox
-                                        checked={this.state.checkedAll}
-                                        onChange={this.onAllChange.bind(this)}
-                                    >全选</Checkbox>
-                                </div>
-                                <div className="operate-all">
-                                    <span onClick={this.showRemoveModal.bind(this)}>移出收藏夹</span>
-                                    <Modal
-                                        title="移出收藏夹"
-                                        visible={this.state.removeModalVisible}
-                                        onOk={this.handleRemoveOk.bind(this)}
-                                        onCancel={this.handleRemoveCancel.bind(this)}
-                                    >
-                                        <div>确定将这 <b>{this.state.checkedLength}</b> 项从素材库移出吗？</div>
-                                    </Modal>
-                                </div>
-                                <div className="operate-all" onClick={this.props.getReportListRequested.bind(this)}>
-                                    <Dropdown overlay={addMultipleReportMenu} trigger={['click']}
-                                     getPopupContainer={ () => document.querySelector('.collection-opinion-wrapper')}
-                                    >
-                                        <span>加入简报</span>
-                                    </Dropdown>
-                                </div>
-                                <div className="operate-all" onClick={this.props.getMaterialOpinionListRequested.bind(this)}>
-                                    <Dropdown overlay={addMultipleCollectionMenu} trigger={['click']}
-                                     getPopupContainer={ () => document.querySelector('.collection-opinion-wrapper')}
-                                    >
-                                        <span>加入素材库</span>
-                                    </Dropdown>
-                                </div>
-                            </div>
-                            <div className="right">
-                                <Search
-                                    style={{width: '200px',marginRight: '20px'}}
-                                    placeholder="请输入您要搜索的内容"
-                                    onSearch={this.handleSearchBtn.bind(this)}
-                                />
-                            </div>
-                        </div>
-                        <div className="bottom">
-                            <ul className="opinion-detail-wrapper">
-                                {this.props.docList ? OpinionDetailItems : <div>数据为空！</div>}
-                            </ul>
-                        </div>
-                        <div className="pagintion-wrapper">
-                            <Pagination showSizeChanger
-                                        className="pagintion"
-                                        defaultCurrent={1}
-                                        defaultPageSize={20}
-                                        onChange={this.onPaginationChange.bind(this)}
-                                        onShowSizeChange={this.onShowSizeChange.bind(this)}
-                                        total={pageInfo===undefined?0: pageInfo.rowcount}
-                                        current={parseInt(pageInfo===undefined?0:pageInfo.page,10)}
-                                        getPopupContainer={ () => document.querySelector('.collection-opinion-wrapper')}
-                            />
-                        </div>
-                    </div>
+return (<div className="collection-opinion-wrapper">
+  <div className="collection-opinion">
 
-                </div>
-            </div>
-        )
-    }
+    <div className="opinion-list">
+      <div className="top">
+        <div className="left">
+          <div className="choose-all">
+            <Checkbox checked={this.state.checkedAll} onChange={this.onAllChange.bind(this)}>全选</Checkbox>
+          </div>
+          <div className="operate-all">
+            <span onClick={this.showRemoveModal.bind(this)}>移出收藏夹</span>
+            <Modal title="移出收藏夹" visible={this.state.removeModalVisible} onOk={this.handleRemoveOk.bind(this)} onCancel={this.handleRemoveCancel.bind(this)}>
+              <div>确定将这
+                <b>{this.state.checkedLength}</b>
+                项从素材库移出吗？</div>
+            </Modal>
+          </div>
+          <div className="operate-all" onClick={this.props.getReportListRequested.bind(this)}>
+            <Dropdown overlay={addMultipleReportMenu} trigger={['click']} getPopupContainer={() => document.querySelector('.collection-opinion-wrapper')}>
+              <span>加入简报</span>
+            </Dropdown>
+          </div>
+          <div className="operate-all" onClick={this.props.getMaterialOpinionListRequested.bind(this)}>
+            <Dropdown overlay={addMultipleCollectionMenu} trigger={['click']} getPopupContainer={() => document.querySelector('.collection-opinion-wrapper')}>
+              <span>加入素材库</span>
+            </Dropdown>
+          </div>
+        </div>
+        <div className="right">
+          <Search style={{
+              width: '200px',
+              marginRight: '20px'
+            }} placeholder="请输入您要搜索的内容" onSearch={this.handleSearchBtn.bind(this)}/>
+        </div>
+      </div>
+      <div className="bottom">
+        <ul className="opinion-detail-wrapper">
+          {
+            this.props.docList
+              ? OpinionDetailItems
+              : <div>数据为空！</div>
+          }
+        </ul>
+      </div>
+      <div className="pagintion-wrapper">
+        <Pagination showSizeChanger="showSizeChanger" className="pagintion" defaultCurrent={1} defaultPageSize={20} onChange={this.onPaginationChange.bind(this)} onShowSizeChange={this.onShowSizeChange.bind(this)} total={pageInfo === undefined
+            ? 0
+            : pageInfo.rowcount} current={parseInt(
+            pageInfo === undefined
+            ? 0
+            : pageInfo.page,
+          10)} getPopupContainer={() => document.querySelector('.collection-opinion-wrapper')}/>
+      </div>
+    </div>
+
+    <div className="left-boxes">
+      <div className="first-box">
+        <div className="top" onClick={this.showAddCollection.bind(this)}>
+          +新增收藏夹
+
+          <Modal title="新增收藏夹" visible={this.state.addCollectionVisible} onOk={this.handleAddCollectionOk.bind(this)} onCancel={this.handleAddCollectionCancel.bind(this)}>
+            <Form onSubmit={this.handleAddCollectionSubmit.bind(this)}>
+              <FormItem {...formItemLayout} label="收藏夹名称">
+                {
+                  getFieldDecorator('CollectionName', {
+                    rules: [
+                      {
+                        required: true,
+                        message: '名称不能为空！'
+                      }
+                    ],
+                    initialValue: this.state.CollectionValue
+                  })(<Input onChange={this.CollectionChange.bind(this)} maxLength={'14'}/>)
+                }
+              </FormItem>
+            </Form>
+          </Modal>
+        </div>
+        <div className="bottom">
+          <ul className="collection-list">
+            {
+              favCatList.map((item, index) => <li key={item.id} className={this.state.CollectionCurrent === index
+                  ? 'collection-list-item-active'
+                  : 'collection-list-item'}>
+                <span className="collection-name" onClick={this.handleMeterialNavigation.bind(this, item.id, index)} title={item.catname}>{item.catname}</span>
+                <span>
+                  {
+                    item.type === 1
+                      ? <Dropdown overlay={CollectionSetMenu} trigger={['click']} getPopupContainer={() => document.querySelector('.collection-opinion-wrapper')}>
+                          <Icon type="setting" style={{
+                              fontSize: '18px'
+                            }} className="collection-icon" onClick={this.onClickCollectionListItem.bind(this, item.id)}/>
+                        </Dropdown>
+                      : null
+                  }
+                </span>
+              </li>)
+            }
+          </ul>
+          <Modal title="收藏夹重命名" visible={this.state.renameCollectionVisible} onOk={this.handleRenameCollectionOk.bind(this)} onCancel={this.handleRenameCollectionCancel.bind(this)}>
+            <Input placeholder="给收藏夹起一个新的名字吧" prefix={<Icon type = "folder-open" />} value={this.state.CollectionName} onChange={this.onChangeCollectionName.bind(this)} maxLength={'15'}/>
+          </Modal>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>)
+}
 }
 
 const mapStateToProps = state => {
