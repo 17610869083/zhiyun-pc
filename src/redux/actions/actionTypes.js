@@ -92,3 +92,5 @@ export const PAGINATION_PAGE='PAGINATION_PAGE';
 export const HOME_MODULE='HOME_MODULE';
 //筛选栏显示状态
 export const SEARCH_STATE='SEARCH_STATE';
+//提示信息显示状态
+export const INFORMS_STATE='INFORMS_STATE';

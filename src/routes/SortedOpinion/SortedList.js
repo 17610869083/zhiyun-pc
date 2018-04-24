@@ -34,6 +34,10 @@ class SortedList extends React.Component {
                 {
                     name: '近30天',
                     value: '30day'
+                },
+                {
+                    name:'自定义',
+                    value:'custom'
                 }
             ],
             neg: 'all',
@@ -102,9 +106,20 @@ class SortedList extends React.Component {
             sortValue: 'timedown',
             filterValue: 0,
             mediaValue: '全部',
+            timePickerShow: false,
         };
     }
-    timeClick(value) {
+    timeClick(index,value) {
+        if (index === 5) {
+            this.setState({
+                timePickerShow: !this.state.timePickerShow
+            })
+            return
+        }else{
+            this.setState({
+                timePickerShow: false
+            })
+        }
         this.setState({
             datetag: value
         });
@@ -321,10 +336,10 @@ class SortedList extends React.Component {
         };
 
         // 时间
-        const Time = datetagArray.map((item) =>
+        const Time = datetagArray.map((item,index) =>
             <div
                 key={item.value}
-                onClick={this.timeClick.bind(this, item.value)}
+                onClick={this.timeClick.bind(this,index,item.value)}
                 className={item.value === datetag ? 'item active' : 'item'}
             ><span className="item-inner">{item.name}</span></div>
         );
@@ -382,7 +397,7 @@ class SortedList extends React.Component {
                         <div className="right">
                             {Time}
                         </div>
-                        <div className="other">
+                        <div className="other" style={this.state.timePickerShow?{display:'block'}:{display:'none'}}>
                             <Form onSubmit={this.handleSubmit.bind(this)}>
                             <FormItem  
                                     {...formItemLayout}

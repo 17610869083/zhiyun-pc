@@ -29,7 +29,8 @@ import {OPINION_SEARCH_REQUESTED,
     GET_SORTED_MENU_SUCCEEDED,
     TOPIC_NAV_MESSAGE_SUCCEEDED,
     TOPIC_NAV_MESSAGE_REQUESTED,
-    PAGINATION_PAGE
+    PAGINATION_PAGE,
+    INFORMS_STATE
 } from '../actions/actionTypes'; 
 const opinionSearchSucceededReducer = handleAction(OPINION_SEARCH_SUCCEEDED, (state, action) => ({
     data: action.payload,
@@ -172,6 +173,10 @@ export const getTopicMessageSucceeded = handleAction(TOPIC_NAV_MESSAGE_SUCCEEDED
 export const paginationPage = handleAction(PAGINATION_PAGE, (state, action) => ({
     data: action.payload
 }), {data:1});
+
+export const informsstate = handleAction(INFORMS_STATE, (state, action) => ({
+    data: action.payload
+}), {data:false});
 
 export {opinionSearchRequestedReducer,
     searchKeywordSyncReducer,

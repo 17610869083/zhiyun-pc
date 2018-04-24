@@ -56,9 +56,9 @@ class WeiboOpinionBox extends React.PureComponent {
                         <Tabs defaultActiveKey="1" onChange={this.datetagType.bind(this)}>
                             <TabPane tab="全部" key="1">
                                 <ul className="list">
-                                    {weiboAll ?
-                                        weiboAll.map(item =>
-                                            <li key={item.sid} className="list-item" onClick={this.clickItemTitle.bind(this,item.sid)}>
+                                    {weiboAll !=='[]'&&weiboAll.length!==0 ?
+                                        weiboAll.map((item,index) =>
+                                            <li key={index} className="list-item" onClick={this.clickItemTitle.bind(this,item.sid)}>
                                                 <div className="negative">
                                                     {
                                                         item.negative === 1 ? <IconFont type="icon-sina" style={{color: '#f40000',fontSize: '20px'}}/> :
@@ -82,9 +82,9 @@ class WeiboOpinionBox extends React.PureComponent {
                             </TabPane>
                             <TabPane tab="负面" key="2">
                                 <ul className="list">
-                                    {weiboNegative ?
-                                        weiboNegative.map(item =>
-                                            <li key={item.sid} className="list-item" onClick={this.clickItemTitle.bind(this,item.sid)}>
+                                    {weiboNegative !=='[]'&& weiboNegative.length!==0 ?
+                                        weiboNegative.map((item,index) =>
+                                            <li key={index} className="list-item" onClick={this.clickItemTitle.bind(this,item.sid)}>
                                                 <div className="negative">
                                                     {
                                                         item.negative === 1 ? <IconFont type="icon-weibo1" style={{color: '#f40000',fontSize: '20px'}}/> :

@@ -34,6 +34,10 @@ class TopicList extends React.Component {
                 {
                     name: '近30天',
                     value: '30day'
+                },
+                {
+                    name:'自定义',
+                    value:'custom'
                 }
             ],
             isTopShow: true,
@@ -118,6 +122,11 @@ class TopicList extends React.Component {
         if (index === 5) {
             this.setState({
                 timePickerShow: !this.state.timePickerShow
+            })
+            return
+        }else{
+            this.setState({
+                timePickerShow: false
             })
         }
         request(api_topic_message_list, {
@@ -502,7 +511,7 @@ class TopicList extends React.Component {
                         <div className="right">
                             {Time}
                         </div>
-                        <div className="other">
+                        <div className="other" style={this.state.timePickerShow?{display:'block'}:{display:'none'}}>
                             <Form onSubmit={this.handleSubmit.bind(this)}>
                             <FormItem  
                                     {...formItemLayout}

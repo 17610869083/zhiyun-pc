@@ -32,6 +32,10 @@ class AllOpinion extends React.Component {
                 {
                     name: '近30天',
                     value: '30day'
+                },
+                {
+                    name:'自定义',
+                    value:'custom'
                 }
             ],
             isTopShow: true,
@@ -112,6 +116,16 @@ class AllOpinion extends React.Component {
         this.setState({
             timeValue: value
         });
+        if(value==='custom'){
+             this.setState({
+                timePickerShow:!this.state.timePickerShow
+             })
+             return
+        }else{
+            this.setState({
+                timePickerShow:false
+             })
+        }
         if(this.state.type!==1){
         const param = {
             datetag: value,
@@ -619,7 +633,7 @@ class AllOpinion extends React.Component {
                         <div className="right">
                             {Time}
                         </div>
-                        <div className="other">
+                        <div className="other" style={this.state.timePickerShow?{display:'block'}:{display:'none'}}>
                              <Form onSubmit={this.handleSubmit.bind(this)}>
                                 <FormItem
                                     {...formItemLayout}

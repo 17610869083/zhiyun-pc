@@ -2,7 +2,7 @@ import React from 'react';
 import {Row, Col,Icon} from 'antd';
 import request from '../../utils/request';
 import {connect} from 'react-redux';
-import {homeModule} from '../../redux/actions/createActions'
+import {homeModule,informsState} from '../../redux/actions/createActions'
 import './index.less';
 import TodayOpinionBox from './TodayOpinionBox';
 import OpinionTrendBox from './OpinionTrendBox';
@@ -57,8 +57,7 @@ class NewHome extends React.Component {
                  'opinionCount':'舆情统计',
                  'HotWord':'相关热词',
                  'mediaDistribution':'媒体分布'
-            },
-            alertMsg:''
+            }
         }
     }
     componentWillMount() {
@@ -354,9 +353,7 @@ class NewHome extends React.Component {
             this.props.homeModule(homeMessage) ;
     }
     informs(){
-        this.setState({
-            alertMsg:''
-        })
+        this.props.informsState({data:false})
     }
     render() {
         const {
@@ -368,18 +365,18 @@ class NewHome extends React.Component {
             opinionCountArr,
             topicOpinionArr
         } = this.state;
-        const {userInfo} = this.props;
-        const {ModuleList} = this.props;
+        const {userInfo,informsstate,ModuleList} = this.props;
         const moduleList = this.state.homeMessage.length!==0?homeModuleList(this.state.homeMessage).map((item,index)=>
         <li key={index}>{this.state.delMoudleList[item]}
         <Icon type="plus-circle-o" className="addModule"
-        onClick={this.addModule.bind(this,item)}
+         onClick={this.addModule.bind(this,item)}
         ></Icon>
         </li>):'';
         return (
             <div> 
-            <div className="informs" style={userInfo.alerMsg==='' &&this.props.type!==undefined?{display:'none'}:{display:'block'}}>
-            {userInfo.alertMsg}<i onClick={ this.informs.bind(this) }>X</i>
+            <div className="informs" style={ informsstate?{display:'none'}:{display:'flex'}}>
+            <span> {userInfo.alerMsg}</span>       
+            <Icon type="close" onClick={ this.informs.bind(this) } style={{color:'#fff'}}/>
             </div>
             <div className="home-pages" style={this.props.type!==undefined?{'backgroundColor':'#ffffff'}:{'backgroundColor':'#e4ebf7'}}>
                 <div className="layout" style={this.props.type!==undefined?{display:'block',width:'8%'}:{display:'none'}}>
@@ -496,7 +493,8 @@ class NewHome extends React.Component {
 const mapStateToProps = state => {
     return {
         ModuleList: state.homeModuleReducer,
-        userInfo: state.userFetchSuccess
+        userInfo: state.userFetchSuccess,
+        informsstate :state.informsstate.data
     }
 };
 const mapDispatchToProps = dispatch => {
@@ -504,6 +502,9 @@ const mapDispatchToProps = dispatch => {
         homeModule: data => {
             dispatch(homeModule(data))
         },
+        informsState: data => {
+            dispatch(informsState(data)) 
+        }
     }
 };
 export default connect(mapStateToProps, mapDispatchToProps)(NewHome);

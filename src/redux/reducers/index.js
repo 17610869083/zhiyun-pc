@@ -40,7 +40,8 @@ import {opinionSearchRequestedReducer,
     getSortedMenuRequested,
     getSortedMenuSucceeded,
     getTopicMessageRequested,
-    getTopicMessageSucceeded
+    getTopicMessageSucceeded,
+    informsstate
 } from './opinionReducer';
 
 const reducer = combineReducers({
@@ -85,7 +86,8 @@ const reducer = combineReducers({
     getTopicMessageSucceeded,
     paginationPageReducer,
     homeModuleReducer,
-    searchStateReducer
+    searchStateReducer,
+    informsstate
 });
 
 export default reducer;

@@ -1,6 +1,6 @@
 import request from './request';
 
-const host = 'http://web.is8.com.cn/om/webpart/';
+const host = 'http://119.90.61.155/om3/webpart/';
 
 // 最新预警舆情
 const newest = host + 'main/DocSearchDo?action=mainAlert';

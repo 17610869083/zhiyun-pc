@@ -38,7 +38,8 @@ import {OPINION_SEARCH_REQUESTED,
     TOPIC_NAV_MESSAGE_SUCCEEDED,
     PAGINATION_PAGE,
     HOME_MODULE,
-    SEARCH_STATE
+    SEARCH_STATE,
+    INFORMS_STATE
 } from './actionTypes';
 
 
@@ -116,3 +117,5 @@ export const paginationPage=createAction(PAGINATION_PAGE);
 export const homeModule=createAction(HOME_MODULE);
 //筛选栏状态
 export const searchState=createAction(SEARCH_STATE);
+//提示信息显示状态
+export const informsState=createAction(INFORMS_STATE);

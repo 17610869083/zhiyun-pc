@@ -305,10 +305,10 @@ export function urlTokey() {
             key = '5';
             break;
         case 'topic':
-            key = '6';
+            key = '7';
             break;
         case 'sortedopinion':
-            key = '7';
+            key = '6';
             break;
         case 'reportopinion':
             key = 'reportopinion';
