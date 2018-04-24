@@ -293,7 +293,6 @@ class TopicOpinion extends React.Component {
                   >
                         {iitem.topicname}
                   </span>
-                 {/* {iitem.topicname.length>9?iitem.topicname.slice(0,9)+'...':iitem.topicname} */}
                  <img src={delect} alt="" className="icon-delete"  data-topicid={iitem.topicid} onClick={this.delTopic.bind(this)}/>
                 </li>
              )}
@@ -315,29 +314,21 @@ class TopicOpinion extends React.Component {
                         style={{backgroundColor: '#0c1224',paddingTop:'10px',color:'#fff',border:'none'}}
                     >
                         <Menu.Item key="topiclist" style={{fontSize:'16px'}}>
-                            {/* <Icon type="bars" /> */}
                             信息列表
                         </Menu.Item>
                         <Menu.Item key="count" style={{fontSize:'16px'}}>
-                            {/* <Icon type="area-chart" /> */}
                             统计分析
                         </Menu.Item>
                         <Menu.Item key="report" style={{fontSize:'16px'}}>
-                            {/* <Icon type="book" /> */}
                             专题报告
                         </Menu.Item>
                         <Menu.Item key="setting" style={{fontSize:'16px'}}>
-                            {/* <Icon type="setting" /> */}
                             修改专题设置
                         </Menu.Item>
                         <Menu.Item key="addtopic" style={{fontSize:'16px'}}>
-                        {/* style={this.state.isAddTopicShow ? {display: 'block',fontSize:'16px'} : {display: 'none',fontSize:'16px'}} */}
-                            {/* <Icon type="plus" /> */}
                             添加专题
                         </Menu.Item>
                         <Menu.Item key="addsort" style={{fontSize:'16px'}} onClick={this.handleCancelAddTopic.bind(this)}>
-                        {/* style={this.state.isAddTopicShow ? {display: 'block',fontSize:'16px'} : {display: 'none',fontSize:'16px'}} */}
-                            {/* <Icon type="plus" /> */}
                             添加分类
                         </Menu.Item>
                     </Menu>
