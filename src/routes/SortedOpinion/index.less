@@ -119,14 +119,12 @@
   }
   .sorted-opinion-option {
     width: 84%;
-    margin-left: 20px;
     font-size: 14px;
     .ant-menu-item-active{
       color: #fff;
     }
     .ant-menu-horizontal > .ant-menu-item, .ant-menu-horizontal > .ant-menu-submenu{
       border-bottom: none;
-      top: 10px;
     }
     .ant-menu-horizontal{
       background-color: #0c1224;
@@ -137,7 +135,6 @@
       border-bottom: none;
       background-color: #fff;
       border-radius: 7px 7px 0 0;
-      height: 36px;
     }
 
     .topic-wrapper {
@@ -149,12 +146,18 @@
       background: #0c1224;
       align-items: center;
       color:#fff;
+      box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+      padding-left: 20px;
+      .ant-menu-horizontal > .ant-menu-item{
+        border:none;
+        border-radius: 7px 7px 0 0;
+      }
       .ant-menu-item-selected{
        background-color: #fff;
        color: #000;
        border-bottom: none;
        border-radius: 7px 7px 0 0;
-       margin-left: 10px;
      }
      .close{
       cursor: pointer;

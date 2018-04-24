@@ -44,7 +44,6 @@ class OpinionTrendBox extends React.Component {
                 });
                 setTimeout(()=>{
                     if(this.echarts_react) {
-                     console.log(123)
                     let echarts_instance = this.echarts_react.getEchartsInstance();
                     echarts_instance.resize();
                     }

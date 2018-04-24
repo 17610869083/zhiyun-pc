@@ -57,7 +57,8 @@ class NewHome extends React.Component {
                  'opinionCount':'舆情统计',
                  'HotWord':'相关热词',
                  'mediaDistribution':'媒体分布'
-            }
+            },
+            alertMsg:''
         }
     }
     componentWillMount() {
@@ -352,6 +353,11 @@ class NewHome extends React.Component {
             })
             this.props.homeModule(homeMessage) ;
     }
+    informs(){
+        this.setState({
+            alertMsg:''
+        })
+    }
     render() {
         const {
             todayOpinionCount,
@@ -362,6 +368,7 @@ class NewHome extends React.Component {
             opinionCountArr,
             topicOpinionArr
         } = this.state;
+        const {userInfo} = this.props;
         const {ModuleList} = this.props;
         const moduleList = this.state.homeMessage.length!==0?homeModuleList(this.state.homeMessage).map((item,index)=>
         <li key={index}>{this.state.delMoudleList[item]}
@@ -370,6 +377,10 @@ class NewHome extends React.Component {
         ></Icon>
         </li>):'';
         return (
+            <div> 
+            <div className="informs" style={userInfo.alerMsg==='' &&this.props.type!==undefined?{display:'none'}:{display:'block'}}>
+            {userInfo.alertMsg}<i onClick={ this.informs.bind(this) }>X</i>
+            </div>
             <div className="home-pages" style={this.props.type!==undefined?{'backgroundColor':'#ffffff'}:{'backgroundColor':'#e4ebf7'}}>
                 <div className="layout" style={this.props.type!==undefined?{display:'block',width:'8%'}:{display:'none'}}>
                      <div>首页</div>
@@ -478,12 +489,14 @@ class NewHome extends React.Component {
                         </Row>
                 </div>
             </div>
+            </div> 
         )
     }
 }
 const mapStateToProps = state => {
     return {
         ModuleList: state.homeModuleReducer,
+        userInfo: state.userFetchSuccess
     }
 };
 const mapDispatchToProps = dispatch => {
