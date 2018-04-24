@@ -266,7 +266,7 @@ class SortedOpinion extends React.Component {
               display: 'none'
             }}>
           <Dropdown overlay={OperateItems} trigger={['click']}>
-            <img src={setting} alt="setting" className="setting-icon" onClick={this.onClickCatId.bind(this, item.catid)}/> {/* <Icon type="setting" onClick={this.onClickCatId.bind(this,item.catid)}/> */}
+            <img src={setting} alt="setting" className="setting-icon" onClick={this.onClickCatId.bind(this, item.catid)}/> 
           </Dropdown>
         </div>
       </li>
