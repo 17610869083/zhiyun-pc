@@ -553,7 +553,7 @@ return (<div className="collection-opinion-wrapper">
         </ul>
       </div>
       <div className="pagintion-wrapper">
-        <Pagination showSizeChanger="showSizeChanger" className="pagintion" defaultCurrent={1} defaultPageSize={20} onChange={this.onPaginationChange.bind(this)} onShowSizeChange={this.onShowSizeChange.bind(this)} total={pageInfo === undefined
+        <Pagination showSizeChanger={true} className="pagintion" defaultCurrent={1} defaultPageSize={20} onChange={this.onPaginationChange.bind(this)} onShowSizeChange={this.onShowSizeChange.bind(this)} total={pageInfo === undefined
             ? 0
             : pageInfo.rowcount} current={parseInt(
             pageInfo === undefined

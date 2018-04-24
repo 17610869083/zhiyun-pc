@@ -3,7 +3,6 @@ import {connect} from 'react-redux';
 import {
   Menu,
   Icon,
-  Button,
   Modal,
   Input,
   message,
@@ -54,7 +53,7 @@ class SortedOpinion extends React.Component {
       clfUlShowIndex: 0,
       clfsname: '',
       flag: true,
-      isTopShow: false
+      isTopShow: true
     }
   }
   // 删除分类项目
@@ -266,7 +265,7 @@ class SortedOpinion extends React.Component {
               display: 'none'
             }}>
           <Dropdown overlay={OperateItems} trigger={['click']}>
-            <img src={setting} alt="setting" className="setting-icon" onClick={this.onClickCatId.bind(this, item.catid)}/> {/* <Icon type="setting" onClick={this.onClickCatId.bind(this,item.catid)}/> */}
+            <img src={setting} alt="setting" className="setting-icon" onClick={this.onClickCatId.bind(this, item.catid)}/>
           </Dropdown>
         </div>
       </li>
@@ -332,14 +331,8 @@ class SortedOpinion extends React.Component {
             </Menu>
           </div>
           <div className="close" onClick={this.triggerTopShow.bind(this)}>
-            <span>{
-                this.state.isTopShow
-                  ? '显示'
-                  : '隐藏'
-              }</span>
-            <Icon type={this.state.isTopShow
-                ? 'down'
-                : 'right'}/>
+          <span>{this.state.isTopShow ? '显示' : '隐藏'}</span>
+          <Icon type={this.state.isTopShow ? 'down' : 'right'} />
           </div>
         </div>
         {
@@ -359,7 +352,11 @@ class SortedOpinion extends React.Component {
 }
 
 const mapStateToProps = state => {
-  return {loadingState: state.getSortedContentSucceeded.data.state, clfId: state.changeClfId.id, sortedMenu: state.getSortedMenuSucceeded.res, search: state.searchStateReducer.data}
+  return {
+    loadingState: state.getSortedContentSucceeded.data.state, 
+    clfId: state.changeClfId.id, sortedMenu: state.getSortedMenuSucceeded.res,
+    search: state.searchStateReducer.data
+    }
 };
 
 const mapDispatchToProps = dispatch => {

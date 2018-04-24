@@ -4,7 +4,7 @@ import {Checkbox, Icon, Input, Menu, Dropdown, Popconfirm, message, Popover, But
     Spin, Alert, Select,Pagination,Modal} from 'antd';
 import { history } from '../../utils/history';
 import './OpinionDetail.less';
-import {opinionTrend, opinionColor,setHighlightTags,formatDateTime,clickTitleColor} from '../../utils/format';
+import {opinionTrend, opinionColor,setHighlightTags,formatDateTime} from '../../utils/format';
 import request from '../../utils/request';
 import {api_edit_doc_neg,api_del_doc,api_push_material,api_push_collection,
     api_allopinion_exportskip,api_topic_export_word,api_sorted_rule_list,api_topic_message} from '../../services/api';
@@ -17,11 +17,9 @@ import {opinionSearchRequested,
     exportSkip,
     paginationPage
 } from '../../redux/actions/createActions';
-import {sessionSetArticleItem,sessionGetArticleItem} from '../../utils/localStorage';
 import Store from '../../redux/store/index';
 import deleteImg from '../../assets/operate-img/delete.png';
 import exportImg from '../../assets/operate-img/export.png';
-// import closeEyeImg from '../../assets/operate-img/close-eye.png';
 import starImg from '../../assets/operate-img/star.png';
 import infoBaseImg from '../../assets/operate-img/info-base.png';
 import weixin from '../../assets/icon-img/weixin.png';
@@ -96,9 +94,6 @@ class OpinionDetail extends React.Component {
         }
         this.props.searchKeywordSync({seltype:'content',
             keyword:'',type:0});
-
-        sessionSetArticleItem('sidArr',sessionGetArticleItem('sidArr') ===null?'':
-        sessionGetArticleItem('sidArr'));
     }
 
     componentWillReceiveProps() {
@@ -150,13 +145,6 @@ class OpinionDetail extends React.Component {
     }
     clickItemTitle(sid,e) {
        window.open(window.location.origin + window.location.pathname + '#/detail/' + sid);
-    //     history.push({
-    //         pathname:`/detail/${sid}`
-    //    });
-       sessionSetArticleItem('sidArr',sessionGetArticleItem('sidArr') === '' ?''.concat(sid+','):
-       sessionGetArticleItem('sidArr').concat(sid+',')
-       )
-
     }
 
     // 删除舆情
@@ -585,7 +573,6 @@ class OpinionDetail extends React.Component {
         const docList = this.props.docList ? this.props.docList : [{carry: '新闻'}];
         const OpinionDetailItems =docList[0]!==undefined && docList[0]['negative']!==undefined? docList.map((item, index) =>
             <li key={item.sid} className="opinion-detail-item">
-
             <div className="cheackBox">
                    <Checkbox checked={this.state.checkedArray[index]}
                               onChange={this.onChangeItem.bind(this,index)}
@@ -603,19 +590,14 @@ class OpinionDetail extends React.Component {
             <img src={this.state.carryAll[item.carry]} alt="" className="carryImg"  />
              </Tooltip>
              </div>
-
             </div>
             <div className="content">
                 <div className="item-top">
                     <div className="title"
                     title={item.title} onClick={this.clickItemTitle.bind(this, item.sid)}
-                    style={clickTitleColor(sessionGetArticleItem('sidArr'),item.sid)?{color:'#ffffff'}:
-                    {color:'#000000'}
-                    }
                     >{(item.title && item.title.length>35)?item.title.slice(0,35)+'...':item.title}
                     </div>
                 </div>
-
                 <div className="item-middle">
                     <div className="Summary">摘要：</div>
                     <div className="left" style={this.state.isSummaryShow ? {display: 'block'} : {display: 'none'}}>
@@ -630,9 +612,6 @@ class OpinionDetail extends React.Component {
                     <div className="key">
                         <div className="pubdate">
                             <span className="date">{item.pubdate.split(' ')[0]} &nbsp;&nbsp;{item.pubdate.split(' ')[1]}</span>
-                            {
-                              //<span className="date">{item.pubdate.split(' ')[0]}</span>
-                            }
                         </div>
                         <div className="similar-info">相似信息：{item.similerInfo && (item.similerInfo.similerCount?item.similerInfo.similerCount:0)}条</div>
                         <div className="resource">
@@ -764,7 +743,6 @@ class OpinionDetail extends React.Component {
                 }
             </Menu>
         );
-
         return (
             <div className="opinion-detail" >
                 <div className="top">
@@ -794,13 +772,6 @@ class OpinionDetail extends React.Component {
                             </div>
                         </Tooltip>
                         </Dropdown>
-                        {
-                          // <Tooltip title='显示摘要' placement="bottom">
-                          // <div className="operate-all" onClick={this.triggerSummaryShow.bind(this)}>
-                          //     <img src={this.state.isSummaryShow?openEyeImg:closeEyeImg} alt="close" className="close-img"/>
-                          // </div>
-                          // </Tooltip>
-                        }
                         <Dropdown overlay={putinReportMenu} trigger={['click']}
                         getPopupContainer={ () => document.querySelector('.opinion-detail')}
                         >
