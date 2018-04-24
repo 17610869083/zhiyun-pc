@@ -30,7 +30,7 @@ class NagetiveOpinion extends React.Component {
          }
          this.setState({
              datetagType:datetag[key]
-         }) 
+         })
     }
     render() {
         const {todayOpinion,yesterdayOpinion,beforeYesterdayOpinion} = this.props;
