@@ -9,7 +9,7 @@ class HotWordBox extends React.Component{
     }
     render(){
         const fontSizeMapper = word => Math.log2(word.value) * 2;
-        const rotate = word => word.value % 360;
+        const rotate = word => word.value % 120;
         const {data} = this.props;
          return(
             <div className="hotWord-box">
@@ -21,12 +21,12 @@ class HotWordBox extends React.Component{
                         </div>
                         <div className="more">
                         <Icon type="close-circle" className="delModule"
-                         style={this.props.status==='setting'?{visibility:'visible',color: 'rgba(0,0,0,0.65)',fontSize: '18px'}:{'visibility':'hidden'}}
+                         style={this.props.status==='setting'?{visibility:'visible',fontSize: '18px'}:{'visibility':'hidden'}}
                          onClick={this.delHotWordBox.bind(this)}
                         ></Icon>
                         </div>
                     </div>
-                    <div>
+                    <div className="wordCloud">
                         <WordCloud
                         data={data}
                         fontSizeMapper={fontSizeMapper}

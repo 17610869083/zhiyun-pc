@@ -283,10 +283,10 @@ class TopicOpinion extends React.Component {
             <img src={setting} alt="" className="icon-setting" onClick={this.onCatid.bind(this)} data-catid={item.catid}/>         
           </Dropdown> 
           </div>      
-           <ul className="topics" style={{height:item.topicList&&item.topicList.length*30+'px'}}>
+           <ul className="topics" style={{height:item.topicList&&item.topicList.length*31+'px'}}>
               {item.topicList && item.topicList.map((iitem,iindex) =>
                  <li  key={iitem.topicid}
-                 className={this.state.materialCurrent === iitem.topicid ? 'a-topic  backGroundBlue' : 'a-topic'}
+                 className={this.state.materialCurrent === iitem.topicid ? 'backGroundBlue' : 'a-topic'}
                   >
                   <span className="topicTitle" onClick={this.queryTopic.bind(this,iitem.topicid)}
                    title={iitem.topicname}
@@ -311,7 +311,7 @@ class TopicOpinion extends React.Component {
                         onClick={this.handleClick.bind(this)}
                         selectedKeys={[this.state.current]}
                         mode="horizontal"
-                        style={{backgroundColor: '#0c1224',paddingTop:'10px',color:'#fff',border:'none'}}
+                        style={{lineHeight:'40px',backgroundColor: '#0c1224',paddingTop:'14px',color:'#fff',border:'none'}}
                     >
                         <Menu.Item key="topiclist" style={{fontSize:'16px'}}>
                             信息列表

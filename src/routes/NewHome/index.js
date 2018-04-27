@@ -379,11 +379,13 @@ class NewHome extends React.Component {
             <Icon type="close" onClick={ this.informs.bind(this) } style={{color:'#fff'}}/>
             </div>
             <div className="home-pages" style={this.props.type!==undefined?{'backgroundColor':'#ffffff'}:{'backgroundColor':'#e4ebf7'}}>
-                <div className="layout" style={this.props.type!==undefined?{display:'block',width:'8%'}:{display:'none'}}>
+                <div className="home-layout" style={this.props.type!==undefined?{display:'block',width:'8%'}:{display:'none'}}>
+                     <div className="layout-list">
                      <div>首页</div>
                      <ul>
                         {moduleList}
                      </ul>
+                     </div>
                 </div>
                 <div className="container" style={this.props.type!==undefined?{width:'92%'}:{width:'100%'}}>
                     <Row gutter={16} className="row"

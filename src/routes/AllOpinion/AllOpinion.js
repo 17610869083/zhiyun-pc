@@ -604,7 +604,9 @@ class AllOpinion extends React.Component {
                 key={index}
                 onClick={this.mediaClick.bind(this, item.value)}
                 className={item.value === this.state.mediaValue ? 'item active' : 'item'}
-            ><span className="item-inner">{item.key==='docSearch'?'其它':item.value}<span className="count"> ({item.count})</span></span></div>
+            ><p className="item-inner">{item.key==='docSearch'?'其它':item.value}</p>
+            <p className="count">{item.count}</p>
+            </div>
         );
 
         const param = {

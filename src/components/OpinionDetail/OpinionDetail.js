@@ -599,7 +599,6 @@ class OpinionDetail extends React.Component {
                     </div>
                 </div>
                 <div className="item-middle">
-                    <div className="Summary">摘要：</div>
                     <div className="left" style={this.state.isSummaryShow ? {display: 'block'} : {display: 'none'}}>
                         <div >
                             <span className="summary"  dangerouslySetInnerHTML={{__html: setHighlightTags(item.summary,item.nztags.split(' '))}}>

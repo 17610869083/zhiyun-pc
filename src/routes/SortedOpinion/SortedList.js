@@ -439,7 +439,7 @@ class SortedList extends React.Component {
                         </div>
                     </div>
                     <div className="media-items">
-                        <div className="left">媒体排行：</div>
+                        <div className="left">媒体：</div>
                         <div className="right">
                             {Media}
                         </div>

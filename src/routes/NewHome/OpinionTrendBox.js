@@ -98,7 +98,7 @@ class OpinionTrendBox extends React.Component {
                             echarts={echarts}
                             option={this.state.mediaChartOption}
                             lazyUpdate={true}
-                            style={{height: '350px', width: '100%', marginBottom: '-20px'}}
+                            style={{height: '350px', width: '81%', marginBottom: '-20px'}}
                             ref={(e) => { this.echarts_react = e; }}
                             />
                                 <div className="total">

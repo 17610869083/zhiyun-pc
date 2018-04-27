@@ -37,7 +37,7 @@ class WeiboOpinionBox extends React.PureComponent {
         const {weiboAll,weiboNegative} = this.props;
         const more = this.props.status!=='setting'?<span onClick={this.goAllOpinion.bind(this)}>更多
         <IconFont type="icon-gengduo" style={{color: '#9b9b9b',fontSize: '14px'}}/>
-        </span>:<Icon type="close-circle" className="delModule" style={{color: 'rgba(0,0,0,0.65)',fontSize: '18px'}}
+        </span>:<Icon type="close-circle" className="delModule" style={{fontSize: '18px'}}
         onClick={this.delWeiboOpinionBox.bind(this)}
         ></Icon>;
         return (
