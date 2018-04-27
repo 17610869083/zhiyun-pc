@@ -8,7 +8,7 @@ class HotWordBox extends React.Component{
           this.props.delHotWordBox(1)
     }
     render(){
-        const fontSizeMapper = word => Math.log2(word.value) * 6;
+        const fontSizeMapper = word => Math.log2(word.value) * 2;
         const rotate = word => word.value % 360;
         const {data} = this.props;
          return(

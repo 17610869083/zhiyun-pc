@@ -43,7 +43,7 @@ class Index extends React.Component {
             qqStatus:false,
             phoneStatus:false,
             weixinStatus:false,
-            channelList:[{channelname:'首页',channelurl:'/webpart/index.html#/home',key:"1"}]            
+            channelList:[{channelname:'首页',channelurl:'/webpart/index.html#/home',key:"1"}]
         };
         this.toggle = () => {
             this.setState({
@@ -108,7 +108,7 @@ class Index extends React.Component {
     render() {
         const {themeColor} =this.props;
         let menuList=[];
-        this.state.channelList.map( (item,index) =>{ 
+        this.state.channelList.map( (item,index) =>{
              if(item.channelurl==='/reportopinion/list'){
                 menuList.push(<SubMenu
                         key={item.key}
@@ -135,7 +135,7 @@ class Index extends React.Component {
                         </Menu.Item>
                     </SubMenu>)
                     }else if (item.channelurl==='../systemMan/systemManDo?action=userList'){
-                        menuList.push(<SubMenu key={item.key} 
+                        menuList.push(<SubMenu key={item.key}
                         title={<span><Icon type={item.type} style={{fontSize: '14px',boxShadow:'0 0 30px #01C2E0',color:'#01C2E0',height:'0'}}/><span style={{fontSize: '14px'}}>系统设置</span></span>}>
                         <Menu.Item key="noticesetting">
                             <Link to="/noticesetting">
@@ -168,17 +168,17 @@ class Index extends React.Component {
                        </a>:<Link to={item.channelurl}>
                       <Icon type={item.type} style={{ boxShadow:'0 0 30px #01C2E0',color:'#01C2E0',height:'0'}}/>
                       <span>{item.channelname}</span>
-                      </Link> 
+                      </Link>
                       }
                       </Menu.Item>)
-                      } 
+                      }
                       return 3
                 })
         return (
             <div className="root-container">
                 <Layout className="layout">
                     <Sider
-                        className="sider"
+                        className="sider siders"
                         trigger={null}
                         collapsible
                         style={{backgroundColor: '#0c1224'}}
@@ -201,7 +201,7 @@ class Index extends React.Component {
                             className="selectMenu"
                             selectedKeys={[urlTokey()]}
                         >
-                            {menuList} 
+                            {menuList}
                         </Menu>
                     </Sider>
                     <Layout className="right-layout">
@@ -290,7 +290,6 @@ class Index extends React.Component {
                         </Content>
                     </Layout>
                 </Layout>
-
             </div>
         )
     }

@@ -20,7 +20,7 @@ class TopicOpinionBox extends React.PureComponent {
     }
     render() {
         const {topicOpinion} = this.props;
-        const more = this.props.status!=='setting'?<span onClick={this.goTopicOpinion.bind(this)}>更多 
+        const more = this.props.status!=='setting'?<span onClick={this.goTopicOpinion.bind(this)}>更多
         <IconFont type="icon-gengduo" style={{color: '#9b9b9b',fontSize: '14px'}}/>
         </span>:<Icon type="close-circle" className="delModule" style={{color: 'rgba(0,0,0,0.65)',fontSize: '18px'}}
         onClick={this.delTopicOpinionBox.bind(this)}
@@ -46,13 +46,6 @@ class TopicOpinionBox extends React.PureComponent {
                                             {item.docList!==undefined ?
                                                 item.docList.slice(0,6).map((i,index) =>
                                                     <li key={i.sid} className="list-item" onClick={this.clickItemTitle.bind(this,i.sid)}>
-                                                        <div className="negative">
-                                                            {
-                                                                index < 3 ? <IconFont type="icon-star" style={{color: '#ffbc34',fontSize: '18px'}}/> :
-                                                                    <IconFont type="icon-star" style={{color: '#d8d8d8',fontSize: '20px'}}/>
-                                                            }
-
-                                                        </div>
                                                         <div className="content">
                                                             <div className="title">{i.title}</div>
                                                             <div className="desc">

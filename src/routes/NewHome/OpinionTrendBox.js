@@ -103,31 +103,34 @@ class OpinionTrendBox extends React.Component {
                             />
                                 <div className="total">
                                 <div className="opinion-info">
-                                   <div className="icon-wrapper" style={{backgroundColor: '#009efb'}}>
-                                        <IconFont type="icon-yuqing" style={{color: '#ffffff',fontSize: '40px'}}/>
-                                    </div>
+
                                     <div className="count">
                                         <div className="test">舆情总量</div>
                                         <div className="number">{monthCount[4]['all']}</div>
                                     </div>
+                                    <div className="icon-wrapper" style={{backgroundColor: '#009efb'}}>
+                                         <IconFont type="icon-yuqing" style={{color: '#ffffff',fontSize: '40px'}}/>
+                                     </div>
 
                                 </div>
                                 <div className="opinion-info">
-                                <div className="icon-wrapper" style={{backgroundColor: '#ff6600'}}>
-                                        <IconFont type="icon-jinggao-white" style={{fontSize: '40px'}}/>
-                                    </div>
+
                                     <div className="count">
                                         <div className="test">负面总量</div>
                                         <div className="number">{monthCount[2]['negative']}</div>
                                     </div>
+                                    <div className="icon-wrapper" style={{backgroundColor: '#ff6600'}}>
+                                            <IconFont type="icon-jinggao-white" style={{fontSize: '40px'}}/>
+                                        </div>
                                 </div>
                                 <div className="opinion-info">
-                                    <div className="icon-wrapper" style={{backgroundColor: '#ffab00'}}>
-                                        <IconFont type="icon-shandian-white" style={{fontSize: '40px'}}/>
-                                    </div>
+
                                     <div className="count">
                                         <div className="test">预警总量</div>
                                         <div className="number">{monthCount[3]['warn']}</div>
+                                    </div>
+                                    <div className="icon-wrapper" style={{backgroundColor: '#ffab00'}}>
+                                        <IconFont type="icon-shandian-white" style={{fontSize: '40px'}}/>
                                     </div>
                                 </div>
                                 </div>

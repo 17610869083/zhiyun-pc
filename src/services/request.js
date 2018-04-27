@@ -35,17 +35,16 @@ const option = {
     credentials: 'include'
 };
 
-export default async function request(url, options) {   
+export default async function request(url, options) {
     const response =  await fetch(url, Object.assign(option, options));
     checkStatus(response);
     const data = await response.json();
     if(data.code && data.code ===-1 ){
         alert('登录已过期！请重新登录');
         history.push('/login');
-        return data  
+        return data
     }else{
         return data;
     }
-    
-}
 
+}

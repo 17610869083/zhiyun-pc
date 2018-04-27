@@ -25,7 +25,7 @@
         }
       }
       .more {
-        color: #fff;
+        color: #9b9b9b;
         font-size: 12px;
         cursor: pointer;
         margin-right: 14px;
@@ -35,57 +35,48 @@
       .list {
         margin-top: -12px;
         .list-item {
+          padding-left: 20px;
           &:hover {
             background-color: #b3e5fc;
-            cursor: pointer;
             border-left: 2px solid #3B83E9;
+            cursor: pointer;
           }
           display: flex;
           justify-content: space-between;
-          height: 45px;
-          line-height: 45px;
           border-bottom: 1px solid #e4ebf7;
           border-left: 2px solid #FFFFFF;
+          height: 45px;
           .negative {
             min-width: 80px;
             width: 10%;
             display: flex;
             justify-content: center;
             align-items: center;
-            .negative-icon {
-              width: 24px;
-              height: 24px;
-              border-radius: 50%;
-              line-height: 24px;
+          }
+          .content {
+            width: 74%;
+            .title {
+              color: #000000;
+              overflow: hidden;
+              white-space: nowrap;
+              text-overflow: ellipsis;
+            }
+            .desc {
+              display: flex;
+              // justify-content: space-between;
               font-size: 12px;
-              background-color: red;
-              color: #FFFFFF;
-              text-align: center;
+            }
+            .source{
+              margin-left: 40px;
             }
           }
-          .title {
-            width: 60%;
-            color: #000000;
-            overflow: hidden;
-            white-space: nowrap;
-            text-overflow: ellipsis;
-          }
-          .source {
+          .new {
             width: 10%;
-            font-size: 12px;
-            overflow: hidden;
-            white-space: nowrap;
-            text-overflow: ellipsis;
-          }
-          .time {
-            font-size: 12px;
-            width: 10%;
-            overflow: hidden;
-            white-space: nowrap;
-            text-overflow: ellipsis;
+            display: flex;
+            justify-content: center;
+            align-items: center;
           }
         }
-
       }
     }
   }

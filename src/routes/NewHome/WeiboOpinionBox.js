@@ -35,7 +35,7 @@ class WeiboOpinionBox extends React.PureComponent {
     }
     render() {
         const {weiboAll,weiboNegative} = this.props;
-        const more = this.props.status!=='setting'?<span onClick={this.goAllOpinion.bind(this)}>更多 
+        const more = this.props.status!=='setting'?<span onClick={this.goAllOpinion.bind(this)}>更多
         <IconFont type="icon-gengduo" style={{color: '#9b9b9b',fontSize: '14px'}}/>
         </span>:<Icon type="close-circle" className="delModule" style={{color: 'rgba(0,0,0,0.65)',fontSize: '18px'}}
         onClick={this.delWeiboOpinionBox.bind(this)}
@@ -59,21 +59,12 @@ class WeiboOpinionBox extends React.PureComponent {
                                     {weiboAll !=='[]'&&weiboAll.length!==0 ?
                                         weiboAll.map((item,index) =>
                                             <li key={index} className="list-item" onClick={this.clickItemTitle.bind(this,item.sid)}>
-                                                <div className="negative">
-                                                    {
-                                                        item.negative === 1 ? <IconFont type="icon-sina" style={{color: '#f40000',fontSize: '20px'}}/> :
-                                                            <IconFont type="icon-weibo1" style={{color: '#007aff',fontSize: '20px'}}/>
-                                                    }
-                                                </div>
                                                 <div className="content">
                                                     <div className="title">{item.title}</div>
                                                     <div className="desc">
                                                         <span className="time">{item.pubdate.substring(10)}</span>
                                                         <span className="source">{item.source}</span>
                                                     </div>
-                                                </div>
-                                                <div className="new">
-                                                    <IconFont type="icon-xin" style={{color: '#f40000',fontSize: '20px'}}/>
                                                 </div>
                                             </li>
                                         ) : <BlankPage desc='<span>空空如也，赶紧去<a href="index.html#/warnsetting">添加</a>关键词</span>'/>
@@ -85,21 +76,12 @@ class WeiboOpinionBox extends React.PureComponent {
                                     {weiboNegative !=='[]'&& weiboNegative.length!==0 ?
                                         weiboNegative.map((item,index) =>
                                             <li key={index} className="list-item" onClick={this.clickItemTitle.bind(this,item.sid)}>
-                                                <div className="negative">
-                                                    {
-                                                        item.negative === 1 ? <IconFont type="icon-weibo1" style={{color: '#f40000',fontSize: '20px'}}/> :
-                                                            <IconFont type="icon-sina" style={{color: '#007aff',fontSize: '20px'}}/>
-                                                    }
-                                                </div>
                                                 <div className="content">
                                                     <div className="title">{item.title}</div>
                                                     <div className="desc">
                                                         <span className="time">{item.pubdate.substring(10)}</span>
                                                         <span className="source">{item.source}</span>
                                                     </div>
-                                                </div>
-                                                <div className="new">
-                                                    <IconFont type="icon-xin" style={{color: '#f40000',fontSize: '20px'}}/>
                                                 </div>
                                             </li>
                                         ) : <BlankPage desc='<span>空空如也，赶紧去<a href="index.html#/warnsetting">添加</a>关键词</span>'/>

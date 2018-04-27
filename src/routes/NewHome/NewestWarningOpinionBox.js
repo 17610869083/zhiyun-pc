@@ -30,14 +30,14 @@ class NagetiveOpinion extends React.Component {
          }
          this.setState({
              datetagType:datetag[key]
-         }) 
+         })
     }
     delNewestWarningOpinionBox(){
           this.props.delNewestWarningBox(1);
     }
     render() {
         const {todayOpinion,yesterdayOpinion,beforeYesterdayOpinion} = this.props;
-        const more = this.props.status!=='setting'?<span onClick={this.goAllOpinion.bind(this)}>更多 
+        const more = this.props.status!=='setting'?<span onClick={this.goAllOpinion.bind(this)}>更多
         <IconFont type="icon-gengduo" style={{color: '#9b9b9b',fontSize: '14px'}}/>
         </span>:<Icon type="close-circle" className="delModule" style={{color: 'rgba(0,0,0,0.65)',fontSize: '18px'}}
         onClick={this.delNewestWarningOpinionBox.bind(this)}
@@ -60,16 +60,15 @@ class NagetiveOpinion extends React.Component {
                                 <ul className="list">
                                     {todayOpinion.length > 0 ?
                                         todayOpinion.map((item,index) =>
-                                            <li key={item.sid} className="list-item" onClick={this.clickItemTitle.bind(this,item.sid)}>
-                                                <div className="negative">
-                                                    {index < 3 ? <IconFont type="icon-shandian" style={{color: '#ffab00',fontSize: '20px'}}/> :
-                                                        <IconFont type="icon-shandian" style={{color: '#d8d8d8',fontSize: '20px'}}/>
-                                                    }
-                                                </div>
+                                        <li key={index} className="list-item" onClick={this.clickItemTitle.bind(this,item.sid)}>
+                                            <div className="content">
                                                 <div className="title">{item.title}</div>
-                                                <div className="source">{item.source}</div>
-                                                <div className="time">{item.pubdate.substring(10)}</div>
-                                            </li>
+                                                <div className="desc">
+                                                    <span className="time">{item.pubdate.substring(10)}</span>
+                                                    <span className="source">{item.source}</span>
+                                                </div>
+                                            </div>
+                                        </li>
                                         ) : <BlankPage desc='<span>空空如也，赶紧去<a href="index.html#/warnsetting">添加</a>关键词</span>'/>
                                     }
                                 </ul>
@@ -78,16 +77,15 @@ class NagetiveOpinion extends React.Component {
                                 <ul className="list">
                                     {yesterdayOpinion.length > 0 ?
                                         yesterdayOpinion.map((item,index) =>
-                                            <li key={item.sid} className="list-item" onClick={this.clickItemTitle.bind(this,item.sid)}>
-                                                <div className="negative">
-                                                    {index < 3 ? <IconFont type="icon-shandian" style={{color: '#ffab00',fontSize: '20px'}}/> :
-                                                        <IconFont type="icon-shandian" style={{color: '#d8d8d8',fontSize: '20px'}}/>
-                                                    }
-                                                </div>
+                                        <li key={index} className="list-item" onClick={this.clickItemTitle.bind(this,item.sid)}>
+                                            <div className="content">
                                                 <div className="title">{item.title}</div>
-                                                <div className="source">{item.source}</div>
-                                                <div className="time">{item.pubdate.substring(10)}</div>
-                                            </li>
+                                                <div className="desc">
+                                                    <span className="time">{item.pubdate.substring(10)}</span>
+                                                    <span className="source">{item.source}</span>
+                                                </div>
+                                            </div>
+                                        </li>
                                         ) : <BlankPage desc='<span>空空如也，赶紧去<a href="index.html#/warnsetting">添加</a>关键词</span>'/>
                                     }
                                 </ul>
@@ -96,16 +94,15 @@ class NagetiveOpinion extends React.Component {
                                 <ul className="list">
                                     {beforeYesterdayOpinion.length ?
                                         beforeYesterdayOpinion.map((item,index) =>
-                                            <li key={item.sid} className="list-item" onClick={this.clickItemTitle.bind(this,item.sid)}>
-                                                <div className="negative">
-                                                    {index < 3 ? <IconFont type="icon-shandian" style={{color: '#ffab00',fontSize: '20px'}}/> :
-                                                        <IconFont type="icon-shandian" style={{color: '#d8d8d8',fontSize: '20px'}}/>
-                                                    }
-                                                </div>
+                                        <li key={index} className="list-item" onClick={this.clickItemTitle.bind(this,item.sid)}>
+                                            <div className="content">
                                                 <div className="title">{item.title}</div>
-                                                <div className="source">{item.source}</div>
-                                                <div className="time">{item.pubdate.substring(10)}</div>
-                                            </li>
+                                                <div className="desc">
+                                                    <span className="time">{item.pubdate.substring(10)}</span>
+                                                    <span className="source">{item.source}</span>
+                                                </div>
+                                            </div>
+                                        </li>
                                         ) : <BlankPage desc='<span>空空如也，赶紧去<a href="index.html#/warnsetting">添加</a>关键词</span>'/>
                                     }
                                 </ul>
