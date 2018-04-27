@@ -19,8 +19,8 @@ class MediaDistribution extends React.Component{
             },
             grid:{
                 left:'20%',
-                top : '2%', 
-                bottom: 30 
+                top : '2%',
+                bottom: 10
                 },
             series: [
                 {
@@ -84,7 +84,7 @@ class MediaDistribution extends React.Component{
                             lazyUpdate={true}
                         />
             </div>
-            </div>   
+            </div>
         )
     }
 }
