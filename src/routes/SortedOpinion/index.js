@@ -354,7 +354,7 @@ class SortedOpinion extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    loadingState: state.getSortedContentSucceeded.data.state, 
+    loadingState: state.getSortedContentSucceeded.data.state,
     clfId: state.changeClfId.id, sortedMenu: state.getSortedMenuSucceeded.res,
     search: state.searchStateReducer.data
     }
