@@ -52,10 +52,9 @@
               line-height: 30px;
               padding-left: 20px;
               box-sizing: border-box;
-              margin-bottom: -1px;
               color:#fff;
               background: #0d8da1;
-              box-shadow: 0 6px 6px #ededed;
+              border-bottom: 1px solid #dbdbdb;
                cursor: pointer;
                position: relative;
                .icon-setting{
@@ -73,22 +72,46 @@
                  margin:0 5px 0 -4px;
               }
             }
+            &:hover{
+              color:#000;
+             }
             }
             .topics {
               text-indent: 1em;
               background: #ffffff;
               .backGroundBlue{
-                background-color: #f2f2f2;
-                color: #008cee;
-                border-left:2px solid #008cee;
-                padding-left:0;
+                position: relative;
+                height: 30px;
+                line-height: 30px;
+                padding-left: 2px;    
+                font-size: 14px;    
+                background-color: #f7f7f7;
+                color: #0d8da1;
+                border-left:2px solid #0d8da1;     
+                cursor: pointer;
+                .topicTitle{
+                   width: 80%;
+                   text-overflow:ellipsis;
+                   white-space: nowrap;
+                   overflow: hidden;
+                   display: inline-block;
+                }
+                .topic-name {
+                  width: 70%;
+                  overflow: hidden;
+                }
+                .icon-delete {
+                  position: absolute;
+                  top: 7px;
+                  right: 10px;
+                  padding-left: 20px;
+                }
               }
               .a-topic {
                 position: relative;
                 height: 30px;
                 line-height: 30px;
-                padding-left: 2px;
-                margin-top: 1px;    
+                padding-left: 2px;    
                 color:#9c9c9c;
                 font-size: 14px;           
                 cursor: pointer;
@@ -111,9 +134,9 @@
                 }
                 &:hover {
                   background-color: #f7f7f7;
-                  color: #008cee;
-                  border-left:2px solid #008cee;
-                  padding-left:0;
+                  color: #0d8da1;
+                  border-left:2px solid #0d8da1;
+                  padding-left:0px;
                 }
               }
             }
@@ -134,6 +157,7 @@
           -webkit-user-select:none; 
           -ms-user-select:none; 
           user-select:none;
+          margin-top: 10px;
           span{
             margin-right: 16px;
           }
@@ -147,6 +171,8 @@
          box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
          overflow: hidden;
          padding-left: 20px;
+         height: 44px;
+         padding-bottom: 10px;
          .ant-menu-item-selected{
           background-color: #fff;
           color: #000;

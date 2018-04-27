@@ -17,6 +17,11 @@ class MediaDistribution extends React.Component{
                 trigger: 'item',
                 formatter: "{a} <br/>{b}: {c} ({d}%)"
             },
+            grid:{
+                left:'20%',
+                top : '2%', 
+                bottom: 30 
+                },
             series: [
                 {
                     name:'总量',
@@ -29,7 +34,6 @@ class MediaDistribution extends React.Component{
                             borderColor: '#aaa',
                             borderWidth: 1,
                             borderRadius: 4,
-
                             rich: {
                                 a: {
                                     color: '#999',
@@ -69,19 +73,16 @@ class MediaDistribution extends React.Component{
                 </div>
                 <div className="more">
                         <Icon type="close-circle" className="delModule"
-                         style={this.props.status==='setting'?{visibility:'visible',color: 'rgba(0,0,0,0.65)',fontSize: '18px'}:{'visibility':'hidden'}}
+                         style={this.props.status==='setting'?{visibility:'visible',fontSize: '18px'}:{'visibility':'hidden'}}
                          onClick={this.delmediaDistributionBox.bind(this)}
                         ></Icon>
                 </div>
             </div>
-            
                         <ReactEchartsCore
                             echarts={echarts}
                             option={mediaOption}
                             lazyUpdate={true}
-                            
                         />
-              
             </div>
             </div>   
         )

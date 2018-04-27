@@ -44,7 +44,7 @@
         cursor: pointer;
         color: #fff;
         background-color: #0d8da1;
-        border-bottom: 1px solid #008CEE;
+        border-bottom: 1px solid #dbdbdb;
         padding-left: 20px;
         .name {
           width: 144px;
@@ -62,7 +62,7 @@
           }
         }
         &:hover {
-          color: #5AA0EE;
+          color: #000;
         }
       }
       .clf-ul {
@@ -72,15 +72,19 @@
           height: 36px;
           align-items: center;
           cursor: pointer;
-          padding-left: 20px;
+          padding-left: 2px;
           background-color: #FFFFFF;
           &:hover {
-            color: #5AA0EE;
+            background-color: #f7f7f7;
+            color: #0d8da1;
+            border-left:2px solid #0d8da1;
+            padding-left:0px;
           }
           .name {
             line-height: 36px;
             height: 36px;
             width: 80%;
+            padding-left: 20px;
               text-overflow: ellipsis;
               white-space: nowrap;
               overflow: hidden;
@@ -93,14 +97,15 @@
           display: flex;
           justify-content: space-between;
           height: 36px;
-          background-color: #e6f7ff;
-          color: #5AA0EE;
-          border-left: 2px solid #5AA0EE;
+          line-height: 36px;
+          background-color: #f2f2f2;
+          color: #0d8da1;
+          border-left: 2px solid #0d8da1;
           align-items: center;
           padding-left: 20px;
           cursor: pointer;
           &:hover {
-            color: #5AA0EE;
+            color: #0d8da1;
           }
           .name {
             line-height: 40px;
@@ -149,6 +154,8 @@
       box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
       overflow: hidden;
       padding-left: 20px;
+      padding-bottom: 10px;
+      height: 44px;
       .ant-menu-horizontal > .ant-menu-item{
         border:none;
         border-radius: 7px 7px 0 0;
@@ -169,6 +176,7 @@
       -webkit-user-select:none; 
       -ms-user-select:none; 
       user-select:none;
+      margin-top: 10px;
       span{
         margin-right: 16px;
       }

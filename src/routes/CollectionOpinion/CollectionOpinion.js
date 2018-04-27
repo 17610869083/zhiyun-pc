@@ -457,7 +457,6 @@ class CollectionOpinion extends React.Component {
                     <div className="item-bottom">
                     <div className="resource">
                         <a href="">
-                            <Icon type="link" />
                             <span className="source">{item.source}</span>
                         </a>
                     </div>

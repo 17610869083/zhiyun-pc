@@ -19,7 +19,7 @@ class TodayOpinionBox extends React.PureComponent {
             <div className="today-opinion-box">
                  <div className="today-opinion-top"
                   style={this.props.status==='setting'?{display:'block'}:{display:'none'}}>
-                 <Icon type="close-circle" className="delModule" style={{color: 'rgba(0,0,0,0.65)',fontSize: '18px'}}
+                 <Icon type="close-circle" className="delModule" style={{fontSize: '18px'}}
                  onClick={this.delTodayOpinionBox.bind(this)}
                  ></Icon>
                  </div>

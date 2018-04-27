@@ -304,9 +304,10 @@ class SortedOpinion extends React.Component {
           <div>
             <Menu onClick={this.handleMenuClick.bind(this)} selectedKeys={[this.state.current]} mode="horizontal" style={{
                 backgroundColor: '#0c1224',
-                paddingTop: '10px',
+                paddingTop: '14px',
                 color: '#fff',
-                border: 'none'
+                border: 'none',
+                lineHeight:'40px'
               }}>
               <Menu.Item key="sortlist" style={{
                   fontSize: '16px'

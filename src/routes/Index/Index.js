@@ -21,7 +21,6 @@ const WarnSetting = AsyncComponent ( () => import('../SystemSetting/WarnSetting/
 const NoticeSetting = AsyncComponent ( () => import('../SystemSetting/NoticeSetting/NoticeSetting'))
 const TopicEditOpinionDetail = AsyncComponent ( () => import('../SystemSetting/TopicEditOpinionDetail/TopicEditOpinionDetail'))
 const EditOpinionDetail = AsyncComponent ( () => import('../../components/EditOpinionDetail/EditOpinionDetail'))
-const WarningOpinion = AsyncComponent ( () => import('../WarningOpinion/WarningOpinion'))
 const HistoryOpinion = AsyncComponent ( () => import('../HistoryOpinion/HistoryOpinion'))
 const CollectionOpinion = AsyncComponent ( () => import('../CollectionOpinion/CollectionOpinion'))
 const MaterialOpinion = AsyncComponent ( () => import('../MaterialOpinion/MaterialOpinion'))
@@ -113,22 +112,22 @@ class Index extends React.Component {
                 menuList.push(<SubMenu
                         key={item.key}
                         title={<span><Icon type={item.type} style={{fontSize: '14px',boxShadow:'0 0 30px #01C2E0',color:'#01C2E0',height:'0'}}/><span style={{fontSize: '14px'}}>舆情报告</span></span>}>
-                        <Menu.Item key="reportopinion" >
+                        <Menu.Item key="reportopinion" style={{fontSize: '14px'}}>
                             <Link to="/reportopinion/list">
                                 <span>简报列表</span>
                             </Link>
                         </Menu.Item>
-                        <Menu.Item key="materiaopinion" >
+                        <Menu.Item key="materiaopinion" style={{fontSize: '14px'}}>
                             <Link to="/materiaopinion">
                                 <span>素材库</span>
                             </Link>
                         </Menu.Item>
-                        <Menu.Item key="collectionopinion" >
+                        <Menu.Item key="collectionopinion" style={{fontSize: '14px'}}>
                             <Link to="/collectionopinion">
                                 <span>我的收藏</span>
                             </Link>
                         </Menu.Item>
-                        <Menu.Item key="historyopinion" >
+                        <Menu.Item key="historyopinion" style={{fontSize: '14px'}}>
                             <Link to="/historyopinion">
                                 <span>我的报告库</span>
                             </Link>
@@ -137,23 +136,23 @@ class Index extends React.Component {
                     }else if (item.channelurl==='../systemMan/systemManDo?action=userList'){
                         menuList.push(<SubMenu key={item.key} 
                         title={<span><Icon type={item.type} style={{fontSize: '14px',boxShadow:'0 0 30px #01C2E0',color:'#01C2E0',height:'0'}}/><span style={{fontSize: '14px'}}>系统设置</span></span>}>
-                        <Menu.Item key="noticesetting">
+                        <Menu.Item key="noticesetting" style={{fontSize: '14px'}}>
                             <Link to="/noticesetting">
                                 <span>通知设置</span>
                             </Link>
                         </Menu.Item>
 
-                        <Menu.Item key="warnsetting">
+                        <Menu.Item key="warnsetting" style={{fontSize: '14px'}}>
                             <Link to="/warnsetting">
                                 <span>预警设置</span>
                             </Link>
                         </Menu.Item>
-                        <Menu.Item key="excludesetting">
+                        <Menu.Item key="excludesetting" style={{fontSize: '14px'}}>
                             <Link to="/excludesetting">
                                 <span>排除停用</span>
                             </Link>
                         </Menu.Item>
-                        <Menu.Item key="publicopinion">
+                        <Menu.Item key="publicopinion" style={{fontSize: '14px'}}>
                             <Link to="/publicopinion">
                                 <span>舆情录入</span>
                             </Link>
@@ -197,7 +196,7 @@ class Index extends React.Component {
                             mode="inline"
                             theme="dark"
                             inlineCollapsed={this.state.collapsed}
-                            style={{backgroundColor: '#0c1224'}}
+                            style={{backgroundColor: '#0c1224',maxHeight:'700px',overflowX: 'hidden', overflowY: 'scroll' }}
                             className="selectMenu"
                             selectedKeys={[urlTokey()]}
                         >
@@ -220,7 +219,6 @@ class Index extends React.Component {
                                 <Route path="/materiaopinion" component={MaterialOpinion}/>
                                 <Route path="/collectionopinion" component={CollectionOpinion}/>
                                 <Route path="/historyopinion" component={HistoryOpinion}/>
-                                <Route path="/warningopinion" component={WarningOpinion}/>
                                 <Route path="/home" exact component={NewHome}/>
                                 <Route path="/noticesetting" component={NoticeSetting}/>
                                 <Route path="/warnsetting" component={WarnSetting}/>
