@@ -2,36 +2,45 @@
   // overflow: hidden;
   background-color: #FFFFFF;
   margin-top: 20px;
-  margin-bottom: 0px;
-  box-shadow: 0 3px 1px -2px rgba(0,0,0,0.2),
-  0 2px 2px 0 rgba(0,0,0,0.14),
-  0 1px 5px 0px rgba(0,0,0,0.12);
-  border-radius:4px;
-  min-height: 440px;
+  margin-bottom: 0;
+  box-shadow: 0 3px 1px -2px rgba(0,0,0,0.2), 0 2px 2px 0 rgba(0,0,0,0.14), 0 1px 5px 0 rgba(0,0,0,0.12);
+  border-radius: 4px;
+  min-height: 420px;
+
   .container {
     .top {
       margin-top: 10px;
       background-color: #1b2133;
       .title {
         font-size: 15px;
-        margin:0 20px;
+        margin: 0 20px;
         height: 44px !important;
         line-height: 43px !important;
+
         .txt {
           color: #fff !important;
           margin-left: 14px;
         }
-        .btnBox{
-           margin-left: 5%;
-           button{margin-left: 2%; background-color: #1b2133; color: #1780cc;border-color: #1780cc;}
+
+        .btnBox {
+          margin-left: 5%;
+
+          button {
+            margin-left: 2%;
+            background-color: #1b2133;
+            color: #1780cc;
+            border-color: #1780cc;
+          }
         }
-        .delModule{
-           float:right;
-           cursor:pointer;
-           margin-top: 18px;
-           color:#fff;
+
+        .delModule {
+          float: right;
+          cursor: pointer;
+          margin-top: 18px;
+          color: #fff;
         }
       }
+
       .row {
         .col {
           display: flex;
@@ -41,40 +50,46 @@
           //&:last-child {
           //  border-right: none;
           //}
-
         }
       }
     }
+
     .bottom {
       display: flex;
-      justify-content: space-between;
-      .total{
-          width:16%;
-          .opinion-info {
+      // justify-content: space-between;
+      .total {
+        width: 24%;
+
+        .opinion-info {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          margin: 46px 0;
+
+          .count {
+            margin-left: 20px;
+            margin-right: 75px;
+            min-width: 76px;
+
+            .number {
+              font-size: 26px;
+            }
+
+            .test {
+              font-size: 16px;
+              color: #ccc;
+            }
+          }
+
+          .icon-wrapper {
+            width: 54px;
+            height: 54px;
+            border-radius: 50%;
             display: flex;
             justify-content: center;
             align-items: center;
-            margin: 46px 0 ;
-            .count {
-               margin-left: 20px;
-               min-width: 76px;
-              .number {
-                font-size: 26px;
-              }
-              .test {
-                font-size: 16px;
-                color: #73e681;
-              }
-            }
-            .icon-wrapper {
-              width: 54px;
-              height: 54px;
-              border-radius: 50%;
-              display: flex;
-              justify-content: center;
-              align-items: center;
-            }
           }
+        }
       }
     }
   }

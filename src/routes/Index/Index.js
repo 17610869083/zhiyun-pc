@@ -35,76 +35,74 @@ const ZHeader = AsyncComponent ( () => import('../../components/ZHeader/Zheader'
 const { Header, Sider, Content } = Layout;
 const SubMenu = Menu.SubMenu;
 class Index extends React.Component {
-    constructor() {
-        super();
-        this.state = {
-            collapsed: false,
-            status:false,
-            qqStatus:false,
-            phoneStatus:false,
-            weixinStatus:false,
-            channelList:[{channelname:'首页',channelurl:'/webpart/index.html#/home',key:"1"}]
-        };
-        this.toggle = () => {
-            this.setState({
-                collapsed: !this.state.collapsed,
-            });
-        };
-    }
-    componentWillMount(){
-        request(api_get_channel)
-        .then(res => {
-              if(res.data.code===1){
-                  this.setState({
-                    channelList:res.data.channelList
-                  })
-              }
+  constructor() {
+    super();
+    this.state = {
+      collapsed: false,
+      status:false,
+      qqStatus:false,
+      phoneStatus:false,
+      weixinStatus:false,
+      channelList:[{channelname:'首页',channelurl:'/webpart/index.html#/home',key:"1"}]
+    };
+    this.toggle = () => {
+      this.setState({
+          collapsed: !this.state.collapsed,
+      });
+    };
+  }
+  componentWillMount(){
+    request(api_get_channel)
+    .then(res => {
+      if(res.data.code===1){
+        this.setState({
+          channelList:res.data.channelList
         })
-    }
-    goBackIndex() {
-        history.push('/home');
-    }
-    showQQ(e){
-            this.setState({
-                status:true,
-                qqStatus:true
-             })
-
-    }
-    hideQQ(e){
-            this.setState({
-                status:false,
-                qqStatus:false
-             })
-
-    }
-    showPhone(e){
-            this.setState({
-                status:true,
-                phoneStatus:true
-             })
-    }
-    hidePhone(e){
-            this.setState({
-                status:false,
-                phoneStatus:false
-             })
-    }
-    showWeixin(e){
-            this.setState({
-                status:true,
-                weixinStatus:true
-             })
-    }
-    hideWeixin(e){
-            this.setState({
-                status:false,
-                weixinStatus:false
-             })
-    }
-    backTop(){
-       document.querySelector('.main').scrollTop =0;
-    }
+      }
+    })
+  }
+  goBackIndex() {
+    history.push('/home');
+  }
+  showQQ(e){
+    this.setState({
+      status:true,
+      qqStatus:true
+    })
+  }
+  hideQQ(e){
+    this.setState({
+      status:false,
+      qqStatus:false
+    })
+  }
+  showPhone(e){
+    this.setState({
+      status:true,
+      phoneStatus:true
+    })
+  }
+  hidePhone(e){
+    this.setState({
+      status:false,
+      phoneStatus:false
+    })
+  }
+  showWeixin(e){
+    this.setState({
+      status:true,
+      weixinStatus:true
+    })
+  }
+  hideWeixin(e){
+    this.setState({
+      status:false,
+      weixinStatus:false
+    })
+  }
+  backTop(){
+    document.querySelector('.main').scrollTop =0;
+  }
     render() {
         const {themeColor} =this.props;
         let menuList=[];
@@ -257,44 +255,59 @@ class Index extends React.Component {
                                             onMouseEnter={this.showPhone.bind(this)}
                                             onMouseLeave={this.hidePhone.bind(this)}
                                    ></i>
-                                           <div className={this.state.phoneStatus?'phoneBox active':'phoneBox'}
-                                            >
-                                            <p>咨询热线：</p>
-                                            <p>82540636</p>
-                                            <p>服务热线：</p>
-                                            <p>400-618-1863</p>
-                                            </div>
-                                   </li>
+                                          <div className={this.state.qqStatus?"qqBox active":'qqBox'}
+                                          >
+                                          <p>系统问题咨询</p>
+                                          <p>在线沟通，请点我</p>
+                                          <p>
+                                              <Button type="primary" onClick={() => {window.open('tencent://message/?uin=601703164&')}}>在线咨询</Button>
+                                          </p>
+                                          </div>
+                                 </li>
+                                 <li
+                                  className="suspensionList"
+                                 ><i className="fa fa-phone suspensionIcon" aria-hidden="true"
+                                          onMouseEnter={this.showPhone.bind(this)}
+                                          onMouseLeave={this.hidePhone.bind(this)}
+                                 ></i>
+                                         <div className={this.state.phoneStatus?'phoneBox active':'phoneBox'}
+                                          >
+                                          <p>咨询热线：</p>
+                                          <p>82540636</p>
+                                          <p>服务热线：</p>
+                                          <p>400-618-1863</p>
+                                          </div>
+                                 </li>
 
-                                   <li
-                                   className="suspensionList"
-                                   ><i className="fa fa-weixin suspensionIcon" aria-hidden="true"
-                                onMouseEnter={this.showWeixin.bind(this)}
-                                onMouseLeave={this.hideWeixin.bind(this)}
-                                   ></i>
-                                            <div className={this.state.weixinStatus?'weixinBox active':'weixinBox'}
-                                           >
-                                            <img src={CRcode} alt="" width="70px" height="70px"/>
-                                            <p className="appDownload">官方app下载</p>
-                                            </div>
-                                   </li>
+                                 <li
+                                 className="suspensionList"
+                                 ><i className="fa fa-weixin suspensionIcon" aria-hidden="true"
+                              onMouseEnter={this.showWeixin.bind(this)}
+                              onMouseLeave={this.hideWeixin.bind(this)}
+                                 ></i>
+                                          <div className={this.state.weixinStatus?'weixinBox active':'weixinBox'}
+                                         >
+                                          <img src={CRcode} alt="" width="70px" height="70px"/>
+                                          <p className="appDownload">官方app下载</p>
+                                          </div>
+                                 </li>
 
-                                   <li
-                                    className="suspensionList"
-                                    onClick={this.backTop.bind(this)}
-                                   >
-                                       <i className="fa fa-arrow-up suspensionIcon" aria-hidden="true">
-                                       </i>
-                                   </li>
-                                 </ul>
-                                 </div>
-                            </div>
-                        </Content>
-                    </Layout>
-                </Layout>
-            </div>
-        )
-    }
+                                 <li
+                                  className="suspensionList"
+                                  onClick={this.backTop.bind(this)}
+                                 >
+                                     <i className="fa fa-arrow-up suspensionIcon" aria-hidden="true">
+                                     </i>
+                                 </li>
+                               </ul>
+                               </div>
+                          </div>
+                      </Content>
+                  </Layout>
+              </Layout>
+          </div>
+      )
+  }
 }
 
 const mapStateToProps = state => {

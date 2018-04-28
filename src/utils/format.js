@@ -55,7 +55,9 @@ export function formatMediaChart(data) {
         },
         grid: {
             left: '6%',
-            right: 0
+            right: 0,
+            // top:20,
+            bottom: 20
         },
         color: ['#20aafc','#ff5858','#e70000','#ffbc34','#91c7ae','#749f83',  '#ca8622', '#bda29a','#6e7074', '#546570', '#c4ccd3'],
         xAxis: data.xAxis[0],

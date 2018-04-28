@@ -98,15 +98,15 @@ class OpinionTrendBox extends React.Component {
                             echarts={echarts}
                             option={this.state.mediaChartOption}
                             lazyUpdate={true}
-                            style={{height: '350px', width: '81%', marginBottom: '-20px'}}
+                            style={{height: '350px', width: '75%', marginBottom: '-20px'}}
                             ref={(e) => { this.echarts_react = e; }}
                             />
                                 <div className="total">
                                 <div className="opinion-info">
 
                                     <div className="count">
-                                        <div className="test">舆情总量</div>
-                                        <div className="number">{monthCount[4]['all']}</div>
+                                      <div className="number">{monthCount[4]['all']}</div>
+                                      <div className="test">舆情总量</div>
                                     </div>
                                     <div className="icon-wrapper" style={{backgroundColor: '#009efb'}}>
                                          <IconFont type="icon-yuqing" style={{color: '#ffffff',fontSize: '40px'}}/>
@@ -114,20 +114,18 @@ class OpinionTrendBox extends React.Component {
 
                                 </div>
                                 <div className="opinion-info">
-
                                     <div className="count">
-                                        <div className="test">负面总量</div>
                                         <div className="number">{monthCount[2]['negative']}</div>
+                                        <div className="test">负面总量</div>
                                     </div>
                                     <div className="icon-wrapper" style={{backgroundColor: '#ff6600'}}>
                                             <IconFont type="icon-jinggao-white" style={{fontSize: '40px'}}/>
                                         </div>
                                 </div>
                                 <div className="opinion-info">
-
                                     <div className="count">
-                                        <div className="test">预警总量</div>
                                         <div className="number">{monthCount[3]['warn']}</div>
+                                        <div className="test">预警总量</div>
                                     </div>
                                     <div className="icon-wrapper" style={{backgroundColor: '#ffab00'}}>
                                         <IconFont type="icon-shandian-white" style={{fontSize: '40px'}}/>

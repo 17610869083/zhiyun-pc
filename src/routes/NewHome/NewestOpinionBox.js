@@ -65,7 +65,7 @@ class NewestOpinionBox extends React.Component {
                                 <li key={item.sid}>
                                 <div className="opinion-item"  onClick={this.clickItemTitle.bind(this,item.sid)}
                                 >
-                                  <div className="content">
+                                  <div className="content"> 
                                       <div className="title">{item.title}</div>
                                       <div className="desc">
                                           <span className="time">{item.pubdate.substring(10)}</span>

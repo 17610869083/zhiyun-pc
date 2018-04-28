@@ -80,7 +80,7 @@ class MediaDistribution extends React.Component{
                             lazyUpdate={true}
                         />
             </div>
-            </div>   
+            </div>
         )
     }
 }
