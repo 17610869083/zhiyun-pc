@@ -17,16 +17,12 @@ class MediaDistribution extends React.Component{
                 trigger: 'item',
                 formatter: "{a} <br/>{b}: {c} ({d}%)"
             },
-            grid:{
-                left:'20%',
-                top : '2%',
-                bottom: 10
-                },
             series: [
                 {
                     name:'总量',
                     type:'pie',
                     radius: ['40%', '55%'],
+                    center:['50%', 180],
                     label: {
                         normal: {
                             formatter: '{a|{a}}{abg|}\n{hr|}\n  {b|{b}：}{c}  {per|{d}%}  ',

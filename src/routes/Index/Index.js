@@ -10,6 +10,7 @@ import CRcode from '../LoginPage/crcode.jpg';
 import {api_get_channel} from '../../services/api';
 import request from '../../utils/request';
 import {urlTokey} from '../../utils/format';
+import Iconfont from '../../components/IconFont';
 import AsyncComponent from '../../components/AsyncComponent/AsyncComponent'
 const NewHome = AsyncComponent ( () => import('../NewHome'))
 const TopicReportList = AsyncComponent ( () => import('../TopicReportList/TopicReportList'))
@@ -103,148 +104,149 @@ class Index extends React.Component {
     document.querySelector('.main').scrollTop =0;
   }
     render() {
-      const {themeColor} =this.props;
-      let menuList=[];
-      this.state.channelList.map( (item,index) =>{
-        if(item.channelurl==='/reportopinion/list'){
-          menuList.push(<SubMenu
-                  key={item.key}
-                  title={<span><Icon type={item.type} style={{fontSize: '14px',boxShadow:'0 0 30px #01C2E0',color:'#01C2E0',height:'0'}}/><span style={{fontSize: '14px'}}>舆情报告</span></span>}>
-                  <Menu.Item key="reportopinion" style={{fontSize: '14px'}}>
-                      <Link to="/reportopinion/list">
-                          <span>简报列表</span>
+        const {themeColor} =this.props;
+        let menuList=[];
+        this.state.channelList.map( (item,index) =>{
+             if(item.channelurl==='/reportopinion/list'){
+                menuList.push(<SubMenu
+                        key={item.key}
+                        title={<span><Icon type={item.type} style={{fontSize: '14px'}}/><span style={{fontSize: '14px'}}>舆情报告</span></span>}>
+                        <Menu.Item key="reportopinion" style={{fontSize: '14px'}}>
+                            <Link to="/reportopinion/list">
+                                <span>简报列表</span>
+                            </Link>
+                        </Menu.Item>
+                        <Menu.Item key="materiaopinion" style={{fontSize: '14px'}}>
+                            <Link to="/materiaopinion">
+                                <span>素材库</span>
+                            </Link>
+                        </Menu.Item>
+                        <Menu.Item key="collectionopinion" style={{fontSize: '14px'}}>
+                            <Link to="/collectionopinion">
+                                <span>我的收藏</span>
+                            </Link>
+                        </Menu.Item>
+                        <Menu.Item key="historyopinion" style={{fontSize: '14px'}}>
+                            <Link to="/historyopinion">
+                                <span>我的报告库</span>
+                            </Link>
+                        </Menu.Item>
+                    </SubMenu>)
+                    }else if (item.channelurl==='../systemMan/systemManDo?action=userList'){
+                        menuList.push(<SubMenu key={item.key}
+                        title={<span><Icon type={item.type} 
+                        style={{fontSize: '14px'}}/><span style={{fontSize: '14px'}}>系统设置</span></span>}>
+                        <Menu.Item key="noticesetting" style={{fontSize: '14px'}}>
+                            <Link to="/noticesetting">
+                                <span>通知设置</span>
+                            </Link>
+                        </Menu.Item>
+                        <Menu.Item key="warnsetting" style={{fontSize: '14px'}}>
+                            <Link to="/warnsetting">
+                                <span>预警设置</span>
+                            </Link>
+                        </Menu.Item>
+                        <Menu.Item key="excludesetting" style={{fontSize: '14px'}}>
+                            <Link to="/excludesetting">
+                                <span>排除停用</span>
+                            </Link>
+                        </Menu.Item>
+                        <Menu.Item key="publicopinion" style={{fontSize: '14px'}}>
+                            <Link to="/publicopinion">
+                                <span>舆情录入</span>
+                            </Link>
+                        </Menu.Item>
+                    </SubMenu>)
+                    }else {
+                    menuList.push(<Menu.Item key={item.key} style={{fontSize: '14px'}}>
+                      {item.channelurl.indexOf('http')!==-1?
+                       <a href={item.channelurl} target="blank">
+                    <Icon type={item.type} style={{fontSize:'14px'}}/>
+                    <span>{item.channelname}</span>
+                       </a>:<Link to={item.channelurl}>
+                       <Icon type={item.type} style={{fontSize:'14px'}}></Icon>
+                      <span>{item.channelname}</span>
                       </Link>
-                  </Menu.Item>
-                  <Menu.Item key="materiaopinion" style={{fontSize: '14px'}}>
-                      <Link to="/materiaopinion">
-                          <span>素材库</span>
-                      </Link>
-                  </Menu.Item>
-                  <Menu.Item key="collectionopinion" style={{fontSize: '14px'}}>
-                      <Link to="/collectionopinion">
-                          <span>我的收藏</span>
-                      </Link>
-                  </Menu.Item>
-                  <Menu.Item key="historyopinion" style={{fontSize: '14px'}}>
-                      <Link to="/historyopinion">
-                          <span>我的报告库</span>
-                      </Link>
-                  </Menu.Item>
-              </SubMenu>)
-              }else if (item.channelurl==='../systemMan/systemManDo?action=userList'){
-                  menuList.push(<SubMenu key={item.key}
-                  title={<span><Icon type={item.type} style={{fontSize: '14px',boxShadow:'0 0 30px #01C2E0',color:'#01C2E0',height:'0'}}/><span style={{fontSize: '14px'}}>系统设置</span></span>}>
-                  <Menu.Item key="noticesetting" style={{fontSize: '14px'}}>
-                      <Link to="/noticesetting">
-                          <span>通知设置</span>
-                      </Link>
-                  </Menu.Item>
-
-                  <Menu.Item key="warnsetting" style={{fontSize: '14px'}}>
-                      <Link to="/warnsetting">
-                          <span>预警设置</span>
-                      </Link>
-                  </Menu.Item>
-                  <Menu.Item key="excludesetting" style={{fontSize: '14px'}}>
-                      <Link to="/excludesetting">
-                          <span>排除停用</span>
-                      </Link>
-                  </Menu.Item>
-                  <Menu.Item key="publicopinion" style={{fontSize: '14px'}}>
-                      <Link to="/publicopinion">
-                          <span>舆情录入</span>
-                      </Link>
-                  </Menu.Item>
-              </SubMenu>)
-              }else {
-              menuList.push(<Menu.Item key={item.key} style={{fontSize: '14px'}}>
-                {item.channelurl.indexOf('http')!==-1?
-                 <a href={item.channelurl} target="blank">
-              <Icon type={item.type} style={{ boxShadow:'0 0 30px #01C2E0',color:'#01C2E0',height:'0' }}/>
-              <span>{item.channelname}</span>
-                 </a>:<Link to={item.channelurl}>
-                <Icon type={item.type} style={{ boxShadow:'0 0 30px #01C2E0',color:'#01C2E0',height:'0'}}/>
-                <span>{item.channelname}</span>
-                </Link>
-                }
-                </Menu.Item>)
-                }
-        return 3
-      })
-      return (
-          <div className="root-container">
-              <Layout className="layout">
-                  <Sider
-                      className="sider siders"
-                      trigger={null}
-                      collapsible
-                      style={{backgroundColor: '#0c1224'}}
-                      collapsed={this.state.collapsed}
-                  >
-                      <div>
-                          <div className="logo-wrapper" style={{backgroundColor: themeColor.topColor.backgroundColor}}>
-                              <img src={logo} alt="logo" className="logo" onClick={this.goBackIndex.bind(this)} />
-                          </div>
-                          <div className="trigger-wrapper" onClick={this.toggle}>
-                              <i className="fa fa-bars" aria-hidden="true" style={{fontSize: '14px', color: '#ffffff'}}/>
-                          </div>
-                      </div>
-                      <Menu
-                          defaultSelectedKeys={['1']}
-                          mode="inline"
-                          theme="dark"
-                          inlineCollapsed={this.state.collapsed}
-                          style={{backgroundColor: '#0c1224',maxHeight:'700px',overflowX: 'hidden', overflowY: 'scroll' }}
-                          className="selectMenu"
-                          selectedKeys={[urlTokey()]}
-                      >
-                          {menuList}
-                      </Menu>
-                  </Sider>
-                  <Layout className="right-layout">
-                      <Header className="header" style={{backgroundColor:themeColor.topColor.backgroundColor,height:'66px'}}>
-                          <ZHeader/>
-                      </Header>
-                      <Content className="main" ref={(main)=>{ this.main = main}}>
-                          <Switch>
-                              <Route path="/trendfeeling" component={TrendFeeling}/>
-                              <Route path="/bigscreen" component={BigScreen} />
-                              <Route path="/allopinion" component={AllOpinion}/>
-                              <Route path="/topic" component={TopicOpinion}/>
-                              <Route path="/test" component={EditOpinionDetail}/>
-                              <Route path="/reportopinion/list" component={ReportOpinion}/>
-                              <Route path="/reportopinion/detail" component={ReportOpinionDetail}/>
-                              <Route path="/materiaopinion" component={MaterialOpinion}/>
-                              <Route path="/collectionopinion" component={CollectionOpinion}/>
-                              <Route path="/historyopinion" component={HistoryOpinion}/>
-                              <Route path="/home" exact component={NewHome}/>
-                              <Route path="/noticesetting" component={NoticeSetting}/>
-                              <Route path="/warnsetting" component={WarnSetting}/>
-                              <Route path="/excludesetting" component={ExcludeSetting}/>
-                              <Route path="/publicopinion" component={TopicEditOpinionDetail}/>
-                              <Route path="/sortedopinion" component={SortedOpinion}/>
-                              <Route path="/topic/addtopic" component={TopicAdd}/>
-                              <Route path="/sortedopinion/addrule" component={SortedAdd}/>
-                              <Route path="/topicreportlist" component={TopicReportList}/>
-                          </Switch>
-                          <div className="suspensionBox">
-                               <div >
-                               <ul className="suspension">
-                                 <li
-                                      className="suspensionList"
-                                      onMouseLeave={this.hideQQ.bind(this)}
-                                  ><i className="fa fa-qq suspensionIcon" aria-hidden="true"
-                                      onMouseEnter={this.showQQ.bind(this)}
-                                   ></i>
-                                          <div className={this.state.qqStatus?"qqBox active":'qqBox'}
-                                          >
-                                          <p>系统问题咨询</p>
-                                          <p>在线沟通，请点我</p>
-                                          <p>
-                                              <Button type="primary" onClick={() => {window.open('tencent://message/?uin=601703164&')}}>在线咨询</Button>
-                                          </p>
-                                          </div>
-                                 </li>
+                      }
+                      </Menu.Item>)
+                      }
+                      return 3
+                })
+        return (
+            <div className="root-container">
+                <Layout className="layout">
+                    <Sider
+                        className="sider siders"
+                        trigger={null}
+                        collapsible
+                        style={{backgroundColor: '#0c1224'}}
+                        collapsed={this.state.collapsed}
+                    >
+                        <div>
+                            <div className="logo-wrapper" style={{backgroundColor: themeColor.topColor.backgroundColor}}>
+                                <img src={logo} alt="logo" className="logo" onClick={this.goBackIndex.bind(this)} />
+                            </div>
+                            <div className="trigger-wrapper" onClick={this.toggle}>
+                                <i className="fa fa-bars" aria-hidden="true" style={{fontSize: '14px', color: '#ffffff'}}/>
+                                <Iconfont type=""></Iconfont>
+                            </div>
+                        </div>
+                        <Menu
+                            defaultSelectedKeys={['1']}
+                            mode="inline"
+                            theme="dark"
+                            inlineCollapsed={this.state.collapsed}
+                            style={{backgroundColor: '#0c1224',maxHeight:'700px',overflowX: 'hidden', overflowY: 'scroll' }}
+                            className="selectMenu"
+                            selectedKeys={[urlTokey()]}
+                        >
+                            {menuList}
+                        </Menu>
+                    </Sider>
+                    <Layout className="right-layout">
+                        <Header className="header" style={{backgroundColor:themeColor.topColor.backgroundColor,height:'66px'}}>
+                            <ZHeader/>
+                        </Header>
+                        <Content className="main" ref={(main)=>{ this.main = main}}>
+                            <Switch>
+                                <Route path="/trendfeeling" component={TrendFeeling}/>
+                                <Route path="/bigscreen" component={BigScreen} />
+                                <Route path="/allopinion" component={AllOpinion}/>
+                                <Route path="/topic" component={TopicOpinion}/>
+                                <Route path="/test" component={EditOpinionDetail}/>
+                                <Route path="/reportopinion/list" component={ReportOpinion}/>
+                                <Route path="/reportopinion/detail" component={ReportOpinionDetail}/>
+                                <Route path="/materiaopinion" component={MaterialOpinion}/>
+                                <Route path="/collectionopinion" component={CollectionOpinion}/>
+                                <Route path="/historyopinion" component={HistoryOpinion}/>
+                                <Route path="/home" exact component={NewHome}/>
+                                <Route path="/noticesetting" component={NoticeSetting}/>
+                                <Route path="/warnsetting" component={WarnSetting}/>
+                                <Route path="/excludesetting" component={ExcludeSetting}/>
+                                <Route path="/publicopinion" component={TopicEditOpinionDetail}/>
+                                <Route path="/sortedopinion" component={SortedOpinion}/>
+                                <Route path="/topic/addtopic" component={TopicAdd}/>
+                                <Route path="/sortedopinion/addrule" component={SortedAdd}/>
+                                <Route path="/topicreportlist" component={TopicReportList}/>
+                            </Switch>
+                            <div className="suspensionBox">
+                                 <div >
+                                 <ul className="suspension">
+                                   <li
+                                        className="suspensionList"
+                                        onMouseLeave={this.hideQQ.bind(this)}
+                                    ><i className="fa fa-qq suspensionIcon" aria-hidden="true"
+                                        onMouseEnter={this.showQQ.bind(this)}
+                                     ></i>
+                                            <div className={this.state.qqStatus?"qqBox active":'qqBox'}
+                                            >
+                                            <p>系统问题咨询</p>
+                                            <p>在线沟通，请点我</p>
+                                            <p>
+                                                <Button type="primary" onClick={() => {window.open('tencent://message/?uin=601703164&')}}>在线咨询</Button>
+                                            </p>
+                                            </div>
+                                   </li>
                                  <li
                                   className="suspensionList"
                                  ><i className="fa fa-phone suspensionIcon" aria-hidden="true"
