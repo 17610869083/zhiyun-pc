@@ -110,7 +110,7 @@ class Index extends React.Component {
              if(item.channelurl==='/reportopinion/list'){
                 menuList.push(<SubMenu
                         key={item.key}
-                        title={<span><Iconfont type={item.type} style={{fontSize: '14px'}}/><span style={{fontSize: '14px'}}>舆情报告</span></span>}>
+                        title={<span><Icon type={item.type} style={{fontSize: '14px'}}/><span style={{fontSize: '14px'}}>舆情报告</span></span>}>
                         <Menu.Item key="reportopinion" style={{fontSize: '14px'}}>
                             <Link to="/reportopinion/list">
                                 <span>简报列表</span>
@@ -134,7 +134,7 @@ class Index extends React.Component {
                     </SubMenu>)
                     }else if (item.channelurl==='../systemMan/systemManDo?action=userList'){
                         menuList.push(<SubMenu key={item.key}
-                        title={<span><Iconfont type={item.type} 
+                        title={<span><Icon type={item.type} 
                         style={{fontSize: '14px'}}/><span style={{fontSize: '14px'}}>系统设置</span></span>}>
                         <Menu.Item key="noticesetting" style={{fontSize: '14px'}}>
                             <Link to="/noticesetting">
@@ -161,12 +161,10 @@ class Index extends React.Component {
                     menuList.push(<Menu.Item key={item.key} style={{fontSize: '14px'}}>
                       {item.channelurl.indexOf('http')!==-1?
                        <a href={item.channelurl} target="blank">
-                    <Iconfont type={item.type} style={{fontSize:'14px'}}/>
+                    <Icon type={item.type} style={{fontSize:'14px'}}/>
                     <span>{item.channelname}</span>
                        </a>:<Link to={item.channelurl}>
-                    {/* <Iconfont type={item.type} style={{fontSize:'14px'}}></Iconfont> */}
-                       {/* <Icon type={item.type} style={{fontSize:'14px'}}></Icon> */}
-                       <i className="action fa fa-address-book" aria-hidden="true"></i>
+                       <Icon type={item.type} style={{fontSize:'14px'}}></Icon>
                       <span>{item.channelname}</span>
                       </Link>
                       }
@@ -249,21 +247,6 @@ class Index extends React.Component {
                                             </p>
                                             </div>
                                    </li>
-                                   <li
-                                    className="suspensionList"
-                                   ><i className="fa fa-phone suspensionIcon" aria-hidden="true"
-                                            onMouseEnter={this.showPhone.bind(this)}
-                                            onMouseLeave={this.hidePhone.bind(this)}
-                                   ></i>
-                                          <div className={this.state.qqStatus?"qqBox active":'qqBox'}
-                                          >
-                                          <p>系统问题咨询</p>
-                                          <p>在线沟通，请点我</p>
-                                          <p>
-                                              <Button type="primary" onClick={() => {window.open('tencent://message/?uin=601703164&')}}>在线咨询</Button>
-                                          </p>
-                                          </div>
-                                 </li>
                                  <li
                                   className="suspensionList"
                                  ><i className="fa fa-phone suspensionIcon" aria-hidden="true"
