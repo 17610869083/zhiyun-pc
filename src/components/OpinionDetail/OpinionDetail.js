@@ -670,14 +670,14 @@ class OpinionDetail extends React.Component {
                     <div>
                         <Tooltip title='删除' placement="bottom">
                         <Popconfirm title="确定要删除这条信息吗？" onConfirm={this.deleteConfirm.bind(this, item.sid)} onCancel={this.deleteCancel.bind(this)} okText="是" cancelText="否">
-                        <i><Iconfont type="icon-shanchu" style={{fontSize:'14px',fill:'#0D8DA1'}}></Iconfont></i>  
+                        <i><Iconfont type="icon-shanchu" style={{fontSize:'16px',fill:'#0D8DA1'}}></Iconfont></i>  
                         </Popconfirm>
                         </Tooltip>
                     </div>
                     <div>
                     <Tooltip title='设为预警' placement="bottom">
                     <Popconfirm title="是否将这条信息设为预警？" onConfirm={this.warningConfirm.bind(this, item.sid)} onCancel={this.deleteCancel.bind(this)} okText="是" cancelText="否">
-                     <i>sdd</i>
+                    <i><Iconfont type="icon-yujing1" style={{fontSize:'16px',fill:'#0D8DA1'}}></Iconfont></i>  
                     </Popconfirm>
                     </Tooltip>
                     </div>
@@ -696,7 +696,7 @@ class OpinionDetail extends React.Component {
                                 onVisibleChange={this.handleVisibleChange.bind(this, index)}
                                 visible={this.state.popVisible && this.state.popIndex === index}
                             >
-                            <i><Iconfont type="icon--jiageyujing" style={{fontSize:'14px',fill:'#0D8DA1'}}></Iconfont></i> 
+                            <i><Iconfont type="icon--jiageyujing" style={{fontSize:'18px',fill:'#0D8DA1'}}></Iconfont></i> 
                             </Popover>
                             </Tooltip>
                         </div>
@@ -716,7 +716,7 @@ class OpinionDetail extends React.Component {
                         getPopupContainer={ () => document.querySelector('.opinion-detail')}
                         >
                             <Tooltip title='素材库' placement="bottom">
-                            <i><Iconfont type="icon-sucaiku" style={{fontSize:'14px',fill:'#0D8DA1'}} onClick={this.props.getCollectionOpinionListRequested.bind(this)}></Iconfont></i>  
+                            <i><Iconfont type="icon-sucaiku" style={{fontSize:'18px',fill:'#0D8DA1'}} onClick={this.props.getCollectionOpinionListRequested.bind(this)}></Iconfont></i>  
                             </Tooltip>
                         </Dropdown>
                         </div>
@@ -736,7 +736,7 @@ class OpinionDetail extends React.Component {
                         } trigger={['click']}
                         getPopupContainer={ () => document.querySelector('.opinion-detail')}
                         >
-                        <i><Iconfont type="icon-shoucang" style={{fontSize:'14px',fill:'#0D8DA1'}} onClick={this.props.getMaterialOpinionListRequested.bind(this)}></Iconfont></i> 
+                        <i><Iconfont type="icon-shoucang" style={{fontSize:'16px',fill:'#0D8DA1'}} onClick={this.props.getMaterialOpinionListRequested.bind(this)}></Iconfont></i> 
                         </Dropdown>
                         </Tooltip>
                         </div>
