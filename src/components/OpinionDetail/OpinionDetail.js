@@ -89,7 +89,6 @@ class OpinionDetail extends React.Component {
 
                     }
              })
-
           })
         }
         this.props.searchKeywordSync({seltype:'content',
@@ -120,8 +119,6 @@ class OpinionDetail extends React.Component {
                     }
              })
              }
-
-
   }
     // ------全选
     chooseAllOnChange(e) {
@@ -132,7 +129,6 @@ class OpinionDetail extends React.Component {
         });
     }
     onChangeItem(index, event) {
-
         const arr = this.state.checkedArray;
         arr[index] = event.target.checked;
         const isEveryChecked = arr.every(item => {
@@ -568,9 +564,52 @@ class OpinionDetail extends React.Component {
             downloadVisible:false
         })
     }
+    //单条加入素材库
+    materialConfirm(sid,e){
+          request(api_push_material + '&catid='+ e.key +'&sid=["' + sid+'"]' ).then((res) => {
+            if (res.data.code === 1) {
+                message.success(res.data.msg);
+            }
+            });
+    }
+    //单条加入收藏
+    collectionlConfirm(sid,e){
+        request(api_push_collection + '&catid='+ e.key +'&sid=["' +sid+'"]' ).then((res) => {
+            if (res.data.code === 1) {
+                message.success('舆情文章添加到收藏夹成功');
+            }
+        });
+    }
     render() {
         const {page} =this.props;
         const docList = this.props.docList ? this.props.docList : [{carry: '新闻'}];
+        // 素材库的目录
+        const putinReportMenu = (
+            <Menu onClick={this.putIntoMaterial.bind(this)}>
+                {
+                    this.props.materialList.map(item =>
+                        <Menu.Item key={item.id}>
+                            <Icon type="folder" />
+                            <span>{item.catname}</span>
+                        </Menu.Item>
+                    )
+                }
+            </Menu>
+        );
+
+        // 收藏夹的目录
+        const collectionMenu = (
+            <Menu onClick={this.putIntoCollection.bind(this)}>
+                {
+                    this.props.favCatList.map(item =>
+                        <Menu.Item key={item.id}>
+                            <Icon type="folder" />
+                            <span>{item.catname}</span>
+                        </Menu.Item>
+                    )
+                }
+            </Menu>
+        );
         const OpinionDetailItems =docList[0]!==undefined && docList[0]['negative']!==undefined? docList.map((item, index) =>
             <li key={item.sid} className="opinion-detail-item">
             <div className="cheackBox">
@@ -624,7 +663,6 @@ class OpinionDetail extends React.Component {
                         <div className="keywords">
                             {item.nztags}
                         </div>
-
                     </div>
                     </div>
                     <div className="cirleBox">
@@ -636,27 +674,13 @@ class OpinionDetail extends React.Component {
                         </Tooltip>
                     </div>
                     <div>
-                        <Tooltip title='删除' placement="bottom">
-                        <Popconfirm title="确定要删除这条信息吗？" onConfirm={this.deleteConfirm.bind(this, item.sid)} onCancel={this.deleteCancel.bind(this)} okText="是" cancelText="否">
-                        <img src={deleteImg} alt=""/>
-                        </Popconfirm>
-                        </Tooltip>
+                    <Tooltip title='设为预警' placement="bottom">
+                    <Popconfirm title="是否将这条信息设为预警？" onConfirm={this.warningConfirm.bind(this, item.sid)} onCancel={this.deleteCancel.bind(this)} okText="是" cancelText="否">
+                    <img src={warning} alt=""/>
+                    </Popconfirm>
+                    </Tooltip>
                     </div>
-                        <div>
-                            <Tooltip title='删除' placement="bottom">
-                            <Popconfirm title="确定要删除这条信息吗？" onConfirm={this.deleteConfirm.bind(this, item.sid)} onCancel={this.deleteCancel.bind(this)} okText="是" cancelText="否">
-                            <img src={deleteImg} alt=""/>
-                            </Popconfirm>
-                            </Tooltip>
-                        </div>
-                        <div>
-                            <Tooltip title='设为预警' placement="bottom">
-                            <Popconfirm title="是否将这条信息设为预警？" onConfirm={this.warningConfirm.bind(this, item.sid)} onCancel={this.deleteCancel.bind(this)} okText="是" cancelText="否">
-                            <img src={warning} alt=""/>
-                            </Popconfirm>
-                            </Tooltip>
-                        </div>
-                        <div>
+                    <div>
                         <Tooltip title='设置倾向' placement="bottom">
                         <Popover
                                 content={
@@ -675,18 +699,54 @@ class OpinionDetail extends React.Component {
                             </Popover>
                             </Tooltip>
                         </div>
+                        <div>
+                        <Dropdown overlay={
+                        <Menu onClick={this.materialConfirm.bind(this,item.sid)}>
+                            {
+                                this.props.materialList.map(iitem =>
+                                    <Menu.Item key={iitem.id}>
+                                        <Icon type="folder" />
+                                        <span>{iitem.catname}</span>
+                                    </Menu.Item>
+                                )
+                            }
+                        </Menu>
+                      } trigger={['click']}
+                        getPopupContainer={ () => document.querySelector('.opinion-detail')}
+                        >
+                            <Tooltip title='素材库' placement="bottom">
+                            <img src={infoBaseImg} alt="infoBase" className="close-img" onClick={this.props.getCollectionOpinionListRequested.bind(this)}/>
+                            </Tooltip>
+                        </Dropdown>
+                        </div>
+                        <div>
+                        <Tooltip title='收藏' placement="bottom">
+                        <Dropdown overlay={
+                        <Menu onClick={this.collectionlConfirm.bind(this,item.sid)}>
+                            {
+                                this.props.favCatList.map(iitem =>
+                                    <Menu.Item key={iitem.id}>
+                                        <Icon type="folder" />
+                                        <span>{iitem.catname}</span>
+                                    </Menu.Item>
+                                )
+                            }
+                        </Menu>
+                        } trigger={['click']}
+                        getPopupContainer={ () => document.querySelector('.opinion-detail')}
+                        >
+                        <img src={starImg} alt="star" className="close-img" onClick={this.props.getMaterialOpinionListRequested.bind(this)}/>
+                        </Dropdown>
+                        </Tooltip>
+                        </div>
                     </div>
                 </div>
                 </div>
-                {
-                  //时间
-                }
             </li>
         ):<BlankPage desc={this.props.propsType==='TopicList'?
         '<span>空空如也，赶紧去<a href="index.html#/topic/addtopic">添加</a>关键词</span>':
         '<span>空空如也，赶紧去<a href="index.html#/sortedopinion/addrule">添加</a>关键词</span>'
         }/>;
-
         const ChangeTrendMenu = (
             <Menu>
                 <Menu.Item key="0">
@@ -703,8 +763,6 @@ class OpinionDetail extends React.Component {
                 </Menu.Item>
             </Menu>
         );
-
-
         const Loading = (
             <Spin tip="加载中...">
                 <Alert
@@ -713,34 +771,6 @@ class OpinionDetail extends React.Component {
                     type="info"
                 />
             </Spin>
-        );
-
-        // 素材库的目录
-        const putinReportMenu = (
-            <Menu onClick={this.putIntoMaterial.bind(this)}>
-                {
-                    this.props.materialList.map(item =>
-                        <Menu.Item key={item.id}>
-                            <Icon type="folder" />
-                            <span>{item.catname}</span>
-                        </Menu.Item>
-                    )
-                }
-            </Menu>
-        );
-
-        // 收藏夹的目录
-        const collectionMenu = (
-            <Menu onClick={this.putIntoCollection.bind(this)}>
-                {
-                    this.props.favCatList.map(item =>
-                        <Menu.Item key={item.id}>
-                            <Icon type="folder" />
-                            <span>{item.catname}</span>
-                        </Menu.Item>
-                    )
-                }
-            </Menu>
         );
         return (
             <div className="opinion-detail" >
@@ -799,9 +829,7 @@ class OpinionDetail extends React.Component {
                        total={ this.props.pageInfo && this.props.pageInfo.count}
                        getPopupContainer={ () => document.querySelector('.all-opinion')}
                        current={page}
-
                         />
-
                     <div className="inputSearch"
                     style={this.props.propsType==='AllopinionList' ?{visibility:'visible'}: {visibility:'hidden'}}>
                     <div className="right">
@@ -809,7 +837,6 @@ class OpinionDetail extends React.Component {
                             <Select defaultValue="content" onChange={this.handleSearchChange.bind(this)}>
                                 <Option value="content" className="selectFont">搜全文</Option>
                                 <Option value="title" className="selectFont">搜标题</Option>
-                                {/* <Option value="source" className="selectFont">搜媒体</Option> */}
                             </Select>
                             <Input
                                 style={{width: '150px'}}
@@ -818,11 +845,6 @@ class OpinionDetail extends React.Component {
                             />
 
                         </InputGroup>
-
-                        {/* <div className="workingModel">
-                            <span className="selectFont leftBorder" onClick={this.operation.bind(this)}>操作模式</span>
-                            <span className="selectFont" onClick={this.Streamline.bind(this)}>精简模式</span>
-                        </div> */}
                     </div>
                     <Button className="search" onClick={this.handleSearchBtn.bind(this)}>搜索</Button>
                     </div>

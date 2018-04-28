@@ -10,6 +10,7 @@ import CRcode from '../LoginPage/crcode.jpg';
 import {api_get_channel} from '../../services/api';
 import request from '../../utils/request';
 import {urlTokey} from '../../utils/format';
+import Iconfont from '../../components/IconFont';
 import AsyncComponent from '../../components/AsyncComponent/AsyncComponent'
 const NewHome = AsyncComponent ( () => import('../NewHome'))
 const TopicReportList = AsyncComponent ( () => import('../TopicReportList/TopicReportList'))
@@ -111,7 +112,7 @@ class Index extends React.Component {
              if(item.channelurl==='/reportopinion/list'){
                 menuList.push(<SubMenu
                         key={item.key}
-                        title={<span><Icon type={item.type} style={{fontSize: '14px',boxShadow:'0 0 30px #01C2E0',color:'#01C2E0',height:'0'}}/><span style={{fontSize: '14px'}}>舆情报告</span></span>}>
+                        title={<span><Iconfont type={item.type} style={{fontSize: '14px'}}/><span style={{fontSize: '14px'}}>舆情报告</span></span>}>
                         <Menu.Item key="reportopinion" style={{fontSize: '14px'}}>
                             <Link to="/reportopinion/list">
                                 <span>简报列表</span>
@@ -135,13 +136,13 @@ class Index extends React.Component {
                     </SubMenu>)
                     }else if (item.channelurl==='../systemMan/systemManDo?action=userList'){
                         menuList.push(<SubMenu key={item.key}
-                        title={<span><Icon type={item.type} style={{fontSize: '14px',boxShadow:'0 0 30px #01C2E0',color:'#01C2E0',height:'0'}}/><span style={{fontSize: '14px'}}>系统设置</span></span>}>
+                        title={<span><Iconfont type={item.type} 
+                        style={{fontSize: '14px'}}/><span style={{fontSize: '14px'}}>系统设置</span></span>}>
                         <Menu.Item key="noticesetting" style={{fontSize: '14px'}}>
                             <Link to="/noticesetting">
                                 <span>通知设置</span>
                             </Link>
                         </Menu.Item>
-
                         <Menu.Item key="warnsetting" style={{fontSize: '14px'}}>
                             <Link to="/warnsetting">
                                 <span>预警设置</span>
@@ -162,10 +163,12 @@ class Index extends React.Component {
                     menuList.push(<Menu.Item key={item.key} style={{fontSize: '14px'}}>
                       {item.channelurl.indexOf('http')!==-1?
                        <a href={item.channelurl} target="blank">
-                    <Icon type={item.type} style={{ boxShadow:'0 0 30px #01C2E0',color:'#01C2E0',height:'0' }}/>
+                    <Iconfont type={item.type} style={{fontSize:'14px'}}/>
                     <span>{item.channelname}</span>
                        </a>:<Link to={item.channelurl}>
-                      <Icon type={item.type} style={{ boxShadow:'0 0 30px #01C2E0',color:'#01C2E0',height:'0'}}/>
+                    {/* <Iconfont type={item.type} style={{fontSize:'14px'}}></Iconfont> */}
+                       {/* <Icon type={item.type} style={{fontSize:'14px'}}></Icon> */}
+                       <i className="action fa fa-address-book" aria-hidden="true"></i>
                       <span>{item.channelname}</span>
                       </Link>
                       }
@@ -189,6 +192,7 @@ class Index extends React.Component {
                             </div>
                             <div className="trigger-wrapper" onClick={this.toggle}>
                                 <i className="fa fa-bars" aria-hidden="true" style={{fontSize: '14px', color: '#ffffff'}}/>
+                                <Iconfont type=""></Iconfont>
                             </div>
                         </div>
                         <Menu
