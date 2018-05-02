@@ -696,7 +696,7 @@ class OpinionDetail extends React.Component {
                                 onVisibleChange={this.handleVisibleChange.bind(this, index)}
                                 visible={this.state.popVisible && this.state.popIndex === index}
                             >
-                            <i><Iconfont type="icon--jiageyujing" style={{fontSize:'18px',fill:'#0D8DA1'}}></Iconfont></i> 
+                            <Iconfont type="icon--jiageyujing" style={{fontSize:'18px',fill:'#0D8DA1'}}></Iconfont>
                             </Popover>
                             </Tooltip>
                         </div>

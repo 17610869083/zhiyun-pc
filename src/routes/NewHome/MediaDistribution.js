@@ -22,7 +22,7 @@ class MediaDistribution extends React.Component{
                     name:'总量',
                     type:'pie',
                     radius: ['40%', '55%'],
-                    center:['50%', 180],
+                    center:['50%', '70%'],
                     label: {
                         normal: {
                             formatter: '{a|{a}}{abg|}\n{hr|}\n  {b|{b}：}{c}  {per|{d}%}  ',
@@ -78,6 +78,7 @@ class MediaDistribution extends React.Component{
                             echarts={echarts}
                             option={mediaOption}
                             lazyUpdate={true}
+                            style={{height:'400px'}}
                         />
             </div>
             </div>

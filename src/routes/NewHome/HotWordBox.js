@@ -32,7 +32,7 @@ class HotWordBox extends React.Component{
                         fontSizeMapper={fontSizeMapper}
                         rotate={rotate}
                         width={400}
-                        height={300}
+                        height={400}
                         />
                     </div>
                     </div>

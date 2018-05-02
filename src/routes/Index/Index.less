@@ -5,12 +5,10 @@
     height: 100%;
     .siders{
       .ant-menu-root{
-        // overflow: hidden;
-        overflow-y: scroll;
       }
     }
     .sider {
-      overflow: hidden;
+      
       .selectMenu::-webkit-scrollbar {
         display: none;
     }
@@ -42,9 +40,12 @@
           color: #01C2E0;
         }
       }
-      // .ant-menu-dark .ant-menu-inline.ant-menu-sub{}
       .ant-menu-item .anticon + span, .ant-menu-submenu-title .anticon + span{
         margin-left: 10px;
+      }
+      .ant-menu-submenu-inline a{
+          color:rgba(255, 255, 255, 0.67);
+          text-decoration: none; 
       }
       .logo-wrapper {
         height: 64px;

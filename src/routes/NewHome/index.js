@@ -91,7 +91,7 @@ class NewHome extends React.Component {
                 request(api_newest_opinion)
                     .then((res) => {
                         if (res.data && res.data.code === 1) {
-                            const opinionList = res.data.doclist.slice(0,6);
+                            const opinionList = res.data.doclist.slice(0,7);
                             opinionList.forEach((item,index)=>{
                                     item.key=index+1
                             })
@@ -365,7 +365,7 @@ class NewHome extends React.Component {
             opinionCountArr,
             topicOpinionArr
         } = this.state;
-        const {userInfo,informsstate,ModuleList} = this.props;
+        const {userInfo,ModuleList} = this.props;
         const moduleList = this.state.homeMessage.length!==0?homeModuleList(this.state.homeMessage).map((item,index)=>
         <li key={index}>{this.state.delMoudleList[item]}
         <Icon type="plus-circle-o" className="addModule"
@@ -374,7 +374,7 @@ class NewHome extends React.Component {
         </li>):'';
         return (
             <div> 
-            <div className="informs" style={ informsstate?{display:'none'}:{display:'flex'}}>
+            <div className="informs" style={ userInfo.alerMsg===''?{display:'none'}:{display:'flex'}}>
             <span> {userInfo.alerMsg}</span>       
             <Icon type="close" onClick={ this.informs.bind(this) } style={{color:'#fff'}}/>
             </div>
@@ -411,12 +411,15 @@ class NewHome extends React.Component {
                         </Col>
                     </Row>
                     <Row gutter={16} className="row">
-                        <Col span={12}
-                          style={ModuleList.newestOpinion===1?{display:'none'}:{display:'block'}}
+                    <Col span={12}
+                          style={ModuleList.newestWarningOpinion===1?{display:'none'}:{display:'block'}}
                         >
-                            <NewestOpinionBox opinionList={opinionList}
-                            status={this.props.type!==undefined?'setting':''}
-                            delNewestBox={this.delNewestBox.bind(this)}
+                           <NewestWarningOpinionBox
+                                todayOpinion={todayWarningOpinion}
+                                yesterdayOpinion={yesterdayWarningOpinion}
+                                beforeYesterdayOpinion={beforeYesterdayWarningOpinion}
+                                status={this.props.type!==undefined?'setting':''}
+                                delNewestWarningBox={this.delNewestWarningBox.bind(this)}
                             />
                         </Col>
                         <Col span={12}
@@ -431,14 +434,19 @@ class NewHome extends React.Component {
                             />
                         </Col>
                         <Col span={12}
-                          style={ModuleList.newestWarningOpinion===1?{display:'none'}:{display:'block'}}
+                          style={ModuleList.newestOpinion===1?{display:'none'}:{display:'block'}}
                         >
-                           <NewestWarningOpinionBox
-                                todayOpinion={todayWarningOpinion}
-                                yesterdayOpinion={yesterdayWarningOpinion}
-                                beforeYesterdayOpinion={beforeYesterdayWarningOpinion}
-                                status={this.props.type!==undefined?'setting':''}
-                                delNewestWarningBox={this.delNewestWarningBox.bind(this)}
+                            <NewestOpinionBox opinionList={opinionList}
+                            status={this.props.type!==undefined?'setting':''}
+                            delNewestBox={this.delNewestBox.bind(this)}
+                            />
+                        </Col>
+                        <Col span={12}
+                          style={ModuleList.opinionCount===1?{display:'none'}:{display:'block'}}
+                        >
+                            <OpinionCountBox data={opinionCountArr}
+                            status={this.props.type!==undefined?'setting':''}
+                            delCountBox={this.delCountBox.bind(this)}
                             />
                         </Col>
                         <Col span={12}
@@ -451,6 +459,7 @@ class NewHome extends React.Component {
                                 delWeiboBox={this.delWeiboBox.bind(this)}
                             />
                         </Col>
+
                         <Col span={12}
                           style={ModuleList.topicOpinion===1?{display:'none'}:{display:'block'}}
                         >
@@ -459,14 +468,7 @@ class NewHome extends React.Component {
                             delTopicBox={this.delTopicBox.bind(this)}
                             />
                         </Col>
-                        <Col span={12}
-                          style={ModuleList.opinionCount===1?{display:'none'}:{display:'block'}}
-                        >
-                            <OpinionCountBox data={opinionCountArr}
-                            status={this.props.type!==undefined?'setting':''}
-                            delCountBox={this.delCountBox.bind(this)}
-                            />
-                        </Col>
+
 
                         <Col span={12}
                         style={ModuleList.HotWord===1?{display:'none'}:{display:'block'}}

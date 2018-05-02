@@ -38,7 +38,7 @@ class NagetiveOpinion extends React.Component {
     render() {
         const {todayOpinion,yesterdayOpinion,beforeYesterdayOpinion} = this.props;
         const more = this.props.status!=='setting'?<span onClick={this.goAllOpinion.bind(this)}>更多
-        <IconFont type="icon-gengduo" style={{color: '#9b9b9b',fontSize: '14px'}}/>
+        <IconFont type="icon-gengduo" style={{color: '#9b9b9b',fontSize: '16px'}}/>
         </span>:<Icon type="close-circle" className="delModule" style={{fontSize: '18px'}}
         onClick={this.delNewestWarningOpinionBox.bind(this)}
         ></Icon>;

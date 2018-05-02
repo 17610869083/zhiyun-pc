@@ -283,7 +283,7 @@ class TopicOpinion extends React.Component {
             <img src={setting} alt="" className="icon-setting" onClick={this.onCatid.bind(this)} data-catid={item.catid}/>         
           </Dropdown> 
           </div>      
-           <ul className="topics" style={{height:item.topicList&&item.topicList.length*31+'px'}}>
+           <ul className="topics" style={{height:item.topicList&&item.topicList.length*40+'px'}}>
               {item.topicList && item.topicList.map((iitem,iindex) =>
                  <li  key={iitem.topicid}
                  className={this.state.materialCurrent === iitem.topicid ? 'backGroundBlue' : 'a-topic'}
