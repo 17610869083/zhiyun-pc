@@ -830,24 +830,6 @@ class OpinionDetail extends React.Component {
                        getPopupContainer={ () => document.querySelector('.all-opinion')}
                        current={page}
                         />
-                    <div className="inputSearch"
-                    style={this.props.propsType==='AllopinionList' ?{visibility:'visible'}: {visibility:'hidden'}}>
-                    <div className="right">
-                        <InputGroup compact>
-                            <Select defaultValue="content" onChange={this.handleSearchChange.bind(this)}>
-                                <Option value="content" className="selectFont">搜全文</Option>
-                                <Option value="title" className="selectFont">搜标题</Option>
-                            </Select>
-                            <Input
-                                style={{width: '150px'}}
-                                placeholder="请输入您要搜索的内容"
-                                onChange={this.searchInput.bind(this)}
-                            />
-
-                        </InputGroup>
-                    </div>
-                    <Button className="search" onClick={this.handleSearchBtn.bind(this)}>搜索</Button>
-                    </div>
                 </div>
                 <div className="bottom">
                     {this.state.loading ? Loading : (null)}
