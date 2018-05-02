@@ -11,10 +11,12 @@ import TopicReportEcharts from './TopicReport/TopicReportEcharts';
 import {api_topic_del,api_topic_typeAdd,api_topic_typeDel,api_classify_revise} from '../../services/api';
 import request from '../../utils/request';
 import './TopicOpinion.less';
+import Iconfont from '../../components/IconFont';
 import {setlocationPathname,getTopicLocationRequested,topicNavMessageRequested,searchState} from '../../redux/actions/createActions';
 import {connect} from 'react-redux';
 import setting from '../../assets/icon-img/setting.png';
-import delect from '../../assets/icon-img/delect.png';
+// import delect from '../../assets/icon-img/delect.png';
+import deleteImg from '../../assets/operate-img/delete.png';
 import { setTimeout } from 'timers';
 class TopicOpinion extends React.Component {
     constructor(props) {
@@ -35,9 +37,9 @@ class TopicOpinion extends React.Component {
             addTopic:0,
             addClass:1,
             isTopShow:true
-        };  
-       
-    }   
+        };
+
+    }
     handleClick(e) {
         if(e.key==='addsort'){
             this.setState({
@@ -277,13 +279,14 @@ class TopicOpinion extends React.Component {
           <div className="a-class" key={index}>
           <div className="class-name" >
           <div className="leftBox" onClick={this.dropDown.bind(this)} data-index='1' title={item.catname}>
-          {item.catname} 
-          </div> 
-          <Dropdown overlay={delItems} trigger={['click']}> 
-            <img src={setting} alt="" className="icon-setting" onClick={this.onCatid.bind(this)} data-catid={item.catid}/>         
-          </Dropdown> 
-          </div>      
-           <ul className="topics" style={{height:item.topicList&&item.topicList.length*40+'px'}}>
+            <i>< Iconfont type="icon-wenjianjia"/></i><span className='mar'>{item.catname}</span>
+          </div>
+          <Dropdown overlay={delItems} trigger={['click']}>
+            <i><Iconfont type="icon-icon02" className="icon-setting" onClick={this.onCatid.bind(this)} data-catid={item.catid} /></i>
+            {/*<img src={setting} alt="" className="icon-setting" onClick={this.onCatid.bind(this)} data-catid={item.catid}/>*/}
+          </Dropdown>
+          </div>
+           <ul className="topics" style={{height:item.topicList&&item.topicList.length*31+'px'}}>
               {item.topicList && item.topicList.map((iitem,iindex) =>
                  <li  key={iitem.topicid}
                  className={this.state.materialCurrent === iitem.topicid ? 'backGroundBlue' : 'a-topic'}
@@ -293,7 +296,7 @@ class TopicOpinion extends React.Component {
                   >
                         {iitem.topicname}
                   </span>
-                 <img src={delect} alt="" className="icon-delete"  data-topicid={iitem.topicid} onClick={this.delTopic.bind(this)}/>
+                 <img src={deleteImg} alt="" className="icon-delete"  data-topicid={iitem.topicid} onClick={this.delTopic.bind(this)}/>
                 </li>
              )}
              </ul>
@@ -352,7 +355,7 @@ class TopicOpinion extends React.Component {
                 <div className="left-boxes">
                     <div className="first-box">
                         <div className="add-topic-class">
-                        专题
+                          专题
                         </div>
                         <div className="classes">
                         {LeftTopicLists}
@@ -367,7 +370,7 @@ class TopicOpinion extends React.Component {
                     onCancel={this.handleCancel.bind(this)}
                     >
                     <p className="textCenter">输入分类名</p>
-                    <Input className="gapInput" onChange={this.onChange.bind(this)}  
+                    <Input className="gapInput" onChange={this.onChange.bind(this)}
                     value={this.state.inputValue}
                     maxLength={'20'}
                     />

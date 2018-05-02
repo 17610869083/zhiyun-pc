@@ -16,11 +16,13 @@ import SortedAdd from './SortedAdd';
 import SortedSetting from './SortedSetting';
 import request from '../../utils/request';
 import {api_sorted_cat_add, api_sorted_cat_edit, api_sorted_cat_delete, api_sorted_grade_delete} from '../../services/api';
-import delect from '../../assets/icon-img/delect.png';
+// import delect from '../../assets/icon-img/delect.png';
 import setting from '../../assets/icon-img/setting.png';
+import deleteImg from '../../assets/operate-img/delete.png';
 import './index.less';
 import {changeClfId, getSortedContentRequested, getCollectionLocationRequested, getSortedMenuRequested, searchState} from "../../redux/actions/createActions";
 import {setTimeout} from 'timers';
+import Iconfont from '../../components/IconFont';
 const confirm = Modal.confirm;
 class SortedOpinion extends React.Component {
   constructor() {
@@ -255,7 +257,8 @@ class SortedOpinion extends React.Component {
     const SortedMenu = sortedMenu.map((item) => (<ul key={item.catid} className="sort-menu-ul">
       <li className="catname" onClick={this.toggleClfUl.bind(this, item.catid)}>
         <div className="name">
-          <span >{item.catname}</span>
+          <i>< Iconfont type="icon-wenjianjia"/></i>
+          <span className='mar'>{item.catname}</span>
         </div>
         <div className="setting" style={item.cattype === 1
             ? {
@@ -265,7 +268,8 @@ class SortedOpinion extends React.Component {
               display: 'none'
             }}>
           <Dropdown overlay={OperateItems} trigger={['click']}>
-            <img src={setting} alt="setting" className="setting-icon" onClick={this.onClickCatId.bind(this, item.catid)}/>
+            <i>< Iconfont type="icon-icon02" onClick={this.onClickCatId.bind(this, item.catid)} className="setting-icon"/></i>
+            {/*<img src={setting} alt="setting" className="setting-icon" onClick={this.onClickCatId.bind(this, item.catid)}/>*/}
           </Dropdown>
         </div>
       </li>
@@ -278,7 +282,7 @@ class SortedOpinion extends React.Component {
               : 'clf-item'} key={sortItem.clfid}>
             <span className="name" onClick={this.changeSortRoute.bind(this, sortItem.clfid)} title={sortItem.clfname}>{sortItem.clfname}</span>
             {/* <Icon type="delete" className="del" onClick={this.deleteSortedItem.bind(this,sortItem.clfid)}/> */}
-            <img src={delect} alt="delete" className="delete-icon" onClick={this.deleteSortedItem.bind(this, sortItem.clfid)}/>
+            <img src={deleteImg} alt="delete" className="delete-icon" onClick={this.deleteSortedItem.bind(this, sortItem.clfid)}/>
           </li>)
         }
       </ul>
