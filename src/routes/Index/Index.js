@@ -108,7 +108,7 @@ class Index extends React.Component {
         this.state.channelList.map( (item,index) =>{
              if(item.channelurl==='/reportopinion/list'){
                 menuList.push(<SubMenu
-                        key={index}
+                        key={item.key}
                         title={<Link to="/historyopinion"><span><Icon type={item.type} style={{fontSize: '16px'}}/><span style={{fontSize: '16px'}}>舆情报告</span></span></Link>}
                         >                      
                         <Menu.Item key="reportopinion" style={{fontSize: '16px'}}>
@@ -133,7 +133,7 @@ class Index extends React.Component {
                         </Menu.Item>
                     </SubMenu>)
                     }else if (item.channelurl==='../systemMan/systemManDo?action=userList'){
-                        menuList.push(<SubMenu key={index}
+                        menuList.push(<SubMenu key={item.key}
                         title={<Link to="/noticesetting"><span><Icon type={item.type} 
                         style={{fontSize: '16px'}}/><span style={{fontSize: '16px'}}>系统设置</span></span></Link>}>
                         <Menu.Item key="noticesetting" style={{fontSize: '16px'}}>
@@ -158,7 +158,7 @@ class Index extends React.Component {
                         </Menu.Item>
                     </SubMenu>)
                     }else {
-                    menuList.push(<Menu.Item key={index} style={{fontSize: '16px'}}>
+                    menuList.push(<Menu.Item key={item.key} style={{fontSize: '16px'}}>
                       {item.channelurl.indexOf('http')!==-1?
                        <a href={item.channelurl} target="blank">
                     <Icon type={item.type} style={{fontSize:'16px'}}/>
