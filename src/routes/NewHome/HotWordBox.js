@@ -16,7 +16,7 @@ class HotWordBox extends React.Component{
                     <div className="container">
                     <div className="top">
                         <div className="title">
-                            <IconFont type="icon-new" style={{fontSize: '18px'}}/>
+                            <IconFont type="icon-recigengxin" style={{fontSize: '21px',color:'#00c8e7'}}/>
                             <span className="txt">相关热词</span>
                         </div>
                         <div className="more">
@@ -32,7 +32,7 @@ class HotWordBox extends React.Component{
                         fontSizeMapper={fontSizeMapper}
                         rotate={rotate}
                         width={400}
-                        height={300}
+                        height={400}
                         />
                     </div>
                     </div>

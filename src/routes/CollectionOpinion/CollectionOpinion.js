@@ -1,7 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {Checkbox, Icon, Tooltip, Pagination, Input, Menu, Dropdown, Modal, Form,message} from 'antd';
-import {history} from '../../utils/history';
 import request from '../../utils/request';
 import {
     api_add_collection_opinion,
@@ -50,7 +49,7 @@ class CollectionOpinion extends React.Component {
 
     // 点击标题跳转
     clickItemTitle(sid) {
-        history.push(`/detail/${sid}`);
+        window.open(window.location.origin + window.location.pathname + '#/detail/' + sid);
     }
 
     // -----------新增收藏库

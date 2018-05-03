@@ -38,7 +38,7 @@ class NagetiveOpinion extends React.Component {
     render() {
         const {todayOpinion,yesterdayOpinion,beforeYesterdayOpinion} = this.props;
         const more = this.props.status!=='setting'?<span onClick={this.goAllOpinion.bind(this)}>更多 
-        <IconFont type="icon-gengduo" style={{color: '#9b9b9b',fontSize: '14px'}}/>
+        <IconFont type="icon-gengduo" style={{color: '#9b9b9b',fontSize: '16px'}}/>
         </span>:<Icon type="close-circle" className="delModule" style={{fontSize: '18px'}}
         onClick={this.delNegativeOpinionBox.bind(this)}
         ></Icon>;
@@ -47,7 +47,7 @@ class NagetiveOpinion extends React.Component {
                 <div className="container">
                     <div className="top">
                         <div className="title">
-                            <IconFont type="icon-warn" style={{fontSize: '18px'}}/>
+                            <IconFont type="icon-fumianxinxi" style={{fontSize: '20px',color:'#00c8e7'}}/>
                             <span className="txt">负面舆情</span>
                         </div>
                         <div className="more">
@@ -61,12 +61,13 @@ class NagetiveOpinion extends React.Component {
                                     {todayOpinion.length > 0 ?
                                         todayOpinion.map((item,index) =>
                                             <li key={item.sid} className="list-item" onClick={this.clickItemTitle.bind(this,item.sid)}>
-                                                <div className="negative">
-                                                    <div className="negative-icon" style={index < 3 ? {backgroundColor: '#EB000E'} : {backgroundColor: '#d8d8d8'}}>负</div>
-                                                </div>
-                                                <div className="title">{item.title}</div>
-                                                <div className="source">{item.source}</div>
-                                                <div className="time">{item.pubdate.substring(10)}</div>
+                                            <div className="content">
+                                            <div className="title">{item.title}</div>
+                                            <div className="desc">
+                                                <span className="time">{item.pubdate.substring(10)}</span>
+                                                <span className="source">{item.source}</span>
+                                            </div>
+                                            </div>
                                             </li>
                                         ) : <BlankPage desc='<span>空空如也，赶紧去<a href="index.html#/warnsetting?type=601">添加</a>关键词</span>'/>
                                     }
@@ -77,12 +78,13 @@ class NagetiveOpinion extends React.Component {
                                     {yesterdayOpinion.length > 0 ?
                                         yesterdayOpinion.map((item,index) =>
                                             <li key={item.sid} className="list-item" onClick={this.clickItemTitle.bind(this,item.sid)}>
-                                                <div className="negative">
-                                                    <div className="negative-icon" style={index < 3 ? {backgroundColor: '#EB000E'} : {backgroundColor: '#d8d8d8'}}>负</div>
-                                                </div>
-                                                <div className="title">{item.title}</div>
-                                                <div className="source">{item.source}</div>
-                                                <div className="time">{item.pubdate.substring(10)}</div>
+                                             <div className="content">
+                                             <div className="title">{item.title}</div>
+                                             <div className="desc">
+                                                 <span className="time">{item.pubdate.substring(10)}</span>
+                                                 <span className="source">{item.source}</span>
+                                             </div>
+                                             </div>
                                             </li>
                                         ) : <BlankPage desc='<span>空空如也，赶紧去<a href="index.html#/warnsetting?type=601">添加</a>关键词</span>'/>
                                     }
@@ -93,12 +95,13 @@ class NagetiveOpinion extends React.Component {
                                     {beforeYesterdayOpinion.length > 0 ?
                                         beforeYesterdayOpinion.map((item,index) =>
                                             <li key={item.sid} className="list-item" onClick={this.clickItemTitle.bind(this,item.sid)}>
-                                                <div className="negative">
-                                                    <div className="negative-icon" style={index < 3 ? {backgroundColor: '#EB000E'} : {backgroundColor: '#d8d8d8'}}>负</div>
-                                                </div>
-                                                <div className="title">{item.title}</div>
-                                                <div className="source">{item.source}</div>
-                                                <div className="time">{item.pubdate.substring(10)}</div>
+                                            <div className="content">
+                                            <div className="title">{item.title}</div>
+                                            <div className="desc">
+                                                <span className="time">{item.pubdate.substring(10)}</span>
+                                                <span className="source">{item.source}</span>
+                                            </div>
+                                            </div>
                                             </li>
                                         ) : <BlankPage desc='<span>空空如也，赶紧去<a href="index.html#/warnsetting?type=601">添加</a>关键词</span>'/>
                                     }

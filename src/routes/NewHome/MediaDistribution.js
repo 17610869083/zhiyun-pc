@@ -22,7 +22,7 @@ class MediaDistribution extends React.Component{
                     name:'总量',
                     type:'pie',
                     radius: ['40%', '55%'],
-                    center:['50%', 180],
+                    center:['50%', '70%'],
                     label: {
                         normal: {
                             formatter: '{a|{a}}{abg|}\n{hr|}\n  {b|{b}：}{c}  {per|{d}%}  ',
@@ -64,7 +64,7 @@ class MediaDistribution extends React.Component{
             <div className="container">
             <div className="top">
                 <div className="title">
-                    <IconFont type="icon-new" style={{fontSize: '18px'}}/>
+                    <IconFont type="icon-fenbutu" style={{fontSize: '22px'}}/>
                     <span className="txt">媒体分布</span>
                 </div>
                 <div className="more">
@@ -78,6 +78,7 @@ class MediaDistribution extends React.Component{
                             echarts={echarts}
                             option={mediaOption}
                             lazyUpdate={true}
+                            style={{height:'400px'}}
                         />
             </div>
             </div>

@@ -21,7 +21,7 @@ class TopicOpinionBox extends React.PureComponent {
     render() {
         const {topicOpinion} = this.props;
         const more = this.props.status!=='setting'?<span onClick={this.goTopicOpinion.bind(this)}>更多
-        <IconFont type="icon-gengduo" style={{color: '#9b9b9b',fontSize: '14px'}}/>
+        <IconFont type="icon-gengduo" style={{color: '#9b9b9b',fontSize: '16px'}}/>
         </span>:<Icon type="close-circle" className="delModule" style={{fontSize: '18px'}}
         onClick={this.delTopicOpinionBox.bind(this)}
         ></Icon>;
@@ -30,7 +30,7 @@ class TopicOpinionBox extends React.PureComponent {
                 <div className="container">
                     <div className="top">
                         <div className="title">
-                            <IconFont type="icon-zhuanti1" style={{color: '#ffbc34',fontSize: '18px'}}/>
+                            <IconFont type="icon-tesezhuanti" style={{color: '#00c8e7',fontSize: '18px'}}/>
                             <span className="txt">专题舆情</span>
                         </div>
                         <div className="more">

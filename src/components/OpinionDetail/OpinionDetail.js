@@ -645,152 +645,164 @@ class OpinionDetail extends React.Component {
       </Menu>
     );
     const OpinionDetailItems = docList[0] !== undefined && docList[0]['negative'] !== undefined ? docList.map((item, index) =>
-      <li key={item.sid} className="opinion-detail-item">
-        <div className="cheackBox">
-          <Checkbox checked={this.state.checkedArray[index]}
-                    onChange={this.onChangeItem.bind(this, index)}
-                    className="opinionCheack"
-          />
-        </div>
-        <div className="iconBox">
-          <div className="negative">
-            <div className="inner-type" style={opinionColor(item.negative)}>
-              {opinionTrend(item.negative)}
+        <li key={item.sid} className="opinion-detail-item">
+          <div className="cheackBox">
+            <Checkbox checked={this.state.checkedArray[index]}
+                      onChange={this.onChangeItem.bind(this, index)}
+                      className="opinionCheack"
+            />
+          </div>
+          <div className="iconBox">
+            <div className="negative">
+              <div className="inner-type" style={opinionColor(item.negative)}>
+                {opinionTrend(item.negative)}
+              </div>
+            </div>
+            <div className="imgBox" style={this.state.isSummaryShow ? {display: 'block'} : {display: 'none'}}>
+              <Tooltip title={item.carry === '综合' ? '其它' : item.carry} placement="bottomRight">
+                <img src={this.state.carryAll[item.carry]} alt="" className="carryImg"/>
+              </Tooltip>
             </div>
           </div>
-          <div className="imgBox" style={this.state.isSummaryShow ? {display: 'block'} : {display: 'none'}}>
-            <Tooltip title={item.carry === '综合' ? '其它' : item.carry} placement="bottomRight">
-              <img src={this.state.carryAll[item.carry]} alt="" className="carryImg"/>
-            </Tooltip>
-          </div>
-        </div>
-        <div className="content">
-          <div className="item-top">
-            <div className="title"
-                 title={item.title} onClick={this.clickItemTitle.bind(this, item.sid)}
-            >{(item.title && item.title.length > 35) ? item.title.slice(0, 35) + '...' : item.title}
+          <div className="content">
+            <div className="item-top">
+              <div className="title"
+                   title={item.title} onClick={this.clickItemTitle.bind(this, item.sid)}
+              >{(item.title && item.title.length > 35) ? item.title.slice(0, 35) + '...' : item.title}
+              </div>
             </div>
-          </div>
-          <div className="item-middle">
-            <div className="left" style={this.state.isSummaryShow ? {display: 'block'} : {display: 'none'}}>
-              <div>
+            <div className="item-middle">
+              <div className="left" style={this.state.isSummaryShow ? {display: 'block'} : {display: 'none'}}>
+                <div>
                             <span className="summary"
                                   dangerouslySetInnerHTML={{__html: setHighlightTags(item.summary, item.nztags.split(' '))}}>
                             </span>
+                </div>
               </div>
             </div>
-          </div>
-          <div className="item-bottom" style={this.state.isSummaryShow ? {display: 'flex'} : {display: 'none'}}>
-            <div className="item-left">
-              <div className="key">
-                <div className="pubdate">
-                  <span className="date">{item.pubdate.split(' ')[0]} &nbsp;&nbsp;{item.pubdate.split(' ')[1]}</span>
-                </div>
-                <div
-                  className="similar-info">相似信息：{item.similerInfo && (item.similerInfo.similerCount ? item.similerInfo.similerCount : 0)}条
-                </div>
-                <div className="resource">
-                  <a href={item.url} target="_black">
+            {/*<div className="item-bottom" style={this.state.isSummaryShow ? {display: 'flex'} : {display: 'none'}}>*/}
+            {/*<div className="item-left">*/}
+            {/*<div className="key">*/}
+            {/*<div className="pubdate">*/}
+            {/*<span className="date">{item.pubdate.split(' ')[0]} &nbsp;&nbsp;{item.pubdate.split(' ')[1]}</span>*/}
+            {/*</div>*/}
+            {/*</div>*/}
+            {/*</div>*/}
+            <div className="item-bottom" style={this.state.isSummaryShow ? {display: 'flex'} : {display: 'none'}}>
+              <div className="item-left">
+                <div className="key">
+                  <div className="pubdate">
+                    <span className="date">{item.pubdate.split(' ')[0]} &nbsp;&nbsp;{item.pubdate.split(' ')[1]}</span>
+                  </div>
+                  <div
+                    className="similar-info">相似信息：{item.similerInfo && (item.similerInfo.similerCount ? item.similerInfo.similerCount : 0)}条
+                  </div>
+                  <div className="resource">
+                    <a href={item.url} target="_black">
                                   <span className="source"
                                         title={item.source}
                                   >{item.source && item.source.length >= 4 ? item.source.slice(0, 3) + '...' : item.source}</span>
-                  </a>
+                    </a>
+                  </div>
+                  <div className="title">关键词：</div>
+                  <div className="keywords">
+                    {item.nztags}
+                  </div>
+                  <div className="cirleBox">
+                    <div>
+                      <Tooltip title='删除' placement="bottom">
+                        <Popconfirm title="确定要删除这条信息吗？" onConfirm={this.deleteConfirm.bind(this, item.sid)}
+                                    onCancel={this.deleteCancel.bind(this)} okText="是" cancelText="否">
+                          <i><Iconfont type="icon-shanchu1" style={{fontSize: '18px', fill: '#01c2e0'}}></Iconfont></i>
+                        </Popconfirm>
+                      </Tooltip>
+                    </div>
+                    <div>
+                      <Tooltip title='设为预警' placement="bottom">
+                        <Popconfirm title="是否将这条信息设为预警？" onConfirm={this.warningConfirm.bind(this, item.sid)}
+                                    onCancel={this.deleteCancel.bind(this)} okText="是" cancelText="否">
+                          <i><Iconfont type="icon-fengxianyujing" style={{fontSize: '20px', fill: '#01c2e0', verticalAlign: '0px'}}></Iconfont></i>
+                        </Popconfirm>
+                      </Tooltip>
+                    </div>
+                    <div>
+                      <Tooltip title='设置倾向' placement="bottom">
+                        <Popover
+                          content={
+                            <div>
+                              <Button type="primary" size="small"
+                                      onClick={this.editDocNeg.bind(this, item.sid, 'neg')}>负面</Button>
+                              <Button type="primary" size="small" style={{marginLeft: '30px'}}
+                                      onClick={this.editDocNeg.bind(this, item.sid, 'mid')}>中性</Button>
+                              <Button type="primary" size="small" style={{marginLeft: '30px'}}
+                                      onClick={this.editDocNeg.bind(this, item.sid, 'pos')}>正面</Button>
+                            </div>
+                          }
+                          title="设置这条信息的倾向"
+                          trigger="click"
+                          onVisibleChange={this.handleVisibleChange.bind(this, index)}
+                          visible={this.state.popVisible && this.state.popIndex === index}
+                        >
+                          <Iconfont type="icon--jiageyujing" style={{fontSize: '18px', fill: '#01c2e0'}}></Iconfont>
+                        </Popover>
+                      </Tooltip>
+                    </div>
+                    <div>
+                      <Dropdown overlay={
+                        <Menu onClick={this.materialConfirm.bind(this, item.sid)}>
+                          {
+                            this.props.materialList.map(iitem =>
+                              <Menu.Item key={iitem.id}>
+                                <Icon type="folder"/>
+                                <span>{iitem.catname}</span>
+                              </Menu.Item>
+                            )
+                          }
+                        </Menu>
+                      } trigger={['click']}
+                                getPopupContainer={() => document.querySelector('.opinion-detail')}
+                      >
+                        <Tooltip title='素材库' placement="bottom">
+                          <i><Iconfont type="icon-sucaiku" style={{fontSize: '15px', fill: '#01c2e0'}}
+                                       onClick={this.props.getCollectionOpinionListRequested.bind(this)}></Iconfont></i>
+                        </Tooltip>
+                      </Dropdown>
+                    </div>
+                    <div>
+                      <Tooltip title='收藏' placement="bottom">
+                        <Dropdown overlay={
+                          <Menu onClick={this.collectionlConfirm.bind(this, item.sid)}>
+                            {
+                              this.props.favCatList.map(iitem =>
+                                <Menu.Item key={iitem.id}>
+                                  <Icon type="folder"/>
+                                  <span>{iitem.catname}</span>
+                                </Menu.Item>
+                              )
+                            }
+                          </Menu>
+                        } trigger={['click']}
+                                  getPopupContainer={() => document.querySelector('.opinion-detail')}
+                        >
+                          <i><Iconfont type="icon-shoucang" style={{fontSize: '16px', fill: '#01c2e0'}}
+                                       onClick={this.props.getMaterialOpinionListRequested.bind(this)}></Iconfont></i>
+                        </Dropdown>
+                      </Tooltip>
+                    </div>
+                  </div>
                 </div>
-                <div className="title">关键词：</div>
-                <div className="keywords">
-                  {item.nztags}
-                </div>
               </div>
-            </div>
-            <div className="cirleBox">
-              <div>
-                <Tooltip title='删除' placement="bottom">
-                  <Popconfirm title="确定要删除这条信息吗？" onConfirm={this.deleteConfirm.bind(this, item.sid)}
-                              onCancel={this.deleteCancel.bind(this)} okText="是" cancelText="否">
-                    <i><Iconfont type="icon-shanchu" style={{fontSize: '16px', fill: '#01c2e0'}}></Iconfont></i>
-                  </Popconfirm>
-                </Tooltip>
-              </div>
-              <div>
-                <Tooltip title='设为预警' placement="bottom">
-                  <Popconfirm title="是否将这条信息设为预警？" onConfirm={this.warningConfirm.bind(this, item.sid)}
-                              onCancel={this.deleteCancel.bind(this)} okText="是" cancelText="否">
-                    <i><Iconfont type="icon-yujing1" style={{fontSize: '16px', fill: '#01c2e0'}}></Iconfont></i>
-                  </Popconfirm>
-                </Tooltip>
-              </div>
-              <div>
-                <Tooltip title='设置倾向' placement="bottom">
-                  <Popover
-                    content={
-                      <div>
-                        <Button type="primary" size="small"
-                                onClick={this.editDocNeg.bind(this, item.sid, 'neg')}>负面</Button>
-                        <Button type="primary" size="small" style={{marginLeft: '30px'}}
-                                onClick={this.editDocNeg.bind(this, item.sid, 'mid')}>中性</Button>
-                        <Button type="primary" size="small" style={{marginLeft: '30px'}}
-                                onClick={this.editDocNeg.bind(this, item.sid, 'pos')}>正面</Button>
-                      </div>
-                    }
-                    title="设置这条信息的倾向"
-                    trigger="click"
-                    onVisibleChange={this.handleVisibleChange.bind(this, index)}
-                    visible={this.state.popVisible && this.state.popIndex === index}
-                  >
-                    <i><Iconfont type="icon--jiageyujing" style={{fontSize: '18px', fill: '#01c2e0'}}></Iconfont></i>
-                  </Popover>
-                </Tooltip>
-              </div>
-              <div>
-                <Dropdown overlay={
-                  <Menu onClick={this.materialConfirm.bind(this, item.sid)}>
-                    {
-                      this.props.materialList.map(iitem =>
-                        <Menu.Item key={iitem.id}>
-                          <Icon type="folder"/>
-                          <span>{iitem.catname}</span>
-                        </Menu.Item>
-                      )
-                    }
-                  </Menu>
-                } trigger={['click']}
-                          getPopupContainer={() => document.querySelector('.opinion-detail')}
-                >
-                  <Tooltip title='素材库' placement="bottom">
-                    <i><Iconfont type="icon-sucaiku" style={{fontSize: '18px', fill: '#01c2e0'}}
-                                 onClick={this.props.getCollectionOpinionListRequested.bind(this)}></Iconfont></i>
-                  </Tooltip>
-                </Dropdown>
-              </div>
-              <div>
-                <Tooltip title='收藏' placement="bottom">
-                  <Dropdown overlay={
-                    <Menu onClick={this.collectionlConfirm.bind(this, item.sid)}>
-                      {
-                        this.props.favCatList.map(iitem =>
-                          <Menu.Item key={iitem.id}>
-                            <Icon type="folder"/>
-                            <span>{iitem.catname}</span>
-                          </Menu.Item>
-                        )
-                      }
-                    </Menu>
-                  } trigger={['click']}
-                            getPopupContainer={() => document.querySelector('.opinion-detail')}
-                  >
-                    <i><Iconfont type="icon-shoucang" style={{fontSize: '16px', fill: '#01c2e0'}}
-                                 onClick={this.props.getMaterialOpinionListRequested.bind(this)}></Iconfont></i>
-                  </Dropdown>
-                </Tooltip>
-              </div>
+
             </div>
           </div>
-        </div>
-      </li>
-    ) : <BlankPage desc={this.props.propsType === 'TopicList' ?
-      '<span>空空如也，赶紧去<a href="index.html#/topic/addtopic">添加</a>关键词</span>' :
-      '<span>空空如也，赶紧去<a href="index.html#/sortedopinion/addrule">添加</a>关键词</span>'
-    }/>;
+
+        </li>
+      ) :
+      <BlankPage desc={this.props.propsType === 'TopicList' ?
+        '<span>空空如也，赶紧去<a href="index.html#/topic/addtopic">添加</a>关键词</span>' :
+        '<span>空空如也，赶紧去<a href="index.html#/sortedopinion/addrule">添加</a>关键词</span>'
+      }/>
+    ;
     const ChangeTrendMenu = (
       <Menu>
         <Menu.Item key="0">
@@ -829,7 +841,8 @@ class OpinionDetail extends React.Component {
                         onCancel={this.deleteCancel.bind(this)} okText="是" cancelText="否">
               <Tooltip title='删除' placement="bottom">
                 <div className="operate-all">
-                  <img src={deleteImg} alt="delete" className="delete-img"/>
+                  {/*<img src={deleteImg} alt="delete" className="delete-img"/>*/}
+                  <i><Iconfont type="icon-shanchu1" style={{fontSize: '20px', fill: '#01c2e0'}}></Iconfont></i>
                 </div>
               </Tooltip>
             </Popconfirm>
@@ -842,7 +855,8 @@ class OpinionDetail extends React.Component {
                       getPopupContainer={() => document.querySelector('.opinion-detail')}>
               <Tooltip title='倾向' placement="bottom">
                 <div className="operate-all">
-                  <img src={remove} alt="plus" className="plus-img"/>
+                  {/*<img src={remove} alt="plus" className="plus-img"/>*/}
+                  <i><Iconfont type="icon-fengxianyujing" style={{fontSize: '21px', fill: '#00c8e7', verticalAlign: '-3px'}}></Iconfont></i>
                 </div>
               </Tooltip>
             </Dropdown>
@@ -851,7 +865,8 @@ class OpinionDetail extends React.Component {
             >
               <Tooltip title='素材库' placement="bottom">
                 <div className="operate-all" onClick={this.props.getCollectionOpinionListRequested.bind(this)}>
-                  <img src={infoBaseImg} alt="infoBase" className="close-img"/>
+                  {/*<img src={infoBaseImg} alt="infoBase" className="close-img"/>*/}
+                  <i><Iconfont type="icon-sucaiku" style={{fontSize: '15px', fill:'#01c2e0'}}></Iconfont></i>
                 </div>
               </Tooltip>
             </Dropdown>
@@ -860,7 +875,8 @@ class OpinionDetail extends React.Component {
                         getPopupContainer={() => document.querySelector('.opinion-detail')}
               >
                 <div className="operate-all" onClick={this.props.getMaterialOpinionListRequested.bind(this)}>
-                  <img src={starImg} alt="star" className="close-img"/>
+                  {/*<img src={starImg} alt="star" className="close-img"/>*/}
+                  <i><Iconfont type="icon-shoucang" style={{fontSize: '16px', fill: '#01c2e0'}}></Iconfont></i>i>
                 </div>
 
               </Dropdown>
