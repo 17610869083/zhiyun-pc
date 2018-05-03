@@ -283,7 +283,7 @@ class TopicOpinion extends React.Component {
           <div className="a-class" key={index}>
           <div className="class-name" >
           <div className="leftBox" onClick={this.dropDown.bind(this,item.catid)} data-index='1' title={item.catname}>
-            <i>< Iconfont type="icon-wenjianjia"/></i><span className='mar'>{item.catname}</span>
+            <i>< Iconfont type="icon-caidanyingyong2"style={{fill:'#00c8e7'}}/></i><span className='mar'>{item.catname}</span>
 
           </div>
           <Dropdown overlay={delItems} trigger={['click']}>
