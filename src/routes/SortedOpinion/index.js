@@ -255,7 +255,7 @@ class SortedOpinion extends React.Component {
     const SortedMenu = sortedMenu.map((item) => (<ul key={item.catid} className="sort-menu-ul">
       <li className="catname">
         <div className="name" onClick={this.toggleClfUl.bind(this, item.catid)}>
-          <i>< Iconfont type="icon-wenjianjia"/></i>
+          <i>< Iconfont type="icon-caidanyingyong2" style={{fill:'#00c8e7'}}/></i>
           <span className='mar'>{item.catname}</span>
         </div>
         <div className="setting" style={item.cattype === 1
