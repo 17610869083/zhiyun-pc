@@ -14,8 +14,6 @@ import './TopicOpinion.less';
 import Iconfont from '../../components/IconFont';
 import {setlocationPathname,getTopicLocationRequested,topicNavMessageRequested,searchState} from '../../redux/actions/createActions';
 import {connect} from 'react-redux';
-import setting from '../../assets/icon-img/setting.png';
-// import delect from '../../assets/icon-img/delect.png';
 import deleteImg from '../../assets/operate-img/delete.png';
 import { setTimeout } from 'timers';
 class TopicOpinion extends React.Component {
@@ -245,18 +243,24 @@ class TopicOpinion extends React.Component {
          console.log(e)
     }
     //分类下拉菜单
-    dropDown(e){
-        e.preventDefault();
-        let documentNode=e.target.parentNode.nextSibling;
-        let num=parseInt(e.target.dataset.index,10);
-        e.target.dataset.index=num+1;
-        documentNode.style.transition='height 500ms';
-        documentNode.style.overflow='hidden';
-             if(parseInt(e.target.dataset.index,10)%2===0){
-                documentNode.style.height='0';
-             }else{
-                documentNode.style.height=documentNode.children.length*30+'px';
-             }
+    dropDown(catid){
+           const ref = this.refs['topicList' + catid];
+           if (ref.style.display === 'block') {
+             ref.style.display = 'none';
+           } else {
+             ref.style.display = 'block';
+           }
+        // e.stopPropagation();
+        // let documentNode=e.target.parentNode.nextSibling || e.target.parentNode.parentNode.nextSibling;
+        // let num=parseInt(e.target.dataset.index,10);
+        // e.target.dataset.index=num+1;
+        // documentNode.style.transition='height 500ms';
+        // documentNode.style.overflow='hidden';
+        //      if(parseInt(e.target.dataset.index,10)%2===0){
+        //         documentNode.style.height='0';
+        //      }else{
+        //         documentNode.style.height=documentNode.children.length*30+'px';
+        //      }
     }
     stopPropagation(e){
           e.stopPropagation();
@@ -278,15 +282,15 @@ class TopicOpinion extends React.Component {
         const LeftTopicLists=topicNavMessageSucceededState!==1&&topicNavMessageSucceededState.map((item,index)=>
           <div className="a-class" key={index}>
           <div className="class-name" >
-          <div className="leftBox" onClick={this.dropDown.bind(this)} data-index='1' title={item.catname}>
+          <div className="leftBox" onClick={this.dropDown.bind(this,item.catid)} data-index='1' title={item.catname}>
             <i>< Iconfont type="icon-wenjianjia"/></i><span className='mar'>{item.catname}</span>
+
           </div>
           <Dropdown overlay={delItems} trigger={['click']}>
             <i><Iconfont type="icon-icon02" className="icon-setting" onClick={this.onCatid.bind(this)} data-catid={item.catid} /></i>
-            {/*<img src={setting} alt="" className="icon-setting" onClick={this.onCatid.bind(this)} data-catid={item.catid}/>*/}
           </Dropdown>
           </div>
-           <ul className="topics" style={{height:item.topicList&&item.topicList.length*31+'px'}}>
+           <ul className="topics" ref={'topicList'+item.catid}>
               {item.topicList && item.topicList.map((iitem,iindex) =>
                  <li  key={iitem.topicid}
                  className={this.state.materialCurrent === iitem.topicid ? 'backGroundBlue' : 'a-topic'}

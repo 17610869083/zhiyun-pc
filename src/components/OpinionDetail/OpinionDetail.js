@@ -1,7 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {Checkbox, Icon, Input, Menu, Dropdown, Popconfirm, message, Popover, Button,
-    Spin, Alert, Select,Pagination,Modal} from 'antd';
+    Spin, Alert, Pagination,Modal,Select} from 'antd';
 import { history } from '../../utils/history';
 import './OpinionDetail.less';
 import {opinionTrend, opinionColor,setHighlightTags,formatDateTime} from '../../utils/format';
@@ -32,7 +32,6 @@ import media from '../../assets/icon-img/new.png';
 import boke from '../../assets/icon-img/boke.png';
 import app from '../../assets/icon-img/app.png';
 import twitter from '../../assets/icon-img/twitter.png';
-import warning from '../../assets/icon-img/warning.png';
 import remove from '../../assets/icon-img/remove.png';
 import BlankPage from '../../base/Exception/BlankPage';
 import Iconfont from '../IconFont';
@@ -830,6 +829,25 @@ class OpinionDetail extends React.Component {
                        getPopupContainer={ () => document.querySelector('.all-opinion')}
                        current={page}
                         />
+                      <div className="inputSearch" 
+                    style={this.props.propsType==='AllopinionList' ?{visibility:'visible'}: {visibility:'hidden',width:'100px'}}>   
+                    <div className="right">
+                        <InputGroup compact>
+                            <Select defaultValue="content" onChange={this.handleSearchChange.bind(this)}>
+                                <Option value="content" className="selectFont">搜全文</Option>
+                                <Option value="title" className="selectFont">搜标题</Option>
+                                {/* <Option value="source" className="selectFont">搜媒体</Option> */}
+                            </Select>
+                            <Input
+                                style={{width: '150px'}}
+                                placeholder="请输入您要搜索的内容"
+                                onChange={this.searchInput.bind(this)}
+                            />
+                            
+                        </InputGroup>
+                    </div>
+                    <Button className="search" onClick={this.handleSearchBtn.bind(this)}>搜索</Button>
+                    </div> 
                 </div>
                 <div className="bottom">
                     {this.state.loading ? Loading : (null)}
