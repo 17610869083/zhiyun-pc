@@ -374,7 +374,7 @@ class NewHome extends React.Component {
         </li>):'';
         return (
             <div> 
-            <div className="informs" style={ informsstate?{display:'none'}:{display:'flex'}}>
+            <div className="informs" style={ userInfo.alerMsg===''?{display:'none'}:{display:'flex'}}>
             <span> {userInfo.alerMsg}</span>       
             <Icon type="close" onClick={ this.informs.bind(this) } style={{color:'#fff'}}/>
             </div>

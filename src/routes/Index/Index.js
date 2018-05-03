@@ -38,7 +38,7 @@ class Index extends React.Component {
   constructor() {
     super();
     this.state = {
-      collapsed: false,
+      collapsed: true,
       status:false,
       qqStatus:false,
       phoneStatus:false,
@@ -188,7 +188,6 @@ class Index extends React.Component {
                             </div>
                             <div className="trigger-wrapper" onClick={this.toggle}>
                                 <i className="fa fa-bars" aria-hidden="true" style={{fontSize: '14px', color: '#ffffff'}}/>
-                                <Iconfont type=""></Iconfont>
                             </div>
                         </div>
                         <Menu
@@ -196,7 +195,7 @@ class Index extends React.Component {
                             mode="inline"
                             theme="dark"
                             inlineCollapsed={this.state.collapsed}
-                            style={{backgroundColor: '#0c1224',maxHeight:'700px',overflowX: 'hidden', overflowY: 'scroll' }}
+                            style={this.state.collapsed?{backgroundColor: '#0c1224',maxHeight:'700px'}:{backgroundColor: '#0c1224',maxHeight:'700px',overflow:'auto'}}
                             className="selectMenu"
                             selectedKeys={[urlTokey()]}
                         >
