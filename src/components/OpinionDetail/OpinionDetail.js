@@ -37,7 +37,6 @@ import media from '../../assets/icon-img/new.png';
 import boke from '../../assets/icon-img/boke.png';
 import app from '../../assets/icon-img/app.png';
 import twitter from '../../assets/icon-img/twitter.png';
-import warning from '../../assets/icon-img/warning.png';
 import remove from '../../assets/icon-img/remove.png';
 import BlankPage from '../../base/Exception/BlankPage';
 import Iconfont from '../IconFont';

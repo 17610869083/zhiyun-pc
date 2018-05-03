@@ -287,7 +287,6 @@ export function urlTokey() {
     if (hash.match(/^(#\/)(\w+)/)) {
         url = hash.match(/^(#\/)(\w+)/)[2];
     }
-
     let key = '0';
     switch (url)
     {

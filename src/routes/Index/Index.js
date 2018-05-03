@@ -134,7 +134,7 @@ class Index extends React.Component {
                     </SubMenu>)
                     }else if (item.channelurl==='../systemMan/systemManDo?action=userList'){
                         menuList.push(<SubMenu key={item.key}
-                        title={<span><Icon type={item.type} 
+                        title={<span><Icon type={item.type}
                         style={{fontSize: '14px'}}/><span style={{fontSize: '14px'}}>系统设置</span></span>}>
                         <Menu.Item key="noticesetting" style={{fontSize: '14px'}}>
                             <Link to="/noticesetting">

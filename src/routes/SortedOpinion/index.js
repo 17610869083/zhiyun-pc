@@ -16,8 +16,6 @@ import SortedAdd from './SortedAdd';
 import SortedSetting from './SortedSetting';
 import request from '../../utils/request';
 import {api_sorted_cat_add, api_sorted_cat_edit, api_sorted_cat_delete, api_sorted_grade_delete} from '../../services/api';
-// import delect from '../../assets/icon-img/delect.png';
-import setting from '../../assets/icon-img/setting.png';
 import deleteImg from '../../assets/operate-img/delete.png';
 import './index.less';
 import {changeClfId, getSortedContentRequested, getCollectionLocationRequested, getSortedMenuRequested, searchState} from "../../redux/actions/createActions";
@@ -255,8 +253,8 @@ class SortedOpinion extends React.Component {
       <Menu.Item key="delete">删除</Menu.Item>
     </Menu>);
     const SortedMenu = sortedMenu.map((item) => (<ul key={item.catid} className="sort-menu-ul">
-      <li className="catname" onClick={this.toggleClfUl.bind(this, item.catid)}>
-        <div className="name">
+      <li className="catname">
+        <div className="name" onClick={this.toggleClfUl.bind(this, item.catid)}>
           <i>< Iconfont type="icon-wenjianjia"/></i>
           <span className='mar'>{item.catname}</span>
         </div>
@@ -269,7 +267,7 @@ class SortedOpinion extends React.Component {
             }}>
           <Dropdown overlay={OperateItems} trigger={['click']}>
             <i>< Iconfont type="icon-icon02" onClick={this.onClickCatId.bind(this, item.catid)} className="setting-icon"/></i>
-            {/*<img src={setting} alt="setting" className="setting-icon" onClick={this.onClickCatId.bind(this, item.catid)}/>*/}
+
           </Dropdown>
         </div>
       </li>
@@ -281,7 +279,7 @@ class SortedOpinion extends React.Component {
               ? 'clf-item-active'
               : 'clf-item'} key={sortItem.clfid}>
             <span className="name" onClick={this.changeSortRoute.bind(this, sortItem.clfid)} title={sortItem.clfname}>{sortItem.clfname}</span>
-            {/* <Icon type="delete" className="del" onClick={this.deleteSortedItem.bind(this,sortItem.clfid)}/> */}
+        
             <img src={deleteImg} alt="delete" className="delete-icon" onClick={this.deleteSortedItem.bind(this, sortItem.clfid)}/>
           </li>)
         }
