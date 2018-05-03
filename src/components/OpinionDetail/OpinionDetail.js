@@ -23,10 +23,7 @@ import {
   paginationPage
 } from '../../redux/actions/createActions';
 import Store from '../../redux/store/index';
-import deleteImg from '../../assets/operate-img/delete.png';
 import exportImg from '../../assets/operate-img/export.png';
-import starImg from '../../assets/operate-img/star.png';
-import infoBaseImg from '../../assets/operate-img/info-base.png';
 import weixin from '../../assets/icon-img/weixin.png';
 import news from '../../assets/icon-img/news.png';
 import weibo from '../../assets/icon-img/weibo.png';
@@ -37,13 +34,10 @@ import media from '../../assets/icon-img/new.png';
 import boke from '../../assets/icon-img/boke.png';
 import app from '../../assets/icon-img/app.png';
 import twitter from '../../assets/icon-img/twitter.png';
-import remove from '../../assets/icon-img/remove.png';
 import BlankPage from '../../base/Exception/BlankPage';
 import Iconfont from '../IconFont';
-
 const InputGroup = Input.Group;
 const Option = Select.Option;
-
 class OpinionDetail extends React.Component {
   constructor(props) {
     super(props);
@@ -679,14 +673,6 @@ class OpinionDetail extends React.Component {
                 </div>
               </div>
             </div>
-            {/*<div className="item-bottom" style={this.state.isSummaryShow ? {display: 'flex'} : {display: 'none'}}>*/}
-            {/*<div className="item-left">*/}
-            {/*<div className="key">*/}
-            {/*<div className="pubdate">*/}
-            {/*<span className="date">{item.pubdate.split(' ')[0]} &nbsp;&nbsp;{item.pubdate.split(' ')[1]}</span>*/}
-            {/*</div>*/}
-            {/*</div>*/}
-            {/*</div>*/}
             <div className="item-bottom" style={this.state.isSummaryShow ? {display: 'flex'} : {display: 'none'}}>
               <div className="item-left">
                 <div className="key">
@@ -890,6 +876,24 @@ class OpinionDetail extends React.Component {
             getPopupContainer={() => document.querySelector('.all-opinion')}
             current={page}
           />
+                  <div className="inputSearch" 
+                    style={this.props.propsType==='AllopinionList' ?{visibility:'visible'}: {visibility:'hidden',width:'100px'}}>   
+                    <div className="right">
+                        <InputGroup compact>
+                            <Select defaultValue="content" onChange={this.handleSearchChange.bind(this)}>
+                                <Option value="content" className="selectFont">搜全文</Option>
+                                <Option value="title" className="selectFont">搜标题</Option>
+                            </Select>
+                            <Input
+                                style={{width: '150px'}}
+                                placeholder="请输入您要搜索的内容"
+                                onChange={this.searchInput.bind(this)}
+                            />
+                            
+                        </InputGroup>
+                    </div>
+                    <Button className="search" onClick={this.handleSearchBtn.bind(this)}>搜索</Button>
+                    </div> 
         </div>
         <div className="bottom">
           {this.state.loading ? Loading : (null)}
