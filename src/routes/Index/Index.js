@@ -10,7 +10,6 @@ import CRcode from '../LoginPage/crcode.jpg';
 import {api_get_channel} from '../../services/api';
 import request from '../../utils/request';
 import {urlTokey} from '../../utils/format';
-import Iconfont from '../../components/IconFont';
 import AsyncComponent from '../../components/AsyncComponent/AsyncComponent'
 
 const NewHome = AsyncComponent(() => import('../NewHome'))
