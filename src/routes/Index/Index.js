@@ -193,11 +193,11 @@ class Index extends React.Component {
             className="sider siders"
             trigger={null}
             collapsible
-            style={{backgroundColor: '#0c1224'}}
+            style={{backgroundColor: '#2d324f'}}
             collapsed={this.state.collapsed}
           >
             <div>
-              <div className="logo-wrapper" style={{backgroundColor: themeColor.topColor.backgroundColor}}>
+              <div className="logo-wrapper" >
                 <img src={logo} alt="logo" className="logo" onClick={this.goBackIndex.bind(this)}/>
               </div>
               <div className="trigger-wrapper" onClick={this.toggle}>
@@ -210,9 +210,9 @@ class Index extends React.Component {
               theme="dark"
               inlineCollapsed={this.state.collapsed}
               style={this.state.collapsed ? {
-                backgroundColor: '#0c1224',
+                backgroundColor: '#2d324f',
                 maxHeight: '700px'
-              } : {backgroundColor: '#0c1224', maxHeight: '700px', overflow: 'auto'}}
+              } : {backgroundColor: '#2d324f', maxHeight: '700px', overflow: 'auto'}}
               className="selectMenu"
               selectedKeys={[urlTokey()]}
             >

@@ -1,6 +1,6 @@
 import React from 'react';
 import request from '../../utils/request';
-import ReactQuill from 'react-quill';
+import Kindeditor from '../../components/Kindeditor/Kindeditor.js';
 import {connect} from 'react-redux';
 import {
     getCollectionOpinionListRequested,
@@ -588,7 +588,7 @@ class DetailOpinion extends React.Component {
                          <div className="pushEmail">推送邮箱：</div>
                          <Select
                             mode="tags"
-                            style={{ width: '83%',lineHeight:'10px'}}
+                            style={{ width: '100%'}}
                             size='small'
                             placeholder="请选择要推送的邮箱"
                             onChange={this.selectChange}
@@ -606,9 +606,8 @@ class DetailOpinion extends React.Component {
                          <Input placeholder="手动输入邮箱地址" className="bigInput"
                          onChange={this.emailInput}
                          /></p>
-                        <ReactQuill value={this.state.contents.length===0?conent:this.state.contents}
-                            onChange={this.handleChange}
-                            />
+                         <Kindeditor contents={this.state.contents.length===0?conent:this.state.contents}
+                           onChange={this.handleChange}/>
                         </Modal>
                     </div>
                 </div>

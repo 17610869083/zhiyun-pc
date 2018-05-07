@@ -1,5 +1,5 @@
 import React from 'react';
-import ReactQuill from 'react-quill';
+import Kindeditor from '../Kindeditor/Kindeditor.js';
 import {connect} from 'react-redux';
 import 'react-quill/dist/quill.snow.css';
 import './EditOpinionDetail.less';
@@ -11,8 +11,6 @@ import {getLocalTime} from '../../utils/format';
 import {addMessageRemove} from '../../redux/actions/createActions';
 import moment from 'moment';
 const FormItem = Form.Item;
-
-
 class EditOpinionDetail extends React.Component {
     constructor(props) {
         super(props)
@@ -428,9 +426,8 @@ class EditOpinionDetail extends React.Component {
                 {...formItemLayout}
                 label="编辑器"
             >
-                <ReactQuill value={this.state.text}
-                            onChange={this.handleChange.bind(this)}
-                />
+                 <Kindeditor contents={this.state.text}
+                 onChange={this.handleChange.bind(this)}/>
             </FormItem>
         </Form>
 

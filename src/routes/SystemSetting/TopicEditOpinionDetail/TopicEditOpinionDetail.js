@@ -1,5 +1,5 @@
 import React from 'react';
-import ReactQuill from 'react-quill';
+import Kindeditor from '../../../components/Kindeditor/Kindeditor.js';
 import 'react-quill/dist/quill.snow.css';
 import './TopicEditOpinionDetail.less';
 import { Form, Input, InputNumber,DatePicker,Button,Cascader,message } from 'antd';
@@ -310,10 +310,8 @@ class TopicEditOpinionDetail extends React.Component {
                     {...formItemLayout}
                     label="编辑器"
                 >
-                    <ReactQuill value={this.state.text}
-                                onChange={this.handleChange}
-                            
-                                />
+                  <Kindeditor contents={this.state.text}
+                  onChange={this.handleChange}/>            
                 </FormItem>
                 <div className="publicBox">
                 <Button  type="primary" htmlType="submit" className="submitBtn">保存</Button>

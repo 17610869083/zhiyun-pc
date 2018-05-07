@@ -318,7 +318,7 @@ class TopicOpinion extends React.Component {
                         onClick={this.handleClick.bind(this)}
                         selectedKeys={[this.state.current]}
                         mode="horizontal"
-                        style={{lineHeight:'40px',backgroundColor: '#0c1224',paddingTop:'14px',color:'#fff',border:'none'}}
+                        style={{lineHeight:'40px',backgroundColor: '#2d324f',paddingTop:'14px',color:'#fff',border:'none'}}
                     >
                         <Menu.Item key="topiclist" style={{fontSize:'16px'}}>
                             信息列表

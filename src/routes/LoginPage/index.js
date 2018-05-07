@@ -10,6 +10,7 @@ import CRCode from './crcode.jpg';
 import IosApp from './iosapp.png';
 import {setItem,getPasswordItem,setPasswordItem} from '../../utils/localStorage';
 import {LIGHT,DARK} from '../../utils/colors';
+
 const FormItem = Form.Item;
 
 class LoginPage extends React.Component {
@@ -21,8 +22,33 @@ class LoginPage extends React.Component {
             password:'',
             checked:false,
             isIosAppShow:false,
-            type:''
+            type:'',
+            IE:true
         }
+    }
+    componentWillMount(){    
+            var userAgent = navigator.userAgent; //取得浏览器的userAgent字符串  
+            var isIE = userAgent.indexOf("compatible") > -1 && userAgent.indexOf("MSIE") > -1; //判断是否IE<11浏览器  
+            var isEdge = userAgent.indexOf("Edge") > -1 && !isIE; //判断是否IE的Edge浏览器  
+            var isIE11 = userAgent.indexOf('Trident') > -1 && userAgent.indexOf("rv:11.0") > -1;
+            if(isIE) {
+                var reIE = new RegExp("MSIE (\\d+\\.\\d+);");
+                reIE.test(userAgent);
+                var fIEVersion = parseFloat(RegExp["$1"]);
+                if(fIEVersion <11 ){
+                    this.setState({
+                        IE:false
+                    })
+                    alert('请使用IE最新版本，以获得最好的体验')
+                }
+            } else if(isEdge) {
+                return 'edge';//edge
+            } else if(isIE11) {
+                return 11; //IE11  
+            }else{
+                return -1;//不是ie浏览器
+            }
+        
     }
     componentDidMount(){
            const userInfo = getPasswordItem('userPassword');
@@ -33,8 +59,19 @@ class LoginPage extends React.Component {
                   checked:true
                })
            }
+           setItem('theme',{
+            topColor: {
+                backgroundColor: LIGHT
+            },
+            bottomColor: {
+                backgroundColor: DARK
+            },
+            textColor:{
+                 color:'#000000'
+            }
+        });
     }
-    handleSubmit = (e) => {
+    handleSubmit (e){
         e.preventDefault();
         this.props.form.validateFields((err, values) => {
             if (!err) {
@@ -47,17 +84,6 @@ class LoginPage extends React.Component {
                 request(api_login + `&username=${userName}&password=${password}`).then((res) => {
                     if (res.data.code === 1) {
                         message.success(res.data.msg);
-                        setItem('theme',{
-                            topColor: {
-                                backgroundColor: LIGHT
-                            },
-                            bottomColor: {
-                                backgroundColor: DARK
-                            },
-                            textColor:{
-                                 color:'#000000'
-                            }
-                        });
                         history.push('/home');
                     } else {
                         message.warning(res.data.msg);
@@ -65,20 +91,21 @@ class LoginPage extends React.Component {
                 })
             }
         });
+     
     };
 
-    triggerCRCodeShow = () => {
+    triggerCRCodeShow (){
         this.setState({
             isCRCodeShow: !this.state.isCRCodeShow,
 
         })
     };
-    triggerIosAppShow = () => {
+    triggerIosAppShow (){
         this.setState({
             isIosAppShow: !this.state.isIosAppShow,
         })
     };
-    onChange = (e) =>{           
+    onChange (e) {           
             const {checked} = e.target;
             this.setState({
                 checked:checked
@@ -109,6 +136,7 @@ class LoginPage extends React.Component {
         const { getFieldDecorator } = this.props.form;
         return (
             <div className="login-page">
+            
                 <div className="login-box">
                     <div className="header">
                         <div className="img-wrapper">
@@ -119,7 +147,7 @@ class LoginPage extends React.Component {
                         </div>
                     </div>
                     <div className="login">
-                        <Form onSubmit={this.handleSubmit} className="login-form">
+                        <Form onSubmit={this.handleSubmit.bind(this)} className="login-form">
                             <FormItem className="username-from">
                             {getFieldDecorator('username', {
                                     rules: [{ required: true, message: '请输入您的密码！' }],
@@ -161,7 +189,7 @@ class LoginPage extends React.Component {
                                     valuePropName: 'checked',
                                     initialValue: this.state.checked,
                                 })(
-                                    <Checkbox onChange={this.onChange}>记住密码</Checkbox>
+                                    <Checkbox onChange={this.onChange.bind(this)}>记住密码</Checkbox>
                                 )}
                             </FormItem>
                             <FormItem className="submit">
@@ -177,13 +205,13 @@ class LoginPage extends React.Component {
                     <div className={this.state.isCRCodeShow ? 'cr-code' : 'cr-code-hide'} >
                         <img src={CRCode} alt="CRCode" className="img"/>
                     </div>
-                    <Button className="open-app-btn" onClick={this.triggerCRCodeShow}>下载安卓APP</Button>
+                    <Button className="open-app-btn" onClick={this.triggerCRCodeShow.bind(this)}>下载安卓APP</Button>
                     </div>
                      <div>
                      <div className={this.state.isIosAppShow ? 'cr-code' : 'cr-code-hide'} >
                         <img src={IosApp} alt="CRCode" className="img"/>
                     </div>
-                    <Button className="open-app-btn" onClick={this.triggerIosAppShow}>下载iOS APP</Button>
+                    <Button className="open-app-btn" onClick={this.triggerIosAppShow.bind(this)}>下载iOS APP</Button>
                      </div>  
                 </div>
             </div>

@@ -87,7 +87,7 @@ class SettingCreateTopic extends React.Component {
     onChangeObject(e) {
         let { value } = e.target;
         let ObjectArr=value.split(' '); 
-        if(/~|!|@|#|\$|\^|&|\*|=|\?|！|￥|-|\(|\)|（|）|%|【|】|\{|\}|；|;|%|,|，|。|\./.test(value)){ 
+        if(/~|!|@|#|\$|\^|&|\*|=|\?|！|￥|-|（|）|%|【|】|\{|\}|；|;|%|,|，|。|\./.test(value)){ 
              message.warning('请不要带有特殊字符');
         }else if (keywordDuplicateCheck(ObjectArr)){
              message.warning('请不要出现重复的关键词或多余的空格');
@@ -99,7 +99,7 @@ class SettingCreateTopic extends React.Component {
     onChangeSubject1(e) {
         const { value } = e.target; 
         let Subject1Arr=value.split(' '); 
-        if(/~|!|@|#|\$|\^|&|\*|=|\?|！|￥|-|\(|\)|（|）|%|【|】|\{|\}|；|;|%|,|，|。|\./.test(value)){ 
+        if(/~|!|@|#|\$|\^|&|\*|=|\?|！|￥|-|（|）|%|【|】|\{|\}|；|;|%|,|，|。|\./.test(value)){ 
             message.warning('请不要带有特殊字符');
        }else if (keywordDuplicateCheck(Subject1Arr)){
             message.warning('请不要出现重复的关键词或多余的空格');
@@ -111,7 +111,7 @@ class SettingCreateTopic extends React.Component {
     onChangeSubject2(e) {
         const { value } = e.target;
         let Subject2Arr=value.split(' ');
-        if(/~|!|@|#|\$|\^|&|\*|=|\?|！|￥|-|\(|\)|（|）|(%)|【|】|\{|\}|；|;|(%)|,|，|。|\./.test(value)){  
+        if(/~|!|@|#|\$|\^|&|\*|=|\?|！|￥|-|（|）|(%)|【|】|\{|\}|；|;|(%)|,|，|。|\./.test(value)){  
             message.warning('请不要带有特殊字符');
        }else if (keywordDuplicateCheck(Subject2Arr)){
             message.warning('请不要出现重复的关键词或多余的空格');
@@ -123,7 +123,7 @@ class SettingCreateTopic extends React.Component {
     onChangeFilter(e) {
         const { value } = e.target;
         let FilterArr=value.split(' ');
-        if(/~|!|@|#|\$|\^|&|\*|=|\?|！|￥|-|\(|\)|（|）|%|【|】|\{|\}|；|;|%|,|，|。|\./.test(value)){ 
+        if(/~|!|@|#|\$|\^|&|\*|=|\?|！|￥|-|（|）|%|【|】|\{|\}|；|;|%|,|，|。|\./.test(value)){ 
             message.warning('请不要带有特殊字符');
        }else if (keywordDuplicateCheck(FilterArr)){
             message.warning('请不要出现重复的关键词或多余的空格');

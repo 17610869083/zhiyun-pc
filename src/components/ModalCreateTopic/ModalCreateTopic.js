@@ -20,7 +20,7 @@ class ModalCreateTopic extends React.Component{
     }
     OnChange(e){
           const {value} =e.target;
-          if(/~|!|@|#|\$|\^|&|=|\?|~|@|#|￥|……|-|\(|\)|（|）|\{|\}|\[|\]/.test(value)){ 
+          if(/~|!|@|#|\$|\^|&|=|\?|~|@|#|￥|……|-|（|）|\{|\}|\[|\]/.test(value)){ 
               message.warning('请不要带有特殊字符');
           }
           this.setState({

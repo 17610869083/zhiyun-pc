@@ -22,8 +22,6 @@ import {api_newest_opinion,
 } from '../../services/api';
 
 import {formatOpinionCount} from '../../utils/format'
-
-
 class HomePage extends React.Component {
 
     constructor() {
@@ -134,7 +132,7 @@ class HomePage extends React.Component {
           
             <div className="home-page">
                 <div className="container">
-                    <Row gutter={16} className="row">
+                    {/* <Row gutter={16} className="row">
                         <Col span={24}>
                             <TodayOpinionBox data={todayOpinionCount}/>
                         </Col>
@@ -178,7 +176,7 @@ class HomePage extends React.Component {
                         <Col span={12}>
                             <OpinionCountBox data={opinionCountArr}/>
                         </Col>
-                    </Row>
+                    </Row> */}
                 </div>
             </div>
          </div>

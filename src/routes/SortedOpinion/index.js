@@ -305,7 +305,7 @@ class SortedOpinion extends React.Component {
         <div className="topic-top">
           <div>
             <Menu onClick={this.handleMenuClick.bind(this)} selectedKeys={[this.state.current]} mode="horizontal" style={{
-                backgroundColor: '#0c1224',
+                backgroundColor: '#2d324f',
                 paddingTop: '14px',
                 color: '#fff',
                 border: 'none',

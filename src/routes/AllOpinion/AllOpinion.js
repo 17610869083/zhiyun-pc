@@ -377,7 +377,7 @@ class AllOpinion extends React.Component {
         carry: this.state.mediaValue,
         begin: this.state.begin,
         end: this.state.end,
-        pagesize: this.state.pagesize
+        pagesize: pageSize
       };
       this.props.opinionSearchRequest(param);
       this.props.paginationPage(1);
