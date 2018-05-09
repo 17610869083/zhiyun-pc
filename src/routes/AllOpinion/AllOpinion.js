@@ -175,8 +175,12 @@ class AllOpinion extends React.Component {
       };
       const begin = values['range-time-picker'][0];
       const end = values['range-time-picker'][1];
-      if (getSecondTime(begin) > getSecondTime(end)) {
+      if (getSecondTime(begin) > Math.round(new Date())) {
+        message.error('开始时间请不要大于当前时间');
+      }
+      else if (getSecondTime(begin) > getSecondTime(end)) {
         message.error('开始时间请不要大于结束时间');
+        // console.log(getSecondTime(begin),Math.round(new Date()))
         return;
       }
       const timeValue = 'custom';
