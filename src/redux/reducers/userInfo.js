@@ -10,7 +10,8 @@ const defaultUserInfo = {
     remark: "gzwxb",
     sysname: "贵州网信办舆情云平台",
     tel: "11111",
-    username: "gzwxb "
+    username: "gzwxb ",
+    alerMsg:''    
 };
 
 const getUserInfoReducer = (state = {info: "" }, action) => {

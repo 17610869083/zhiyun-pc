@@ -351,6 +351,10 @@ class OpinionDetail extends React.Component {
     const {value} = e.target;
     if (value === '') {
       this.props.searchType(0);
+      this.props.searchKeywordSync({
+        seltype: this.state.seltype,
+        keyword: '', type: 0
+      });
     }
     this.setState({
       searchInputValue: value
@@ -705,7 +709,7 @@ class OpinionDetail extends React.Component {
                       <Tooltip title='设为预警' placement="bottom">
                         <Popconfirm title="是否将这条信息设为预警？" onConfirm={this.warningConfirm.bind(this, item.sid)}
                                     onCancel={this.deleteCancel.bind(this)} okText="是" cancelText="否">
-                          <i><Iconfont type="icon-fengxianyujing" style={{fontSize: '20px', fill: '#01c2e0', verticalAlign: '0px'}}></Iconfont></i>
+                          <i><Iconfont type="icon--jiageyujing" style={{fontSize: '18px', fill: '#01c2e0'}}></Iconfont></i>
                         </Popconfirm>
                       </Tooltip>
                     </div>
@@ -727,7 +731,7 @@ class OpinionDetail extends React.Component {
                           onVisibleChange={this.handleVisibleChange.bind(this, index)}
                           visible={this.state.popVisible && this.state.popIndex === index}
                         >
-                          <Iconfont type="icon--jiageyujing" style={{fontSize: '18px', fill: '#01c2e0'}}></Iconfont>
+                         <i><Iconfont type="icon-fengxianyujing" style={{fontSize: '20px', fill: '#01c2e0', verticalAlign: '0px'}}></Iconfont></i>
                         </Popover>
                       </Tooltip>
                     </div>
@@ -825,7 +829,6 @@ class OpinionDetail extends React.Component {
                         onCancel={this.deleteCancel.bind(this)} okText="是" cancelText="否">
               <Tooltip title='删除' placement="bottom">
                 <div className="operate-all">
-                  {/*<img src={deleteImg} alt="delete" className="delete-img"/>*/}
                   <i><Iconfont type="icon-shanchu1" style={{fontSize: '20px', fill: '#01c2e0'}}></Iconfont></i>
                 </div>
               </Tooltip>
@@ -839,7 +842,6 @@ class OpinionDetail extends React.Component {
                       getPopupContainer={() => document.querySelector('.opinion-detail')}>
               <Tooltip title='倾向' placement="bottom">
                 <div className="operate-all">
-                  {/*<img src={remove} alt="plus" className="plus-img"/>*/}
                   <i><Iconfont type="icon-fengxianyujing" style={{fontSize: '21px', fill: '#00c8e7', verticalAlign: '-3px'}}></Iconfont></i>
                 </div>
               </Tooltip>
@@ -849,7 +851,6 @@ class OpinionDetail extends React.Component {
             >
               <Tooltip title='素材库' placement="bottom">
                 <div className="operate-all" onClick={this.props.getCollectionOpinionListRequested.bind(this)}>
-                  {/*<img src={infoBaseImg} alt="infoBase" className="close-img"/>*/}
                   <i><Iconfont type="icon-sucaiku" style={{fontSize: '15px', fill:'#01c2e0'}}></Iconfont></i>
                 </div>
               </Tooltip>
@@ -859,7 +860,6 @@ class OpinionDetail extends React.Component {
                         getPopupContainer={() => document.querySelector('.opinion-detail')}
               >
                 <div className="operate-all" onClick={this.props.getMaterialOpinionListRequested.bind(this)}>
-                  {/*<img src={starImg} alt="star" className="close-img"/>*/}
                   <i><Iconfont type="icon-shoucang" style={{fontSize: '16px', fill: '#01c2e0'}}></Iconfont></i>i>
                 </div>
 

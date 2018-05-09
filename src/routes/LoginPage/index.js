@@ -7,7 +7,7 @@ import {api_login} from '../../services/api';
 import request from '../../utils/request';
 import {history} from '../../utils/history';
 import CRCode from './crcode.jpg';
-import IosApp from './iosapp.png';
+import IosApp from './iosapp.jpg';
 import {setItem,getPasswordItem,setPasswordItem} from '../../utils/localStorage';
 import {LIGHT,DARK} from '../../utils/colors';
 
@@ -150,7 +150,7 @@ class LoginPage extends React.Component {
                         <Form onSubmit={this.handleSubmit.bind(this)} className="login-form">
                             <FormItem className="username-from">
                             {getFieldDecorator('username', {
-                                    rules: [{ required: true, message: '请输入您的密码！' }],
+                                    rules: [{ required: true, message: '请输入您的用户名！' }],
                                     initialValue:this.state.userName
                                 })(
                                     <Input placeholder="用户名" 

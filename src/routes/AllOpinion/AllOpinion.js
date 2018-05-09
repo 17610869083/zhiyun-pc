@@ -404,7 +404,9 @@ class AllOpinion extends React.Component {
     this.setState({
       page: pagenumber
     });
-    const param = {
+    let param='';
+    if(this.props.ks===''){
+      param = {
       datetag: this.state.timeValue,
       neg: this.state.trendValue,
       order: this.state.sortValue,
@@ -415,6 +417,13 @@ class AllOpinion extends React.Component {
       page: pagenumber,
       pagesize: this.state.pagesize
     };
+   }else{
+      param = {
+      seltype: "content",
+      keyword:this.props.ks.keyword,
+      page:pagenumber
+     }
+   }
     this.props.opinionSearchRequest(param);
     this.props.paginationPage(pagenumber);
     ReactDOM.findDOMNode(this).scrollIntoView();

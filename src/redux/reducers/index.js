@@ -1,5 +1,4 @@
 import {combineReducers} from 'redux';
-
 import changeThemeReducer from './changeThemeReducer';
 import getRouterReducer from './getRouterReducer';
 import exportSkip from './exportSkip';

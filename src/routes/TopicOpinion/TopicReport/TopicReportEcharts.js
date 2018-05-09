@@ -338,6 +338,7 @@ class TopicReportEcharts extends React.Component {
                 }
             },
             toolbox: {
+                right:30,
                 feature: {
                     dataView: {
                         show: true, readOnly: false               
@@ -374,7 +375,6 @@ class TopicReportEcharts extends React.Component {
     }
         // 专题倾向性分析
         getOption(){  
-  
              const trendOption = {
                 title : {
                     text: '',
@@ -386,6 +386,7 @@ class TopicReportEcharts extends React.Component {
                     formatter: "{a} <br/>{b} : {c} ({d}%)"
                 },
                 toolbox: {
+                    right:30,
                     feature: {
                     restore:{
                         show:true,
@@ -458,8 +459,7 @@ class TopicReportEcharts extends React.Component {
         }
 
         // 专题媒体类型分析
-        mediaOption(){
-                
+        mediaOption(){    
             const mediaOption = {
                 title : {
                     text: '',
@@ -471,6 +471,7 @@ class TopicReportEcharts extends React.Component {
                     formatter: "{a} <br/>{b} : {c} ({d}%)"
                 },
                 toolbox: {
+                    right:30,
                     feature: {
                     restore:{
                         show:true,
@@ -551,6 +552,7 @@ class TopicReportEcharts extends React.Component {
                     }
                 },
                 toolbox: {
+                    right:30,
                     feature: {
                     restore:{
                         show:true,
@@ -624,7 +626,6 @@ class TopicReportEcharts extends React.Component {
 
         // 专题媒体类型倾向性分布
         mediaTypeTrendOption(){
-             
             const mediaTypeTrendOption = {
                 title: {
                     text: '',
@@ -642,6 +643,7 @@ class TopicReportEcharts extends React.Component {
                     }
                 },
                 toolbox: {
+                    right:30,
                     feature: {
                     restore:{
                         show:true,
@@ -714,7 +716,6 @@ class TopicReportEcharts extends React.Component {
 
        // 负面媒体分布
         negativeMediaOption(){
-            
             const  negativeMediaOption = {
                 title : {
                     text: '',
@@ -731,6 +732,7 @@ class TopicReportEcharts extends React.Component {
                     data: ['直接访问','邮件营销','联盟广告','视频广告','搜索引擎']
                 },
                 toolbox: {
+                    right:30,
                     feature: {
                     restore:{
                         show:true,
@@ -793,6 +795,7 @@ class TopicReportEcharts extends React.Component {
                     }
                 },
                 toolbox: {
+                    right:30,
                     feature: {
                         dataView: {
                             show: true, readOnly: false               
@@ -840,6 +843,7 @@ class TopicReportEcharts extends React.Component {
                     }
                 },
                 toolbox: {
+                    right:30,
                     feature: {
                         dataView: {
                             show: true, readOnly: false               

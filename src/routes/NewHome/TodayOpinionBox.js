@@ -2,19 +2,75 @@ import React from 'react';
 import {Row, Col,Icon} from 'antd';
 import IconFont from '../../components/IconFont';
 import './TodayOpinionBox.less';
-
+import {api_today_opinion} from '../../services/api';
+import request from '../../utils/request';
 class TodayOpinionBox extends React.PureComponent {
-
+    constructor(){
+        super();
+        this.state={
+             todayAll:0,
+             todayWarning:0,
+             todayNegative:0,
+             ratio:0
+        }
+    }
+    componentDidMount(){
+        request(api_today_opinion)
+        .then(res => {
+        const data = res.data;    
+        const todayAll = data['今日舆情'] && data['今日舆情'].length!==0 ? data['今日舆情'][4]['总数'] : 0;
+        const todayWarning = data['今日舆情'] && data['今日舆情'].length!==0 ? data['今日舆情'][3]['预警'] : 0;
+        const todayNegative = data['今日舆情'] && data['今日舆情'].length!==0? data['今日舆情'][2]['负面'] : 0;
+        const yesterdayNegative = data['昨日舆情'] && data['昨日舆情'].length!==0? data['昨日舆情'][2]['负面'] : 0;
+        const ratio =  yesterdayNegative === 0 ? 0 : Number.parseInt((todayNegative - yesterdayNegative)/yesterdayNegative*100, 10);  
+        if(todayAll !==0){
+            this.allTimer=setInterval(()=>{
+                this.setState({
+                    todayAll:this.state.todayAll+(Math.floor(todayAll/10))
+                })
+                if(this.state.todayAll>=todayAll){
+                    clearInterval(this.allTimer)
+                }
+            },100)  
+            }
+            if(todayWarning !==0){
+                this.warningTimer=setInterval(()=>{
+                    this.setState({
+                        todayWarning:this.state.todayWarning+(Math.floor(todayWarning/10))
+                    })
+                    if(this.state.todayWarning>=todayWarning){
+                        clearInterval(this.warningTimer)
+                    }
+                },100)  
+            }
+            if(todayNegative !==0){
+                this.negativeTimer=setInterval(()=>{
+                    this.setState({
+                        todayNegative:this.state.todayNegative+(Math.floor(todayNegative/10))
+                    })
+                    if(this.state.negativeTimer>=todayNegative){
+                        clearInterval(this.negativeTimer)
+                    }
+                },100)  
+            }
+            if(ratio !==0){
+                this.ratioTimer=setInterval(()=>{
+                    this.setState({
+                        ratio:this.state.ratio+(Math.floor(ratio/10))
+                    })
+                    if(this.state.ratio>=ratio){
+                        clearInterval(this.ratioTimer)
+                    }
+                },100)  
+            }
+        }) 
+    }
     delTodayOpinionBox(){
             this.props.delTodayBox(1);
     }
     render() {
-        const {data} = this.props;
-        const todayAll = data['今日舆情'] && data['今日舆情'].length!==0 ? data['今日舆情'][4]['总数'] : "";
-        const todayWarning = data['今日舆情'] && data['今日舆情'].length!==0 ? data['今日舆情'][3]['预警'] : "";
-        const todayNegative = data['今日舆情'] && data['今日舆情'].length!==0? data['今日舆情'][2]['负面'] : "";
-        const yesterdayNegative = data['昨日舆情'] && data['昨日舆情'].length!==0? data['昨日舆情'][2]['负面'] : "";
-        const ratio =  yesterdayNegative === 0 ? 0 : Number.parseInt((todayNegative - yesterdayNegative)/yesterdayNegative*100, 10);
+        const {todayAll,todayWarning,todayNegative,ratio} = this.state;
+
         return (
             <div className="today-opinion-box">
                  <div className="today-opinion-top"
@@ -24,6 +80,7 @@ class TodayOpinionBox extends React.PureComponent {
                  ></Icon>
                  </div>
                  <div className="container">
+                 {this.state.num}
                      <Row gutter={60}>
                          <Col span={6}>
                              <div className="opinion-info">

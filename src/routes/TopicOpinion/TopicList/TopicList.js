@@ -372,14 +372,14 @@ class TopicList extends React.Component {
     }
     componentDidMount() {  
         setTimeout( ()=>{
-        let topicID=Store.getState().getRouterReducer;    
+        let topicID=Store.getState().getRouterReducer;   
         if(typeof topicID!=='object'){
                 request(api_topic_message_list,{
                     method: 'POST',
                     headers: {
                         "Content-Type": "application/x-www-form-urlencoded"
                     },
-                    body: `topicid=${topicID}`
+                    body: `topicid=${topicID}&similer=0`
     
                 } ).then((res) => {
                     if(res.data && res.data.code!==0){
@@ -406,7 +406,7 @@ class TopicList extends React.Component {
                    headers: {
                        "Content-Type": "application/x-www-form-urlencoded"
                    },
-                   body:`topicid=${topicID}`
+                   body:`topicid=${topicID}&similer=0`
                }).then((res) => {
                     if(res.data){
                          this.setState({
@@ -419,8 +419,8 @@ class TopicList extends React.Component {
                             timeIndex:0,  
                             sortIndex :0, 
                             filterIndex: 0,
-                             mediaIndex:0,
-                             trendIndex :0
+                            mediaIndex:0,
+                            trendIndex :0
                         });
                     }
                });

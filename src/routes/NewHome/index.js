@@ -20,8 +20,6 @@ import {
   api_newest_warning_opinion,
   api_weibo_opinion,
   api_count_opinion,
-  api_today_opinion,
-  api_main_topic_opinion,
   api_hot_word,
   api_carrier_pie,
   api_homepage_message,
@@ -43,8 +41,6 @@ class NewHome extends React.Component {
       weiboAll: [],
       weiboNegative: [],
       opinionCountArr: [],
-      todayOpinionCount: {},
-      topicOpinionArr: [],
       hotWordData: [],
       mediaDistributionArr: [],
       homeMessage: [],
@@ -83,13 +79,6 @@ class NewHome extends React.Component {
             HotWord: res.data.HotWord
           })
         }
-
-        // 昨日和今日舆情
-        request(api_today_opinion)
-          .then((res) => {
-            this.setState({
-              todayOpinionCount: res.data
-            });
             // 最新舆情
             request(api_newest_opinion)
               .then((res) => {
@@ -148,14 +137,6 @@ class NewHome extends React.Component {
                                 this.setState({
                                   opinionCountArr: opinionCountArr
                                 });
-
-                                // 专题舆情
-                                request(api_main_topic_opinion)
-                                  .then((res) => {
-                                    const topicOpinion = Object.values(res.data);
-                                    this.setState({
-                                      topicOpinionArr: topicOpinion
-                                    });
                                     request(api_hot_word)
                                       .then(res => {
                                         this.setState({
@@ -174,8 +155,6 @@ class NewHome extends React.Component {
                       });
                   });
               });
-          });
-      });
   }
 
   delHotWordBox(type) {
@@ -372,13 +351,11 @@ class NewHome extends React.Component {
 
   render() {
     const {
-      todayOpinionCount,
       opinionList,
       todayOpinionArr, yesterdayOpinion, beforeYesterdayOpinion,
       todayWarningOpinion, yesterdayWarningOpinion, beforeYesterdayWarningOpinion,
       weiboAll, weiboNegative,
-      opinionCountArr,
-      topicOpinionArr
+      opinionCountArr
     } = this.state;
     const {userInfo, ModuleList} = this.props;
     const moduleList = this.state.homeMessage.length !== 0 ? homeModuleList(this.state.homeMessage).map((item, index) =>
@@ -410,8 +387,7 @@ class NewHome extends React.Component {
             >
               <Col span={24}
               >
-                <TodayOpinionBox data={todayOpinionCount}
-                                 status={this.props.type !== undefined ? 'setting' : ''}
+                <TodayOpinionBox status={this.props.type !== undefined ? 'setting' : ''}
                                  delTodayBox={this.delTodayBox.bind(this)}
                 />
               </Col>
@@ -471,8 +447,7 @@ class NewHome extends React.Component {
               <Col span={12}
                    style={ModuleList.topicOpinion === 1 ? {display: 'none'} : {display: 'block'}}
               >
-                <TopicOpinionBox topicOpinion={topicOpinionArr}
-                                 status={this.props.type !== undefined ? 'setting' : ''}
+                <TopicOpinionBox status={this.props.type !== undefined ? 'setting' : ''}
                                  delTopicBox={this.delTopicBox.bind(this)}
                 />
               </Col>

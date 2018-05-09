@@ -263,6 +263,7 @@ class TopicCount extends React.Component {
                 formatter: "{a} <br/>{b} : {c} ({d}%)"
             },
             toolbox: {
+                right:30,
                 feature: {
                 restore:{
                     show:true,
@@ -344,6 +345,7 @@ class TopicCount extends React.Component {
                 }
             },
             toolbox: {
+                right:30,
                 feature: {
                     dataView: {
                         show: true, readOnly: false               
@@ -390,6 +392,7 @@ class TopicCount extends React.Component {
                 formatter: "{a} <br/>{b} : {c} ({d}%)"
             },
             toolbox: {
+                right:30,
                 feature: {
                 restore:{
                     show:true,
@@ -466,6 +469,7 @@ class TopicCount extends React.Component {
                 }
             },
             toolbox: {
+                right:30,
                 feature: {
                 restore:{
                     show:true,
@@ -550,6 +554,7 @@ class TopicCount extends React.Component {
                 }
             },
             toolbox: {
+                right:30,
                 feature: {
                 restore:{
                     show:true,
@@ -626,6 +631,7 @@ class TopicCount extends React.Component {
                 data:['直接访问','邮件营销','联盟广告','视频广告','搜索引擎']
             },
             toolbox: {
+                right:30,
                 feature: {
                 restore:{
                     show:true,
@@ -688,6 +694,7 @@ class TopicCount extends React.Component {
                 data: ['直接访问','邮件营销','联盟广告','视频广告','搜索引擎']
             },
             toolbox: {
+                right:30,
                 feature: {
                 restore:{
                     show:true,

@@ -419,7 +419,7 @@ class TopicReport extends React.Component {
                             <Button type="primary" className="word" onClick={this.showModal.bind(this,'word')}>导出Word</Button>
                         </Col>
                         <Col span={6} offset={6}>
-                            <Button type="primary" className="excl" onClick={this.showModal.bind(this,'excel')}>导出EXCL</Button>
+                            <Button type="primary" className="excl" onClick={this.showModal.bind(this,'excel')}>导出Excel</Button>
                         </Col>
                     </Row>
                 </div>

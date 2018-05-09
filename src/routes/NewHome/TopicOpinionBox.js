@@ -4,13 +4,25 @@ import BlankPage from '../../base/Exception/BlankPage';
 import { Tabs ,Icon} from 'antd';
 import './TopicOpinionBox.less';
 import {history} from '../../utils/history';
+import {connect} from 'react-redux';
+import {setlocationPathname} from '../../redux/actions/createActions';
+import request from '../../utils/request';
+import {api_main_topic_opinion} from '../../services/api';
 const TabPane = Tabs.TabPane;
 
 class TopicOpinionBox extends React.PureComponent {
+    constructor(){
+        super();
+        this.state={
+            topicid:0,
+            topicOpinion:[]
+        }
+    }
     clickItemTitle(sid) {
         window.open(window.location.origin + window.location.pathname + '#/detail/' + sid);
     }
     goTopicOpinion() {
+        this.props.setlocationPathname(this.state.topicid)
         history.push({
             pathname: '/topic/topiclist'
         });
@@ -18,8 +30,22 @@ class TopicOpinionBox extends React.PureComponent {
     delTopicOpinionBox(){
          this.props.delTopicBox(1);
     }
-    render() {
-        const {topicOpinion} = this.props;
+    componentWillMount(){
+        request(api_main_topic_opinion)
+        .then(res => {
+              this.setState({
+                topicid:res.data.topic_0.topicid ,
+                topicOpinion:Object.values(res.data)            
+              })
+        })
+    }
+    tabClick(key){
+         this.setState({
+            topicid:parseInt(key,10)
+         })
+    }
+    render() {  
+         const {topicOpinion} = this.state;
         const more = this.props.status!=='setting'?<span onClick={this.goTopicOpinion.bind(this)}>更多
         <IconFont type="icon-gengduo" style={{color: '#9b9b9b',fontSize: '16px'}}/>
         </span>:<Icon type="close-circle" className="delModule" style={{fontSize: '18px'}}
@@ -38,10 +64,10 @@ class TopicOpinionBox extends React.PureComponent {
                         </div>
                     </div>
                     <div className="bottom">
-                        <Tabs defaultActiveKey="0">
+                        <Tabs defaultActiveKey="0" onChange={this.tabClick.bind(this)}>
                             {
-                                topicOpinion.map((item,index) =>
-                                    <TabPane tab={item.topicname} key={index}>
+                                topicOpinion.length!==0?topicOpinion.map((item,index) =>
+                                    <TabPane tab={item.topicname} key={item.topicid}>
                                         <ul className="list">
                                             {item.docList!==undefined ?
                                                 item.docList.slice(0,6).map((i,index) =>
@@ -58,7 +84,7 @@ class TopicOpinionBox extends React.PureComponent {
                                             }
                                         </ul>
                                     </TabPane>
-                                )
+                                ):''
                             }
                         </Tabs>
                     </div>
@@ -67,5 +93,11 @@ class TopicOpinionBox extends React.PureComponent {
         )
     }
 }
-
-export default TopicOpinionBox;
+const mapDispatchToProps = dispatch => {
+    return {
+        setlocationPathname: req => {
+            dispatch(setlocationPathname(req));
+        }
+    }
+}
+export default connect(null,mapDispatchToProps)(TopicOpinionBox);
