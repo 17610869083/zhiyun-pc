@@ -148,7 +148,7 @@ class SortedAdd extends React.Component {
 
     sortedNameChange(e){
         const {value} = e.target;
-        if(value.length>=14){
+        if(value.length>=28){
               message.error('专题名称请不要超过14个字符');
               return;
         }
