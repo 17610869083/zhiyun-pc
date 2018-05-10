@@ -1,14 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {connect} from 'react-redux';
-import {Pagination, DatePicker, Form, message, Button} from 'antd';
+import { connect } from 'react-redux';
+import { Pagination, DatePicker, Form, message, Button } from 'antd';
 import request from '../../../utils/request';
 import OpinionDetail from '../../../components/OpinionDetail/OpinionDetail';
 import Store from '../../../redux/store/index';
 import './TopicList.less';
-import {getTopicRequested, paginationPage, searchKeywordSync} from '../../../redux/actions/createActions';
-import {api_topic_message_list} from '../../../services/api';
-import {getSecondTime} from '../../../utils/format';
+import { getTopicRequested, paginationPage, searchKeywordSync } from '../../../redux/actions/createActions';
+import { api_topic_message_list } from '../../../services/api';
+import { getSecondTime } from '../../../utils/format';
 
 const FormItem = Form.Item;
 
@@ -99,7 +99,7 @@ class TopicList extends React.Component {
       filterIndex: 0,
       filterValue: 0,
       media: [
-        {count: 0, value: "全部", key: "docApp"},
+        { count: 0, value: "全部", key: "docApp" },
       ],
       mediaIndex: 0,
       mediaValue: '全部',
@@ -150,7 +150,7 @@ class TopicList extends React.Component {
       }
     })
     this.props.paginationPage(1);
-    this.props.searchKeywordSync({keyword: "1", seltype: "1", type: 0});
+    this.props.searchKeywordSync({ keyword: "1", seltype: "1", type: 0 });
   }
 
   // 选择具体时间
@@ -201,7 +201,7 @@ class TopicList extends React.Component {
       })
     });
     this.props.paginationPage(1);
-    this.props.searchKeywordSync({keyword: "1", seltype: "1", type: 0});
+    this.props.searchKeywordSync({ keyword: "1", seltype: "1", type: 0 });
     document.querySelector('.ant-calendar-picker-input').style.cssText = "border: 1px solid #42b9f5;border-radius: 5px;"
   }
 
@@ -228,7 +228,7 @@ class TopicList extends React.Component {
       }
     })
     this.props.paginationPage(1);
-    this.props.searchKeywordSync({keyword: "1", seltype: "1", type: 0});
+    this.props.searchKeywordSync({ keyword: "1", seltype: "1", type: 0 });
   }
 
   sortClick(index, value) {
@@ -254,7 +254,7 @@ class TopicList extends React.Component {
       }
     })
     this.props.paginationPage(1);
-    this.props.searchKeywordSync({keyword: "1", seltype: "1", type: 0});
+    this.props.searchKeywordSync({ keyword: "1", seltype: "1", type: 0 });
   }
 
   filterClick(index, value) {
@@ -280,7 +280,7 @@ class TopicList extends React.Component {
       }
     })
     this.props.paginationPage(1);
-    this.props.searchKeywordSync({keyword: "1", seltype: "1", type: 0});
+    this.props.searchKeywordSync({ keyword: "1", seltype: "1", type: 0 });
   }
 
   mediaClick(index, value) {
@@ -306,7 +306,7 @@ class TopicList extends React.Component {
       }
     })
     this.props.paginationPage(1);
-    this.props.searchKeywordSync({keyword: "1", seltype: "1", type: 0});
+    this.props.searchKeywordSync({ keyword: "1", seltype: "1", type: 0 });
   }
 
   onShowSizeChange(current, pageSize) {
@@ -440,16 +440,16 @@ class TopicList extends React.Component {
   }
 
   render() {
-    const {getFieldDecorator} = this.props.form;
-    const {page} = this.props;
+    const { getFieldDecorator } = this.props.form;
+    const { page } = this.props;
     const formItemLayout = {
       labelCol: {
-        xs: {span: 24},
-        sm: {span: 8},
+        xs: { span: 24 },
+        sm: { span: 8 },
       },
       wrapperCol: {
-        xs: {span: 24},
-        sm: {span: 16},
+        xs: { span: 24 },
+        sm: { span: 16 },
       },
     };
     // 时间
@@ -513,19 +513,19 @@ class TopicList extends React.Component {
     };
     return (
       <div className="topic-list-opinion">
-        <div className="sort-top" style={this.props.search ? {display: 'block'} : {display: 'none'}}>
+        <div className="sort-top" style={this.props.search ? { display: 'block' } : { display: 'none' }}>
           <div className="sort-items">
             <div className="left">时间：</div>
             <div className="right">
               {Time}
             </div>
-            <div className="other" style={this.state.timePickerShow ? {display: 'block'} : {display: 'none'}}>
+            <div className="other" style={this.state.timePickerShow ? { display: 'block' } : { display: 'none' }}>
               <Form onSubmit={this.handleSubmit.bind(this)}>
                 <FormItem
                   {...formItemLayout}
                 >
                   {getFieldDecorator('range-time-picker')(
-                    <DatePicker showTime placeholder="开始日期" format="YYYY-MM-DD HH:mm:ss"/>
+                    <DatePicker showTime placeholder="开始日期" format="YYYY-MM-DD HH:mm:ss" />
                   )}
                 </FormItem>
                 <FormItem
@@ -536,7 +536,7 @@ class TopicList extends React.Component {
                     />
                   )}
                 </FormItem>
-                <Button type="primary" htmlType="submit" style={{marginTop: '2px'}}>
+                <Button type="primary" htmlType="submit" style={{ marginTop: '2px' }}>
                   确定
                 </Button>
               </Form>
@@ -570,24 +570,24 @@ class TopicList extends React.Component {
         <div className="middle">
           <div className="count">根据您的条件，为您筛选出<span className="number">{this.state.count}</span>条数据！</div>
           <OpinionDetail docList={this.state.docList}
-                         onDataChange={this.dataChanged.bind(this)}
-                         param={param}
-                         current={page}
-                         pageSize={this.state.pagesize}
-                         propsType='TopicList'
-                         pageInfo={this.state.pageInfo}
+            onDataChange={this.dataChanged.bind(this)}
+            param={param}
+            current={page}
+            pageSize={this.state.pagesize}
+            propsType='TopicList'
+            pageInfo={this.state.pageInfo}
           />
         </div>
         <div className="bottom">
           <div className="pagintion-wrapper">
             <Pagination showSizeChanger
-                        defaultCurrent={1}
-                        defaultPageSize={20}
-                        onChange={this.onPaginationChange.bind(this)}
-                        onShowSizeChange={this.onShowSizeChange.bind(this)}
-                        total={this.state.count}
-                        getPopupContainer={() => document.querySelector('.topic-list-opinion')}
-                        current={page}
+              defaultCurrent={1}
+              defaultPageSize={20}
+              onChange={this.onPaginationChange.bind(this)}
+              onShowSizeChange={this.onShowSizeChange.bind(this)}
+              total={this.state.count}
+              getPopupContainer={() => document.querySelector('.topic-list-opinion')}
+              current={page}
             />
           </div>
         </div>
