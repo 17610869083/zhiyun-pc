@@ -36,8 +36,10 @@ import app from '../../assets/icon-img/app.png';
 import twitter from '../../assets/icon-img/twitter.png';
 import BlankPage from '../../base/Exception/BlankPage';
 import Iconfont from '../IconFont';
+
 const InputGroup = Input.Group;
 const Option = Select.Option;
+
 class OpinionDetail extends React.Component {
   constructor(props) {
     super(props);
@@ -114,6 +116,7 @@ class OpinionDetail extends React.Component {
           })
         }
       })
+
       request(api_topic_message + '&topicid=' + this.props.getRouterReducer).then(res => {
         if (res.data && res.data.code !== 0) {
           this.setState({
@@ -121,6 +124,12 @@ class OpinionDetail extends React.Component {
           })
 
         }
+      })
+    }
+    if (prevProps.current !== this.props.current) {
+      this.setState({
+        checkedAll: false,
+        checkedArray: new Array(40).fill(false)
       })
     }
   }
@@ -209,7 +218,6 @@ class OpinionDetail extends React.Component {
 
   onChangeOtherOperate({key}) {
   }
-
 
   // 取消操作
   deleteCancel(e) {
@@ -482,7 +490,9 @@ class OpinionDetail extends React.Component {
 
   onPaginationChange(pagenumber) {
     this.setState({
-      page: pagenumber
+      page: pagenumber,
+      checkedArray: new Array(40).fill(false),
+      checkedAll: false
     });
     const param = this.props.param;
     param.page = pagenumber;
@@ -709,7 +719,8 @@ class OpinionDetail extends React.Component {
                       <Tooltip title='设为预警' placement="bottom">
                         <Popconfirm title="是否将这条信息设为预警？" onConfirm={this.warningConfirm.bind(this, item.sid)}
                                     onCancel={this.deleteCancel.bind(this)} okText="是" cancelText="否">
-                          <i><Iconfont type="icon--jiageyujing" style={{fontSize: '18px', fill: '#01c2e0'}}></Iconfont></i>
+                          <i><Iconfont type="icon--jiageyujing"
+                                       style={{fontSize: '18px', fill: '#01c2e0'}}></Iconfont></i>
                         </Popconfirm>
                       </Tooltip>
                     </div>
@@ -731,7 +742,8 @@ class OpinionDetail extends React.Component {
                           onVisibleChange={this.handleVisibleChange.bind(this, index)}
                           visible={this.state.popVisible && this.state.popIndex === index}
                         >
-                         <i><Iconfont type="icon-fengxianyujing" style={{fontSize: '20px', fill: '#01c2e0', verticalAlign: '0px'}}></Iconfont></i>
+                          <i><Iconfont type="icon-fengxianyujing"
+                                       style={{fontSize: '20px', fill: '#01c2e0', verticalAlign: '0px'}}></Iconfont></i>
                         </Popover>
                       </Tooltip>
                     </div>
@@ -842,7 +854,8 @@ class OpinionDetail extends React.Component {
                       getPopupContainer={() => document.querySelector('.opinion-detail')}>
               <Tooltip title='倾向' placement="bottom">
                 <div className="operate-all">
-                  <i><Iconfont type="icon-fengxianyujing" style={{fontSize: '21px', fill: '#00c8e7', verticalAlign: '-3px'}}></Iconfont></i>
+                  <i><Iconfont type="icon-fengxianyujing"
+                               style={{fontSize: '21px', fill: '#00c8e7', verticalAlign: '-3px'}}></Iconfont></i>
                 </div>
               </Tooltip>
             </Dropdown>
@@ -851,7 +864,7 @@ class OpinionDetail extends React.Component {
             >
               <Tooltip title='素材库' placement="bottom">
                 <div className="operate-all" onClick={this.props.getCollectionOpinionListRequested.bind(this)}>
-                  <i><Iconfont type="icon-sucaiku" style={{fontSize: '15px', fill:'#01c2e0'}}></Iconfont></i>
+                  <i><Iconfont type="icon-sucaiku" style={{fontSize: '15px', fill: '#01c2e0'}}></Iconfont></i>
                 </div>
               </Tooltip>
             </Dropdown>
@@ -860,7 +873,7 @@ class OpinionDetail extends React.Component {
                         getPopupContainer={() => document.querySelector('.opinion-detail')}
               >
                 <div className="operate-all" onClick={this.props.getMaterialOpinionListRequested.bind(this)}>
-                  <i><Iconfont type="icon-shoucang" style={{fontSize: '16px', fill: '#01c2e0'}}></Iconfont></i>i>
+                  <i><Iconfont type="icon-shoucang" style={{fontSize: '16px', fill: '#01c2e0'}}></Iconfont></i>
                 </div>
 
               </Dropdown>
@@ -875,24 +888,27 @@ class OpinionDetail extends React.Component {
             getPopupContainer={() => document.querySelector('.all-opinion')}
             current={page}
           />
-                  <div className="inputSearch" 
-                    style={this.props.propsType==='AllopinionList' ?{visibility:'visible'}: {visibility:'hidden',width:'100px'}}>   
-                    <div className="right">
-                        <InputGroup compact>
-                            <Select defaultValue="content" onChange={this.handleSearchChange.bind(this)}>
-                                <Option value="content" className="selectFont">搜全文</Option>
-                                <Option value="title" className="selectFont">搜标题</Option>
-                            </Select>
-                            <Input
-                                style={{width: '150px'}}
-                                placeholder="请输入您要搜索的内容"
-                                onChange={this.searchInput.bind(this)}
-                            />
-                            
-                        </InputGroup>
-                    </div>
-                    <Button className="search" onClick={this.handleSearchBtn.bind(this)}>搜索</Button>
-                    </div> 
+          <div className="inputSearch"
+               style={this.props.propsType === 'AllopinionList' ? {visibility: 'visible'} : {
+                 visibility: 'hidden',
+                 width: '100px'
+               }}>
+            <div className="right">
+              <InputGroup compact>
+                <Select defaultValue="content" onChange={this.handleSearchChange.bind(this)}>
+                  <Option value="content" className="selectFont">搜全文</Option>
+                  <Option value="title" className="selectFont">搜标题</Option>
+                </Select>
+                <Input
+                  style={{width: '150px'}}
+                  placeholder="请输入您要搜索的内容"
+                  onChange={this.searchInput.bind(this)}
+                />
+
+              </InputGroup>
+            </div>
+            <Button className="search" onClick={this.handleSearchBtn.bind(this)}>搜索</Button>
+          </div>
         </div>
         <div className="bottom">
           {this.state.loading ? Loading : (null)}
