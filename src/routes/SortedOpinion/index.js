@@ -266,7 +266,7 @@ class SortedOpinion extends React.Component {
               display: 'none'
             }}>
           <Dropdown overlay={OperateItems} trigger={['click']}>
-            <i>< Iconfont type="icon-icon02" onClick={this.onClickCatId.bind(this, item.catid)} className="setting-icon"/></i>
+            <i onClick={this.onClickCatId.bind(this, item.catid)}>< Iconfont type="icon-icon02"  className="setting-icon"/></i>
 
           </Dropdown>
         </div>
@@ -312,22 +312,22 @@ class SortedOpinion extends React.Component {
                 lineHeight:'40px'
               }}>
               <Menu.Item key="sortlist" style={{
-                  fontSize: '16px'
+                  fontSize: '18px'
                 }}>
                 信息列表
               </Menu.Item>
               <Menu.Item key="setting" style={{
-                  fontSize: '16px'
+                  fontSize: '18px'
                 }}>
                 修改分类设置
               </Menu.Item>
               <Menu.Item key="addtopic" style={{
-                  fontSize: '16px'
+                  fontSize: '18px'
                 }}>
                 添加话题
               </Menu.Item>
               <Menu.Item key="addsort" style={{
-                  fontSize: '16px'
+                  fontSize: '18px'
                 }}>
                 添加分类
               </Menu.Item>

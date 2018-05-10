@@ -107,7 +107,6 @@ class AllOpinion extends React.Component {
       end: '0000-00-00 02:00:00',
       timePickerShow: false,
       current: 1,
-      sss: '132',
       type: 0,
       endTime: ''
     }
@@ -177,10 +176,10 @@ class AllOpinion extends React.Component {
       const end = values['range-time-picker'][1];
       if (getSecondTime(begin) > Math.round(new Date())) {
         message.error('开始时间请不要大于当前时间');
+        return;
       }
       else if (getSecondTime(begin) > getSecondTime(end)) {
         message.error('开始时间请不要大于结束时间');
-        // console.log(getSecondTime(begin),Math.round(new Date()))
         return;
       }
       const timeValue = 'custom';
@@ -409,7 +408,7 @@ class AllOpinion extends React.Component {
       page: pagenumber
     });
     let param='';
-    if(this.props.ks===''){
+    if(this.props.ks.keyword===''){
       param = {
       datetag: this.state.timeValue,
       neg: this.state.trendValue,
@@ -425,7 +424,8 @@ class AllOpinion extends React.Component {
       param = {
       seltype: "content",
       keyword:this.props.ks.keyword,
-      page:pagenumber
+      page:pagenumber,
+      similer:0
      }
    }
     this.props.opinionSearchRequest(param);
@@ -441,6 +441,7 @@ class AllOpinion extends React.Component {
   }
 
   dataChanged() {
+    const searchMessage = this.props.ks;
     if (this.state.type !== 1) {
       const param = {
         datetag: this.state.timeValue,
@@ -456,15 +457,14 @@ class AllOpinion extends React.Component {
       this.props.opinionSearchRequest(param);
     } else {
       const param = {
-        datetag: this.state.timeValue,
-        seltype: 'content',
-        keyword: this.props.ks.keyword,
-        neg: this.state.trendValue,
-        order: this.state.sortValue,
-        similer: this.state.filterValue,
-        carry: this.state.mediaValue,
-        begin: this.state.begin,
-        end: this.state.end
+        seltype: searchMessage.seltype,
+        keyword: searchMessage.keyword,
+        similer:this.state.filterValue,
+        datetag:this.state.timeValue,
+        neg:this.state.trendValue,
+        order:this.state.sortValue,
+        carry:this.state.mediaValue,
+        page:this.props.page
       };
       this.props.opinionSearchRequest(param);
       this.props.paginationPage(1);
@@ -548,7 +548,6 @@ class AllOpinion extends React.Component {
 
   componentDidMount() {
     ReactDOM.findDOMNode(this).scrollIntoView();
-
   }
 
   componentWillUnmount() {
@@ -645,8 +644,8 @@ class AllOpinion extends React.Component {
         <div className="close-open">
           <div className="count"> 信息列表</div>
           <div className="close" onClick={this.triggerTopShow.bind(this)}>
+            <span className="closeBtn">{this.state.isTopShow ? '显示' : '隐藏'}</span>
             <Icon type={this.state.isTopShow ? 'down' : 'right'}/>
-            <span className="closeBtn">{this.state.isTopShow ? '隐藏' : '显示'}</span>
           </div>
         </div>
         <div className="sort-top" style={this.state.isTopShow ? {display: 'block'} : {display: 'none'}}>

@@ -41,7 +41,7 @@ class CollectionOpinion extends React.Component {
             checkedLength: 0,
             checked: false,
             checkedAll: false,
-            arr: new Array(30).fill(false),
+            arr: new Array(40).fill(false),
             materialSid: '',
             CollectionValue:''
         };
@@ -196,7 +196,7 @@ class CollectionOpinion extends React.Component {
                     message.success(res.data.msg);
                     this.setState({
                         checkedAll: false,
-                        arr: new Array(30).fill(false)
+                        arr: new Array(40).fill(false)
                     });
                 }
             });
@@ -225,7 +225,7 @@ class CollectionOpinion extends React.Component {
                     message.success(res.data.msg);
                     this.setState({
                         checkedAll: false,
-                        arr: new Array(30).fill(false)
+                        arr: new Array(40).fill(false)
                     });
                 }
             });
@@ -247,7 +247,7 @@ class CollectionOpinion extends React.Component {
                     message.success(res.data.msg);
                     this.setState({
                         checkedAll: false,
-                        arr: new Array(30).fill(false)
+                        arr: new Array(40).fill(false)
                     });
                 }
             });
@@ -265,16 +265,18 @@ class CollectionOpinion extends React.Component {
 
     // 分页
     onPaginationChange(page) {
-        console.log(page);
         if (page !== '') {
             this.props.getCollectionOpinionDetailRequested(`${this.state.current}&page=${page}&pagesize=${this.state.pageSize}`);
-            this.setState({currentPage: page})
+            this.setState({
+                currentPage: page,
+                arr:new Array(40).fill(false),
+                checkedAll:false
+            })
         }
     }
 
     // 每页显示数量
     onShowSizeChange(current, pageSize) {
-        // console.log(pageSize);
         this.props.getCollectionOpinionDetailRequested(`${this.state.current}&page=${this.state.currentPage}&pagesize=${pageSize}`);
         this.setState({pageSize: pageSize})
     }
@@ -317,9 +319,7 @@ class CollectionOpinion extends React.Component {
             this.deleteCollection(this.state.CollectionListItemId);
         } else if (key === 'rename') {
             this.setState({ renameCollectionVisible: true })
-        } else {
-            console.log(key);
-        }
+        } 
     }
     deleteCollection(id) {
         const getCollectionOpinionListRequested = this.props.getCollectionOpinionListRequested;

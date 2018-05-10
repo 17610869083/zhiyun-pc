@@ -1,3 +1,4 @@
+import "babel-polyfill";
 import React from 'react';
 import {connect} from 'react-redux';
 import {
@@ -23,7 +24,6 @@ import {
   paginationPage
 } from '../../redux/actions/createActions';
 import Store from '../../redux/store/index';
-import exportImg from '../../assets/operate-img/export.png';
 import weixin from '../../assets/icon-img/weixin.png';
 import news from '../../assets/icon-img/news.png';
 import weibo from '../../assets/icon-img/weibo.png';
@@ -35,7 +35,11 @@ import boke from '../../assets/icon-img/boke.png';
 import app from '../../assets/icon-img/app.png';
 import twitter from '../../assets/icon-img/twitter.png';
 import BlankPage from '../../base/Exception/BlankPage';
-import Iconfont from '../IconFont';
+import Collection from '../../assets/img/collection.svg';
+import Material from '../../assets/img/material.svg';
+import Qing from '../../assets/img/qing.svg';
+import Del from '../../assets/img/del.svg'; 
+import Dowload from '../../assets/img/dowload.svg';
 const InputGroup = Input.Group;
 const Option = Select.Option;
 class OpinionDetail extends React.Component {
@@ -119,9 +123,14 @@ class OpinionDetail extends React.Component {
           this.setState({
             topicMessage: res.data
           })
-
         }
       })
+    }
+    if(prevProps.current !== this.props.current){
+       this.setState({
+         checkedArray:this.state.checkedArray.fill(false),
+         checkedAll:false
+       })
     }
   }
 
@@ -187,7 +196,15 @@ class OpinionDetail extends React.Component {
           this.props.onDataChange(1);
         }
       });
-    } else {
+    } else if (type === 'warin') {
+      request(api_edit_doc_neg + '&neg=2&sid=["' + sid + '"]', {}).then((res) => {
+        if (res.data.code === 1) {
+          message.success(res.data.msg);
+          this.props.onDataChange(1);
+        }
+      });
+    }
+    else {
       request(api_edit_doc_neg + '&neg=-1&sid=["' + sid + '"]', {}).then((res) => {
         if (res.data.code === 1) {
           message.success(res.data.msg);
@@ -249,7 +266,7 @@ class OpinionDetail extends React.Component {
           this.props.onDataChange(1);
           this.setState({
             checkedAll: false,
-            checkedArray: new Array(30).fill(false)
+            checkedArray: new Array(40).fill(false)
           });
         }
       });
@@ -270,7 +287,7 @@ class OpinionDetail extends React.Component {
           this.props.onDataChange(1);
           this.setState({
             checkedAll: false,
-            checkedArray: new Array(30).fill(false)
+            checkedArray: new Array(40).fill(false)
           });
         }
       });
@@ -291,7 +308,7 @@ class OpinionDetail extends React.Component {
           this.props.onDataChange(1);
           this.setState({
             checkedAll: false,
-            checkedArray: new Array(30).fill(false)
+            checkedArray: new Array(40).fill(false)
           });
         }
       });
@@ -312,7 +329,7 @@ class OpinionDetail extends React.Component {
           this.props.onDataChange(1);
           this.setState({
             checkedAll: false,
-            checkedArray: new Array(30).fill(false)
+            checkedArray: new Array(40).fill(false)
           });
         }
       });
@@ -333,7 +350,7 @@ class OpinionDetail extends React.Component {
           this.props.onDataChange(1);
           this.setState({
             checkedAll: false,
-            checkedArray: new Array(30).fill(false)
+            checkedArray: new Array(40).fill(false)
           });
         }
       });
@@ -366,6 +383,12 @@ class OpinionDetail extends React.Component {
     const param = {
       seltype: this.state.seltype,
       keyword: this.state.searchInputValue,
+      similer:0,
+      datetag:'all',
+      neg:'all',
+      order:'timedown',
+      carry:'全部',
+      page:1
     };
     this.props.opinionSearchRequest(param);
     this.props.searchKeywordSync({
@@ -392,7 +415,7 @@ class OpinionDetail extends React.Component {
           message.success(res.data.msg);
           this.setState({
             checkedAll: false,
-            checkedArray: new Array(30).fill(false)
+            checkedArray: new Array(40).fill(false)
           });
         }
       });
@@ -413,7 +436,7 @@ class OpinionDetail extends React.Component {
           message.success('舆情文章添加到收藏夹成功');
           this.setState({
             checkedAll: false,
-            checkedArray: new Array(30).fill(false)
+            checkedArray: new Array(40).fill(false)
           });
         }
       });
@@ -482,14 +505,16 @@ class OpinionDetail extends React.Component {
 
   onPaginationChange(pagenumber) {
     this.setState({
-      page: pagenumber
+      page: pagenumber,
+      checkedArray:this.state.checkedArray.fill(false)
     });
     const param = this.props.param;
     param.page = pagenumber;
     if (this.props.type === 1) {
       this.props.opinionSearchRequest({
         seltype: 'content', keyword: this.state.searchInputValue,
-        page: pagenumber
+        page: pagenumber,
+        similer:0
       });
     } else if (this.props.searchKeyword.type === 1) {
       this.props.opinionSearchRequest({
@@ -689,27 +714,23 @@ class OpinionDetail extends React.Component {
                     <a href={item.url} target="_black">
                                   <span className="source"
                                         title={item.source}
-                                  >{item.source && item.source.length >= 4 ? item.source.slice(0, 3) + '...' : item.source}</span>
+                                  >{item.source}</span>
                     </a>
                   </div>
                   <div className="title">关键词：</div>
                   <div className="keywords">
                     {item.nztags}
                   </div>
-                  <div className="cirleBox">
+
+                </div>
+              </div>
+              <div className="item-right">
+              <div className="cirleBox">
                     <div>
                       <Tooltip title='删除' placement="bottom">
                         <Popconfirm title="确定要删除这条信息吗？" onConfirm={this.deleteConfirm.bind(this, item.sid)}
                                     onCancel={this.deleteCancel.bind(this)} okText="是" cancelText="否">
-                          <i><Iconfont type="icon-shanchu1" style={{fontSize: '18px', fill: '#01c2e0'}}></Iconfont></i>
-                        </Popconfirm>
-                      </Tooltip>
-                    </div>
-                    <div>
-                      <Tooltip title='设为预警' placement="bottom">
-                        <Popconfirm title="是否将这条信息设为预警？" onConfirm={this.warningConfirm.bind(this, item.sid)}
-                                    onCancel={this.deleteCancel.bind(this)} okText="是" cancelText="否">
-                          <i><Iconfont type="icon--jiageyujing" style={{fontSize: '18px', fill: '#01c2e0'}}></Iconfont></i>
+                          <img src={Del}  alt="删除"/>
                         </Popconfirm>
                       </Tooltip>
                     </div>
@@ -724,6 +745,8 @@ class OpinionDetail extends React.Component {
                                       onClick={this.editDocNeg.bind(this, item.sid, 'mid')}>中性</Button>
                               <Button type="primary" size="small" style={{marginLeft: '30px'}}
                                       onClick={this.editDocNeg.bind(this, item.sid, 'pos')}>正面</Button>
+                              <Button type="primary" size="small" style={{marginLeft: '30px'}}
+                                      onClick={this.editDocNeg.bind(this, item.sid, 'warin')}>预警</Button>
                             </div>
                           }
                           title="设置这条信息的倾向"
@@ -731,7 +754,7 @@ class OpinionDetail extends React.Component {
                           onVisibleChange={this.handleVisibleChange.bind(this, index)}
                           visible={this.state.popVisible && this.state.popIndex === index}
                         >
-                         <i><Iconfont type="icon-fengxianyujing" style={{fontSize: '20px', fill: '#01c2e0', verticalAlign: '0px'}}></Iconfont></i>
+                         <img src={Qing} alt="倾向" style={{height:'30px',width:'27px'}}/>
                         </Popover>
                       </Tooltip>
                     </div>
@@ -748,11 +771,10 @@ class OpinionDetail extends React.Component {
                           }
                         </Menu>
                       } trigger={['click']}
-                                getPopupContainer={() => document.querySelector('.opinion-detail')}
+                                getPopupContainer={() => document.querySelector('.opinion-detail-item')}
                       >
                         <Tooltip title='素材库' placement="bottom">
-                          <i><Iconfont type="icon-sucaiku" style={{fontSize: '15px', fill: '#01c2e0'}}
-                                       onClick={this.props.getCollectionOpinionListRequested.bind(this)}></Iconfont></i>
+                        <img src={Material} alt="素材库" style={{height:'18px'}} onClick={this.props.getCollectionOpinionListRequested.bind(this)}/>
                         </Tooltip>
                       </Dropdown>
                     </div>
@@ -770,17 +792,14 @@ class OpinionDetail extends React.Component {
                             }
                           </Menu>
                         } trigger={['click']}
-                                  getPopupContainer={() => document.querySelector('.opinion-detail')}
+                                  getPopupContainer={() => document.querySelector('.opinion-detail-item')}
                         >
-                          <i><Iconfont type="icon-shoucang" style={{fontSize: '16px', fill: '#01c2e0'}}
-                                       onClick={this.props.getMaterialOpinionListRequested.bind(this)}></Iconfont></i>
+                        <img src={Collection} alt="收藏"  style={{height:'18px'}} onClick={this.props.getMaterialOpinionListRequested.bind(this)}/>
                         </Dropdown>
                       </Tooltip>
                     </div>
                   </div>
-                </div>
               </div>
-
             </div>
           </div>
 
@@ -829,20 +848,20 @@ class OpinionDetail extends React.Component {
                         onCancel={this.deleteCancel.bind(this)} okText="是" cancelText="否">
               <Tooltip title='删除' placement="bottom">
                 <div className="operate-all">
-                  <i><Iconfont type="icon-shanchu1" style={{fontSize: '20px', fill: '#01c2e0'}}></Iconfont></i>
+                  <img src={Del} alt="删除" style={{ height:'22px'}}/>
                 </div>
               </Tooltip>
             </Popconfirm>
             <Tooltip title='未勾选默认导出5000条' placement="bottom">
               <div className="operate-all" onClick={this.showModal.bind(this)}>
-                <img src={exportImg} alt="export" className="export-img"/>
+              <img src={Dowload} alt="export" />
               </div>
             </Tooltip>
             <Dropdown overlay={ChangeTrendMenu} trigger={['click']}
                       getPopupContainer={() => document.querySelector('.opinion-detail')}>
               <Tooltip title='倾向' placement="bottom">
                 <div className="operate-all">
-                  <i><Iconfont type="icon-fengxianyujing" style={{fontSize: '21px', fill: '#00c8e7', verticalAlign: '-3px'}}></Iconfont></i>
+                <img src={Qing} alt="倾向" style={{height:'30px',width:'27px'}}/>
                 </div>
               </Tooltip>
             </Dropdown>
@@ -851,7 +870,7 @@ class OpinionDetail extends React.Component {
             >
               <Tooltip title='素材库' placement="bottom">
                 <div className="operate-all" onClick={this.props.getCollectionOpinionListRequested.bind(this)}>
-                  <i><Iconfont type="icon-sucaiku" style={{fontSize: '15px', fill:'#01c2e0'}}></Iconfont></i>
+                <img src={Material} alt="素材库" style={{height:'18px'}}/>
                 </div>
               </Tooltip>
             </Dropdown>
@@ -860,9 +879,8 @@ class OpinionDetail extends React.Component {
                         getPopupContainer={() => document.querySelector('.opinion-detail')}
               >
                 <div className="operate-all" onClick={this.props.getMaterialOpinionListRequested.bind(this)}>
-                  <i><Iconfont type="icon-shoucang" style={{fontSize: '16px', fill: '#01c2e0'}}></Iconfont></i>i>
+                <img src={Collection} alt="收藏"  style={{height:'18px'}}/>
                 </div>
-
               </Dropdown>
             </Tooltip>
           </div>

@@ -285,7 +285,9 @@ class TopicReport extends React.Component {
             pageInfo.page=page;
             this.props.getReportListRequested({pagesize:pageInfo.pagesize,page:pageInfo.page});
             this.setState({
-                pageinfo:pageInfo
+                pageinfo:pageInfo,
+                arr:new Array(40).fill(false),
+                allCheacked:false
             })
     }
     onShowSizeChange(current, pageSize){

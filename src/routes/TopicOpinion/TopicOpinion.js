@@ -220,6 +220,7 @@ class TopicOpinion extends React.Component {
                     pathname:`/topic/topiclist`,
                     search:`?catId=${this.state.catid}`
                     });
+                 this.props.topicNavMessageRequested(new Date())
               }
         })
     }
@@ -233,10 +234,10 @@ class TopicOpinion extends React.Component {
             this.setState({visibleThree:true})
            }
     }
-    onCatid(e){
+    onCatid(catid){
          this.setState({
-             catid:e.target.dataset.catid,
-              childRen:e.target.parentNode.nextSibling.children.length
+             catid:catid,
+             childRen:this.refs['topicList' + catid].children.length
           })
     }
     filterTreeNode(e){
@@ -250,17 +251,6 @@ class TopicOpinion extends React.Component {
            } else {
              ref.style.display = 'block';
            }
-        // e.stopPropagation();
-        // let documentNode=e.target.parentNode.nextSibling || e.target.parentNode.parentNode.nextSibling;
-        // let num=parseInt(e.target.dataset.index,10);
-        // e.target.dataset.index=num+1;
-        // documentNode.style.transition='height 500ms';
-        // documentNode.style.overflow='hidden';
-        //      if(parseInt(e.target.dataset.index,10)%2===0){
-        //         documentNode.style.height='0';
-        //      }else{
-        //         documentNode.style.height=documentNode.children.length*30+'px';
-        //      }
     }
     stopPropagation(e){
           e.stopPropagation();
@@ -274,8 +264,8 @@ class TopicOpinion extends React.Component {
     render() {
     	const delItems = (
             <Menu onClick={this.onDelitem.bind(this)}>
-                <Menu.Item key="1">删除</Menu.Item>
                 <Menu.Item key="2">重命名</Menu.Item>
+                <Menu.Item key="1">删除</Menu.Item>
             </Menu>
        );
         let {topicNavMessageSucceededState} =this.props;
@@ -283,11 +273,11 @@ class TopicOpinion extends React.Component {
           <div className="a-class" key={index}>
           <div className="class-name" >
           <div className="leftBox" onClick={this.dropDown.bind(this,item.catid)} data-index='1' title={item.catname}>
-            <i>< Iconfont type="icon-caidanyingyong2"style={{fill:'#00c8e7'}}/></i><span className='mar'>{item.catname}</span>
+            <i>< Iconfont type="icon-caidanyingyong2" style={{fill:'#00c8e7'}}/></i><span className='mar'>{item.catname}</span>
 
           </div>
           <Dropdown overlay={delItems} trigger={['click']}>
-            <i><Iconfont type="icon-icon02" className="icon-setting" onClick={this.onCatid.bind(this)} data-catid={item.catid} /></i>
+            <i onClick={this.onCatid.bind(this,item.catid)}><Iconfont type="icon-icon02" className="icon-setting"/></i>
           </Dropdown>
           </div>
            <ul className="topics" ref={'topicList'+item.catid}>
@@ -320,22 +310,22 @@ class TopicOpinion extends React.Component {
                         mode="horizontal"
                         style={{lineHeight:'40px',backgroundColor: '#2d324f',paddingTop:'14px',color:'#fff',border:'none'}}
                     >
-                        <Menu.Item key="topiclist" style={{fontSize:'16px'}}>
+                        <Menu.Item key="topiclist" style={{fontSize:'18px'}}>
                             信息列表
                         </Menu.Item>
-                        <Menu.Item key="count" style={{fontSize:'16px'}}>
+                        <Menu.Item key="count" style={{fontSize:'18px'}}>
                             统计分析
                         </Menu.Item>
-                        <Menu.Item key="report" style={{fontSize:'16px'}}>
+                        <Menu.Item key="report" style={{fontSize:'18px'}}>
                             专题报告
                         </Menu.Item>
-                        <Menu.Item key="setting" style={{fontSize:'16px'}}>
+                        <Menu.Item key="setting" style={{fontSize:'18px'}}>
                             修改专题设置
                         </Menu.Item>
-                        <Menu.Item key="addtopic" style={{fontSize:'16px'}}>
+                        <Menu.Item key="addtopic" style={{fontSize:'18px'}}>
                             添加专题
                         </Menu.Item>
-                        <Menu.Item key="addsort" style={{fontSize:'16px'}} onClick={this.handleCancelAddTopic.bind(this)}>
+                        <Menu.Item key="addsort" style={{fontSize:'18px'}} onClick={this.handleCancelAddTopic.bind(this)}>
                             添加分类
                         </Menu.Item>
                     </Menu>

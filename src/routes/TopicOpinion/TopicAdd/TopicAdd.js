@@ -244,8 +244,8 @@ class TopicAdd extends React.Component {
   }
   topicNameChange(e){
          const {value} = e.target;
-         if(value.length>=14){
-               message.error('专题名称请不要超过14个字符');
+         if(value.length>=28){
+               message.error('专题名称请不要超过28个字符');
                return;
          }
          this.setState({
@@ -313,7 +313,7 @@ class TopicAdd extends React.Component {
                                     {...formItemLayout}
                                 >
                     <Input placeholder="专题名称" style={{width: '300px'}}
-                    maxLength={'15'}
+                    maxLength={'28'}
                      onChange={this.topicNameChange.bind(this)}
                      value={this.state.topicNameValue}
                     />                              
@@ -473,7 +473,7 @@ class TopicAdd extends React.Component {
                                     {...formItemLayout}
                                 >
                                         <Input placeholder="专题名称" style={{width: '300px'}}
-                                            maxLength={'15'}
+                                            maxLength={'28'}
                                             onChange={this.topicNameChange.bind(this)}
                                             value={this.state.topicNameValue}
                                         />

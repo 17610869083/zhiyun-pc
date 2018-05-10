@@ -230,7 +230,11 @@ class MaterialOpinion extends React.Component {
     onPaginationChange(page) {
         if (page !== '') {
             this.props.getMaterialOpinionDetailRequested(`${this.state.current}&page=${page}&pagesize=${this.state.pageSize}`);
-            this.setState({currentPage: page})
+            this.setState({
+                currentPage: page,
+                arr:new Array(40).fill(false),
+                checkedAll:false
+            })
         }
     }
 

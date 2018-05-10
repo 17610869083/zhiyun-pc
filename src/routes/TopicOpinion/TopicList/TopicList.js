@@ -207,12 +207,15 @@ class TopicList extends React.Component {
             trendIndex: index,
             trendValue: value
         });
+        const requestStr = this.state.timeValue !== 'custom' ?
+        `topicid=${this.state.topicID}&datetag=${this.state.timeValue}&neg=${value}&order=${this.state.sortValue}&similer=${this.state.filterValue}&carry=${this.state.mediaValue}`
+        :`topicid=${this.state.topicID}&datetag=custom&neg=${value}&order=${this.state.sortValue}&similer=${this.state.filterValue}&carry=${this.state.mediaValue}&begin=${this.state.begin}&end=${this.state.end}`
         request(api_topic_message_list, {
             method: 'POST',
             headers: {
                 "Content-Type": "application/x-www-form-urlencoded"
             },
-            body: `pagesize=${this.state.pagesize}&topicid=${this.state.topicID}&datetag=${this.state.timeValue}&neg=${value}&order=${this.state.sortValue}&similer=${this.state.filterValue}&carry=${this.state.mediaValue}&begin=${this.state.begin}&end=${this.state.end}`
+            body: requestStr
         }).then((res) => {
             if(res.data&&res.data.code!==0){
             this.setState({
@@ -233,12 +236,15 @@ class TopicList extends React.Component {
             sortIndex: index,
             sortValue: value
         });
+        const requestStr = this.state.timeValue !== 'custom' ?
+        `topicid=${this.state.topicID}&datetag=${this.state.timeValue}&neg=${this.state.trendValue}&order=${value}&similer=${this.state.filterValue}&carry=${this.state.mediaValue}`
+        :`topicid=${this.state.topicID}&datetag=custom&neg=${this.state.trendValue}&order=${value}&similer=${this.state.filterValue}&carry=${this.state.mediaValue}&begin=${this.state.begin}&end=${this.state.end}`
         request(api_topic_message_list, {
             method: 'POST',
             headers: {
                 "Content-Type": "application/x-www-form-urlencoded"
             },
-            body: `pagesize=${this.state.pagesize}&topicid=${this.state.topicID}&datetag=${this.state.timeValue}&neg=${this.state.trendValue}&order=${value}&similer=${this.state.filterValue}&carry=${this.state.mediaValue}&begin=${this.state.begin}&end=${this.state.end}`
+            body: requestStr
         }).then((res) => {
             if(res.data&&res.data.docList){
             this.setState({
@@ -259,12 +265,15 @@ class TopicList extends React.Component {
             filterIndex: index,
             filterValue: value
         });
+        const requestStr = this.state.timeValue !== 'custom' ?
+        `topicid=${this.state.topicID}&datetag=${this.state.timeValue}&neg=${this.state.trendValue}&order=${this.state.sortValue}&similer=${value}&carry=${this.state.mediaValue}`
+        :`topicid=${this.state.topicID}&datetag=custom&neg=${this.state.trendValue}&order=${this.state.sortValue}&similer=${value}&carry=${this.state.mediaValue}&begin=${this.state.begin}&end=${this.state.end}`
         request(api_topic_message_list, {
             method: 'POST',
             headers: {
                 "Content-Type": "application/x-www-form-urlencoded"
             },
-            body: `pagesize=${this.state.pagesize}&topicid=${this.state.topicID}&datetag=${this.state.timeValue}&neg=${this.state.trendValue}&order=${this.state.sortValue}&similer=${value}&carry=${this.state.mediaValue}&begin=${this.state.begin}&end=${this.state.end}`
+            body: requestStr
         }).then((res) => {
             if(res.data&&res.data.docList){
             this.setState({
@@ -285,12 +294,15 @@ class TopicList extends React.Component {
             mediaIndex: index,
             mediaValue: value
         });
+        const requestStr = this.state.timeValue !== 'custom' ?
+        `topicid=${this.state.topicID}&datetag=${this.state.timeValue}&neg=${this.state.trendValue}&order=${this.state.sortValue}&similer=${this.state.filterValue}&carry=${value}`
+        :`topicid=${this.state.topicID}&datetag=custom&neg=${this.state.trendValue}&order=${this.state.sortValue}&similer=${this.state.filterValue}&carry=${value}&begin=${this.state.begin}&end=${this.state.end}`
         request(api_topic_message_list, {
             method: 'POST',
             headers: {
                 "Content-Type": "application/x-www-form-urlencoded"
             },
-            body: `pagesize=${this.state.pagesize}&topicid=${this.state.topicID}&datetag=${this.state.timeValue}&neg=${this.state.trendValue}&order=${this.state.sortValue}&similer=${this.state.filterValue}&carry=${value}`
+            body: requestStr
         }).then((res) => {
             if(res.data&&res.data.docList){
             this.setState({
@@ -310,12 +322,15 @@ class TopicList extends React.Component {
             page: current,
             pagesize: pageSize
         });
+        const requestStr = this.state.timeValue !== 'custom' ?
+        `topicid=${this.state.topicID}&datetag=${this.state.timeValue}&neg=${this.state.trendValue}&order=${this.state.sortValue}&similer=${this.state.filterValue}&carry=${this.state.mediaValue}&page=${current}&pagesize=${pageSize}`
+        :`topicid=${this.state.topicID}&datetag=custom&neg=${this.state.trendValue}&order=${this.state.sortValue}&similer=${this.state.filterValue}&carry=${this.state.mediaValue}&page=${current}&pagesize=${pageSize}&begin=${this.state.begin}&end=${this.state.end}`
         request(api_topic_message_list, {
             method: 'POST',
             headers: {
                 "Content-Type": "application/x-www-form-urlencoded"
             },
-            body: `topicid=${this.state.topicID}&datetag=${this.state.timeValue}&neg=${this.state.trendValue}&order=${this.state.sortValue}&similer=${this.state.filterValue}&carry=${this.state.mediaValue}&page=${current}&pagesize=${pageSize}&begin=${this.state.begin}&end=${this.state.end}`
+            body: requestStr
         }).then((res) => {
             if(res.data&&res.data.docList){
             this.setState({
@@ -328,18 +343,20 @@ class TopicList extends React.Component {
         }
         })
     }
-
     onPaginationChange(pagenumber) {
         this.setState({
             page: pagenumber
         });
         this.props.paginationPage(pagenumber);
+        const requestStr = this.state.timeValue !== 'custom' ?
+        `topicid=${this.state.topicID}&datetag=${this.state.timeValue}&neg=${this.state.trendValue}&order=${this.state.sortValue}&similer=${this.state.filterValue}&carry=${this.state.mediaValue}&page=${pagenumber}&pagesize=${this.state.pagesize}`
+        :`topicid=${this.state.topicID}&datetag=custom&neg=${this.state.trendValue}&order=${this.state.sortValue}&similer=${this.state.filterValue}&carry=${this.state.mediaValue}&page=${pagenumber}&pagesize=${this.state.pagesize}&begin=${this.state.begin}&end=${this.state.end}`
         request(api_topic_message_list, {
             method: 'POST',
             headers: {
                 "Content-Type": "application/x-www-form-urlencoded"
             },
-            body: `topicid=${this.state.topicID}&datetag=${this.state.timeValue}&neg=${this.state.trendValue}&order=${this.state.sortValue}&similer=${this.state.filterValue}&carry=${this.state.mediaValue}&page=${pagenumber}&pagesize=${this.state.pagesize}&begin=${this.state.begin}&end=${this.state.end}`
+            body: requestStr
         }).then((res) => {
             if(res.data&&res.data.docList){
             this.setState({
@@ -354,12 +371,15 @@ class TopicList extends React.Component {
         ReactDOM.findDOMNode(this).scrollIntoView(); 
     }
     dataChanged(data) {
-        request(api_topic_message_list, {
+         const requestStr = this.state.timeValue !== 'custom' ?
+         `topicid=${this.state.topicID}&datetag=${this.state.timeValue}&neg=${this.state.trendValue}&order=${this.state.sortValue}&similer=${this.state.filterValue}&carry=${this.state.mediaValue}&page=${data}&pagesize=${this.state.pagesize}`
+         :`topicid=${this.state.topicID}&datetag=custom&neg=${this.state.trendValue}&order=${this.state.sortValue}&similer=${this.state.filterValue}&carry=${this.state.mediaValue}&page=${data}&pagesize=${this.state.pagesize}&begin=${this.state.begin}&end=${this.state.end}`
+         request(api_topic_message_list, {
             method: 'POST',
             headers: {
                 "Content-Type": "application/x-www-form-urlencoded"
             },
-            body: `topicid=${this.state.topicID}&datetag=${this.state.timeValue}&neg=${this.state.trendValue}&order=${this.state.sortValue}&similer=${this.state.filterValue}&carry=${this.state.mediaValue}&page=${data}&pagesize=${this.state.pagesize}&begin=${this.state.begin}&end=${this.state.end}`
+            body: requestStr
         }).then((res) => {
             if(res.data&&res.data.docList){
             this.setState({
@@ -567,6 +587,7 @@ class TopicList extends React.Component {
                     pageSize={this.state.pagesize}
                     propsType='TopicList'
                     pageInfo={this.state.pageInfo}
+                    current={ this.state.page }
                     />
                 </div>
                 <div className="bottom">

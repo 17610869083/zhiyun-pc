@@ -40,8 +40,8 @@ class TopicSetting extends React.Component {
             disNone: {visibility: 'hidden'},
             topicCatList:[],
             topicAlldata:Store.getState().getTopicLocationSucceededReducer.res,
-            topicbDate:0,
-            topiceDate:0,
+            topicbDate:'',
+            topiceDate:'',
             addType:1,
             select:0,
             delRule:[],
@@ -75,37 +75,6 @@ class TopicSetting extends React.Component {
                  }
                  })
           })
-
-        //  request(api_topic_typeList).then(res=>{
-        //          if(res.data){
-        //             this.setState({
-        //                 [addtypeStr]:topicAlldatas.rulearr,
-        //                 select:topicAlldatas.catid,
-        //                 topicbDate:getLocalTime(topicAlldatas.topicbdate.time) ,
-        //                 topiceDate:getLocalTime(topicAlldatas.topicedate.time) ,
-        //                 addType: topicAlldatas.addtype ,
-        //                 topicAlldata:topicAlldatas  ,
-        //                 topicCatList:res.data.topicCatList,                   
-        //                })
-        //          }
-        //  })
-
-
-         
-        //  if(topicAlldatas.code!==0){
-    	//   request(api_topic_typeList).then(res=>{
-    	//   	     if(res.data){
-    	//   	     	  this.setState({
-        //                      topicCatList:res.data.topicCatList,
-        //                      [addtypeStr]:topicAlldatas.rulearr,
-        //                      select:topicAlldatas.catid,
-        //                      topicbDate:getLocalTime(topicAlldatas.topicbdate.time) ,
-        //                      topiceDate:getLocalTime(topicAlldatas.topicedate.time)                         
-        //                     })
-    	//    	     }
-        //   });       
-
-        // }
 
     }
      //快速添加规则
@@ -306,8 +275,8 @@ class TopicSetting extends React.Component {
   }
   TopicNameChange(e){
         const {value} = e.target;
-        if(value.length>=14){
-              message.error('专题名称请不要超过14个字符');
+        if(value.length>28){
+              message.error('专题名称请不要超过28个字符');
               return;
         }
         this.setState({
@@ -340,12 +309,10 @@ class TopicSetting extends React.Component {
     let topicbDateTime=this.state.topicbDate!==0?this.state.topicbDate:new Date();
     let topiceDateTime=this.state.topiceDate!==0?this.state.topiceDate:new Date();
     let topicCatid=this.state.topicAlldata.catid?this.state.topicAlldata.catid:75;
-        const topicCatList=this.state.topicCatList.length!==0 && topicCatid!==75?
+        const topicCatList=this.state.topicCatList.length!==0?
         this.state.topicCatList.map((item,index)=> 
         <Option value={(item.catid).toString()} key={index}>{item.catname}</Option>
-         ):<Option value={'75'}>默认文件夹</Option>; 
-         
-         
+         ):<Option value={'75'}>默认文件夹</Option>;    
          const titleTip= <div>
          <p>关键词组合：关键词之间用“+”、“-”或者“*”连接，符号均为英文状态。</p>
          <p>①“+”代表或(或者) </p>
@@ -371,7 +338,7 @@ class TopicSetting extends React.Component {
                                     {...formItemLayout}
                                 >
                             <Input placeholder='专题名称' style={{width: '300px'}}
-                             maxLength={'15'}
+                             maxLength={'28'}
                              onChange={this.TopicNameChange.bind(this)}
                              value={this.state.topicNameValue}
                             />          
@@ -393,6 +360,7 @@ class TopicSetting extends React.Component {
                             <DatePicker showTime format="YYYY-MM-DD HH:mm:ss" 
                                value={moment(topicbDateTime,'YYYY-MM-DD HH:mm:ss')}
                                onChange={this.startTime.bind(this)}
+                               allowClear={false}
                             />
                                 </FormItem>
                                 <FormItem
@@ -403,6 +371,7 @@ class TopicSetting extends React.Component {
                            <DatePicker showTime format="YYYY-MM-DD HH:mm:ss"
                             value={moment(topiceDateTime,'YYYY-MM-DD HH:mm:ss')}
                             onChange={this.endTime.bind(this)}
+                            allowClear={false}
                            />
 
                               
@@ -527,7 +496,7 @@ class TopicSetting extends React.Component {
                                     {...formItemLayout}
                                 >
                                         <Input placeholder="专题名称" style={{width: '300px'}}
-                                        maxLength={'15'}
+                                        maxLength={'28'}
                                         onChange={this.TopicNameChange.bind(this)}
                                         value={this.state.topicNameValue}
                                         />                                   
@@ -550,16 +519,17 @@ class TopicSetting extends React.Component {
                                         <DatePicker showTime format="YYYY-MM-DD HH:mm:ss"
                                         value={moment(topicbDateTime,'YYYY-MM-DD HH:mm:ss')}
                                         onChange={this.startTime.bind(this)}
+                                        allowClear={false}
                                         />
                                 </FormItem>
                                 <FormItem
                                     {...formItemLayout}
                                     label="结束时间"
                                 >
-            
                                         <DatePicker showTime format="YYYY-MM-DD HH:mm:ss"
                                         value={moment(topiceDateTime,'YYYY-MM-DD HH:mm:ss')}
                                         onChange={this.endTime.bind(this)}
+                                        allowClear={false}
                                         />
                        
                                 </FormItem>
