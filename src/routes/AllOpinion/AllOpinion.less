@@ -13,14 +13,13 @@
     justify-content: space-between;
     .count {
       padding-left: 32px;
-      color:#fff;
+      color: #fff;
       font-size: 18px;
       .number {
         color: #00c8e7;
       }
     }
     .close {
-      cursor: pointer;
       cursor: pointer;
       margin-right: 18px;
       moz-user-select: -moz-none;
@@ -40,29 +39,41 @@
   }
   .sort-top {
     background-color: #ffffff;
-    padding:0 20px;
-    box-shadow: 0 5px 10px rgba(0,0,0,0.1);
-    .sort-items:last-child{
+    padding: 0 20px;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+    .sort-items:last-child {
       border-bottom: none;
     }
     .sort-items {
       display: flex;
-      min-height:40px;
+      min-height: 40px;
       line-height: 40px;
       border-bottom: 1px solid #E4EBF7;
       .left {
         width: 64px;
-        color:#0c1124;
+        color: #0c1124;
         font-size: 16px;
+        margin-right: 20px;
       }
       .right {
         .item {
           display: inline-block;
-          min-width:70px;
-          color:#898989;
+          min-width: 70px;
+          color: #898989;
           font-size: 16px;
           cursor: pointer;
           margin-right: 20px;
+          .count {
+            color: #898989;
+          }
+        }
+        .fours {
+          display: inline-block;
+          min-width: 70px;
+          color: #898989;
+          font-size: 16px;
+          cursor: pointer;
+          margin: 0 20px;
           .count {
             color: #898989;
           }
@@ -80,12 +91,12 @@
       .other {
         margin-top: 4px;
         height: 30px;
-         form{
+        form {
           display: flex;
-          .ant-form-item{
+          .ant-form-item {
             margin: 0 5px;
-           }
-         }
+          }
+        }
 
       }
     }
@@ -98,10 +109,11 @@
         color: #0c1124;
         font-size: 16px;
         line-height: 40px;
+        margin-right: 20px;
       }
       .right {
         text-align: center;
-        & .item:last-child{
+        & .item:last-child {
           margin-right: 0;
         }
         .item {
@@ -114,7 +126,7 @@
             color: #898989;
           }
         }
-        .item:first-child{
+        .item:first-child {
           text-align: left;
           margin-right: 33px;
         }
@@ -133,16 +145,16 @@
   }
   .middle {
     margin-top: 10px;
-    box-shadow: 0 5px 10px rgba(0,0,0,0.1);
-    .count{
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+    .count {
       height: 26px;
       line-height: 20px;
       font-size: 14px;
-      color:#838383;
+      color: #838383;
       padding-left: 20px;
-      .number{
-             color:#00c8e7;
-        }
+      .number {
+        color: #00c8e7;
+      }
     }
   }
   .bottom {

@@ -603,7 +603,7 @@ class AllOpinion extends React.Component {
       <div
         key={index}
         onClick={this.sortClick.bind(this, item.value)}
-        className={item.value === this.state.sortValue ? 'item active' : 'item'}
+        className={item.value === this.state.sortValue ? 'item active' : 'fours'}
       ><span className="item-inner">{item.name}</span></div>
     );
 
