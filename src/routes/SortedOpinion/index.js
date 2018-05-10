@@ -208,6 +208,7 @@ class SortedOpinion extends React.Component {
         clfid = this.props.sortedMenu[i]['clflist'][0]['clfid'];
         break;
       }
+
     }
     this.timer = setTimeout(() => {
       const catid = this.props.sortedMenu[0]['catid'];
