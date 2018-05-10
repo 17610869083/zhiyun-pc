@@ -322,7 +322,6 @@ class SortedList extends React.Component {
       };
       this.props.getSortedContentRequested(param);
     } else if (prevProps.page !== this.props.page) {
-
     }
   }
 

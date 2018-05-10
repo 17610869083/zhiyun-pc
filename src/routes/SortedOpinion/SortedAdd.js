@@ -149,7 +149,7 @@ class SortedAdd extends React.Component {
     sortedNameChange(e){
         const {value} = e.target;
         if(value.length>=28){
-              message.error('专题名称请不要超过14个字符');
+              message.error('专题名称请不要超28个字符');
               return;
         }
         this.setState({
@@ -205,7 +205,7 @@ class SortedAdd extends React.Component {
                                     {...formItemLayout}
                                 >
                                         <Input placeholder="话题名称" style={{width: '300px'}}
-                                            maxLength={'15'}
+                                            maxLength={'28'}
                                             onChange={this.sortedNameChange.bind(this)}
                                             value={this.state.sortedNameValue}
                                         />
@@ -266,7 +266,7 @@ class SortedAdd extends React.Component {
                                         rules: [{ required: true, message: '请输入您要设置的专题名称！' }],
                                     })( */}
                                         <Input placeholder="专题名称" style={{width: '300px'}}
-                                        maxLength={'15'}
+                                        maxLength={'28'}
                                         onChange={this.sortedNameChange.bind(this)}
                                         value={this.state.sortedNameValue}
                                         />

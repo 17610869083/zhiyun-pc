@@ -277,7 +277,8 @@ class HistoryOpinion extends React.Component{
                    if(res.data.taskList!==undefined){
                          this.setState({
                             tasklist:res.data.taskList,
-                            page:e
+                            page:e,
+                            selectedRowKeys:[]
                          })
                    }
              })
@@ -287,7 +288,8 @@ class HistoryOpinion extends React.Component{
                 if(res.data.taskList!==undefined){
                     this.setState({
                        tasklist:res.data.taskList,
-                       page:e
+                       page:e,
+                       electedRowKeys:[]
                     })
                   }
               })
@@ -303,7 +305,8 @@ class HistoryOpinion extends React.Component{
                    if(res.data.taskList!==undefined){
                          this.setState({
                             tasklist:res.data.taskList,
-                            page:e
+                            page:e,
+                            electedRowKeys:[]
                          })
                    }
              })
@@ -322,7 +325,8 @@ class HistoryOpinion extends React.Component{
               if(res.data.taskList!==undefined){
                     this.setState({
                         reportTaskList:res.data.taskList,
-                        reportPage:e
+                        reportPage:e,
+                        selectedRowKeys:[]
                     })
               }
         })
@@ -332,7 +336,8 @@ class HistoryOpinion extends React.Component{
           if(res.data.taskList!==undefined){
               this.setState({
                 reportTaskList:res.data.taskList,
-                reportPage:e
+                reportPage:e,
+                selectedRowKeys:[]
               })
             }
         })
@@ -347,7 +352,8 @@ class HistoryOpinion extends React.Component{
                if(res.data.taskList!==undefined){
                      this.setState({
                         reportTaskList:res.data.taskList,
-                        reportPage:e
+                        reportPage:e,
+                        selectedRowKeys:[]
                      })
                }
          })
@@ -510,7 +516,6 @@ class HistoryOpinion extends React.Component{
         <i className={this.state.type==='1'?'fa fa-file-excel-o':'fa fa-file-word-o'} aria-hidden="true"></i>
         <span className={'title'+text.Id} onBlur={this.blur.bind(this)}
         data-id={text.Id}
-
         >{text.taskname}</span></span>,
   }, {
     title: '来源类型',
@@ -627,11 +632,9 @@ class HistoryOpinion extends React.Component{
     getCheckboxProps: record => ({
        disabled: record.name === 'Disabled User'
     })
-
   };
     return(
         <div className="historyBox">
-
            <div>
            <Tabs tabBarExtraContent={operations}
            defaultActiveKey="1"

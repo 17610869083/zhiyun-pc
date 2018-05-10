@@ -5,10 +5,10 @@
     margin: 0 auto;
   }
   .ant-dropdown {
-    height: 322px;
+    height: 200px;
     overflow: auto;
   }
-  // 分液器样式【上】
+  // 分页器样式【上】
   .ant-pagination-item-link {
     background-color: #2d324f;
   }
@@ -87,17 +87,11 @@
         span {
           margin-left: 4px;
         }
-        .delete-img {
-          width: 18px;
-        }
-        .export-img {
-          width: 16px;
-        }
-        .plus-img {
-          width: 18px;
-        }
-        .close-img {
-          width: 18px;
+        img{
+          width: 24px;
+          height: 21px;
+          margin: 0 auto;
+          cursor: pointer;
         }
       }
     }
@@ -154,7 +148,6 @@
           border-top: none;
           border-bottom: none;
           box-sizing: border-box;
-          width: 75px;
           height: 20px;
           display: flex;
           align-items: center;
@@ -181,7 +174,8 @@
           .item-bottom {
             display: flex;
             margin-left: 1.1%;
-            width: 80%;
+            width: 79%;
+            justify-content: space-between;
             .item-left {
               display: flex;
               color: #838383;
@@ -190,6 +184,7 @@
               display: flex;
               justify-content: flex-start;
               padding-bottom: 6px;
+              cursor: pointer;
               div {
                 width: 24px;
                 height: 24px;
@@ -199,24 +194,21 @@
                 justify-content: center;
                 border-radius: 4px;
                 img {
-                  width: 14px;
-                  height: 14px;
+                  width: 24px;
+                  height: 21px;
                   margin: 0 auto;
                   cursor: pointer;
                 }
               }
             }
             .similar-info {
-              // color: #007aff;
               margin-right: 10px;
               margin-left: 25px;
               width: 120px;
             }
             .key {
               display: flex;
-              //margin-left: 24px;
               .keywords {
-                //margin-left: 10px;
                 color: #ff0000;
                 min-width: 95px;
               }

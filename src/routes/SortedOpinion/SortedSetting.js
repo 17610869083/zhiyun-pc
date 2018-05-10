@@ -299,9 +299,9 @@ class SortedSetting extends React.Component {
                             onSelect={this.onSelect.bind(this)}
                     >
                       {
-                        sortCatList.length !== 0 && this.state.select !== 0 ? sortCatList.map((item) =>
+                        sortCatList && sortCatList.map((item) =>
                           <Option value={item.id + ""} key={item.id}>{item.catname}
-                          </Option>) : <Option value={'0'}>默认文件夹</Option>
+                          </Option>) 
                       }
                     </Select>
                   )}
@@ -351,7 +351,7 @@ class SortedSetting extends React.Component {
               >
 
                 <Input placeholder="方案名称" style={{width: '300px'}}
-                       maxLength={'15'}
+                       maxLength={'28'}
                        onChange={this.sortedNameChange.bind(this)}
                        value={this.state.sortedNameValue}
                 />
@@ -364,9 +364,9 @@ class SortedSetting extends React.Component {
                   initialValue: this.state.select + '',
                 })(
                   <Select style={{width: '154px'}}>
-                    {sortCatList.length !== 0 && this.state.select !== 0 ? sortCatList.map((item) =>
+                    {sortCatList &&sortCatList.map((item) =>
                       <Option value={item.id + ""} key={item.id}>{item.catname}
-                      </Option>) : <Option value={"0"}>默认文件夹</Option>
+                      </Option>) 
                     }
                   </Select>
                 )}

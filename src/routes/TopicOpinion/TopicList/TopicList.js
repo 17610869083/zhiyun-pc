@@ -236,184 +236,152 @@ class TopicList extends React.Component {
       sortIndex: index,
       sortValue: value
     });
-    request(api_topic_message_list, {
-      method: 'POST',
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded"
-      },
-      body: `pagesize=${this.state.pagesize}&topicid=${this.state.topicID}&datetag=${this.state.timeValue}&neg=${this.state.trendValue}&order=${value}&similer=${this.state.filterValue}&carry=${this.state.mediaValue}&begin=${this.state.begin}&end=${this.state.end}`
-    }).then((res) => {
-      if (res.data && res.data.docList) {
-        this.setState({
-          docList: res.data.docList,
-          pageCount: res.data.pageInfo.pageCount,
-          count: res.data.pageInfo.count,
-          pageInfo: res.data.pageInfo,
-          media: res.data.carryCount,
-        });
-      }
-    })
-    this.props.paginationPage(1);
-    this.props.searchKeywordSync({ keyword: "1", seltype: "1", type: 0 });
-  }
+        const requestStr = this.state.timeValue !== 'custom' ?
+        `topicid=${this.state.topicID}&datetag=${this.state.timeValue}&neg=${value}&order=${this.state.sortValue}&similer=${this.state.filterValue}&carry=${this.state.mediaValue}`
+        :`topicid=${this.state.topicID}&datetag=custom&neg=${value}&order=${this.state.sortValue}&similer=${this.state.filterValue}&carry=${this.state.mediaValue}&begin=${this.state.begin}&end=${this.state.end}`
+        request(api_topic_message_list, {
+            method: 'POST',
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded"
+            },
+            body: requestStr
+        }).then((res) => {
+            if(res.data&&res.data.code!==0){
+            this.setState({
+                docList: res.data.docList,
+                pageCount: res.data.pageInfo.pageCount,
+                count: res.data.pageInfo.count,
+                pageInfo:res.data.pageInfo,
+                media: res.data.carryCount,
+            });
+        }
+        })
+        this.props.paginationPage(1);
+        this.props.searchKeywordSync({keyword: "1", seltype: "1",type:0});
+    }
 
   filterClick(index, value) {
     this.setState({
       filterIndex: index,
       filterValue: value
     });
-    request(api_topic_message_list, {
-      method: 'POST',
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded"
-      },
-      body: `pagesize=${this.state.pagesize}&topicid=${this.state.topicID}&datetag=${this.state.timeValue}&neg=${this.state.trendValue}&order=${this.state.sortValue}&similer=${value}&carry=${this.state.mediaValue}&begin=${this.state.begin}&end=${this.state.end}`
-    }).then((res) => {
-      if (res.data && res.data.docList) {
-        this.setState({
-          docList: res.data.docList,
-          pageCount: res.data.pageInfo.pageCount,
-          count: res.data.pageInfo.count,
-          pageInfo: res.data.pageInfo,
-          media: res.data.carryCount,
-        });
-      }
-    })
-    this.props.paginationPage(1);
-    this.props.searchKeywordSync({ keyword: "1", seltype: "1", type: 0 });
-  }
+        const requestStr = this.state.timeValue !== 'custom' ?
+        `topicid=${this.state.topicID}&datetag=${this.state.timeValue}&neg=${this.state.trendValue}&order=${value}&similer=${this.state.filterValue}&carry=${this.state.mediaValue}`
+        :`topicid=${this.state.topicID}&datetag=custom&neg=${this.state.trendValue}&order=${value}&similer=${this.state.filterValue}&carry=${this.state.mediaValue}&begin=${this.state.begin}&end=${this.state.end}`
+        request(api_topic_message_list, {
+            method: 'POST',
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded"
+            },
+            body: requestStr
+        }).then((res) => {
+            if(res.data&&res.data.docList){
+            this.setState({
+                docList: res.data.docList,
+                pageCount: res.data.pageInfo.pageCount,
+                count: res.data.pageInfo.count,
+                pageInfo:res.data.pageInfo,
+                media: res.data.carryCount,
+            });
+           }
+        })
+        this.props.paginationPage(1);
+        this.props.searchKeywordSync({keyword: "1", seltype: "1",type:0});
+    }
 
   mediaClick(index, value) {
     this.setState({
       mediaIndex: index,
       mediaValue: value
     });
-    request(api_topic_message_list, {
-      method: 'POST',
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded"
-      },
-      body: `pagesize=${this.state.pagesize}&topicid=${this.state.topicID}&datetag=${this.state.timeValue}&neg=${this.state.trendValue}&order=${this.state.sortValue}&similer=${this.state.filterValue}&carry=${value}`
-    }).then((res) => {
-      if (res.data && res.data.docList) {
-        this.setState({
-          docList: res.data.docList,
-          pageCount: res.data.pageInfo.pageCount,
-          count: res.data.pageInfo.count,
-          pageInfo: res.data.pageInfo,
-          media: res.data.carryCount,
-        });
-      }
-    })
-    this.props.paginationPage(1);
-    this.props.searchKeywordSync({ keyword: "1", seltype: "1", type: 0 });
-  }
+        const requestStr = this.state.timeValue !== 'custom' ?
+        `topicid=${this.state.topicID}&datetag=${this.state.timeValue}&neg=${this.state.trendValue}&order=${this.state.sortValue}&similer=${value}&carry=${this.state.mediaValue}`
+        :`topicid=${this.state.topicID}&datetag=custom&neg=${this.state.trendValue}&order=${this.state.sortValue}&similer=${value}&carry=${this.state.mediaValue}&begin=${this.state.begin}&end=${this.state.end}`
+        request(api_topic_message_list, {
+            method: 'POST',
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded"
+            },
+            body: requestStr
+        }).then((res) => {
+            if(res.data&&res.data.docList){
+            this.setState({
+                docList: res.data.docList,
+                pageCount: res.data.pageInfo.pageCount,
+                pageInfo:res.data.pageInfo,
+                media: res.data.carryCount,
+            });
+        }
+        })
+        this.props.paginationPage(1);
+        this.props.searchKeywordSync({keyword: "1", seltype: "1",type:0});
+    }
 
   onShowSizeChange(current, pageSize) {
     this.setState({
       page: current,
       pagesize: pageSize
     });
-    request(api_topic_message_list, {
-      method: 'POST',
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded"
-      },
-      body: `topicid=${this.state.topicID}&datetag=${this.state.timeValue}&neg=${this.state.trendValue}&order=${this.state.sortValue}&similer=${this.state.filterValue}&carry=${this.state.mediaValue}&page=${current}&pagesize=${pageSize}&begin=${this.state.begin}&end=${this.state.end}`
-    }).then((res) => {
-      if (res.data && res.data.docList) {
-        this.setState({
-          docList: res.data.docList,
-          pageCount: res.data.pageInfo.pageCount,
-          count: res.data.pageInfo.count,
-          pageInfo: res.data.pageInfo,
-          media: res.data.carryCount,
-        });
-      }
-    })
-  }
-
-  onPaginationChange(pagenumber) {
-    this.setState({
-      page: pagenumber
-    });
-    this.props.paginationPage(pagenumber);
-    request(api_topic_message_list, {
-      method: 'POST',
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded"
-      },
-      body: `topicid=${this.state.topicID}&datetag=${this.state.timeValue}&neg=${this.state.trendValue}&order=${this.state.sortValue}&similer=${this.state.filterValue}&carry=${this.state.mediaValue}&page=${pagenumber}&pagesize=${this.state.pagesize}&begin=${this.state.begin}&end=${this.state.end}`
-    }).then((res) => {
-      if (res.data && res.data.docList) {
-        this.setState({
-          docList: res.data.docList,
-          pageCount: res.data.pageInfo.pageCount,
-          count: res.data.pageInfo.count,
-          pageInfo: res.data.pageInfo,
-          media: res.data.carryCount,
-        });
-      }
-    })
-    ReactDOM.findDOMNode(this).scrollIntoView();
-  }
-
-  dataChanged(data) {
-    request(api_topic_message_list, {
-      method: 'POST',
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded"
-      },
-      body: `topicid=${this.state.topicID}&datetag=${this.state.timeValue}&neg=${this.state.trendValue}&order=${this.state.sortValue}&similer=${this.state.filterValue}&carry=${this.state.mediaValue}&page=${data}&pagesize=${this.state.pagesize}&begin=${this.state.begin}&end=${this.state.end}`
-    }).then((res) => {
-      if (res.data && res.data.docList) {
-        this.setState({
-          docList: res.data.docList,
-          page: data,
-          media: res.data.carryCount,
-        });
-      }
-    })
-  }
-
-  componentDidMount() {
-    setTimeout(() => {
-      let topicID = Store.getState().getRouterReducer;
-      if (typeof topicID !== 'object') {
+        const requestStr = this.state.timeValue !== 'custom' ?
+        `topicid=${this.state.topicID}&datetag=${this.state.timeValue}&neg=${this.state.trendValue}&order=${this.state.sortValue}&similer=${this.state.filterValue}&carry=${this.state.mediaValue}&pagesize=${pageSize}`
+        :`topicid=${this.state.topicID}&datetag=custom&neg=${this.state.trendValue}&order=${this.state.sortValue}&similer=${this.state.filterValue}&carry=${this.state.mediaValue}&begin=${this.state.begin}&end=${this.state.end}&pagesize=${pageSize}`
         request(api_topic_message_list, {
-          method: 'POST',
-          headers: {
-            "Content-Type": "application/x-www-form-urlencoded"
-          },
-          body: `topicid=${topicID}&similer=0`
-
+            method: 'POST',
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded"
+            },
+            body: requestStr
+        }).then((res) => {
+            if(res.data&&res.data.docList){
+            this.setState({
+                docList: res.data.docList,
+                pageCount: res.data.pageInfo.pageCount,
+                count: res.data.pageInfo.count,
+                pageInfo:res.data.pageInfo,
+                media: res.data.carryCount,
+            });
+        }
+        })
+        this.props.paginationPage(1);
+        this.props.searchKeywordSync({keyword: "1", seltype: "1",type:0});
+    }
+    onPaginationChange(pagenumber) {
+        this.setState({
+          page: pagenumber
+        });
+        this.props.paginationPage(pagenumber);
+        const requestStr = this.state.timeValue !== 'custom' ?
+        `topicid=${this.state.topicID}&datetag=${this.state.timeValue}&neg=${this.state.trendValue}&order=${this.state.sortValue}&similer=${this.state.filterValue}&carry=${this.state.mediaValue}&page=${pagenumber}&pagesize=${this.state.pagesize}`
+        :`topicid=${this.state.topicID}&datetag=custom&neg=${this.state.trendValue}&order=${this.state.sortValue}&similer=${this.state.filterValue}&carry=${this.state.mediaValue}&page=${pagenumber}&pagesize=${this.state.pagesize}&begin=${this.state.begin}&end=${this.state.end}`
+        request(api_topic_message_list, {
+            method: 'POST',
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded"
+            },
+            body: requestStr
         }).then((res) => {
           if (res.data && res.data.code !== 0) {
             this.setState({
               docList: res.data.docList,
-              media: res.data.carryCount,
               pageCount: res.data.pageInfo.pageCount,
               count: res.data.pageInfo.count,
               pageInfo: res.data.pageInfo,
-              topicID: topicID
+              media: res.data.carryCount
             });
-          }
-        });
-      }
-    }, 300)
-
-  }
-
-  componentDidUpdate(prevProps, prevState) {
-    if (prevProps.location.search !== this.props.location.search) {
-      let topicID = Store.getState().getRouterReducer;
-      if (typeof topicID !== 'object') {
-        request(api_topic_message_list, {
-          method: 'POST',
-          headers: {
-            "Content-Type": "application/x-www-form-urlencoded"
-          },
-          body: `topicid=${topicID}&similer=0`
+        }
+        })
+        ReactDOM.findDOMNode(this).scrollIntoView(); 
+    }
+    dataChanged(data) {
+         const requestStr = this.state.timeValue !== 'custom' ?
+         `topicid=${this.state.topicID}&datetag=${this.state.timeValue}&neg=${this.state.trendValue}&order=${this.state.sortValue}&similer=${this.state.filterValue}&carry=${this.state.mediaValue}&page=${data}&pagesize=${this.state.pagesize}`
+         :`topicid=${this.state.topicID}&datetag=custom&neg=${this.state.trendValue}&order=${this.state.sortValue}&similer=${this.state.filterValue}&carry=${this.state.mediaValue}&page=${data}&pagesize=${this.state.pagesize}&begin=${this.state.begin}&end=${this.state.end}`
+         request(api_topic_message_list, {
+            method: 'POST',
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded"
+            },
+            body: requestStr
         }).then((res) => {
           if (res.data) {
             this.setState({
@@ -422,18 +390,40 @@ class TopicList extends React.Component {
               pageCount: res.data.pageInfo.pageCount,
               count: res.data.pageInfo.count,
               pageInfo: res.data.pageInfo,
-              topicID: topicID,
-              timeIndex: 0,
-              sortIndex: 0,
-              filterIndex: 0,
-              mediaIndex: 0,
-              trendIndex: 0
             });
           }
         });
       }
-    }
-  }
+      componentDidUpdate(prevProps, prevState) {
+        if (prevProps.location.search !== this.props.location.search) {
+          let topicID = Store.getState().getRouterReducer;
+          if (typeof topicID !== 'object') {
+            request(api_topic_message_list, {
+              method: 'POST',
+              headers: {
+                "Content-Type": "application/x-www-form-urlencoded"
+              },
+              body: `topicid=${topicID}&similer=0`
+            }).then((res) => {
+              if (res.data) {
+                this.setState({
+                  docList: res.data.docList,
+                  media: res.data.carryCount,
+                  pageCount: res.data.pageInfo.pageCount,
+                  count: res.data.pageInfo.count,
+                  pageInfo: res.data.pageInfo,
+                  topicID: topicID,
+                  timeIndex: 0,
+                  sortIndex: 0,
+                  filterIndex: 0,
+                  mediaIndex: 0,
+                  trendIndex: 0
+                });
+              }
+            });
+          }
+        }
+      }
 
   componentWillUnmount() {
     this.props.paginationPage(1);
@@ -488,95 +478,93 @@ class TopicList extends React.Component {
       ><span className="item-inner">{item.name}</span></div>
     );
 
-
     // 媒体类型
     const Media = this.state.media.map((item, index) =>
-      <div
-        key={index}
-        onClick={this.mediaClick.bind(this, index, item.value)}
-        className={index === this.state.mediaIndex ? 'item active' : 'item'}
-      ><p className="item-inner">{item.key === 'docSearch' ? '其它' : item.value}</p>
-        <p className="count">{item.count}</p>
-      </div>
-    );
-
-    const param = {
-      datetag: this.state.timeValue,
-      neg: this.state.trendValue,
-      order: this.state.sortValue,
-      similer: this.state.filterValue,
-      carry: this.state.mediaValue,
-      begin: this.state.begin,
-      end: this.state.end,
-      page: this.state.page,
-      pagesize: this.state.pagesize
-    };
-    return (
-      <div className="topic-list-opinion">
-        <div className="sort-top" style={this.props.search ? { display: 'block' } : { display: 'none' }}>
-          <div className="sort-items">
-            <div className="left">时间：</div>
-            <div className="right">
-              {Time}
-            </div>
-            <div className="other" style={this.state.timePickerShow ? { display: 'block' } : { display: 'none' }}>
-              <Form onSubmit={this.handleSubmit.bind(this)}>
-                <FormItem
-                  {...formItemLayout}
-                >
-                  {getFieldDecorator('range-time-picker')(
-                    <DatePicker showTime placeholder="开始日期" format="YYYY-MM-DD HH:mm:ss" />
-                  )}
-                </FormItem>
-                <FormItem
-                  {...formItemLayout}
-                >
-                  {getFieldDecorator('range-endtime-picker')(
-                    <DatePicker showTime placeholder="结束日期" format="YYYY-MM-DD HH:mm:ss"
+    <div
+      key={index}
+      onClick={this.mediaClick.bind(this, index, item.value)}
+      className={index === this.state.mediaIndex ? 'item active' : 'item'}
+    ><p className="item-inner">{item.key === 'docSearch' ? '其它' : item.value}</p>
+      <p className="count">{item.count}</p>
+    </div>
+  );
+        const param = {
+            datetag: this.state.timeValue,
+            neg: this.state.trendValue,
+            order: this.state.sortValue,
+            similer: this.state.filterValue,
+            carry: this.state.mediaValue,
+            begin: this.state.begin,
+            end: this.state.end,
+            page:this.state.page,
+            pagesize:this.state.pagesize
+        };
+        return (
+            <div className="topic-list-opinion">
+                <div className="sort-top" style={this.props.search ? {display: 'block'} : {display: 'none'}}>
+                    <div className="sort-items">
+                        <div className="left">时间：</div>
+                        <div className="right">
+                            {Time}
+                        </div>
+                        <div className="other" style={this.state.timePickerShow?{display:'block'}:{display:'none'}}>
+                            <Form onSubmit={this.handleSubmit.bind(this)}>
+                            <FormItem  
+                                    {...formItemLayout}
+                                >
+                                    {getFieldDecorator('range-time-picker')(
+                        <DatePicker showTime placeholder="开始日期" format="YYYY-MM-DD HH:mm:ss"/>                    
+                                    )}                             
+                                </FormItem>
+                                <FormItem  
+                                    {...formItemLayout}
+                                >
+                                    {getFieldDecorator('range-endtime-picker')(
+                        <DatePicker showTime placeholder="结束日期" format="YYYY-MM-DD HH:mm:ss"
+                        />                    
+                                    )}                             
+                                </FormItem>
+                                <Button type="primary" htmlType="submit" style={{marginTop:'2px'}}>
+                                 确定
+                                </Button>
+                            </Form>
+                        </div>
+                    </div>
+                    <div className="sort-items">
+                        <div className="left">倾向：</div>
+                        <div className="right">
+                            {Trend}
+                        </div>
+                    </div>
+                    <div className="sort-items">
+                        <div className="left">排序：</div>
+                        <div className="right">
+                            {Sort}
+                        </div>
+                    </div>
+                    <div className="sort-items">
+                        <div className="left">去重：</div>
+                        <div className="right">
+                            {Filter}
+                        </div>
+                    </div>
+                    <div className="media-items">
+                        <div className="left">媒体：</div>
+                        <div className="right">
+                            {Media}
+                        </div>
+                    </div>
+                </div>
+                <div className="middle">
+                <div className="count">根据您的条件，为您筛选出<span className="number">{this.state.count}</span>条数据！</div>
+                    <OpinionDetail docList={this.state.docList} 
+                    onDataChange={this.dataChanged.bind(this)}
+                    param={param}
+                    pageSize={this.state.pagesize}
+                    propsType='TopicList'
+                    pageInfo={this.state.pageInfo}
+                    current={ this.state.page }
                     />
-                  )}
-                </FormItem>
-                <Button type="primary" htmlType="submit" style={{ marginTop: '2px' }}>
-                  确定
-                </Button>
-              </Form>
-            </div>
-          </div>
-          <div className="sort-items">
-            <div className="left">倾向：</div>
-            <div className="right">
-              {Trend}
-            </div>
-          </div>
-          <div className="sort-items">
-            <div className="left">排序：</div>
-            <div className="right">
-              {Sort}
-            </div>
-          </div>
-          <div className="sort-items">
-            <div className="left">去重：</div>
-            <div className="right">
-              {Filter}
-            </div>
-          </div>
-          <div className="media-items">
-            <div className="left">媒体：</div>
-            <div className="right">
-              {Media}
-            </div>
-          </div>
-        </div>
-        <div className="middle">
-          <div className="count">根据您的条件，为您筛选出<span className="number">{this.state.count}</span>条数据！</div>
-          <OpinionDetail docList={this.state.docList}
-            onDataChange={this.dataChanged.bind(this)}
-            param={param}
-            current={page}
-            pageSize={this.state.pagesize}
-            propsType='TopicList'
-            pageInfo={this.state.pageInfo}
-          />
         </div>
         <div className="bottom">
           <div className="pagintion-wrapper">

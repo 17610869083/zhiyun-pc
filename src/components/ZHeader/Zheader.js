@@ -127,7 +127,8 @@ class Zheader extends React.Component {
         keyword: value,type:1});
     }
     // 登出系统
-    logoutSystem() {
+    logoutSystem(data) {
+        if(data.key === '5'){
         confirm({
             title: '您确定要退出系统吗？',
             content: '退出系统',
@@ -144,6 +145,7 @@ class Zheader extends React.Component {
                 message.info('您取消了操作！');
             },
           });
+        }
     }
 
     // 消息列表
@@ -183,7 +185,7 @@ class Zheader extends React.Component {
         const {onChangeTheme, userInfo,themeColor} = this.props;
         const { userInfoVisible, themeVisible, confirmLoading} = this.state;
         const menu = (
-            <Menu>
+            <Menu onClick={this.logoutSystem.bind(this)}>
                 <Menu.Item key="0">
                     <span onClick={this.showUserInfoModal.bind(this)}>&nbsp;&nbsp;&nbsp;&nbsp;用户信息&nbsp;&nbsp;&nbsp;&nbsp;</span>
                 </Menu.Item>
@@ -200,7 +202,7 @@ class Zheader extends React.Component {
                     {/*<span>&nbsp;&nbsp;&nbsp;&nbsp;系统设置&nbsp;&nbsp;&nbsp;&nbsp;</span>*/}
                 {/*</Menu.Item>*/}
                 <Menu.Divider />
-                <Menu.Item key="5"><span onClick={this.logoutSystem.bind(this)}>&nbsp;&nbsp;&nbsp;&nbsp;退出</span></Menu.Item>
+                <Menu.Item key="5"><span>&nbsp;&nbsp;&nbsp;&nbsp;退出</span></Menu.Item>
             </Menu>
         );
 
