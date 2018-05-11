@@ -130,8 +130,9 @@ class OpinionDetail extends React.Component {
     }
     if(prevProps.current !== this.props.current){
        this.setState({
-         checkedArray:this.state.checkedArray.fill(false),
-         checkedAll:false
+         checkedAll:false,
+         checkedArray:this.state.checkedArray.fill(false)
+
        })
     }
   }
@@ -755,7 +756,7 @@ class OpinionDetail extends React.Component {
                           onVisibleChange={this.handleVisibleChange.bind(this, index)}
                           visible={this.state.popVisible && this.state.popIndex === index}
                         >
-                         <img src={Qing} alt="倾向" style={{height:'30px',width:'27px'}}/>
+                         <img src={Qing} alt="倾向" style={{height:'30px',width:'24px',marginTop:'-2px'}}/>
                         </Popover>
                       </Tooltip>
                     </div>
