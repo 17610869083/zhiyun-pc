@@ -155,6 +155,7 @@ class TopicList extends React.Component {
 
   // 选择具体时间
   handleSubmit(event) {
+    event.preventDefault();
     this.props.form.validateFields((err, fieldsValue) => {
       if (err) {
         return;
@@ -202,7 +203,6 @@ class TopicList extends React.Component {
     });
     this.props.paginationPage(1);
     this.props.searchKeywordSync({keyword: "1", seltype: "1", type: 0});
-    document.querySelector('.ant-calendar-picker-input').style.cssText = "border: 1px solid #42b9f5;border-radius: 5px;"
   }
 
   trendClick(index, value) {
@@ -210,12 +210,15 @@ class TopicList extends React.Component {
       trendIndex: index,
       trendValue: value
     });
+    const requestStr = this.state.timeValue !== 'custom' ?
+    `topicid=${this.state.topicID}&datetag=${this.state.timeValue}&neg=${value}&order=${this.state.sortValue}&similer=${this.state.filterValue}&carry=${this.state.mediaValue}`
+    :`topicid=${this.state.topicID}&datetag=custom&neg=${value}&order=${this.state.sortValue}&similer=${this.state.filterValue}&carry=${this.state.mediaValue}&begin=${this.state.begin}&end=${this.state.end}`
     request(api_topic_message_list, {
       method: 'POST',
       headers: {
         "Content-Type": "application/x-www-form-urlencoded"
       },
-      body: `pagesize=${this.state.pagesize}&topicid=${this.state.topicID}&datetag=${this.state.timeValue}&neg=${value}&order=${this.state.sortValue}&similer=${this.state.filterValue}&carry=${this.state.mediaValue}&begin=${this.state.begin}&end=${this.state.end}`
+      body: requestStr
     }).then((res) => {
       if (res.data && res.data.code !== 0) {
         this.setState({
@@ -237,8 +240,8 @@ class TopicList extends React.Component {
       sortValue: value
     });
         const requestStr = this.state.timeValue !== 'custom' ?
-        `topicid=${this.state.topicID}&datetag=${this.state.timeValue}&neg=${value}&order=${this.state.sortValue}&similer=${this.state.filterValue}&carry=${this.state.mediaValue}`
-        :`topicid=${this.state.topicID}&datetag=custom&neg=${value}&order=${this.state.sortValue}&similer=${this.state.filterValue}&carry=${this.state.mediaValue}&begin=${this.state.begin}&end=${this.state.end}`
+        `topicid=${this.state.topicID}&datetag=${this.state.timeValue}&neg=${this.state.trendValue}&order=${value}&similer=${this.state.filterValue}&carry=${this.state.mediaValue}`
+        :`topicid=${this.state.topicID}&datetag=custom&neg=${this.state.trendValue}&order=${value}&similer=${this.state.filterValue}&carry=${this.state.mediaValue}&begin=${this.state.begin}&end=${this.state.end}`
         request(api_topic_message_list, {
             method: 'POST',
             headers: {
@@ -266,8 +269,8 @@ class TopicList extends React.Component {
       filterValue: value
     });
         const requestStr = this.state.timeValue !== 'custom' ?
-        `topicid=${this.state.topicID}&datetag=${this.state.timeValue}&neg=${this.state.trendValue}&order=${value}&similer=${this.state.filterValue}&carry=${this.state.mediaValue}`
-        :`topicid=${this.state.topicID}&datetag=custom&neg=${this.state.trendValue}&order=${value}&similer=${this.state.filterValue}&carry=${this.state.mediaValue}&begin=${this.state.begin}&end=${this.state.end}`
+        `topicid=${this.state.topicID}&datetag=${this.state.timeValue}&neg=${this.state.trendValue}&order=${this.state.sortValue}&similer=${value}&carry=${this.state.mediaValue}`
+        :`topicid=${this.state.topicID}&datetag=custom&neg=${this.state.trendValue}&order=${this.state.sortValue}&similer=${value}&carry=${this.state.mediaValue}&begin=${this.state.begin}&end=${this.state.end}`
         request(api_topic_message_list, {
             method: 'POST',
             headers: {
@@ -295,8 +298,8 @@ class TopicList extends React.Component {
       mediaValue: value
     });
         const requestStr = this.state.timeValue !== 'custom' ?
-        `topicid=${this.state.topicID}&datetag=${this.state.timeValue}&neg=${this.state.trendValue}&order=${this.state.sortValue}&similer=${value}&carry=${this.state.mediaValue}`
-        :`topicid=${this.state.topicID}&datetag=custom&neg=${this.state.trendValue}&order=${this.state.sortValue}&similer=${value}&carry=${this.state.mediaValue}&begin=${this.state.begin}&end=${this.state.end}`
+        `topicid=${this.state.topicID}&datetag=${this.state.timeValue}&neg=${this.state.trendValue}&order=${this.state.sortValue}&similer=${value}&carry=${value}`
+        :`topicid=${this.state.topicID}&datetag=custom&neg=${this.state.trendValue}&order=${this.state.sortValue}&similer=${value}&carry=${value}&begin=${this.state.begin}&end=${this.state.end}`
         request(api_topic_message_list, {
             method: 'POST',
             headers: {
@@ -465,7 +468,7 @@ class TopicList extends React.Component {
       <div
         key={index}
         onClick={this.sortClick.bind(this, index, item.value)}
-        className={index === this.state.sortIndex ? 'item active' : 'fours'}
+        className={index === this.state.sortIndex ? 'fours active' : 'fours'}
       ><span className="item-inner">{item.name}</span></div>
     );
 

@@ -159,6 +159,7 @@ class AllOpinion extends React.Component {
 
   // 选择具体时间
   handleSubmit(event) {
+    event.preventDefault();
     this.props.form.validateFields((err, fieldsValue) => {
       if (err) {
         return;
@@ -603,7 +604,7 @@ class AllOpinion extends React.Component {
       <div
         key={index}
         onClick={this.sortClick.bind(this, item.value)}
-        className={item.value === this.state.sortValue ? 'item active' : 'fours'}
+        className={item.value === this.state.sortValue ? 'fours active' : 'fours'}
       ><span className="item-inner">{item.name}</span></div>
     );
 

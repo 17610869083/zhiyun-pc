@@ -213,6 +213,7 @@ class SortedList extends React.Component {
   }
 
   handleSubmit(event) {
+    event.preventDefault();
     this.props.form.validateFields((err, fieldsValue) => {
       if (err) {
         return;
@@ -388,7 +389,7 @@ class SortedList extends React.Component {
       <div
         key={item.value}
         onClick={this.sortClick.bind(this, item.value)}
-        className={item.value === order ? 'item active' : 'fours'}
+        className={item.value === order ? 'fours active' : 'fours'}
       ><span className="item-inner">{item.name}</span></div>
     );
     const param = {
