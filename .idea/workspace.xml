@@ -3,8 +3,9 @@
   <component name="ChangeListManager">
     <list default="true" id="726af7e2-77cc-48cc-a2de-0a0efde7d3ff" name="Default" comment="up">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/public/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/OpinionDetail/OpinionDetail.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/OpinionDetail/OpinionDetail.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routes/HistoryOpinion/HistoryOpinion.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/HistoryOpinion/HistoryOpinion.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routes/TopicOpinion/TopicList/TopicList.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/TopicOpinion/TopicList/TopicList.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -20,7 +21,7 @@
     <favorites_list name="zhiyun-pc" />
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300" />
+    <leaf />
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -32,16 +33,12 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>onDelitem</find>
-      <find>visibleOne</find>
-      <find>visible</find>
       <find>delOkOne</find>
       <find>childRen</find>
       <find>onCatid</find>
       <find>connect</find>
       <find>分类</find>
       <find>SortedMenu</find>
-      <find>Sort</find>
       <find>homeModuleReducer</find>
       <find>informsstate</find>
       <find>pageInfo</find>
@@ -51,17 +48,21 @@
       <find>onShowSizeChange</find>
       <find>ks</find>
       <find>clfId</find>
-      <find>checkedAll</find>
       <find>component</find>
-      <find>OpinionDetail</find>
       <find>courrent</find>
       <find>prevProps</find>
       <find>Pagination</find>
-      <find>onPaginationChange</find>
       <find>console</find>
       <find>page</find>
       <find>componentDidUpdate</find>
       <find>current</find>
+      <find>onPaginationChange</find>
+      <find>chooseAllOnChange</find>
+      <find>checked</find>
+      <find>Checkbox</find>
+      <find>OpinionDetail</find>
+      <find>checkedAll</find>
+      <find>Sort</find>
     </findStrings>
     <replaceStrings>
       <replace>collection</replace>
@@ -76,7 +77,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/services/opinionServices.js" />
         <option value="$PROJECT_DIR$/src/redux/saga/index.js" />
         <option value="$PROJECT_DIR$/src/base/Loading/Loading.js" />
         <option value="$PROJECT_DIR$/src/routes/Index/Index.less" />
@@ -119,14 +119,15 @@
         <option value="$PROJECT_DIR$/public/index.html" />
         <option value="$PROJECT_DIR$/src/components/OpinionDetail/OpinionDetail.less" />
         <option value="$PROJECT_DIR$/src/routes/SortedOpinion/index.js" />
-        <option value="$PROJECT_DIR$/src/routes/TopicOpinion/TopicList/TopicList.less" />
         <option value="$PROJECT_DIR$/src/routes/SortedOpinion/SortedList.less" />
         <option value="$PROJECT_DIR$/src/routes/AllOpinion/AllOpinion.less" />
         <option value="$PROJECT_DIR$/src/redux/actions/createActions.js" />
+        <option value="$PROJECT_DIR$/src/routes/SortedOpinion/SortedList.js" />
         <option value="$PROJECT_DIR$/src/routes/AllOpinion/AllOpinion.js" />
         <option value="$PROJECT_DIR$/src/components/OpinionDetail/OpinionDetail.js" />
         <option value="$PROJECT_DIR$/src/routes/TopicOpinion/TopicList/TopicList.js" />
-        <option value="$PROJECT_DIR$/src/routes/SortedOpinion/SortedList.js" />
+        <option value="$PROJECT_DIR$/src/routes/TopicOpinion/TopicList/TopicList.less" />
+        <option value="$PROJECT_DIR$/src/routes/HistoryOpinion/HistoryOpinion.js" />
       </list>
     </option>
   </component>
@@ -172,12 +173,6 @@
               <item name="zhiyun-pc" type="b2602c69:ProjectViewProjectNode" />
               <item name="zhiyun-pc" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="components" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="zhiyun-pc" type="b2602c69:ProjectViewProjectNode" />
-              <item name="zhiyun-pc" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="routes" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -185,22 +180,7 @@
               <item name="zhiyun-pc" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="routes" type="462c0819:PsiDirectoryNode" />
-              <item name="SortedOpinion" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="zhiyun-pc" type="b2602c69:ProjectViewProjectNode" />
-              <item name="zhiyun-pc" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="routes" type="462c0819:PsiDirectoryNode" />
-              <item name="TopicOpinion" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="zhiyun-pc" type="b2602c69:ProjectViewProjectNode" />
-              <item name="zhiyun-pc" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="routes" type="462c0819:PsiDirectoryNode" />
-              <item name="TopicOpinion" type="462c0819:PsiDirectoryNode" />
-              <item name="TopicList" type="462c0819:PsiDirectoryNode" />
+              <item name="HistoryOpinion" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -399,6 +379,7 @@
       <workItem from="1525875457838" duration="35000" />
       <workItem from="1525916442510" duration="14113000" />
       <workItem from="1525940947030" duration="12274000" />
+      <workItem from="1526001121922" duration="7532000" />
     </task>
     <task id="LOCAL-00001" summary="up">
       <created>1525262734297</created>
@@ -439,12 +420,12 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="887997000" />
+    <option name="totallyTimeSpent" value="895529000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.498366" weight="0.21354167" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.498366" visible="true" weight="0.21354167" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="调试" order="15" weight="0.32843137" />
       <window_info anchor="bottom" id="Docker" order="8" show_stripe_button="false" />
@@ -521,13 +502,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/routes/NewHome/OpinionCountBox.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="135">
-          <caret line="29" column="115" selection-start-line="29" selection-start-column="115" selection-end-line="29" selection-end-column="115" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/utils/format.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-143">
@@ -749,13 +723,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/OpinionDetail/OpinionDetail.less">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="4422">
-          <caret line="254" column="36" lean-forward="true" selection-start-line="254" selection-start-column="36" selection-end-line="254" selection-end-column="36" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/index.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="267">
@@ -804,13 +771,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/routes/TopicOpinion/TopicList/TopicList.less">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2013">
-          <caret line="61" column="29" lean-forward="true" selection-start-line="61" selection-start-column="29" selection-end-line="61" selection-end-column="29" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/routes/AllOpinion/AllOpinion.less">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="792">
@@ -829,9 +789,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2607">
           <caret line="79" column="12" lean-forward="true" selection-start-line="79" selection-start-column="12" selection-end-line="79" selection-end-column="12" />
-          <folding>
-            <element signature="e#0#26#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -842,16 +799,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/routes/TopicOpinion/TopicList/TopicList.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="167">
-          <caret line="12" column="4" selection-start-line="12" selection-start-column="4" selection-end-line="12" selection-end-column="4" />
-          <folding>
-            <element signature="e#0#26#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/routes/SortedOpinion/SortedList.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="223">
@@ -859,20 +806,51 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/OpinionDetail/OpinionDetail.less">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3628">
+          <caret line="282" column="28" lean-forward="true" selection-start-line="282" selection-start-column="28" selection-end-line="282" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/routes/AllOpinion/AllOpinion.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="332">
+          <caret line="733" column="14" lean-forward="true" selection-start-line="733" selection-start-column="14" selection-end-line="733" selection-end-column="14" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/components/OpinionDetail/OpinionDetail.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="299">
-          <caret line="131" column="47" lean-forward="true" selection-start-line="131" selection-start-column="47" selection-end-line="131" selection-end-column="47" />
+        <state relative-caret-position="233">
+          <caret line="895" column="26" lean-forward="true" selection-start-line="895" selection-start-column="26" selection-end-line="895" selection-end-column="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/routes/TopicOpinion/TopicList/TopicList.less">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="262">
+          <caret line="74" column="30" lean-forward="true" selection-start-line="74" selection-start-column="30" selection-end-line="74" selection-end-column="30" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/routes/TopicOpinion/TopicList/TopicList.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="134">
+          <caret line="556" column="35" lean-forward="true" selection-start-line="556" selection-start-column="35" selection-end-line="556" selection-end-column="35" />
           <folding>
             <element signature="e#0#26#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/routes/AllOpinion/AllOpinion.js">
+    <entry file="file://$PROJECT_DIR$/src/routes/HistoryOpinion/HistoryOpinion.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="134">
-          <caret line="726" column="23" selection-start-line="726" selection-start-column="13" selection-end-line="726" selection-end-column="23" />
+        <state relative-caret-position="264">
+          <caret line="459" column="27" lean-forward="true" selection-start-line="459" selection-start-column="27" selection-end-line="459" selection-end-column="27" />
+          <folding>
+            <element signature="e#0#26#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

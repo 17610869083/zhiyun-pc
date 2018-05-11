@@ -1,14 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { connect } from 'react-redux';
-import { Pagination, DatePicker, Form, message, Button } from 'antd';
+import {connect} from 'react-redux';
+import {Pagination, DatePicker, Form, message, Button} from 'antd';
 import request from '../../../utils/request';
 import OpinionDetail from '../../../components/OpinionDetail/OpinionDetail';
 import Store from '../../../redux/store/index';
 import './TopicList.less';
-import { getTopicRequested, paginationPage, searchKeywordSync } from '../../../redux/actions/createActions';
-import { api_topic_message_list } from '../../../services/api';
-import { getSecondTime } from '../../../utils/format';
+import {getTopicRequested, paginationPage, searchKeywordSync} from '../../../redux/actions/createActions';
+import {api_topic_message_list} from '../../../services/api';
+import {getSecondTime} from '../../../utils/format';
 
 const FormItem = Form.Item;
 
@@ -99,7 +99,7 @@ class TopicList extends React.Component {
       filterIndex: 0,
       filterValue: 0,
       media: [
-        { count: 0, value: "全部", key: "docApp" },
+        {count: 0, value: "全部", key: "docApp"},
       ],
       mediaIndex: 0,
       mediaValue: '全部',
@@ -150,7 +150,7 @@ class TopicList extends React.Component {
       }
     })
     this.props.paginationPage(1);
-    this.props.searchKeywordSync({ keyword: "1", seltype: "1", type: 0 });
+    this.props.searchKeywordSync({keyword: "1", seltype: "1", type: 0});
   }
 
   // 选择具体时间
@@ -201,7 +201,7 @@ class TopicList extends React.Component {
       })
     });
     this.props.paginationPage(1);
-    this.props.searchKeywordSync({ keyword: "1", seltype: "1", type: 0 });
+    this.props.searchKeywordSync({keyword: "1", seltype: "1", type: 0});
     document.querySelector('.ant-calendar-picker-input').style.cssText = "border: 1px solid #42b9f5;border-radius: 5px;"
   }
 
@@ -228,7 +228,7 @@ class TopicList extends React.Component {
       }
     })
     this.props.paginationPage(1);
-    this.props.searchKeywordSync({ keyword: "1", seltype: "1", type: 0 });
+    this.props.searchKeywordSync({keyword: "1", seltype: "1", type: 0});
   }
 
   sortClick(index, value) {
@@ -236,152 +236,177 @@ class TopicList extends React.Component {
       sortIndex: index,
       sortValue: value
     });
-        const requestStr = this.state.timeValue !== 'custom' ?
-        `topicid=${this.state.topicID}&datetag=${this.state.timeValue}&neg=${value}&order=${this.state.sortValue}&similer=${this.state.filterValue}&carry=${this.state.mediaValue}`
-        :`topicid=${this.state.topicID}&datetag=custom&neg=${value}&order=${this.state.sortValue}&similer=${this.state.filterValue}&carry=${this.state.mediaValue}&begin=${this.state.begin}&end=${this.state.end}`
-        request(api_topic_message_list, {
-            method: 'POST',
-            headers: {
-                "Content-Type": "application/x-www-form-urlencoded"
-            },
-            body: requestStr
-        }).then((res) => {
-            if(res.data&&res.data.code!==0){
-            this.setState({
-                docList: res.data.docList,
-                pageCount: res.data.pageInfo.pageCount,
-                count: res.data.pageInfo.count,
-                pageInfo:res.data.pageInfo,
-                media: res.data.carryCount,
-            });
-        }
-        })
-        this.props.paginationPage(1);
-        this.props.searchKeywordSync({keyword: "1", seltype: "1",type:0});
-    }
+    const requestStr = this.state.timeValue !== 'custom' ?
+      `topicid=${this.state.topicID}&datetag=${this.state.timeValue}&neg=${value}&order=${this.state.sortValue}&similer=${this.state.filterValue}&carry=${this.state.mediaValue}`
+      : `topicid=${this.state.topicID}&datetag=custom&neg=${value}&order=${this.state.sortValue}&similer=${this.state.filterValue}&carry=${this.state.mediaValue}&begin=${this.state.begin}&end=${this.state.end}`
+    request(api_topic_message_list, {
+      method: 'POST',
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded"
+      },
+      body: requestStr
+    }).then((res) => {
+      if (res.data && res.data.code !== 0) {
+        this.setState({
+          docList: res.data.docList,
+          pageCount: res.data.pageInfo.pageCount,
+          count: res.data.pageInfo.count,
+          pageInfo: res.data.pageInfo,
+          media: res.data.carryCount,
+        });
+      }
+    })
+    this.props.paginationPage(1);
+    this.props.searchKeywordSync({keyword: "1", seltype: "1", type: 0});
+  }
 
   filterClick(index, value) {
     this.setState({
       filterIndex: index,
       filterValue: value
     });
-        const requestStr = this.state.timeValue !== 'custom' ?
-        `topicid=${this.state.topicID}&datetag=${this.state.timeValue}&neg=${this.state.trendValue}&order=${value}&similer=${this.state.filterValue}&carry=${this.state.mediaValue}`
-        :`topicid=${this.state.topicID}&datetag=custom&neg=${this.state.trendValue}&order=${value}&similer=${this.state.filterValue}&carry=${this.state.mediaValue}&begin=${this.state.begin}&end=${this.state.end}`
-        request(api_topic_message_list, {
-            method: 'POST',
-            headers: {
-                "Content-Type": "application/x-www-form-urlencoded"
-            },
-            body: requestStr
-        }).then((res) => {
-            if(res.data&&res.data.docList){
-            this.setState({
-                docList: res.data.docList,
-                pageCount: res.data.pageInfo.pageCount,
-                count: res.data.pageInfo.count,
-                pageInfo:res.data.pageInfo,
-                media: res.data.carryCount,
-            });
-           }
-        })
-        this.props.paginationPage(1);
-        this.props.searchKeywordSync({keyword: "1", seltype: "1",type:0});
-    }
+    const requestStr = this.state.timeValue !== 'custom' ?
+      `topicid=${this.state.topicID}&datetag=${this.state.timeValue}&neg=${this.state.trendValue}&order=${value}&similer=${this.state.filterValue}&carry=${this.state.mediaValue}`
+      : `topicid=${this.state.topicID}&datetag=custom&neg=${this.state.trendValue}&order=${value}&similer=${this.state.filterValue}&carry=${this.state.mediaValue}&begin=${this.state.begin}&end=${this.state.end}`
+    request(api_topic_message_list, {
+      method: 'POST',
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded"
+      },
+      body: requestStr
+    }).then((res) => {
+      if (res.data && res.data.docList) {
+        this.setState({
+          docList: res.data.docList,
+          pageCount: res.data.pageInfo.pageCount,
+          count: res.data.pageInfo.count,
+          pageInfo: res.data.pageInfo,
+          media: res.data.carryCount,
+        });
+      }
+    })
+    this.props.paginationPage(1);
+    this.props.searchKeywordSync({keyword: "1", seltype: "1", type: 0});
+  }
 
   mediaClick(index, value) {
     this.setState({
       mediaIndex: index,
       mediaValue: value
     });
-        const requestStr = this.state.timeValue !== 'custom' ?
-        `topicid=${this.state.topicID}&datetag=${this.state.timeValue}&neg=${this.state.trendValue}&order=${this.state.sortValue}&similer=${value}&carry=${this.state.mediaValue}`
-        :`topicid=${this.state.topicID}&datetag=custom&neg=${this.state.trendValue}&order=${this.state.sortValue}&similer=${value}&carry=${this.state.mediaValue}&begin=${this.state.begin}&end=${this.state.end}`
-        request(api_topic_message_list, {
-            method: 'POST',
-            headers: {
-                "Content-Type": "application/x-www-form-urlencoded"
-            },
-            body: requestStr
-        }).then((res) => {
-            if(res.data&&res.data.docList){
-            this.setState({
-                docList: res.data.docList,
-                pageCount: res.data.pageInfo.pageCount,
-                pageInfo:res.data.pageInfo,
-                media: res.data.carryCount,
-            });
-        }
-        })
-        this.props.paginationPage(1);
-        this.props.searchKeywordSync({keyword: "1", seltype: "1",type:0});
-    }
+    const requestStr = this.state.timeValue !== 'custom' ?
+      `topicid=${this.state.topicID}&datetag=${this.state.timeValue}&neg=${this.state.trendValue}&order=${this.state.sortValue}&similer=${value}&carry=${this.state.mediaValue}`
+      : `topicid=${this.state.topicID}&datetag=custom&neg=${this.state.trendValue}&order=${this.state.sortValue}&similer=${value}&carry=${this.state.mediaValue}&begin=${this.state.begin}&end=${this.state.end}`
+    request(api_topic_message_list, {
+      method: 'POST',
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded"
+      },
+      body: requestStr
+    }).then((res) => {
+      if (res.data && res.data.docList) {
+        this.setState({
+          docList: res.data.docList,
+          pageCount: res.data.pageInfo.pageCount,
+          pageInfo: res.data.pageInfo,
+          media: res.data.carryCount,
+        });
+      }
+    })
+    this.props.paginationPage(1);
+    this.props.searchKeywordSync({keyword: "1", seltype: "1", type: 0});
+  }
 
   onShowSizeChange(current, pageSize) {
     this.setState({
       page: current,
       pagesize: pageSize
     });
-        const requestStr = this.state.timeValue !== 'custom' ?
-        `topicid=${this.state.topicID}&datetag=${this.state.timeValue}&neg=${this.state.trendValue}&order=${this.state.sortValue}&similer=${this.state.filterValue}&carry=${this.state.mediaValue}&pagesize=${pageSize}`
-        :`topicid=${this.state.topicID}&datetag=custom&neg=${this.state.trendValue}&order=${this.state.sortValue}&similer=${this.state.filterValue}&carry=${this.state.mediaValue}&begin=${this.state.begin}&end=${this.state.end}&pagesize=${pageSize}`
-        request(api_topic_message_list, {
-            method: 'POST',
-            headers: {
-                "Content-Type": "application/x-www-form-urlencoded"
-            },
-            body: requestStr
-        }).then((res) => {
-            if(res.data&&res.data.docList){
-            this.setState({
-                docList: res.data.docList,
-                pageCount: res.data.pageInfo.pageCount,
-                count: res.data.pageInfo.count,
-                pageInfo:res.data.pageInfo,
-                media: res.data.carryCount,
-            });
-        }
-        })
-        this.props.paginationPage(1);
-        this.props.searchKeywordSync({keyword: "1", seltype: "1",type:0});
-    }
-    onPaginationChange(pagenumber) {
+    const requestStr = this.state.timeValue !== 'custom' ?
+      `topicid=${this.state.topicID}&datetag=${this.state.timeValue}&neg=${this.state.trendValue}&order=${this.state.sortValue}&similer=${this.state.filterValue}&carry=${this.state.mediaValue}&pagesize=${pageSize}`
+      : `topicid=${this.state.topicID}&datetag=custom&neg=${this.state.trendValue}&order=${this.state.sortValue}&similer=${this.state.filterValue}&carry=${this.state.mediaValue}&begin=${this.state.begin}&end=${this.state.end}&pagesize=${pageSize}`
+    request(api_topic_message_list, {
+      method: 'POST',
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded"
+      },
+      body: requestStr
+    }).then((res) => {
+      if (res.data && res.data.docList) {
         this.setState({
-          page: pagenumber
+          docList: res.data.docList,
+          pageCount: res.data.pageInfo.pageCount,
+          count: res.data.pageInfo.count,
+          pageInfo: res.data.pageInfo,
+          media: res.data.carryCount,
         });
-        this.props.paginationPage(pagenumber);
-        const requestStr = this.state.timeValue !== 'custom' ?
-        `topicid=${this.state.topicID}&datetag=${this.state.timeValue}&neg=${this.state.trendValue}&order=${this.state.sortValue}&similer=${this.state.filterValue}&carry=${this.state.mediaValue}&page=${pagenumber}&pagesize=${this.state.pagesize}`
-        :`topicid=${this.state.topicID}&datetag=custom&neg=${this.state.trendValue}&order=${this.state.sortValue}&similer=${this.state.filterValue}&carry=${this.state.mediaValue}&page=${pagenumber}&pagesize=${this.state.pagesize}&begin=${this.state.begin}&end=${this.state.end}`
+      }
+    })
+    this.props.paginationPage(1);
+    this.props.searchKeywordSync({keyword: "1", seltype: "1", type: 0});
+  }
+
+  onPaginationChange(pagenumber) {
+    this.setState({
+      page: pagenumber
+    });
+    this.props.paginationPage(pagenumber);
+    const requestStr = this.state.timeValue !== 'custom' ?
+      `topicid=${this.state.topicID}&datetag=${this.state.timeValue}&neg=${this.state.trendValue}&order=${this.state.sortValue}&similer=${this.state.filterValue}&carry=${this.state.mediaValue}&page=${pagenumber}&pagesize=${this.state.pagesize}`
+      : `topicid=${this.state.topicID}&datetag=custom&neg=${this.state.trendValue}&order=${this.state.sortValue}&similer=${this.state.filterValue}&carry=${this.state.mediaValue}&page=${pagenumber}&pagesize=${this.state.pagesize}&begin=${this.state.begin}&end=${this.state.end}`
+    request(api_topic_message_list, {
+      method: 'POST',
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded"
+      },
+      body: requestStr
+    }).then((res) => {
+      if (res.data && res.data.code !== 0) {
+        this.setState({
+          docList: res.data.docList,
+          pageCount: res.data.pageInfo.pageCount,
+          count: res.data.pageInfo.count,
+          pageInfo: res.data.pageInfo,
+          media: res.data.carryCount
+        });
+      }
+    })
+    ReactDOM.findDOMNode(this).scrollIntoView();
+  }
+
+  dataChanged(data) {
+    const requestStr = this.state.timeValue !== 'custom' ?
+      `topicid=${this.state.topicID}&datetag=${this.state.timeValue}&neg=${this.state.trendValue}&order=${this.state.sortValue}&similer=${this.state.filterValue}&carry=${this.state.mediaValue}&page=${data}&pagesize=${this.state.pagesize}`
+      : `topicid=${this.state.topicID}&datetag=custom&neg=${this.state.trendValue}&order=${this.state.sortValue}&similer=${this.state.filterValue}&carry=${this.state.mediaValue}&page=${data}&pagesize=${this.state.pagesize}&begin=${this.state.begin}&end=${this.state.end}`
+    request(api_topic_message_list, {
+      method: 'POST',
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded"
+      },
+      body: requestStr
+    }).then((res) => {
+      if (res.data) {
+        this.setState({
+          docList: res.data.docList,
+          media: res.data.carryCount,
+          pageCount: res.data.pageInfo.pageCount,
+          count: res.data.pageInfo.count,
+          pageInfo: res.data.pageInfo,
+        });
+      }
+    });
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevProps.location.search !== this.props.location.search) {
+      let topicID = Store.getState().getRouterReducer;
+      if (typeof topicID !== 'object') {
         request(api_topic_message_list, {
-            method: 'POST',
-            headers: {
-                "Content-Type": "application/x-www-form-urlencoded"
-            },
-            body: requestStr
-        }).then((res) => {
-          if (res.data && res.data.code !== 0) {
-            this.setState({
-              docList: res.data.docList,
-              pageCount: res.data.pageInfo.pageCount,
-              count: res.data.pageInfo.count,
-              pageInfo: res.data.pageInfo,
-              media: res.data.carryCount
-            });
-        }
-        })
-        ReactDOM.findDOMNode(this).scrollIntoView(); 
-    }
-    dataChanged(data) {
-         const requestStr = this.state.timeValue !== 'custom' ?
-         `topicid=${this.state.topicID}&datetag=${this.state.timeValue}&neg=${this.state.trendValue}&order=${this.state.sortValue}&similer=${this.state.filterValue}&carry=${this.state.mediaValue}&page=${data}&pagesize=${this.state.pagesize}`
-         :`topicid=${this.state.topicID}&datetag=custom&neg=${this.state.trendValue}&order=${this.state.sortValue}&similer=${this.state.filterValue}&carry=${this.state.mediaValue}&page=${data}&pagesize=${this.state.pagesize}&begin=${this.state.begin}&end=${this.state.end}`
-         request(api_topic_message_list, {
-            method: 'POST',
-            headers: {
-                "Content-Type": "application/x-www-form-urlencoded"
-            },
-            body: requestStr
+          method: 'POST',
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded"
+          },
+          body: `topicid=${topicID}&similer=0`
         }).then((res) => {
           if (res.data) {
             this.setState({
@@ -390,56 +415,41 @@ class TopicList extends React.Component {
               pageCount: res.data.pageInfo.pageCount,
               count: res.data.pageInfo.count,
               pageInfo: res.data.pageInfo,
+              topicID: topicID,
+              timeIndex: 0,
+              sortIndex: 0,
+              filterIndex: 0,
+              mediaIndex: 0,
+              trendIndex: 0
             });
           }
         });
       }
-      componentDidUpdate(prevProps, prevState) {
-        if (prevProps.location.search !== this.props.location.search) {
-          let topicID = Store.getState().getRouterReducer;
-          if (typeof topicID !== 'object') {
-            request(api_topic_message_list, {
-              method: 'POST',
-              headers: {
-                "Content-Type": "application/x-www-form-urlencoded"
-              },
-              body: `topicid=${topicID}&similer=0`
-            }).then((res) => {
-              if (res.data) {
-                this.setState({
-                  docList: res.data.docList,
-                  media: res.data.carryCount,
-                  pageCount: res.data.pageInfo.pageCount,
-                  count: res.data.pageInfo.count,
-                  pageInfo: res.data.pageInfo,
-                  topicID: topicID,
-                  timeIndex: 0,
-                  sortIndex: 0,
-                  filterIndex: 0,
-                  mediaIndex: 0,
-                  trendIndex: 0
-                });
-              }
-            });
-          }
-        }
-      }
+    }
+    if (prevProps.current !== this.props.current) {
+      this.setState({
+        checkedAll: false
+        // checkedArray:this.state.checkedArray.fill(false)
+
+      })
+    }
+  }
 
   componentWillUnmount() {
     this.props.paginationPage(1);
   }
 
   render() {
-    const { getFieldDecorator } = this.props.form;
-    const { page } = this.props;
+    const {getFieldDecorator} = this.props.form;
+    const {page} = this.props;
     const formItemLayout = {
       labelCol: {
-        xs: { span: 24 },
-        sm: { span: 8 },
+        xs: {span: 24},
+        sm: {span: 8},
       },
       wrapperCol: {
-        xs: { span: 24 },
-        sm: { span: 16 },
+        xs: {span: 24},
+        sm: {span: 16},
       },
     };
     // 时间
@@ -465,7 +475,7 @@ class TopicList extends React.Component {
       <div
         key={index}
         onClick={this.sortClick.bind(this, index, item.value)}
-        className={index === this.state.sortIndex ? 'item active' : 'fours'}
+        className={index === this.state.sortIndex ? 'item active' : 'item fours'}
       ><span className="item-inner">{item.name}</span></div>
     );
 
@@ -480,102 +490,103 @@ class TopicList extends React.Component {
 
     // 媒体类型
     const Media = this.state.media.map((item, index) =>
-    <div
-      key={index}
-      onClick={this.mediaClick.bind(this, index, item.value)}
-      className={index === this.state.mediaIndex ? 'item active' : 'item'}
-    ><p className="item-inner">{item.key === 'docSearch' ? '其它' : item.value}</p>
-      <p className="count">{item.count}</p>
-    </div>
-  );
-        const param = {
-            datetag: this.state.timeValue,
-            neg: this.state.trendValue,
-            order: this.state.sortValue,
-            similer: this.state.filterValue,
-            carry: this.state.mediaValue,
-            begin: this.state.begin,
-            end: this.state.end,
-            page:this.state.page,
-            pagesize:this.state.pagesize
-        };
-        return (
-            <div className="topic-list-opinion">
-                <div className="sort-top" style={this.props.search ? {display: 'block'} : {display: 'none'}}>
-                    <div className="sort-items">
-                        <div className="left">时间：</div>
-                        <div className="right">
-                            {Time}
-                        </div>
-                        <div className="other" style={this.state.timePickerShow?{display:'block'}:{display:'none'}}>
-                            <Form onSubmit={this.handleSubmit.bind(this)}>
-                            <FormItem  
-                                    {...formItemLayout}
-                                >
-                                    {getFieldDecorator('range-time-picker')(
-                        <DatePicker showTime placeholder="开始日期" format="YYYY-MM-DD HH:mm:ss"/>                    
-                                    )}                             
-                                </FormItem>
-                                <FormItem  
-                                    {...formItemLayout}
-                                >
-                                    {getFieldDecorator('range-endtime-picker')(
-                        <DatePicker showTime placeholder="结束日期" format="YYYY-MM-DD HH:mm:ss"
-                        />                    
-                                    )}                             
-                                </FormItem>
-                                <Button type="primary" htmlType="submit" style={{marginTop:'2px'}}>
-                                 确定
-                                </Button>
-                            </Form>
-                        </div>
-                    </div>
-                    <div className="sort-items">
-                        <div className="left">倾向：</div>
-                        <div className="right">
-                            {Trend}
-                        </div>
-                    </div>
-                    <div className="sort-items">
-                        <div className="left">排序：</div>
-                        <div className="right">
-                            {Sort}
-                        </div>
-                    </div>
-                    <div className="sort-items">
-                        <div className="left">去重：</div>
-                        <div className="right">
-                            {Filter}
-                        </div>
-                    </div>
-                    <div className="media-items">
-                        <div className="left">媒体：</div>
-                        <div className="right">
-                            {Media}
-                        </div>
-                    </div>
-                </div>
-                <div className="middle">
-                <div className="count">根据您的条件，为您筛选出<span className="number">{this.state.count}</span>条数据！</div>
-                    <OpinionDetail docList={this.state.docList} 
-                    onDataChange={this.dataChanged.bind(this)}
-                    param={param}
-                    pageSize={this.state.pagesize}
-                    propsType='TopicList'
-                    pageInfo={this.state.pageInfo}
-                    current={ this.state.page }
+      <div
+        key={index}
+        onClick={this.mediaClick.bind(this, index, item.value)}
+        className={index === this.state.mediaIndex ? 'item active' : 'item'}
+      ><p className="item-inner">{item.key === 'docSearch' ? '其它' : item.value}</p>
+        <p className="count">{item.count}</p>
+      </div>
+    );
+    const param = {
+      datetag: this.state.timeValue,
+      neg: this.state.trendValue,
+      order: this.state.sortValue,
+      similer: this.state.filterValue,
+      carry: this.state.mediaValue,
+      begin: this.state.begin,
+      end: this.state.end,
+      page: this.state.page,
+      pagesize: this.state.pagesize
+    };
+    return (
+      <div className="topic-list-opinion">
+        <div className="sort-top" style={this.props.search ? {display: 'block'} : {display: 'none'}}>
+          <div className="sort-items">
+            <div className="left">时间：</div>
+            <div className="right">
+              {Time}
+            </div>
+            <div className="other" style={this.state.timePickerShow ? {display: 'block'} : {display: 'none'}}>
+              <Form onSubmit={this.handleSubmit.bind(this)}>
+                <FormItem
+                  {...formItemLayout}
+                >
+                  {getFieldDecorator('range-time-picker')(
+                    <DatePicker showTime placeholder="开始日期" format="YYYY-MM-DD HH:mm:ss"/>
+                  )}
+                </FormItem>
+                <FormItem
+                  {...formItemLayout}
+                >
+                  {getFieldDecorator('range-endtime-picker')(
+                    <DatePicker showTime placeholder="结束日期" format="YYYY-MM-DD HH:mm:ss"
                     />
+                  )}
+                </FormItem>
+                <Button type="primary" htmlType="submit" style={{marginTop: '2px'}}>
+                  确定
+                </Button>
+              </Form>
+            </div>
+          </div>
+          <div className="sort-items">
+            <div className="left">倾向：</div>
+            <div className="right">
+              {Trend}
+            </div>
+          </div>
+          <div className="sort-items">
+            <div className="left">排序：</div>
+            <div className="right">
+              {Sort}
+            </div>
+          </div>
+          <div className="sort-items">
+            <div className="left">去重：</div>
+            <div className="right">
+              {Filter}
+            </div>
+          </div>
+          <div className="media-items">
+            <div className="left">媒体：</div>
+            <div className="right">
+              {Media}
+            </div>
+          </div>
+        </div>
+        <div className="middle">
+          <div className="count">根据您的条件，为您筛选出<span className="number">{this.state.count}</span>条数据！</div>
+          <OpinionDetail docList={this.state.docList}
+                         onDataChange={this.dataChanged.bind(this)}
+                         param={param}
+                         pageSize={this.state.pagesize}
+                         propsType='TopicList'
+                         pageInfo={this.state.pageInfo}
+                         current={this.state.page}
+                         current={page}
+          />
         </div>
         <div className="bottom">
           <div className="pagintion-wrapper">
             <Pagination showSizeChanger
-              defaultCurrent={1}
-              defaultPageSize={20}
-              onChange={this.onPaginationChange.bind(this)}
-              onShowSizeChange={this.onShowSizeChange.bind(this)}
-              total={this.state.count}
-              getPopupContainer={() => document.querySelector('.topic-list-opinion')}
-              current={page}
+                        defaultCurrent={1}
+                        defaultPageSize={20}
+                        onChange={this.onPaginationChange.bind(this)}
+                        onShowSizeChange={this.onShowSizeChange.bind(this)}
+                        total={this.state.count}
+                        current={page}
+                        getPopupContainer={() => document.querySelector('.topic-list-opinion')}
             />
           </div>
         </div>
