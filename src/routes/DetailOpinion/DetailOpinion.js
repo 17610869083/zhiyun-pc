@@ -189,7 +189,6 @@ class DetailOpinion extends React.Component {
 
   // 取消操作
   deleteCancel(e) {
-    console.log(e);
     message.error('取消操作');
   }
 
@@ -431,7 +430,8 @@ class DetailOpinion extends React.Component {
     }
     const conent = getMeailMessage(this.state.emailData);
     const data = this.state.data;
-    const sid = this.state.id;
+    const sid = this.state.sid;
+    console.log(sid)
     const Keywords = this.state.keywords.map((item, index) =>
       <span key={index} className="value-item">{item}</span>
     );

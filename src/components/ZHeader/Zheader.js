@@ -116,15 +116,17 @@ class Zheader extends React.Component {
     handleSearchContent(value) {
         const param = {
             seltype: "content",
-            keyword: value
+            keyword: value,
+            similer:0
         };
+        this.props.opinionSearchRequest(param);
+        this.props.searchKeywordSync({seltype: "content",
+        keyword: value,type:1});
         history.push({
                pathname:"/allopinion",
                search:'type=search'
         });
-        this.props.opinionSearchRequest(param);
-        this.props.searchKeywordSync({seltype: "content",
-        keyword: value,type:1});
+
     }
     // 登出系统
     logoutSystem(data) {

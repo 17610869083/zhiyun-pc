@@ -31,7 +31,8 @@ import {
   TOPIC_NAV_MESSAGE_SUCCEEDED,
   TOPIC_NAV_MESSAGE_REQUESTED,
   PAGINATION_PAGE,
-  INFORMS_STATE
+  INFORMS_STATE,
+  CLF_CAT_STATE
 } from '../actions/actionTypes';
 
 const opinionSearchSucceededReducer = handleAction(OPINION_SEARCH_SUCCEEDED, (state, action) => ({
@@ -52,7 +53,7 @@ const opinionSearchRequestedReducer = handleAction(OPINION_SEARCH_REQUESTED, (st
 
 const searchKeywordSyncReducer = handleAction(SEARCH_KEYWORD_SYNC, (state, action) => ({
   ks: action.payload
-}), {keyword: "", seltype: "content"});
+}),{ks:{keyword: "", seltype: "content"}});
 
 const setOpinionTypeRequestedReducer = handleAction(SET_OPINION_TYPE_REQUESTED, (state, action) => ({
   type: action.payload
@@ -182,6 +183,9 @@ export const informsstate = handleAction(INFORMS_STATE, (state, action) => ({
   data: action.payload
 }), {data: false});
 
+export const clfCatState = handleAction(CLF_CAT_STATE, (state, action) => ({
+  data: action.payload
+}), {data: {state:false,catid:1}}); 
 export {
   opinionSearchRequestedReducer,
   searchKeywordSyncReducer,

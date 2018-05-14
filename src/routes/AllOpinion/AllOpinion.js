@@ -137,7 +137,7 @@ class AllOpinion extends React.Component {
       };
       this.props.opinionSearchRequest(param);
       this.props.paginationPage(1);
-      this.props.searchKeywordSync({keyword: "", seltype: "1", type: 0});
+      //this.props.searchKeywordSync({keyword: "", seltype: "1", type: 0});
     } else {
       const param = {
         datetag: value,
@@ -203,7 +203,7 @@ class AllOpinion extends React.Component {
         };
         this.props.opinionSearchRequest(param);
         this.props.paginationPage(1);
-        this.props.searchKeywordSync({keyword: "", seltype: "1", type: 0});
+        //this.props.searchKeywordSync({keyword: "", seltype: "1", type: 0});
       } else {
         const param = {
           datetag: timeValue,
@@ -240,7 +240,7 @@ class AllOpinion extends React.Component {
       };
       this.props.opinionSearchRequest(param);
       this.props.paginationPage(1);
-      this.props.searchKeywordSync({keyword: "", seltype: "1", type: 0});
+      //this.props.searchKeywordSync({keyword: "", seltype: "1", type: 0});
     } else {
       const param = {
         datetag: this.state.timeValue,
@@ -276,7 +276,7 @@ class AllOpinion extends React.Component {
       };
       this.props.opinionSearchRequest(param);
       this.props.paginationPage(1);
-      this.props.searchKeywordSync({keyword: "", seltype: "1", type: 0});
+      //this.props.searchKeywordSync({keyword: "", seltype: "1", type: 0});
     } else {
       const param = {
         datetag: this.state.timeValue,
@@ -312,7 +312,7 @@ class AllOpinion extends React.Component {
       };
       this.props.opinionSearchRequest(param);
       this.props.paginationPage(1);
-      this.props.searchKeywordSync({keyword: "", seltype: "1", type: 0});
+      //this.props.searchKeywordSync({keyword: "", seltype: "1", type: 0});
     } else {
       const param = {
         datetag: this.state.timeValue,
@@ -348,7 +348,7 @@ class AllOpinion extends React.Component {
       };
       this.props.opinionSearchRequest(param);
       this.props.paginationPage(1);
-      this.props.searchKeywordSync({keyword: "", seltype: "1", type: 0});
+      //this.props.searchKeywordSync({keyword: "", seltype: "1", type: 0});
     } else {
       const param = {
         datetag: this.state.timeValue,
@@ -385,7 +385,7 @@ class AllOpinion extends React.Component {
       };
       this.props.opinionSearchRequest(param);
       this.props.paginationPage(1);
-      this.props.searchKeywordSync({keyword: "", seltype: "1", type: 0});
+     // this.props.searchKeywordSync({keyword: "", seltype: "1", type: 0});
     } else {
       const param = {
         datetag: this.state.timeValue,
@@ -452,7 +452,7 @@ class AllOpinion extends React.Component {
         carry: this.state.mediaValue,
         begin: this.state.begin,
         end: this.state.end,
-        page: this.state.page,
+        page: this.props.page,
         pagesize: this.state.pagesize
       };
       this.props.opinionSearchRequest(param);
@@ -549,6 +549,11 @@ class AllOpinion extends React.Component {
 
   componentDidMount() {
     ReactDOM.findDOMNode(this).scrollIntoView();
+    if(this.props.ks && this.props.ks.keyword !==''){
+      this.setState({
+          type:1
+      })
+   }
   }
 
   componentWillUnmount() {

@@ -97,10 +97,10 @@ class OpinionDetail extends React.Component {
     //     })
     //   })
     // }
-    this.props.searchKeywordSync({
-      seltype: 'content',
-      keyword: '', type: 0
-    });
+    // this.props.searchKeywordSync({
+    //   seltype: 'content',
+    //   keyword: '', type: 0
+    // });
   }
 
   componentWillReceiveProps() {
@@ -506,6 +506,7 @@ class OpinionDetail extends React.Component {
   }
 
   onPaginationChange(pagenumber) {
+    this.props.paginationPage(pagenumber);
     this.setState({
       page: pagenumber,
       checkedArray:this.state.checkedArray.fill(false)
@@ -529,7 +530,6 @@ class OpinionDetail extends React.Component {
     } else {
       this.props.onDataChange(pagenumber);
     }
-    this.props.paginationPage(pagenumber);
   }
 
   showModal() {

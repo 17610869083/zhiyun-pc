@@ -94,3 +94,6 @@ export const HOME_MODULE='HOME_MODULE';
 export const SEARCH_STATE='SEARCH_STATE';
 //提示信息显示状态
 export const INFORMS_STATE='INFORMS_STATE';
+
+//分类文件夹状态
+export const CLF_CAT_STATE = 'CLF_CAT_STATE';

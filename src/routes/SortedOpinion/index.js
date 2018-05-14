@@ -18,7 +18,7 @@ import request from '../../utils/request';
 import {api_sorted_cat_add, api_sorted_cat_edit, api_sorted_cat_delete, api_sorted_grade_delete} from '../../services/api';
 import deleteImg from '../../assets/operate-img/delete.png';
 import './index.less';
-import {changeClfId, getSortedContentRequested, getCollectionLocationRequested, getSortedMenuRequested, searchState} from "../../redux/actions/createActions";
+import {clfCatState,changeClfId, getSortedContentRequested, getCollectionLocationRequested, getSortedMenuRequested, searchState} from "../../redux/actions/createActions";
 import {setTimeout} from 'timers';
 import Iconfont from '../../components/IconFont';
 const confirm = Modal.confirm;
@@ -99,6 +99,11 @@ class SortedOpinion extends React.Component {
     this.setState({sortVisible: false})
   }
   onChangeSortInputValue(e) {
+    const {value} = e.target;
+    if(value.length>=28){
+      message.error('分类名称请不要超过28个字符');
+      return;
+    }
     this.setState({sortInputValue: e.target.value});
   }
   // 删除和重命名
@@ -153,6 +158,11 @@ class SortedOpinion extends React.Component {
     this.setState({renameSortVisible: false})
   }
   onChangeRenameSortInputValue(e) {
+    const {value} = e.target;
+    if(value.length>=28){
+      message.error('分类名称请不要超过28个字符');
+      return;
+    }
     this.setState({sortInputRenameValue: e.target.value})
   }
 
@@ -185,11 +195,13 @@ class SortedOpinion extends React.Component {
     this.setState({clfId: clfId, current: 'sortlist'});
     history.push({pathname: `/sortedopinion/list`, search: `?cifid=${clfId}`})
     this.props.changeClfId(clfId);
+    this.props.clfCatState({state:true})
   }
 
   // 显示与隐藏
   toggleClfUl(catid) {
-    this.props.getSortedContentRequested({catid: catid})
+    this.props.getSortedContentRequested({catid: catid,similer:0})
+    this.props.clfCatState({state:false,catid:catid})
     const ref = this.refs['clf-ul-' + catid];
     if (ref.style.display === 'block') {
       ref.style.display = 'none';
@@ -213,7 +225,8 @@ class SortedOpinion extends React.Component {
     this.sortTimer = setTimeout(() => {
       const catid = this.props.sortedMenu[0]['catid'];
       const param = {
-        catid: catid
+        catid: catid,
+        similer:0
       }
       this.props.changeClfId(clfid);
       this.props.getSortedContentRequested(param);
@@ -296,10 +309,10 @@ class SortedOpinion extends React.Component {
       </div>
       <div className="modals">
         <Modal title="添加分类" visible={sortVisible} onOk={this.handleSortOk.bind(this)} onCancel={this.handleCancel.bind(this)}>
-          <Input placeholder="请输入分类名称" prefix={<Icon type = "folder" />} onChange={this.onChangeSortInputValue.bind(this)} value={sortInputValue} maxLength={'20'}/>
+          <Input placeholder="请输入分类名称" prefix={<Icon type = "folder" />} onChange={this.onChangeSortInputValue.bind(this)} value={sortInputValue} maxLength={'28'}/>
         </Modal>
         <Modal title="分类重命名" visible={renameSortVisible} onOk={this.handleRenameSortOk.bind(this)} onCancel={this.handleRenameSortCancel.bind(this)}>
-          <Input placeholder="请输入分类名称" prefix={<Icon type = "folder" />} onChange={this.onChangeRenameSortInputValue.bind(this)} value={this.state.sortInputRenameValue} maxLength={'20'}/>
+          <Input placeholder="请输入分类名称" prefix={<Icon type = "folder" />} onChange={this.onChangeRenameSortInputValue.bind(this)} value={this.state.sortInputRenameValue} maxLength={'28'}/>
         </Modal>
       </div>
       <div className="sorted-opinion-option">
@@ -379,6 +392,9 @@ const mapDispatchToProps = dispatch => {
     },
     searchState: req => {
       dispatch(searchState(req))
+    },
+    clfCatState : req => {
+      dispatch(clfCatState(req));
     }
   }
 };

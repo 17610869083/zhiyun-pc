@@ -73,7 +73,7 @@ class LoginPage extends React.Component {
     }
     handleSubmit (e){
         e.preventDefault();
-        if(IE){
+        if(this.state.IE){
         this.props.form.validateFields((err, values) => {
             if (!err) {
                 const userName = values.username;

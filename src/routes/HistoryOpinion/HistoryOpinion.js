@@ -526,8 +526,7 @@ class HistoryOpinion extends React.Component {
     ];
 
     const operations = <span className="moreButton"><Button type="primary"
-                                                            onClick={this.batchDel.bind(this)}>批量删除</Button>
-      {/* <Button type="primary">批量下载</Button> */}
+     onClick={this.batchDel.bind(this)}>批量删除</Button>
                   </span>;
     const columns = [{
       title: '标题',

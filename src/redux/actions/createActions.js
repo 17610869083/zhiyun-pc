@@ -40,7 +40,8 @@ import {
   PAGINATION_PAGE,
   HOME_MODULE,
   SEARCH_STATE,
-  INFORMS_STATE
+  INFORMS_STATE,
+  CLF_CAT_STATE
 } from './actionTypes';
 
 
@@ -120,3 +121,6 @@ export const homeModule = createAction(HOME_MODULE);
 export const searchState = createAction(SEARCH_STATE);
 //提示信息显示状态
 export const informsState = createAction(INFORMS_STATE);
+
+//分类文件夹状态
+export const clfCatState = createAction(CLF_CAT_STATE);

@@ -9,6 +9,7 @@ import './TopicList.less';
 import {getTopicRequested, paginationPage, searchKeywordSync} from '../../../redux/actions/createActions';
 import {api_topic_message_list} from '../../../services/api';
 import {getSecondTime} from '../../../utils/format';
+import { setTimeout } from 'timers';
 
 const FormItem = Form.Item;
 
@@ -378,10 +379,11 @@ class TopicList extends React.Component {
   }
 
   dataChanged(data) {
-    const requestStr = this.state.timeValue !== 'custom' ?
-      `topicid=${this.state.topicID}&datetag=${this.state.timeValue}&neg=${this.state.trendValue}&order=${this.state.sortValue}&similer=${this.state.filterValue}&carry=${this.state.mediaValue}&page=${data}&pagesize=${this.state.pagesize}`
-      : `topicid=${this.state.topicID}&datetag=custom&neg=${this.state.trendValue}&order=${this.state.sortValue}&similer=${this.state.filterValue}&carry=${this.state.mediaValue}&page=${data}&pagesize=${this.state.pagesize}&begin=${this.state.begin}&end=${this.state.end}`
-    request(api_topic_message_list, {
+    this.dataChangeTimer = setTimeout(() => {
+      const requestStr = this.state.timeValue !== 'custom' ?
+      `topicid=${this.state.topicID}&datetag=${this.state.timeValue}&neg=${this.state.trendValue}&order=${this.state.sortValue}&similer=${this.state.filterValue}&carry=${this.state.mediaValue}&page=${this.props.page}&pagesize=${this.state.pagesize}`
+      : `topicid=${this.state.topicID}&datetag=custom&neg=${this.state.trendValue}&order=${this.state.sortValue}&similer=${this.state.filterValue}&carry=${this.state.mediaValue}&page=${this.props.page}&pagesize=${this.state.pagesize}&begin=${this.state.begin}&end=${this.state.end}`
+      request(api_topic_message_list, {
       method: 'POST',
       headers: {
         "Content-Type": "application/x-www-form-urlencoded"
@@ -397,7 +399,8 @@ class TopicList extends React.Component {
           pageInfo: res.data.pageInfo,
         });
       }
-    });
+      }); 
+    },10)
   }
       componentDidMount() {  
         //this.topicTimer = setTimeout( ()=>{
@@ -457,7 +460,7 @@ class TopicList extends React.Component {
 
   componentWillUnmount() {
     this.props.paginationPage(1);
-    //clearTimeout(this.topicTimer);
+    clearTimeout(this.dataChangeTimer); 
   }
 
   render() {

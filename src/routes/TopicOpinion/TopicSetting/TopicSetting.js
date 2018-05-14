@@ -275,7 +275,7 @@ class TopicSetting extends React.Component {
   }
   TopicNameChange(e){
         const {value} = e.target;
-        if(value.length>28){
+        if(value.length>=28){
               message.error('专题名称请不要超过28个字符');
               return;
         }

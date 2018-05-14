@@ -1,5 +1,5 @@
 import React from 'react';
-import {Icon, Menu,Modal,Input,Dropdown} from 'antd';
+import {Icon, Menu,Modal,Input,Dropdown,message} from 'antd';
 import { Route, Switch} from 'react-router-dom';
 import {history} from '../../utils/history';
 import TopicList from './TopicList/TopicList';
@@ -117,6 +117,11 @@ class TopicOpinion extends React.Component {
 
     }
     onChange(e){
+          const {value} = e.target;
+          if(value.length>=28){
+            message.error('分类名称请不要超过28个字符');
+            return;
+          } 
     	  this.setState({inputValue:e.target.value})
     }
     handleOk(e){
@@ -367,7 +372,7 @@ class TopicOpinion extends React.Component {
                     <p className="textCenter">输入分类名</p>
                     <Input className="gapInput" onChange={this.onChange.bind(this)}
                     value={this.state.inputValue}
-                    maxLength={'20'}
+                    maxLength={'28'}
                     />
                     </Modal>
                     <Modal
@@ -393,7 +398,8 @@ class TopicOpinion extends React.Component {
                     onCancel={this.delCancelThree.bind(this)}
                     >
                     <p className="textCenter">输入新的分类名</p>
-                    <Input className="gapInput" onChange={this.onChange.bind(this)}   value={this.state.inputValue}/>
+                    <Input className="gapInput" onChange={this.onChange.bind(this)}  
+                     value={this.state.inputValue}  maxLength={'28'}/>
                 </Modal>
             </div>
         )

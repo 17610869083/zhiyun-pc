@@ -6,6 +6,7 @@ import {getSortedContentRequested, paginationPage} from '../../redux/actions/cre
 import OpinionDetail from '../../components/OpinionDetail/OpinionDetail';
 import './SortedList.less';
 import {getSecondTime} from '../../utils/format';
+import { setTimeout } from 'timers';
 
 const FormItem = Form.Item;
 
@@ -126,8 +127,17 @@ class SortedList extends React.Component {
     this.setState({
       datetag: value
     });
-    const param = {
+    const param = this.props.clfCat.state ? {
       clfid: this.props.clfId,
+      datetag: value,
+      neg: this.state.neg,
+      order: this.state.order,
+      similer: this.state.similer,
+      carry: this.state.carry,
+      page: 1,
+      pagesize: this.state.pagesize,
+    } :{
+      catid: this.props.clfCat.catid,
       datetag: value,
       neg: this.state.neg,
       order: this.state.order,
@@ -144,8 +154,17 @@ class SortedList extends React.Component {
     this.setState({
       neg: value
     });
-    const param = {
+    const param = this.props.clfCat.state ? {
       clfid: this.props.clfId,
+      datetag: this.state.datetag,
+      neg: value,
+      order: this.state.order,
+      similer: this.state.similer,
+      carry: this.state.carry,
+      page: 1,
+      pagesize: this.state.pagesize,
+    } :{
+      catid: this.props.clfCat.catid,
       datetag: this.state.datetag,
       neg: value,
       order: this.state.order,
@@ -162,8 +181,17 @@ class SortedList extends React.Component {
     this.setState({
       carry: value
     });
-    const param = {
+    const param = this.props.clfCat.state ? {
       clfid: this.props.clfId,
+      datetag: this.state.datetag,
+      neg: this.state.neg,
+      order: this.state.order,
+      similer: this.state.similer,
+      carry:  value,
+      page: 1,
+      pagesize: this.state.pagesize,
+    } :{
+      catid: this.props.clfCat.catid,
       datetag: this.state.datetag,
       neg: this.state.neg,
       order: this.state.order,
@@ -180,8 +208,17 @@ class SortedList extends React.Component {
     this.setState({
       similer: value
     });
-    const param = {
+    const param = this.props.clfCat.state ? {
       clfid: this.props.clfId,
+      datetag: this.state.datetag,
+      neg: this.state.neg,
+      order: this.state.order,
+      similer: value,
+      carry:  this.state.carry,
+      page: 1,
+      pagesize: this.state.pagesize,
+    } :{
+      catid: this.props.clfCat.catid,
       datetag: this.state.datetag,
       neg: this.state.neg,
       order: this.state.order,
@@ -198,8 +235,17 @@ class SortedList extends React.Component {
     this.setState({
       order: value
     });
-    const param = {
+    const param = this.props.clfCat.state ? {
       clfid: this.props.clfId,
+      datetag: this.state.datetag,
+      neg: this.state.neg,
+      order: value,
+      similer: this.state.similer,
+      carry:  this.state.carry,
+      page: 1,
+      pagesize: this.state.pagesize,
+    } :{
+      catid: this.props.clfCat.catid,
       datetag: this.state.datetag,
       neg: this.state.neg,
       order: value,
@@ -233,15 +279,25 @@ class SortedList extends React.Component {
         message.error('开始时间请不要大于结束时间');
         return;
       }
-
       this.setState({
         begin: begin,
         end: end,
         timeValue: 'custom',
         timeIndex: 0
       });
-      const param = {
+      const param = this.props.clfCat.state ? {
         clfid: this.props.clfId,
+        datetag: this.state.datetag,
+        neg: this.state.neg,
+        order: this.state.order,
+        similer: this.state.similer,
+        carry:  this.state.carry,
+        page: 1,
+        pagesize: this.state.pagesize,
+        begin: begin,
+        end: end
+      } :{
+        catid: this.props.clfCat.catid,
         datetag: this.state.datetag,
         neg: this.state.neg,
         order: this.state.order,
@@ -255,22 +311,30 @@ class SortedList extends React.Component {
       this.props.getSortedContentRequested(param);
       this.props.paginationPage(1);
     })
-
   }
 
   onPaginationChange(value) {
     this.setState({
       page: value
     });
-    const param = {
+    const param = this.props.clfCat.state ? {
       clfid: this.props.clfId,
+      datetag: this.state.datetag,
+      neg: this.state.neg,
+      order: this.state.order,
+      similer: this.state.similer,
+      carry:  this.state.carry,
+      page: value,
+      pagesize: this.state.pagesize
+    } :{
+      catid: this.props.clfCat.catid,
       datetag: this.state.datetag,
       neg: this.state.neg,
       order: this.state.order,
       similer: this.state.similer,
       carry: this.state.carry,
       page: value,
-      pagesize: this.state.pagesize,
+      pagesize: this.state.pagesize
     };
     this.props.getSortedContentRequested(param);
     this.props.paginationPage(value);
@@ -282,31 +346,51 @@ class SortedList extends React.Component {
       page: current,
       pagesize: pageSize
     });
-    const param = {
+    const param = this.props.clfCat.state ? {
       clfid: this.props.clfId,
+      datetag: this.state.datetag,
+      neg: this.state.neg,
+      order: this.state.order,
+      similer: this.state.similer,
+      carry:  this.state.carry,
+      page: this.state.page,
+      pagesize: pageSize
+    } :{
+      catid: this.props.clfCat.catid,
       datetag: this.state.datetag,
       neg: this.state.neg,
       order: this.state.order,
       similer: this.state.similer,
       carry: this.state.carry,
       page: this.state.page,
-      pagesize: pageSize,
+      pagesize: pageSize
     };
     this.props.getSortedContentRequested(param);
   }
 
   dataChanged(data) {
-    const param = {
-      clfid: this.props.clfId,
-      datetag: this.state.datetag,
-      neg: this.state.neg,
-      order: this.state.order,
-      similer: this.state.similer,
-      carry: this.state.carry,
-      page: data,
-      pagesize: this.state.pagesize,
-    };
-    this.props.getSortedContentRequested(param);
+    this.sortDataTimer = setTimeout(()=>{
+      const param = this.props.clfCat.state ? {
+        clfid: this.props.clfId,
+        datetag: this.state.datetag,
+        neg: this.state.neg,
+        order: this.state.order,
+        similer: this.state.similer,
+        carry:  this.state.carry,
+        page: this.props.page,
+        pagesize: this.state.pagesize
+      } :{
+        catid: this.props.clfCat.catid,
+        datetag: this.state.datetag,
+        neg: this.state.neg,
+        order: this.state.order,
+        similer: this.state.similer,
+        carry: this.state.carry,
+        page: this.props.page,
+        pagesize: this.state.pagesize
+      };
+      this.props.getSortedContentRequested(param);
+    },10)
   }
 
   // 头部显示和隐藏
@@ -317,9 +401,9 @@ class SortedList extends React.Component {
   }  
   componentDidUpdate(prevProps, prevState) {
     if (prevProps.location.search !== this.props.location.search) {
-      console.log('clf2')
       const param = {
         clfid: this.props.clfId,
+        similer:0
       };
       this.props.getSortedContentRequested(param);
     } else if (prevProps.page !== this.props.page) {
@@ -328,8 +412,9 @@ class SortedList extends React.Component {
 
   componentWillUnmount() {
     this.props.paginationPage(1);
+    clearTimeout(this.sortDataTimer)
+    
   }
-
   render() {
     const {docList, pageInfo, carryCount, page} = this.props;
     const {
@@ -498,7 +583,8 @@ const mapStateToProps = state => {
     pageInfo: state.getSortedContentSucceeded.data.pageInfo,
     clfId: state.changeClfId.id,
     page: state.paginationPageReducer,
-    search: state.searchStateReducer.data
+    search: state.searchStateReducer.data,
+    clfCat : state.clfCatState.data
   }
 };
 const mapDispatchToProps = dispatch => {
