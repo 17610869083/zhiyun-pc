@@ -189,11 +189,7 @@ class SortedSetting extends React.Component {
   }
 
   componentWillMount() {
-    // request(api_sorted_menu_list).then(res => {
-    //     console.log(res);
-    // })
     let clfid = this.props.location.search.split('=')[1];
-
     request(api_sorted_rule_list + '&clfid=' + clfid).then(res => {
       if (res.data && res.data.code !== 0) {
         let addtypeStr = 'num' + (res.data.addtype);

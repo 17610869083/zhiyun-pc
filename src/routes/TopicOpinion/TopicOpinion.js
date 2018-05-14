@@ -58,11 +58,12 @@ class TopicOpinion extends React.Component {
         });
     }
     componentWillUnmount(){
-        this.props.searchState({data:true})
+        this.props.searchState({data:true});
+        clearTimeout( this.topichomeTimer);
     }
     componentWillMount(){
-          this.props.topicNavMessageRequested(new Date());
-          setTimeout( ()=>{
+         this.props.topicNavMessageRequested(new Date());
+         this.topichomeTimer = setTimeout( ()=>{
           let topicMessage=this.props.topicNavMessageSucceededState;
           if(topicMessage!==1){
             let firstTopicid='';

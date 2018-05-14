@@ -71,7 +71,7 @@ class TopicReportList extends React.Component{
                         })(
                             <Input 
                             onChange={this.reportChange.bind(this)}
-                            maxLength={'14'}/>
+                            maxLength={'28'}/>
                         )}
                     </FormItem>
                 </Form>

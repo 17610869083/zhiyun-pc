@@ -8,7 +8,7 @@ import {
   regenerate_report, api_removetitle_report, public_sentiment_report, preview_report,
   report_search, api_batch_del_report, api_export_small
 } from '../../services/api';
-import {getLocalTime, responseTime} from '../../utils/format';
+import {getLocalTime, responseTime,getSecondTime} from '../../utils/format';
 
 const TabPane = Tabs.TabPane;
 
@@ -147,7 +147,6 @@ class HistoryOpinion extends React.Component {
 
   //删除
   handleOk() {
-
     request(del_report, {
       method: 'POST',
       headers: {
@@ -400,12 +399,16 @@ class HistoryOpinion extends React.Component {
   queryTitle = () => {
     let tasklist = this.state.type === '1' ? 'tasklist' : 'reportTaskList';
     let pageCount = this.state.type === '1' ? 'pageCount' : 'reportPageCount';
+    if(getSecondTime(this.state.startTime) > getSecondTime(this.state.endTime)){
+         message.error('开始时间请不要大于结束时间！');
+         return;
+    }
     request(report_search, {
       method: 'POST',
       headers: {
         "Content-Type": "application/x-www-form-urlencoded"
       },
-      body: `taskname=${this.state.titleInputValue}&sdate=${this.state.startTime}&edate=${this.state.endTime}`
+      body: `taskname=${this.state.titleInputValue}&sdate=${this.state.startTime} 00:00:00&edate=${this.state.endTime} 23:59:59`
     }).then(res => {
       if (res.data) {
         this.setState({
@@ -672,8 +675,8 @@ class HistoryOpinion extends React.Component {
                        value={this.state.titleInputValue}
                 />
                 <span>生成时间:</span>
-                <DatePicker format="YYYY-MM-DD HH:mm:ss" className="datePicker" onChange={this.startTime}/>
-                <DatePicker format="YYYY-MM-DD HH:mm:ss" className="datePicker" onChange={this.endTime}/>
+                <DatePicker format="YYYY-MM-DD" className="datePicker" onChange={this.startTime}/>
+                <DatePicker format="YYYY-MM-DD" className="datePicker" onChange={this.endTime}/>
                 <Button type="primary" onClick={this.queryTitle}>查询</Button>
               </div>
               <div className="historySummary">
@@ -714,8 +717,8 @@ class HistoryOpinion extends React.Component {
                        value={this.state.titleInputValue}
                 />
                 <span>生成时间:</span>
-                <DatePicker format="YYYY-MM-DD HH:mm:ss" className="datePicker" onChange={this.startTime}/>
-                <DatePicker format="YYYY-MM-DD HH:mm:ss" className="datePicker" onChange={this.endTime}/>
+                <DatePicker format="YYYY-MM-DD" className="datePicker" onChange={this.startTime}/>
+                <DatePicker format="YYYY-MM-DD" className="datePicker" onChange={this.endTime}/>
                 <Button type="primary" onClick={this.queryTitle}>查询</Button>
               </div>
               <div className="historySummary">

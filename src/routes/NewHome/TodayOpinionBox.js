@@ -14,6 +14,12 @@ class TodayOpinionBox extends React.PureComponent {
              ratio:0
         }
     }
+    componentWillUnmount(){
+         if(this.allTimer) clearInterval(this.allTimer);
+         if(this.warningTimer) clearInterval(this.warningTimer);
+         if(this.negativeTimer) clearInterval(this.negativeTimer);
+         if(this.ratioTimer) clearInterval(this.ratioTimer);
+    }
     componentDidMount(){
         request(api_today_opinion)
         .then(res => {

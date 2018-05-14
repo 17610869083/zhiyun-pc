@@ -314,10 +314,10 @@ class SortedList extends React.Component {
     this.setState({
       isTopShow: !this.state.isTopShow
     })
-  }
-
+  }  
   componentDidUpdate(prevProps, prevState) {
     if (prevProps.location.search !== this.props.location.search) {
+      console.log('clf2')
       const param = {
         clfid: this.props.clfId,
       };

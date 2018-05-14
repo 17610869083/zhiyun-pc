@@ -220,7 +220,7 @@ class TopicList extends React.Component {
       },
       body: requestStr
     }).then((res) => {
-      if (res.data && res.data.code !== 0) {
+      if (res.data ) {
         this.setState({
           docList: res.data.docList,
           pageCount: res.data.pageInfo.pageCount,
@@ -399,7 +399,25 @@ class TopicList extends React.Component {
       }
     });
   }
-
+      componentDidMount() {  
+        //this.topicTimer = setTimeout( ()=>{
+        let topicID=Store.getState().getRouterReducer;    
+        if(typeof topicID!=='object'){
+                request(api_topic_message_list + '&topicid=' + topicID+ '&similer=0').then((res) => {
+                    if(res.data && res.data.code!==0){
+                    this.setState({
+                        docList: res.data.docList,
+                        media: res.data.carryCount,
+                        pageCount: res.data.pageInfo.pageCount,
+                        count: res.data.pageInfo.count,
+                        pageInfo:res.data.pageInfo,
+                        topicID:topicID
+                    });
+                }
+                });
+        }
+      //},60)   
+    }
   componentDidUpdate(prevProps, prevState) {
     if (prevProps.location.search !== this.props.location.search) {
       let topicID = Store.getState().getRouterReducer;
@@ -433,13 +451,13 @@ class TopicList extends React.Component {
       this.setState({
         checkedAll: false
         // checkedArray:this.state.checkedArray.fill(false)
-
       })
     }
   }
 
   componentWillUnmount() {
     this.props.paginationPage(1);
+    //clearTimeout(this.topicTimer);
   }
 
   render() {
@@ -576,7 +594,6 @@ class TopicList extends React.Component {
                          pageSize={this.state.pagesize}
                          propsType='TopicList'
                          pageInfo={this.state.pageInfo}
-                         current={this.state.page}
                          current={page}
           />
         </div>

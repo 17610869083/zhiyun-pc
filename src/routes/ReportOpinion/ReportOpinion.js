@@ -236,8 +236,8 @@ class TopicReport extends React.Component {
         this.props.form.validateFields((err, values) => {
             if (!err) {
                 const newReportName = values.newReportName;
-                if(newReportName.length>14){
-                      message.error('简报名称请不要大于14个字符');
+                if(newReportName.length>28){
+                      message.error('简报名称请不要大于28个字符');
                       return;
                 }
                 request(api_add_report + '&reportname=' + newReportName, {}).then(res => {
@@ -454,7 +454,7 @@ class TopicReport extends React.Component {
                         })(
                             <Input
                             onChange={this.reportChange.bind(this)}
-                            maxLength={'14'}/>
+                            maxLength={'28'}/>
                         )}
                     </FormItem>
                 </Form>

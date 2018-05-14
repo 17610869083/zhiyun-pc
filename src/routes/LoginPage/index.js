@@ -73,6 +73,7 @@ class LoginPage extends React.Component {
     }
     handleSubmit (e){
         e.preventDefault();
+        if(IE){
         this.props.form.validateFields((err, values) => {
             if (!err) {
                 const userName = values.username;
@@ -91,7 +92,7 @@ class LoginPage extends React.Component {
                 })
             }
         });
-     
+       }
     };
 
     triggerCRCodeShow (){
