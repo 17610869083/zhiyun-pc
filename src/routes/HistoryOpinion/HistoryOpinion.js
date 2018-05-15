@@ -704,7 +704,8 @@ class HistoryOpinion extends React.Component {
                      pagination={{
                        total: this.state.pageCount,
                        onChange: this.change.bind(this),
-                       current: this.state.page
+                       current: this.state.page,
+                       position:'top'
                      }}
               />
             </TabPane>
@@ -738,7 +739,8 @@ class HistoryOpinion extends React.Component {
                      pagination={{
                        total: this.state.reportPageCount,
                        onChange: this.reportChange.bind(this),
-                       current: this.state.reportPage
+                       current: this.state.reportPage,
+                       position:'top'
                      }}
               />
             </TabPane>

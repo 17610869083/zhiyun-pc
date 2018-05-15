@@ -326,22 +326,22 @@ class SortedOpinion extends React.Component {
                 lineHeight:'40px'
               }}>
               <Menu.Item key="sortlist" style={{
-                  fontSize: '18px'
+                  fontSize: '16px'
                 }}>
                 信息列表
               </Menu.Item>
               <Menu.Item key="setting" style={{
-                  fontSize: '18px'
+                  fontSize: '16px'
                 }}>
                 修改分类设置
               </Menu.Item>
               <Menu.Item key="addtopic" style={{
-                  fontSize: '18px'
+                  fontSize: '16px'
                 }}>
                 添加话题
               </Menu.Item>
               <Menu.Item key="addsort" style={{
-                  fontSize: '18px'
+                  fontSize: '16px'
                 }}>
                 添加分类
               </Menu.Item>

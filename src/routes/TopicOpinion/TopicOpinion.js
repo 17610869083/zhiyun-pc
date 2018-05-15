@@ -316,22 +316,22 @@ class TopicOpinion extends React.Component {
                         mode="horizontal"
                         style={{lineHeight:'40px',backgroundColor: '#2d324f',paddingTop:'14px',color:'#fff',border:'none'}}
                     >
-                        <Menu.Item key="topiclist" style={{fontSize:'18px'}}>
+                        <Menu.Item key="topiclist" style={{fontSize:'16px'}}>
                             信息列表
                         </Menu.Item>
-                        <Menu.Item key="count" style={{fontSize:'18px'}}>
+                        <Menu.Item key="count" style={{fontSize:'16px'}}>
                             统计分析
                         </Menu.Item>
-                        <Menu.Item key="report" style={{fontSize:'18px'}}>
+                        <Menu.Item key="report" style={{fontSize:'16px'}}>
                             专题报告
                         </Menu.Item>
-                        <Menu.Item key="setting" style={{fontSize:'18px'}}>
+                        <Menu.Item key="setting" style={{fontSize:'16px'}}>
                             修改专题设置
                         </Menu.Item>
-                        <Menu.Item key="addtopic" style={{fontSize:'18px'}}>
+                        <Menu.Item key="addtopic" style={{fontSize:'16px'}}>
                             添加专题
                         </Menu.Item>
-                        <Menu.Item key="addsort" style={{fontSize:'18px'}} onClick={this.handleCancelAddTopic.bind(this)}>
+                        <Menu.Item key="addsort" style={{fontSize:'16px'}} onClick={this.handleCancelAddTopic.bind(this)}>
                             添加分类
                         </Menu.Item>
                     </Menu>

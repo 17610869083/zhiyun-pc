@@ -121,24 +121,24 @@ class Index extends React.Component {
       if (item.channelurl === '/reportopinion/list') {
         menuList.push(<SubMenu
           key={item.key}
-          title={<span><Icon type={item.type} style={{fontSize: '14px'}}/><span
-            style={{fontSize: '14px'}}>舆情报告</span></span>}>
-          <Menu.Item key="reportopinion" style={{fontSize: '14px'}}>
+          title={<span><Icon type={item.type} style={{fontSize: '16px'}}/><span
+            style={{fontSize: '16px'}}>舆情报告</span></span>}>
+          <Menu.Item key="reportopinion" style={{fontSize: '16px'}}>
             <Link to="/reportopinion/list">
               <span>简报列表</span>
             </Link>
           </Menu.Item>
-          <Menu.Item key="materiaopinion" style={{fontSize: '14px'}}>
+          <Menu.Item key="materiaopinion" style={{fontSize: '16px'}}>
             <Link to="/materiaopinion">
               <span>素材库</span>
             </Link>
           </Menu.Item>
-          <Menu.Item key="collectionopinion" style={{fontSize: '14px'}}>
+          <Menu.Item key="collectionopinion" style={{fontSize: '16px'}}>
             <Link to="/collectionopinion">
               <span>我的收藏</span>
             </Link>
           </Menu.Item>
-          <Menu.Item key="historyopinion" style={{fontSize: '14px'}}>
+          <Menu.Item key="historyopinion" style={{fontSize: '16px'}}>
             <Link to="/historyopinion">
               <span>我的报告库</span>
             </Link>
@@ -147,37 +147,37 @@ class Index extends React.Component {
       } else if (item.channelurl === '../systemMan/systemManDo?action=userList') {
         menuList.push(<SubMenu key={item.key}
                                title={<span><Icon type={item.type}
-                                                  style={{fontSize: '14px'}}/><span
-                                 style={{fontSize: '14px'}}>系统设置</span></span>}>
-          <Menu.Item key="noticesetting" style={{fontSize: '14px'}}>
+                                                  style={{fontSize: '16px'}}/><span
+                                 style={{fontSize: '16px'}}>系统设置</span></span>}>
+          <Menu.Item key="noticesetting" style={{fontSize: '16px'}}>
             <Link to="/noticesetting">
               <span>通知设置</span>
             </Link>
           </Menu.Item>
-          <Menu.Item key="warnsetting" style={{fontSize: '14px'}}>
+          <Menu.Item key="warnsetting" style={{fontSize: '16px'}}>
             <Link to="/warnsetting">
               <span>预警设置</span>
             </Link>
           </Menu.Item>
-          <Menu.Item key="excludesetting" style={{fontSize: '14px'}}>
+          <Menu.Item key="excludesetting" style={{fontSize: '16px'}}>
             <Link to="/excludesetting">
               <span>排除停用</span>
             </Link>
           </Menu.Item>
-          <Menu.Item key="publicopinion" style={{fontSize: '14px'}}>
+          <Menu.Item key="publicopinion" style={{fontSize: '16px'}}>
             <Link to="/publicopinion">
               <span>舆情录入</span>
             </Link>
           </Menu.Item>
         </SubMenu>)
       } else {
-        menuList.push(<Menu.Item key={item.key} style={{fontSize: '14px'}}>
+        menuList.push(<Menu.Item key={item.key} style={{fontSize: '16px'}}>
           {item.channelurl.indexOf('http') !== -1 ?
             <a href={item.channelurl} target="blank">
-              <Icon type={item.type} style={{fontSize: '14px'}}/>
+              <Icon type={item.type} style={{fontSize: '16px'}}/>
               <span>{item.channelname}</span>
             </a> : <Link to={item.channelurl}>
-              <Icon type={item.type} style={{fontSize: '14px'}}></Icon>
+              <Icon type={item.type} style={{fontSize: '16px'}}></Icon>
               <span>{item.channelname}</span>
             </Link>
           }

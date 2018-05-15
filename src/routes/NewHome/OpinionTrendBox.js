@@ -74,17 +74,17 @@ class OpinionTrendBox extends React.Component {
                 <div className="container">
                     <div className="top">
                         <div className="title">
-                            <IconFont type="icon-qushi" style={{color: '#3F94FD',fontSize: '18px'}}/>
+                            <IconFont type="icon-qushi" style={{color: '#00c8e7',fontSize: '18px'}}/>
                             <span className="txt">舆情走势</span>
                             <span className="btnBox">
                             <Button onClick={this.trendChange.bind(this,'day',1)}
-                            style={this.state.buttonState===1?{color:'#fff',borderColor:'#108ee9',backgroundColor:'#1780cc'}:{}}
+                            style={this.state.buttonState===1?{color:'#fff',borderColor:'#108ee9',backgroundColor:'#00c8e7'}:{}}
                             >日</Button>
                             <Button onClick={this.trendChange.bind(this,'week',2)}
-                             style={this.state.buttonState===2?{color:'#fff',borderColor:'#108ee9',backgroundColor:'#1780cc'}:{}}
+                             style={this.state.buttonState===2?{color:'#fff',borderColor:'#108ee9',backgroundColor:'#00c8e7'}:{}}
                             >周</Button>
                             <Button onClick={this.trendChange.bind(this,'month',3)}
-                             style={this.state.buttonState===3?{color:'#fff',borderColor:'#108ee9',backgroundColor:'#1780cc'}:{}}
+                             style={this.state.buttonState===3?{color:'#fff',borderColor:'#108ee9',backgroundColor:'#00c8e7'}:{}}
                             >月</Button>
                             </span>
                             <Icon type="close-circle" className="delModule"
