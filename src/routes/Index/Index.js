@@ -196,7 +196,7 @@ class Index extends React.Component {
             collapsed={this.state.collapsed}
           >
             <div>
-              <div className="logo-wrapper" >
+              <div className="logo-wrapper">
                 <img src={logo} alt="logo" className="logo" onClick={this.goBackIndex.bind(this)}/>
               </div>
               <div className="trigger-wrapper" onClick={this.toggle}>
@@ -272,8 +272,7 @@ class Index extends React.Component {
                         onMouseEnter={this.showPhone.bind(this)}
                         onMouseLeave={this.hidePhone.bind(this)}
                     ></i>
-                      <div className={this.state.phoneStatus ? 'phoneBox active' : 'phoneBox'}
-                      >
+                      <div className={this.state.phoneStatus ? 'phoneBox active' : 'phoneBox'}>
                         <p>咨询热线：</p>
                         <p>82540636</p>
                         <p>服务热线：</p>
