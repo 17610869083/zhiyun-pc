@@ -113,7 +113,6 @@ class Index extends React.Component {
   backTop() {
     document.querySelector('.main').scrollTop = 0;
   }
-
   render() {
     const {themeColor} = this.props;
     let menuList = [];
@@ -121,8 +120,8 @@ class Index extends React.Component {
       if (item.channelurl === '/reportopinion/list') {
         menuList.push(<SubMenu
           key={item.key}
-          title={<span><Icon type={item.type} style={{fontSize: '16px'}}/><span
-            style={{fontSize: '16px'}}>舆情报告</span></span>}>
+          title={<Link to="/historyopinion"><span><Icon type={item.type} style={{fontSize: '16px'}}/><span
+            style={{fontSize: '16px'}}>舆情报告</span></span></Link>}>
           <Menu.Item key="reportopinion" style={{fontSize: '16px'}}>
             <Link to="/reportopinion/list">
               <span>简报列表</span>
@@ -145,10 +144,10 @@ class Index extends React.Component {
           </Menu.Item>
         </SubMenu>)
       } else if (item.channelurl === '../systemMan/systemManDo?action=userList') {
-        menuList.push(<SubMenu key={item.key}
-                               title={<span><Icon type={item.type}
+        menuList.push(<SubMenu key={item.key} 
+                               title={<Link to="/noticesetting"><span><Icon type={item.type}
                                                   style={{fontSize: '16px'}}/><span
-                                 style={{fontSize: '16px'}}>系统设置</span></span>}>
+                                 style={{fontSize: '16px'}}>系统设置</span></span> </Link>}>
           <Menu.Item key="noticesetting" style={{fontSize: '16px'}}>
             <Link to="/noticesetting">
               <span>通知设置</span>

@@ -92,7 +92,7 @@ class LoginPage extends React.Component {
                 })
             }
         });
-       }
+        }
     };
 
     triggerCRCodeShow (){

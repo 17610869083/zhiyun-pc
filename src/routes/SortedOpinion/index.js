@@ -16,11 +16,11 @@ import SortedAdd from './SortedAdd';
 import SortedSetting from './SortedSetting';
 import request from '../../utils/request';
 import {api_sorted_cat_add, api_sorted_cat_edit, api_sorted_cat_delete, api_sorted_grade_delete} from '../../services/api';
-import deleteImg from '../../assets/operate-img/delete.png';
 import './index.less';
 import {clfCatState,changeClfId, getSortedContentRequested, getCollectionLocationRequested, getSortedMenuRequested, searchState} from "../../redux/actions/createActions";
 import {setTimeout} from 'timers';
 import Iconfont from '../../components/IconFont';
+import Del from '../../assets/img/del.svg'; 
 const confirm = Modal.confirm;
 class SortedOpinion extends React.Component {
   constructor() {
@@ -293,8 +293,7 @@ class SortedOpinion extends React.Component {
               ? 'clf-item-active'
               : 'clf-item'} key={sortItem.clfid}>
             <span className="name" onClick={this.changeSortRoute.bind(this, sortItem.clfid)} title={sortItem.clfname}>{sortItem.clfname}</span>
-        
-            <img src={deleteImg} alt="delete" className="delete-icon" onClick={this.deleteSortedItem.bind(this, sortItem.clfid)}/>
+            <img src={Del} alt="删除" className="delete-icon" onClick={this.deleteSortedItem.bind(this, sortItem.clfid)}/>
           </li>)
         }
       </ul>
@@ -305,7 +304,9 @@ class SortedOpinion extends React.Component {
         <div className="operation">
           分类
         </div>
+        <div className="sort-conent">
         {SortedMenu}
+        </div>
       </div>
       <div className="modals">
         <Modal title="添加分类" visible={sortVisible} onOk={this.handleSortOk.bind(this)} onCancel={this.handleCancel.bind(this)}>

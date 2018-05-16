@@ -405,11 +405,14 @@ class NewHome extends React.Component {
             </Row>
             <Row gutter={16} className="row">
               <Col span={12}
-                   style={ModuleList.newestOpinion === 1 ? {display: 'none'} : {display: 'block'}}
+                   style={ModuleList.newestWarningOpinion === 1 ? {display: 'none'} : {display: 'block'}}
               >
-                <NewestOpinionBox opinionList={opinionList}
-                                  status={this.props.type !== undefined ? 'setting' : ''}
-                                  delNewestBox={this.delNewestBox.bind(this)}
+                <NewestWarningOpinionBox
+                  todayOpinion={todayWarningOpinion}
+                  yesterdayOpinion={yesterdayWarningOpinion}
+                  beforeYesterdayOpinion={beforeYesterdayWarningOpinion}
+                  status={this.props.type !== undefined ? 'setting' : ''}
+                  delNewestWarningBox={this.delNewestWarningBox.bind(this)}
                 />
               </Col>
               <Col span={12}
@@ -424,14 +427,11 @@ class NewHome extends React.Component {
                 />
               </Col>
               <Col span={12}
-                   style={ModuleList.newestWarningOpinion === 1 ? {display: 'none'} : {display: 'block'}}
+                   style={ModuleList.newestOpinion === 1 ? {display: 'none'} : {display: 'block'}}
               >
-                <NewestWarningOpinionBox
-                  todayOpinion={todayWarningOpinion}
-                  yesterdayOpinion={yesterdayWarningOpinion}
-                  beforeYesterdayOpinion={beforeYesterdayWarningOpinion}
-                  status={this.props.type !== undefined ? 'setting' : ''}
-                  delNewestWarningBox={this.delNewestWarningBox.bind(this)}
+                <NewestOpinionBox opinionList={opinionList}
+                                  status={this.props.type !== undefined ? 'setting' : ''}
+                                  delNewestBox={this.delNewestBox.bind(this)}
                 />
               </Col>
               <Col span={12}

@@ -17,7 +17,7 @@
            line-height: 44px;
            padding-left: 20px;
            color:#fff;
-           font-size: 18px;
+           font-size: 14px;
           .add-topic {
             width: 100px;
             height: 40px;
@@ -25,7 +25,7 @@
             border-left:1px solid #007aff;
             border-top:1px solid #007aff;
             text-align: center;
-            font-size: 16px;
+            font-size: 14px;
             cursor: pointer;
             border-radius:4px 0 0 0;
             color:#007aff;
@@ -44,6 +44,20 @@
         }
         .classes {
           background: #F7F7F7;
+          max-height: 420px;
+          overflow: auto;
+          -ms-scroll-chaining: chained;
+          -ms-overflow-style: none;
+          -ms-content-zooming: zoom;
+          -ms-scroll-rails: none;
+          -ms-content-zoom-limit-min: 100%;
+          -ms-content-zoom-limit-max: 500%;
+          -ms-scroll-snap-type: proximity;
+          -ms-scroll-snap-points-x: snapList(100%, 200%, 300%, 400%, 500%);
+          -ms-overflow-style: none;
+          }
+          .classes::-webkit-scrollbar {
+            display: none;
           }
           .a-class {
             box-sizing: border-box;
@@ -67,7 +81,7 @@
               text-overflow:ellipsis;
               white-space: nowrap;
               overflow: hidden;
-              font-size: 16px;
+              font-size: 14px;
               .mar{
                 margin-left: 10px;
               }
@@ -109,7 +123,7 @@
                   top: 12px;
                   right: 10px;
                   padding-left: 20px;
-                  width: 35px;
+                  width: 40px;
                 }
               }
               .a-topic {
@@ -134,10 +148,10 @@
                 }
                 .icon-delete {
                   position: absolute;
-                  top: 7px;
+                  top: 8px;
                   right: 10px;
                   padding-left: 20px;
-                  width: 35px;
+                  width: 40px;
                 }
                 &:hover {
                   background-color: #f7f7f7;

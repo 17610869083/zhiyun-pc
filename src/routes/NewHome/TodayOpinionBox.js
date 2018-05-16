@@ -81,7 +81,7 @@ class TodayOpinionBox extends React.PureComponent {
             <div className="today-opinion-box">
                  <div className="today-opinion-top"
                   style={this.props.status==='setting'?{display:'block'}:{display:'none'}}>
-                 <Icon type="close-circle" className="delModule" style={{fontSize: '18px'}}
+                 <Icon type="close-circle" className="delModule" style={{fontSize: '18px',color: '#ffffff'}}
                  onClick={this.delTodayOpinionBox.bind(this)}
                  ></Icon>
                  </div>
@@ -92,7 +92,7 @@ class TodayOpinionBox extends React.PureComponent {
                              <div className="opinion-info">
                                  <div className="content">
                                      <div className="icon-wrapper" style={{backgroundColor: '#f2a200'}}>
-                                         <IconFont type="icon-shandian" style={{color: '#ffffff',fontSize: '50px'}}/>
+                                         <IconFont type="icon-shandian22-copy" style={{color: '#ffffff',fontSize: '50px'}}/>
                                      </div>
                                      <div className="count" style={{backgroundColor: '#ffbc34'}}>
                                          <div className="number">{todayWarning}</div>

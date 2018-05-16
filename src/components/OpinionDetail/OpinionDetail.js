@@ -850,20 +850,20 @@ class OpinionDetail extends React.Component {
                         onCancel={this.deleteCancel.bind(this)} okText="是" cancelText="否">
               <Tooltip title='删除' placement="bottom">
                 <div className="operate-all">
-                  <img src={Del} alt="删除" style={{ height:'22px'}}/>
+                  <img src={Del} alt="删除" style={{ height:'22px',marginTop:'2px'}}/>
                 </div>
               </Tooltip>
             </Popconfirm>
             <Tooltip title='未勾选默认导出5000条' placement="bottom">
               <div className="operate-all" onClick={this.showModal.bind(this)}>
-              <img src={Dowload} alt="export" />
+              <img src={Dowload} alt="export" style={{height:'18px'}}/>
               </div>
             </Tooltip>
             <Dropdown overlay={ChangeTrendMenu} trigger={['click']}
                       getPopupContainer={() => document.querySelector('.opinion-detail')}>
               <Tooltip title='倾向' placement="bottom">
                 <div className="operate-all">
-                <img src={Qing} alt="倾向" style={{height:'30px',width:'27px'}}/>
+                <img src={Qing} alt="倾向" style={{height:'24px',width:'24px',marginTop:'-2px'}}/>
                 </div>
               </Tooltip>
             </Dropdown>
@@ -872,7 +872,7 @@ class OpinionDetail extends React.Component {
             >
               <Tooltip title='素材库' placement="bottom">
                 <div className="operate-all" onClick={this.props.getCollectionOpinionListRequested.bind(this)}>
-                <img src={Material} alt="素材库" style={{height:'18px'}}/>
+                <img src={Material} alt="素材库" style={{height:'16px'}}/>
                 </div>
               </Tooltip>
             </Dropdown>

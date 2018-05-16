@@ -21,14 +21,9 @@ import EditOpinionDetail from '../../components/EditOpinionDetail/EditOpinionDet
 import {Tag, Popconfirm, message, Icon, Modal, Menu, Dropdown, Select, Input} from 'antd';
 import {history} from '../../utils/history';
 import {setHighlightTags, opinionTypeToColor, getMeailMessage} from '../../utils/format';
-import pushImg from '../../assets/operate-img/push.png';
-import deleteImg from '../../assets/operate-img/delete.png';
-import negativeImg from '../../assets/operate-img/negative.png';
-import warningImg from '../../assets/operate-img/warning.png';
-import editImg from '../../assets/operate-img/edit.png';
 import './DetailOpinion.less';
 import Store from '../../redux/store/index'
-
+import IconFont from '../../components/IconFont'
 const Option = Select.Option;
 
 class DetailOpinion extends React.Component {
@@ -526,17 +521,19 @@ class DetailOpinion extends React.Component {
                         <div className="itemBox">
                             <Popconfirm title="确定要将这条信息设置为预警吗？" onConfirm={this.warningConfirm.bind(this, sid)} onCancel={this.deleteCancel.bind(this)} okText="是" cancelText="否">
                                 <div className="operation-item" title="设为预警">
-                                    <img src={warningImg} alt="warning"/>
+                                <IconFont type="icon-shandian"/>
+                                    {/* <img src={warningImg} alt="warning"/> */}
                                 </div>
                             </Popconfirm>
                             <Popconfirm title="确定要将这条信息设置为负面吗？" onConfirm={this.negativeConfirm.bind(this, sid)} onCancel={this.deleteCancel.bind(this)} okText="是" cancelText="否">
                                 <div className="operation-item" title="设为负面">
-                                    <img src={negativeImg} alt="negative"/>
+                                <IconFont type="icon-fumianxinxi"/>
+                                    {/* <img src={negativeImg} alt="negative"/> */}
                                 </div>
                             </Popconfirm>
                             <Popconfirm title="确定要将这条信息设置为正面吗？" onConfirm={this.positiveConfirm.bind(this, sid)} onCancel={this.deleteCancel.bind(this)} okText="是" cancelText="否">
-                                <div className="operation-item item-font" title="设为正面">
-                                      正
+                                <div className="operation-item" title="设为正面">
+                                <IconFont type="icon-zheng"/>
                                 </div>
                             </Popconfirm>
                             <Popconfirm title="确定要将这条信息设置为中性吗？" onConfirm={this.neutralConfirm.bind(this, sid)} onCancel={this.deleteCancel.bind(this)} okText="是" cancelText="否">
@@ -547,15 +544,18 @@ class DetailOpinion extends React.Component {
 
                             <Popconfirm title="确定要删除这条信息吗？" onConfirm={this.deleteConfirm.bind(this, sid)} onCancel={this.deleteCancel.bind(this)} okText="是" cancelText="否">
                                 <div className="operation-item" title="删除">
-                                    <img src={deleteImg} alt="delete"/>
+                                <IconFont type="icon-shanchu1"/>
+                                    {/* <img src={deleteImg} alt="delete"/> */}
                                 </div>
                             </Popconfirm>
                             <div className="operation-item" title="修改" onClick={this.showEditModal.bind(this)}>
-                                <img src={editImg} alt="edit"/>
+                               <IconFont type="icon-iconfontbianji1"/>
+                                {/* <img src={editImg} alt="edit"/> */}
                             </div>
                            
                                 <div className="operation-item" title="推送">
-                                    <img src={pushImg} alt="push" onClick={this.searchEmail.bind(this)}/>
+                                <IconFont type="icon-tuisongguize"/>
+                                    {/* <img src={pushImg} alt="push" onClick={this.searchEmail.bind(this)}/> */}
                                 </div>
                             </div>
                             <div className="keywords-right">

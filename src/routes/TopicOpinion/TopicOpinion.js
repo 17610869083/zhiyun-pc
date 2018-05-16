@@ -14,8 +14,8 @@ import './TopicOpinion.less';
 import Iconfont from '../../components/IconFont';
 import {setlocationPathname,getTopicLocationRequested,topicNavMessageRequested,searchState} from '../../redux/actions/createActions';
 import {connect} from 'react-redux';
-import deleteImg from '../../assets/operate-img/delete.png';
 import { setTimeout } from 'timers';
+import Del from '../../assets/img/del.svg'; 
 class TopicOpinion extends React.Component {
     constructor(props) {
         super(props);
@@ -296,7 +296,7 @@ class TopicOpinion extends React.Component {
                   >
                         {iitem.topicname}
                   </span>
-                 <img src={deleteImg} alt="" className="icon-delete"  data-topicid={iitem.topicid} onClick={this.delTopic.bind(this)}/>
+                  <img src={Del} alt="删除" className="icon-delete"  data-topicid={iitem.topicid} onClick={this.delTopic.bind(this)}/>
                 </li>
              )}
              </ul>
