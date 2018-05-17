@@ -44,7 +44,8 @@ class CollectionOpinion extends React.Component {
             checkedAll: false,
             arr: new Array(40).fill(false),
             materialSid: '',
-            CollectionValue: ''
+            CollectionValue: '',
+            browserHeight:300
         };
     }
 
@@ -283,6 +284,9 @@ class CollectionOpinion extends React.Component {
     }
 
     componentWillMount() {
+        this.setState({
+            browserHeight:window.innerHeight-140
+        })
         this.props.getCollectionOpinionListRequested();
         setTimeout(() => {
             this.props.getCollectionOpinionDetailRequested(21);
@@ -541,7 +545,7 @@ class CollectionOpinion extends React.Component {
                             }} placeholder="请输入您要搜索的内容" onSearch={this.handleSearchBtn.bind(this)} />
                         </div>
                     </div>
-                    <div className="bottom">
+                    <div className="bottom" >
                         <ul className="opinion-detail-wrapper">
                             {
                                 this.props.docList
@@ -584,7 +588,7 @@ class CollectionOpinion extends React.Component {
                                 </Form>
                             </Modal>
                         </div>
-                        <div className="bottom">
+                        <div className="bottom" style={{maxHeight:this.state.browserHeight+'px'}}>
                             <ul className="collection-list">
                                 {
                                     favCatList.map((item, index) => <li key={item.id} className={this.state.CollectionCurrent === index

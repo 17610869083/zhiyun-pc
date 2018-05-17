@@ -168,6 +168,9 @@ class OpinionDetail extends React.Component {
       if (res.data.code === 1) {
         message.success(res.data.msg);
         this.props.onDataChange(1);
+        this.setState({
+          checkedArray:new Array(40).fill(false)
+        })
       }
     });
   }
@@ -178,6 +181,9 @@ class OpinionDetail extends React.Component {
       if (res.data.code === 1) {
         message.success(res.data.msg);
         this.props.onDataChange(1);
+        this.setState({
+          checkedArray:new Array(40).fill(false)
+        })
       }
     });
   }
@@ -189,6 +195,9 @@ class OpinionDetail extends React.Component {
         if (res.data.code === 1) {
           message.success(res.data.msg);
           this.props.onDataChange(1);
+          this.setState({
+            checkedArray:new Array(40).fill(false)
+          })
         }
       })
 
@@ -197,6 +206,9 @@ class OpinionDetail extends React.Component {
         if (res.data.code === 1) {
           message.success(res.data.msg);
           this.props.onDataChange(1);
+          this.setState({
+            checkedArray:new Array(40).fill(false)
+          })
         }
       });
     } else if (type === 'warin') {
@@ -204,6 +216,9 @@ class OpinionDetail extends React.Component {
         if (res.data.code === 1) {
           message.success(res.data.msg);
           this.props.onDataChange(1);
+          this.setState({
+            checkedArray:new Array(40).fill(false)
+          })
         }
       });
     }
@@ -212,6 +227,9 @@ class OpinionDetail extends React.Component {
         if (res.data.code === 1) {
           message.success(res.data.msg);
           this.props.onDataChange(1);
+          this.setState({
+            checkedArray:new Array(40).fill(false)
+          })
         }
       });
     }

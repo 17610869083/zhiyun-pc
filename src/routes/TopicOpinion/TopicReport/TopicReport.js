@@ -85,10 +85,6 @@ class TopicReport extends React.Component {
                 {
                     type: '新闻',
                     name: '新闻'
-                },
-                {
-                    type: '微博',
-                    name: '微博'
                 }
             ],
             count: [

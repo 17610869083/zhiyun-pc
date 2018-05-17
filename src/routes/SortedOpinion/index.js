@@ -53,7 +53,8 @@ class SortedOpinion extends React.Component {
       clfUlShowIndex: 0,
       clfsname: '',
       flag: true,
-      isTopShow: true
+      isTopShow: true,
+      browserHeight:300
     }
   }
   // 删除分类项目
@@ -214,6 +215,9 @@ class SortedOpinion extends React.Component {
     clearTimeout(this.sortTimer);
   }
   componentWillMount() {
+    this.setState({
+      browserHeight:window.innerHeight-140
+    })
     this.props.getSortedMenuRequested();
     let clfid = '';
     for (let i = 0; i < this.props.sortedMenu.length; i++) {
@@ -304,7 +308,7 @@ class SortedOpinion extends React.Component {
         <div className="operation">
           分类
         </div>
-        <div className="sort-conent">
+        <div className="sort-conent" style={{maxHeight:this.state.browserHeight+'px'}}>
         {SortedMenu}
         </div>
       </div>
@@ -334,7 +338,7 @@ class SortedOpinion extends React.Component {
               <Menu.Item key="setting" style={{
                   fontSize: '16px'
                 }}>
-                修改分类设置
+                修改话题设置
               </Menu.Item>
               <Menu.Item key="addtopic" style={{
                   fontSize: '16px'
@@ -348,7 +352,7 @@ class SortedOpinion extends React.Component {
               </Menu.Item>
             </Menu>
           </div>
-          <div className="close" onClick={this.triggerTopShow.bind(this)}>
+          <div className="close" onClick={this.triggerTopShow.bind(this)} style={this.state.current === 'sortlist'?{display:'block'}:{display:'none'}}>
           <span>{this.state.isTopShow ? '显示' : '隐藏'}</span>
           <Icon type={this.state.isTopShow ? 'down' : 'right'} />
           </div>

@@ -39,7 +39,8 @@ class MaterialOpinion extends React.Component {
             checkedAll: false,
             checkedLength: 0,
             arr: new Array(30).fill(false),
-            MaterialValue:''
+            MaterialValue:'',
+            browserHeight:300
         };
     }
 
@@ -249,7 +250,8 @@ class MaterialOpinion extends React.Component {
         this.props.getMaterialOpinionListRequested();
         const {materialList} =this.props;
         this.setState({
-              current:materialList[0]['id']
+              current:materialList[0]['id'],
+              browserHeight:window.innerHeight-140
         })
         setTimeout(() => {
             this.props.getMaterialOpinionDetailRequested(materialList[0]['id']);
@@ -502,7 +504,7 @@ class MaterialOpinion extends React.Component {
                                 />
                             </div>
                         </div>
-                        <div className="bottom">
+                        <div className="bottom" > 
                             <ul className="opinion-detail-wrapper">
                                 {this.props.docList ? OpinionDetailItems : <div>暂无数据！</div>}
                             </ul>
@@ -522,7 +524,6 @@ class MaterialOpinion extends React.Component {
                     </div>
                     <div className="left-boxes">
                         <div className="first-box">
-
                             <div className="top" onClick={this.showAddMaterial.bind(this)}>
                             +新增素材库
                                 <Modal
@@ -550,7 +551,7 @@ class MaterialOpinion extends React.Component {
                                     </Form>
                                 </Modal>
                             </div>
-                            <div className="bottom">
+                            <div className="bottom" style={{maxHeight:this.state.browserHeight+'px'}} >
                                 <ul className="material-list">
                                     {
                                         materialList.map((item, index) =>

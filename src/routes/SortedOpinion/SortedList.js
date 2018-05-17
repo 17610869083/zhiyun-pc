@@ -110,10 +110,15 @@ class SortedList extends React.Component {
       filterValue: 0,
       mediaValue: '全部',
       timePickerShow: false,
+      timeIndex:0
     };
   }
 
   timeClick(index, value) {
+    this.setState({
+      datetag: value,
+      timeIndex:index
+    });
     if (index === 5) {
       this.setState({
         timePickerShow: !this.state.timePickerShow
@@ -124,9 +129,7 @@ class SortedList extends React.Component {
         timePickerShow: false
       })
     }
-    this.setState({
-      datetag: value
-    });
+  
     const param = this.props.clfCat.state ? {
       clfid: this.props.clfId,
       datetag: value,
@@ -433,13 +436,12 @@ class SortedList extends React.Component {
         sm: {span: 16},
       },
     };
-
     // 时间
     const Time = datetagArray.map((item, index) =>
       <div
         key={item.value}
         onClick={this.timeClick.bind(this, index, item.value)}
-        className={item.value === datetag ? 'item active' : 'item'}
+        className={index === this.state.timeIndex ? 'item active' : 'item'}
       ><span className="item-inner">{item.name}</span></div>
     );
     // 倾向

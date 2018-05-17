@@ -54,7 +54,7 @@ class TodayOpinionBox extends React.PureComponent {
                     this.setState({
                         todayNegative:this.state.todayNegative+(Math.floor(todayNegative/10))
                     })
-                    if(this.state.negativeTimer>=todayNegative){
+                    if(this.state.todayNegative>=todayNegative){
                         clearInterval(this.negativeTimer)
                     }
                 },100)  

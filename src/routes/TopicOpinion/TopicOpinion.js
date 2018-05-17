@@ -34,7 +34,8 @@ class TopicOpinion extends React.Component {
             materialCurrent:0,
             addTopic:0,
             addClass:1,
-            isTopShow:true
+            isTopShow:true,
+            browserHeight:300
         };
 
     }
@@ -75,7 +76,8 @@ class TopicOpinion extends React.Component {
             this.setState({
                 topicLists:topicMessage,
                 topicId:firstTopicid,
-                materialCurrent:firstTopicid
+                materialCurrent:firstTopicid,
+                browserHeight:window.innerHeight-140
               })
             this.props.setlocationPathname(firstTopicid);
           }
@@ -336,7 +338,7 @@ class TopicOpinion extends React.Component {
                         </Menu.Item>
                     </Menu>
                     </div>
-                    <div className="close"  onClick={this.triggerTopShow.bind(this)}>
+                    <div className="close"  onClick={this.triggerTopShow.bind(this)} style={this.state.current==='topiclist'?{display:'block'}:{display:'none'}}>
                     <span>{this.state.isTopShow ? '显示' : '隐藏'}</span>
                     <Icon type={this.state.isTopShow ? 'down' : 'right'} />
                     </div>
@@ -357,7 +359,7 @@ class TopicOpinion extends React.Component {
                         <div className="add-topic-class">
                           专题
                         </div>
-                        <div className="classes">
+                        <div className="classes" style={{maxHeight:this.state.browserHeight+'px'}}>
                         {LeftTopicLists}
                         </div>
                     </div>
