@@ -83,7 +83,7 @@ class NewHome extends React.Component {
             request(api_newest_opinion)
               .then((res) => {
                 if (res.data && res.data.code === 1) {
-                  const opinionList = res.data.doclist.slice(0, 6);
+                  const opinionList = res.data.doclist.slice(0,7);
                   opinionList.forEach((item, index) => {
                     item.key = index + 1
                   })
