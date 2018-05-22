@@ -549,7 +549,7 @@ class AllOpinion extends React.Component {
 
   componentDidMount() {
     ReactDOM.findDOMNode(this).scrollIntoView();
-    if(this.props.ks && this.props.ks.keyword !==''){
+    if(this.props.ks.keyword !==''){
       this.setState({
           type:1
       })

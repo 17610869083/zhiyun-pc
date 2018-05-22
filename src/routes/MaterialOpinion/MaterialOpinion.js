@@ -522,7 +522,7 @@ class MaterialOpinion extends React.Component {
                             />
                         </div>
                     </div>
-                    <div className="left-boxes">
+                    <div className="left-boxes" style={this.props.getSids ? {left:'76%'}:{left:'85.6%'}}>
                         <div className="first-box">
                             <div className="top" onClick={this.showAddMaterial.bind(this)}>
                             +新增素材库

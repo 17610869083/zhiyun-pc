@@ -540,7 +540,8 @@ class OpinionDetail extends React.Component {
     } else if (this.props.searchKeyword.type === 1) {
       this.props.opinionSearchRequest({
         seltype: 'content', keyword: this.props.searchKeyword.keyword,
-        page: pagenumber
+        page: pagenumber,
+        similer:0
       });
     }
     else if (this.props.propsType === 'AllopinionList') {

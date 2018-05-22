@@ -15,7 +15,6 @@ import {
 import {formatDateTime} from '../../utils/format';
 import BlankPage from '../../base/Exception/BlankPage';
 const confirm = Modal.confirm;
-const FormItem = Form.Item;
 class TopicReport extends React.Component {
     constructor() {
         super();
@@ -222,8 +221,20 @@ class TopicReport extends React.Component {
     }
     // 确认创建简报
     handleCreateReportOk() {
-
-        this.handleCreateReportSubmit();
+        request(api_add_report,{
+            method: 'POST',
+            headers: {
+            "Content-Type": "application/x-www-form-urlencoded"
+            },
+            body:`reportname=${this.state.reportValue}`
+        }).then(res => {
+            message.success(res.data.msg);
+            this.props.getReportListRequested({pagesize:10,page:1});
+        })
+        this.setState({
+            createReportModalVisible: false,
+            reportValue:''
+        });
     }
     // 取消创建简报
     handleCreateReportCancel() {
@@ -231,27 +242,6 @@ class TopicReport extends React.Component {
             createReportModalVisible: false
         });
     }
-    // 创建提交
-    handleCreateReportSubmit() {
-        this.props.form.validateFields((err, values) => {
-            if (!err) {
-                const newReportName = values.newReportName;
-                if(newReportName.length>28){
-                      message.error('简报名称请不要大于28个字符');
-                      return;
-                }
-                request(api_add_report + '&reportname=' + newReportName, {}).then(res => {
-                    message.success(res.data.msg);
-                    this.props.getReportListRequested({pagesize:10,page:1});
-                })
-                this.setState({
-                    createReportModalVisible: false
-                });
-            }
-        });
-    }
-
-
     // 跳转到报告详情页
     linkToReportDetail(record,e) {
         e.preventDefault();
@@ -356,8 +346,8 @@ class TopicReport extends React.Component {
     }
     reportChange(e){
          const {value} = e.target;
-         if(value.length>=14){
-              message.error('简报名称请不要超过14个字符')
+         if(value.length>=28){
+              message.error('简报名称请不要超过28个字符')
          }
          this.setState({
             reportValue: value
@@ -370,7 +360,6 @@ class TopicReport extends React.Component {
           })
     }
     render() {
-        const { getFieldDecorator } = this.props.form;
         const { reportData } = this.props;
         const pageInfo=reportData[0]!==undefined?reportData[0]['pageinfo']:{rowcount:10,page:1}
         const dataNewList =reportData[0]!==undefined?reportData.map((item, index) =>
@@ -414,16 +403,6 @@ class TopicReport extends React.Component {
             </div>
         </li>
     ):<BlankPage desc="报告素材夹为空，请手动添加"/>;
-        const formItemLayout = {
-            labelCol: {
-                xs: { span: 24 },
-                sm: { span: 6 },
-            },
-            wrapperCol: {
-                xs: { span: 24 },
-                sm: { span: 14 },
-            },
-        };
         return (
            <div>
             <div className="route-report-opinion">
@@ -445,19 +424,9 @@ class TopicReport extends React.Component {
                 onOk={this.handleCreateReportOk.bind(this)}
                 onCancel={this.handleCreateReportCancel.bind(this)}
             >
-                <Form onSubmit={this.handleCreateReportSubmit.bind(this)}>
-                    <FormItem
-                        {...formItemLayout}
-                        label="简报名称">
-                        {getFieldDecorator('newReportName', {
-                               initialValue:this.state.reportValue
-                        })(
-                            <Input
-                            onChange={this.reportChange.bind(this)}
-                            maxLength={'28'}/>
-                        )}
-                    </FormItem>
-                </Form>
+            <Input
+            onChange={this.reportChange.bind(this)}
+            maxLength={'28'}/>
             </Modal>
             </div>
         </div>
