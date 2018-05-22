@@ -11,7 +11,6 @@ import {api_get_channel} from '../../services/api';
 import request from '../../utils/request';
 import {urlTokey} from '../../utils/format';
 import AsyncComponent from '../../components/AsyncComponent/AsyncComponent'
-
 const NewHome = AsyncComponent(() => import('../NewHome'))
 const TopicReportList = AsyncComponent(() => import('../TopicReportList/TopicReportList'))
 const SortedAdd = AsyncComponent(() => import('../SortedOpinion/SortedAdd'))
