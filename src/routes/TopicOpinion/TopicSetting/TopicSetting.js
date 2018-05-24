@@ -97,6 +97,7 @@ class TopicSetting extends React.Component {
      }
     // 改变设置方式
     handleOnChange(key) {
+        if(key===this.state.addType){
         let ruleIdArr=[];
         let oldruleId=this.state.topicAlldata.rulearr;  
         for(let i in oldruleId){
@@ -106,6 +107,9 @@ class TopicSetting extends React.Component {
             ruleId:ruleIdArr,
             addType:parseInt(key,10)
         })
+     }else{
+         return;
+     }
     }
     onAddtype(){
     	 this.setState({addtype:1})
@@ -329,10 +333,10 @@ class TopicSetting extends React.Component {
             匹配关键词组合</span>;
         return (
             <div className="topic-add-wrapper">
-                <Tabs onChange={this.handleOnChange.bind(this)} type="card" activeKey={this.state.addType!==undefined?this.state.addType.toString():'1'}>
+                <Tabs tabBarStyle={{color:'#C1C1C1'}} onChange={this.handleOnChange.bind(this)} type="card" activeKey={this.state.addType!==undefined?this.state.addType.toString():'1'}>
                     <TabPane tab="快速设置" key="1">                  
                         <div className="fast-setting">
-             <Form onSubmit={this.handleSubmit.bind(this)} className="login-form">
+                        <Form onSubmit={this.handleSubmit.bind(this)} className="login-form">
                                 <FormItem
                                     label="专题名称"
                                     {...formItemLayout}

@@ -3,10 +3,6 @@
   height: 100%;
   .layout {
     height: 100%;
-    .siders{
-      .ant-menu-root{
-      }
-    }
     .sider {
       -ms-scroll-chaining: chained;
       -ms-overflow-style: none;
@@ -25,21 +21,22 @@
         line-height: 42px;
         border-bottom: 1px solid rgba(228,235,247,0.1);
         i{
-          color:#01C2E0;
+          color:#5a8bff;
         }
       }
       .ant-menu-submenu {
         border-bottom: 1px solid rgba(228,235,247,0.1);
         i{
-          color:#01C2E0;
+          color:#5a8bff;
         }
       }
       .ant-menu-sub{
-        background-color: #004955;
+        background-color: #f0f2fb;
+        color:#000;
         // padding-left: 10px;
       }
       .ant-menu-item-selected {
-        background-color: #0D8DA1;
+        background-color: #5a8bff;
         span {
           // margin-left: 10px;
           color: #fff;
@@ -50,17 +47,25 @@
       }
       .ant-menu-item .anticon + span, .ant-menu-submenu-title .anticon + span{
         margin-left: 10px;
+        color:#000;
+      }
+      .ant-menu-submenu-inline > .ant-menu-submenu-title:after{
+          color:#5a8bff;
       }
       .ant-menu-submenu-inline a{
           color:rgba(255, 255, 255, 0.67);
           text-decoration: none; 
       }
+      .ant-menu-submenu-inline span{
+        color:#000;
+        text-decoration: none; 
+    }
       .logo-wrapper {
         height: 64px;
         display: flex;
         justify-content: center;
         align-items: center;
-        background: #2d324f;
+        background: #4877e6;
         .logo {
           width: 52px;
           cursor: pointer;
@@ -73,6 +78,7 @@
         align-items: center;
         cursor: pointer;
         border-bottom: 1px solid rgba(228,235,247,0.1);
+        transition: margin-left 0.5s;
       }
     }
     .right-layout {

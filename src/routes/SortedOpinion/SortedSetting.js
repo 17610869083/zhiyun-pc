@@ -117,6 +117,7 @@ class SortedSetting extends React.Component {
 
   // 改变设置方式
   handleOnChange(key) {
+    if(key===this.state.addType){
     let ruleIdArr = [];
     let oldruleId = this.state.topicAlldata.rulearr;
     for (let i in oldruleId) {
@@ -126,6 +127,9 @@ class SortedSetting extends React.Component {
       ruleId: ruleIdArr,
       addType: parseInt(key, 10)
     })
+   }else{
+     return;
+   }
   }
 
   //删除单条规则
@@ -268,7 +272,7 @@ class SortedSetting extends React.Component {
         匹配关键词组合</span>;
     return (
       <div className="sort-add-wrapper">
-        <Tabs type="card" onChange={this.handleOnChange.bind(this)}
+        <Tabs tabBarStyle={{color:'#C1C1C1'}} type="card" onChange={this.handleOnChange.bind(this)}
               activeKey={this.state.addType !== undefined ? this.state.addType.toString() : '1'}
         >
           <TabPane tab="快速设置" key="1" className="ant-tabs-styles">

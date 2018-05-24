@@ -76,9 +76,8 @@ class TodayOpinionBox extends React.PureComponent {
     }
     render() {
         const {todayAll,todayWarning,todayNegative,ratio} = this.state;
-
         return (
-            <div className="today-opinion-box">
+            <div className="today-opinion-box" draggable="true">
                  <div className="today-opinion-top"
                   style={this.props.status==='setting'?{display:'block'}:{display:'none'}}>
                  <Icon type="close-circle" className="delModule" style={{fontSize: '18px',color: '#ffffff'}}

@@ -4,7 +4,7 @@ import {Input, Icon, Menu, Dropdown, Modal, Avatar, Badge, Popover,message} from
 import {setItem, getItem} from '../../utils/localStorage';
 import {history} from '../../utils/history';
 import request from '../../utils/request';
-import {api_login,api_revise_userinfo,api_get_userinfo,api_homepage_message} from '../../services/api';
+import {api_logout,api_revise_userinfo,api_get_userinfo,api_homepage_message} from '../../services/api';
 import './ZHeader.less';
 import user from '../../assets/icon-img/user.png';
 import UserInfo from '../UserInfo/UserInfo';
@@ -138,7 +138,7 @@ class Zheader extends React.Component {
             okType: 'danger',
             cancelText: '否',
             onOk() {
-                request(api_login).then((res) => {
+                request(api_logout).then((res) => {
                     history.push("/login");
                     message.success('您已退出了系统！');
                 })
@@ -226,9 +226,9 @@ class Zheader extends React.Component {
                         <div className="search">
                             <Search placeholder="搜索" style={{ width: 200 }} onSearch={this.handleSearchContent.bind(this)} />
                         </div>
-                        <div className="qq" onClick={() => {window.open('tencent://message/?uin=601703164&')}}>
+                        {/* <div className="qq" onClick={() => {window.open('tencent://message/?uin=601703164&')}}>
                             <i className="fa fa-qq" aria-hidden="true" style={{color:themeColor.textColor.color}}/>
-                        </div>
+                        </div> */}
                         <div className="notify">
                             <Popover
                                 content={PoverMenu}

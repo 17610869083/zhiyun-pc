@@ -29,7 +29,9 @@ class SortedAdd extends React.Component {
             DelwayRule:[],
             ruleId:[],
             firstSortid:"1",
-            sortedNameValue:''
+            sortedNameValue:'',
+            flag:false,
+            activeKey:'1'
         }
     }
     handleSubmit(e) {
@@ -156,6 +158,17 @@ class SortedAdd extends React.Component {
               sortedNameValue:value
         })
     }
+
+    handleOnChange(key){
+        if(this.state.flag){
+            return;
+         }else{
+            this.setState({
+                flag:true,
+                activeKey:key
+             })
+         }
+    }
     render() {
         const {sortCatList} = this.state;
         const { getFieldDecorator } = this.props.form;
@@ -196,7 +209,7 @@ class SortedAdd extends React.Component {
         匹配关键词组合</span>;
         return (
             <div className="sorted-add-wrapper">
-                <Tabs type="card">
+                <Tabs tabBarStyle={this.state.flag?{color:'#C1C1C1'}:{color:'#000'}} onChange={this.handleOnChange.bind(this)} type="card" activeKey={this.state.activeKey} >
                     <TabPane tab="快速设置" key="1">
                         <div className="fast-setting">
                             <Form onSubmit={this.handleSubmit.bind(this)} className="login-form">

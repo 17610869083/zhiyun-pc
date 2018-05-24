@@ -388,7 +388,7 @@ class NewHome extends React.Component {
               <Col span={24}
               >
                 <TodayOpinionBox status={this.props.type !== undefined ? 'setting' : ''}
-                                 delTodayBox={this.delTodayBox.bind(this)}
+                                 delTodayBox={this.delTodayBox.bind(this)}                                
                 />
               </Col>
             </Row>

@@ -23,8 +23,8 @@ export function sessionSetItem(name,item) {
 export function getTheme() {
     const theme = getItem('theme');
     if (null === theme) {
-        const themeOBJ = {topColor: {backgroundColor: '#ffffff'},bottomColor: {backgroundColor: DARK},
-          textColor:{color:'#cccccc'}
+        const themeOBJ = {topColor: {backgroundColor: '#5a8bff'},bottomColor: {backgroundColor: DARK},
+          textColor:{color:'#fff'}
         };
         setItem('theme', themeOBJ);
     }

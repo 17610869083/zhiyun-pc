@@ -40,7 +40,9 @@ class TopicAdd extends React.Component {
             DelwayRule:[],
             ruleId:[],
             firstTopicid:'70',
-            topicNameValue:''
+            topicNameValue:'',
+            flag:false,
+            activeKey:'1'
         }
     }
     componentWillMount(){
@@ -72,8 +74,15 @@ class TopicAdd extends React.Component {
            "rulecode4":""}])});   	  
      }
     // 改变设置方式
-    handleOnChange(key) {
-        
+    handleOnChange(key) { 
+         if(this.state.flag){
+            return;
+         }else{
+            this.setState({
+                flag:true,
+                activeKey:key
+             })
+         }
     }
 
     goTopiclist(){
@@ -301,7 +310,7 @@ class TopicAdd extends React.Component {
 
             <div className="topic-add-wrapper">
 
-                <Tabs onChange={this.handleOnChange.bind(this)} type="card">
+                <Tabs tabBarStyle={this.state.flag?{color:'#C1C1C1'}:{color:'#000'}} onChange={this.handleOnChange.bind(this)} type="card" activeKey={this.state.activeKey}>
 
                     <TabPane tab="快速设置" key="1">
                     

@@ -14,7 +14,7 @@ function BigScreen() {
         <Col span={6}>
           <div className="box">
             <div className="inner-box">
-              <a href="http://web.is8.com.cn/om/dev/visual/all/index.html" className="link" target="blank">
+              <a href="../dev/visual/all/index.html" className="link" target="blank">
                 <span className="title">数据可视化总览</span>
                 <img src={BigScreenAll} alt="all" className="img"/>
               </a>
@@ -24,7 +24,7 @@ function BigScreen() {
         <Col span={6}>
           <div className="box">
             <div className="inner-box">
-              <a href="http://web.is8.com.cn/om/dev/visual/topic/index.html#/1" className="link" target="blank">
+              <a href="../dev/visual/topic/index.html#/1" className="link" target="blank">
                 <span className="title">数据可视化专题</span>
                 <img src={BigScreenTopic} alt="topic" className="img"/>
               </a>

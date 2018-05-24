@@ -67,7 +67,7 @@ class LoginPage extends React.Component {
                 backgroundColor: DARK
             },
             textColor:{
-                 color:'#000000'
+                 color:'#fff'
             }
         });
     }

@@ -52,7 +52,6 @@ class DetailOpinion extends React.Component {
   componentDidUpdate(prevProps, prevState) {
     if (prevState.num !== this.state.num) {
       const id = this.props.match.params.id;
-      console.log(id)
       request(api_get_doc_detail + '&sid=' + id, {}).then((res) => {
         const keywords = res.data.nstags ? (res.data.nstags.split(' ')) : [''];
         const content = setHighlightTags(res.data.content, keywords);
@@ -426,7 +425,6 @@ class DetailOpinion extends React.Component {
     const conent = getMeailMessage(this.state.emailData);
     const data = this.state.data;
     const sid = this.state.sid;
-    console.log(sid)
     const Keywords = this.state.keywords.map((item, index) =>
       <span key={index} className="value-item">{item}</span>
     );
@@ -553,7 +551,7 @@ class DetailOpinion extends React.Component {
                                 {/* <img src={editImg} alt="edit"/> */}
                             </div>
                            
-                                <div className="operation-item" title="推送">
+                                <div className="operation-item" title="推送" onClick={this.searchEmail.bind(this)}>
                                 <IconFont type="icon-tuisongguize"/>
                                     {/* <img src={pushImg} alt="push" onClick={this.searchEmail.bind(this)}/> */}
                                 </div>

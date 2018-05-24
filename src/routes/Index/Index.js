@@ -5,7 +5,7 @@ import {Route, Switch, Link} from 'react-router-dom';
 import './Index.less';
 import {history} from '../../utils/history';
 import {exportSkip} from '../../redux/actions/createActions';
-import logo from '../../assets/img/logo2.png';
+import logo from '../../assets/img/logo.png';
 import CRcode from '../LoginPage/crcode.jpg';
 import {api_get_channel} from '../../services/api';
 import request from '../../utils/request';
@@ -31,6 +31,7 @@ const AllOpinion = AsyncComponent(() => import('../AllOpinion/AllOpinion'))
 const TrendFeeling = AsyncComponent(() => import('../TopicOpinion/TrendFeeling/TrendFeeling'))
 const BigScreen = AsyncComponent(() => import('../BigScreen/BigScreen'))
 const ZHeader = AsyncComponent(() => import('../../components/ZHeader/Zheader'))
+const ReportTemplate = AsyncComponent(() => import('../ReportTemplate/ReportTemplate'))
 const {Header, Sider, Content} = Layout;
 const SubMenu = Menu.SubMenu;
 
@@ -121,22 +122,22 @@ class Index extends React.Component {
           key={item.key}
           title={<Link to="/historyopinion"><span><Icon type={item.type} style={{fontSize: '16px'}}/><span
             style={{fontSize: '16px'}}>舆情报告</span></span></Link>}>
-          <Menu.Item key="reportopinion" style={{fontSize: '16px'}}>
+          <Menu.Item key="reportopinion" style={{fontSize: '16px',color:'#000'}}>
             <Link to="/reportopinion/list">
               <span>简报列表</span>
             </Link>
           </Menu.Item>
-          <Menu.Item key="materiaopinion" style={{fontSize: '16px'}}>
+          <Menu.Item key="materiaopinion" style={{fontSize: '16px',color:'#000'}}>
             <Link to="/materiaopinion">
               <span>素材库</span>
             </Link>
           </Menu.Item>
-          <Menu.Item key="collectionopinion" style={{fontSize: '16px'}}>
+          <Menu.Item key="collectionopinion" style={{fontSize: '16px',color:'#000'}}>
             <Link to="/collectionopinion">
               <span>我的收藏</span>
             </Link>
           </Menu.Item>
-          <Menu.Item key="historyopinion" style={{fontSize: '16px'}}>
+          <Menu.Item key="historyopinion" style={{fontSize: '16px',color:'#000'}}>
             <Link to="/historyopinion">
               <span>我的报告库</span>
             </Link>
@@ -145,7 +146,7 @@ class Index extends React.Component {
       } else if (item.channelurl === '../systemMan/systemManDo?action=userList') {
         menuList.push(<SubMenu key={item.key} 
                                title={<Link to="/noticesetting"><span><Icon type={item.type}
-                                                  style={{fontSize: '16px'}}/><span
+                                 style={{fontSize: '16px'}}/><span
                                  style={{fontSize: '16px'}}>系统设置</span></span> </Link>}>
           <Menu.Item key="noticesetting" style={{fontSize: '16px'}}>
             <Link to="/noticesetting">
@@ -190,15 +191,15 @@ class Index extends React.Component {
             className="sider siders"
             trigger={null}
             collapsible
-            style={{backgroundColor: '#2d324f'}}
+            style={{backgroundColor: '#fff'}}
             collapsed={this.state.collapsed}
           >
             <div>
               <div className="logo-wrapper">
                 <img src={logo} alt="logo" className="logo" onClick={this.goBackIndex.bind(this)}/>
-              </div>
-              <div className="trigger-wrapper" onClick={this.toggle}>
+                <div className="trigger-wrapper" onClick={this.toggle} style={this.state.collapsed?{margin:'0'}:{marginLeft:'50px'}}>
                 <i className="fa fa-bars" aria-hidden="true" style={{fontSize: '14px', color: '#ffffff'}}/>
+                </div>
               </div>
             </div>
             <Menu
@@ -207,9 +208,9 @@ class Index extends React.Component {
               theme="dark"
               inlineCollapsed={this.state.collapsed}
               style={this.state.collapsed ? {
-                backgroundColor: '#2d324f',
-                maxHeight: '700px'
-              } : {backgroundColor: '#2d324f', maxHeight: '700px', overflow: 'auto'}}
+                backgroundColor: '#fff',
+                maxHeight: '600px'
+              } : {backgroundColor: '#fff', maxHeight: '600px', overflow: 'auto'}}
               className="selectMenu"
               selectedKeys={[urlTokey()]}
             >
@@ -243,6 +244,7 @@ class Index extends React.Component {
                 <Route path="/topic/addtopic" component={TopicAdd}/>
                 <Route path="/sortedopinion/addrule" component={SortedAdd}/>
                 <Route path="/topicreportlist" component={TopicReportList}/>
+                <Route path="/reporttemplate" component={ReportTemplate}/>
               </Switch>
               <div className="suspensionBox">
                 <div>
