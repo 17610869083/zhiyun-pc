@@ -7,6 +7,7 @@
     margin-right: 20px;
     position: fixed;
     left:85.6%;
+    background: #fff;
     .sort-conent{
       max-height: 438px;
       overflow: auto;
@@ -26,11 +27,10 @@
     .operation {
       width: 100%;
       height: 44px;
-      background: #2d324f;
       line-height: 44px;
       padding-left: 20px;
-      color:#fff;
       font-size: 14px;
+      color:#000;
       .operation-btn1 {
         width: 100px;
         height: 40px;
@@ -58,10 +58,9 @@
         align-items: center;
         height: 36px;
         cursor: pointer;
-        color: #fff;
-        background-color: #0d8da1;
         border-bottom: 1px solid #dbdbdb;
         padding-left: 10px;
+        color:#000;
         .name {
           font-size: 14px;
           width: 144px;
@@ -78,7 +77,7 @@
         }
         .setting {
           .setting-icon {
-            margin-right: 10px;
+            margin-right: 12px;
           }
         }
         &:hover {
@@ -93,19 +92,18 @@
           align-items: center;
           cursor: pointer;
           padding-left: 2px;
-          background-color: #FFFFFF;
           border-bottom: 1px solid #ccc;
           &:hover {
             background-color: #f7f7f7;
-            color: #0d8da1;
-            border-left:2px solid #0d8da1;
+            color: #5a8bff;
+            border-left:2px solid #5a8bff;
             padding-left:0px;
           }
           .name {
             line-height: 36px;
             height: 36px;
             width: 80%;
-            padding-left: 20px;
+            padding-left: 38px;
               text-overflow: ellipsis;
               white-space: nowrap;
               overflow: hidden;
@@ -121,17 +119,17 @@
           height: 40px;
           line-height: 40px;
           background-color: #f2f2f2;
-          color: #0d8da1;
-          border-left: 2px solid #0d8da1;
+          color: #5a8bff;
+          border-left: 2px solid #5a8bff;
           align-items: center;
-          padding-left: 20px;
+          padding-left: 38px;
           cursor: pointer;
           &:hover {
-            color: #0d8da1;
+            color: #5a8bff;
           }
           .name {
             line-height: 40px;
-            height: 36px;
+            height: 40px;
             width: 80%;
             text-overflow: ellipsis;
             white-space: nowrap;
@@ -148,9 +146,9 @@
   .sorted-opinion-option {
     width: 84%;
     font-size: 14px;
-    .ant-menu-item-active{
-      color: #fff;
-    }
+    // .ant-menu-item-active{
+    //   color: #fff;
+    // }
     .ant-menu-horizontal > .ant-menu-item, .ant-menu-horizontal > .ant-menu-submenu{
       border-bottom: none;
     }
@@ -159,10 +157,10 @@
       color: #fff;
     }
     .ant-menu-item-selected{
-      color: #000;
+      color: #fff;
       border-bottom: none;
-      background-color: #fff;
-      border-radius: 7px 7px 0 0;
+      background-color: #5a8bff;
+      border-radius: 20px;
     }
 
     .topic-wrapper {
@@ -171,7 +169,6 @@
     .topic-top{
       display: flex;
       justify-content: space-between;
-      background: #2d324f;
       align-items: center;
       color:#fff;
       box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
@@ -181,13 +178,13 @@
       height: 44px;
       .ant-menu-horizontal > .ant-menu-item{
         border:none;
-        border-radius: 7px 7px 0 0;
+        border-radius: 20px;
       }
       .ant-menu-item-selected{
-       background-color: #fff;
-       color: #000;
+       background-color: #5a8bff;
+       color: #fff;
        border-bottom: none;
-       border-radius: 7px 7px 0 0;
+       border-radius: 20px;
      }
      .close{
       cursor: pointer;
@@ -202,7 +199,7 @@
       margin-top: 10px;
       span{
         margin-right: 16px;
-        font-size: 16px;
+        font-size: 14px;
       }
   }
    }

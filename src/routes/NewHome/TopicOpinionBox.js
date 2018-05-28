@@ -8,6 +8,7 @@ import {connect} from 'react-redux';
 import {setlocationPathname} from '../../redux/actions/createActions';
 import request from '../../utils/request';
 import {api_main_topic_opinion} from '../../services/api';
+import {GRAY,BLACK,BLUES} from '../../utils/colors';
 const TabPane = Tabs.TabPane;
 
 class TopicOpinionBox extends React.PureComponent {
@@ -46,18 +47,18 @@ class TopicOpinionBox extends React.PureComponent {
     }
     render() {  
          const {topicOpinion} = this.state;
-        const more = this.props.status!=='setting'?<span onClick={this.goTopicOpinion.bind(this)}>更多
-        <IconFont type="icon-gengduo" style={{color: '#9b9b9b',fontSize: '16px'}}/>
-        </span>:<Icon type="close-circle" className="delModule" style={{fontSize: '18px'}}
+        const more = this.props.status!=='setting'?<span style={{color:BLACK}} onClick={this.goTopicOpinion.bind(this)}>更多
+        <IconFont type="icon-jiantou" style={{color: '#9b9b9b',fontSize: '16px',marginLeft:'6px'}}/>
+        </span>:<Icon type="close-circle" className="delModule" style={{fontSize: '18px',color:BLUES}}
         onClick={this.delTopicOpinionBox.bind(this)}
         ></Icon>;
         return (
             <div className="topic-opinion-box">
                 <div className="container">
-                    <div className="top">
+                    <div className="top" style={{background:GRAY}}>
                         <div className="title">
-                            <IconFont type="icon-tesezhuanti" style={{color: '#00c8e7',fontSize: '18px'}}/>
-                            <span className="txt">专题舆情</span>
+                            <IconFont type="icon-tesezhuanti" style={{color: BLUES,fontSize: '18px'}}/>
+                            <span className="txt" style={{color:BLACK}}>专题舆情</span>
                         </div>
                         <div className="more">
                               {more}

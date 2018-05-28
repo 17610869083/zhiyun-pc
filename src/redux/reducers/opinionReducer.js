@@ -37,7 +37,7 @@ import {
 
 const opinionSearchSucceededReducer = handleAction(OPINION_SEARCH_SUCCEEDED, (state, action) => ({
   data: action.payload,
-}), {data: {docList: [], pageInfo: {}, carryCount: [{count: 257740, value: "APP", key: "docApp"}]}});
+}), {data: {docList: [1], pageInfo: {}, carryCount: [{count: 257740, value: "APP", key: "docApp"}]}});
 
 export const topicListSucceededReducer = handleAction(GET_TOPIC_SHOWLIST_SUCCEEDED, (state, action) => ({
   data: action.payload,
@@ -134,7 +134,7 @@ export const getSortedContentRequested = handleAction(GET_SORTED_CONTENT_REQUEST
 }), "1");
 export const getSortedContentSucceeded = handleAction(GET_SORTED_CONTENT_SUCCEEDED, (state, action) => ({
   data: action.payload
-}), {data: {docList: [], pageinfo: {}}});
+}), {data: {docList: [1], pageinfo: {}}});
 
 export const changeClfId = handleAction(CHANGE_CLF_ID, (state, action) => ({
   id: action.payload

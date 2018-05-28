@@ -15,7 +15,8 @@ import Iconfont from '../../components/IconFont';
 import {setlocationPathname,getTopicLocationRequested,topicNavMessageRequested,searchState} from '../../redux/actions/createActions';
 import {connect} from 'react-redux';
 import { setTimeout } from 'timers';
-import Del from '../../assets/img/del.svg'; 
+import {GRAY,BLACK} from '../../utils/colors';
+import Del from '../../assets/img/grayDel.svg'; 
 class TopicOpinion extends React.Component {
     constructor(props) {
         super(props);
@@ -73,15 +74,15 @@ class TopicOpinion extends React.Component {
                            return firstTopicid=topicMessage[0]['topicList'][0]['topicid'];
                       }
             })
+            this.props.setlocationPathname(firstTopicid);
             this.setState({
                 topicLists:topicMessage,
                 topicId:firstTopicid,
                 materialCurrent:firstTopicid,
                 browserHeight:window.innerHeight-140
               })
-            this.props.setlocationPathname(firstTopicid);
           }
-          },100)
+          },50)
     }
     // 添加专题
     handleAddTopic() {
@@ -281,8 +282,7 @@ class TopicOpinion extends React.Component {
           <div className="a-class" key={index}>
           <div className="class-name" >
           <div className="leftBox" onClick={this.dropDown.bind(this,item.catid)} data-index='1' title={item.catname}>
-            <i>< Iconfont type="icon-caidanyingyong2" style={{fill:'#00c8e7'}}/></i><span className='mar'>{item.catname}</span>
-
+            <i>< Iconfont type="icon-wenjianjia2" style={{fontSize:'18px'}}/></i><span className='mar'>{item.catname}</span>
           </div>
           <Dropdown overlay={delItems} trigger={['click']}>
             <i onClick={this.onCatid.bind(this,item.catid)}><Iconfont type="icon-icon02" className="icon-setting"/></i>
@@ -310,13 +310,13 @@ class TopicOpinion extends React.Component {
              {TopicList}
                 <div className="topic-opinion-wrapper">
                 <div className="topic-info">
-                    <div className="topic-top">
+                    <div className="topic-top" style={{background:GRAY}}>
                     <div>
                     <Menu
                         onClick={this.handleClick.bind(this)}
                         selectedKeys={[this.state.current]}
                         mode="horizontal"
-                        style={{lineHeight:'40px',backgroundColor: '#2d324f',paddingTop:'14px',color:'#fff',border:'none'}}
+                        style={{lineHeight:'26px',backgroundColor: GRAY,paddingTop:'14px',border:'none'}}
                     >
                         <Menu.Item key="topiclist" style={{fontSize:'16px'}}>
                             信息列表
@@ -338,7 +338,7 @@ class TopicOpinion extends React.Component {
                         </Menu.Item>
                     </Menu>
                     </div>
-                    <div className="close"  onClick={this.triggerTopShow.bind(this)} style={this.state.current==='topiclist'?{display:'block'}:{display:'none'}}>
+                    <div className="close"  onClick={this.triggerTopShow.bind(this)} style={this.state.current==='topiclist'?{display:'block',color:BLACK}:{display:'none'}}>
                     <span>{this.state.isTopShow ? '显示' : '隐藏'}</span>
                     <Icon type={this.state.isTopShow ? 'down' : 'right'} />
                     </div>
@@ -356,7 +356,7 @@ class TopicOpinion extends React.Component {
                 </div>
                 <div className="left-boxes">
                     <div className="first-box">
-                        <div className="add-topic-class">
+                        <div className="add-topic-class" style={{background:GRAY}}>
                           专题
                         </div>
                         <div className="classes" style={{maxHeight:this.state.browserHeight+'px'}}>

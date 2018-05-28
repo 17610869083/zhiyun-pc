@@ -5,7 +5,7 @@ import ReactEchartsCore from 'echarts-for-react/lib/core';
 import echarts from 'echarts/lib/echarts';
 import 'echarts/lib/chart/pie';
 import {Icon} from 'antd';
-
+import {GRAY,BLACK,BLUES} from '../../utils/colors';
 class MediaDistribution extends React.Component{
     delmediaDistributionBox(){
         this.props.delMediaDistributionBox(1);
@@ -62,14 +62,14 @@ class MediaDistribution extends React.Component{
         return (
             <div className="mediaDistribution-box">
             <div className="container">
-            <div className="top">
+            <div className="top" style={{background:GRAY}}>
                 <div className="title">
-                    <IconFont type="icon-fenbutu" style={{fontSize: '22px'}}/>
-                    <span className="txt">媒体分布</span>
+                    <IconFont type="icon-fenbutu" style={{fontSize: '22px',color:BLUES}}/>
+                    <span className="txt" style={{color:BLACK}}>媒体分布</span>
                 </div>
                 <div className="more">
                         <Icon type="close-circle" className="delModule"
-                         style={this.props.status==='setting'?{visibility:'visible',fontSize: '18px'}:{'visibility':'hidden'}}
+                         style={this.props.status==='setting'?{visibility:'visible',fontSize: '18px',color:BLUES}:{'visibility':'hidden'}}
                          onClick={this.delmediaDistributionBox.bind(this)}
                         ></Icon>
                 </div>

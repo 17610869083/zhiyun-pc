@@ -5,6 +5,7 @@ import {Pagination, DatePicker, Form, Icon, message, Button} from 'antd';
 import OpinionDetail from '../../components/OpinionDetail/OpinionDetail';
 import {opinionSearchRequested, searchKeywordSync, paginationPage} from '../../redux/actions/createActions';
 import {URLToObject, getSecondTime} from '../../utils/format';
+import {GRAY} from '../../utils/colors';
 import './AllOpinion.less';
 
 const FormItem = Form.Item;
@@ -40,7 +41,6 @@ class AllOpinion extends React.Component {
         }
       ],
       isTopShow: true,
-      loading: true,
       timeValue: 'all',
       trend: [
         {
@@ -82,15 +82,15 @@ class AllOpinion extends React.Component {
       sortValue: 'timedown',
       filter: [
         {
-          name: '去重',
-          value: 0
-        },
-        {
           name: '不去重',
           value: 1
+        },
+        {
+          name: '去重',
+          value: 0
         }
       ],
-      filterValue: 0,
+      filterValue: 1,
       media: [
         {count: 0, value: "全部", key: "docApp"},
 
@@ -102,7 +102,7 @@ class AllOpinion extends React.Component {
       pagesize: 20,
       pageCount: 500,
       count: 0,
-      docList: [],
+      docList: [1],
       begin: '0000-00-00 01:00:00',
       end: '0000-00-00 02:00:00',
       timePickerShow: false,
@@ -426,7 +426,7 @@ class AllOpinion extends React.Component {
       seltype: "content",
       keyword:this.props.ks.keyword,
       page:pagenumber,
-      similer:0
+      similer:1
      }
    }
     this.props.opinionSearchRequest(param);
@@ -545,6 +545,7 @@ class AllOpinion extends React.Component {
     if (this.props.location.search !== "?type=search") {
       this.homepageMore(window.location.hash);
     }
+
   }
 
   componentDidMount() {
@@ -647,7 +648,7 @@ class AllOpinion extends React.Component {
     };
     return (
       <div className="all-opinion" id="anchor">
-        <div className="close-open">
+        <div className="close-open" style={{background:GRAY}}>
           <div className="count"> 信息列表</div>
           <div className="close" onClick={this.triggerTopShow.bind(this)}>
             <span className="closeBtn">{this.state.isTopShow ? '显示' : '隐藏'}</span>

@@ -3,7 +3,6 @@ import {connect} from 'react-redux';
 import {Layout, Menu, Icon, Button} from 'antd';
 import {Route, Switch, Link} from 'react-router-dom';
 import './Index.less';
-import {history} from '../../utils/history';
 import {exportSkip} from '../../redux/actions/createActions';
 import logo from '../../assets/img/logo.png';
 import CRcode from '../LoginPage/crcode.jpg';
@@ -65,7 +64,11 @@ class Index extends React.Component {
   }
 
   goBackIndex() {
-    history.push('/home');
+      if(this.state.collapsed){
+      this.setState({
+        collapsed:false
+      })
+    }
   }
 
   showQQ(e) {
@@ -122,22 +125,22 @@ class Index extends React.Component {
           key={item.key}
           title={<Link to="/historyopinion"><span><Icon type={item.type} style={{fontSize: '16px'}}/><span
             style={{fontSize: '16px'}}>舆情报告</span></span></Link>}>
-          <Menu.Item key="reportopinion" style={{fontSize: '16px',color:'#000'}}>
+          <Menu.Item key="reportopinion" style={{fontSize: '16px'}}>
             <Link to="/reportopinion/list">
               <span>简报列表</span>
             </Link>
           </Menu.Item>
-          <Menu.Item key="materiaopinion" style={{fontSize: '16px',color:'#000'}}>
+          <Menu.Item key="materiaopinion" style={{fontSize: '16px'}}>
             <Link to="/materiaopinion">
               <span>素材库</span>
             </Link>
           </Menu.Item>
-          <Menu.Item key="collectionopinion" style={{fontSize: '16px',color:'#000'}}>
+          <Menu.Item key="collectionopinion" style={{fontSize: '16px'}}>
             <Link to="/collectionopinion">
               <span>我的收藏</span>
             </Link>
           </Menu.Item>
-          <Menu.Item key="historyopinion" style={{fontSize: '16px',color:'#000'}}>
+          <Menu.Item key="historyopinion" style={{fontSize: '16px'}}>
             <Link to="/historyopinion">
               <span>我的报告库</span>
             </Link>
@@ -197,10 +200,10 @@ class Index extends React.Component {
             <div>
               <div className="logo-wrapper">
                 <img src={logo} alt="logo" className="logo" onClick={this.goBackIndex.bind(this)}/>
-                <div className="trigger-wrapper" onClick={this.toggle} style={this.state.collapsed?{margin:'0'}:{marginLeft:'50px'}}>
-                <i className="fa fa-bars" aria-hidden="true" style={{fontSize: '14px', color: '#ffffff'}}/>
-                </div>
               </div>
+              <div className="trigger-wrapper" onClick={this.toggle}>
+                <i className="fa fa-bars" aria-hidden="true" style={{fontSize: '14px', color: '#5a8bff'}}/>
+                </div>
             </div>
             <Menu
               defaultSelectedKeys={['1']}
@@ -218,7 +221,7 @@ class Index extends React.Component {
             </Menu>
           </Sider>
           <Layout className="right-layout">
-            <Header className="header" style={{backgroundColor: themeColor.topColor.backgroundColor, height: '66px'}}>
+            <Header className="header" style={{backgroundColor: themeColor.topColor.backgroundColor, height: '60px'}}>
               <ZHeader/>
             </Header>
             <Content className="main" ref={(main) => {

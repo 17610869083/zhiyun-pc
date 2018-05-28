@@ -4,6 +4,7 @@ import BlankPage from '../../base/Exception/BlankPage';
 import './NegativeOpinion.less';
 import { Tabs,Icon } from 'antd';
 import {history} from '../../utils/history';
+import {GRAY,BLACK,BLUES} from '../../utils/colors';
 const TabPane = Tabs.TabPane;
 
 class NagetiveOpinion extends React.Component {
@@ -37,18 +38,18 @@ class NagetiveOpinion extends React.Component {
     }
     render() {
         const {todayOpinion,yesterdayOpinion,beforeYesterdayOpinion} = this.props;
-        const more = this.props.status!=='setting'?<span onClick={this.goAllOpinion.bind(this)}>更多 
-        <IconFont type="icon-gengduo" style={{color: '#9b9b9b',fontSize: '16px'}}/>
-        </span>:<Icon type="close-circle" className="delModule" style={{fontSize: '18px'}}
+        const more = this.props.status!=='setting'?<span style={{color:BLACK}} onClick={this.goAllOpinion.bind(this)}>更多 
+         <IconFont type="icon-jiantou" style={{color: '#9b9b9b',fontSize: '16px',marginLeft:'6px'}}/>
+        </span>:<Icon type="close-circle" className="delModule" style={{fontSize: '18px',color:BLUES}}
         onClick={this.delNegativeOpinionBox.bind(this)}
         ></Icon>;
         return (
             <div className="negative-opinion-box">
                 <div className="container">
-                    <div className="top">
+                    <div className="top" style={{background:GRAY}}>
                         <div className="title">
-                            <IconFont type="icon-fumianxinxi" style={{fontSize: '20px',color:'#00c8e7'}}/>
-                            <span className="txt">负面舆情</span>
+                            <IconFont type="icon-fumianxinxi" style={{fontSize: '20px',color:BLUES}}/>
+                            <span className="txt" style={{color:BLACK}}>负面舆情</span>
                         </div>
                         <div className="more">
                              {more}

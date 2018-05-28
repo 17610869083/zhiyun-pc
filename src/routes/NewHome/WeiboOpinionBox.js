@@ -4,6 +4,7 @@ import BlankPage from '../../base/Exception/BlankPage';
 import './WeiboOpinionBox.less';
 import { Tabs ,Icon} from 'antd';
 import {history} from '../../utils/history';
+import {GRAY,BLACK,BLUES} from '../../utils/colors';
 const TabPane = Tabs.TabPane;
 
 class WeiboOpinionBox extends React.PureComponent {
@@ -35,18 +36,18 @@ class WeiboOpinionBox extends React.PureComponent {
     }
     render() {
         const {weiboAll,weiboNegative} = this.props;
-        const more = this.props.status!=='setting'?<span onClick={this.goAllOpinion.bind(this)}>更多
-        <IconFont type="icon-gengduo" style={{color: '#9b9b9b',fontSize: '16px'}}/>
-        </span>:<Icon type="close-circle" className="delModule" style={{fontSize: '18px'}}
+        const more = this.props.status!=='setting'?<span style={{color:BLACK}}  onClick={this.goAllOpinion.bind(this)}>更多
+        <IconFont type="icon-jiantou" style={{color: '#9b9b9b',fontSize: '16px',marginLeft:'6px'}}/>
+        </span>:<Icon type="close-circle" className="delModule" style={{fontSize: '18px',color:BLUES}}
         onClick={this.delWeiboOpinionBox.bind(this)}
         ></Icon>;
         return (
             <div className="weibo-opinion-box">
                 <div className="container">
-                    <div className="top">
+                    <div className="top" style={{background:GRAY}}>
                         <div className="title">
                             <IconFont type="icon-weibo1" style={{fontSize: '20px'}}/>
-                            <span className="txt">微博舆情</span>
+                            <span className="txt" style={{color:BLACK}}>微博舆情</span>
                         </div>
                         <div className="more">
                                {more}

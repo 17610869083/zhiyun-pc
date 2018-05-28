@@ -20,9 +20,7 @@
           height: 40px;
           line-height: 40px;
           text-align: center;
-          background-color: #2d324f;
           // border:1px solid #008cee;
-          color:#fff;
           cursor: pointer;
           .btn {
             width: 100%;
@@ -53,6 +51,9 @@
               padding-left: 10px;
               padding-right: 10px;
               border-bottom: 1px solid #E4EBF7;
+              .ant-dropdown-trigger{
+                cursor: pointer;
+              }
               .collection-name {
                 cursor: pointer;
                 width: 80%;
@@ -68,12 +69,12 @@
             .collection-list-item-active {
               height: 40px;
               line-height: 40px;
-              background-color: #0d8da1;
-              color: #ffffff;
               display: flex;
               justify-content: space-between;
               padding-left: 10px;
               padding-right: 10px;
+              border-bottom: 1px solid #eeeeee;
+              background: #5a8bff;
               .collection-name {
                 cursor: pointer;
                 width: 80%;
@@ -95,7 +96,7 @@
       width: 84%;
       .ant-checkbox + span{
         padding-left: 35px;
-        color: #0d8da1;
+        color: #5a8bff;
       }
       .top {
         height: 40px;
@@ -105,8 +106,6 @@
         padding-left: 10px;
         border-bottom: 1px solid #eeeeee;
         background: #F7F7F7;
-        color:#fff;
-        background-color: #2d324f;
         font-size: 16px;
         .left {
           display: flex;
@@ -122,6 +121,7 @@
             cursor: pointer;
             display: flex;
             align-items: center;
+            color:#000;
             span {
               margin-left: 6px;
             }
@@ -235,6 +235,10 @@
         justify-content: center;
         .pagintion {
           margin-bottom: 20px;
+          .ant-pagination-item-active{
+            background: #5a8bff;
+            border-color:#5a8bff;
+        }
         }
       }
     }

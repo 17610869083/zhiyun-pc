@@ -3,6 +3,7 @@ import IconFont from '../../components/IconFont';
 import './HotWordBox.less';
 import WordCloud from 'react-d3-cloud';
 import {Icon} from 'antd';
+import {GRAY,BLACK,BLUES} from '../../utils/colors';
 class HotWordBox extends React.Component{
     delHotWordBox(){
           this.props.delHotWordBox(1)
@@ -14,14 +15,14 @@ class HotWordBox extends React.Component{
          return(
             <div className="hotWord-box">
                     <div className="container">
-                    <div className="top">
+                    <div className="top" style={{background:GRAY}}>
                         <div className="title">
-                            <IconFont type="icon-recigengxin" style={{fontSize: '21px',color:'#00c8e7'}}/>
-                            <span className="txt">相关热词</span>
+                            <IconFont type="icon-recigengxin" style={{fontSize: '21px',color:BLUES}}/>
+                            <span className="txt" style={{color:BLACK}}>相关热词</span>
                         </div>
                         <div className="more">
                         <Icon type="close-circle" className="delModule"
-                         style={this.props.status==='setting'?{visibility:'visible',fontSize: '18px'}:{'visibility':'hidden'}}
+                         style={this.props.status==='setting'?{visibility:'visible',fontSize: '18px',color:BLUES}:{'visibility':'hidden'}}
                          onClick={this.delHotWordBox.bind(this)}
                         ></Icon>
                         </div>

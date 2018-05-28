@@ -4,7 +4,6 @@ import {connect} from 'react-redux';
 import {Pagination, DatePicker, Form, message, Button} from 'antd';
 import request from '../../../utils/request';
 import OpinionDetail from '../../../components/OpinionDetail/OpinionDetail';
-import Store from '../../../redux/store/index';
 import './TopicList.less';
 import {getTopicRequested, paginationPage, searchKeywordSync} from '../../../redux/actions/createActions';
 import {api_topic_message_list} from '../../../services/api';
@@ -89,16 +88,16 @@ class TopicList extends React.Component {
       sortValue: 'timedown',
       filter: [
         {
-          name: '去重',
-          value: 0
-        },
-        {
           name: '不去重',
           value: 1
+        },
+        {
+          name: '去重',
+          value: 0
         }
       ],
       filterIndex: 0,
-      filterValue: 0,
+      filterValue: 1,
       media: [
         {count: 0, value: "全部", key: "docApp"},
       ],
@@ -108,7 +107,7 @@ class TopicList extends React.Component {
       pagesize: 20,
       pageCount: 0,
       count: 0,
-      docList: [],
+      docList: [1],
       begin: '0000-00-00 00:00:00',
       end: '2222-22-22 22:22:22',
       timePickerShow: false,
@@ -403,10 +402,10 @@ class TopicList extends React.Component {
     },10)
   }
       componentDidMount() {  
-        //this.topicTimer = setTimeout( ()=>{
-        let topicID=Store.getState().getRouterReducer;    
+        this.topicTimer = setTimeout( ()=>{
+        let topicID=this.props.getRouter;    
         if(typeof topicID!=='object'){
-                request(api_topic_message_list + '&topicid=' + topicID+ '&similer=0').then((res) => {
+                request(api_topic_message_list + '&topicid=' + topicID).then((res) => {
                     if(res.data && res.data.code!==0){
                     this.setState({
                         docList: res.data.docList,
@@ -419,18 +418,18 @@ class TopicList extends React.Component {
                 }
                 });
         }
-      //},60)   
+       },60)   
     }
   componentDidUpdate(prevProps, prevState) {
     if (prevProps.location.search !== this.props.location.search) {
-      let topicID = Store.getState().getRouterReducer;
+      let topicID = this.props.getRouter;
       if (typeof topicID !== 'object') {
         request(api_topic_message_list, {
           method: 'POST',
           headers: {
             "Content-Type": "application/x-www-form-urlencoded"
           },
-          body: `topicid=${topicID}&similer=0`
+          body: `topicid=${topicID}`
         }).then((res) => {
           if (res.data) {
             this.setState({
@@ -461,6 +460,7 @@ class TopicList extends React.Component {
   componentWillUnmount() {
     this.props.paginationPage(1);
     clearTimeout(this.dataChangeTimer); 
+    clearTimeout(this.topicTimer); 
   }
 
   render() {
@@ -624,7 +624,8 @@ const mapStateToProps = state => {
     themeColor: state.changeThemeReducer,
     keyword: state.onSearchContentReducer.keyword,
     page: state.paginationPageReducer,
-    search: state.searchStateReducer.data
+    search: state.searchStateReducer.data,
+    getRouter: state.getRouterReducer
   }
 };
 const mapDispatchToProps = dispatch => {

@@ -4,6 +4,7 @@ import BlankPage from '../../base/Exception/BlankPage';
 import './NewestWarningOpinionBox.less';
 import { Tabs,Icon } from 'antd';
 import {history} from '../../utils/history';
+import {GRAY,BLACK,BLUES} from '../../utils/colors';
 const TabPane = Tabs.TabPane;
 
 class NagetiveOpinion extends React.Component {
@@ -37,18 +38,18 @@ class NagetiveOpinion extends React.Component {
     }
     render() {
         const {todayOpinion,yesterdayOpinion,beforeYesterdayOpinion} = this.props;
-        const more = this.props.status!=='setting'?<span onClick={this.goAllOpinion.bind(this)}>更多
-        <IconFont type="icon-gengduo" style={{color: '#9b9b9b',fontSize: '16px'}}/>
-        </span>:<Icon type="close-circle" className="delModule" style={{fontSize: '18px'}}
+        const more = this.props.status!=='setting'?<span style={{color:BLACK}} onClick={this.goAllOpinion.bind(this)}>更多
+        <IconFont type="icon-jiantou" style={{color: '#9b9b9b',fontSize: '16px',marginLeft:'6px'}}/>
+        </span>:<Icon type="close-circle" className="delModule" style={{fontSize: '18px',color:BLUES}}
         onClick={this.delNewestWarningOpinionBox.bind(this)}
         ></Icon>;
         return (
             <div className="newest-warning-opinion-box">
                 <div className="container">
-                    <div className="top">
+                    <div className="top" style={{background:GRAY}}>
                         <div className="title">
-                            <IconFont type="icon-shandian" style={{color: '#00c8e7',fontSize: '21px',verticalAlign:'-5px'}}/>
-                            <span className="txt">预警舆情</span>
+                            <IconFont type="icon-shandian" style={{color: BLUES,fontSize: '21px',verticalAlign:'-5px'}}/>
+                            <span className="txt" style={{color:BLACK}}>预警舆情</span>
                         </div>
                         <div className="more">
                                {more}

@@ -21,6 +21,8 @@ import {
 
 import './CollectionOpinion.less';
 import BlankPage from '../../base/Exception/BlankPage';
+import {GRAY} from '../../utils/colors';
+import Iconfont from '../../components/IconFont'
 const Search = Input.Search;
 const confirm = Modal.confirm;
 const FormItem = Form.Item;
@@ -512,9 +514,8 @@ class CollectionOpinion extends React.Component {
 
         return (<div className="collection-opinion-wrapper">
             <div className="collection-opinion">
-
                 <div className="opinion-list">
-                    <div className="top">
+                    <div className="top" style={{background:GRAY}}>
                         <div className="left">
                             <div className="choose-all">
                                 <Checkbox checked={this.state.checkedAll} onChange={this.onAllChange.bind(this)}>全选</Checkbox>
@@ -567,7 +568,7 @@ class CollectionOpinion extends React.Component {
 
                 <div className="left-boxes">
                     <div className="first-box">
-                        <div className="top" onClick={this.showAddCollection.bind(this)}>
+                        <div className="top" style={{background:GRAY}} onClick={this.showAddCollection.bind(this)}>
                             +新增收藏夹
 
           <Modal title="新增收藏夹" visible={this.state.addCollectionVisible} onOk={this.handleAddCollectionOk.bind(this)} onCancel={this.handleAddCollectionCancel.bind(this)}>
@@ -599,9 +600,7 @@ class CollectionOpinion extends React.Component {
                                             {
                                                 item.type === 1
                                                     ? <Dropdown overlay={CollectionSetMenu} trigger={['click']} getPopupContainer={() => document.querySelector('.collection-opinion-wrapper')}>
-                                                        <Icon type="setting" style={{
-                                                            fontSize: '18px'
-                                                        }} className="collection-icon" onClick={this.onClickCollectionListItem.bind(this, item.id)} />
+                              <i onClick={this.onClickCollectionListItem.bind(this, item.id)}>< Iconfont type="icon-icon02" style={{color:'#000'}}/></i>                            
                                                     </Dropdown>
                                                     : null
                                             }

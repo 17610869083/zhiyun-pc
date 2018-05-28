@@ -6,17 +6,15 @@
   .close-open {
     height: 44px;
     line-height: 44px;
-    background-color: #2d324f;
     //box-shadow: 0 5px 10px rgba(0,0,0,0.1);
-    border-bottom: 1px solid #2d324f;
     display: flex;
     justify-content: space-between;
     .count {
       padding-left: 32px;
-      color: #fff;
       font-size: 16px;
+      color:#000;
       .number {
-        color: #00c8e7;
+        color: #5a8bff;
       }
     }
     .close {
@@ -29,11 +27,9 @@
       -webkit-user-select:none;
       -ms-user-select:none;
       user-select:none;
-      color:#fff;
       .closeBtn{
-         font-size: 16px;
+         font-size: 14px;
          margin-right: 16px;
-         color:#fff;
       }
     }
   }
@@ -81,11 +77,11 @@
         .active {
           .item-inner {
             border-radius: 5px;
-            color: #00c8e7;
+            color: #5a8bff;
             width: 50px;
             text-align: center;
             .count {
-              color: #00c8e7;
+              color: #5a8bff;
               text-align: center;
             }
           }
@@ -135,12 +131,12 @@
         .active {
           .item-inner {
             border-radius: 5px;
-            color: #00c8e7;
+            color: #5a8bff;
             text-align: center;
             width: 50px;
           }
           .count {
-            color: #00c8e7;
+            color: #5a8bff;
             text-align: center;
           }
         }
@@ -158,7 +154,7 @@
       color: #838383;
       padding-left: 20px;
       .number {
-        color: #00c8e7;
+        color: #5a8bff;
       }
     }
   }
@@ -167,6 +163,10 @@
       margin: 20px;
       display: flex;
       justify-content: center;
+      .ant-pagination-item-active{
+          background: #5a8bff;
+          border-color:#5a8bff;
+      }
     }
   }
 }

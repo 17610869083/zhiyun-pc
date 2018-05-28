@@ -17,6 +17,8 @@ import {opinionSearchRequested,
 
 import './MaterialOpinion.less';
 import BlankPage from '../../base/Exception/BlankPage';
+import {GRAY,BLACK} from '../../utils/colors';
+import Iconfont from '../../components/IconFont'
 const Search = Input.Search;
 const confirm = Modal.confirm;
 const FormItem = Form.Item;
@@ -468,7 +470,7 @@ class MaterialOpinion extends React.Component {
             <div className="materia-opinion-wrapper">
                 <div className="materia-opinion">
                     <div className="opinion-list">
-                        <div className="top">
+                        <div className="top" style={{background:GRAY}}>
                             <div className="left">
                                 <div className="choose-all">
                                     <Checkbox
@@ -478,7 +480,7 @@ class MaterialOpinion extends React.Component {
                                     >全选</Checkbox>
                                 </div>
                                 <div className="operate-all">
-                                    <span onClick={this.showRemoveModal.bind(this)}>移出素材库</span>
+                                    <span onClick={this.showRemoveModal.bind(this)} style={{color:BLACK}}>移出素材库</span>
                                     <Modal
                                         title="移出素材库"
                                         visible={this.state.removeModalVisible}
@@ -492,7 +494,7 @@ class MaterialOpinion extends React.Component {
                                     <Dropdown overlay={addMultipleReportMenu} trigger={['click']}
                                      getPopupContainer={ () => document.querySelector('.materia-opinion-wrapper')}
                                     >
-                                        <span>加入简报</span>
+                                        <span style={{color:BLACK}}>加入简报</span>
                                     </Dropdown>
                                 </div>
                             </div>
@@ -524,7 +526,7 @@ class MaterialOpinion extends React.Component {
                     </div>
                     <div className="left-boxes" style={this.props.getSids ? {left:'76%'}:{left:'85.6%'}}>
                         <div className="first-box">
-                            <div className="top" onClick={this.showAddMaterial.bind(this)}>
+                            <div className="top" style={{background:GRAY}} onClick={this.showAddMaterial.bind(this)}>
                             +新增素材库
                                 <Modal
                                     title="新增素材库"
@@ -566,11 +568,7 @@ class MaterialOpinion extends React.Component {
                                                             <Dropdown overlay={materialSetMenu} trigger={['click']}
                                                             getPopupContainer={ () => document.querySelector('.materia-opinion-wrapper')}
                                                             >
-                                                                <Icon type="setting"
-                                                                      style={{fontSize: '18px'}}
-                                                                      className="material-icon"
-                                                                      onClick={this.onClickMaterialListItem.bind(this,item.id)}
-                                                                />
+                                    <i onClick={this.onClickMaterialListItem.bind(this, item.catid)}>< Iconfont type="icon-icon02" style={{color:'#000'}}/></i>                                    
                                                             </Dropdown> : null
                                                     }
                                                 </span>

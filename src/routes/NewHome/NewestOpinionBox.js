@@ -4,6 +4,7 @@ import BlankPage from '../../base/Exception/BlankPage';
 import {history} from '../../utils/history';
 import './NewestOpinionBox.less';
 import { Icon } from 'antd';
+import {GRAY,BLACK,BLUES} from '../../utils/colors';
 class NewestOpinionBox extends React.Component {
     constructor() {
         super();
@@ -28,18 +29,18 @@ class NewestOpinionBox extends React.Component {
      }
     render() {
         const {opinionList} = this.props;
-        const more = this.props.status!=='setting'?<span onClick={this.goAllOpinion.bind(this)}>更多
-        <IconFont type="icon-gengduo" style={{color: '#9b9b9b',fontSize: '16px'}}/>
-        </span>:<Icon type="close-circle" className="delModule" style={{fontSize: '18px'}}
+        const more = this.props.status!=='setting'?<span style={{color:BLACK}} onClick={this.goAllOpinion.bind(this)}>更多
+        <IconFont type="icon-jiantou" style={{fontSize: '16px',color: '#9b9b9b',marginLeft:'6px'}}/>
+        </span>:<Icon type="close-circle" className="delModule" style={{fontSize: '18px',color:BLUES}}
         onClick={this.delNewestOpinionBox.bind(this)}
         ></Icon>;
         return (
             <div className="newest-opinion-box">
                 <div className="container">
-                    <div className="top">
+                    <div className="top" style={{background:GRAY}}>
                         <div className="title">
                             <IconFont type="icon-zuixin" style={{fontSize: '18px'}}/>
-                            <span className="txt">最新舆情</span>
+                            <span className="txt" style={{color:BLACK}}>最新舆情</span>
                         </div>
                         <div className="more">
                             {more}

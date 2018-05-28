@@ -14,6 +14,7 @@ import {
   api_allopinion_exportskip, api_topic_export_word
 } from '../../services/api';
 import {Tooltip} from 'antd';
+import {GRAY} from '../../utils/colors';
 import {
   opinionSearchRequested,
   searchKeywordSync,
@@ -42,12 +43,10 @@ import Del from '../../assets/img/del.svg';
 import Dowload from '../../assets/img/dowload.svg';
 const InputGroup = Input.Group;
 const Option = Select.Option;
-
 class OpinionDetail extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      loading: true,
       isSummaryShow: true,
       popVisible: false,
       popIndex: 0,
@@ -78,65 +77,14 @@ class OpinionDetail extends React.Component {
       type: 0
     };
   }
-
-  componentDidMount() {
-    // if (this.props.propsType !== 'AllopinionList') {
-    //   request(api_sorted_rule_list + '&clfid=' + this.props.clfId).then(res => {
-    //     if (res.data) {
-    //       this.setState({
-    //         clfMessage: res.data
-    //       })
-    //     }
-    //     request(api_topic_message + '&topicid=' + this.props.getRouterReducer).then(res => {
-    //       if (res.data && res.data.code !== 0) {
-    //         this.setState({
-    //           topicMessage: res.data
-    //         })
-
-    //       }
-    //     })
-    //   })
-    // }
-    // this.props.searchKeywordSync({
-    //   seltype: 'content',
-    //   keyword: '', type: 0
-    // });
-  }
-
-  componentWillReceiveProps() {
-    this.setState({
-      loading: false
-    });
-
-  }
-
   componentDidUpdate(prevProps, prevState) {
-    // if (prevProps.clfId !== this.props.clfId || prevProps.getRouterReducer !== this.props.getRouterReducer) {
-    //   request(api_sorted_rule_list + '&clfid=' + this.props.clfId).then(res => {
-    //     if (res.data) {
-    //       this.setState({
-    //         clfMessage: res.data
-    //       })
-    //     }
-    //   })
-
-    //   request(api_topic_message + '&topicid=' + this.props.getRouterReducer).then(res => {
-    //     if (res.data && res.data.code !== 0) {
-    //       this.setState({
-    //         topicMessage: res.data
-    //       })
-    //     }
-    //   })
-    // } 
     if(prevProps.current !== this.props.current){
        this.setState({
          checkedAll:false,
          checkedArray:this.state.checkedArray.fill(false)
-
        })
     }
   }
-
   // ------全选
   chooseAllOnChange(e) {
     const arr = this.state.checkedArray.fill(e.target.checked);
@@ -403,7 +351,6 @@ class OpinionDetail extends React.Component {
     const param = {
       seltype: this.state.seltype,
       keyword: this.state.searchInputValue,
-      similer:0,
       datetag:'all',
       neg:'all',
       order:'timedown',
@@ -533,15 +480,13 @@ class OpinionDetail extends React.Component {
     param.page = pagenumber;
     if (this.props.type === 1) {
       this.props.opinionSearchRequest({
-        seltype: 'content', keyword: this.state.searchInputValue,
-        page: pagenumber,
-        similer:0
+        seltype: 'content', keyword: this.props.searchKeyword.keyword,
+        page: pagenumber
       });
     } else if (this.props.searchKeyword.type === 1) {
       this.props.opinionSearchRequest({
         seltype: 'content', keyword: this.props.searchKeyword.keyword,
-        page: pagenumber,
-        similer:0
+        page: pagenumber
       });
     }
     else if (this.props.propsType === 'AllopinionList') {
@@ -566,7 +511,9 @@ class OpinionDetail extends React.Component {
       fileName: filename
     })
   }
+  handleImageLoaded(){
 
+  }
   handleOk() {
     this.setState({
       visible: false,
@@ -659,6 +606,7 @@ class OpinionDetail extends React.Component {
 
   render() {
     const {page} = this.props;
+    const flag = this.props.docList[0] && this.props.docList[0] === 1?true:false;
     const docList = this.props.docList ? this.props.docList : [{carry: '新闻'}];
     // 素材库的目录
     const putinReportMenu = (
@@ -775,7 +723,7 @@ class OpinionDetail extends React.Component {
                           onVisibleChange={this.handleVisibleChange.bind(this, index)}
                           visible={this.state.popVisible && this.state.popIndex === index}
                         >
-                         <img src={Qing} alt="倾向" style={{height:'30px',width:'24px',marginTop:'-2px'}}/>
+                         <img src={Qing} alt="倾向" style={{height:'18px',width:'18px'}}/>
                         </Popover>
                       </Tooltip>
                     </div>
@@ -858,13 +806,13 @@ class OpinionDetail extends React.Component {
     );
     return (
       <div className="opinion-detail">
-        <div className="top">
+        <div className="top" style={{background:GRAY}}>
           <div className="left">
             <div className="choose-all">
               <Checkbox onChange={this.chooseAllOnChange.bind(this)} checked={this.state.checkedAll}
                         className="check"></Checkbox>
             </div>
-            <div className="operate-all-operation">批量操作：</div>
+            <div className="operate-all-operation">全选：</div>
             <Popconfirm title="是否删除您选择的舆情？" onConfirm={this.deleteOpinionLists.bind(this)}
                         onCancel={this.deleteCancel.bind(this)} okText="是" cancelText="否">
               <Tooltip title='删除' placement="bottom">
@@ -875,14 +823,14 @@ class OpinionDetail extends React.Component {
             </Popconfirm>
             <Tooltip title='未勾选默认导出5000条' placement="bottom">
               <div className="operate-all" onClick={this.showModal.bind(this)}>
-              <img src={Dowload} alt="export" style={{height:'18px'}}/>
+              <img src={Dowload} alt="export" style={{height:'18px',marginTop:'2px'}}/>
               </div>
             </Tooltip>
             <Dropdown overlay={ChangeTrendMenu} trigger={['click']}
                       getPopupContainer={() => document.querySelector('.opinion-detail')}>
               <Tooltip title='倾向' placement="bottom">
                 <div className="operate-all">
-                <img src={Qing} alt="倾向" style={{height:'24px',width:'24px',marginTop:'-2px'}}/>
+                <img src={Qing} alt="倾向" style={{height:'18px',width:'18px'}}/>
                 </div>
               </Tooltip>
             </Dropdown>
@@ -937,13 +885,10 @@ class OpinionDetail extends React.Component {
           </div>
         </div>
         <div className="bottom">
-          {this.state.loading ? Loading : (null)}
-          <ul className="opinion-detail-wrapper">
-
+          {flag ? Loading : (null)}
+          <ul className="opinion-detail-wrapper" onLoad={this.handleImageLoaded.bind(this)}>
             {OpinionDetailItems}
-
           </ul>
-
         </div>
         <Modal
           title="命名该文件"

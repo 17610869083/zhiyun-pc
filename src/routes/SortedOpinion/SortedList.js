@@ -70,15 +70,15 @@ class SortedList extends React.Component {
       carryArray: [
         {count: 0, value: "全部", key: "all"}
       ],
-      similer: 0,
+      similer: 1,
       similerArray: [
-        {
-          name: '去重',
-          value: 0
-        },
         {
           name: '不去重',
           value: 1
+        },
+        {
+          name: '去重',
+          value: 0
         }
       ],
       order: 'timedown',
@@ -101,7 +101,6 @@ class SortedList extends React.Component {
       page: 1,
       pagesize: 20,
       pageCount: 500,
-      docList: [],
       count: 0,
       isTopShow: true,
       timeValue: 'all',
@@ -405,8 +404,7 @@ class SortedList extends React.Component {
   componentDidUpdate(prevProps, prevState) {
     if (prevProps.location.search !== this.props.location.search) {
       const param = {
-        clfid: this.props.clfId,
-        similer:0
+        clfid: this.props.clfId
       };
       this.props.getSortedContentRequested(param);
     } else if (prevProps.page !== this.props.page) {
@@ -421,7 +419,7 @@ class SortedList extends React.Component {
   render() {
     const {docList, pageInfo, carryCount, page} = this.props;
     const {
-      datetag, neg, carry, similer, order,
+       neg, carry, similer, order,
       datetagArray, negArray, carryArray, similerArray, orderArray
     } = this.state;
     const {getFieldDecorator} = this.props.form;
@@ -556,7 +554,6 @@ class SortedList extends React.Component {
             pageSize={this.state.pagesize}
             pageInfo={pageInfo}
             current={page}
-
           />
         </div>
         <div className="bottom">

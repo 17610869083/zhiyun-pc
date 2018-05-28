@@ -116,8 +116,7 @@ class Zheader extends React.Component {
     handleSearchContent(value) {
         const param = {
             seltype: "content",
-            keyword: value,
-            similer:0
+            keyword: value
         };
         this.props.opinionSearchRequest(param);
         this.props.searchKeywordSync({seltype: "content",

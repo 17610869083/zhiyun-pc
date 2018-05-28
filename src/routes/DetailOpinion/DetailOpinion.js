@@ -519,7 +519,7 @@ class DetailOpinion extends React.Component {
                         <div className="itemBox">
                             <Popconfirm title="确定要将这条信息设置为预警吗？" onConfirm={this.warningConfirm.bind(this, sid)} onCancel={this.deleteCancel.bind(this)} okText="是" cancelText="否">
                                 <div className="operation-item" title="设为预警">
-                                <IconFont type="icon-shandian"/>
+                                <IconFont type="icon-shandian" />
                                     {/* <img src={warningImg} alt="warning"/> */}
                                 </div>
                             </Popconfirm>

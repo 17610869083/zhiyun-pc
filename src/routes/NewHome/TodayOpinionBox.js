@@ -4,6 +4,7 @@ import IconFont from '../../components/IconFont';
 import './TodayOpinionBox.less';
 import {api_today_opinion} from '../../services/api';
 import request from '../../utils/request';
+import {GRAY,BLUES} from '../../utils/colors';
 class TodayOpinionBox extends React.PureComponent {
     constructor(){
         super();
@@ -28,44 +29,49 @@ class TodayOpinionBox extends React.PureComponent {
         const todayWarning = data['今日舆情'] && data['今日舆情'].length!==0 ? data['今日舆情'][3]['预警'] : 0;
         const todayNegative = data['今日舆情'] && data['今日舆情'].length!==0? data['今日舆情'][2]['负面'] : 0;
         const yesterdayNegative = data['昨日舆情'] && data['昨日舆情'].length!==0? data['昨日舆情'][2]['负面'] : 0;
-        const ratio =  yesterdayNegative === 0 ? 0 : Number.parseInt((todayNegative - yesterdayNegative)/yesterdayNegative*100, 10);  
+        const ratio = yesterdayNegative === 0 ? 0 : Number.parseInt((todayNegative - yesterdayNegative)/yesterdayNegative*100, 10);  
         if(todayAll !==0){
             this.allTimer=setInterval(()=>{
-                this.setState({
-                    todayAll:this.state.todayAll+(Math.floor(todayAll/10))
-                })
                 if(this.state.todayAll>=todayAll){
                     clearInterval(this.allTimer)
+                }else{
+                    this.setState({
+                        todayAll:this.state.todayAll+(Math.floor(todayAll/10))
+                    })
                 }
             },100)  
             }
             if(todayWarning !==0){
                 this.warningTimer=setInterval(()=>{
-                    this.setState({
-                        todayWarning:this.state.todayWarning+(Math.floor(todayWarning/10))
-                    })
                     if(this.state.todayWarning>=todayWarning){
                         clearInterval(this.warningTimer)
+                    }else{
+                        this.setState({
+                            todayWarning:this.state.todayWarning+(Math.floor(todayWarning/10))
+                        })
                     }
                 },100)  
             }
             if(todayNegative !==0){
                 this.negativeTimer=setInterval(()=>{
-                    this.setState({
-                        todayNegative:this.state.todayNegative+(Math.floor(todayNegative/10))
-                    })
                     if(this.state.todayNegative>=todayNegative){
                         clearInterval(this.negativeTimer)
+                    }else{
+                        this.setState({
+                            todayNegative:this.state.todayNegative+(Math.floor(todayNegative/10))
+                        })
                     }
                 },100)  
             }
             if(ratio !==0){
+
                 this.ratioTimer=setInterval(()=>{
-                    this.setState({
-                        ratio:this.state.ratio+(Math.floor(ratio/10))
-                    })
                     if(this.state.ratio>=ratio){
                         clearInterval(this.ratioTimer)
+                    }else{
+                        this.setState({
+                            ratio:this.state.ratio+(Math.floor(ratio/10))
+                        })
                     }
                 },100)  
             }
@@ -78,9 +84,9 @@ class TodayOpinionBox extends React.PureComponent {
         const {todayAll,todayWarning,todayNegative,ratio} = this.state;
         return (
             <div className="today-opinion-box" draggable="true">
-                 <div className="today-opinion-top"
-                  style={this.props.status==='setting'?{display:'block'}:{display:'none'}}>
-                 <Icon type="close-circle" className="delModule" style={{fontSize: '18px',color: '#ffffff'}}
+                 <div className="today-opinion-top" 
+                  style={this.props.status==='setting'?{display:'block',background:GRAY}:{display:'none'}}>
+                 <Icon type="close-circle" className="delModule" style={{fontSize: '18px',color:BLUES}}
                  onClick={this.delTodayOpinionBox.bind(this)}
                  ></Icon>
                  </div>

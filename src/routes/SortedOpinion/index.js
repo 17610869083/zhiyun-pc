@@ -18,9 +18,9 @@ import request from '../../utils/request';
 import {api_sorted_cat_add, api_sorted_cat_edit, api_sorted_cat_delete, api_sorted_grade_delete} from '../../services/api';
 import './index.less';
 import {clfCatState,changeClfId, getSortedContentRequested, getCollectionLocationRequested, getSortedMenuRequested, searchState} from "../../redux/actions/createActions";
-import {setTimeout} from 'timers';
 import Iconfont from '../../components/IconFont';
-import Del from '../../assets/img/del.svg'; 
+import Del from '../../assets/img/grayDel.svg'; 
+import {GRAY,BLACK} from '../../utils/colors';
 const confirm = Modal.confirm;
 class SortedOpinion extends React.Component {
   constructor() {
@@ -201,7 +201,7 @@ class SortedOpinion extends React.Component {
 
   // 显示与隐藏
   toggleClfUl(catid) {
-    this.props.getSortedContentRequested({catid: catid,similer:0})
+    this.props.getSortedContentRequested({catid: catid})
     this.props.clfCatState({state:false,catid:catid})
     const ref = this.refs['clf-ul-' + catid];
     if (ref.style.display === 'block') {
@@ -229,21 +229,18 @@ class SortedOpinion extends React.Component {
     this.sortTimer = setTimeout(() => {
       const catid = this.props.sortedMenu[0]['catid'];
       const param = {
-        catid: catid,
-        similer:0
+        catid: catid
       }
       this.props.changeClfId(clfid);
       this.props.getSortedContentRequested(param);
     }, 10)
   }
-
   componentDidMount() {
     if (history.location.pathname === '/sortedopinion/list') {
       this.setState({current: 'sortlist'});
     }
   }
   componentDidUpdate(prevProps, prevState) {
-
     if (prevProps.location !== this.props.location) {
       if (this.props.location.pathname === '/sortedopinion/addrule') {
         this.setState({isAddTopicShow: true})
@@ -273,7 +270,7 @@ class SortedOpinion extends React.Component {
     const SortedMenu = sortedMenu.map((item) => (<ul key={item.catid} className="sort-menu-ul">
       <li className="catname">
         <div className="name" onClick={this.toggleClfUl.bind(this, item.catid)}>
-          <i>< Iconfont type="icon-caidanyingyong2" style={{fill:'#00c8e7'}}/></i>
+          <i>< Iconfont type="icon-wenjianjia2" style={{fontSize:'18px'}}/></i>
           <span className='mar'>{item.catname}</span>
         </div>
         <div className="setting" style={item.cattype === 1
@@ -285,7 +282,6 @@ class SortedOpinion extends React.Component {
             }}>
           <Dropdown overlay={OperateItems} trigger={['click']}>
             <i onClick={this.onClickCatId.bind(this, item.catid)}>< Iconfont type="icon-icon02"  className="setting-icon"/></i>
-
           </Dropdown>
         </div>
       </li>
@@ -305,7 +301,7 @@ class SortedOpinion extends React.Component {
 
     return (<div className="sorted-opinion-container">
       <div className="sorted-menu">
-        <div className="operation">
+        <div className="operation" style={{background:GRAY}}>
           分类
         </div>
         <div className="sort-conent" style={{maxHeight:this.state.browserHeight+'px'}}>
@@ -321,14 +317,14 @@ class SortedOpinion extends React.Component {
         </Modal>
       </div>
       <div className="sorted-opinion-option">
-        <div className="topic-top">
+        <div className="topic-top" style={{background:GRAY}}>
           <div>
             <Menu onClick={this.handleMenuClick.bind(this)} selectedKeys={[this.state.current]} mode="horizontal" style={{
-                backgroundColor: '#2d324f',
+                backgroundColor: GRAY,
                 paddingTop: '14px',
-                color: '#fff',
+                color: '#000',
                 border: 'none',
-                lineHeight:'40px'
+                lineHeight:'26px'
               }}>
               <Menu.Item key="sortlist" style={{
                   fontSize: '16px'
@@ -352,7 +348,7 @@ class SortedOpinion extends React.Component {
               </Menu.Item>
             </Menu>
           </div>
-          <div className="close" onClick={this.triggerTopShow.bind(this)} style={this.state.current === 'sortlist'?{display:'block'}:{display:'none'}}>
+          <div className="close" onClick={this.triggerTopShow.bind(this)} style={this.state.current === 'sortlist'?{display:'block',color:BLACK}:{display:'none'}}>
           <span>{this.state.isTopShow ? '显示' : '隐藏'}</span>
           <Icon type={this.state.isTopShow ? 'down' : 'right'} />
           </div>

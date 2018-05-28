@@ -4,10 +4,9 @@
   margin: 20px 20px;
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
   .top {
-    background:#2d324f;
     box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
     height: 44px;
-    line-height: 56px;
+    line-height: 46px;
     padding:0 20px 0 20px;
     display: flex;
     justify-content: space-between;
@@ -18,8 +17,8 @@
     }
     .new-multiple-btn {
       margin-left: 40px;
-      background-color: #fff;
-      color: #000;
+      background-color: #5a8bff;
+      color: #fff;
       padding-bottom: 26px;
       border-bottom: none;
       padding-top: 7px;
@@ -27,11 +26,12 @@
     }
   }
   .ant-btn{
-    border-radius: 7px 7px 0 0;
+    border-radius: 20px;
   }
   .ant-btn-primary{
-    background-color: #2d324f;
-    border-color: #2d324f;
+    background-color: #f0f2fb;
+    border:none;
+    color:#000;
   }
    .paginationBox{
     display: flex;
@@ -39,6 +39,10 @@
     margin:20px;
     ul{
        margin-bottom: 20px;
+       .ant-pagination-item-active{
+        background: #5a8bff;
+        border-color:#5a8bff;
+    }
     }
     }
   .report {
@@ -58,7 +62,7 @@
           .reportMessage{
               width: 21%;
               font-size: 18px;
-              color: #00c8e7;
+              color: #5a8bff;
               border-left: 1px solid #ccc;
               border-right: 1px solid #ccc;
               .reportName{
@@ -83,21 +87,21 @@
           }
           .reportDate{
             font-size: 18px;
-            color: #00c8e7;
+            color: #5a8bff;
             width: 34%;
             border-right: 1px solid #ccc;
        }
           .reportCunt{
               width: 11%;
               font-size: 18px;
-              color: #00c8e7;
+              color: #5a8bff;
               border-right: 1px solid #ccc;
           }
           .reportOperation-other{
               width: 10%;
               text-align: center;
               font-size: 18px;
-              color: #00c8e7;
+              color: #5a8bff;
               margin-left: 20px;
           }
           .reportOperation{
@@ -180,8 +184,6 @@
         .ant-table-tbody tr td:nth-child(5){
             display: none;
         }
-
-
         .fa {
           font-size: 20px;
           margin-left: 10px;

@@ -14,6 +14,7 @@ import {
 } from '../../redux/actions/createActions';
 import {formatDateTime} from '../../utils/format';
 import BlankPage from '../../base/Exception/BlankPage';
+import {GRAY} from '../../utils/colors';
 const confirm = Modal.confirm;
 class TopicReport extends React.Component {
     constructor() {
@@ -406,7 +407,7 @@ class TopicReport extends React.Component {
         return (
            <div>
             <div className="route-report-opinion">
-            <div className="top">
+            <div className="top" style={{background:GRAY}}>
             <div>
             <Button type="primary" onClick={this.deleteMultipleReport.bind(this)}>批量删除</Button>
             <Modal
