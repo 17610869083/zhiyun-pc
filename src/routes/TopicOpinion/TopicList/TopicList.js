@@ -107,7 +107,7 @@ class TopicList extends React.Component {
       pagesize: 20,
       pageCount: 0,
       count: 0,
-      docList: [1],
+      docList: [],
       begin: '0000-00-00 00:00:00',
       end: '2222-22-22 22:22:22',
       timePickerShow: false,
@@ -268,6 +268,7 @@ class TopicList extends React.Component {
       filterIndex: index,
       filterValue: value
     });
+        console.log(this.state.trendValue)
         const requestStr = this.state.timeValue !== 'custom' ?
         `topicid=${this.state.topicID}&datetag=${this.state.timeValue}&neg=${this.state.trendValue}&order=${this.state.sortValue}&similer=${value}&carry=${this.state.mediaValue}`
         :`topicid=${this.state.topicID}&datetag=custom&neg=${this.state.trendValue}&order=${this.state.sortValue}&similer=${value}&carry=${this.state.mediaValue}&begin=${this.state.begin}&end=${this.state.end}`
@@ -406,7 +407,7 @@ class TopicList extends React.Component {
         let topicID=this.props.getRouter;    
         if(typeof topicID!=='object'){
                 request(api_topic_message_list + '&topicid=' + topicID).then((res) => {
-                    if(res.data && res.data.code!==0){
+                    if(res.data){
                     this.setState({
                         docList: res.data.docList,
                         media: res.data.carryCount,

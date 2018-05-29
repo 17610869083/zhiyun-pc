@@ -273,8 +273,8 @@ class HistoryOpinion extends React.Component {
       },
       body: `source=${tasklist}&taskid=${id}&finishDate=${finishdate}`
     }).then(res => {
-      let downloadUrl = 'http://web.is8.com.cn' + res.data.downloadUrl;
-      window.location.href = downloadUrl;
+      let downloadUrl =  res.data.downloadUrl;
+      window.location.href = downloadUrl
     })
   }
 

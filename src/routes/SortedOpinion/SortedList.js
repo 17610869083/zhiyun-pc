@@ -414,7 +414,6 @@ class SortedList extends React.Component {
   componentWillUnmount() {
     this.props.paginationPage(1);
     clearTimeout(this.sortDataTimer)
-    
   }
   render() {
     const {docList, pageInfo, carryCount, page} = this.props;

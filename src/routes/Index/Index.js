@@ -39,6 +39,7 @@ class Index extends React.Component {
     super();
     this.state = {
       collapsed: true,
+      flag:true,
       status: false,
       qqStatus: false,
       phoneStatus: false,
@@ -47,11 +48,24 @@ class Index extends React.Component {
     };
     this.toggle = () => {
       this.setState({
-        collapsed: !this.state.collapsed,
+        flag: !this.state.flag,
       });
     };
   }
-
+  mouseEnterToggle = () => {
+    if(this.state.collapsed){
+    this.setState({
+      collapsed:false
+    })
+   }
+  }
+  mouseLeaveToggle = () => {
+    if(!this.state.collapsed){
+    this.setState({
+      collapsed:true
+    })
+  }
+ }
   componentWillMount() {
     request(api_get_channel)
       .then(res => {
@@ -195,13 +209,14 @@ class Index extends React.Component {
             trigger={null}
             collapsible
             style={{backgroundColor: '#fff'}}
-            collapsed={this.state.collapsed}
+            collapsed={this.state.collapsed && this.state.flag}
           >
             <div>
               <div className="logo-wrapper">
                 <img src={logo} alt="logo" className="logo" onClick={this.goBackIndex.bind(this)}/>
               </div>
-              <div className="trigger-wrapper" onClick={this.toggle}>
+              <div className="trigger-wrapper" onClick={this.toggle} onMouseEnter={this.mouseEnterToggle} 
+              onMouseLeave={this.mouseLeaveToggle}>
                 <i className="fa fa-bars" aria-hidden="true" style={{fontSize: '14px', color: '#5a8bff'}}/>
                 </div>
             </div>

@@ -43,6 +43,10 @@ class TopicReport extends React.Component {
             ],
             trend: [
                 {
+                    type: 'all',
+                    name: '全部'
+                },
+                {
                     type: '-1',
                     name: '正面'
                 },

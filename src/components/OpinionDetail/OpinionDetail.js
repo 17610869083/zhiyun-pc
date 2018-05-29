@@ -11,7 +11,7 @@ import {opinionTrend, opinionColor, setHighlightTags, formatDateTime} from '../.
 import request from '../../utils/request';
 import {
   api_edit_doc_neg, api_del_doc, api_push_material, api_push_collection,
-  api_allopinion_exportskip, api_topic_export_word
+  api_allopinion_exportskip, api_topic_export_word,api_sorted_rule_list,api_topic_message
 } from '../../services/api';
 import {Tooltip} from 'antd';
 import {GRAY} from '../../utils/colors';
@@ -84,6 +84,43 @@ class OpinionDetail extends React.Component {
          checkedArray:this.state.checkedArray.fill(false)
        })
     }
+    if(prevProps.clfId!==this.props.clfId){
+          request(api_sorted_rule_list + '&clfid=' + this.props.clfId).then(res => {
+                  if(res.data){
+                       this.setState({
+                           clfMessage:res.data
+                       })
+                  }
+          })
+      }else if(prevProps.getRouterReducer!==this.props.getRouterReducer){
+          request(api_topic_message +'&topicid=' +this.props.getRouterReducer).then(res=>{
+              if(res.data && res.data.code!==0){
+                  this.setState({
+                      topicMessage:res.data
+                  })    
+              }
+            })
+       }
+  }
+  componentDidMount(){
+    let propsType = this.props.propsType;
+    if(propsType !=='AllopinionList' && propsType === 'SortedList'){
+      request(api_sorted_rule_list + '&clfid=' + this.props.clfId).then(res => {
+          if(res.data){
+               this.setState({
+                   clfMessage:res.data
+               })
+            }
+          })   
+    }else if (propsType !=='AllopinionList' && propsType === 'TopicList'){       
+           request(api_topic_message +'&topicid=' +this.props.getRouterReducer).then(res=>{
+                  if(res.data && res.data.code!==0){
+                      this.setState({
+                          topicMessage:res.data
+                      })    
+                  }
+           }) 
+          }
   }
   // ------全选
   chooseAllOnChange(e) {
@@ -606,7 +643,7 @@ class OpinionDetail extends React.Component {
 
   render() {
     const {page} = this.props;
-    const flag = this.props.docList[0] && this.props.docList[0] === 1?true:false;
+    const flag = this.props.docList&& this.props.docList.length === 0?true:false;
     const docList = this.props.docList ? this.props.docList : [{carry: '新闻'}];
     // 素材库的目录
     const putinReportMenu = (

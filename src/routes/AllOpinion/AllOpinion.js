@@ -102,7 +102,7 @@ class AllOpinion extends React.Component {
       pagesize: 20,
       pageCount: 500,
       count: 0,
-      docList: [1],
+      docList: [],
       begin: '0000-00-00 01:00:00',
       end: '0000-00-00 02:00:00',
       timePickerShow: false,
