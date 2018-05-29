@@ -185,7 +185,7 @@ export const informsstate = handleAction(INFORMS_STATE, (state, action) => ({
 
 export const clfCatState = handleAction(CLF_CAT_STATE, (state, action) => ({
   data: action.payload
-}), {data: {state:false,catid:1}}); 
+}), {data: {state:true,catid:1}}); 
 export {
   opinionSearchRequestedReducer,
   searchKeywordSyncReducer,

@@ -27,7 +27,6 @@ class SortedOpinion extends React.Component {
     super();
     this.state = {
       current: 'sortlist',
-      isAddTopicShow: false,
       sortedMenu: [
         {
           catid: 1,
@@ -180,29 +179,18 @@ class SortedOpinion extends React.Component {
     }
 
   }
-  // 添加分类
-  // showAddSortNavigate() {
-  //     this.setState({
-  //         isAddTopicShow: true,
-  //         current: 'addtopic'
-  //     });
-  //     history.push({
-  //         pathname: '/sortedopinion/addrule'
-  //     })
-  // }
-
   // 切换分类路由
   changeSortRoute(clfId, e) {
     this.setState({clfId: clfId, current: 'sortlist'});
     history.push({pathname: `/sortedopinion/list`, search: `?cifid=${clfId}`})
     this.props.changeClfId(clfId);
-    this.props.clfCatState({state:true})
+    //this.props.clfCatState({state:true})
   }
 
   // 显示与隐藏
   toggleClfUl(catid) {
-    this.props.getSortedContentRequested({catid: catid})
-    this.props.clfCatState({state:false,catid:catid})
+    //this.props.getSortedContentRequested({catid: catid})
+   // this.props.clfCatState({state:false,catid:catid})
     const ref = this.refs['clf-ul-' + catid];
     if (ref.style.display === 'block') {
       ref.style.display = 'none';
@@ -212,13 +200,10 @@ class SortedOpinion extends React.Component {
   }
   componentWillUnmount() {
     this.props.searchState({data: true});
-    clearTimeout(this.sortTimer);
+    // clearTimeout(this.sortTimer);
   }
   componentWillMount() {
-    this.setState({
-      browserHeight:window.innerHeight-140
-    })
-    this.props.getSortedMenuRequested();
+    this.props.getSortedMenuRequested(); 
     let clfid = '';
     for (let i = 0; i < this.props.sortedMenu.length; i++) {
       if (this.props.sortedMenu[i]['clflist'][0] !== undefined) {
@@ -227,10 +212,17 @@ class SortedOpinion extends React.Component {
       }
     }
     this.props.changeClfId(clfid);
+    this.setState({
+      browserHeight:window.innerHeight-140,
+      clfId:clfid
+    })
     this.sortTimer = setTimeout(() => {
-      const catid = this.props.sortedMenu[0]['catid'];
+      //const catid = this.props.sortedMenu[0]['catid'];
+      // const param = {
+      //   catid: catid
+      // }
       const param = {
-        catid: catid
+        clfid: clfid
       }
       this.props.getSortedContentRequested(param);
     }, 10)
@@ -239,18 +231,6 @@ class SortedOpinion extends React.Component {
     if (history.location.pathname === '/sortedopinion/list') {
       this.setState({current: 'sortlist'});
     }
-  }
-  componentDidUpdate(prevProps, prevState) {
-    if (prevProps.location !== this.props.location) {
-      if (this.props.location.pathname === '/sortedopinion/addrule') {
-        this.setState({isAddTopicShow: true})
-      } else if (this.props.location.pathname === '/sortedopinion/list') {
-        this.setState({isAddTopicShow: false, current: 'sortlist'})
-      } else {
-        this.setState({isAddTopicShow: false})
-      }
-    }
-
   }
   triggerTopShow() {
     this.setState({

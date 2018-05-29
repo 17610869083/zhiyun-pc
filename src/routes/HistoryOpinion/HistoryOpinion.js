@@ -388,7 +388,7 @@ class HistoryOpinion extends React.Component {
       } else {
         this.setState({
           visiblePreview: true,
-          downloadUrl: 'http://web.is8.com.cn/om' + res.data.downloadUrl
+          downloadUrl: '../../' + res.data.downloadUrl
         })
       }
     })
@@ -552,7 +552,7 @@ class HistoryOpinion extends React.Component {
           <Tooltip title="下载报告">
             <i className="fa fa-download" aria-hidden="true"
                style={text[0]['taskstate'] === '2' ? {color: 'black'} : {color: 'gray', cursor: 'text'}}
-               onClick={this.down.bind(this)}
+               onClick={text[0]['taskstate'] === '2' ? this.down.bind(this) : ''}
                data-source={text[0]['source']}
                data-id={text[0]['Id']}
                data-finishdate={text[0]['finishdate']}
