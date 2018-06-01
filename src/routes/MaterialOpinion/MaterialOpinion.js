@@ -303,6 +303,7 @@ class MaterialOpinion extends React.Component {
         })
     }
     onClickMaterialListItemDelete({key}) {
+        console.log()
         if (key === 'delete') {
             this.deleteMaterial(this.state.materialListItemId);
         } else if (key === 'rename') {
@@ -568,7 +569,7 @@ class MaterialOpinion extends React.Component {
                                                             <Dropdown overlay={materialSetMenu} trigger={['click']}
                                                             getPopupContainer={ () => document.querySelector('.materia-opinion-wrapper')}
                                                             >
-                                    <i onClick={this.onClickMaterialListItem.bind(this, item.catid)}>< Iconfont type="icon-icon02" style={{color:'#000'}}/></i>                                    
+                                    <i onClick={this.onClickMaterialListItem.bind(this, item.id)}>< Iconfont type="icon-icon02" style={{color:'#000'}}/></i>                                    
                                                             </Dropdown> : null
                                                     }
                                                 </span>

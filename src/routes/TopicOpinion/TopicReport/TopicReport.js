@@ -361,7 +361,7 @@ class TopicReport extends React.Component {
                             }
                         </div>
                     </div>
-                    <div className="row">
+                    {/* <div className="row">
                         <div className="title">情感倾向：</div>
                         <div className="type">
                             {
@@ -373,7 +373,7 @@ class TopicReport extends React.Component {
                                 ))
                             }
                         </div>
-                    </div>
+                    </div> */}
                     <div className="row">
                         <div className="title">分类方式：</div>
                         <div className="type">

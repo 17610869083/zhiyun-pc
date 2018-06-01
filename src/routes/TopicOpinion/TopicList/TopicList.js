@@ -268,7 +268,6 @@ class TopicList extends React.Component {
       filterIndex: index,
       filterValue: value
     });
-        console.log(this.state.trendValue)
         const requestStr = this.state.timeValue !== 'custom' ?
         `topicid=${this.state.topicID}&datetag=${this.state.timeValue}&neg=${this.state.trendValue}&order=${this.state.sortValue}&similer=${value}&carry=${this.state.mediaValue}`
         :`topicid=${this.state.topicID}&datetag=custom&neg=${this.state.trendValue}&order=${this.state.sortValue}&similer=${value}&carry=${this.state.mediaValue}&begin=${this.state.begin}&end=${this.state.end}`
@@ -404,7 +403,7 @@ class TopicList extends React.Component {
   }
       componentDidMount() {  
         this.topicTimer = setTimeout( ()=>{
-        let topicID=this.props.getRouter;    
+        let topicID=this.props.getRouter;   
         if(typeof topicID!=='object'){
                 request(api_topic_message_list + '&topicid=' + topicID).then((res) => {
                     if(res.data){

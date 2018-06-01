@@ -75,7 +75,8 @@ class OpinionTrendBox extends React.Component {
                     <div className="top" style={{background:GRAY}}>
                         <div className="title">
                             <IconFont type="icon-qushi" style={{color: BLUES,fontSize: '18px'}}/>
-                            <span className="txt" style={{color:BLACK}}>舆情走势</span>
+                            {/* <span className="txt" style={{color:BLACK}}>舆情走势</span> */}
+                            <span className="txt" style={{color:BLACK}}>信息走势</span>
                             <span className="btnBox">
                             <Button onClick={this.trendChange.bind(this,'day',1)}
                             style={this.state.buttonState===1?{color:'#fff',borderColor:'#108ee9',backgroundColor:'#5a8bff'}:{}}
@@ -106,7 +107,8 @@ class OpinionTrendBox extends React.Component {
 
                                     <div className="count">
                                       <div className="number">{monthCount[4]['all']}</div>
-                                      <div className="test">舆情总量</div>
+                                      {/* <div className="test">舆情总量</div> */}
+                                      <div className="test">信息总量</div>
                                     </div>
                                     <div className="icon-wrapper" style={{backgroundColor: '#009efb'}}>
                                          <IconFont type="icon-yuqing" style={{color: '#ffffff',fontSize: '40px'}}/>
@@ -116,7 +118,8 @@ class OpinionTrendBox extends React.Component {
                                 <div className="opinion-info">
                                     <div className="count">
                                         <div className="number">{monthCount[2]['negative']}</div>
-                                        <div className="test">负面总量</div>
+                                        {/* <div className="test">负面总量</div> */}
+                                        <div className="test">重点总量</div>
                                     </div>
                                     <div className="icon-wrapper" style={{backgroundColor: '#ff6600'}}>
                                             <IconFont type="icon-jinggao-white" style={{fontSize: '40px'}}/>
@@ -125,7 +128,8 @@ class OpinionTrendBox extends React.Component {
                                 <div className="opinion-info">
                                     <div className="count">
                                         <div className="number">{monthCount[3]['warn']}</div>
-                                        <div className="test">预警总量</div>
+                                        {/* <div className="test">预警总量</div> */}
+                                        <div className="test">特推总量</div>
                                     </div>
                                     <div className="icon-wrapper" style={{backgroundColor: '#ffab00'}}>
                                         <IconFont type="icon-shandian-white" style={{fontSize: '40px'}}/>

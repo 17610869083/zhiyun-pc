@@ -82,7 +82,7 @@ class TopicOpinion extends React.Component {
                 browserHeight:window.innerHeight-140
               })
           }
-          },50)
+          },100)
     }
     // 添加专题
     handleAddTopic() {
@@ -244,9 +244,6 @@ class TopicOpinion extends React.Component {
              catid:catid,
              childRen:this.refs['topicList' + catid].children.length
           })
-    }
-    filterTreeNode(e){
-         console.log(e)
     }
     //分类下拉菜单
     dropDown(catid){

@@ -49,7 +49,8 @@ class NagetiveOpinion extends React.Component {
                     <div className="top" style={{background:GRAY}}>
                         <div className="title">
                             <IconFont type="icon-shandian" style={{color: BLUES,fontSize: '21px',verticalAlign:'-5px'}}/>
-                            <span className="txt" style={{color:BLACK}}>预警舆情</span>
+                            {/* <span className="txt" style={{color:BLACK}}>预警舆情</span> */}
+                            <span className="txt" style={{color:BLACK}}>特推信息</span>
                         </div>
                         <div className="more">
                                {more}

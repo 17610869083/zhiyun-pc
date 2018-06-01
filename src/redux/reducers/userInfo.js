@@ -8,7 +8,7 @@ const defaultUserInfo = {
     nickname: "贵州网信办",
     password: "gzwxb",
     remark: "gzwxb",
-    sysname: "贵州网信办舆情云平台",
+    sysname: "",
     tel: "11111",
     username: "gzwxb ",
     alerMsg:''    

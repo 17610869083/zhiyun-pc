@@ -40,7 +40,8 @@ class NewestOpinionBox extends React.Component {
                     <div className="top" style={{background:GRAY}}>
                         <div className="title">
                             <IconFont type="icon-zuixin" style={{fontSize: '18px'}}/>
-                            <span className="txt" style={{color:BLACK}}>最新舆情</span>
+                            {/* <span className="txt" style={{color:BLACK}}>最新舆情</span> */}
+                            <span className="txt" style={{color:BLACK}}>最新信息</span>
                         </div>
                         <div className="more">
                             {more}

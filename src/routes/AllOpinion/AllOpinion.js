@@ -7,9 +7,7 @@ import {opinionSearchRequested, searchKeywordSync, paginationPage} from '../../r
 import {URLToObject, getSecondTime} from '../../utils/format';
 import {GRAY} from '../../utils/colors';
 import './AllOpinion.less';
-
 const FormItem = Form.Item;
-
 class AllOpinion extends React.Component {
   constructor() {
     super();
