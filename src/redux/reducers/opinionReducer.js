@@ -69,8 +69,10 @@ const getMaterialOpinionListRequestedReducer = handleAction(GET_MATERIAL_OPINION
 }), "1");
 const getMaterialOpinionListSucceededReducer = handleAction(GET_MATERIAL_OPINION_LIST_SUCCEEDED, (state, action) => ({
   data: action.payload
-}), {data: {reportCatList: [{id: 1, catname: '默认文件夹'}]}});
-
+}), {
+    data: {reportCatList: [{id: '', catname: ''}]}
+  }
+);
 
 const getTopicLocationRequestedReducer = handleAction(GET_TOPIC_ANDRULE_REQUESTED, (state, action) => ({
   req: action.payload

@@ -160,6 +160,8 @@ export const api_edit_material_opinion = host + 'oWork/reportDo?action=editRepor
 export const api_push_material = host + 'oWork/reportDo?action=putResource';
 // 删除素材库中的文章内容
 export const api_del_doc_from_cat = host + 'oWork/reportDo?action=delDocFromCat';
+// 文件置顶
+export const api_add_doc_from_top = host + 'oWork/reportDo?action=catMoveToTop';
 export {
     api_newest_warning_opinion,
     api_today_opinion,
