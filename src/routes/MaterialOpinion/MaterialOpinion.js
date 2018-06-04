@@ -27,7 +27,6 @@ import './MaterialOpinion.less';
 import BlankPage from '../../base/Exception/BlankPage';
 import { GRAY, BLACK } from '../../utils/colors';
 import Iconfont from '../../components/IconFont'
-import DemoHOCItem from '../../components/DemoHOCItem/DemoHOCItem.js';
 const Search = Input.Search;
 const Option = Select.Option;
 const confirm = Modal.confirm;
@@ -88,11 +87,20 @@ class MaterialOpinion extends React.Component {
 		})
 	}
 	handleAddMaterialSubmit() {
+		const _that = this;
 		this.props.form.validateFields((err, values) => {
 			if (!err) {
 				request(api_add_material_opinion + '&catname=' + values.materialName, {}).then(res => {
 					if (res.data.code === 1) {
 						message.success(res.data.msg);
+						request(api_material_opinion_list)
+							.then(datas => {
+								if (datas.data) {
+									_that.setState({
+										materialList: datas.data.reportCatList
+									})
+								}
+							})
 					} else if (res.data.code === 2) {
 						message.warning(res.data.msg);
 					} else {
@@ -101,7 +109,7 @@ class MaterialOpinion extends React.Component {
 					this.setState({
 						addMaterialVisible: false
 					});
-					this.props.getMaterialOpinionListRequested();
+					// this.props.getMaterialOpinionListRequested();
 				});
 			}
 		});
@@ -359,7 +367,7 @@ class MaterialOpinion extends React.Component {
 		}
 	}
 	deleteMaterial(id) {
-		const getMaterialOpinionListRequested = this.props.getMaterialOpinionListRequested;
+		const _that = this;
 		confirm({
 			title: '您确定要删除本素材库吗?',
 			content: '删除素材库，里面的舆情也会一并移除。',
@@ -367,10 +375,17 @@ class MaterialOpinion extends React.Component {
 				request(api_delete_material_opinion + '&catid=' + id, {}).then(res => {
 					if (res.data.code === 1) {
 						message.success(res.data.msg);
+						request(api_material_opinion_list)
+							.then(datas => {
+								if (datas.data) {
+									_that.setState({
+										materialList: datas.data.reportCatList
+									})
+								}
+							})
 					} else {
 						message.error(res.data.msg);
 					}
-					getMaterialOpinionListRequested();
 				});
 			},
 			onCancel() {
@@ -705,7 +720,6 @@ const mapStateToProps = state => {
 		materialList: state.getMaterialOpinionListSucceededReducer.data.reportCatList,
 		reportData: state.getReportListSucceeded.data
 	}
-	console.log(state.getMaterialOpinionListSucceededReducer.data.reportCatList)
 };
 
 const mapDispatchToProps = dispatch => {
