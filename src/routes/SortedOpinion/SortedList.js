@@ -407,7 +407,6 @@ class SortedList extends React.Component {
         clfid: this.props.clfId
       };
       this.props.getSortedContentRequested(param);
-    } else if (prevProps.page !== this.props.page) {
     }
   }
 

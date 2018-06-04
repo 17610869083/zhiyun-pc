@@ -43,7 +43,7 @@ class TopicOpinion extends React.Component {
     handleClick(e) {
         if(e.key==='addsort'){
             this.setState({
-                current: 'topiclist',
+                current: e.key,
                 isAddTopicShow: false,
                 visible:true,
                 addClass:0,
@@ -82,7 +82,7 @@ class TopicOpinion extends React.Component {
                 browserHeight:window.innerHeight-140
               })
           }
-          },50)
+          },100)
     }
     // 添加专题
     handleAddTopic() {
@@ -92,10 +92,6 @@ class TopicOpinion extends React.Component {
             addClass:0
         });
         history.push(`/topic/addtopic`);
-    }
-    // 关别添加分类选项
-    handleCancelAddTopic() {
-
     }
     delTopic(e){
         e.stopPropagation();
@@ -249,9 +245,6 @@ class TopicOpinion extends React.Component {
              childRen:this.refs['topicList' + catid].children.length
           })
     }
-    filterTreeNode(e){
-         console.log(e)
-    }
     //分类下拉菜单
     dropDown(catid){
            const ref = this.refs['topicList' + catid];
@@ -333,7 +326,7 @@ class TopicOpinion extends React.Component {
                         <Menu.Item key="addtopic" style={{fontSize:'16px'}}>
                             添加专题
                         </Menu.Item>
-                        <Menu.Item key="addsort" style={{fontSize:'16px'}} onClick={this.handleCancelAddTopic.bind(this)}>
+                        <Menu.Item key="addsort" style={{fontSize:'16px'}} >
                             添加分类
                         </Menu.Item>
                     </Menu>

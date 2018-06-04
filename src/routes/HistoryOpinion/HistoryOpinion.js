@@ -48,7 +48,15 @@ class HistoryOpinion extends React.Component {
         'clf': '分类舆情',
         'work': '舆情报告',
         'topicReport_doc': '专题报告'
-      },
+      }
+      // sourceType: {
+      //   'topic': '专题信息',
+      //   'monitor': '信息总览',
+      //   'topicReport_excel': '专题报告',
+      //   'clf': '分类信息',
+      //   'work': '统计报告',
+      //   'topicReport_doc': '专题报告'
+      // }
     }
   }
 
@@ -552,7 +560,7 @@ class HistoryOpinion extends React.Component {
           <Tooltip title="下载报告">
             <i className="fa fa-download" aria-hidden="true"
                style={text[0]['taskstate'] === '2' ? {color: 'black'} : {color: 'gray', cursor: 'text'}}
-               onClick={this.down.bind(this)}
+               onClick={text[0]['taskstate'] === '2' ? this.down.bind(this) : ''}
                data-source={text[0]['source']}
                data-id={text[0]['Id']}
                data-finishdate={text[0]['finishdate']}
@@ -666,7 +674,8 @@ class HistoryOpinion extends React.Component {
                 activeKey={this.state.type}
                 onTabClick={this.onTabClick.bind(this)}
           >
-            <TabPane tab="舆情摘要" key="1">
+            {/* <TabPane tab="舆情摘要" key="1"> */}
+            <TabPane tab="信息摘要" key="1">
               <div className="historyHeader">
                 <Input className="titleInput"
                        placeholder="输入标题"
@@ -682,7 +691,7 @@ class HistoryOpinion extends React.Component {
                 <div className="source">来源类型：</div>
                 <div className={this.state.sourceSummary === 'monitor' ? 'summary blueSummary' : 'summary'}
                      onClick={this.searchSummary.bind(this, 'monitor')}
-                >舆情摘要
+                >信息摘要
                 </div>
                 <div className={this.state.sourceSummary === 'topic' ? 'summary blueSummary' : 'summary'}
                      onClick={this.searchSummary.bind(this, 'topic')}
@@ -709,7 +718,8 @@ class HistoryOpinion extends React.Component {
                      }}
               />
             </TabPane>
-            <TabPane tab="舆情报告" key="2">
+            {/* <TabPane tab="舆情报告" key="2"> */}
+            <TabPane tab="统计报告" key="2">
               <div className="historyHeader">
                 <Input className="titleInput"
                        placeholder="输入标题"
@@ -725,7 +735,9 @@ class HistoryOpinion extends React.Component {
                 <div className="source">来源类型：</div>
                 <div className={this.state.sourceSummary === 'work' ? 'summary blueSummary' : 'summary'}
                      onClick={this.searchReportSummary.bind(this, 'work')}
-                >舆情简报
+                >
+                {/* 信息简报 */}
+                舆情简报
                 </div>
                 <div className={this.state.sourceSummary === 'topicReport_doc' ? 'summary blueSummary' : 'summary'}
                      onClick={this.searchReportSummary.bind(this, 'topicReport_doc')}

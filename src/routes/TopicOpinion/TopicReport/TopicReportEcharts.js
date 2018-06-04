@@ -906,7 +906,8 @@ class TopicReportEcharts extends React.Component {
                         <Col span={6}></Col>
                         <Col span={12}>
                         <div  className="echartsBox"> 
-                        <div className="chartTitle">负面舆情日增趋势</div> 
+                        {/* <div className="chartTitle">负面舆情日增趋势</div>  */}
+                        <div className="chartTitle">重点舆情日增趋势</div> 
                             <ReactEchartsCore
                                 echarts={echarts}
                                 option={this.negativeGlobal()}

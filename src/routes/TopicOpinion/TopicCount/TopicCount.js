@@ -940,7 +940,8 @@ class TopicCount extends React.Component {
                 <Row>
                     <Col span={12}>
                     <div  className="echartsBox"> 
-                    <div className="chartTitle">负面载体分布</div> 
+                    {/* <div className="chartTitle">负面载体分布</div>  */}
+                    <div className="chartTitle">重点载体分布</div> 
                         <ReactEchartsCore
                             echarts={echarts}
                             option={negativeCarryOption}
@@ -951,7 +952,8 @@ class TopicCount extends React.Component {
                     
                     <Col span={12}>
                     <div  className="echartsBox"> 
-                    <div className="chartTitle">负面媒体分布</div> 
+                    {/* <div className="chartTitle">负面媒体分布</div>  */}
+                    <div className="chartTitle">重点媒体分布</div> 
                         <ReactEchartsCore
                             echarts={echarts}
                             option={negativeMediaOption}

@@ -3,7 +3,7 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {
   Checkbox, Icon, Input, Menu, Dropdown, Popconfirm, message, Popover, Button,
-  Spin, Alert, Select, Pagination, Modal
+  Spin, Alert, Select, Pagination, Modal,Tooltip
 } from 'antd';
 import {history} from '../../utils/history';
 import './OpinionDetail.less';
@@ -13,7 +13,6 @@ import {
   api_edit_doc_neg, api_del_doc, api_push_material, api_push_collection,
   api_allopinion_exportskip, api_topic_export_word,api_sorted_rule_list,api_topic_message
 } from '../../services/api';
-import {Tooltip} from 'antd';
 import {GRAY} from '../../utils/colors';
 import {
   opinionSearchRequested,
@@ -74,7 +73,8 @@ class OpinionDetail extends React.Component {
       visible: false,
       fileName: '',
       downloadVisible: false,
-      type: 0
+      type: 0,
+      downloadFlag:false
     };
   }
   componentDidUpdate(prevProps, prevState) {
@@ -382,28 +382,32 @@ class OpinionDetail extends React.Component {
       searchInputValue: value
     })
   }
-
-  // 搜索按钮
-  handleSearchBtn() {
-    const param = {
-      seltype: this.state.seltype,
-      keyword: this.state.searchInputValue,
-      datetag:'all',
-      neg:'all',
-      order:'timedown',
-      carry:'全部',
-      page:1
-    };
-    this.props.opinionSearchRequest(param);
-    this.props.searchKeywordSync({
-      seltype: this.state.seltype,
-      keyword: this.state.searchInputValue, type: 0
-    });
-    this.props.paginationPage(1);
-    if (this.props.propsType === 'AllopinionList') {
-      this.props.searchType(1);
-    }
+  keyDown(e){
+     if(e.keyCode === 13){
+      const param = {
+        seltype: this.state.seltype,
+        keyword: this.state.searchInputValue,
+        datetag:'all',
+        neg:'all',
+        order:'timedown',
+        carry:'全部',
+        page:1
+      };
+      this.props.opinionSearchRequest(param);
+      this.props.searchKeywordSync({
+        seltype: this.state.seltype,
+        keyword: this.state.searchInputValue, type: 0
+      });
+      this.props.paginationPage(1);
+      if (this.props.propsType === 'AllopinionList') {
+        this.props.searchType(1);
+      }
+     }
   }
+  // 搜索按钮
+  // handleSearchBtn() {
+
+  // }
 
   // 推送到素材库
   putIntoMaterial(e) {
@@ -548,13 +552,11 @@ class OpinionDetail extends React.Component {
       fileName: filename
     })
   }
-  handleImageLoaded(){
-
-  }
   handleOk() {
     this.setState({
       visible: false,
-      downloadVisible: true
+      downloadVisible: true,
+      downloadFlag:true
     })
     let propsType = this.props.propsType;
     let propsParamData = this.props.param;
@@ -573,6 +575,11 @@ class OpinionDetail extends React.Component {
           "Content-Type": "application/x-www-form-urlencoded"
         },
         body: `page=${propsParamData.page}&sids=${propsParamData.sid}&pagesize=${propsParamData.pagesize}&datetag=${propsParamData.datetag}&taskname=${this.state.fileName}&documenttype=excel&createdate=${time}&taskstate=0&source=monitor&order=${propsParamData.order}&begin=${propsParamData.begin}&end=${propsParamData.end}&neg=${propsParamData.neg}&carry=${propsParamData.carry}&similer=${propsParamData.similer}&seltype=conten&keyword=`
+      }).then(res => {
+            this.setState({
+              downloadFlag:false
+            })
+            window.location.href = 'http://119.90.61.155' +res.data.downloadUrl
       })
 
     } else if (propsType === 'TopicList') {
@@ -582,6 +589,11 @@ class OpinionDetail extends React.Component {
           "Content-Type": "application/x-www-form-urlencoded"
         },
         body: `topicName=${this.state.fileName}&topicid=${this.state.topicMessage.topicid}&sids=${propsParamData.sid}&page=${propsParamData.page}&pagesize=${propsParamData.pagesize}&datetag=${propsParamData.datetag}&taskname=${this.state.fileName}&documenttype=excel&createdate=${time}&taskstate=0&source=topic&order=${propsParamData.order}&begin=${propsParamData.begin}&end=${propsParamData.end}&neg=${propsParamData.neg}&carry=${propsParamData.carry}&similer=${propsParamData.similer}&seltype=conten&keyword=`
+      }).then(res => {
+        this.setState({
+          downloadFlag:false
+        })
+        window.location.href = 'http://119.90.61.155' +res.data.downloadUrl
       })
     } else {
       request(api_topic_export_word, {
@@ -590,7 +602,12 @@ class OpinionDetail extends React.Component {
           "Content-Type": "application/x-www-form-urlencoded"
         },
         body: `typeid=${this.state.clfMessage.typeid}&clfname=${this.state.fileName}&clfid=${this.state.clfMessage.clfid}&sids=${propsParamData.sid}&page=${propsParamData.page}&pagesize=${propsParamData.pagesize}&datetag=${propsParamData.datetag}&taskname=${this.state.fileName}&documenttype=excel&createdate=${time}&taskstate=0&source=clf&order=${propsParamData.order}&begin=${propsParamData.begin}&end=${propsParamData.end}&neg=${propsParamData.neg}&carry=${propsParamData.carry}&similer=${propsParamData.similer}&seltype=conten&keyword=`
-      })
+      }).then(res => {
+        this.setState({
+          downloadFlag:false
+        })
+        window.location.href = 'http://119.90.61.155' +res.data.downloadUrl
+     })
     }
   }
 
@@ -841,6 +858,15 @@ class OpinionDetail extends React.Component {
         />
       </Spin>
     );
+    const downLoading = (
+      <Spin tip="生成中...">
+          <Alert
+          message="正在生成文档..."
+          description="请稍等..."
+          type="info"
+          />
+      </Spin>
+    );
     return (
       <div className="opinion-detail">
         <div className="top" style={{background:GRAY}}>
@@ -906,7 +932,9 @@ class OpinionDetail extends React.Component {
                }}>
             <div className="right">
               <InputGroup compact>
-                <Select defaultValue="content" onChange={this.handleSearchChange.bind(this)}>
+                <Select defaultValue="content" onChange={this.handleSearchChange.bind(this)} 
+                 getPopupContainer={() => document.querySelector('.opinion-detail')}
+                >
                   <Option value="content" className="selectFont">搜全文</Option>
                   <Option value="title" className="selectFont">搜标题</Option>
                 </Select>
@@ -914,16 +942,18 @@ class OpinionDetail extends React.Component {
                   style={{width: '150px'}}
                   placeholder="请输入您要搜索的内容"
                   onChange={this.searchInput.bind(this)}
+                  onKeyDown = {this.keyDown.bind(this)}
                 />
 
               </InputGroup>
             </div>
-            <Button className="search" onClick={this.handleSearchBtn.bind(this)}>搜索</Button>
+            {/* <Button className="search" onClick={this.handleSearchBtn.bind(this)}>搜索</Button> */}
           </div>
         </div>
         <div className="bottom">
+          { this.state.downloadFlag?downLoading:(null)}
           {flag ? Loading : (null)}
-          <ul className="opinion-detail-wrapper" onLoad={this.handleImageLoaded.bind(this)}>
+          <ul className="opinion-detail-wrapper">
             {OpinionDetailItems}
           </ul>
         </div>
@@ -944,7 +974,7 @@ class OpinionDetail extends React.Component {
           >确定
           </Button>
         </Modal>
-        <Modal
+        {/* <Modal
           title="下载"
           visible={this.state.downloadVisible}
           onOk={this.downloadHandleOk.bind(this)}
@@ -952,7 +982,7 @@ class OpinionDetail extends React.Component {
           cancelText='留在此页'
         >
           <p>是否去下载</p>
-        </Modal>
+        </Modal> */}
       </div>
     )
   }

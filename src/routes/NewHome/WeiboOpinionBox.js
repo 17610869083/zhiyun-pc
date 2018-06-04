@@ -47,7 +47,8 @@ class WeiboOpinionBox extends React.PureComponent {
                     <div className="top" style={{background:GRAY}}>
                         <div className="title">
                             <IconFont type="icon-weibo1" style={{fontSize: '20px'}}/>
-                            <span className="txt" style={{color:BLACK}}>微博舆情</span>
+                            {/* <span className="txt" style={{color:BLACK}}>微博舆情</span> */}
+                            <span className="txt" style={{color:BLACK}}>微博信息</span>
                         </div>
                         <div className="more">
                                {more}
@@ -74,7 +75,8 @@ class WeiboOpinionBox extends React.PureComponent {
                                     }
                                 </ul>
                             </TabPane>
-                            <TabPane tab="负面" key="2">
+                            {/* <TabPane tab="负面" key="2"> */}
+                            <TabPane tab="重点" key="2">
                                 <ul className="list">
                                     {weiboNegative !=='[]'&& weiboNegative.length!==0 ?
                                         weiboNegative.map((item,index) =>

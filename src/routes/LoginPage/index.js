@@ -144,7 +144,8 @@ class LoginPage extends React.Component {
                             <img src={zhiyunImg} alt="zhiyun"/>
                         </div>
                         <div className="title">
-                            <h2>知云网大数据舆情云平台</h2>
+                            {/* <h2>知云网大数据舆情云平台</h2> */}
+                            <h2>知云网大数据云平台</h2>
                         </div>
                     </div>
                     <div className="login">

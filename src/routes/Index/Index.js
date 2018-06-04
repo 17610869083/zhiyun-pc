@@ -131,6 +131,7 @@ class Index extends React.Component {
     document.querySelector('.main').scrollTop = 0;
   }
   render() {
+    // 统计报告-舆情报告   
     const {themeColor} = this.props;
     let menuList = [];
     this.state.channelList.map((item, index) => {
@@ -210,22 +211,23 @@ class Index extends React.Component {
             collapsible
             style={{backgroundColor: '#fff'}}
             collapsed={this.state.collapsed && this.state.flag}
+            onMouseEnter={this.mouseEnterToggle} 
+            onMouseLeave={this.mouseLeaveToggle}
           >
             <div>
               <div className="logo-wrapper">
                 <img src={logo} alt="logo" className="logo" onClick={this.goBackIndex.bind(this)}/>
               </div>
-              <div className="trigger-wrapper" onClick={this.toggle} onMouseEnter={this.mouseEnterToggle} 
-              onMouseLeave={this.mouseLeaveToggle}>
+              <div className="trigger-wrapper" onClick={this.toggle} >
                 <i className="fa fa-bars" aria-hidden="true" style={{fontSize: '14px', color: '#5a8bff'}}/>
-                </div>
+              </div>
             </div>
             <Menu
               defaultSelectedKeys={['1']}
               mode="inline"
               theme="dark"
-              inlineCollapsed={this.state.collapsed}
-              style={this.state.collapsed ? {
+              // inlineCollapsed={this.state.collapsed && this.state.flag}
+              style={this.state.collapsed && this.state.flag ? {
                 backgroundColor: '#fff',
                 maxHeight: '600px'
               } : {backgroundColor: '#fff', maxHeight: '600px', overflow: 'auto'}}

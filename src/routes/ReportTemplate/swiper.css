@@ -65,15 +65,17 @@
   -webkit-flex-shrink: 0;
   -ms-flex-negative: 0;
   flex-shrink: 0;
-  width: 30%;
-  height: 200px;
+  height: 267px;
   background: #fff;
   position: relative;
+  border:1px solid #5a8bff;
+  border-radius:6px;
   -webkit-transition-property: -webkit-transform;
   transition-property: -webkit-transform;
   -o-transition-property: transform;
   transition-property: transform;
   transition-property: transform, -webkit-transform;
+  margin: 40px 0 ;
 }
 .swiper-invisible-blank-slide {
   visibility: hidden;
@@ -403,7 +405,7 @@ button.swiper-pagination-bullet {
 }
 /* Scrollbar */
 .swiper-scrollbar {
-  border-radius: 10px;
+  border-radius: 6px;
   position: relative;
   -ms-touch-action: none;
   background: rgba(0, 0, 0, 0.1);
@@ -413,8 +415,9 @@ button.swiper-pagination-bullet {
   left: 1%;
   bottom: 3px;
   z-index: 50;
-  height: 5px;
+  height: 20px;
   width: 98%;
+  padding:6px 0;
 }
 .swiper-container-vertical > .swiper-scrollbar {
   position: absolute;
@@ -428,7 +431,7 @@ button.swiper-pagination-bullet {
   height: 100%;
   width: 100%;
   position: relative;
-  background: rgba(0, 0, 0, 0.5);
+  background: #fff;
   border-radius: 10px;
   left: 0;
   top: 0;
