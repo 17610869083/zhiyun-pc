@@ -101,8 +101,8 @@ class TodayOpinionBox extends React.PureComponent {
                                      </div>
                                      <div className="count" style={{backgroundColor: '#ffbc34'}}>
                                          <div className="number">{todayWarning}</div>
-                                         {/* <div className="name">今日预警</div> */}
-                                         <div className="name">今日特推</div>
+                                         <div className="name">今日预警</div>
+                                         {/* <div className="name">今日特推</div> */}
                                      </div>
 
                                  </div>
@@ -118,8 +118,8 @@ class TodayOpinionBox extends React.PureComponent {
                                      </div>
                                      <div className="count">
                                          <div className="number">{todayAll}</div>
-                                         {/* <div className="name">今日舆情</div> */}
-                                         <div className="name">今日信息</div>
+                                         <div className="name">今日舆情</div>
+                                         {/* <div className="name">今日信息</div> */}
                                      </div>
 
                                  </div>
@@ -133,8 +133,8 @@ class TodayOpinionBox extends React.PureComponent {
                                      </div>
                                      <div className="count" style={{backgroundColor: '#ff3f3f'}}>
                                          <div className="number">{todayNegative}</div>
-                                         {/* <div className="name">今日负面</div> */}
-                                         <div className="name">今日重点</div>
+                                         <div className="name">今日负面</div>
+                                         {/* <div className="name">今日重点</div> */}
                                      </div>
                                  </div>
                              </div>
@@ -147,8 +147,8 @@ class TodayOpinionBox extends React.PureComponent {
                                      </div>
                                      <div className="count" style={{backgroundColor: '#ff8839'}}>
                                          <div className="number">{ratio}%</div>
-                                         {/* <div className="name">负面同比增长</div> */}
-                                         <div className="name">重点信息增长</div>
+                                         <div className="name">负面同比增长</div>
+                                         {/* <div className="name">重点信息增长</div> */}
                                      </div>
                                  </div>
                              </div>

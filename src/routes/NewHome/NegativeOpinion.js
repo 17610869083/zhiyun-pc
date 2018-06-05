@@ -11,7 +11,7 @@ class NagetiveOpinion extends React.Component {
     constructor() {
         super();
         this.state = {
-            datetagType:'today'
+            datetagType:'all'
         }
     }
     clickItemTitle(sid) {
@@ -25,9 +25,8 @@ class NagetiveOpinion extends React.Component {
     }
     tabChange(key){
          let datetag = {
-            '1': 'today',
-            '2':'yestoday',
-            '3':'7day'
+            '1': 'all',
+            '2':'today',
          }
          this.setState({
              datetagType:datetag[key]
@@ -37,7 +36,7 @@ class NagetiveOpinion extends React.Component {
              this.props.delNegativeBox(1);
     }
     render() {
-        const {todayOpinion,yesterdayOpinion,beforeYesterdayOpinion} = this.props;
+        const {todayOpinion,alldayOpinion} = this.props;
         const more = this.props.status!=='setting'?<span style={{color:BLACK}} onClick={this.goAllOpinion.bind(this)}>更多 
          <IconFont type="icon-jiantou" style={{color: '#9b9b9b',fontSize: '16px',marginLeft:'6px'}}/>
         </span>:<Icon type="close-circle" className="delModule" style={{fontSize: '18px',color:BLUES}}
@@ -49,8 +48,8 @@ class NagetiveOpinion extends React.Component {
                     <div className="top" style={{background:GRAY}}>
                         <div className="title">
                             <IconFont type="icon-fumianxinxi" style={{fontSize: '20px',color:BLUES}}/>
-                            {/* <span className="txt" style={{color:BLACK}}>负面舆情</span> */}
-                            <span className="txt" style={{color:BLACK}}>重点信息</span>
+                            <span className="txt" style={{color:BLACK}}>负面舆情</span>
+                            {/* <span className="txt" style={{color:BLACK}}>重点信息</span> */}
                         </div>
                         <div className="more">
                              {more}
@@ -58,7 +57,24 @@ class NagetiveOpinion extends React.Component {
                     </div>
                     <div className="bottom">
                         <Tabs defaultActiveKey="1" onChange={this.tabChange.bind(this)}>
-                            <TabPane tab="24小时" key="1">
+                        <TabPane tab="全部" key="1">
+                                <ul className="list">
+                                    {alldayOpinion.length > 0 ?
+                                        alldayOpinion.map((item,index) =>
+                                            <li key={item.sid} className="list-item" onClick={this.clickItemTitle.bind(this,item.sid)}>
+                                             <div className="content">
+                                             <div className="title">{item.title}</div>
+                                             <div className="desc">
+                                                 <span className="time">{item.pubdate.substring(10)}</span>
+                                                 <span className="source">{item.source}</span>
+                                             </div>
+                                             </div>
+                                            </li>
+                                        ) : <BlankPage desc='<span>空空如也，赶紧去<a href="index.html#/warnsetting?type=601">添加</a>关键词</span>'/>
+                                    }
+                                </ul>
+                            </TabPane>
+                            <TabPane tab="最新" key="2">
                                 <ul className="list">
                                     {todayOpinion.length > 0 ?
                                         todayOpinion.map((item,index) =>
@@ -75,40 +91,7 @@ class NagetiveOpinion extends React.Component {
                                     }
                                 </ul>
                             </TabPane>
-                            <TabPane tab="昨天" key="2">
-                                <ul className="list">
-                                    {yesterdayOpinion.length > 0 ?
-                                        yesterdayOpinion.map((item,index) =>
-                                            <li key={item.sid} className="list-item" onClick={this.clickItemTitle.bind(this,item.sid)}>
-                                             <div className="content">
-                                             <div className="title">{item.title}</div>
-                                             <div className="desc">
-                                                 <span className="time">{item.pubdate.substring(10)}</span>
-                                                 <span className="source">{item.source}</span>
-                                             </div>
-                                             </div>
-                                            </li>
-                                        ) : <BlankPage desc='<span>空空如也，赶紧去<a href="index.html#/warnsetting?type=601">添加</a>关键词</span>'/>
-                                    }
-                                </ul>
-                            </TabPane>
-                            <TabPane tab="前天" key="3">
-                                <ul className="list">
-                                    {beforeYesterdayOpinion.length > 0 ?
-                                        beforeYesterdayOpinion.map((item,index) =>
-                                            <li key={item.sid} className="list-item" onClick={this.clickItemTitle.bind(this,item.sid)}>
-                                            <div className="content">
-                                            <div className="title">{item.title}</div>
-                                            <div className="desc">
-                                                <span className="time">{item.pubdate.substring(10)}</span>
-                                                <span className="source">{item.source}</span>
-                                            </div>
-                                            </div>
-                                            </li>
-                                        ) : <BlankPage desc='<span>空空如也，赶紧去<a href="index.html#/warnsetting?type=601">添加</a>关键词</span>'/>
-                                    }
-                                </ul>
-                            </TabPane>
+
                         </Tabs>
                     </div>
                 </div>

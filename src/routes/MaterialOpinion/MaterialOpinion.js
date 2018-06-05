@@ -57,10 +57,6 @@ class MaterialOpinion extends React.Component {
 			materialList: []
 		};
 	}
-	// componentWillReceiveProps(nextProps){
-	// 	console.log(nextProps);
-	//   materiaList: nextProps.materialList //下一阶段的props
-	// }
 	// 拖拽
 	handleSort(data) {
 		this.setState({
@@ -156,10 +152,7 @@ class MaterialOpinion extends React.Component {
 						getDetail(current);
 					}
 				});
-			},
-			onCancel() {
-				console.log('取消');
-			},
+			}
 		});
 	}
 
@@ -362,8 +355,6 @@ class MaterialOpinion extends React.Component {
 			this.setState({ renameMaterialVisible: true })
 		} else if (key === 'top') {
 			this.onClickTopList(this.state.topId)
-		} else {
-			console.log(key);
 		}
 	}
 	deleteMaterial(id) {
@@ -491,7 +482,6 @@ class MaterialOpinion extends React.Component {
 
 
 		const docList = this.props.docList ? this.props.docList : [{ carry: '新闻' }];
-		console.log(docList);
 		const OpinionDetailItems = docList.length !== 0 ? docList.map((item, index) =>
 			<li key={item.sid} className="opinion-detail-item">
 				<Checkbox
@@ -667,7 +657,6 @@ class MaterialOpinion extends React.Component {
 							</div>
 							<div className="bottom" style={{ maxHeight: this.state.browserHeight + 'px' }} >
 								<ul className="material-list">
-									{console.log(materialList)}
 									{
 										this.state.materialList.map((item, index) =>
 											<li key={item.id} className={this.state.materialCurrent === index ? 'material-list-item-active' : 'material-list-item'}>

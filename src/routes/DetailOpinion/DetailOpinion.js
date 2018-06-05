@@ -520,40 +520,35 @@ class DetailOpinion extends React.Component {
                             <Popconfirm title="确定要将这条信息设置为预警吗？" onConfirm={this.warningConfirm.bind(this, sid)} onCancel={this.deleteCancel.bind(this)} okText="是" cancelText="否">
                                 <div className="operation-item" title="设为预警">
                                 <IconFont type="icon-shandian" />
-                                    {/* <img src={warningImg} alt="warning"/> */}
                                 </div>
                             </Popconfirm>
                             <Popconfirm title="确定要将这条信息设置为负面吗？" onConfirm={this.negativeConfirm.bind(this, sid)} onCancel={this.deleteCancel.bind(this)} okText="是" cancelText="否">
                                 <div className="operation-item" title="设为负面">
                                 <IconFont type="icon-fumianxinxi"/>
-                                    {/* <img src={negativeImg} alt="negative"/> */}
                                 </div>
                             </Popconfirm>
                             <Popconfirm title="确定要将这条信息设置为正面吗？" onConfirm={this.positiveConfirm.bind(this, sid)} onCancel={this.deleteCancel.bind(this)} okText="是" cancelText="否">
                                 <div className="operation-item" title="设为正面">
-                                <IconFont type="icon-zheng"/>
+                                <IconFont type="icon-zheng" style={{fontSize:'22px',marginTop:'2px'}}/>
                                 </div>
                             </Popconfirm>
                             <Popconfirm title="确定要将这条信息设置为中性吗？" onConfirm={this.neutralConfirm.bind(this, sid)} onCancel={this.deleteCancel.bind(this)} okText="是" cancelText="否">
                                 <div className="operation-item item-font" title="设为中性">
-                                中
+                                <IconFont type="icon-zhong1" style={{fontSize:'21px'}}/> 
                                 </div>
                             </Popconfirm>
 
                             <Popconfirm title="确定要删除这条信息吗？" onConfirm={this.deleteConfirm.bind(this, sid)} onCancel={this.deleteCancel.bind(this)} okText="是" cancelText="否">
                                 <div className="operation-item" title="删除">
-                                <IconFont type="icon-shanchu1"/>
-                                    {/* <img src={deleteImg} alt="delete"/> */}
+                                <IconFont type="icon-shanchu1-copy-copy"/>
                                 </div>
                             </Popconfirm>
                             <div className="operation-item" title="修改" onClick={this.showEditModal.bind(this)}>
-                               <IconFont type="icon-iconfontbianji1"/>
-                                {/* <img src={editImg} alt="edit"/> */}
+                               <IconFont type="icon-xiugai"/>
                             </div>
                            
                                 <div className="operation-item" title="推送" onClick={this.searchEmail.bind(this)}>
-                                <IconFont type="icon-tuisongguize"/>
-                                    {/* <img src={pushImg} alt="push" onClick={this.searchEmail.bind(this)}/> */}
+                                <IconFont type="icon-tuisongguize"/> 
                                 </div>
                             </div>
                             <div className="keywords-right">

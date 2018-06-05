@@ -29,8 +29,8 @@ class OpinionCountBox extends React.PureComponent {
                     <div className="top" style={{background:GRAY}}>
                         <div className="title">
                             <IconFont type="icon-tongji" style={{fontSize: '28px',color:BLUES,verticalAlign:'-8px'}}/>
-                            {/* <span className="txt" style={{color:BLACK}}>舆情统计</span> */}
-                            <span className="txt" style={{color:BLACK}}>信息统计</span>
+                            <span className="txt" style={{color:BLACK}}>舆情统计</span>
+                            {/* <span className="txt" style={{color:BLACK}}>信息统计</span> */}
                         </div>
                         <div className="more">
                               {more}

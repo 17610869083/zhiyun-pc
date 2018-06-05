@@ -50,8 +50,8 @@ export function formatMediaChart(data) {
             trigger: 'axis'
         },
         legend: {
-            data:['常规', '关注', '重点','特推'],
-            // data:['正面', '中性', '负面','预警'],
+            //data:['常规', '关注', '重点','特推'],
+            data:['正面', '中性', '负面','预警'],
             top: 30
         },
         grid: {
@@ -69,29 +69,29 @@ export function formatMediaChart(data) {
         ],
         series: [
             {
-                // name: '正面',
-                name: '常规',
+                name: '正面',
+                //name: '常规',
                 type: 'line',
                 smooth: true,
                 data: data.series[0].data
             },
             {
-                // name: '中性',
-                name: '关注',
+                name: '中性',
+                //name: '关注',
                 type: 'line',
                 smooth: true,
                 data: data.series[1].data
             },
             {
-                // name: '负面',
-                name: '重点',
+                name: '负面',
+                //name: '重点',
                 type: 'line',
                 smooth: true,
                 data: data.series[2].data
             },
             {
-                // name: '预警',
-                name: '特推',
+                name: '预警',
+                //name: '特推',
                 type: 'line',
                 smooth: true,
                 data: data.series[3].data

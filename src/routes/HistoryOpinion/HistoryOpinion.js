@@ -674,8 +674,8 @@ class HistoryOpinion extends React.Component {
                 activeKey={this.state.type}
                 onTabClick={this.onTabClick.bind(this)}
           >
-            {/* <TabPane tab="舆情摘要" key="1"> */}
-            <TabPane tab="信息摘要" key="1">
+            <TabPane tab="舆情摘要" key="1">
+            {/* <TabPane tab="信息摘要" key="1"> */}
               <div className="historyHeader">
                 <Input className="titleInput"
                        placeholder="输入标题"
@@ -718,8 +718,8 @@ class HistoryOpinion extends React.Component {
                      }}
               />
             </TabPane>
-            {/* <TabPane tab="舆情报告" key="2"> */}
-            <TabPane tab="统计报告" key="2">
+            <TabPane tab="舆情报告" key="2">
+            {/* <TabPane tab="统计报告" key="2"> */}
               <div className="historyHeader">
                 <Input className="titleInput"
                        placeholder="输入标题"
