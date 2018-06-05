@@ -119,8 +119,7 @@ function* getCollectioncLocationSaga() {
 // 获取素材库列表
 function* getMaterialOpinionList() {
     try {
-				const result = yield call(apiGetMaterialOpinionList);
-				console.log(result);
+		const result = yield call(apiGetMaterialOpinionList);
         yield put(getMaterialOpinionListSucceeded(result));
     } catch(e) {
         console.log(e);

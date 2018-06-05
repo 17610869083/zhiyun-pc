@@ -33,11 +33,9 @@ class NewHome extends React.Component {
     this.state = {
       opinionList: [],
       todayOpinionArr: [],
-      yesterdayOpinion: [],
-      beforeYesterdayOpinion: [],
+      alldayOpinion:[],
       todayWarningOpinion: [],
-      yesterdayWarningOpinion: [],
-      beforeYesterdayWarningOpinion: [],
+      alldayWarningOpinion: [],
       weiboAll: [],
       weiboNegative: [],
       opinionCountArr: [],
@@ -95,15 +93,12 @@ class NewHome extends React.Component {
                 // 负面舆情
                 request(api_newest_negative_opinion)
                   .then((res) => {
-                    console.log(res);
                     if (res.data) {
-                      const todayOpinion = res.data['24hour'].all.docList ? res.data['24hour'].all.docList : [];
-                      const yesterdayOpinion = res.data['yestoday'].all.docList ? res.data['yestoday'].all.docList : [];
-                      const beforeYesterdayOpinion = res.data['bfyestoday'].all.docList ? res.data['bfyestoday'].all.docList : [];
+                      const todayOpinion = res.data['24hour'].docList ? res.data['24hour'].docList : [];
+                      const alldayOpinion = res.data['all'].docList ? res.data['all'].docList : [];
                       this.setState({
                         todayOpinionArr: todayOpinion,
-                        yesterdayOpinion: yesterdayOpinion,
-                        beforeYesterdayOpinion: beforeYesterdayOpinion
+                        alldayOpinion: alldayOpinion
                       })
                     }
 
@@ -112,15 +107,12 @@ class NewHome extends React.Component {
                       .then((res) => {
                         if (res.data) {
                           const todayOpinion = res.data['24hour'].docList ? res.data['24hour'].docList : [];
-                          const yesterdayOpinion = res.data['yestoday'].docList ? res.data['yestoday'].docList : [];
-                          const beforeYesterdayOpinion = res.data['bfyestoday'].docList ? res.data['bfyestoday'].docList : [];
+                          const alldayOpinion = res.data['all'].docList ? res.data['all'].docList : [];
                           this.setState({
                             todayWarningOpinion: todayOpinion,
-                            yesterdayWarningOpinion: yesterdayOpinion,
-                            beforeYesterdayWarningOpinion: beforeYesterdayOpinion
+                            alldayWarningOpinion: alldayOpinion,
                           })
                         }
-
                         // 微博舆情
                         request(api_weibo_opinion)
                           .then((res) => {
@@ -351,13 +343,8 @@ class NewHome extends React.Component {
   }
 
   render() {
-    const {
-      opinionList,
-      todayOpinionArr, yesterdayOpinion, beforeYesterdayOpinion,
-      todayWarningOpinion, yesterdayWarningOpinion, beforeYesterdayWarningOpinion,
-      weiboAll, weiboNegative,
-      opinionCountArr
-    } = this.state;
+    const {opinionList,todayOpinionArr, alldayOpinion,todayWarningOpinion, alldayWarningOpinion, 
+      weiboAll, weiboNegative,opinionCountArr} = this.state;
     const {userInfo, ModuleList} = this.props;
     const moduleList = this.state.homeMessage.length !== 0 ? homeModuleList(this.state.homeMessage).map((item, index) =>
       <li key={index}>{this.state.delMoudleList[item]}
@@ -394,7 +381,6 @@ class NewHome extends React.Component {
               </Col>
             </Row>
             <Row gutter={16} className="row"
-              //  style={ModuleList.opinionTrend===1?{display:'none'}:{display:'block'}}
             >
               <Col span={24}>
                 {ModuleList.opinionTrend === 1 ? '' : <OpinionTrendBox
@@ -410,8 +396,7 @@ class NewHome extends React.Component {
               >
                 <NewestWarningOpinionBox
                   todayOpinion={todayWarningOpinion}
-                  yesterdayOpinion={yesterdayWarningOpinion}
-                  beforeYesterdayOpinion={beforeYesterdayWarningOpinion}
+                  alldayOpinion={alldayWarningOpinion}
                   status={this.props.type !== undefined ? 'setting' : ''}
                   delNewestWarningBox={this.delNewestWarningBox.bind(this)}
                 />
@@ -421,8 +406,7 @@ class NewHome extends React.Component {
               >
                 <NegativeOpinionBox
                   todayOpinion={todayOpinionArr}
-                  yesterdayOpinion={yesterdayOpinion}
-                  beforeYesterdayOpinion={beforeYesterdayOpinion}
+                  alldayOpinion={alldayOpinion}
                   status={this.props.type !== undefined ? 'setting' : ''}
                   delNegativeBox={this.delNegativeBox.bind(this)}
                 />

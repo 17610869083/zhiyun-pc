@@ -31,6 +31,7 @@ const TrendFeeling = AsyncComponent(() => import('../TopicOpinion/TrendFeeling/T
 const BigScreen = AsyncComponent(() => import('../BigScreen/BigScreen'))
 const ZHeader = AsyncComponent(() => import('../../components/ZHeader/Zheader'))
 const ReportTemplate = AsyncComponent(() => import('../ReportTemplate/ReportTemplate'))
+const ChooseTemplate = AsyncComponent(() => import('../ChooseTemplate/ChooseTemplate'))
 const {Header, Sider, Content} = Layout;
 const SubMenu = Menu.SubMenu;
 
@@ -265,6 +266,7 @@ class Index extends React.Component {
                 <Route path="/sortedopinion/addrule" component={SortedAdd}/>
                 <Route path="/topicreportlist" component={TopicReportList}/>
                 <Route path="/reporttemplate" component={ReportTemplate}/>
+                <Route path="/choosetemplate" component={ChooseTemplate}/>
               </Switch>
               <div className="suspensionBox">
                 <div>

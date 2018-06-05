@@ -480,14 +480,9 @@ class AllOpinion extends React.Component {
         timeValue: 'today',
         trendValue: 1
       })
-    } else if (pathname === '#/allopinion?datetag=yestoday&neg=1') {
+    } else if (pathname === '#/allopinion?datetag=all&neg=1') {
       this.setState({
-        timeValue: 'yestoday',
-        trendValue: 1
-      })
-    } else if (pathname === '#/allopinion?datetag=7day&neg=1') {
-      this.setState({
-        timeValue: '7day',
+        timeValue: 'all',
         trendValue: 1
       })
     }
@@ -496,17 +491,12 @@ class AllOpinion extends React.Component {
         timeValue: 'today',
         trendValue: 2
       })
-    } else if (pathname === '#/allopinion?datetag=yestoday&neg=2') {
+    } else if (pathname === '#/allopinion?datetag=all&neg=2') {
       this.setState({
-        timeValue: 'yestoday',
+        timeValue: 'all',
         trendValue: 2
       })
-    } else if (pathname === '#/allopinion?datetag=7day&neg=2') {
-      this.setState({
-        timeValue: '7day',
-        trendValue: 2
-      })
-    }
+    } 
     else if (pathname === '#/allopinion?carry=weibo&neg=all') {
       this.setState({
         mediaValue: '微博',

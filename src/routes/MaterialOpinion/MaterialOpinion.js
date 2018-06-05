@@ -179,10 +179,7 @@ class MaterialOpinion extends React.Component {
 						getDetail(current);
 					}
 				});
-			},
-			onCancel() {
-				console.log('取消');
-			},
+			}
 		});
 	}
 
@@ -385,8 +382,6 @@ class MaterialOpinion extends React.Component {
 			this.setState({ renameMaterialVisible: true })
 		} else if (key === 'top') {
 			this.onClickTopList(this.state.topId)
-		} else {
-			console.log(key);
 		}
 	}
 	deleteMaterial(id) {
@@ -514,7 +509,6 @@ class MaterialOpinion extends React.Component {
 
 
 		const docList = this.props.docList ? this.props.docList : [{ carry: '新闻' }];
-		console.log(docList);
 		const OpinionDetailItems = docList.length !== 0 ? docList.map((item, index) => 
 			<div key={item.sid}>
 			  <div className="item_time" style={{ height: 25, paddingLeft: 34 }}>{item.adddate}</div>
