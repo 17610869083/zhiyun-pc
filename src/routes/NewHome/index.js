@@ -95,10 +95,11 @@ class NewHome extends React.Component {
                 // 负面舆情
                 request(api_newest_negative_opinion)
                   .then((res) => {
+                    console.log(res);
                     if (res.data) {
-                      const todayOpinion = res.data['24hour'].docList ? res.data['24hour'].docList : [];
-                      const yesterdayOpinion = res.data['yestoday'].docList ? res.data['yestoday'].docList : [];
-                      const beforeYesterdayOpinion = res.data['bfyestoday'].docList ? res.data['bfyestoday'].docList : [];
+                      const todayOpinion = res.data['24hour'].all.docList ? res.data['24hour'].all.docList : [];
+                      const yesterdayOpinion = res.data['yestoday'].all.docList ? res.data['yestoday'].all.docList : [];
+                      const beforeYesterdayOpinion = res.data['bfyestoday'].all.docList ? res.data['bfyestoday'].all.docList : [];
                       this.setState({
                         todayOpinionArr: todayOpinion,
                         yesterdayOpinion: yesterdayOpinion,

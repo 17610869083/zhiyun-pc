@@ -11,7 +11,7 @@ import {
 	api_add_doc_from_top,
 	api_material_opinion_list
 } from '../../services/api';
-import { apiGetMaterialOpinionList } from '../../services/opinionServices';
+// import { apiGetMaterialOpinionList } from '../../services/opinionServices';
 import { opinionTrend, opinionColor } from '../../utils/format';
 // import AsyncComponent from '../../components/AsyncComponent/AsyncComponent'
 // const TopicEditOpinionDetail = AsyncComponent(() => import('../SystemSetting/TopicEditOpinionDetail/TopicEditOpinionDetail'))
@@ -23,7 +23,7 @@ import {
 	getReportListRequested
 
 } from '../../redux/actions/createActions';
-import Store from '../../redux/store/index';
+// import Store from '../../redux/store/index';
 import weixin from '../../assets/icon-img/weixin.png';
 import news from '../../assets/icon-img/news.png';
 import weibo from '../../assets/icon-img/weibo.png';
@@ -34,10 +34,10 @@ import media from '../../assets/icon-img/new.png';
 import boke from '../../assets/icon-img/boke.png';
 import app from '../../assets/icon-img/app.png';
 import twitter from '../../assets/icon-img/twitter.png';
-import Collection from '../../assets/img/collection.svg';
-import Material from '../../assets/img/material.svg';
-import Qing from '../../assets/img/qing.svg';
-import Del from '../../assets/img/del.svg';
+// import Collection from '../../assets/img/collection.svg';
+// import Material from '../../assets/img/material.svg';
+// import Qing from '../../assets/img/qing.svg';
+// import Del from '../../assets/img/del.svg';
 import './MaterialOpinion.less';
 import BlankPage from '../../base/Exception/BlankPage';
 import { GRAY, BLACK } from '../../utils/colors';
