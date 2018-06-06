@@ -162,6 +162,8 @@ export const api_push_material = host + 'oWork/reportDo?action=putResource';
 export const api_del_doc_from_cat = host + 'oWork/reportDo?action=delDocFromCat';
 // 文件置顶
 export const api_add_doc_from_top = host + 'oWork/reportDo?action=catMoveToTop';
+// 素材库舆情录入
+export const api_add_doc_from_mat = host + 'oWork/reportDo?action=oDataAdd';
 export {
     api_newest_warning_opinion,
     api_today_opinion,

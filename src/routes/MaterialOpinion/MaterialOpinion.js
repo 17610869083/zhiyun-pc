@@ -13,15 +13,16 @@ import {
 } from '../../services/api';
 // import { apiGetMaterialOpinionList } from '../../services/opinionServices';
 import { opinionTrend, opinionColor } from '../../utils/format';
-// import AsyncComponent from '../../components/AsyncComponent/AsyncComponent'
+import AllOpinion from '../AllOpinion/AllOpinion'
 // const TopicEditOpinionDetail = AsyncComponent(() => import('../SystemSetting/TopicEditOpinionDetail/TopicEditOpinionDetail'))
 import TopicEditOpinionDetail from '../SystemSetting/TopicEditOpinionDetail/TopicEditOpinionDetail'
 import {
 	opinionSearchRequested,
 	getMaterialOpinionListRequested,
 	getMaterialOpinionDetailRequested,
-	getReportListRequested
-
+	getReportListRequested,
+	searchKeywordSync,
+	paginationPage
 } from '../../redux/actions/createActions';
 // import Store from '../../redux/store/index';
 import weixin from '../../assets/icon-img/weixin.png';
@@ -46,6 +47,7 @@ const Search = Input.Search;
 const Option = Select.Option;
 const confirm = Modal.confirm;
 const FormItem = Form.Item;
+const InputGroup = Input.Group;
 
 class MaterialOpinion extends React.Component {
 	constructor() {
@@ -68,6 +70,7 @@ class MaterialOpinion extends React.Component {
 			MaterialValue: '',
 			browserHeight: 300,
 			addModalVisible: false,
+			opinionVisible: false,
 			topId: null,
 			materialList: [],
 			carryAll: {
@@ -81,7 +84,10 @@ class MaterialOpinion extends React.Component {
         '博客': boke,
         'APP': app,
         'pjljkm': twitter
-      },
+			},
+			seltype: 'content',
+			searchInputValue: '',
+			visibleFile: false
 		};
 	}
 	// 拖拽
@@ -215,7 +221,8 @@ class MaterialOpinion extends React.Component {
 	}
 	showAddModal() {
 		this.setState({
-			addModalVisible: true
+			addModalVisible: true,
+			visibleFile: true
 		})
 	}
 	handleRemoveOk() {
@@ -247,7 +254,6 @@ class MaterialOpinion extends React.Component {
 			removeModalVisible: false
 		})
 	}
-
 	handleAddOk() {
 		this.setState({
 			addModalVisible: false
@@ -257,6 +263,18 @@ class MaterialOpinion extends React.Component {
 	handleAddCancel() {
 		this.setState({
 			addModalVisible: false
+		})
+	}
+
+	opinionHandleAddOk() {
+		this.setState({
+			opinionVisible: false
+		})
+	}
+
+	opinionHandleAddCancel() {
+		this.setState({
+			opinionVisible: false
 		})
 	}
 
@@ -450,8 +468,80 @@ class MaterialOpinion extends React.Component {
 		}
 	}
 
-	rightList() {
+	 // 搜索内容
+	handleSearchChange(value) {
+    this.setState({
+      seltype: value
+    });
 	}
+
+	onPaginationChangeOpinion(pagenumber) {
+    this.props.paginationPage(pagenumber);
+    this.setState({
+      page: pagenumber,
+      checkedArray:this.state.checkedArray.fill(false)
+    });
+    const param = this.props.param;
+    param.page = pagenumber;
+    if (this.props.type === 1) {
+      this.props.opinionSearchRequest({
+        seltype: 'content', keyword: this.props.searchKeyword.keyword,
+        page: pagenumber
+      });
+    } else if (this.props.searchKeyword.type === 1) {
+      this.props.opinionSearchRequest({
+        seltype: 'content', keyword: this.props.searchKeyword.keyword,
+        page: pagenumber
+      });
+    }
+    else if (this.props.propsType === 'AllopinionList') {
+      this.props.opinionSearchRequest(param);
+    } else {
+      this.props.onDataChange(pagenumber);
+    }
+  }
+
+	searchInput(e) {
+    const {value} = e.target;
+    if (value === '') {
+      this.props.searchType(0);
+      this.props.searchKeywordSync({
+        seltype: this.state.seltype,
+        keyword: '', type: 0
+      });
+    }
+    this.setState({
+      searchInputValue: value
+    })
+  }
+	
+	keyDown(e){
+		console.log(e.target.value);
+		// opinionVisible
+		if(e.keyCode === 13){
+			this.setState({
+				opinionVisible: true
+			})
+		 const param = {
+			 seltype: this.state.seltype,
+			 keyword: this.state.searchInputValue,
+			 datetag:'all',
+			 neg:'all',
+			 order:'timedown',
+			 carry:'全部',
+			 page:1
+		 };
+		 this.props.opinionSearchRequest(param);
+		 this.props.searchKeywordSync({
+			 seltype: this.state.seltype,
+			 keyword: this.state.searchInputValue, type: 0
+		 });
+		 this.props.paginationPage(1);
+		 if (this.props.propsType === 'AllopinionList') {
+			 this.props.searchType(1);
+		 }
+		}
+ }
 
 	onClickTopList(id) {
 		request(api_add_doc_from_top + '&catid=' + id, {}).then((res) => {
@@ -459,6 +549,7 @@ class MaterialOpinion extends React.Component {
 				message.success(res.data.msg);
 				request(api_material_opinion_list)
 				.then(res => {
+					console.log(res);
 					if (res.data) {
 						this.setState({
 							materialList: res.data.reportCatList
@@ -472,7 +563,7 @@ class MaterialOpinion extends React.Component {
 		});
 	}
 	render() {
-		const { pageInfo, materialList, reportData } = this.props;
+		const { pageInfo, reportData } = this.props;
 		const { getFieldDecorator } = this.props.form;
 		const formItemLayout = {
 			labelCol: {
@@ -511,7 +602,7 @@ class MaterialOpinion extends React.Component {
 		const docList = this.props.docList ? this.props.docList : [{ carry: '新闻' }];
 		const OpinionDetailItems = docList.length !== 0 ? docList.map((item, index) => 
 			<div key={item.sid}>
-			  <div className="item_time" style={{ height: 25, paddingLeft: 34 }}>{item.adddate}</div>
+			  <div className="item_time" style={{ height: 25, paddingLeft: 34, background: "#f7f7f7" }}>{item.adddate}</div>
 				<li key={item.sid} className="opinion-detail-item">
 					<Checkbox
 						checked={this.state.arr[index]}
@@ -584,12 +675,6 @@ class MaterialOpinion extends React.Component {
 				</Menu.Item>
 			</Menu>
 		);
-		const selectBefore = (
-			<Select defaultValue="全站搜索" style={{ width: 80 }}>
-				<Option value="全站搜索">全站搜索</Option>
-				<Option value="素材库">素材库</Option>
-			</Select>
-		);
 		return (
 			<div className="materia-opinion-wrapper">
 				<div className="materia-opinion">
@@ -631,17 +716,43 @@ class MaterialOpinion extends React.Component {
 										onOk={this.handleAddOk.bind(this)}
 										onCancel={this.handleAddCancel.bind(this)}
 									>
-										<TopicEditOpinionDetail />
+										<TopicEditOpinionDetail visible={this.state.visibleFile} file={this.state.materialList}/>
 									</Modal>
 								</div>
 							</div>
-							<div className="right">
+							{/* <div className="right">
 								<Search
-									addonBefore={selectBefore}
+									// addonBefore={selectBefore}
 									style={{ width: '260px', marginRight: '20px' }}
 									placeholder="搜索标题，文章内容"
 									onSearch={this.handleSearchBtn.bind(this)}
 								/>
+							</div> */}
+							<div className="inputSearch">
+								<div className="right">
+									<InputGroup compact>
+										<Select defaultValue="content" onChange={this.handleSearchChange.bind(this)}>
+											<Option value="content" className="selectFont">全站搜索</Option>
+											<Option value="title" className="selectFont">素材库</Option>
+										</Select>
+										<Input
+											style={{width: '150px'}}
+											placeholder="搜索标题，文章内容"
+											onChange={this.searchInput.bind(this)}
+											onKeyDown = {this.keyDown.bind(this)}
+										/>
+										<Modal
+											width={1100}
+											footer={null}
+											title="舆情监测"
+											visible={this.state.opinionVisible}
+											onOk={this.opinionHandleAddOk.bind(this)}
+											onCancel={this.opinionHandleAddCancel.bind(this)}
+										>
+											<AllOpinion />
+										</Modal>
+									</InputGroup>
+								</div>
 							</div>
 						</div>
 						<div className="bottom" >
@@ -746,7 +857,8 @@ const mapStateToProps = state => {
 		docList: state.getMaterialOpinionDetailSucceededReducer.data.docList,
 		pageInfo: state.getMaterialOpinionDetailSucceededReducer.data.pageinfo,
 		materialList: state.getMaterialOpinionListSucceededReducer.data.reportCatList,
-		reportData: state.getReportListSucceeded.data
+		reportData: state.getReportListSucceeded.data,
+    searchKeyword: state.searchKeywordSyncReducer.ks		
 	}
 };
 
@@ -755,6 +867,9 @@ const mapDispatchToProps = dispatch => {
 		opinionSearchRequest: req => {
 			dispatch(opinionSearchRequested(req));
 		},
+		searchKeywordSync: ks => {
+      dispatch(searchKeywordSync(ks));
+    },
 		getMaterialOpinionListRequested: () => {
 			dispatch(getMaterialOpinionListRequested());
 		},
@@ -763,7 +878,10 @@ const mapDispatchToProps = dispatch => {
 		},
 		getReportListRequested: (req) => {
 			dispatch(getReportListRequested(req));
-		}
+		},
+		paginationPage: req => {
+      dispatch(paginationPage(req));
+    }
 	}
 };
 export default connect(mapStateToProps, mapDispatchToProps)(Form.create()(MaterialOpinion));
