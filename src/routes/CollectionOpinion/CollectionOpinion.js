@@ -443,7 +443,7 @@ class CollectionOpinion extends React.Component {
 
         const docList = this.props.docList ? this.props.docList : [{ carry: '新闻' }];
         const OpinionDetailItems = docList.length !== 0 ? docList.map((item, index) =>
-            <li key={item.sid} className="opinion-detail-item">
+            <li key={item.id} className="opinion-detail-item">
                 <Checkbox className="labe"
                     checked={this.state.arr[index]}
                     onChange={this.onChange.bind(this, index)}

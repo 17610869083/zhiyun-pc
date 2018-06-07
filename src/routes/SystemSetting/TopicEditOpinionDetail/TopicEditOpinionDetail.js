@@ -73,9 +73,10 @@ class TopicEditOpinionDetail extends React.Component {
 					.then(ret => {
 						console.log(ret);
 						if (ret.data) {
-							this.props.getMaterialOpinionDetailRequested(ret.data.reportCatList);
+							this.props.getMaterialOpinionDetailRequested(ids);
 						}
-					})					
+					})		
+					this.props.handle(false);			
 					for (let i in values) {
 						values[i] = '';
 					}

@@ -9,7 +9,8 @@ import {
 	api_del_doc_from_cat,
 	api_put_into_report,
 	api_add_doc_from_top,
-	api_material_opinion_list
+	api_material_opinion_list,
+	api_res_fav_cat
 } from '../../services/api';
 // import { apiGetMaterialOpinionList } from '../../services/opinionServices';
 import { opinionTrend, opinionColor } from '../../utils/format';
@@ -22,7 +23,8 @@ import {
 	getMaterialOpinionDetailRequested,
 	getReportListRequested,
 	searchKeywordSync,
-	paginationPage
+	paginationPage,
+  getCollectionOpinionListRequested	
 } from '../../redux/actions/createActions';
 // import Store from '../../redux/store/index';
 import weixin from '../../assets/icon-img/weixin.png';
@@ -87,7 +89,9 @@ class MaterialOpinion extends React.Component {
 			},
 			seltype: 'content',
 			searchInputValue: '',
-			visibleFile: false
+			visibleFile: false,
+			checkedAll: false,
+      checkedArray: new Array(40).fill(false)
 		};
 	}
 	// 拖拽
@@ -252,29 +256,6 @@ class MaterialOpinion extends React.Component {
 	handleRemoveCancel() {
 		this.setState({
 			removeModalVisible: false
-		})
-	}
-	handleAddOk() {
-		this.setState({
-			addModalVisible: false
-		})
-	}
-
-	handleAddCancel() {
-		this.setState({
-			addModalVisible: false
-		})
-	}
-
-	opinionHandleAddOk() {
-		this.setState({
-			opinionVisible: false
-		})
-	}
-
-	opinionHandleAddCancel() {
-		this.setState({
-			opinionVisible: false
 		})
 	}
 
@@ -562,9 +543,75 @@ class MaterialOpinion extends React.Component {
 			}
 		});
 	}
+	// 舆情录入弹框控制	
+	handleAddOk() {
+		this.setState({
+			addModalVisible: false
+		})
+	}
+	// 舆情录入弹框控制
+	handleAddCancel = flag => {
+		this.setState({
+			addModalVisible: flag
+		})
+	};
+  // 控制舆情监测弹框
+	opinionHandleAddOk = () => {
+		this.setState({
+			opinionVisible: false
+		})
+	};
+  // 控制舆情监测弹框
+	opinionHandleAddCancel = () => {
+		this.setState({
+			opinionVisible: false
+		})
+	}
+	//单条加入收藏
+	collectionlConfirm(sid, e) {
+		console.log(sid,e)
+		request(api_res_fav_cat + '&newcatid=' + e.key + '&id=["' + sid + '"]').then((res) => {
+			console.log(res);
+			// debugger;
+			if (res.data.code === "2") {
+				message.success(res.data.msg);
+			} else if (res.data.code === "1") {
+				message.error(res.data.msg);			
+			} else {
+				message.warning(res.data.msg);				
+			}
+		});
+	}
+	// 推送到收藏夹
+	putIntoCollection(e) {
+		const collectionId = e.key;
+		const arr = this.checkedTrue();
+		const size = arr.length;
+		if (size === 0) {
+			message.warning("至少选择一项！");
+		} else {
+			const sidList = JSON.stringify(arr);
+			request(api_res_fav_cat + '&newcatid=' + collectionId + '&id=' + sidList, {}).then((res) => {
+				console.log(res);
+				// debugger;
+				if (res.data.code === "2") {
+					message.success(res.data.msg);
+					this.setState({
+						checkedAll: false,
+						checkedArray: new Array(40).fill(false)
+					});
+				} else if (res.data.code === "1") {
+					message.error(res.data.msg);			
+				} else {
+					message.warning(res.data.msg);				
+				}
+			});
+		}
+	}
 	render() {
 		const { pageInfo, reportData } = this.props;
 		const { getFieldDecorator } = this.props.form;
+		console.log(this.props)
 		const formItemLayout = {
 			labelCol: {
 				xs: { span: 24 },
@@ -586,6 +633,20 @@ class MaterialOpinion extends React.Component {
 			</Menu>
 		);
 
+		// 收藏夹的目录
+		const collectionMenu = (
+			<Menu onClick={this.putIntoCollection.bind(this)}>
+				{
+					this.props.favCatList.map(item =>
+						<Menu.Item key={item.id}>
+							<Icon type="folder"/>
+							<span>{item.catname}</span>
+						</Menu.Item>
+					)
+				}
+			</Menu>
+		);
+
 
 		// 多项加入简报
 		const addMultipleReportMenu = (
@@ -601,7 +662,7 @@ class MaterialOpinion extends React.Component {
 
 		const docList = this.props.docList ? this.props.docList : [{ carry: '新闻' }];
 		const OpinionDetailItems = docList.length !== 0 ? docList.map((item, index) => 
-			<div key={item.sid}>
+			<div key={item.id}>
 			  <div className="item_time" style={{ height: 25, paddingLeft: 34, background: "#f7f7f7" }}>{item.adddate}</div>
 				<li key={item.sid} className="opinion-detail-item">
 					<Checkbox
@@ -643,7 +704,7 @@ class MaterialOpinion extends React.Component {
 					<div className="item-middle">
 						<div className="right">
 							<div className="base-operate">
-								<Tooltip title="加入简报">
+								{/* <Tooltip title="加入简报">
 									<Dropdown overlay={addReportMenu} trigger={['click']}
 										getPopupContainer={() => document.querySelector('.materia-opinion-wrapper')}
 									>
@@ -651,10 +712,40 @@ class MaterialOpinion extends React.Component {
 											onClick={this.getReportOpinionList.bind(this, item.sid)}
 										/>
 									</Dropdown>
-								</Tooltip>
+								</Tooltip> */}
 								<Tooltip title="从素材库移除">
-									<i className="fa fa-arrow-circle-right" aria-hidden="true" onClick={this.deleteThisFormMaterial.bind(this, item.id)} />
+									<i
+										aria-hidden="true"
+										onClick={this.deleteThisFormMaterial.bind(this, item.id)}
+									>
+										< Iconfont type="icon-shanchu1-copy" style={{ width: 20, height: 20 }} />
+									</i>
 								</Tooltip>
+								<Tooltip title='收藏'>
+									<Dropdown
+									  overlay={
+											<Menu onClick={this.collectionlConfirm.bind(this, item.sid)}>
+												{
+													this.props.favCatList.map(i =>
+														<Menu.Item key={i.id}>
+															<Icon type="folder"/>
+															<span>{i.catname}</span>
+														</Menu.Item>
+													)
+												}
+											</Menu>
+										}
+										trigger={['click']}
+										getPopupContainer={() => document.querySelector('.opinion-detail-item')}
+									>
+										<i
+											aria-hidden="true"
+											onClick={this.props.getCollectionOpinionListRequested.bind(this)}
+										>
+											< Iconfont type="icon-shoucang" style={{ width: 17, height: 17, marginBottom: 2, marginLeft: 20 }} />
+										</i>
+									</Dropdown>
+                </Tooltip>
 							</div>
 						</div>
 					</div>
@@ -703,21 +794,48 @@ class MaterialOpinion extends React.Component {
 									<Dropdown overlay={addMultipleReportMenu} trigger={['click']}
 										getPopupContainer={() => document.querySelector('.materia-opinion-wrapper')}
 									>
-										<span style={{ color: BLACK }}>加入简报</span>
+										<span style={{ color: BLACK }}>生成报告</span>
 									</Dropdown>
 								</div>
 								<div className="operate-all">
-									<span onClick={this.showAddModal.bind(this)} style={{ color: BLACK }}>舆情录入</span>
+									<span onClick={() => this.showAddModal(true)} style={{ color: BLACK }}>舆情录入</span>
 									<Modal
 										width={1100}
 										footer={null}
 										title="舆情录入"
 										visible={this.state.addModalVisible}
-										onOk={this.handleAddOk.bind(this)}
-										onCancel={this.handleAddCancel.bind(this)}
+										onOk={() => this.handleAddOk(false)}
+										onCancel={() => this.handleAddCancel(false)}
 									>
-										<TopicEditOpinionDetail visible={this.state.visibleFile} file={this.state.materialList}/>
+										<TopicEditOpinionDetail visible={this.state.visibleFile} file={this.state.materialList} handle={this.handleAddCancel}/>
 									</Modal>
+								</div>
+								<div className="shoucang">
+									<Tooltip title='收藏'>
+										<Dropdown
+											overlay={
+												<Menu onClick={this.putIntoCollection.bind(this)}>
+													{
+														this.props.favCatList.map(i =>
+															<Menu.Item key={i.id}>
+																<Icon type="folder"/>
+																<span>{i.catname}</span>
+															</Menu.Item>
+														)
+													}
+												</Menu>
+											}
+											trigger={['click']}
+											getPopupContainer={() => document.querySelector('.opinion-detail-item')}
+										>
+											<i
+												aria-hidden="true"
+												onClick={this.props.getCollectionOpinionListRequested.bind(this)}
+											>
+												< Iconfont type="icon-shoucang" style={{ width: 17, height: 17, marginLeft: 20 }} />
+											</i>
+										</Dropdown>
+									</Tooltip>
 								</div>
 							</div>
 							{/* <div className="right">
@@ -858,7 +976,8 @@ const mapStateToProps = state => {
 		pageInfo: state.getMaterialOpinionDetailSucceededReducer.data.pageinfo,
 		materialList: state.getMaterialOpinionListSucceededReducer.data.reportCatList,
 		reportData: state.getReportListSucceeded.data,
-    searchKeyword: state.searchKeywordSyncReducer.ks		
+		searchKeyword: state.searchKeywordSyncReducer.ks,
+    favCatList: state.getCollectionOpinionListSucceeded.data.favCatList		
 	}
 };
 
@@ -881,6 +1000,9 @@ const mapDispatchToProps = dispatch => {
 		},
 		paginationPage: req => {
       dispatch(paginationPage(req));
+		},
+		getCollectionOpinionListRequested: () => {
+      dispatch(getCollectionOpinionListRequested());
     }
 	}
 };
