@@ -1,7 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import Kindeditor from '../../../components/Kindeditor/Kindeditor.js';
-import 'react-quill/dist/quill.snow.css';
 import './TopicEditOpinionDetail.less';
 import { Form, Input, InputNumber, DatePicker, Button, Cascader, message, Select } from 'antd';
 import { public_opinion_entry, api_material_opinion_list, api_add_doc_from_mat } from '../../../services/api';
@@ -57,8 +56,6 @@ class TopicEditOpinionDetail extends React.Component {
 		e.preventDefault();
 		this.props.form.validateFields((err, values) => {
 			const ids = parseInt(values.file);
-			console.log(ids);
-			console.log(values)
 			if (!err) {
 				request(api_add_doc_from_mat, {
 					method: 'POST',
@@ -67,11 +64,9 @@ class TopicEditOpinionDetail extends React.Component {
 					},
 					body: `catid=${values.file}&title=${values.title}&pubdate=${this.state.dateTime}&timestamp=${this.state.updateTiem}&source=${values.source}&url=${values.url}&clickcount=${values.clickCount}&replycount=${values.replyCount}&hot=${values.hot}&nrtags=${values.nrtags}&keyword=${values.keyword}&match=1&carry=${this.state.mediaValue[0]}&negative=${this.state.negtiveValue[0]}&summary=${values.summary}&content=${this.state.text}`
 				}).then(res => {
-					console.log(res)
 					message.success(res.data.message)
 					request(api_material_opinion_list)
 					.then(ret => {
-						console.log(ret);
 						if (ret.data) {
 							this.props.getMaterialOpinionDetailRequested(ids);
 						}
@@ -109,8 +104,6 @@ class TopicEditOpinionDetail extends React.Component {
 	}
 	render() {
 		const { getFieldDecorator } = this.props.form;
-		const { file } = this.state;
-		{console.log(this.props)}
 		const formItemLayout = {
 			labelCol: {
 				xs: { span: 24 },

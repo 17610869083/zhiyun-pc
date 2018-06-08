@@ -659,7 +659,6 @@ class OpinionDetail extends React.Component {
   }
 
   render() {
-    console.log(this.props);
     const {page} = this.props;
     const flag = this.props.docList&& this.props.docList.length === 0?true:false;
     const docList = this.props.docList ? this.props.docList : [{carry: '新闻'}];

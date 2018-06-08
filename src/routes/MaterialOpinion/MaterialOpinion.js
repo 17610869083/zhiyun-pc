@@ -90,8 +90,8 @@ class MaterialOpinion extends React.Component {
 			seltype: 'content',
 			searchInputValue: '',
 			visibleFile: false,
-			checkedAll: false,
-      checkedArray: new Array(40).fill(false)
+			checkedArray: new Array(40).fill(false),
+			type: 0
 		};
 	}
 	// 拖拽
@@ -151,6 +151,7 @@ class MaterialOpinion extends React.Component {
 
 	// --------------在素材库内搜索
 	handleSearchBtn(keyword) {
+		console.log(keyword);
 		if (keyword !== '') {
 			this.props.getMaterialOpinionDetailRequested(`${this.state.current}&q=${keyword}`);
 		}
@@ -451,9 +452,10 @@ class MaterialOpinion extends React.Component {
 
 	 // 搜索内容
 	handleSearchChange(value) {
+		console.log(value);
     this.setState({
       seltype: value
-    });
+		});
 	}
 
 	onPaginationChangeOpinion(pagenumber) {
@@ -483,12 +485,14 @@ class MaterialOpinion extends React.Component {
   }
 
 	searchInput(e) {
+		console.log(this.props);
     const {value} = e.target;
     if (value === '') {
-      this.props.searchType(0);
+      this.searchType(0);
       this.props.searchKeywordSync({
         seltype: this.state.seltype,
-        keyword: '', type: 0
+				keyword: '',
+				type: 0
       });
     }
     this.setState({
@@ -497,30 +501,32 @@ class MaterialOpinion extends React.Component {
   }
 	
 	keyDown(e){
-		console.log(e.target.value);
-		// opinionVisible
+		console.log(this.state.seltype, e);		
 		if(e.keyCode === 13){
 			this.setState({
 				opinionVisible: true
 			})
-		 const param = {
-			 seltype: this.state.seltype,
-			 keyword: this.state.searchInputValue,
-			 datetag:'all',
-			 neg:'all',
-			 order:'timedown',
-			 carry:'全部',
-			 page:1
-		 };
-		 this.props.opinionSearchRequest(param);
-		 this.props.searchKeywordSync({
-			 seltype: this.state.seltype,
-			 keyword: this.state.searchInputValue, type: 0
-		 });
-		 this.props.paginationPage(1);
-		 if (this.props.propsType === 'AllopinionList') {
-			 this.props.searchType(1);
-		 }
+			const param = {
+				seltype: this.state.seltype,
+				keyword: this.state.searchInputValue,
+				datetag:'all',
+				neg:'all',
+				order:'timedown',
+				carry:'全部',
+				page:1
+			};
+		console.log(this.state.seltype);			
+			this.props.opinionSearchRequest(param);
+			this.props.searchKeywordSync({
+				seltype: this.state.seltype,
+				keyword: this.state.searchInputValue,
+				type: 0
+			});
+		  console.log(this.props);		 
+		  this.props.paginationPage(1);
+		  if (this.props.propsType === 'AllopinionList') {
+			  this.searchType(1);
+			}
 		}
  }
 
@@ -530,7 +536,6 @@ class MaterialOpinion extends React.Component {
 				message.success(res.data.msg);
 				request(api_material_opinion_list)
 				.then(res => {
-					console.log(res);
 					if (res.data) {
 						this.setState({
 							materialList: res.data.reportCatList
@@ -569,10 +574,7 @@ class MaterialOpinion extends React.Component {
 	}
 	//单条加入收藏
 	collectionlConfirm(sid, e) {
-		console.log(sid,e)
 		request(api_res_fav_cat + '&newcatid=' + e.key + '&id=["' + sid + '"]').then((res) => {
-			console.log(res);
-			// debugger;
 			if (res.data.code === "2") {
 				message.success(res.data.msg);
 			} else if (res.data.code === "1") {
@@ -592,8 +594,6 @@ class MaterialOpinion extends React.Component {
 		} else {
 			const sidList = JSON.stringify(arr);
 			request(api_res_fav_cat + '&newcatid=' + collectionId + '&id=' + sidList, {}).then((res) => {
-				console.log(res);
-				// debugger;
 				if (res.data.code === "2") {
 					message.success(res.data.msg);
 					this.setState({
@@ -601,17 +601,21 @@ class MaterialOpinion extends React.Component {
 						checkedArray: new Array(40).fill(false)
 					});
 				} else if (res.data.code === "1") {
-					message.error(res.data.msg);			
+					message.error(res.data.msg);	
 				} else {
 					message.warning(res.data.msg);				
 				}
 			});
 		}
 	}
+	searchType(data) {
+    this.setState({
+      type: data
+    })
+  }
 	render() {
 		const { pageInfo, reportData } = this.props;
 		const { getFieldDecorator } = this.props.form;
-		console.log(this.props)
 		const formItemLayout = {
 			labelCol: {
 				xs: { span: 24 },
@@ -634,18 +638,18 @@ class MaterialOpinion extends React.Component {
 		);
 
 		// 收藏夹的目录
-		const collectionMenu = (
-			<Menu onClick={this.putIntoCollection.bind(this)}>
-				{
-					this.props.favCatList.map(item =>
-						<Menu.Item key={item.id}>
-							<Icon type="folder"/>
-							<span>{item.catname}</span>
-						</Menu.Item>
-					)
-				}
-			</Menu>
-		);
+		// const collectionMenu = (
+		// 	<Menu onClick={this.putIntoCollection.bind(this)}>
+		// 		{
+		// 			this.props.favCatList.map(item =>
+		// 				<Menu.Item key={item.id}>
+		// 					<Icon type="folder"/>
+		// 					<span>{item.catname}</span>
+		// 				</Menu.Item>
+		// 			)
+		// 		}
+		// 	</Menu>
+		// );
 
 
 		// 多项加入简报
@@ -663,7 +667,8 @@ class MaterialOpinion extends React.Component {
 		const docList = this.props.docList ? this.props.docList : [{ carry: '新闻' }];
 		const OpinionDetailItems = docList.length !== 0 ? docList.map((item, index) => 
 			<div key={item.id}>
-			  <div className="item_time" style={{ height: 25, paddingLeft: 34, background: "#f7f7f7" }}>{item.adddate}</div>
+			  <div className="item_file" style={{ height: 25, background: "#f7f7f7", borderBottom: "1px solid #fff" }}>{item.adddate}</div>			
+			  <div className="item_time" style={{ height: 25, paddingLeft: 40, background: "#f7f7f7" }}>{item.adddate}</div>
 				<li key={item.sid} className="opinion-detail-item">
 					<Checkbox
 						checked={this.state.arr[index]}
@@ -840,7 +845,6 @@ class MaterialOpinion extends React.Component {
 							</div>
 							{/* <div className="right">
 								<Search
-									// addonBefore={selectBefore}
 									style={{ width: '260px', marginRight: '20px' }}
 									placeholder="搜索标题，文章内容"
 									onSearch={this.handleSearchBtn.bind(this)}
@@ -853,12 +857,25 @@ class MaterialOpinion extends React.Component {
 											<Option value="content" className="selectFont">全站搜索</Option>
 											<Option value="title" className="selectFont">素材库</Option>
 										</Select>
-										<Input
-											style={{width: '150px'}}
-											placeholder="搜索标题，文章内容"
-											onChange={this.searchInput.bind(this)}
-											onKeyDown = {this.keyDown.bind(this)}
-										/>
+											<div>
+												{
+												this.state.seltype === "content" ? (
+												<Input
+													style={{width: '150px'}}
+													// placeholder="搜索标题，文章内容"
+													onChange={this.searchInput.bind(this)}
+													onKeyDown = {this.keyDown.bind(this)}
+												/>
+												) : (
+														<Search
+															style={{ width: '150px' }}
+															placeholder="搜索标题，文章内容"
+															onSearch={this.handleSearchBtn.bind(this)}
+														/>
+												  )
+												}
+											</div>
+
 										<Modal
 											width={1100}
 											footer={null}
@@ -867,7 +884,9 @@ class MaterialOpinion extends React.Component {
 											onOk={this.opinionHandleAddOk.bind(this)}
 											onCancel={this.opinionHandleAddCancel.bind(this)}
 										>
-											<AllOpinion />
+											<AllOpinion
+            						searchType={this.searchType.bind(this)}											  
+											/>
 										</Modal>
 									</InputGroup>
 								</div>
