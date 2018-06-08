@@ -33,6 +33,9 @@ class TodayOpinionBox extends React.PureComponent {
         if(todayAll !==0){
             this.allTimer=setInterval(()=>{
                 if(this.state.todayAll>=todayAll){
+                    this.setState({
+                        todayAll:todayAll
+                    })
                     clearInterval(this.allTimer)
                 }else{
                     this.setState({
@@ -44,6 +47,9 @@ class TodayOpinionBox extends React.PureComponent {
             if(todayWarning !==0){
                 this.warningTimer=setInterval(()=>{
                     if(this.state.todayWarning>=todayWarning){
+                        this.setState({
+                            todayWarning:todayWarning
+                        })
                         clearInterval(this.warningTimer)
                     }else{
                         this.setState({
@@ -55,6 +61,9 @@ class TodayOpinionBox extends React.PureComponent {
             if(todayNegative !==0){
                 this.negativeTimer=setInterval(()=>{
                     if(this.state.todayNegative>=todayNegative){
+                        this.setState({
+                            todayNegative:todayNegative
+                        })
                         clearInterval(this.negativeTimer)
                     }else{
                         this.setState({
@@ -64,9 +73,11 @@ class TodayOpinionBox extends React.PureComponent {
                 },100)  
             }
             if(ratio !==0){
-
                 this.ratioTimer=setInterval(()=>{
                     if(this.state.ratio>=ratio){
+                        this.setState({
+                            ratio:ratio
+                        })
                         clearInterval(this.ratioTimer)
                     }else{
                         this.setState({

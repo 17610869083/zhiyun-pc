@@ -1,4 +1,5 @@
 import React from 'react';
+import {connect} from 'react-redux';
 import {Row, Col, Table} from 'antd';
 import ReactEchartsCore from 'echarts-for-react/lib/core';
 import './TopicCount.less';
@@ -12,7 +13,6 @@ import 'echarts/lib/component/toolbox';
 import request from '../../../utils/request';
 import {api_topic_table,api_topic_timeline,api_topic_global,api_topic_trendOption,api_topic_mediaType,
         api_topic_mediaSite,api_topic_mediaTypeTrend,api_topic_negativeCarry,api_topic_negativeMedia} from '../../../services/api';
-import Store from '../../../redux/store/index';
 class TopicCount extends React.Component {
     constructor() {
         super();
@@ -89,30 +89,28 @@ class TopicCount extends React.Component {
         }
     }
     componentDidMount(){
-        if(typeof Store.getState().getRouterReducer!=='object'){
-         let topicID= Store.getState().getRouterReducer;
+        let topic = this.props.getRouterReducer;
+        if(topic.topicid){
           request(api_topic_table,{
                  method:'POST',
                  headers: {
                     "Content-Type": "application/x-www-form-urlencoded"
                  },
-                 body:`topicid=${topicID}`
-          }).then(res=>{  
-                        
+                 body:`topicid=${topic.topicid}`
+          }).then(res=>{         
                 if(res.data&&res.data.code!==0){
                     this.setState({
                         todayData:res.data['CarryCount'][0],
                         totalData:res.data['CarryCount'][1]
                     })
-                }
-                
+                } 
           });
           request(api_topic_timeline,{
             method:'POST',
             headers: {
                "Content-Type": "application/x-www-form-urlencoded"
             },
-            body:`topicid=${topicID}`
+            body:`topicid=${topic.topicid}`
             }).then(res=>{
                  if(res.data.code!==0){
                  this.setState({
@@ -126,7 +124,7 @@ class TopicCount extends React.Component {
                 headers: {
                    "Content-Type": "application/x-www-form-urlencoded"
                 },
-                body:`topicid=${topicID}`
+                body:`topicid=${topic.topicid}`
                 }).then(res=>{
                      if(res.data.code!==0){
                          this.setState({
@@ -140,7 +138,7 @@ class TopicCount extends React.Component {
                     headers: {
                        "Content-Type": "application/x-www-form-urlencoded"
                     },
-                    body:`topicid=${topicID}`
+                    body:`topicid=${topic.topicid}`
                     }).then(res=>{
                         if(res.data.code!==0){
                             this.setState({
@@ -154,7 +152,7 @@ class TopicCount extends React.Component {
                         headers: {
                            "Content-Type": "application/x-www-form-urlencoded"
                         },
-                        body:`topicid=${topicID}`
+                        body:`topicid=${topic.topicid}`
                         }).then(res=>{
                             if(res.data.code!==0){
                                 this.setState({
@@ -168,7 +166,7 @@ class TopicCount extends React.Component {
                             headers: {
                                "Content-Type": "application/x-www-form-urlencoded"
                             },
-                            body:`topicid=${topicID}`
+                            body:`topicid=${topic.topicid}`
                             }).then(res=>{
                                 if(res.data.code!==0){
                                     this.setState({
@@ -182,7 +180,7 @@ class TopicCount extends React.Component {
                                 headers: {
                                    "Content-Type": "application/x-www-form-urlencoded"
                                 },
-                                body:`topicid=${topicID}`
+                                body:`topicid=${topic.topicid}`
                                 }).then(res=>{
                                     if(res.data && res.data.code!==0){
                                         this.setState({
@@ -196,7 +194,7 @@ class TopicCount extends React.Component {
                                     headers: {
                                        "Content-Type": "application/x-www-form-urlencoded"
                                     },
-                                    body:`topicid=${topicID}`
+                                    body:`topicid=${topic.topicid}`
                                     }).then(res=>{
                                         if( res.data && res.data.code!==0){
                                             this.setState({
@@ -209,7 +207,7 @@ class TopicCount extends React.Component {
                                     headers: {
                                            "Content-Type": "application/x-www-form-urlencoded"
                                     },
-                                    body:`topicid=${topicID}`
+                                    body:`topicid=${topic.topicid}`
                                     }).then(res=>{
                              
                                         if(res.data.code!==0){
@@ -394,7 +392,7 @@ class TopicCount extends React.Component {
             toolbox: {
                 right:30,
                 feature: {
-                restore:{
+                re :{
                     show:true,
                     title:'还原'
                 },
@@ -966,5 +964,9 @@ class TopicCount extends React.Component {
         )
     }
 }
-
-export default TopicCount;
+const mapStateToProps = state => {
+    return {
+      getRouterReducer: state.getRouterReducer,
+    }
+  };
+export default connect(mapStateToProps, null)(TopicCount);

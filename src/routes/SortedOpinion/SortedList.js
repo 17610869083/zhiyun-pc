@@ -130,7 +130,7 @@ class SortedList extends React.Component {
     }
   
     const param = this.props.clfCat.state ? {
-      clfid: this.props.clfId,
+      clfid: this.props.clfId.clfid,
       datetag: value,
       neg: this.state.neg,
       order: this.state.order,
@@ -157,7 +157,7 @@ class SortedList extends React.Component {
       neg: value
     });
     const param = this.props.clfCat.state ? {
-      clfid: this.props.clfId,
+      clfid: this.props.clfId.clfid,
       datetag: this.state.datetag,
       neg: value,
       order: this.state.order,
@@ -184,7 +184,7 @@ class SortedList extends React.Component {
       carry: value
     });
     const param = this.props.clfCat.state ? {
-      clfid: this.props.clfId,
+      clfid: this.props.clfId.clfid,
       datetag: this.state.datetag,
       neg: this.state.neg,
       order: this.state.order,
@@ -211,7 +211,7 @@ class SortedList extends React.Component {
       similer: value
     });
     const param = this.props.clfCat.state ? {
-      clfid: this.props.clfId,
+      clfid: this.props.clfId.clfid,
       datetag: this.state.datetag,
       neg: this.state.neg,
       order: this.state.order,
@@ -238,7 +238,7 @@ class SortedList extends React.Component {
       order: value
     });
     const param = this.props.clfCat.state ? {
-      clfid: this.props.clfId,
+      clfid: this.props.clfId.clfid,
       datetag: this.state.datetag,
       neg: this.state.neg,
       order: value,
@@ -288,7 +288,7 @@ class SortedList extends React.Component {
         timeIndex: 0
       });
       const param = this.props.clfCat.state ? {
-        clfid: this.props.clfId,
+        clfid: this.props.clfId.clfid,
         datetag: this.state.datetag,
         neg: this.state.neg,
         order: this.state.order,
@@ -320,7 +320,7 @@ class SortedList extends React.Component {
       page: value
     });
     const param = this.props.clfCat.state ? {
-      clfid: this.props.clfId,
+      clfid: this.props.clfId.clfid,
       datetag: this.state.datetag,
       neg: this.state.neg,
       order: this.state.order,
@@ -349,7 +349,7 @@ class SortedList extends React.Component {
       pagesize: pageSize
     });
     const param = this.props.clfCat.state ? {
-      clfid: this.props.clfId,
+      clfid: this.props.clfId.clfid,
       datetag: this.state.datetag,
       neg: this.state.neg,
       order: this.state.order,
@@ -373,7 +373,7 @@ class SortedList extends React.Component {
   dataChanged(data) {
     this.sortDataTimer = setTimeout(()=>{
       const param = this.props.clfCat.state ? {
-        clfid: this.props.clfId,
+        clfid: this.props.clfId.clfid,
         datetag: this.state.datetag,
         neg: this.state.neg,
         order: this.state.order,
@@ -404,7 +404,7 @@ class SortedList extends React.Component {
   componentDidUpdate(prevProps, prevState) {
     if (prevProps.location.search !== this.props.location.search) {
       const param = {
-        clfid: this.props.clfId
+        clfid: this.props.clfId.clfid
       };
       this.props.getSortedContentRequested(param);
     }

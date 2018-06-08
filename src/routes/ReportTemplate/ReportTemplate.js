@@ -1,5 +1,5 @@
 import React from 'react';
-import Swiper from 'swiper';
+//import Swiper from 'swiper';
 import './ReportTemplate.less';
 import './swiper.css';
 import {GRAY} from '../../utils/colors'
@@ -14,15 +14,14 @@ class ReportTemplate extends React.Component{
           }
         }  
         componentDidMount(){
-             new Swiper('.swiper-container', {
-                slidesPerView: 7.5,
-                spaceBetween: 30,
-                grabCursor:true,
-                scrollbar: {
-                    el: '.swiper-scrollbar'
-                    //hide: true,
-                  }
-              })
+            //  new Swiper('.swiper-container', {
+            //     slidesPerView: 7.5,
+            //     spaceBetween: 30,
+            //     grabCursor:true,
+            //     scrollbar: {
+            //         el: '.swiper-scrollbar'
+            //       }
+            //   })
         }
         checkTemplate(index){
              this.setState({

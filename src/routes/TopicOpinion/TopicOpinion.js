@@ -68,17 +68,19 @@ class TopicOpinion extends React.Component {
          this.topichomeTimer = setTimeout( ()=>{
           let topicMessage=this.props.topicNavMessageSucceededState;
           if(topicMessage!==1){
-            let firstTopicid='';
+            let firstTopicid={topicid:1,topicname:'test'};
             topicMessage.forEach((item)=>{
                       if(item['topicList'][0]!==undefined){
-                           return firstTopicid=topicMessage[0]['topicList'][0]['topicid'];
+                           firstTopicid.topicid = topicMessage[0]['topicList'][0]['topicid'];
+                           firstTopicid.topicname = topicMessage[0]['topicList'][0]['topicname'];
+                           return firstTopicid;
                       }
             })
             this.props.setlocationPathname(firstTopicid);
             this.setState({
                 topicLists:topicMessage,
-                topicId:firstTopicid,
-                materialCurrent:firstTopicid,
+                topicId:firstTopicid.topicid,
+                materialCurrent:firstTopicid.topicid,
                 browserHeight:window.innerHeight-140
               })
           }
@@ -102,13 +104,13 @@ class TopicOpinion extends React.Component {
     	  	childRen:e.target.parentNode.parentNode.children.length
     	  });
     }
-    queryTopic(topicid,e){
+    queryTopic(topicid,topicname,e){
         this.setState({
             materialCurrent: topicid,
             current: 'topiclist',
             topicId:topicid
         })
-          this.props.setlocationPathname(topicid);
+          this.props.setlocationPathname({topicid:topicid,topicname:topicname});
           history.push({
             pathname:`/topic/topiclist`,
             search:`?topicId=${topicid}`
@@ -286,7 +288,7 @@ class TopicOpinion extends React.Component {
                  <li  key={iitem.topicid}
                  className={this.state.materialCurrent === iitem.topicid ? 'backGroundBlue' : 'a-topic'}
                   >
-                  <span className="topicTitle" onClick={this.queryTopic.bind(this,iitem.topicid)}
+                  <span className="topicTitle" onClick={this.queryTopic.bind(this,iitem.topicid,iitem.topicname)}
                    title={iitem.topicname}
                   >
                         {iitem.topicname}

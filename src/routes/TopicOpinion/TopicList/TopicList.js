@@ -403,9 +403,9 @@ class TopicList extends React.Component {
   }
       componentDidMount() {  
         this.topicTimer = setTimeout( ()=>{
-        let topicID=this.props.getRouter;   
-        if(typeof topicID!=='object'){
-                request(api_topic_message_list + '&topicid=' + topicID).then((res) => {
+        let topicID=this.props.getRouter;  
+        if(topicID.topicid){
+                request(api_topic_message_list + '&topicid=' + topicID.topicid).then((res) => {
                     if(res.data){
                     this.setState({
                         docList: res.data.docList,
@@ -413,23 +413,23 @@ class TopicList extends React.Component {
                         pageCount: res.data.pageInfo.pageCount,
                         count: res.data.pageInfo.count,
                         pageInfo:res.data.pageInfo,
-                        topicID:topicID
+                        topicID:topicID.topicid
                     });
                 }
                 });
         }
-       },60)   
+       },100)   
     }
   componentDidUpdate(prevProps, prevState) {
     if (prevProps.location.search !== this.props.location.search) {
       let topicID = this.props.getRouter;
-      if (typeof topicID !== 'object') {
+      if (topicID.topicid) {
         request(api_topic_message_list, {
           method: 'POST',
           headers: {
             "Content-Type": "application/x-www-form-urlencoded"
           },
-          body: `topicid=${topicID}`
+          body: `topicid=${topicID.topicid}`
         }).then((res) => {
           if (res.data) {
             this.setState({
@@ -438,7 +438,7 @@ class TopicList extends React.Component {
               pageCount: res.data.pageInfo.pageCount,
               count: res.data.pageInfo.count,
               pageInfo: res.data.pageInfo,
-              topicID: topicID,
+              topicID: topicID.topicid,
               timeIndex: 0,
               sortIndex: 0,
               filterIndex: 0,

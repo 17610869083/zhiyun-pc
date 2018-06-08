@@ -1,11 +1,9 @@
 import React from 'react';
 import Kindeditor from '../Kindeditor/Kindeditor.js';
 import {connect} from 'react-redux';
-import 'react-quill/dist/quill.snow.css';
 import './EditOpinionDetail.less';
 import { Form, Input, InputNumber,DatePicker} from 'antd';
 import request from '../../utils/request';
-
 import {docdetail_remove} from '../../services/api';
 import {getLocalTime} from '../../utils/format';
 import {addMessageRemove} from '../../redux/actions/createActions';

@@ -11,15 +11,14 @@ import {opinionTrend, opinionColor, setHighlightTags, formatDateTime} from '../.
 import request from '../../utils/request';
 import {
   api_edit_doc_neg, api_del_doc, api_push_material, api_push_collection,
-  api_allopinion_exportskip, api_topic_export_word,api_sorted_rule_list,api_topic_message
-} from '../../services/api';
+  api_allopinion_exportskip, api_topic_export_word,api_material_opinion_list ,api_collection_opinion_list} from '../../services/api';
 import {GRAY} from '../../utils/colors';
 import {
   opinionSearchRequested,
   searchKeywordSync,
   setOpinionTypeRequested,
-  getMaterialOpinionListRequested,
-  getCollectionOpinionListRequested,
+  // getMaterialOpinionListRequested,
+  // getCollectionOpinionListRequested,
   exportSkip,
   paginationPage
 } from '../../redux/actions/createActions';
@@ -66,15 +65,15 @@ class OpinionDetail extends React.Component {
         'pjljkm': twitter
       },
       showNum: 1,
-      clfMessage: {},
-      topicMessage: {},
       searchInputValue: '',
       page: 1,
       visible: false,
       fileName: '',
       downloadVisible: false,
       type: 0,
-      downloadFlag:false
+      downloadFlag:false,
+      materialList:[],
+      favCatList:[]
     };
   }
   componentDidUpdate(prevProps, prevState) {
@@ -84,43 +83,6 @@ class OpinionDetail extends React.Component {
          checkedArray:this.state.checkedArray.fill(false)
        })
     }
-    if(prevProps.clfId!==this.props.clfId){
-          request(api_sorted_rule_list + '&clfid=' + this.props.clfId).then(res => {
-                  if(res.data){
-                       this.setState({
-                           clfMessage:res.data
-                       })
-                  }
-          })
-      }else if(prevProps.getRouterReducer!==this.props.getRouterReducer){
-          request(api_topic_message +'&topicid=' +this.props.getRouterReducer).then(res=>{
-              if(res.data && res.data.code!==0){
-                  this.setState({
-                      topicMessage:res.data
-                  })    
-              }
-            })
-       }
-  }
-  componentDidMount(){
-    let propsType = this.props.propsType;
-    if(propsType !=='AllopinionList' && propsType === 'SortedList'){
-      request(api_sorted_rule_list + '&clfid=' + this.props.clfId).then(res => {
-          if(res.data){
-               this.setState({
-                   clfMessage:res.data
-               })
-            }
-          })   
-    }else if (propsType !=='AllopinionList' && propsType === 'TopicList'){       
-           request(api_topic_message +'&topicid=' +this.props.getRouterReducer).then(res=>{
-                  if(res.data && res.data.code!==0){
-                      this.setState({
-                          topicMessage:res.data
-                      })    
-                  }
-           }) 
-          }
   }
   // ------全选
   chooseAllOnChange(e) {
@@ -480,16 +442,15 @@ class OpinionDetail extends React.Component {
         headers: {
           "Content-Type": "application/x-www-form-urlencoded"
         },
-        body: `topicName=${this.state.topicMessage.topicname}&topicid=${this.state.topicMessage.topicid}&sids=${propsParamData.sid}&page=${propsParamData.page}&pagesize=${propsParamData.pagesize}&datetag=${propsParamData.datetag}&taskname=${this.state.topicMessage.topicname}&documenttype=excel&createdate=${time}&taskstate=0&source=topic&order=${propsParamData.order}&begin=${propsParamData.begin}&end=${propsParamData.end}&neg=${propsParamData.neg}&carry=${propsParamData.carry}&similer=${propsParamData.similer}&seltype=conten&keyword=`
+        body: `topicName=${this.props.getRouterReducer.topicname}&topicid=${this.props.getRouterReducer.topicid}&sids=${propsParamData.sid}&page=${propsParamData.page}&pagesize=${propsParamData.pagesize}&datetag=${propsParamData.datetag}&taskname=${this.props.getRouterReducer.topicname}&documenttype=excel&createdate=${time}&taskstate=0&source=topic&order=${propsParamData.order}&begin=${propsParamData.begin}&end=${propsParamData.end}&neg=${propsParamData.neg}&carry=${propsParamData.carry}&similer=${propsParamData.similer}&seltype=conten&keyword=`
       })
     } else {
-
       request(api_topic_export_word, {
         method: 'POST',
         headers: {
           "Content-Type": "application/x-www-form-urlencoded"
         },
-        body: `typeid=${this.state.clfMessage.typeid}&clfname=${this.state.clfMessage.clfname}&clfid=${this.state.clfMessage.clfid}&sids=${propsParamData.sid}&page=${propsParamData.page}&pagesize=${propsParamData.pagesize}&datetag=${propsParamData.datetag}&taskname=${this.state.clfMessage.clfname}&documenttype=excel&createdate=${time}&taskstate=0&source=clf&order=${propsParamData.order}&begin=${propsParamData.begin}&end=${propsParamData.end}&neg=${propsParamData.neg}&carry=${propsParamData.carry}&similer=${propsParamData.similer}&seltype=conten&keyword=`
+        body: `&clfname=${this.props.clfId.clfname}&clfid=${this.props.clfId.clfid}&sids=${propsParamData.sid}&page=${propsParamData.page}&pagesize=${propsParamData.pagesize}&datetag=${propsParamData.datetag}&taskname=${this.props.clfId.clfname}&documenttype=excel&createdate=${time}&taskstate=0&source=clf&order=${propsParamData.order}&begin=${propsParamData.begin}&end=${propsParamData.end}&neg=${propsParamData.neg}&carry=${propsParamData.carry}&similer=${propsParamData.similer}&seltype=conten&keyword=`
       })
     }
 
@@ -543,9 +504,9 @@ class OpinionDetail extends React.Component {
     if (propsType === 'AllopinionList') {
       filename = '导出汇总舆情数据';
     } else if (propsType === 'TopicList') {
-      filename = this.state.topicMessage.topicname;
+      filename = this.props.getRouterReducer.topicname;
     } else {
-      filename = this.state.clfMessage.clfname;
+      filename = this.props.clfId.clfname;
     }
     this.setState({
       visible: true,
@@ -579,7 +540,7 @@ class OpinionDetail extends React.Component {
             this.setState({
               downloadFlag:false
             })
-            window.location.href = 'http://119.90.61.155' +res.data.downloadUrl
+            window.location.href = res.data.downloadUrl
       })
 
     } else if (propsType === 'TopicList') {
@@ -588,12 +549,12 @@ class OpinionDetail extends React.Component {
         headers: {
           "Content-Type": "application/x-www-form-urlencoded"
         },
-        body: `topicName=${this.state.fileName}&topicid=${this.state.topicMessage.topicid}&sids=${propsParamData.sid}&page=${propsParamData.page}&pagesize=${propsParamData.pagesize}&datetag=${propsParamData.datetag}&taskname=${this.state.fileName}&documenttype=excel&createdate=${time}&taskstate=0&source=topic&order=${propsParamData.order}&begin=${propsParamData.begin}&end=${propsParamData.end}&neg=${propsParamData.neg}&carry=${propsParamData.carry}&similer=${propsParamData.similer}&seltype=conten&keyword=`
+        body: `topicName=${this.state.fileName}&topicid=${this.props.getRouterReducer.topicid}&sids=${propsParamData.sid}&page=${propsParamData.page}&pagesize=${propsParamData.pagesize}&datetag=${propsParamData.datetag}&taskname=${this.state.fileName}&documenttype=excel&createdate=${time}&taskstate=0&source=topic&order=${propsParamData.order}&begin=${propsParamData.begin}&end=${propsParamData.end}&neg=${propsParamData.neg}&carry=${propsParamData.carry}&similer=${propsParamData.similer}&seltype=conten&keyword=`
       }).then(res => {
         this.setState({
           downloadFlag:false
         })
-        window.location.href = 'http://119.90.61.155' +res.data.downloadUrl
+        window.location.href = res.data.downloadUrl
       })
     } else {
       request(api_topic_export_word, {
@@ -601,12 +562,12 @@ class OpinionDetail extends React.Component {
         headers: {
           "Content-Type": "application/x-www-form-urlencoded"
         },
-        body: `typeid=${this.state.clfMessage.typeid}&clfname=${this.state.fileName}&clfid=${this.state.clfMessage.clfid}&sids=${propsParamData.sid}&page=${propsParamData.page}&pagesize=${propsParamData.pagesize}&datetag=${propsParamData.datetag}&taskname=${this.state.fileName}&documenttype=excel&createdate=${time}&taskstate=0&source=clf&order=${propsParamData.order}&begin=${propsParamData.begin}&end=${propsParamData.end}&neg=${propsParamData.neg}&carry=${propsParamData.carry}&similer=${propsParamData.similer}&seltype=conten&keyword=`
+        body: `clfname=${this.state.fileName}&clfid=${this.props.clfId.clfid}&sids=${propsParamData.sid}&page=${propsParamData.page}&pagesize=${propsParamData.pagesize}&datetag=${propsParamData.datetag}&taskname=${this.state.fileName}&documenttype=excel&createdate=${time}&taskstate=0&source=clf&order=${propsParamData.order}&begin=${propsParamData.begin}&end=${propsParamData.end}&neg=${propsParamData.neg}&carry=${propsParamData.carry}&similer=${propsParamData.similer}&seltype=conten&keyword=`
       }).then(res => {
         this.setState({
           downloadFlag:false
         })
-        window.location.href = 'http://119.90.61.155' +res.data.downloadUrl
+        window.location.href = res.data.downloadUrl
      })
     }
   }
@@ -657,7 +618,24 @@ class OpinionDetail extends React.Component {
       }
     });
   }
-
+  //素材库目录列表
+  getCollectionOpinionList(){
+        request(api_material_opinion_list)
+        .then(res => {
+              this.setState({
+                materialList:res.data.reportCatList                
+              })
+        })
+  }
+  //收藏夹目录列表
+  getMaterialOpinionList(){
+    request(api_collection_opinion_list)
+    .then(res => {
+          this.setState({
+             favCatList:res.data.favCatList
+          })
+    })
+  }
   render() {
     const {page} = this.props;
     const flag = this.props.docList&& this.props.docList.length === 0?true:false;
@@ -666,7 +644,7 @@ class OpinionDetail extends React.Component {
     const putinReportMenu = (
       <Menu onClick={this.putIntoMaterial.bind(this)}>
         {
-          this.props.materialList.map(item =>
+          this.state.materialList.map(item =>
             <Menu.Item key={item.id}>
               <Icon type="folder"/>
               <span>{item.catname}</span>
@@ -674,13 +652,13 @@ class OpinionDetail extends React.Component {
           )
         }
       </Menu>
-    );
+    );       
 
     // 收藏夹的目录
     const collectionMenu = (
       <Menu onClick={this.putIntoCollection.bind(this)}>
         {
-          this.props.favCatList.map(item =>
+          this.state.favCatList.map(item =>
             <Menu.Item key={item.id}>
               <Icon type="folder"/>
               <span>{item.catname}</span>
@@ -719,11 +697,8 @@ class OpinionDetail extends React.Component {
             <div className="item-middle">
               <div className="left" style={this.state.isSummaryShow ? {display: 'block'} : {display: 'none'}}>
                 <div>
-                  <span
-                    className="summary"
-                    dangerouslySetInnerHTML={{__html: setHighlightTags(item.summary, item.nztags.split(' '))}}
-                  >
-                  </span>
+                            <span className="summary"
+                                  dangerouslySetInnerHTML={{__html: setHighlightTags(item.summary, item.nztags.split(' '))}}></span>
                 </div>
               </div>
             </div>
@@ -786,9 +761,9 @@ class OpinionDetail extends React.Component {
                     </div>
                     <div>
                       <Dropdown overlay={
-                        <Menu onClick={this.materialConfirm.bind(this, item.sid)}>
+                        <Menu style={{width:'200px'}} onClick={this.materialConfirm.bind(this, item.sid)}>
                           {
-                            this.props.materialList.map(iitem =>
+                            this.state.materialList.map(iitem =>
                               <Menu.Item key={iitem.id}>
                                 <Icon type="folder"/>
                                 <span>{iitem.catname}</span>
@@ -796,11 +771,10 @@ class OpinionDetail extends React.Component {
                             )
                           }
                         </Menu>
-                      } trigger={['click']}
-                                getPopupContainer={() => document.querySelector('.opinion-detail-item')}
+                      } trigger={['click']} getPopupContainer={() => document.querySelector('.opinion-detail-item')} 
                       >
                         <Tooltip title='素材库' placement="bottom">
-                        <img src={Material} alt="素材库" style={{height:'18px'}} onClick={this.props.getCollectionOpinionListRequested.bind(this)}/>
+                        <img src={Material} alt="素材库" style={{height:'18px'}} onClick={this.getCollectionOpinionList.bind(this)}/>
                         </Tooltip>
                       </Dropdown>
                     </div>
@@ -809,7 +783,7 @@ class OpinionDetail extends React.Component {
                         <Dropdown overlay={
                           <Menu onClick={this.collectionlConfirm.bind(this, item.sid)}>
                             {
-                              this.props.favCatList.map(iitem =>
+                              this.state.favCatList.map(iitem =>
                                 <Menu.Item key={iitem.id}>
                                   <Icon type="folder"/>
                                   <span>{iitem.catname}</span>
@@ -820,7 +794,7 @@ class OpinionDetail extends React.Component {
                         } trigger={['click']}
                                   getPopupContainer={() => document.querySelector('.opinion-detail-item')}
                         >
-                        <img src={Collection} alt="收藏"  style={{height:'18px'}} onClick={this.props.getMaterialOpinionListRequested.bind(this)}/>
+                        <img src={Collection} alt="收藏"  style={{height:'18px'}} onClick={this.getMaterialOpinionList.bind(this)}/>
                         </Dropdown>
                       </Tooltip>
                     </div>
@@ -904,7 +878,7 @@ class OpinionDetail extends React.Component {
                       getPopupContainer={() => document.querySelector('.opinion-detail')}
             >
               <Tooltip title='素材库' placement="bottom">
-                <div className="operate-all" onClick={this.props.getCollectionOpinionListRequested.bind(this)}>
+                <div className="operate-all" onClick={this.getCollectionOpinionList.bind(this)}>
                 <img src={Material} alt="素材库" style={{height:'16px'}}/>
                 </div>
               </Tooltip>
@@ -913,7 +887,7 @@ class OpinionDetail extends React.Component {
               <Dropdown overlay={collectionMenu} trigger={['click']}
                         getPopupContainer={() => document.querySelector('.opinion-detail')}
               >
-                <div className="operate-all" onClick={this.props.getMaterialOpinionListRequested.bind(this)}>
+                <div className="operate-all" onClick={this.getMaterialOpinionList.bind(this)}>
                 <img src={Collection} alt="收藏"  style={{height:'18px'}}/>
                 </div>
               </Dropdown>
@@ -995,8 +969,8 @@ const mapStateToProps = state => {
   return {
     themeColor: state.changeThemeReducer,
     editNegRes: state.setOpinionTypeSucceededReducer.res,
-    materialList: state.getMaterialOpinionListSucceededReducer.data.reportCatList,
-    favCatList: state.getCollectionOpinionListSucceeded.data.favCatList,
+    // materialList: state.getMaterialOpinionListSucceededReducer.data.reportCatList,
+    // favCatList: state.getCollectionOpinionListSucceeded.data.favCatList,
     clfId: state.changeClfId.id,
     getTopicMessageSucceeded: state.getTopicMessageSucceeded.data,
     getRouterReducer: state.getRouterReducer,
@@ -1016,12 +990,12 @@ const mapDispatchToProps = dispatch => {
     setOpinionType: type => {
       dispatch(setOpinionTypeRequested(type));
     },
-    getCollectionOpinionListRequested: () => {
-      dispatch(getCollectionOpinionListRequested());
-    },
-    getMaterialOpinionListRequested: () => {
-      dispatch(getMaterialOpinionListRequested());
-    },
+    // getCollectionOpinionListRequested: () => {
+    //   dispatch(getCollectionOpinionListRequested());
+    // },
+    // getMaterialOpinionListRequested: () => {
+    //   dispatch(getMaterialOpinionListRequested());
+    // },
     exportSkip: key => {
       dispatch(exportSkip(key));
     },
