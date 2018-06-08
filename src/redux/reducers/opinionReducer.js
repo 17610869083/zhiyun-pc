@@ -104,7 +104,7 @@ const getCollectionOpinionListRequested = handleAction(GET_COLLECTION_OPINION_LI
 }), "1");
 const getCollectionOpinionListSucceeded = handleAction(GET_COLLECTION_OPINION_LIST_SUCCEEDED, (state, action) => ({
   data: action.payload
-}), {data: {favCatList: [{id: 21, catname: '默认收藏夹'}]}});
+}), {data: {favCatList: [{id: '', catname: ''}]}});
 
 // 获取收藏夹材详细信息
 const getCollectionOpinionDetailRequested = handleAction(GET_COLLECTION__OPINION_DETAIL_REQUESTED, (state, action) => ({

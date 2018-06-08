@@ -8,6 +8,7 @@ class KindEditorReactComponent extends React.Component{
     constructor(props){
         super(props)
         const value=this.props.contents||"";
+        
         this.state = {
             id: 123,
             content:value
@@ -25,13 +26,12 @@ class KindEditorReactComponent extends React.Component{
         this.setState({content:'', id: ''})
 
     }
-    componentWillReceiveProps(nextProps) {
-        //console.log(nextProps)
-        let {content} = nextProps;
+    componentWillReceiveProps(nextProps) { 
+        let {contents} = nextProps;
         let oldContent = this.editor.html();
-        if (oldContent !== content) {
-            this.setState({content:content});
-            this.editor.html(content);
+        if (oldContent !== contents) {
+            this.setState({content:contents});
+            this.editor.html(contents);
         }
     }
     getItems() {
@@ -137,16 +137,16 @@ class KindEditorReactComponent extends React.Component{
 
     render(){
         return (
-            <div className="kindeditor">
+        <div className="kindeditor">
         <textarea
             id={this.state.id}
             name="content"
             ref="textarea"
-            value={this.state.content}
+            value={this.state.contents}
             onChange={this.props.onChange}
         >
         </textarea>
-            </div>
+        </div>
         )
     }
 

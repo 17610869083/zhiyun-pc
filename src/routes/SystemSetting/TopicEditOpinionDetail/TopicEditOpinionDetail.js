@@ -1,7 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import Kindeditor from '../../../components/Kindeditor/Kindeditor.js';
-import 'react-quill/dist/quill.snow.css';
 import './TopicEditOpinionDetail.less';
 import { Form, Input, InputNumber, DatePicker, Button, Cascader, message, Select } from 'antd';
 import { public_opinion_entry, api_material_opinion_list, api_add_doc_from_mat } from '../../../services/api';

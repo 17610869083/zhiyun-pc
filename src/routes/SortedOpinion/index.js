@@ -171,19 +171,19 @@ class SortedOpinion extends React.Component {
     if (e.key === 'addsort') {
       this.setState({sortVisible: true})
     } else if (e.key === 'sortlist') {
-      history.push({pathname: `/sortedopinion/list`, search: `?cifid=${this.props.clfId}`})
+      history.push({pathname: `/sortedopinion/list`, search: `?cifid=${this.props.clfId.clfid}`})
     } else if (e.key === 'setting') {
-      history.push({pathname: `/sortedopinion/setting`, search: `?cifid=${this.props.clfId}`})
+      history.push({pathname: `/sortedopinion/setting`, search: `?cifid=${this.props.clfId.clfid}`})
     } else {
       history.push({pathname: '/sortedopinion/addrule'})
     }
 
   }
   // 切换分类路由
-  changeSortRoute(clfId, e) {
+  changeSortRoute(clfId,clfname,e) {
     this.setState({clfId: clfId, current: 'sortlist'});
     history.push({pathname: `/sortedopinion/list`, search: `?cifid=${clfId}`})
-    this.props.changeClfId(clfId);
+    this.props.changeClfId({clfid:clfId,clfname:clfname});
     //this.props.clfCatState({state:true})
   }
 
@@ -205,27 +205,28 @@ class SortedOpinion extends React.Component {
   componentWillMount() {
     this.props.getSortedMenuRequested();
     this.sortTimer = setTimeout(() => { 
-    let clfid = '';
+    let firstClf = {};
     for (let i = 0; i < this.props.sortedMenu.length; i++) {
       if (this.props.sortedMenu[i]['clflist'][0] !== undefined) {
-        clfid = this.props.sortedMenu[i]['clflist'][0]['clfid'];
+        firstClf.clfid = this.props.sortedMenu[i]['clflist'][0]['clfid'];
+        firstClf.clfname = this.props.sortedMenu[i]['clflist'][0]['clfname'];
         break;
       }
     }
-    this.props.changeClfId(clfid);
+    this.props.changeClfId(firstClf);
     this.setState({
       browserHeight:window.innerHeight-140,
-      clfId:clfid
+      clfId:firstClf.clfid
     })   
       //const catid = this.props.sortedMenu[0]['catid'];
       // const param = {
       //   catid: catid
       // }
       const param = {
-        clfid: clfid
+        clfid: firstClf.clfid
       }
       this.props.getSortedContentRequested(param);
-    }, 100)
+    }, 200)
   }
   componentDidMount() {
     if (history.location.pathname === '/sortedopinion/list') {
@@ -272,7 +273,7 @@ class SortedOpinion extends React.Component {
           item.clflist && item.clflist.map(sortItem => <li className={clfId === sortItem.clfid
               ? 'clf-item-active'
               : 'clf-item'} key={sortItem.clfid}>
-            <span className="name" onClick={this.changeSortRoute.bind(this, sortItem.clfid)} title={sortItem.clfname}>{sortItem.clfname}</span>
+            <span className="name" onClick={this.changeSortRoute.bind(this, sortItem.clfid,sortItem.clfname)} title={sortItem.clfname}>{sortItem.clfname}</span>
             <img src={Del} alt="删除" className="delete-icon" onClick={this.deleteSortedItem.bind(this, sortItem.clfid)}/>
           </li>)
         }

@@ -530,18 +530,17 @@ class AllOpinion extends React.Component {
   }
 
   componentWillMount() {
-    if (this.props.location === null && this.props.location.search !== "?type=search") {
+    if (this.props.location.search !== "?type=search") {
       this.homepageMore(window.location.hash);
-    } else {
-      this.homepageMore(window.location.hash);      
     }
+
   }
 
   componentDidMount() {
     ReactDOM.findDOMNode(this).scrollIntoView();
     if(this.props.ks.keyword !==''){
       this.setState({
-        type:1
+          type:1
       })
    }
   }
@@ -706,29 +705,27 @@ class AllOpinion extends React.Component {
         </div>
         <div className="middle">
           <div className="count">根据您的条件，为您筛选出<span className="number">{pageInfo.count}</span>条数据！</div>
-          <OpinionDetail
-            docList={docList}
-            onDataChange={this.dataChanged.bind(this)}
-            param={param}
-            pageSize={this.state.pagesize}
-            propsType='AllopinionList'
-            pageInfo={pageInfo}
-            current={page}
-            type={this.state.type}
-            searchType={this.searchType.bind(this)}
+          <OpinionDetail docList={docList}
+                         onDataChange={this.dataChanged.bind(this)}
+                         param={param}
+                         pageSize={this.state.pagesize}
+                         propsType='AllopinionList'
+                         pageInfo={pageInfo}
+                         current={page}
+                         type={this.state.type}
+                         searchType={this.searchType.bind(this)}
           />
         </div>
         <div className="bottom">
           <div className="pagintion-wrapper">
-            <Pagination 
-              showSizeChanger
-              defaultCurrent={1}
-              defaultPageSize={20}
-              onChange={this.onPaginationChange.bind(this)}
-              onShowSizeChange={this.onShowSizeChange.bind(this)}
-              total={pageInfo.count}
-              getPopupContainer={() => document.querySelector('.all-opinion')}
-              current={page}
+            <Pagination showSizeChanger
+                        defaultCurrent={1}
+                        defaultPageSize={20}
+                        onChange={this.onPaginationChange.bind(this)}
+                        onShowSizeChange={this.onShowSizeChange.bind(this)}
+                        total={pageInfo.count}
+                        getPopupContainer={() => document.querySelector('.all-opinion')}
+                        current={page}
             />
           </div>
         </div>

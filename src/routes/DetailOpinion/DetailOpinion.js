@@ -195,7 +195,7 @@ class DetailOpinion extends React.Component {
 
   editModalHandleOk() {
     let editData = Store.getState().addMessageReducer;
-    const id = this.state.id;
+    const id = this.state.sid;
     request(api_docedit_save, {
       method: 'POST',
       headers: {
@@ -546,10 +546,9 @@ class DetailOpinion extends React.Component {
                             <div className="operation-item" title="修改" onClick={this.showEditModal.bind(this)}>
                                <IconFont type="icon-xiugai"/>
                             </div>
-                           
-                                <div className="operation-item" title="推送" onClick={this.searchEmail.bind(this)}>
+                                {/* <div className="operation-item" title="推送" onClick={this.searchEmail.bind(this)}>
                                 <IconFont type="icon-tuisongguize"/> 
-                                </div>
+                                </div> */}
                             </div>
                             <div className="keywords-right">
                                 <Dropdown overlay={CollectionMenu} trigger={['click']}
@@ -590,7 +589,7 @@ class DetailOpinion extends React.Component {
                         >
                             <EditOpinionDetail titleSid={sid}/>
                         </Modal>
-                        <Modal
+                        {/* <Modal
                           title="推送消息"
                           visible={this.state.visibleOne}
                            onOk={this.handleOkOne.bind(this)}
@@ -620,7 +619,7 @@ class DetailOpinion extends React.Component {
                          /></p>
                          <Kindeditor contents={this.state.contents.length===0?conent:this.state.contents}
                            onChange={this.handleChange}/>
-                        </Modal>
+                        </Modal> */}
                     </div>
                 </div>
             </div>
