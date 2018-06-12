@@ -1,6 +1,8 @@
 import React from 'react';
 import {GRAY,BLUES} from '../../utils/colors';
 import './ChooseTemplate.less';
+import {api_get_all_report} from '../../services/api';
+import request from '../../utils/request';
 class ChooseTemplate extends React.Component{
     constructor(props){
         super(props);
@@ -16,6 +18,13 @@ class ChooseTemplate extends React.Component{
           })
     }
     checkTemplate () {
+    }
+    componentWillMount(){
+        
+        request(api_get_all_report)
+        .then( res => {
+              console.log(res.data)
+        })
     }
     render(){
     const templateList = this.state.reportType.map((item,index) => {

@@ -9,20 +9,38 @@ import {
 	api_del_doc_from_cat,
 	api_put_into_report,
 	api_add_doc_from_top,
-	api_material_opinion_list
+	api_material_opinion_list,
+	api_res_fav_cat
 } from '../../services/api';
-import { apiGetMaterialOpinionList } from '../../services/opinionServices';
+// import { apiGetMaterialOpinionList } from '../../services/opinionServices';
 import { opinionTrend, opinionColor } from '../../utils/format';
-// import AsyncComponent from '../../components/AsyncComponent/AsyncComponent'
+import AllOpinion from '../AllOpinion/AllOpinion'
 // const TopicEditOpinionDetail = AsyncComponent(() => import('../SystemSetting/TopicEditOpinionDetail/TopicEditOpinionDetail'))
 import TopicEditOpinionDetail from '../SystemSetting/TopicEditOpinionDetail/TopicEditOpinionDetail'
 import {
 	opinionSearchRequested,
 	getMaterialOpinionListRequested,
 	getMaterialOpinionDetailRequested,
-	getReportListRequested
-
+	getReportListRequested,
+	searchKeywordSync,
+	paginationPage,
+  getCollectionOpinionListRequested	
 } from '../../redux/actions/createActions';
+// import Store from '../../redux/store/index';
+import weixin from '../../assets/icon-img/weixin.png';
+import news from '../../assets/icon-img/news.png';
+import weibo from '../../assets/icon-img/weibo.png';
+import talk from '../../assets/icon-img/talk.png';
+import video from '../../assets/icon-img/video.png';
+import all from '../../assets/icon-img/other.png';
+import media from '../../assets/icon-img/new.png';
+import boke from '../../assets/icon-img/boke.png';
+import app from '../../assets/icon-img/app.png';
+import twitter from '../../assets/icon-img/twitter.png';
+// import Collection from '../../assets/img/collection.svg';
+// import Material from '../../assets/img/material.svg';
+// import Qing from '../../assets/img/qing.svg';
+// import Del from '../../assets/img/del.svg';
 import './MaterialOpinion.less';
 import BlankPage from '../../base/Exception/BlankPage';
 import { GRAY, BLACK } from '../../utils/colors';
@@ -31,6 +49,7 @@ const Search = Input.Search;
 const Option = Select.Option;
 const confirm = Modal.confirm;
 const FormItem = Form.Item;
+const InputGroup = Input.Group;
 
 class MaterialOpinion extends React.Component {
 	constructor() {
@@ -53,8 +72,26 @@ class MaterialOpinion extends React.Component {
 			MaterialValue: '',
 			browserHeight: 300,
 			addModalVisible: false,
+			opinionVisible: false,
 			topId: null,
-			materialList: []
+			materialList: [],
+			carryAll: {
+        '新闻': news,
+        '微博': weibo,
+        '论坛': talk,
+        '视频': video,
+        '综合': all,
+        '微信': weixin,
+        '平媒': media,
+        '博客': boke,
+        'APP': app,
+        'pjljkm': twitter
+			},
+			seltype: 'content',
+			searchInputValue: '',
+			visibleFile: false,
+			checkedArray: new Array(40).fill(false),
+			type: 0
 		};
 	}
 	// 拖拽
@@ -114,6 +151,7 @@ class MaterialOpinion extends React.Component {
 
 	// --------------在素材库内搜索
 	handleSearchBtn(keyword) {
+		console.log(keyword);
 		if (keyword !== '') {
 			this.props.getMaterialOpinionDetailRequested(`${this.state.current}&q=${keyword}`);
 		}
@@ -175,7 +213,6 @@ class MaterialOpinion extends React.Component {
 				arr.push(item.id);
 			}
 		});
-
 		return arr;
 	}
 	showRemoveModal() {
@@ -188,7 +225,8 @@ class MaterialOpinion extends React.Component {
 	}
 	showAddModal() {
 		this.setState({
-			addModalVisible: true
+			addModalVisible: true,
+			visibleFile: true
 		})
 	}
 	handleRemoveOk() {
@@ -218,18 +256,6 @@ class MaterialOpinion extends React.Component {
 	handleRemoveCancel() {
 		this.setState({
 			removeModalVisible: false
-		})
-	}
-
-	handleAddOk() {
-		this.setState({
-			addModalVisible: false
-		})
-	}
-
-	handleAddCancel() {
-		this.setState({
-			addModalVisible: false
 		})
 	}
 
@@ -423,8 +449,85 @@ class MaterialOpinion extends React.Component {
 		}
 	}
 
-	rightList() {
+	 // 搜索内容
+	handleSearchChange(value) {
+		console.log(value);
+    this.setState({
+      seltype: value
+		});
 	}
+
+	onPaginationChangeOpinion(pagenumber) {
+    this.props.paginationPage(pagenumber);
+    this.setState({
+      page: pagenumber,
+      checkedArray:this.state.checkedArray.fill(false)
+    });
+    const param = this.props.param;
+    param.page = pagenumber;
+    if (this.props.type === 1) {
+      this.props.opinionSearchRequest({
+        seltype: 'content', keyword: this.props.searchKeyword.keyword,
+        page: pagenumber
+      });
+    } else if (this.props.searchKeyword.type === 1) {
+      this.props.opinionSearchRequest({
+        seltype: 'content', keyword: this.props.searchKeyword.keyword,
+        page: pagenumber
+      });
+    }
+    else if (this.props.propsType === 'AllopinionList') {
+      this.props.opinionSearchRequest(param);
+    } else {
+      this.props.onDataChange(pagenumber);
+    }
+  }
+
+	searchInput(e) {
+		console.log(this.props);
+    const {value} = e.target;
+    if (value === '') {
+      this.searchType(0);
+      this.props.searchKeywordSync({
+        seltype: this.state.seltype,
+				keyword: '',
+				type: 0
+      });
+    }
+    this.setState({
+      searchInputValue: value
+    })
+  }
+	
+	keyDown(e){
+		console.log(this.state.seltype, e);		
+		if(e.keyCode === 13){
+			this.setState({
+				opinionVisible: true
+			})
+			const param = {
+				seltype: this.state.seltype,
+				keyword: this.state.searchInputValue,
+				datetag:'all',
+				neg:'all',
+				order:'timedown',
+				carry:'全部',
+				page:1
+			};
+		console.log(this.state.seltype);			
+			this.props.opinionSearchRequest(param);
+			this.props.searchKeywordSync({
+				seltype: this.state.seltype,
+				keyword: this.state.searchInputValue,
+				type: 0
+			});
+		  console.log(this.props);		 
+		  this.props.paginationPage(1);
+		  if (this.props.propsType === 'AllopinionList') {
+			  this.searchType(1);
+			}
+		}
+ }
 
 	onClickTopList(id) {
 		request(api_add_doc_from_top + '&catid=' + id, {}).then((res) => {
@@ -444,8 +547,73 @@ class MaterialOpinion extends React.Component {
 			}
 		});
 	}
+	// 舆情录入弹框控制	
+	handleAddOk() {
+		this.setState({
+			addModalVisible: false
+		})
+	}
+	// 舆情录入弹框控制
+	handleAddCancel = flag => {
+		this.setState({
+			addModalVisible: flag
+		})
+	};
+  // 控制舆情监测弹框
+	opinionHandleAddOk = () => {
+		this.setState({
+			opinionVisible: false
+		})
+	};
+  // 控制舆情监测弹框
+	opinionHandleAddCancel = () => {
+		this.setState({
+			opinionVisible: false
+		})
+	}
+	//单条加入收藏
+	collectionlConfirm(sid, e) {
+		request(api_res_fav_cat + '&newcatid=' + e.key + '&id=["' + sid + '"]').then((res) => {
+			if (res.data.code === "2") {
+				message.success(res.data.msg);
+			} else if (res.data.code === "1") {
+				message.error(res.data.msg);			
+			} else {
+				message.warning(res.data.msg);				
+			}
+		});
+	}
+	// 推送到收藏夹
+	putIntoCollection(e) {
+		const collectionId = e.key;
+		const arr = this.checkedTrue();
+		const size = arr.length;
+		if (size === 0) {
+			message.warning("至少选择一项！");
+		} else {
+			const sidList = JSON.stringify(arr);
+			request(api_res_fav_cat + '&newcatid=' + collectionId + '&id=' + sidList, {}).then((res) => {
+				if (res.data.code === "2") {
+					message.success(res.data.msg);
+					this.setState({
+						checkedAll: false,
+						checkedArray: new Array(40).fill(false)
+					});
+				} else if (res.data.code === "1") {
+					message.error(res.data.msg);	
+				} else {
+					message.warning(res.data.msg);				
+				}
+			});
+		}
+	}
+	searchType(data) {
+    this.setState({
+      type: data
+    })
+  }
 	render() {
-		const { pageInfo, materialList, reportData } = this.props;
+		const { pageInfo, reportData } = this.props;
 		const { getFieldDecorator } = this.props.form;
 		const formItemLayout = {
 			labelCol: {
@@ -468,6 +636,20 @@ class MaterialOpinion extends React.Component {
 			</Menu>
 		);
 
+		// 收藏夹的目录
+		// const collectionMenu = (
+		// 	<Menu onClick={this.putIntoCollection.bind(this)}>
+		// 		{
+		// 			this.props.favCatList.map(item =>
+		// 				<Menu.Item key={item.id}>
+		// 					<Icon type="folder"/>
+		// 					<span>{item.catname}</span>
+		// 				</Menu.Item>
+		// 			)
+		// 		}
+		// 	</Menu>
+		// );
+
 
 		// 多项加入简报
 		const addMultipleReportMenu = (
@@ -482,57 +664,97 @@ class MaterialOpinion extends React.Component {
 
 
 		const docList = this.props.docList ? this.props.docList : [{ carry: '新闻' }];
-		const OpinionDetailItems = docList.length !== 0 ? docList.map((item, index) =>
-			<li key={item.sid} className="opinion-detail-item">
-				<Checkbox
-					checked={this.state.arr[index]}
-					onChange={this.onChange.bind(this, index)}
-				/>
-				<div className="item-top">
-					<div className="content">
-
-						<div className="negative">
-							<div className="inner-type" style={opinionColor(item.negative)}>
-								{opinionTrend(item.negative)}
+		const OpinionDetailItems = docList.length !== 0 ? docList.map((item, index) => 
+			<div key={item.id}>
+			  <div className="item_file" style={{ height: 25, background: "#f7f7f7", borderBottom: "1px solid #fff" }}>{item.adddate}</div>			
+			  <div className="item_time" style={{ height: 25, paddingLeft: 40, background: "#f7f7f7" }}>{item.adddate}</div>
+				<li key={item.sid} className="opinion-detail-item">
+					<Checkbox
+						checked={this.state.arr[index]}
+						onChange={this.onChange.bind(this, index)}
+					/>
+					<div className="item-top">
+						<div className="content">
+							<div className="negative">
+								<div className="inner-type" style={opinionColor(item.negative)}>
+									{opinionTrend(item.negative)}
+								</div>
+							</div>
+							<div className="title" title={item.title} onClick={this.clickItemTitle.bind(this, item.sid)}>
+								{item.title !== undefined && item.title.length > 58 ? item.title.slice(0, 58) + '...' : item.title}
 							</div>
 						</div>
-						<div className="title" title={item.title} onClick={this.clickItemTitle.bind(this, item.sid)}>
-							{item.title !== undefined && item.title.length > 58 ? item.title.slice(0, 58) + '...' : item.title}
+						<div className="icon" style={{ cursor: "pointer", width: 38, height: 38, margin: "10px 15px" }}>
+							<img src={this.state.carryAll[item.carry]}
+								alt=""
+								className="carryImg"
+								style={{ cursor: "pointer", width: 38, height: 38, display: "block" }}/>
+						</div>
+						<p className="docsummary" style={{ marginLeft: 67, marginTop: -50 }}>{item.docsummary}</p>						
+						<div className="item-bottom">
+							<div className="time" style={{ color: "#ccc", marginLeft: 25 }}>
+								<span className="source">{new Date(item.pubdate.time).toLocaleString()}</span>
+							</div>
+							<div className="resource">
+								<a href="">
+									<span className="source">{item.source}</span>
+								</a>
+							</div>
+							<div className="keywords" style={{ paddingLeft: 25, color: "#ccc" }}>
+								关键词: <span className="source" style={{ color: "red" }}>{item.dockeywords}</span>
+							</div>
 						</div>
 					</div>
-					<div className="item-bottom">
-						<div className="time">
-							{/* <span className="source">{item.source}</span>				   */}
-						</div>
-						<div className="resource">
-							<a href="">
-								<span className="source">{item.source}</span>
-							</a>
-						</div>
-						<div className="keywords">
-							{/* <span className="source">{item.source}</span>							 */}
+					<div className="item-middle">
+						<div className="right">
+							<div className="base-operate">
+								{/* <Tooltip title="加入简报">
+									<Dropdown overlay={addReportMenu} trigger={['click']}
+										getPopupContainer={() => document.querySelector('.materia-opinion-wrapper')}
+									>
+										<i className="fa fa-file-text" aria-hidden="true"
+											onClick={this.getReportOpinionList.bind(this, item.sid)}
+										/>
+									</Dropdown>
+								</Tooltip> */}
+								<Tooltip title="从素材库移除">
+									<i
+										aria-hidden="true"
+										onClick={this.deleteThisFormMaterial.bind(this, item.id)}
+									>
+										< Iconfont type="icon-shanchu1-copy" style={{ width: 20, height: 20 }} />
+									</i>
+								</Tooltip>
+								<Tooltip title='收藏'>
+									<Dropdown
+									  overlay={
+											<Menu onClick={this.collectionlConfirm.bind(this, item.sid)}>
+												{
+													this.props.favCatList.map(i =>
+														<Menu.Item key={i.id}>
+															<Icon type="folder"/>
+															<span>{i.catname}</span>
+														</Menu.Item>
+													)
+												}
+											</Menu>
+										}
+										trigger={['click']}
+										getPopupContainer={() => document.querySelector('.opinion-detail-item')}
+									>
+										<i
+											aria-hidden="true"
+											onClick={this.props.getCollectionOpinionListRequested.bind(this)}
+										>
+											< Iconfont type="icon-shoucang" style={{ width: 17, height: 17, marginBottom: 2, marginLeft: 20 }} />
+										</i>
+									</Dropdown>
+                </Tooltip>
+							</div>
 						</div>
 					</div>
-				</div>
-				<div className="item-middle">
-					<div className="right">
-						<div className="base-operate">
-							<Tooltip title="加入简报">
-								<Dropdown overlay={addReportMenu} trigger={['click']}
-									getPopupContainer={() => document.querySelector('.materia-opinion-wrapper')}
-								>
-									<i className="fa fa-file-text" aria-hidden="true"
-										onClick={this.getReportOpinionList.bind(this, item.sid)}
-									/>
-								</Dropdown>
-							</Tooltip>
-							<Tooltip title="从素材库移除">
-								<i className="fa fa-arrow-circle-right" aria-hidden="true" onClick={this.deleteThisFormMaterial.bind(this, item.id)} />
-							</Tooltip>
-						</div>
-					</div>
-				</div>
-			</li>
+				</li>
+			</div>				
 		) : <BlankPage desc='暂无信息，请在汇总舆情内加入相应信息' />;
 
 		const materialSetMenu = (
@@ -547,12 +769,6 @@ class MaterialOpinion extends React.Component {
 					<span>置顶</span>
 				</Menu.Item>
 			</Menu>
-		);
-		const selectBefore = (
-			<Select defaultValue="全站搜索" style={{ width: 80 }}>
-				<Option value="全站搜索">全站搜索</Option>
-				<Option value="素材库">素材库</Option>
-			</Select>
 		);
 		return (
 			<div className="materia-opinion-wrapper">
@@ -582,30 +798,97 @@ class MaterialOpinion extends React.Component {
 									<Dropdown overlay={addMultipleReportMenu} trigger={['click']}
 										getPopupContainer={() => document.querySelector('.materia-opinion-wrapper')}
 									>
-										<span style={{ color: BLACK }}>加入简报</span>
+										<span style={{ color: BLACK }}>生成报告</span>
 									</Dropdown>
 								</div>
 								<div className="operate-all">
-									<span onClick={this.showAddModal.bind(this)} style={{ color: BLACK }}>舆情录入</span>
+									<span onClick={() => this.showAddModal(true)} style={{ color: BLACK }}>舆情录入</span>
 									<Modal
 										width={1100}
 										footer={null}
 										title="舆情录入"
 										visible={this.state.addModalVisible}
-										onOk={this.handleAddOk.bind(this)}
-										onCancel={this.handleAddCancel.bind(this)}
+										onOk={() => this.handleAddOk(false)}
+										onCancel={() => this.handleAddCancel(false)}
 									>
-										<TopicEditOpinionDetail />
+										<TopicEditOpinionDetail visible={this.state.visibleFile} file={this.state.materialList} handle={this.handleAddCancel}/>
 									</Modal>
 								</div>
+								<div className="shoucang">
+									<Tooltip title='收藏'>
+										<Dropdown
+											overlay={
+												<Menu onClick={this.putIntoCollection.bind(this)}>
+													{
+														this.props.favCatList.map(i =>
+															<Menu.Item key={i.id}>
+																<Icon type="folder"/>
+																<span>{i.catname}</span>
+															</Menu.Item>
+														)
+													}
+												</Menu>
+											}
+											trigger={['click']}
+											getPopupContainer={() => document.querySelector('.opinion-detail-item')}
+										>
+											<i
+												aria-hidden="true"
+												onClick={this.props.getCollectionOpinionListRequested.bind(this)}
+											>
+												< Iconfont type="icon-shoucang" style={{ width: 17, height: 17, marginLeft: 20 }} />
+											</i>
+										</Dropdown>
+									</Tooltip>
+								</div>
 							</div>
-							<div className="right">
+							{/* <div className="right">
 								<Search
-									addonBefore={selectBefore}
 									style={{ width: '260px', marginRight: '20px' }}
 									placeholder="搜索标题，文章内容"
 									onSearch={this.handleSearchBtn.bind(this)}
 								/>
+							</div> */}
+							<div className="inputSearch">
+								<div className="right">
+									<InputGroup compact>
+										<Select defaultValue="content" onChange={this.handleSearchChange.bind(this)}>
+											<Option value="content" className="selectFont">全站搜索</Option>
+											<Option value="title" className="selectFont">素材库</Option>
+										</Select>
+											<div>
+												{
+												this.state.seltype === "content" ? (
+												<Input
+													style={{width: '150px'}}
+													// placeholder="搜索标题，文章内容"
+													onChange={this.searchInput.bind(this)}
+													onKeyDown = {this.keyDown.bind(this)}
+												/>
+												) : (
+														<Search
+															style={{ width: '150px' }}
+															placeholder="搜索标题，文章内容"
+															onSearch={this.handleSearchBtn.bind(this)}
+														/>
+												  )
+												}
+											</div>
+
+										<Modal
+											width={1100}
+											footer={null}
+											title="舆情监测"
+											visible={this.state.opinionVisible}
+											onOk={this.opinionHandleAddOk.bind(this)}
+											onCancel={this.opinionHandleAddCancel.bind(this)}
+										>
+											<AllOpinion
+            						searchType={this.searchType.bind(this)}											  
+											/>
+										</Modal>
+									</InputGroup>
+								</div>
 							</div>
 						</div>
 						<div className="bottom" >
@@ -628,9 +911,12 @@ class MaterialOpinion extends React.Component {
 					</div>
 					<div className="left-boxes" style={this.props.getSids ? { left: '76%' } : { left: '85.6%' }}>
 						<div className="first-box">
-							<div className="top" style={{ background: GRAY }} onClick={this.showAddMaterial.bind(this)}>
-								+新增素材库
-                                <Modal
+							<div className="top" style={{ background: GRAY }}>
+								<div className="sucai">
+									<div style={{ textAlign: "left" }}>素材文件夹</div>
+									<div onClick={this.showAddMaterial.bind(this)} style={{ marginTop: -40, textAlign: "right", marginRight: 10 }}>+添加文件夹</div>
+								</div>
+                <Modal
 									title="新增素材库"
 									visible={this.state.addMaterialVisible}
 									onOk={this.handleAddMaterialOk.bind(this)}
@@ -707,7 +993,9 @@ const mapStateToProps = state => {
 		docList: state.getMaterialOpinionDetailSucceededReducer.data.docList,
 		pageInfo: state.getMaterialOpinionDetailSucceededReducer.data.pageinfo,
 		materialList: state.getMaterialOpinionListSucceededReducer.data.reportCatList,
-		reportData: state.getReportListSucceeded.data
+		reportData: state.getReportListSucceeded.data,
+		searchKeyword: state.searchKeywordSyncReducer.ks,
+    favCatList: state.getCollectionOpinionListSucceeded.data.favCatList		
 	}
 };
 
@@ -716,6 +1004,9 @@ const mapDispatchToProps = dispatch => {
 		opinionSearchRequest: req => {
 			dispatch(opinionSearchRequested(req));
 		},
+		searchKeywordSync: ks => {
+      dispatch(searchKeywordSync(ks));
+    },
 		getMaterialOpinionListRequested: () => {
 			dispatch(getMaterialOpinionListRequested());
 		},
@@ -724,7 +1015,13 @@ const mapDispatchToProps = dispatch => {
 		},
 		getReportListRequested: (req) => {
 			dispatch(getReportListRequested(req));
-		}
+		},
+		paginationPage: req => {
+      dispatch(paginationPage(req));
+		},
+		getCollectionOpinionListRequested: () => {
+      dispatch(getCollectionOpinionListRequested());
+    }
 	}
 };
 export default connect(mapStateToProps, mapDispatchToProps)(Form.create()(MaterialOpinion));

@@ -418,7 +418,7 @@ class TopicList extends React.Component {
                 }
                 });
         }
-       },100)   
+       },700)   
     }
   componentDidUpdate(prevProps, prevState) {
     if (prevProps.location.search !== this.props.location.search) {

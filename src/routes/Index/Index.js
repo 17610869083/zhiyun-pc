@@ -32,6 +32,7 @@ const BigScreen = AsyncComponent(() => import('../BigScreen/BigScreen'))
 const ZHeader = AsyncComponent(() => import('../../components/ZHeader/Zheader'))
 const ReportTemplate = AsyncComponent(() => import('../ReportTemplate/ReportTemplate'))
 const ChooseTemplate = AsyncComponent(() => import('../ChooseTemplate/ChooseTemplate'))
+const CustomHome= AsyncComponent(() => import('../CustomHome/CustomHome'))
 const {Header, Sider, Content} = Layout;
 const SubMenu = Menu.SubMenu;
 
@@ -267,6 +268,8 @@ class Index extends React.Component {
                 <Route path="/topicreportlist" component={TopicReportList}/>
                 <Route path="/reporttemplate" component={ReportTemplate}/>
                 <Route path="/choosetemplate" component={ChooseTemplate}/>
+                <Route path="/customhome" component={CustomHome}/>
+                CustomHome
               </Switch>
               <div className="suspensionBox">
                 <div>

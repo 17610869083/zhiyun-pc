@@ -63,10 +63,14 @@ class TopicOpinion extends React.Component {
         this.props.searchState({data:true});
         clearTimeout( this.topichomeTimer);
     }
-    componentWillMount(){
+    componentDidMount(){
+        //  this.props.topicNavMessageRequested(new Date()).then( () => {
+        //         console.log(123)
+        //  })
          this.props.topicNavMessageRequested(new Date());
          this.topichomeTimer = setTimeout( ()=>{
           let topicMessage=this.props.topicNavMessageSucceededState;
+          console.log(topicMessage)
           if(topicMessage!==1){
             let firstTopicid={topicid:1,topicname:'test'};
             topicMessage.forEach((item)=>{
@@ -84,7 +88,7 @@ class TopicOpinion extends React.Component {
                 browserHeight:window.innerHeight-140
               })
           }
-          },100)
+          },600)
     }
     // 添加专题
     handleAddTopic() {

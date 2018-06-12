@@ -530,7 +530,7 @@ class AllOpinion extends React.Component {
   }
 
   componentWillMount() {
-    if (this.props.location.search !== "?type=search") {
+    if (this.props.location && this.props.location.search !== "?type=search") {
       this.homepageMore(window.location.hash);
     }
 

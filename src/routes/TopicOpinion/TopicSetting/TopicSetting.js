@@ -177,7 +177,8 @@ class TopicSetting extends React.Component {
            preciseTopicRule:rule
        })
     }
-    handleSubmit(e) {         
+    handleSubmit(e) { 
+          e.preventDefault();        
            let rules;
            if(this.state.addType===3){
                rules=JSON.stringify(this.state.SeniorTopicRule.length===0?
@@ -191,8 +192,12 @@ class TopicSetting extends React.Component {
                rules=JSON.stringify(this.state.preciseTopicRule.length===0?
                 topicData(this.state.topicAlldata.rulearr,this.state.addType):this.state.preciseTopicRule);     
            }
-        e.preventDefault();
-        let topicId=Store.getState().getRouterReducer;
+           let rulelist = JSON.parse(rules)[0];
+           if( rulelist.rule1 ==='' || rulelist.rule2 ==='' || rulelist.rule3 === ''|| rulelist.rule4 === ''){
+            message.success('关键词不能为空');
+             return;
+           }
+        let topicId=Store.getState().getRouterReducer.topicid;
         this.props.form.validateFields((err, values) => {
             if (!err) {
                 if(getSecondTime(this.state.topicbDate)>=getSecondTime(this.state.topiceDate)){
@@ -203,11 +208,11 @@ class TopicSetting extends React.Component {
                     return ;
                 }
             request(api_topic_revise,{
-        	method: 'POST',
+        	   method: 'POST',
             headers: {
                   "Content-Type": "application/x-www-form-urlencoded"
             },
-            body:`action=editTopic&topicid=${topicId}&addtype=${this.state.addtype}&begin=${this.state.topicbDate}&end=${this.state.topiceDate}&bind=${this.state.checked}&tname=${this.state.topicNameValue}&catid=${this.state.select}&rule=${encodeURIComponent(rules)}`
+            body:`action=editTopic&topicid=${topicId.topicid}&addtype=${this.state.addtype}&begin=${this.state.topicbDate}&end=${this.state.topiceDate}&bind=${this.state.checked}&tname=${this.state.topicNameValue}&catid=${this.state.select}&rule=${encodeURIComponent(rules)}`
         }).then((res) => {
         	if(res.data.code===1){
                   message.success('关键词修改成功');
@@ -218,9 +223,7 @@ class TopicSetting extends React.Component {
         	}
         })
          }               
-        });
-
-      	
+        }); 	
     }
     onChange(checked){
     	   this.setState({checked:checked===true?1:0})
