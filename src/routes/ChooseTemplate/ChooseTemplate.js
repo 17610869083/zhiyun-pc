@@ -9,7 +9,7 @@ class ChooseTemplate extends React.Component{
         this.state = {
             reportType:['全部','专报','日报'],
             typeIndex:0,
-            contentList:['全部','专报','日报']
+            contentList:[]
         }
     }
     checkType (index) {
@@ -20,10 +20,13 @@ class ChooseTemplate extends React.Component{
     checkTemplate () {
     }
     componentWillMount(){
-        
         request(api_get_all_report)
         .then( res => {
-              console.log(res.data)
+            if(res.data.code === 1){
+            this.setState({
+                contentList: res.data.data.content 
+            })  
+        }
         })
     }
     render(){
@@ -34,7 +37,7 @@ class ChooseTemplate extends React.Component{
                >{item}</li>
     });
     const contentList = this.state.contentList.map((item,index) => {
-        return <li key={index} onDoubleClick = {this.checkTemplate.bind(this)}>{item}</li>
+        return <li key={index} onDoubleClick = {this.checkTemplate.bind(this)}>{item.reportName}</li>
     })
          return (
              <div className="choose-template">
