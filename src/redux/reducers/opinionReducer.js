@@ -96,7 +96,7 @@ const getMaterialOpinionDetailRequestedReducer = handleAction(GET_MATERIAL_OPINI
 }), "1");
 const getMaterialOpinionDetailSucceededReducer = handleAction(GET_MATERIAL_OPINION_DETAIL_SUCCEEDED, (state, action) => ({
   data: action.payload
-}), {data: {docList: [], pageInfo: {rowcount: 3, page: 1}}});
+}), {data: {result:[{datelist: [], ctaname: ''}]}});
 
 // 获取收藏夹列表
 const getCollectionOpinionListRequested = handleAction(GET_COLLECTION_OPINION_LIST_REQUESTED, (state, action) => ({

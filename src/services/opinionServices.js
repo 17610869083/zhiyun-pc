@@ -46,10 +46,6 @@ const apiSetOpinionType = (param) => {
 };
 
 
-const apiGetMaterialOpinionList = () => {
-    return request(api_material_opinion_list)
-};
-
 
 const apiGetTopicLocation = (param) => {
     return request(api_topic_message,{
@@ -71,8 +67,13 @@ const apiGetTopicLocation = (param) => {
     })
   };
 
+  const apiGetMaterialOpinionList = () => {
+    return request(api_material_opinion_list)
+  };
+
 // 获取素材库素材详细信息
 const apiGetMaterialOpinionDetail = (param) => {
+	console.log(param);
     return request(api_material_opinion_detail,{
         method: 'POST',
         headers: {

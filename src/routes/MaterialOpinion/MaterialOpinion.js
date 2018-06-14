@@ -50,6 +50,7 @@ const Option = Select.Option;
 const confirm = Modal.confirm;
 const FormItem = Form.Item;
 const InputGroup = Input.Group;
+// const Dragger = Upload.Dragger;
 
 class MaterialOpinion extends React.Component {
 	constructor() {
@@ -94,6 +95,13 @@ class MaterialOpinion extends React.Component {
 			type: 0
 		};
 	}
+
+	// componentWillReceiveProps(nextProps) {
+	// 	console.log(nextProps);
+	// 	if (nextProps.docList === []) {
+	// 		message.warning("没有选择分类");
+	// 	}
+	// }
 	// 拖拽
 	handleSort(data) {
 		this.setState({
@@ -151,9 +159,9 @@ class MaterialOpinion extends React.Component {
 
 	// --------------在素材库内搜索
 	handleSearchBtn(keyword) {
-		console.log(keyword);
+		// console.log(this.props.docList);
 		if (keyword !== '') {
-			this.props.getMaterialOpinionDetailRequested(`${this.state.current}&q=${keyword}`);
+			this.props.getMaterialOpinionDetailRequested(`${this.state.current}&pagesize=${this.state.pageSize}&q=${keyword}`);
 		}
 	}
 
@@ -198,22 +206,30 @@ class MaterialOpinion extends React.Component {
 	// -----------------移除多项
 	checkedTrue() {
 		const arr = [];
-		this.props.docList.forEach((item, index) => {
-			if (this.state.arr[index] === true && item.sid) {
-				arr.push(item.sid);
-			}
-		});
+		this.props.datelist.map(item => {
+			item.datelist.map(items => {
+				items.doclist.forEach((i, index) => {
+					if (this.state.arr[index] === true && i.sid) {
+						arr.push(i.sid);
+					}
+				});
+			})
+		})
+
 
 		return arr;
 	}
 	checkedIdTrue() {
 		const arr = [];
-		this.props.docList.forEach((item, index) => {
-			if (this.state.arr[index] === true && item.id) {
-				arr.push(item.id);
-			}
-		});
-
+		this.props.datelist.map(item => {
+			item.datelist.map(items => {
+				items.doclist.forEach((i, index) => {
+					if (this.state.arr[index] === true && i.id) {
+						arr.push(i.id);
+					}
+				});
+			})
+		})
 		return arr;
 	}
 	showRemoveModal() {
@@ -225,6 +241,7 @@ class MaterialOpinion extends React.Component {
 		})
 	}
 	showAddModal() {
+		console.log('11')
 		this.setState({
 			addModalVisible: true,
 			visibleFile: true
@@ -299,7 +316,7 @@ class MaterialOpinion extends React.Component {
 	// 分页
 	onPaginationChange(page) {
 		if (page !== '') {
-			this.props.getMaterialOpinionDetailRequested(`${this.state.current}&page=${page}&pagesize=${this.state.pageSize}`);
+			this.props.getMaterialOpinionDetailRequested(`${this.state.materialList[0]['id']}&page=${page}&pagesize=${this.state.pageSize}`);
 			this.setState({
 				currentPage: page,
 				arr: new Array(40).fill(false),
@@ -311,11 +328,14 @@ class MaterialOpinion extends React.Component {
 	// 每页显示数量
 	// 每页显示数量
 	onShowSizeChange(current, pageSize) {
-		this.props.getMaterialOpinionDetailRequested(`${this.state.current}&page=${this.state.currentPage}&pagesize=${pageSize}`);
+		console.log(current);
+
+		this.props.getMaterialOpinionDetailRequested(`${this.state.materialList[0]['id']}&page=${this.state.currentPage}&pagesize=${pageSize}`);
 		this.setState({ pageSize: pageSize })
 	}
 
 	componentWillMount() {
+		console.log(this.props);
 		request(api_material_opinion_list)
 			.then(res => {
 				if (res.data) {
@@ -325,9 +345,7 @@ class MaterialOpinion extends React.Component {
 					this.props.getMaterialOpinionDetailRequested(res.data.reportCatList[0]['id']);
 				}
 			})
-		const { materialList } = this.props;
 		this.setState({
-			current: materialList[0]['id'],
 			browserHeight: window.innerHeight - 140
 		})
 	}
@@ -614,6 +632,7 @@ class MaterialOpinion extends React.Component {
     })
   }
 	render() {
+		console.log(this.props.datelist)
 		const { pageInfo, reportData } = this.props;
 		const { getFieldDecorator } = this.props.form;
 		const formItemLayout = {
@@ -627,15 +646,15 @@ class MaterialOpinion extends React.Component {
 			},
 		};
 		// 单条舆情加入简报
-		const addReportMenu = (
-			<Menu onClick={this.handleAddReportMenu.bind(this)}>
-				{
-					reportData ? reportData.map(item =>
-						<Menu.Item key={item.id}>{item.name}</Menu.Item>
-					) : <Menu.Item key="0">默认简报</Menu.Item>
-				}
-			</Menu>
-		);
+		// const addReportMenu = (
+		// 	<Menu onClick={this.handleAddReportMenu.bind(this)}>
+		// 		{
+		// 			reportData ? reportData.map(item =>
+		// 				<Menu.Item key={item.id}>{item.name}</Menu.Item>
+		// 			) : <Menu.Item key="0">默认简报</Menu.Item>
+		// 		}
+		// 	</Menu>
+		// );
 
 		// 收藏夹的目录
 		// const collectionMenu = (
@@ -662,99 +681,104 @@ class MaterialOpinion extends React.Component {
 				}
 			</Menu>
 		);
-
-
-		const docList = this.props.docList ? this.props.docList : [{ carry: '新闻' }];
-		const OpinionDetailItems = docList.length !== 0 ? docList.map((item, index) => 
-			<div key={item.id}>
-			  <div className="item_file" style={{ height: 25, background: "#f7f7f7", borderBottom: "1px solid #fff" }}>{item.adddate}</div>			
-			  <div className="item_time" style={{ height: 25, paddingLeft: 40, background: "#f7f7f7" }}>{item.adddate}</div>
-				<li key={item.sid} className="opinion-detail-item">
-					<Checkbox
-						checked={this.state.arr[index]}
-						onChange={this.onChange.bind(this, index)}
-					/>
-					<div className="item-top">
-						<div className="content">
-							<div className="negative">
-								<div className="inner-type" style={opinionColor(item.negative)}>
-									{opinionTrend(item.negative)}
-								</div>
-							</div>
-							<div className="title" title={item.title} onClick={this.clickItemTitle.bind(this, item.sid)}>
-								{item.title !== undefined && item.title.length > 58 ? item.title.slice(0, 58) + '...' : item.title}
-							</div>
+		const datelist = this.props.datelist ? this.props.datelist : [{ carry: '新闻' }];
+		const OpinionDetailItems = datelist.length !== 0 ? datelist.map((item, index) => 
+			<div key={index}>
+				<div className="item_file" style={{ background: "#f7f7f7", paddingLeft: 12, borderBottom: "1px solid #fff" }}>
+					< Iconfont type="icon-wenjianjia" style={{ width: 15, height: 15, marginRight: 30 }} />
+				  {item.catname}
+				</div>
+			  {
+					item.datelist.map((i, indexdate) => 
+						<div className="item_time" key={indexdate} style={{ background: "#f7f7f7" }}>
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						  {i.datetime}
+							<ul className="opinion-detail-wrapper">
+								{  
+									i.doclist.map((items, indexDoc) => 
+									  <li key={items.sid} className="opinion-detail-item">
+											<Checkbox
+												checked={this.state.arr[indexDoc]}
+												onChange={this.onChange.bind(this, indexDoc)}
+											/>
+											<div className="item-top">
+												<div className="content">
+													<div className="negative">
+														<div className="inner-type" style={opinionColor(items.negative)}>
+															{opinionTrend(items.negative)}
+														</div>
+													</div>
+													<div className="title" title={items.title} onClick={this.clickItemTitle.bind(this, items.sid)}>
+														{items.title !== undefined && items.title.length > 58 ? items.title.slice(0, 58) + '...' : items.title}
+													</div>
+												</div>
+												<div className="icon" style={{ cursor: "pointer", width: 38, height: 38, margin: "10px 15px" }}>
+													<img src={this.state.carryAll[items.carry]}
+														alt=""
+														className="carryImg"
+														style={{ cursor: "pointer", width: 38, height: 38, display: "block" }}/>
+												</div>
+												<p className="docsummary" style={{ marginLeft: 67, marginTop: -50 }}>{items.docsummary}</p>						
+												<div className="item-bottom">
+													<div className="time" style={{ color: "#ccc", marginLeft: 25 }}>
+											      {new Date(items.pubdate.time).toLocaleString()}
+													</div>
+													<div className="resource">
+														<a href="">
+															<span className="source">{items.source}</span>
+														</a>
+													</div>
+													<div className="keywords" style={{ paddingLeft: 25, color: "#ccc" }}>
+														关键词: <span className="source" style={{ color: "red" }}>{items.dockeywords}</span>
+													</div>
+												</div>
+											</div>
+											<div className="item-middle">
+												<div className="right">
+													<div className="base-operate">
+														<Tooltip title="从素材库移除">
+															<i
+																aria-hidden="true"
+																onClick={this.deleteThisFormMaterial.bind(this, items.id)}
+															>
+																< Iconfont type="icon-shanchu1-copy" style={{ width: 20, height: 20 }} />
+															</i>
+														</Tooltip>
+														<Tooltip title='收藏'>
+															<Dropdown
+																overlay={
+																	<Menu onClick={this.collectionlConfirm.bind(this, items.sid)}>
+																		{
+																			this.props.favCatList.map(iq =>
+																				<Menu.Item key={iq.id}>
+																					<Icon type="folder"/>
+																					<span>{iq.catname}</span>
+																				</Menu.Item>
+																			)
+																		}
+																	</Menu>
+																}
+																trigger={['click']}
+																getPopupContainer={() => document.querySelector('.opinion-detail-item')}
+															>
+																<i
+																	aria-hidden="true"
+																	onClick={this.props.getCollectionOpinionListRequested.bind(this)}
+																>
+																	< Iconfont type="icon-shoucang" style={{ width: 17, height: 17, marginBottom: 2, marginLeft: 20 }} />
+																</i>
+															</Dropdown>
+														</Tooltip>
+													</div>
+												</div>
+											</div>
+										</li>
+									)
+								}
+							</ul>
 						</div>
-						<div className="icon" style={{ cursor: "pointer", width: 38, height: 38, margin: "10px 15px" }}>
-							<img src={this.state.carryAll[item.carry]}
-								alt=""
-								className="carryImg"
-								style={{ cursor: "pointer", width: 38, height: 38, display: "block" }}/>
-						</div>
-						<p className="docsummary" style={{ marginLeft: 67, marginTop: -50 }}>{item.docsummary}</p>						
-						<div className="item-bottom">
-							<div className="time" style={{ color: "#ccc", marginLeft: 25 }}>
-								<span className="source">{new Date(item.pubdate.time).toLocaleString()}</span>
-							</div>
-							<div className="resource">
-								<a href="">
-									<span className="source">{item.source}</span>
-								</a>
-							</div>
-							<div className="keywords" style={{ paddingLeft: 25, color: "#ccc" }}>
-								关键词: <span className="source" style={{ color: "red" }}>{item.dockeywords}</span>
-							</div>
-						</div>
-					</div>
-					<div className="item-middle">
-						<div className="right">
-							<div className="base-operate">
-								{/* <Tooltip title="加入简报">
-									<Dropdown overlay={addReportMenu} trigger={['click']}
-										getPopupContainer={() => document.querySelector('.materia-opinion-wrapper')}
-									>
-										<i className="fa fa-file-text" aria-hidden="true"
-											onClick={this.getReportOpinionList.bind(this, item.sid)}
-										/>
-									</Dropdown>
-								</Tooltip> */}
-								<Tooltip title="从素材库移除">
-									<i
-										aria-hidden="true"
-										onClick={this.deleteThisFormMaterial.bind(this, item.id)}
-									>
-										< Iconfont type="icon-shanchu1-copy" style={{ width: 20, height: 20 }} />
-									</i>
-								</Tooltip>
-								<Tooltip title='收藏'>
-									<Dropdown
-									  overlay={
-											<Menu onClick={this.collectionlConfirm.bind(this, item.sid)}>
-												{
-													this.props.favCatList.map(i =>
-														<Menu.Item key={i.id}>
-															<Icon type="folder"/>
-															<span>{i.catname}</span>
-														</Menu.Item>
-													)
-												}
-											</Menu>
-										}
-										trigger={['click']}
-										getPopupContainer={() => document.querySelector('.opinion-detail-item')}
-									>
-										<i
-											aria-hidden="true"
-											onClick={this.props.getCollectionOpinionListRequested.bind(this)}
-										>
-											< Iconfont type="icon-shoucang" style={{ width: 17, height: 17, marginBottom: 2, marginLeft: 20 }} />
-										</i>
-									</Dropdown>
-                </Tooltip>
-							</div>
-						</div>
-					</div>
-				</li>
+				  )
+				}
 			</div>				
 		) : <BlankPage desc='暂无信息，请在汇总舆情内加入相应信息' />;
 
@@ -785,7 +809,14 @@ class MaterialOpinion extends React.Component {
 									>全选</Checkbox>
 								</div>
 								<div className="operate-all">
-									<span onClick={this.showRemoveModal.bind(this)} style={{ color: BLACK }}>移出素材库</span>
+									<Tooltip title="从素材库移除">
+										<i
+											aria-hidden="true"
+											onClick={this.showRemoveModal.bind(this)}
+										>
+											<Iconfont type="icon-shanchu1-copy-copy" style={{ width: 17, height: 17 }} />
+										</i>
+									</Tooltip>
 									<Modal
 										title="移出素材库"
 										visible={this.state.removeModalVisible}
@@ -799,11 +830,18 @@ class MaterialOpinion extends React.Component {
 									<Dropdown overlay={addMultipleReportMenu} trigger={['click']}
 										getPopupContainer={() => document.querySelector('.materia-opinion-wrapper')}
 									>
-										<span style={{ color: BLACK }}>生成报告</span>
+										<Iconfont type="icon-shengchengbaogao1" style={{ width: 17, height: 17 }} />
 									</Dropdown>
 								</div>
 								<div className="operate-all">
-									<span onClick={() => this.showAddModal(true)} style={{ color: BLACK }}>舆情录入</span>
+									<Tooltip title="从素材库移除">
+										<i
+											aria-hidden="true"
+											onClick={this.showAddModal.bind(this, true)}
+										>
+										<Iconfont type="icon-zongliangluru" style={{ width: 17, height: 17 }} />
+										</i>
+									</Tooltip>
 									<Modal
 										width={1100}
 										footer={null}
@@ -843,13 +881,6 @@ class MaterialOpinion extends React.Component {
 									</Tooltip>
 								</div>
 							</div>
-							{/* <div className="right">
-								<Search
-									style={{ width: '260px', marginRight: '20px' }}
-									placeholder="搜索标题，文章内容"
-									onSearch={this.handleSearchBtn.bind(this)}
-								/>
-							</div> */}
 							<div className="inputSearch">
 								<div className="right">
 									<InputGroup compact>
@@ -893,9 +924,7 @@ class MaterialOpinion extends React.Component {
 							</div>
 						</div>
 						<div className="bottom" >
-							<ul className="opinion-detail-wrapper">
-								{this.props.docList ? OpinionDetailItems : <div>暂无数据！</div>}
-							</ul>
+							{this.props.datelist ? OpinionDetailItems : <div>暂无数据！</div>}
 						</div>
 						<div className="pagintion-wrapper">
 							<Pagination showSizeChanger
@@ -903,7 +932,7 @@ class MaterialOpinion extends React.Component {
 								defaultCurrent={1}
 								defaultPageSize={20}
 								onChange={this.onPaginationChange.bind(this)}
-								onShowSizeChange={this.onShowSizeChange.bind(this)}
+								onShowSizeChange={this.onShowSizeChange.bind(this, this.state.current)}
 								total={pageInfo === undefined ? 0 : pageInfo.rowcount}
 								current={parseInt(pageInfo === undefined ? 0 : pageInfo.page, 10)}
 								getPopupContainer={() => document.querySelector('.materia-opinion-wrapper')}
@@ -914,8 +943,10 @@ class MaterialOpinion extends React.Component {
 						<div className="first-box">
 							<div className="top" style={{ background: GRAY }}>
 								<div className="sucai">
-									<div style={{ textAlign: "left" }}>素材文件夹</div>
-									<div onClick={this.showAddMaterial.bind(this)} style={{ marginTop: -40, textAlign: "right", marginRight: 10 }}>+添加文件夹</div>
+									<div style={{ textAlign: "left" }}>&nbsp;&nbsp;素材文件夹</div>
+									<div onClick={this.showAddMaterial.bind(this)} style={{ marginTop: -40, textAlign: "right", marginRight: 7 }}>
+										<Iconfont type="icon-tianjiawenjianjia" style={{ width: 18, height: 18 }} />
+									</div>
 								</div>
                 <Modal
 									title="新增素材库"
@@ -961,7 +992,6 @@ class MaterialOpinion extends React.Component {
 															</Dropdown> : null
 													}
 												</span>
-												{/* <i onClick={this.onClickTopList.bind(this, item.catid)}><Icon  type="arrow-up" style={{ color: '#000' }} /></i>												 */}
 											</li>
 										)
 									}
@@ -991,7 +1021,7 @@ class MaterialOpinion extends React.Component {
 
 const mapStateToProps = state => {
 	return {
-		docList: state.getMaterialOpinionDetailSucceededReducer.data.docList,
+		datelist: state.getMaterialOpinionDetailSucceededReducer.data.result,
 		pageInfo: state.getMaterialOpinionDetailSucceededReducer.data.pageinfo,
 		materialList: state.getMaterialOpinionListSucceededReducer.data.reportCatList,
 		reportData: state.getReportListSucceeded.data,
