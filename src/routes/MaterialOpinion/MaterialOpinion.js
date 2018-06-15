@@ -92,7 +92,8 @@ class MaterialOpinion extends React.Component {
 			searchInputValue: '',
 			visibleFile: false,
 			checkedArray: new Array(40).fill(false),
-			type: 0
+			type: 0,
+			array: []
 		};
 	}
 
@@ -161,7 +162,7 @@ class MaterialOpinion extends React.Component {
 	handleSearchBtn(keyword) {
 		// console.log(this.props.docList);
 		if (keyword !== '') {
-			this.props.getMaterialOpinionDetailRequested(`${this.state.current}&pagesize=${this.state.pageSize}&q=${keyword}`);
+			this.props.getMaterialOpinionDetailRequested(`${this.state.materialList[0]['id']}&pagesize=${this.state.pageSize}&q=${keyword}`);
 		}
 	}
 
@@ -186,7 +187,6 @@ class MaterialOpinion extends React.Component {
 
 	// 删除单项
 	deleteThisFormMaterial(itemId) {
-		const current = this.state.current;
 		const getDetail = this.props.getMaterialOpinionDetailRequested;
 		confirm({
 			title: '确定将这条舆情移出素材库?',
@@ -194,8 +194,8 @@ class MaterialOpinion extends React.Component {
 			onOk() {
 				request(api_del_doc_from_cat + '&id=[' + itemId + ']', {}).then((res) => {
 					if (res.data.code === 1) {
+						getDetail(itemId);
 						message.success(res.data.msg);
-						getDetail(current);
 					}
 				});
 			}
@@ -206,30 +206,28 @@ class MaterialOpinion extends React.Component {
 	// -----------------移除多项
 	checkedTrue() {
 		const arr = [];
-		this.props.datelist.map(item => {
-			item.datelist.map(items => {
+		this.props.datelist.map(item => 
+			item.datelist.map(items => 
 				items.doclist.forEach((i, index) => {
-					if (this.state.arr[index] === true && i.sid) {
+					if (this.state.array[i.sid] === true && i.sid) {
 						arr.push(i.sid);
-					}
-				});
-			})
-		})
-
-
+					}				
+				})
+			)
+		)
 		return arr;
 	}
 	checkedIdTrue() {
 		const arr = [];
-		this.props.datelist.map(item => {
-			item.datelist.map(items => {
+		this.props.datelist.map(item => 
+			item.datelist.map(items => 
 				items.doclist.forEach((i, index) => {
-					if (this.state.arr[index] === true && i.id) {
+					if (this.state.array[i.sid] === true && i.id) {
 						arr.push(i.id);
 					}
-				});
-			})
-		})
+				})
+			)
+		)
 		return arr;
 	}
 	showRemoveModal() {
@@ -241,7 +239,6 @@ class MaterialOpinion extends React.Component {
 		})
 	}
 	showAddModal() {
-		console.log('11')
 		this.setState({
 			addModalVisible: true,
 			visibleFile: true
@@ -251,14 +248,14 @@ class MaterialOpinion extends React.Component {
 		const arr = this.checkedIdTrue();
 		const size = arr.length;
 		const getMaterialDetail = this.props.getMaterialOpinionDetailRequested;
-		const current = this.state.current;
+		// const current = this.state.current;
 		if (size === 0) {
 			message.warning("至少选择一项！");
 		} else {
 			const sidList = JSON.stringify(arr);
 			request(api_del_doc_from_cat + '&id=' + sidList, {}).then((res) => {
 				if (res.data.code === 1) {
-					getMaterialDetail(current);
+					getMaterialDetail(this.state.materialList[0]['id']);
 					message.success(res.data.msg);
 					this.setState({
 						checkedAll: false,
@@ -328,14 +325,11 @@ class MaterialOpinion extends React.Component {
 	// 每页显示数量
 	// 每页显示数量
 	onShowSizeChange(current, pageSize) {
-		console.log(current);
-
 		this.props.getMaterialOpinionDetailRequested(`${this.state.materialList[0]['id']}&page=${this.state.currentPage}&pagesize=${pageSize}`);
 		this.setState({ pageSize: pageSize })
 	}
 
 	componentWillMount() {
-		console.log(this.props);
 		request(api_material_opinion_list)
 			.then(res => {
 				if (res.data) {
@@ -362,13 +356,13 @@ class MaterialOpinion extends React.Component {
 
 	// ---------单选与全选
 	onChange(index, e) {
-		const arr = this.state.arr;
+		const arr = this.state.array;
 		arr[index] = e.target.checked;
 		const isEveryChecked = arr.every(item => {
 			return (item === true);
 		});
 		this.setState({
-			arr: arr,
+			array: arr,
 			checkedAll: isEveryChecked
 		});
 		if (this.props.getSids !== undefined) {
@@ -376,12 +370,15 @@ class MaterialOpinion extends React.Component {
 		}
 	}
 	onAllChange(e) {
-		const arr = this.state.arr.fill(e.target.checked);
+		debugger
+		const arr = this.state.array.fill(e.target.checked);
+		console.log(arr);
 		this.setState({
 			checkedAll: e.target.checked,
-			arr: arr
+			array: arr
 		});
 		if (this.props.getSids !== undefined) {
+			debugger
 			this.props.getSids(this.checkedTrue())
 		}
 	}
@@ -470,7 +467,6 @@ class MaterialOpinion extends React.Component {
 
 	 // 搜索内容
 	handleSearchChange(value) {
-		console.log(value);
     this.setState({
       seltype: value
 		});
@@ -503,7 +499,6 @@ class MaterialOpinion extends React.Component {
   }
 
 	searchInput(e) {
-		console.log(this.props);
     const {value} = e.target;
     if (value === '') {
       this.searchType(0);
@@ -519,7 +514,6 @@ class MaterialOpinion extends React.Component {
   }
 	
 	keyDown(e){
-		console.log(this.state.seltype, e);		
 		if(e.keyCode === 13){
 			this.setState({
 				opinionVisible: true
@@ -533,14 +527,12 @@ class MaterialOpinion extends React.Component {
 				carry:'全部',
 				page:1
 			};
-		console.log(this.state.seltype);			
 			this.props.opinionSearchRequest(param);
 			this.props.searchKeywordSync({
 				seltype: this.state.seltype,
 				keyword: this.state.searchInputValue,
 				type: 0
 			});
-		  console.log(this.props);		 
 		  this.props.paginationPage(1);
 		  if (this.props.propsType === 'AllopinionList') {
 			  this.searchType(1);
@@ -605,12 +597,12 @@ class MaterialOpinion extends React.Component {
 	// 推送到收藏夹
 	putIntoCollection(e) {
 		const collectionId = e.key;
-		const arr = this.checkedTrue();
-		const size = arr.length;
+		const array = this.checkedTrue();
+		const size = array.length;
 		if (size === 0) {
 			message.warning("至少选择一项！");
 		} else {
-			const sidList = JSON.stringify(arr);
+			const sidList = JSON.stringify(array);
 			request(api_res_fav_cat + '&newcatid=' + collectionId + '&id=' + sidList, {}).then((res) => {
 				if (res.data.code === "2") {
 					message.success(res.data.msg);
@@ -632,7 +624,6 @@ class MaterialOpinion extends React.Component {
     })
   }
 	render() {
-		console.log(this.props.datelist)
 		const { pageInfo, reportData } = this.props;
 		const { getFieldDecorator } = this.props.form;
 		const formItemLayout = {
@@ -698,8 +689,8 @@ class MaterialOpinion extends React.Component {
 									i.doclist.map((items, indexDoc) => 
 									  <li key={items.sid} className="opinion-detail-item">
 											<Checkbox
-												checked={this.state.arr[indexDoc]}
-												onChange={this.onChange.bind(this, indexDoc)}
+												checked={this.state.array[items.sid]}
+												onChange={this.onChange.bind(this, items.sid)}
 											/>
 											<div className="item-top">
 												<div className="content">
@@ -834,7 +825,7 @@ class MaterialOpinion extends React.Component {
 									</Dropdown>
 								</div>
 								<div className="operate-all">
-									<Tooltip title="从素材库移除">
+									<Tooltip title="舆情录入">
 										<i
 											aria-hidden="true"
 											onClick={this.showAddModal.bind(this, true)}
@@ -932,9 +923,9 @@ class MaterialOpinion extends React.Component {
 								defaultCurrent={1}
 								defaultPageSize={20}
 								onChange={this.onPaginationChange.bind(this)}
-								onShowSizeChange={this.onShowSizeChange.bind(this, this.state.current)}
+								onShowSizeChange={this.onShowSizeChange.bind(this)}
 								total={pageInfo === undefined ? 0 : pageInfo.rowcount}
-								current={parseInt(pageInfo === undefined ? 0 : pageInfo.page, 10)}
+								current={this.state.currentPage}
 								getPopupContainer={() => document.querySelector('.materia-opinion-wrapper')}
 							/>
 						</div>
@@ -977,7 +968,7 @@ class MaterialOpinion extends React.Component {
 								<ul className="material-list">
 									{
 										this.state.materialList.map((item, index) =>
-											<li key={item.id} className={this.state.materialCurrent === index ? 'material-list-item-active' : 'material-list-item'}>
+											<li key={index} className={this.state.materialCurrent === index ? 'material-list-item-active' : 'material-list-item'}>
 												<span className="material-name"
 													onClick={this.handleMeterialNavigation.bind(this, item.id, index)}
 													title={item.catname}
