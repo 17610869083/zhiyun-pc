@@ -202,9 +202,13 @@ class SortedOpinion extends React.Component {
     this.props.searchState({data: true});
     // clearTimeout(this.sortTimer);
   }
-  componentWillMount() {
+  componentDidMount() {
+    if (history.location.pathname === '/sortedopinion/list') {
+      this.setState({current: 'sortlist'});
+    }
     this.props.getSortedMenuRequested();
     this.sortTimer = setTimeout(() => { 
+      console.log(this.props.sortedMenu)
     let firstClf = {};
     for (let i = 0; i < this.props.sortedMenu.length; i++) {
       if (this.props.sortedMenu[i]['clflist'][0] !== undefined) {
@@ -226,12 +230,7 @@ class SortedOpinion extends React.Component {
         clfid: firstClf.clfid
       }
       this.props.getSortedContentRequested(param);
-    }, 200)
-  }
-  componentDidMount() {
-    if (history.location.pathname === '/sortedopinion/list') {
-      this.setState({current: 'sortlist'});
-    }
+    }, 1000)
   }
   triggerTopShow() {
     this.setState({

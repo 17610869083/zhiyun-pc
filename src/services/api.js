@@ -32,7 +32,6 @@ const api_new_total = host + 'echart/echartDo?action=yqzc';
 const api_hot_word = host+'echart/echartDo?action=getHotJson';
 // 昨日和今日舆情
 const api_today_opinion = host + 'main/DocSearchDo?action=mainCountDay';
-
 // 热搜媒体排行，对应折线图
 const api_media_opinion = host + 'echart/echartDo?action=yqzc_month_Chart';
 // 热搜媒体排行旁边的舆情统计
@@ -41,10 +40,8 @@ const api_media_count = host + 'echart/echartDo?action=zfmtjChart';
 const api_carrier_pie = host + '/echart/echartDo?action=ztfb';
 // 最新舆情
 const api_newest_opinion = host + 'homePage/docSearchListDo?action=getDocListEchart';
-
 // 最新负面舆情
 const api_newest_negative_opinion = host + 'main/DocSearchDo?action=mainNegation';
-
 // 微博舆情
 const api_weibo_opinion = host + 'main/DocSearchDo?action=mainWeibo';
 
@@ -59,7 +56,6 @@ const api_topic_opinion = host + 'oTopic/TopicEchartDo?action=getTopicMenu';
 
 // 新专题舆情
 const api_main_topic_opinion = host + 'oTopic/TopicEchartDo?action=mainTopic';
-
 
 // 舆情总览
 const api_total_opinion = host + 'main/DocSearchDo?action=docList';
@@ -351,3 +347,7 @@ export const api_update_eamil_push_state=host+'mail/EmailDo?action=updateEamilPu
 export const api_del_report=host+'oWork/reportDo?action=delReport' ;
 //导出细分接口
 export const api_export_small=host+'exp/ExportData?action=getListBySource';
+//报告列表页
+export const api_get_all_report = host + 'Report?action=getAllReport';
+//报告模板
+export const api_get_template_report = host + 'reportDo?action=getAllForm';

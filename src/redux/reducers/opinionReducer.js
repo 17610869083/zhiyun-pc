@@ -157,7 +157,7 @@ export const getSortedMenuSucceeded = handleAction(GET_SORTED_MENU_SUCCEEDED, (s
       clflist: [
         {
           clfid: 1250,
-          clfname: "领导",
+          clfname: "",
           typeId: 222,
           addtype: 2
         }

@@ -469,3 +469,11 @@ export function homeModuleList (data){
          }
         return listArr;
 }
+// 专题图表设置图例
+export function topicLengend (data){
+      let legend = [] ;
+      data.forEach( item => {
+        legend.push(item.name)
+      })
+      return legend;
+}

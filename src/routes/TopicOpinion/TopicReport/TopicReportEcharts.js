@@ -11,6 +11,7 @@ import 'echarts/lib/chart/pie';
 import 'echarts/lib/chart/pictorialBar';
 import 'echarts/lib/component/tooltip';
 import 'echarts/lib/component/toolbox';
+import 'echarts/lib/component/legend';
 import request from '../../../utils/request';
 import {api_topic_table,api_topic_timeline,api_topic_global,api_topic_trendOption,api_topic_mediaType,
     api_topic_mediaSite,api_topic_mediaTypeTrend,api_topic_negativeMedia,
@@ -18,7 +19,7 @@ import {api_topic_table,api_topic_timeline,api_topic_global,api_topic_trendOptio
 } from '../../../services/api';
 import Store from '../../../redux/store/index';
 import {history} from '../../../utils/history';
-import {objectToURL} from '../../../utils/format';
+import {objectToURL,topicLengend} from '../../../utils/format';
 class TopicReportEcharts extends React.Component {
     constructor() {
         super();
@@ -41,20 +42,20 @@ class TopicReportEcharts extends React.Component {
             }
         }
         componentDidMount(){
-            if(typeof Store.getState().getRouterReducer!=='object'){
+            if( Store.getState().getRouterReducer.topicid){
              let topicID= Store.getState().getRouterReducer;
               request(api_topic_table,{
                      method:'POST',
                      headers: {
                         "Content-Type": "application/x-www-form-urlencoded"
                      },
-                     body:`topicid=${topicID}`
+                     body:`topicid=${topicID.topicid}`
               }).then(res=>{           
                     if(res.data){
                         this.setState({
                             todayData:res.data[0],
                             totalData:res.data[1],
-                            topicId:topicID
+                            topicId:topicID.topicid
                         })
                     }
                     
@@ -64,7 +65,7 @@ class TopicReportEcharts extends React.Component {
                 headers: {
                    "Content-Type": "application/x-www-form-urlencoded"
                 },
-                body:`topicid=${topicID}`
+                body:`topicid=${topicID.topicid}`
                 }).then(res=>{
                      this.setState({
                         timelineArr:res.data.line
@@ -76,7 +77,7 @@ class TopicReportEcharts extends React.Component {
                     headers: {
                        "Content-Type": "application/x-www-form-urlencoded"
                     },
-                    body:`topicid=${topicID}`
+                    body:`topicid=${topicID.topicid}`
                     }).then(res=>{
                          if(res.data){
                              this.setState({
@@ -90,7 +91,7 @@ class TopicReportEcharts extends React.Component {
                         headers: {
                            "Content-Type": "application/x-www-form-urlencoded"
                         },
-                        body:`topicid=${topicID}`
+                        body:`topicid=${topicID.topicid}`
                         }).then(res=>{
                             if(res.data){
                                 this.setState({
@@ -104,7 +105,7 @@ class TopicReportEcharts extends React.Component {
                             headers: {
                                "Content-Type": "application/x-www-form-urlencoded"
                             },
-                            body:`topicid=${topicID}`
+                            body:`topicid=${topicID.topicid}`
                             }).then(res=>{
                                 if(res.data){
                                     this.setState({
@@ -118,7 +119,7 @@ class TopicReportEcharts extends React.Component {
                                 headers: {
                                    "Content-Type": "application/x-www-form-urlencoded"
                                 },
-                                body:`topicid=${topicID}`
+                                body:`topicid=${topicID.topicid}`
                                 }).then(res=>{
                                     if(res.data){
                                         this.setState({
@@ -132,7 +133,7 @@ class TopicReportEcharts extends React.Component {
                                     headers: {
                                        "Content-Type": "application/x-www-form-urlencoded"
                                     },
-                                    body:`topicid=${topicID}`
+                                    body:`topicid=${topicID.topicid}`
                                     }).then(res=>{
                                         if(res.data){
                                             this.setState({
@@ -146,7 +147,7 @@ class TopicReportEcharts extends React.Component {
                                         headers: {
                                                "Content-Type": "application/x-www-form-urlencoded"
                                         },
-                                        body:`topicid=${topicID}`
+                                        body:`topicid=${topicID.topicid}`
                                         }).then(res=>{
                                             if(res.data){
                                                 this.setState({
@@ -159,7 +160,7 @@ class TopicReportEcharts extends React.Component {
                                     headers: {
                                            "Content-Type": "application/x-www-form-urlencoded"
                                     },
-                                    body:`topicId=${topicID}`
+                                    body:`topicId=${topicID.topicid}`
                                 }).then(res=>{
                                     if(res.data){
                                         this.setState({
@@ -168,7 +169,7 @@ class TopicReportEcharts extends React.Component {
                                      }
                                      
                                 })
-                                request(api_topic_essay +'&topicId='+topicID).then(res=>{
+                                request(api_topic_essay +'&topicId='+topicID.topicid).then(res=>{
                                     if(res.data){
                                       this.setState({
                                             topicEssay:res.data
@@ -349,7 +350,7 @@ class TopicReportEcharts extends React.Component {
                 }
             },
             legend: {
-                data:[]
+                data:this.state.topicGlobal.series?topicLengend(this.state.topicGlobal.series):[]
             },
             xAxis: [
                 {
@@ -431,9 +432,9 @@ class TopicReportEcharts extends React.Component {
                         show: true
                         },
                 legend: {
-                    orient: 'vertical',
-                    left: 'left',
-                    data: ['直接访问','邮件营销','联盟广告','视频广告','搜索引擎']
+                    orient: 'horizontal',
+                    left: 'center',
+                    data: this.state.trendOptionData.length!==0?topicLengend(this.state.trendOptionData):[]
                 },
                 series : [
                     {
@@ -452,10 +453,7 @@ class TopicReportEcharts extends React.Component {
                     }
                 ]
             };
-            return  trendOption
-
-
-            
+            return  trendOption       
         }
 
         // 专题媒体类型分析
@@ -516,9 +514,9 @@ class TopicReportEcharts extends React.Component {
                         show: true
                         },
                 legend: {
-                    orient: 'vertical',
-                    left: 'left',
-                    data: ['直接访问','邮件营销','联盟广告','视频广告','搜索引擎']
+                    orient: 'horizontal',
+                    left: 'center',
+                    data: this.state.mediaTypeData.length!==0?topicLengend(this.state.mediaTypeData):[],
                 },
                 series : [
                     {
@@ -551,6 +549,9 @@ class TopicReportEcharts extends React.Component {
                         type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
                     }
                 },
+                legend:{
+                  data:this.state.mediaSiteData.series ? topicLengend(this.state.mediaSiteData.series):[]
+               },
                 toolbox: {
                     right:30,
                     feature: {
@@ -627,6 +628,12 @@ class TopicReportEcharts extends React.Component {
         // 专题媒体类型倾向性分布
         mediaTypeTrendOption(){
             const mediaTypeTrendOption = {
+                legend:{
+                    show:true,
+                    orient: 'horizontal',
+                    left: 'center',
+                    data:this.state.mediaTypeTrendData.series?topicLengend(this.state.mediaTypeTrendData.series):[]
+                },
                 title: {
                     text: '',
                     subtext: '',
@@ -709,8 +716,6 @@ class TopicReportEcharts extends React.Component {
                 series:this.state.mediaTypeTrendData.xAxis?this.state.mediaTypeTrendData.series:[]
             };
             return mediaTypeTrendOption;
-
-           
         }
 
 
@@ -806,7 +811,7 @@ class TopicReportEcharts extends React.Component {
                     }
                 },
                 legend: {
-                    data:[]
+                    data:this.state.negativeGlobal.series?topicLengend(this.state.negativeGlobal.series):[]
                 },
                 xAxis: [
                     {
@@ -854,7 +859,7 @@ class TopicReportEcharts extends React.Component {
                     }
                 },
                 legend: {
-                    data:[]
+                    data:this.state.topicEssay.series?topicLengend(this.state.topicEssay.series):[]                    
                 },
                 xAxis: [
                     {
@@ -889,8 +894,7 @@ class TopicReportEcharts extends React.Component {
                       </div>
                     </div>
                     <Row>
-                        <Col span={6}></Col>
-                        <Col span={12}>
+                        <Col span={24}>
                         <div  className="echartsBox"> 
                         <div className="chartTitle">专题倾向性分析</div> 
                             <ReactEchartsCore
@@ -903,8 +907,7 @@ class TopicReportEcharts extends React.Component {
                         </Col>
                     </Row>
                     <Row>
-                        <Col span={6}></Col>
-                        <Col span={12}>
+                        <Col span={24}>
                         <div  className="echartsBox"> 
                         {/* <div className="chartTitle">负面舆情日增趋势</div>  */}
                         <div className="chartTitle">重点舆情日增趋势</div> 
@@ -918,8 +921,7 @@ class TopicReportEcharts extends React.Component {
                         </Col>
                     </Row>
                     <Row>
-                        <Col span={6}></Col>
-                        <Col span={12}>
+                        <Col span={24}>
                         <div  className="echartsBox">
                         <div className="chartTitle">专题文章趋势分析</div> 
                             <ReactEchartsCore
@@ -932,8 +934,7 @@ class TopicReportEcharts extends React.Component {
                         </Col>
                     </Row>
                     <Row>
-                       
-                        <Col span={12}>   
+                        <Col span={24}>   
                             <div  className="echartsBox">                 
                             <div className="chartTitle">专题媒体类型分布</div>
                             <ReactEchartsCore
@@ -944,8 +945,9 @@ class TopicReportEcharts extends React.Component {
                             />
                             </div>
                         </Col>
-                      
-                        <Col span={12}>
+                    </Row>   
+                    <Row> 
+                        <Col span={24}>
                         <div  className="echartsBox">
                         <div className="chartTitle">专题媒体网站分布</div>
                             <ReactEchartsCore
@@ -956,11 +958,9 @@ class TopicReportEcharts extends React.Component {
                             />
                             </div>
                         </Col>
-                    </Row>
-
+                        </Row>
                         <Row>
-                        
-                        <Col span={12}>
+                        <Col span={24}>
                             <div className="echartsBox">
                             <div className="chartTitle" >专题倾向性分析</div>
                             <ReactEchartsCore
@@ -971,7 +971,9 @@ class TopicReportEcharts extends React.Component {
                             />
                             </div>
                         </Col>
-                        <Col span={12}>
+                        </Row>
+                        <Row>
+                        <Col span={24}>
                         <div  className="echartsBox">
                         <div className="chartTitle">专题媒体类型倾向性分析</div> 
                             <ReactEchartsCore
@@ -983,7 +985,6 @@ class TopicReportEcharts extends React.Component {
                             </div> 
                         </Col>
                     </Row>
-
                 <Modal
                   title="下载"
                   visible={this.state.downloadVisible}
