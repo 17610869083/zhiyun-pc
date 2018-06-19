@@ -93,7 +93,8 @@ class MaterialOpinion extends React.Component {
 			visibleFile: false,
 			checkedArray: new Array(40).fill(false),
 			type: 0,
-			array: []
+			array: [],
+			indeterminate: true
 		};
 	}
 
@@ -330,6 +331,7 @@ class MaterialOpinion extends React.Component {
 	}
 
 	componentWillMount() {
+		console.log(this.props);
 		request(api_material_opinion_list)
 			.then(res => {
 				if (res.data) {
@@ -356,6 +358,7 @@ class MaterialOpinion extends React.Component {
 
 	// ---------单选与全选
 	onChange(index, e) {
+		console.log(index)
 		const arr = this.state.array;
 		arr[index] = e.target.checked;
 		const isEveryChecked = arr.every(item => {
@@ -370,17 +373,21 @@ class MaterialOpinion extends React.Component {
 		}
 	}
 	onAllChange(e) {
-		debugger
-		const arr = this.state.array.fill(e.target.checked);
-		console.log(arr);
+		const arr = [];
+		this.props.datelist.map(item => 
+			item.datelist.map(items => 
+				items.doclist.forEach((i, index) => {
+					return arr.push(i.sid);
+				})
+			)
+		)
+		arr.every((item, index) => 
+	    arr[item] = e.target.checked
+		)
 		this.setState({
-			checkedAll: e.target.checked,
-			array: arr
+			array: e.target.checked ? arr : [],
+			checkedAll: e.target.checked
 		});
-		if (this.props.getSids !== undefined) {
-			debugger
-			this.props.getSids(this.checkedTrue())
-		}
 	}
 
 	// -------------列表项编辑和删除
@@ -794,6 +801,7 @@ class MaterialOpinion extends React.Component {
 							<div className="left">
 								<div className="choose-all">
 									<Checkbox
+										// indeterminate={this.state.indeterminate}
 										checked={this.state.checkedAll}
 										onChange={this.onAllChange.bind(this)}
 										className="colors"
