@@ -1,6 +1,6 @@
 import React from 'react';
-import {connect} from 'react-redux';
-import {Checkbox, Icon, Tooltip, Pagination, Input, Menu, Dropdown, Modal, Form,message} from 'antd';
+import { connect } from 'react-redux';
+import { Checkbox, Icon, Tooltip, Pagination, Input, Menu, Dropdown, Modal, Form, message, Select } from 'antd';
 import request from '../../utils/request';
 import {
 	api_add_material_opinion,
@@ -43,8 +43,10 @@ import twitter from '../../assets/icon-img/twitter.png';
 // import Del from '../../assets/img/del.svg';
 import './MaterialOpinion.less';
 import BlankPage from '../../base/Exception/BlankPage';
-import {GRAY} from  '../../utils/colors';
+import { GRAY, BLACK } from '../../utils/colors';
+import Iconfont from '../../components/IconFont'
 const Search = Input.Search;
+const Option = Select.Option;
 const confirm = Modal.confirm;
 const FormItem = Form.Item;
 const InputGroup = Input.Group;
