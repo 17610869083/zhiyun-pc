@@ -5,6 +5,7 @@ import './TodayOpinionBox.less';
 import {api_today_opinion} from '../../services/api';
 import request from '../../utils/request';
 import {GRAY,BLUES} from '../../utils/colors';
+import {history} from '../../utils/history';
 class TodayOpinionBox extends React.PureComponent {
     constructor(){
         super();
@@ -91,6 +92,11 @@ class TodayOpinionBox extends React.PureComponent {
     delTodayOpinionBox(){
             this.props.delTodayBox(1);
     }
+    goAllOpinion(type){
+        history.push({
+            pathname: '/allopinion?datetag=today&neg=' + type
+        });
+    }
     render() {
         const {todayAll,todayWarning,todayNegative,ratio} = this.state;
         return (
@@ -105,7 +111,7 @@ class TodayOpinionBox extends React.PureComponent {
                  {this.state.num}
                      <Row gutter={60}>
                          <Col span={6}>
-                             <div className="opinion-info">
+                             <div className="opinion-info" onClick = {this.goAllOpinion.bind(this,2)}>
                                  <div className="content">
                                      <div className="icon-wrapper" style={{backgroundColor: '#f2a200'}}>
                                          <IconFont type="icon-shandian22-copy" style={{color: '#ffffff',fontSize: '50px'}}/>
@@ -120,7 +126,7 @@ class TodayOpinionBox extends React.PureComponent {
                              </div>
                          </Col>
                          <Col span={6}>
-                             <div className="opinion-info">
+                             <div className="opinion-info"  onClick = {this.goAllOpinion.bind(this,'all')}>
                                  <div className="content">
                                          <div className="icon-wrapper">
                                          <IconFont type="icon-yuqing"
@@ -137,7 +143,7 @@ class TodayOpinionBox extends React.PureComponent {
                              </div>
                          </Col>
                          <Col span={6}>
-                             <div className="opinion-info">
+                             <div className="opinion-info" onClick = {this.goAllOpinion.bind(this,1)}>
                                  <div className="content">
                                      <div className="icon-wrapper" style={{backgroundColor: '#e70000'}}>
                                          <IconFont type="icon-jinggao" style={{color: '#ffffff',fontSize: '50px'}}/>

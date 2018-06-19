@@ -106,7 +106,16 @@ class AllOpinion extends React.Component {
       timePickerShow: false,
       current: 1,
       type: 0,
-      endTime: ''
+      endTime: '',
+      mediaList:{
+        'app':'APP',
+        'blog':'博客',
+        'medium':'平媒',
+        'wechat':'微信',
+        'weibo':'微博',
+        'news':'新闻',
+        'forum':'论坛'
+     }
     }
   }
 
@@ -491,7 +500,12 @@ class AllOpinion extends React.Component {
         timeValue: 'today',
         trendValue: 2
       })
-    } else if (pathname === '#/allopinion?datetag=all&neg=2') {
+    }else if (pathname === '#/allopinion?datetag=today&neg=all') {
+      this.setState({
+        timeValue: 'today',
+        trendValue: 'all'
+      })
+    }else if (pathname === '#/allopinion?datetag=all&neg=2') {
       this.setState({
         timeValue: 'all',
         trendValue: 2
@@ -507,8 +521,14 @@ class AllOpinion extends React.Component {
         mediaValue: '微博',
         trendValue: 1
       })
-    }
-    else {
+    }else if (pathname.indexOf('media') !== -1){
+       let media =  pathname.split('&')[0].split('=')[1];
+       let day =  pathname.split('&')[1].split('=')[1];
+       this.setState({
+        mediaValue: this.state.mediaList[media],
+        timeValue: day
+       })
+    } else {
       this.setState({
         timeValue: 'all'
       })

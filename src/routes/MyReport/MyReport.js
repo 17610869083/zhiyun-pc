@@ -1,10 +1,10 @@
 import React from 'react';
 import './MyReport.less';
-import {Input,DatePicker,Button} from 'antd';
+import {Input,DatePicker,Button,message} from 'antd';
 import {api_get_all_report} from '../../services/api';
 import request from '../../utils/request';
 import IconFont from '../../components/IconFont';
-import img from '../../assets/img/bigscreen_topic.png';
+import img from '../../assets/img/1.png';
 import {getLocalTime} from '../../utils/format';
 class MyReport extends React.Component{
      constructor(props){
@@ -25,7 +25,7 @@ class MyReport extends React.Component{
             },
             index:0,
             contentIndex:'1',
-            test:'1233'
+            editReprotName:'1',
          }
      }
      componentWillMount(){
@@ -53,15 +53,26 @@ class MyReport extends React.Component{
            contentIndex:index 
         })
     }
-    editReportName(reportName,e){
-        e.target.innerHTML = `<input maxLength=15 placeholder=${reportName} autofocus=autofocus style=border:none;>`;
+    editReportName(reportid,reportname,e){
+        this.setState({
+            editReprotName:reportid,
+            inputValue:reportname
+        })
     }
-    blur(e){
+    blur(reportid,e){
+        if(this.state.inputValue === ''){
+            message.success('报告名称不可为空')
+            return;
+        }
+        this.setState({
+            editReprotName:''
+        })
+    }
+    changeReportName(e){
         let {value} = e.target;
-        e.target.innerHTML = value ;
-    }
-    onChange(){
-        console.log(123)
+        this.setState({
+            inputValue:value
+        })
     }
      render(){
          const typeList = this.state.typeList.map( (item,index) => {
@@ -75,8 +86,10 @@ class MyReport extends React.Component{
              className={this.state.contentIndex === index ?'cont active':'cont normal'}
              > 
              <img src={img} alt="" onClick = {this.changeReport.bind(this,index,item.id)}/>
-             <p title="双击可修改名称" onDoubleClick={this.editReportName.bind(this,item.reportName)} 
-             style={{userSelect:'none'}} onBlur = {this.blur.bind(this)}>{item.reportName}</p>
+             {
+             this.state.editReprotName === item.id ? <input autoFocus='autofocus' value={this.state.inputValue} onChange={this.changeReportName.bind(this)} onBlur = {this.blur.bind(this,item.id)}/>:
+             <p title="双击可修改名称" onDoubleClick={this.editReportName.bind(this,item.id,item.reportName)} style={{userSelect:'none'}} >{item.reportName}</p>
+            }
              <p style={{marginBottom:'6px'}}>{getLocalTime(item.updateTime)} 
              {item.status === '2' ?<IconFont className="status" type="icon-queren"/>:<IconFont className="status" type="icon-weiwancheng"/>}
              </p>

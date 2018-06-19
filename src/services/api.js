@@ -1,5 +1,5 @@
 // host
-const host = 'http://119.90.61.155/om31/webpart/';
+const host = 'http://119.90.61.155/om31/webpart/';      
 //const host = 'http://web.is8.com.cn/om/webpart/';
 //const host = './';
 //-------------------登录

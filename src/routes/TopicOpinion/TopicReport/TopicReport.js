@@ -154,7 +154,7 @@ class TopicReport extends React.Component {
 
     componentDidMount(){    
         let topicid = Store.getState().getRouterReducer;
-        request(api_topic_message +'&topicid=' +topicid).then(res=>{
+        request(api_topic_message +'&topicid=' +topicid.topicid).then(res=>{
             if( res.data && res.data.code!==0){
                 this.setState({
                     topicMessage:res.data,
@@ -195,7 +195,7 @@ class TopicReport extends React.Component {
             sort:this.state.sort[this.state.sortIndex]['type'],
             medias:this.state.media[this.state.mediaIndex]['name'],
             trends:this.state.trend[this.state.trendIndex]['type'],
-            topicid:topicid,
+            topicid:topicid.topicid,
             topicName:tackname
         };
         request(api_topic_export_word,{
@@ -233,7 +233,7 @@ class TopicReport extends React.Component {
             sort:this.state.sort[this.state.sortIndex]['type'],
             medias:this.state.media[this.state.mediaIndex]['name'],
             trends:this.state.trend[this.state.trendIndex]['type'],
-            topicid:topicid
+            topicid:topicid.topicid
         };  
         this.props.topicReportExport(report) ;   
         history.push('/topic/echarts'); 
@@ -304,7 +304,7 @@ class TopicReport extends React.Component {
             sort:this.state.sort[this.state.sortIndex]['type'],
             medias:this.state.media[this.state.mediaIndex]['name'],
             trends:this.state.trend[this.state.trendIndex]['type'],
-            topicid:topicid,
+            topicid:topicid.topicid,
             topicName:this.state.fileName
         };
         if(this.state.sourceType==='excel'){
