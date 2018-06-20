@@ -10,7 +10,8 @@ import {
 	api_put_into_report,
 	api_add_doc_from_top,
 	api_material_opinion_list,
-	api_res_fav_cat
+	api_res_fav_cat,
+	api_push_material
 } from '../../services/api';
 // import { apiGetMaterialOpinionList } from '../../services/opinionServices';
 import { opinionTrend, opinionColor } from '../../utils/format';
@@ -45,6 +46,7 @@ import './MaterialOpinion.less';
 import BlankPage from '../../base/Exception/BlankPage';
 import { GRAY, BLACK } from '../../utils/colors';
 import Iconfont from '../../components/IconFont'
+import Sider from 'antd/lib/layout/Sider';
 const Search = Input.Search;
 const Option = Select.Option;
 const confirm = Modal.confirm;
@@ -332,7 +334,6 @@ class MaterialOpinion extends React.Component {
 	}
 
 	componentWillMount() {
-		console.log(this.props);
 		request(api_material_opinion_list)
 			.then(res => {
 				if (res.data) {
@@ -345,7 +346,6 @@ class MaterialOpinion extends React.Component {
 		this.setState({
 			browserHeight: window.innerHeight - 140
 		})
-		console.log(this.state.materialList)
 	}
 	componentDidUpdate(prevProps, prevState) {
 		if (this.props.checkboxState !== undefined) {
@@ -438,7 +438,6 @@ class MaterialOpinion extends React.Component {
 		const getMaterialOpinionListRequested = this.props.getMaterialOpinionListRequested;
 		const id = this.state.materialListItemId;
 		const name = this.state.materialName;
-		console.log(id, name)
 		request(api_edit_material_opinion + '&id=' + id + '&catname=' + name, {}).then(res => {
 			if (res.data.code === 1) {
 				message.success(res.data.msg);
@@ -633,7 +632,80 @@ class MaterialOpinion extends React.Component {
     this.setState({
       type: data
     })
-  }
+	}
+	// 拖拽
+	dragstart(sid, e) {
+		// const arr = this.checkedTrue();
+    // const sidList = JSON.stringify(arr);
+		e.dataTransfer.setData("sid", sid);
+	}
+	dragenter(e) {
+		e.preventDefault()
+	}
+	dragover(e) {
+		e.preventDefault()
+	}
+
+	drop(materialId, e) {
+		e.preventDefault()
+		const sid = e.dataTransfer.getData("sid");
+		request(api_push_material + '&catid=' + materialId + '&sid=' + sid, {}).then((res) => {
+			if (res.data.code === 1) {
+				message.success(res.data.msg);
+				// this.setState({
+				// 	checkedAll: false,
+				// 	checkedArray: new Array(40).fill(false)
+				// });
+			}
+		});
+		console.log(sid);		
+	}
+	// dragStart(e) {
+	// 	this.dragged = e.currentTarget;
+	// }
+	// dragEnd(e) {
+	// 	this.dragged.style.display = 'block';
+	// 	e.target.classList.remove("drag-up");
+	// 	this.over.classList.remove("drag-up");
+	// 	e.target.classList.remove("drag-down");
+	// 	this.over.classList.remove("drag-down");
+	// 	var data = this.state.data;
+	// 	var from = Number(this.dragged.dataset.id);
+	// 	var to = Number(this.over.dataset.id);
+	// 	data.splice(to, 0, data.splice(from, 1)[0]);
+	// 	data = data.map((doc, index)=> {
+	// 		doc.newIndex = index + 1;
+	// 		return doc;
+	// 	})
+	// 	this.setState({data: data});
+	// }
+	// // 拖拽
+  // onDragDrop(e) {
+	// 	// this.props.datelist.map(item => 
+	// 	// 	item.datelist.map(items => 
+	// 	// 		items.doclist.forEach((i, index) => {
+	// 	// 			// console.log(i);
+	// 	// 		})
+	// 	// 	)
+	// 	// )
+	// 	debugger
+	// 	e.preventDefault();
+	// 	// this.dragged.style.display = "none";
+	// 	// if (e.target.tagName !== "LI") {
+	// 	// 	return;
+	// 	// }
+	// 	// //判断当前拖拽target 和 经过的target 的 newIndex
+	// 	// const dgIndex = JSON.parse(this.dragged.dataset.item).newIndex;
+	// 	// const taIndex = JSON.parse(e.target.dataset.item).newIndex;
+	// 	// const animateName = dgIndex > taIndex ? "drag-up" : "drag-down";
+	// 	// if (this.over && e.target.dataset.item !== this.over.dataset.item) {
+	// 	// 	this.over.classList.remove("drag-up", "drag-down");
+	// 	// }
+	// 	// if(!e.target.classList.contains(animateName)) {
+	// 	// 	e.target.classList.add(animateName);
+	// 	// 	this.over = e.target;
+	// 	// }
+	// }
 	render() {
 		const { pageInfo, reportData } = this.props;
 		const { getFieldDecorator } = this.props.form;
@@ -691,95 +763,192 @@ class MaterialOpinion extends React.Component {
 				  {item.catname}
 				</div>
 			  {
-					item.datelist.map((i, indexdate) => 
-						<div className="item_time" key={indexdate} style={{ background: "#f7f7f7" }}>
-						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-						  {i.datetime}
-							<ul className="opinion-detail-wrapper">
-								{  
-									i.doclist.map((items, indexDoc) => 
-									  <li key={items.sid} className="opinion-detail-item">
-											<Checkbox
-												checked={this.state.array[items.sid]}
-												onChange={this.onChange.bind(this, items.sid)}
-											/>
-											<div className="item-top">
-												<div className="content">
-													<div className="negative">
-														<div className="inner-type" style={opinionColor(items.negative)}>
-															{opinionTrend(items.negative)}
+					item.datelist.map((i, indexdate) => {
+						if (i.datetime !== "0000-00-00") {
+							return (
+								<div className="item_time" key={indexdate} style={{ background: "#f7f7f7" }}>
+									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+									{i.datetime}
+									<ul className="opinion-detail-wrapper">
+										{  
+											i.doclist.map((items, indexDoc) => 
+												<li key={items.sid}
+													className="opinion-detail-item"
+													ref="opinionItem"
+													onDragStart={this.dragstart.bind(this, items.sid)}
+													draggable="true"
+												>
+													<Checkbox
+														checked={this.state.array[items.sid]}
+														onChange={this.onChange.bind(this, items.sid)}
+													/>
+													<div className="item-top">
+														<div className="content">
+															<div className="negative">
+																<div className="inner-type" style={opinionColor(items.negative)}>
+																	{opinionTrend(items.negative)}
+																</div>
+															</div>
+															<div className="title" title={items.title} onClick={this.clickItemTitle.bind(this, items.sid)}>
+																{items.title !== undefined && items.title.length > 58 ? items.title.slice(0, 58) + '...' : items.title}
+															</div>
+														</div>
+														<div className="icon" style={{ cursor: "pointer", width: 38, height: 38, margin: "10px 15px" }}>
+															<img src={this.state.carryAll[items.carry]}
+																alt=""
+																className="carryImg"
+																style={{ cursor: "pointer", width: 38, height: 38, display: "block" }}/>
+														</div>
+														<p className="docsummary" style={{ marginLeft: 67, marginTop: -50 }}>{items.docsummary}</p>						
+														<div className="item-bottom">
+															<div className="time" style={{ color: "#ccc", marginLeft: 25 }}>
+																{new Date(items.pubdate.time).toLocaleString()}
+															</div>
+															<div className="resource">
+																<a href="">
+																	<span className="source">{items.source}</span>
+																</a>
+															</div>
+															<div className="keywords" style={{ paddingLeft: 25, color: "#ccc" }}>
+																关键词: <span className="source" style={{ color: "red" }}>{items.dockeywords}</span>
+															</div>
 														</div>
 													</div>
-													<div className="title" title={items.title} onClick={this.clickItemTitle.bind(this, items.sid)}>
-														{items.title !== undefined && items.title.length > 58 ? items.title.slice(0, 58) + '...' : items.title}
-													</div>
-												</div>
-												<div className="icon" style={{ cursor: "pointer", width: 38, height: 38, margin: "10px 15px" }}>
-													<img src={this.state.carryAll[items.carry]}
-														alt=""
-														className="carryImg"
-														style={{ cursor: "pointer", width: 38, height: 38, display: "block" }}/>
-												</div>
-												<p className="docsummary" style={{ marginLeft: 67, marginTop: -50 }}>{items.docsummary}</p>						
-												<div className="item-bottom">
-													<div className="time" style={{ color: "#ccc", marginLeft: 25 }}>
-											      {new Date(items.pubdate.time).toLocaleString()}
-													</div>
-													<div className="resource">
-														<a href="">
-															<span className="source">{items.source}</span>
-														</a>
-													</div>
-													<div className="keywords" style={{ paddingLeft: 25, color: "#ccc" }}>
-														关键词: <span className="source" style={{ color: "red" }}>{items.dockeywords}</span>
-													</div>
-												</div>
-											</div>
-											<div className="item-middle">
-												<div className="right">
-													<div className="base-operate">
-														<Tooltip title="从素材库移除">
-															<i
-																aria-hidden="true"
-																onClick={this.deleteThisFormMaterial.bind(this, items.id)}
-															>
-																< Iconfont type="icon-shanchu1-copy" style={{ width: 20, height: 20 }} />
-															</i>
-														</Tooltip>
-														<Tooltip title='收藏'>
-															<Dropdown
-																overlay={
-																	<Menu onClick={this.collectionlConfirm.bind(this, items.sid)}>
-																		{
-																			this.props.favCatList.map(iq =>
-																				<Menu.Item key={iq.id}>
-																					<Icon type="folder"/>
-																					<span>{iq.catname}</span>
-																				</Menu.Item>
-																			)
+													<div className="item-middle">
+														<div className="right">
+															<div className="base-operate">
+																<Tooltip title="从素材库移除">
+																	<i
+																		aria-hidden="true"
+																		onClick={this.deleteThisFormMaterial.bind(this, items.id)}
+																	>
+																		< Iconfont type="icon-shanchu1-copy" style={{ width: 20, height: 20 }} />
+																	</i>
+																</Tooltip>
+																<Tooltip title='收藏'>
+																	<Dropdown
+																		overlay={
+																			<Menu onClick={this.collectionlConfirm.bind(this, items.sid)}>
+																				{
+																					this.props.favCatList.map(iq =>
+																						<Menu.Item key={iq.id}>
+																							<Icon type="folder"/>
+																							<span>{iq.catname}</span>
+																						</Menu.Item>
+																					)
+																				}
+																			</Menu>
 																		}
-																	</Menu>
-																}
-																trigger={['click']}
-																getPopupContainer={() => document.querySelector('.opinion-detail-item')}
-															>
-																<i
-																	aria-hidden="true"
-																	onClick={this.props.getCollectionOpinionListRequested.bind(this)}
-																>
-																	< Iconfont type="icon-shoucang" style={{ width: 17, height: 17, marginBottom: 2, marginLeft: 20 }} />
-																</i>
-															</Dropdown>
-														</Tooltip>
+																		trigger={['click']}
+																		getPopupContainer={() => document.querySelector('.opinion-detail-item')}
+																	>
+																		<i
+																			aria-hidden="true"
+																			onClick={this.props.getCollectionOpinionListRequested.bind(this)}
+																		>
+																			< Iconfont type="icon-shoucang" style={{ width: 17, height: 17, marginBottom: 2, marginLeft: 20 }} />
+																		</i>
+																	</Dropdown>
+																</Tooltip>
+															</div>
+														</div>
 													</div>
-												</div>
-											</div>
-										</li>
-									)
-								}
-							</ul>
-						</div>
-				  )
+												</li>
+											)
+										}
+									</ul>
+								</div>
+							)
+						} else {
+							return (
+								<div className="item_time" key={indexdate} style={{ background: "#f7f7f7" }}>
+									<ul className="opinion-detail-wrapper">
+										{  
+											i.doclist.map((items, indexDoc) => 
+												<li key={items.sid} className="opinion-detail-item" onDragOver={this.onDragDrop.bind(this)}>
+													<Checkbox
+														checked={this.state.array[items.sid]}
+														onChange={this.onChange.bind(this, items.sid)}
+													/>
+													<div className="item-top">
+														<div className="content">
+															<div className="negative">
+																<div className="inner-type" style={opinionColor(items.negative)}>
+																	{opinionTrend(items.negative)}
+																</div>
+															</div>
+															<div className="title" title={items.title} onClick={this.clickItemTitle.bind(this, items.sid)}>
+																{items.title !== undefined && items.title.length > 58 ? items.title.slice(0, 58) + '...' : items.title}
+															</div>
+														</div>
+														<div className="icon" style={{ cursor: "pointer", width: 38, height: 38, margin: "10px 15px" }}>
+															<img src={this.state.carryAll[items.carry]}
+																alt=""
+																className="carryImg"
+																style={{ cursor: "pointer", width: 38, height: 38, display: "block" }}/>
+														</div>
+														<p className="docsummary" style={{ marginLeft: 67, marginTop: -50 }}>{items.docsummary}</p>						
+														<div className="item-bottom">
+															<div className="time" style={{ color: "#ccc", marginLeft: 25 }}>
+																{new Date(items.pubdate.time).toLocaleString()}
+															</div>
+															<div className="resource">
+																<a href="">
+																	<span className="source">{items.source}</span>
+																</a>
+															</div>
+															<div className="keywords" style={{ paddingLeft: 25, color: "#ccc" }}>
+																关键词: <span className="source" style={{ color: "red" }}>{items.dockeywords}</span>
+															</div>
+														</div>
+													</div>
+													<div className="item-middle">
+														<div className="right">
+															<div className="base-operate">
+																<Tooltip title="从素材库移除">
+																	<i
+																		aria-hidden="true"
+																		onClick={this.deleteThisFormMaterial.bind(this, items.id)}
+																	>
+																		< Iconfont type="icon-shanchu1-copy" style={{ width: 20, height: 20 }} />
+																	</i>
+																</Tooltip>
+																<Tooltip title='收藏'>
+																	<Dropdown
+																		overlay={
+																			<Menu onClick={this.collectionlConfirm.bind(this, items.sid)}>
+																				{
+																					this.props.favCatList.map(iq =>
+																						<Menu.Item key={iq.id}>
+																							<Icon type="folder"/>
+																							<span>{iq.catname}</span>
+																						</Menu.Item>
+																					)
+																				}
+																			</Menu>
+																		}
+																		trigger={['click']}
+																		getPopupContainer={() => document.querySelector('.opinion-detail-item')}
+																	>
+																		<i
+																			aria-hidden="true"
+																			onClick={this.props.getCollectionOpinionListRequested.bind(this)}
+																		>
+																			< Iconfont type="icon-shoucang" style={{ width: 17, height: 17, marginBottom: 2, marginLeft: 20 }} />
+																		</i>
+																	</Dropdown>
+																</Tooltip>
+															</div>
+														</div>
+													</div>
+												</li>
+											)
+										}
+									</ul>
+								</div>
+							)
+						}
+					})
 				}
 			</div>				
 		) : <BlankPage desc='暂无信息，请在汇总舆情内加入相应信息' />;
@@ -978,10 +1147,15 @@ class MaterialOpinion extends React.Component {
 							</div>
 							<div className="bottom" style={{ maxHeight: this.state.browserHeight + 'px' }} >
 								<ul className="material-list">
-								{console.log(this.state.materialList)}
 									{
 										this.state.materialList.map((item, index) =>
-											<li key={index} className={this.state.materialCurrent === index ? 'material-list-item-active' : 'material-list-item'}>
+											<li
+												key={index}
+												className={this.state.materialCurrent === index ? 'material-list-item-active' : 'material-list-item'}
+												onDragEnter={this.dragenter.bind(this)}
+												onDragOver={this.dragover.bind(this)}
+												onDrop={this.drop.bind(this, item.id)}
+											>
 												<span className="material-name"
 													onClick={this.handleMeterialNavigation.bind(this, item.id, index)}
 													title={item.catname}

@@ -68,7 +68,7 @@ class TopicEditOpinionDetail extends React.Component {
 					request(api_material_opinion_list)
 					.then(ret => {
 						if (ret.data) {
-							this.props.getMaterialOpinionDetailRequested(ids);
+							this.props.getMaterialOpinionDetailRequested(`catid=${ids}`);
 						}
 					})		
 					this.props.handle(false);			

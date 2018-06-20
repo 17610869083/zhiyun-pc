@@ -366,10 +366,6 @@ class OpinionDetail extends React.Component {
       }
      }
   }
-  // 搜索按钮
-  // handleSearchBtn() {
-
-  // }
 
   // 推送到素材库
   putIntoMaterial(e) {
