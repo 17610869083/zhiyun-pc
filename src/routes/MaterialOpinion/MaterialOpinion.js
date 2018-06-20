@@ -163,7 +163,7 @@ class MaterialOpinion extends React.Component {
 	handleSearchBtn(keyword) {
 		// console.log(this.props.docList);
 		if (keyword !== '') {
-			this.props.getMaterialOpinionDetailRequested(`${this.state.materialList[0]['id']}&pagesize=${this.state.pageSize}&q=${keyword}`);
+			this.props.getMaterialOpinionDetailRequested(`${this.state.current}&pagesize=${this.state.pageSize}&q=${keyword}`);
 		}
 	}
 
@@ -189,13 +189,14 @@ class MaterialOpinion extends React.Component {
 	// 删除单项
 	deleteThisFormMaterial(itemId) {
 		const getDetail = this.props.getMaterialOpinionDetailRequested;
+		const current = this.state.current;
 		confirm({
 			title: '确定将这条舆情移出素材库?',
 			content: '移出素材库',
 			onOk() {
 				request(api_del_doc_from_cat + '&id=[' + itemId + ']', {}).then((res) => {
 					if (res.data.code === 1) {
-						getDetail(itemId);
+						getDetail(`catid=${current}`);
 						message.success(res.data.msg);
 					}
 				});
@@ -249,14 +250,14 @@ class MaterialOpinion extends React.Component {
 		const arr = this.checkedIdTrue();
 		const size = arr.length;
 		const getMaterialDetail = this.props.getMaterialOpinionDetailRequested;
-		// const current = this.state.current;
+		const current = this.state.current;
 		if (size === 0) {
 			message.warning("至少选择一项！");
 		} else {
 			const sidList = JSON.stringify(arr);
 			request(api_del_doc_from_cat + '&id=' + sidList, {}).then((res) => {
 				if (res.data.code === 1) {
-					getMaterialDetail(this.state.materialList[0]['id']);
+					getMaterialDetail(current);
 					message.success(res.data.msg);
 					this.setState({
 						checkedAll: false,
@@ -308,13 +309,13 @@ class MaterialOpinion extends React.Component {
 			materialCurrent: index
 
 		});
-		this.props.getMaterialOpinionDetailRequested(itemId);
+		this.props.getMaterialOpinionDetailRequested(`catid=${itemId}`);
 	}
 
 	// 分页
 	onPaginationChange(page) {
 		if (page !== '') {
-			this.props.getMaterialOpinionDetailRequested(`${this.state.materialList[0]['id']}&page=${page}&pagesize=${this.state.pageSize}`);
+			this.props.getMaterialOpinionDetailRequested(`catid=${this.state.current}&page=${page}&pagesize=${this.state.pageSize}`);
 			this.setState({
 				currentPage: page,
 				arr: new Array(40).fill(false),
@@ -326,7 +327,7 @@ class MaterialOpinion extends React.Component {
 	// 每页显示数量
 	// 每页显示数量
 	onShowSizeChange(current, pageSize) {
-		this.props.getMaterialOpinionDetailRequested(`${this.state.materialList[0]['id']}&page=${this.state.currentPage}&pagesize=${pageSize}`);
+		this.props.getMaterialOpinionDetailRequested(`catid=${current}&page=${this.state.currentPage}&pagesize=${pageSize}`);
 		this.setState({ pageSize: pageSize })
 	}
 
@@ -338,12 +339,13 @@ class MaterialOpinion extends React.Component {
 					this.setState({
 						materialList: res.data.reportCatList
 					})
-					this.props.getMaterialOpinionDetailRequested(res.data.reportCatList[0]['id']);
+					this.props.getMaterialOpinionDetailRequested(`catid=${res.data.reportCatList[0]['id']}`);
 				}
 			})
 		this.setState({
 			browserHeight: window.innerHeight - 140
 		})
+		console.log(this.state.materialList)
 	}
 	componentDidUpdate(prevProps, prevState) {
 		if (this.props.checkboxState !== undefined) {
@@ -358,7 +360,6 @@ class MaterialOpinion extends React.Component {
 
 	// ---------单选与全选
 	onChange(index, e) {
-		console.log(index)
 		const arr = this.state.array;
 		arr[index] = e.target.checked;
 		const isEveryChecked = arr.every(item => {
@@ -437,14 +438,17 @@ class MaterialOpinion extends React.Component {
 		const getMaterialOpinionListRequested = this.props.getMaterialOpinionListRequested;
 		const id = this.state.materialListItemId;
 		const name = this.state.materialName;
+		console.log(id, name)
 		request(api_edit_material_opinion + '&id=' + id + '&catname=' + name, {}).then(res => {
 			if (res.data.code === 1) {
 				message.success(res.data.msg);
+				getMaterialOpinionListRequested();
+				this.setState({
+					renameMaterialVisible: false
+				});
 			} else {
 				message.error(res.data.msg);
 			}
-			getMaterialOpinionListRequested();
-			this.setState({ renameMaterialVisible: false });
 		});
 	}
 	handleRenameMaterialCancel() {
@@ -557,7 +561,7 @@ class MaterialOpinion extends React.Component {
 						this.setState({
 							materialList: res.data.reportCatList
 						})
-						this.props.getMaterialOpinionDetailRequested(res.data.reportCatList[0]['id']);
+						this.props.getMaterialOpinionDetailRequested(`catid=${id}`);
 					}
 				})
 			} else if (res.data.cade === "1") {
@@ -829,7 +833,7 @@ class MaterialOpinion extends React.Component {
 									<Dropdown overlay={addMultipleReportMenu} trigger={['click']}
 										getPopupContainer={() => document.querySelector('.materia-opinion-wrapper')}
 									>
-										<Iconfont type="icon-shengchengbaogao1" style={{ width: 17, height: 17 }} />
+										<Iconfont type="icon-shengchengbaogao1" style={{ width: 16, height: 16 }} />
 									</Dropdown>
 								</div>
 								<div className="operate-all">
@@ -942,7 +946,7 @@ class MaterialOpinion extends React.Component {
 						<div className="first-box">
 							<div className="top" style={{ background: GRAY }}>
 								<div className="sucai">
-									<div style={{ textAlign: "left" }}>&nbsp;&nbsp;素材文件夹</div>
+									<div style={{ textAlign: "left", color: "#000" }}>&nbsp;&nbsp;素材文件夹</div>
 									<div onClick={this.showAddMaterial.bind(this)} style={{ marginTop: -40, textAlign: "right", marginRight: 7 }}>
 										<Iconfont type="icon-tianjiawenjianjia" style={{ width: 18, height: 18 }} />
 									</div>
@@ -974,6 +978,7 @@ class MaterialOpinion extends React.Component {
 							</div>
 							<div className="bottom" style={{ maxHeight: this.state.browserHeight + 'px' }} >
 								<ul className="material-list">
+								{console.log(this.state.materialList)}
 									{
 										this.state.materialList.map((item, index) =>
 											<li key={index} className={this.state.materialCurrent === index ? 'material-list-item-active' : 'material-list-item'}>

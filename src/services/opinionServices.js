@@ -73,12 +73,13 @@ const apiGetTopicLocation = (param) => {
 
 // 获取素材库素材详细信息
 const apiGetMaterialOpinionDetail = (param) => {
+    console.log(param);
     return request(api_material_opinion_detail,{
         method: 'POST',
         headers: {
             "Content-Type": "application/x-www-form-urlencoded"
         },
-        body: 'catid=' + param
+        body: param
     })
 };
 
