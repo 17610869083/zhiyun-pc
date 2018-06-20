@@ -12,53 +12,29 @@ class MediaDistribution extends React.Component{
     }
     render(){
         const {data} = this.props;
-        const mediaOption= {
-            tooltip: {
-                trigger: 'item',
-                formatter: "{a} <br/>{b}: {c} ({d}%)"
-            },
-            series: [
-                {
-                    name:'总量',
-                    type:'pie',
-                    radius: ['40%', '55%'],
-                    center:['50%', '70%'],
-                    label: {
-                        normal: {
-                            formatter: '{a|{a}}{abg|}\n{hr|}\n  {b|{b}：}{c}  {per|{d}%}  ',
-                            backgroundColor: '#eee',
-                            borderColor: '#aaa',
-                            borderWidth: 1,
-                            borderRadius: 4,
-                            rich: {
-                                a: {
-                                    color: '#999',
-                                    lineHeight: 16,
-                                    align: 'center'
-                                },
-                                hr: {
-                                    borderColor: '#aaa',
-                                    width: '100%',
-                                    borderWidth: 0.5,
-                                    height: 0
-                                },
-                                b: {
-                                    fontSize: 16,
-                                    lineHeight: 16
-                                },
-                                per: {
-                                    color: '#eee',
-                                    backgroundColor: '#334455',
-                                    padding: [2, 4],
-                                    borderRadius: 2
-                                }
-                            }
-                        }
-                    },
-                    data:data.series!==undefined?data.series[0].data:[]
-                }
-            ]
-        };
+				const mediaOption= {
+					tooltip: {
+						trigger: 'item',
+						formatter: "{b}: {c} ({d}%)",
+					},
+					series: [
+						{
+							type:'pie',
+						},
+						{
+							name:'访问来源',
+							type:'pie',
+							radius: ['42%', '55%'],
+							color: ['#8378ea', '#37a2da', '#e7bcf3', '#fb7293','#ffa07f','#ffdc5c','#9fe6b8'],
+							label: {
+								normal: {
+									formatter: '{b}\n{d}%'
+								},
+							},
+							data: data.series!==undefined?data.series[0].data:[],
+						}
+					]
+        };     
         return (
             <div className="mediaDistribution-box">
             <div className="container">
