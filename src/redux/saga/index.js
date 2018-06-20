@@ -175,7 +175,6 @@ function* getReportList(action) {
     try {
         const result = yield call(apiGetReportList,action.payload);
         const reportData = reportToTableData(result);
-        
         yield put(getReportListSucceeded(reportData));
     } catch (e) {
         console.log(e);
