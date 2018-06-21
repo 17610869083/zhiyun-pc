@@ -13,10 +13,8 @@ import {
 	api_res_fav_cat,
 	api_push_material
 } from '../../services/api';
-// import { apiGetMaterialOpinionList } from '../../services/opinionServices';
 import { opinionTrend, opinionColor } from '../../utils/format';
 import AllOpinion from '../AllOpinion/AllOpinion'
-// const TopicEditOpinionDetail = AsyncComponent(() => import('../SystemSetting/TopicEditOpinionDetail/TopicEditOpinionDetail'))
 import TopicEditOpinionDetail from '../SystemSetting/TopicEditOpinionDetail/TopicEditOpinionDetail'
 import {
 	opinionSearchRequested,
@@ -27,7 +25,6 @@ import {
 	paginationPage,
   getCollectionOpinionListRequested	
 } from '../../redux/actions/createActions';
-// import Store from '../../redux/store/index';
 import weixin from '../../assets/icon-img/weixin.png';
 import news from '../../assets/icon-img/news.png';
 import weibo from '../../assets/icon-img/weibo.png';
@@ -259,7 +256,7 @@ class MaterialOpinion extends React.Component {
 			const sidList = JSON.stringify(arr);
 			request(api_del_doc_from_cat + '&id=' + sidList, {}).then((res) => {
 				if (res.data.code === 1) {
-					getMaterialDetail(current);
+					getMaterialDetail(`catid=${current}`);
 					message.success(res.data.msg);
 					this.setState({
 						checkedAll: false,
@@ -635,8 +632,6 @@ class MaterialOpinion extends React.Component {
 	}
 	// 拖拽
 	dragstart(sid, e) {
-		// const arr = this.checkedTrue();
-    // const sidList = JSON.stringify(arr);
 		e.dataTransfer.setData("sid", sid);
 	}
 	dragenter(e) {
@@ -649,63 +644,26 @@ class MaterialOpinion extends React.Component {
 	drop(materialId, e) {
 		e.preventDefault()
 		const sid = e.dataTransfer.getData("sid");
-		request(api_push_material + '&catid=' + materialId + '&sid=' + sid, {}).then((res) => {
-			if (res.data.code === 1) {
-				message.success(res.data.msg);
-				// this.setState({
-				// 	checkedAll: false,
-				// 	checkedArray: new Array(40).fill(false)
-				// });
-			}
-		});
-		console.log(sid);		
+		const array = [];
+		array.push(sid);
+		const arrays = JSON.stringify(array);
+		const arr = this.checkedTrue();
+		const sidList = JSON.stringify(arr);
+		if (arr.length > 1) {
+			request(api_push_material + '&catid=' + materialId + '&sid=' + sidList, {}).then((res) => {
+				if (res.data.code === 1) {
+					message.success(res.data.msg);
+				}
+			});
+		} else if(array.length === 1) {
+			request(api_push_material + '&catid=' + materialId + '&sid=' + arrays, {}).then((res) => {
+				if (res.data.code === 1) {
+					message.success(res.data.msg);
+				}
+			});
+		}
 	}
-	// dragStart(e) {
-	// 	this.dragged = e.currentTarget;
-	// }
-	// dragEnd(e) {
-	// 	this.dragged.style.display = 'block';
-	// 	e.target.classList.remove("drag-up");
-	// 	this.over.classList.remove("drag-up");
-	// 	e.target.classList.remove("drag-down");
-	// 	this.over.classList.remove("drag-down");
-	// 	var data = this.state.data;
-	// 	var from = Number(this.dragged.dataset.id);
-	// 	var to = Number(this.over.dataset.id);
-	// 	data.splice(to, 0, data.splice(from, 1)[0]);
-	// 	data = data.map((doc, index)=> {
-	// 		doc.newIndex = index + 1;
-	// 		return doc;
-	// 	})
-	// 	this.setState({data: data});
-	// }
-	// // 拖拽
-  // onDragDrop(e) {
-	// 	// this.props.datelist.map(item => 
-	// 	// 	item.datelist.map(items => 
-	// 	// 		items.doclist.forEach((i, index) => {
-	// 	// 			// console.log(i);
-	// 	// 		})
-	// 	// 	)
-	// 	// )
-	// 	debugger
-	// 	e.preventDefault();
-	// 	// this.dragged.style.display = "none";
-	// 	// if (e.target.tagName !== "LI") {
-	// 	// 	return;
-	// 	// }
-	// 	// //判断当前拖拽target 和 经过的target 的 newIndex
-	// 	// const dgIndex = JSON.parse(this.dragged.dataset.item).newIndex;
-	// 	// const taIndex = JSON.parse(e.target.dataset.item).newIndex;
-	// 	// const animateName = dgIndex > taIndex ? "drag-up" : "drag-down";
-	// 	// if (this.over && e.target.dataset.item !== this.over.dataset.item) {
-	// 	// 	this.over.classList.remove("drag-up", "drag-down");
-	// 	// }
-	// 	// if(!e.target.classList.contains(animateName)) {
-	// 	// 	e.target.classList.add(animateName);
-	// 	// 	this.over = e.target;
-	// 	// }
-	// }
+
 	render() {
 		const { pageInfo, reportData } = this.props;
 		const { getFieldDecorator } = this.props.form;
@@ -802,7 +760,7 @@ class MaterialOpinion extends React.Component {
 														<p className="docsummary" style={{ marginLeft: 67, marginTop: -50 }}>{items.docsummary}</p>						
 														<div className="item-bottom">
 															<div className="time" style={{ color: "#ccc", marginLeft: 25 }}>
-																{new Date(items.pubdate.time).toLocaleString()}
+																{items.pubdate}
 															</div>
 															<div className="resource">
 																<a href="">
@@ -865,7 +823,7 @@ class MaterialOpinion extends React.Component {
 									<ul className="opinion-detail-wrapper">
 										{  
 											i.doclist.map((items, indexDoc) => 
-												<li key={items.sid} className="opinion-detail-item" onDragOver={this.onDragDrop.bind(this)}>
+												<li key={items.sid} className="opinion-detail-item">
 													<Checkbox
 														checked={this.state.array[items.sid]}
 														onChange={this.onChange.bind(this, items.sid)}
@@ -890,7 +848,7 @@ class MaterialOpinion extends React.Component {
 														<p className="docsummary" style={{ marginLeft: 67, marginTop: -50 }}>{items.docsummary}</p>						
 														<div className="item-bottom">
 															<div className="time" style={{ color: "#ccc", marginLeft: 25 }}>
-																{new Date(items.pubdate.time).toLocaleString()}
+																{items.pubdate}
 															</div>
 															<div className="resource">
 																<a href="">
