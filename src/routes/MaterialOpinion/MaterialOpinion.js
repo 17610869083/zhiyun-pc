@@ -306,7 +306,7 @@ class MaterialOpinion extends React.Component {
 		this.setState({
 			current: itemId,
 			materialCurrent: index,
-			currentPage: this.state.currentPage
+			currentPage: 1
 		});
 		this.props.getMaterialOpinionDetailRequested(`catid=${itemId}`);
 	}
