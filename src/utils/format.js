@@ -271,6 +271,7 @@ export function URLToObject(url) {
 // 把舆情报告返回的数据转换一下
 export function reportToTableData(data) {
     const list = [];
+    if(data.reportList[0]['id']){
     data.reportList.forEach((item,index) => {
         const obj = {
             id: item.id,
@@ -282,7 +283,8 @@ export function reportToTableData(data) {
         };
         list.push(obj);
     });
-    return list;
+   }
+   return list;
 }
 
 // key对应url

@@ -106,7 +106,7 @@ class AllOpinion extends React.Component {
       timePickerShow: false,
       current: 1,
       type: 0,
-      endTime: '',
+      endTime: '',     
       mediaList:{
         'app':'APP',
         'blog':'博客',
@@ -148,7 +148,7 @@ class AllOpinion extends React.Component {
     } else {
       const param = {
         datetag: value,
-        seltype: 'content',
+        seltype:  this.props.ks.seltype,
         keyword: this.props.ks.keyword,
         neg: this.state.trendValue,
         order: this.state.sortValue,
@@ -214,7 +214,7 @@ class AllOpinion extends React.Component {
       } else {
         const param = {
           datetag: timeValue,
-          seltype: 'content',
+          seltype:  this.props.ks.seltype,
           keyword: this.props.ks.keyword,
           neg: this.state.trendValue,
           order: this.state.sortValue,
@@ -251,7 +251,7 @@ class AllOpinion extends React.Component {
     } else {
       const param = {
         datetag: this.state.timeValue,
-        seltype: 'content',
+        seltype:  this.props.ks.seltype,
         keyword: this.props.ks.keyword,
         neg: value,
         order: this.state.sortValue,
@@ -287,7 +287,7 @@ class AllOpinion extends React.Component {
     } else {
       const param = {
         datetag: this.state.timeValue,
-        seltype: 'content',
+        seltype:  this.props.ks.seltype,
         keyword: this.props.ks.keyword,
         neg: this.state.trendValue,
         order: value,
@@ -323,7 +323,7 @@ class AllOpinion extends React.Component {
     } else {
       const param = {
         datetag: this.state.timeValue,
-        seltype: 'content',
+        seltype:  this.props.ks.seltype,
         keyword: this.props.ks.keyword,
         neg: this.state.trendValue,
         order: this.state.sortValue,
@@ -359,7 +359,7 @@ class AllOpinion extends React.Component {
     } else {
       const param = {
         datetag: this.state.timeValue,
-        seltype: 'content',
+        seltype:  this.props.ks.seltype,
         keyword: this.props.ks.keyword,
         neg: this.state.trendValue,
         order: this.state.sortValue,
@@ -396,7 +396,7 @@ class AllOpinion extends React.Component {
     } else {
       const param = {
         datetag: this.state.timeValue,
-        seltype: 'content',
+        seltype:  this.props.ks.seltype,
         keyword: this.props.ks.keyword,
         neg: this.state.trendValue,
         order: this.state.sortValue,
@@ -430,7 +430,7 @@ class AllOpinion extends React.Component {
     };
    }else{
       param = {
-      seltype: "content",
+      seltype: this.props.ks.seltype,
       keyword:this.props.ks.keyword,
       page:pagenumber,
       similer:1
@@ -580,7 +580,15 @@ class AllOpinion extends React.Component {
       type: data
     })
   }
-
+  remove(){
+    this.setState({
+       timeValue:'all', 
+       trendValue:'all' ,
+       filterValue:1,
+       mediaValue:'全部',
+       sortValue:'timedown'
+    })
+  }
   render() {
     const {docList, carryCount, pageInfo, page} = this.props;
     const {getFieldDecorator} = this.props.form;
@@ -734,6 +742,7 @@ class AllOpinion extends React.Component {
                          current={page}
                          type={this.state.type}
                          searchType={this.searchType.bind(this)}
+                         remove = {this.remove.bind(this)}
           />
         </div>
         <div className="bottom">

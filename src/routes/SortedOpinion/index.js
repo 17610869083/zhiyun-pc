@@ -208,7 +208,6 @@ class SortedOpinion extends React.Component {
     }
     this.props.getSortedMenuRequested();
     this.sortTimer = setTimeout(() => { 
-      console.log(this.props.sortedMenu)
     let firstClf = {};
     for (let i = 0; i < this.props.sortedMenu.length; i++) {
       if (this.props.sortedMenu[i]['clflist'][0] !== undefined) {

@@ -12,6 +12,7 @@ class ExcludeSetting extends React.Component{
                allKeywords:[{"rule1":"","rule2":"","rule3":"","rule4":"","id":"","scope":""}],
                negativeExclusion:[{"rule1":"","rule2":"","rule3":"","rule4":"","id":"","scope":""}],
                negativeDiscontinuation:[{"rule1":"","rule2":"","rule3":"","rule4":"","id":"","scope":""}],
+               waring:[{"rule1":"","rule2":"","rule3":"","rule4":"","id":"","scope":""}],
                type:'2000',
                saveMessage:'1',
                delMessage:'1'
@@ -62,7 +63,20 @@ class ExcludeSetting extends React.Component{
                    if(res.data.show1020List){
                         this.setState({
                           negativeDiscontinuation:res.data.show1020List,
-
+                        })
+                   }
+              })
+            }else if (key === '3020'){
+              request(exclude_discontinuation,{
+                method:'POST',
+                headers: {
+                   "Content-Type": "application/x-www-form-urlencoded"
+                },
+                body:`type=3020`
+              }).then(res=>{
+                   if(res.data.show3020List){
+                        this.setState({
+                          waring:res.data.show3020List,
                         })
                    }
               })
@@ -126,7 +140,6 @@ class ExcludeSetting extends React.Component{
                         allKeywords:res.data.show2000List
                        })
                 }
-
                 request(exclude_discontinuation,{
                   method:'POST',
                   headers: {
@@ -152,49 +165,46 @@ class ExcludeSetting extends React.Component{
                             negativeDiscontinuation:res.data.show1020List
                            })
                     }
+                  request(exclude_discontinuation,{
+                    method:'POST',
+                    headers: {
+                       "Content-Type": "application/x-www-form-urlencoded"
+                    },
+                    body:`type=3020`
+                }).then(res=>{
+                    if(res.data.show3020List){
+                           this.setState({
+                            waring:res.data.show3020List
+                           })
+                    }
                   })
-
               })
           })
+        })
         }
        }
 
       saveMessage(data){
-
            this.setState({
                saveMessage:data
            })
       }
-
-      onDel(){
-
-      }
-
-      showModal(){
-
-      }
-
       addRule(){
           this.setState({
             negativeExclusion:this.state.negativeExclusion.concat({"rule1":"","id":"","rule2":"","rule3":"","rule4":"","scope":""}),
             allKeywords:this.state.allKeywords.concat({"rule1":"","id":"","rule2":"","rule3":"","rule4":"","scope":""}),
-            negativeDiscontinuation:this.state.negativeDiscontinuation.concat({"rule1":"","id":"","rule2":"","rule3":"","rule4":"","scope":""})
+            negativeDiscontinuation:this.state.negativeDiscontinuation.concat({"rule1":"","id":"","rule2":"","rule3":"","rule4":"","scope":""}),
+            waring:this.state.waring.concat({"rule1":"","id":"","rule2":"","rule3":"","rule4":"","scope":""}),
           })
       }
-
-      onModelOk(){
-
-      }
-
       onDelwayRule(data){
              this.setState({
                    delMessage:data
              })
       }
       onCreateTopic(){
-
+        
       }
-
       render(){
            return (
                <div className="excludeBox">
@@ -262,6 +272,32 @@ class ExcludeSetting extends React.Component{
                      <span style={{marginRight:'29px',float:'left'}}>关键词组合</span>
                      <Col span={14}>
                      <SystemTopic num1={this.state.negativeDiscontinuation} name="email"
+                           onDelwayRule={this.onDelwayRule.bind(this)}
+                           onCreateTopic={this.onCreateTopic.bind(this)}
+                           type={this.state.type}
+                           saveMessage={this.saveMessage.bind(this)}
+                           mode='excludeSetting'
+                     />
+                     </Col>
+                     </div>
+                     </Row>
+                     <Button type="primary" style={{marginLeft:'131px'}}
+                     onClick={this.addRule.bind(this)}
+                     >+添加规则</Button>
+                   </TabPane>
+
+                   <TabPane tab="预警排除" key="3020">
+                   <p><i className="fa fa-bell" aria-hidden="true" style={{marginRight:'5px'}}></i>预警排除条件
+                   <Tooltip placement="bottom" title='预警排除：在进行预警判断时，会忽略信息中与“预警排除”匹配的关键词。'>
+                   <Icon type="question-circle" className="iconMessage"></Icon>
+                   </Tooltip>
+                   </p>
+
+                     <Row>
+                     <div className="mediaType" >
+                     <span style={{marginRight:'29px',float:'left'}}>关键词组合</span>
+                     <Col span={14}>
+                     <SystemTopic num1={this.state.waring} name="email"
                            onDelwayRule={this.onDelwayRule.bind(this)}
                            onCreateTopic={this.onCreateTopic.bind(this)}
                            type={this.state.type}

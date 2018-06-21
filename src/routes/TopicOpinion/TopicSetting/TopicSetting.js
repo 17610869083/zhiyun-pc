@@ -193,8 +193,8 @@ class TopicSetting extends React.Component {
                 topicData(this.state.topicAlldata.rulearr,this.state.addType):this.state.preciseTopicRule);     
            }
            let rulelist = JSON.parse(rules)[0];
-           if( rulelist.rule1 ==='' || rulelist.rule2 ==='' || rulelist.rule3 === ''|| rulelist.rule4 === ''){
-            message.success('关键词不能为空');
+           if( rulelist.rule1 ==='' && rulelist.rule2 ==='' && rulelist.rule3 === '' && rulelist.rule4 === ''){
+            message.success('规则不能为空');
              return;
            }
         let topicId=Store.getState().getRouterReducer.topicid;
@@ -212,7 +212,7 @@ class TopicSetting extends React.Component {
             headers: {
                   "Content-Type": "application/x-www-form-urlencoded"
             },
-            body:`action=editTopic&topicid=${topicId.topicid}&addtype=${this.state.addtype}&begin=${this.state.topicbDate}&end=${this.state.topiceDate}&bind=${this.state.checked}&tname=${this.state.topicNameValue}&catid=${this.state.select}&rule=${encodeURIComponent(rules)}`
+            body:`action=editTopic&topicid=${topicId}&addtype=${this.state.addtype}&begin=${this.state.topicbDate}&end=${this.state.topiceDate}&bind=${this.state.checked}&tname=${this.state.topicNameValue}&catid=${this.state.select}&rule=${encodeURIComponent(rules)}`
         }).then((res) => {
         	if(res.data.code===1){
                   message.success('关键词修改成功');

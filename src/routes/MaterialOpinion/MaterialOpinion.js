@@ -653,12 +653,16 @@ class MaterialOpinion extends React.Component {
 			request(api_push_material + '&catid=' + materialId + '&sid=' + sidList, {}).then((res) => {
 				if (res.data.code === 1) {
 					message.success(res.data.msg);
+				} else {
+					message.warning(res.data.msg);
 				}
 			});
 		} else if(array.length === 1) {
 			request(api_push_material + '&catid=' + materialId + '&sid=' + arrays, {}).then((res) => {
 				if (res.data.code === 1) {
 					message.success(res.data.msg);
+				} else {
+					message.warning(res.data.msg);
 				}
 			});
 		}

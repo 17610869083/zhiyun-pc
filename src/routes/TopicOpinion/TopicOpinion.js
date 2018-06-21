@@ -64,9 +64,6 @@ class TopicOpinion extends React.Component {
         clearTimeout( this.topichomeTimer);
     }
     componentDidMount(){
-        //  this.props.topicNavMessageRequested(new Date()).then( () => {
-        //         console.log(123)
-        //  })
          this.props.topicNavMessageRequested(new Date());
          this.topichomeTimer = setTimeout( ()=>{
           let topicMessage=this.props.topicNavMessageSucceededState;
@@ -80,6 +77,7 @@ class TopicOpinion extends React.Component {
                            return firstTopicid;
                       }
             })
+            
             this.props.setlocationPathname(firstTopicid);
             this.setState({
                 topicLists:topicMessage,
