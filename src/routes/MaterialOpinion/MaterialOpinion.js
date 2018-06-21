@@ -865,7 +865,7 @@ class MaterialOpinion extends React.Component {
 									<ul className="opinion-detail-wrapper">
 										{  
 											i.doclist.map((items, indexDoc) => 
-												<li key={items.sid} className="opinion-detail-item" onDragOver={this.onDragDrop.bind(this)}>
+												<li key={items.sid} className="opinion-detail-item">
 													<Checkbox
 														checked={this.state.array[items.sid]}
 														onChange={this.onChange.bind(this, items.sid)}
