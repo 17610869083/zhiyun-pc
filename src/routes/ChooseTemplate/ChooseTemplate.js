@@ -24,7 +24,7 @@ class ChooseTemplate extends React.Component{
         .then( res => {
             if(res.data.code === 1){
             this.setState({
-                contentList: res.data.data.content 
+                contentList: res.data.data.pageBean.content 
             })  
         }
         })

@@ -178,7 +178,7 @@ class TopicSetting extends React.Component {
        })
     }
     handleSubmit(e) { 
-          e.preventDefault();        
+           e.preventDefault();     
            let rules;
            if(this.state.addType===3){
                rules=JSON.stringify(this.state.SeniorTopicRule.length===0?
@@ -192,9 +192,10 @@ class TopicSetting extends React.Component {
                rules=JSON.stringify(this.state.preciseTopicRule.length===0?
                 topicData(this.state.topicAlldata.rulearr,this.state.addType):this.state.preciseTopicRule);     
            }
+           console.log(JSON.parse(rules)) 
            let rulelist = JSON.parse(rules)[0];
-           if( rulelist.rule1 ==='' && rulelist.rule2 ==='' && rulelist.rule3 === '' && rulelist.rule4 === ''){
-            message.success('规则不能为空');
+           if( rulelist.rule1 ===''){
+            message.success('主题词不能为空');
              return;
            }
         let topicId=Store.getState().getRouterReducer.topicid;
@@ -561,16 +562,12 @@ class TopicSetting extends React.Component {
                                 />
                                     
                                 </FormItem>
-                                
-                                
                                 <FormItem className="addRule"
                                     {...tailFormItemLayout} 
                                 >
                                 <Button  type="primary" size="small"  onClick={this.seniorRule.bind(this)} >
                                       + 添加规则
                                  </Button>
-                                
-                                
                                 </FormItem>
                                 
                                 <FormItem

@@ -29,7 +29,8 @@ class SettingCreateTopic extends React.Component {
             num:0,
             inputIndex:0,
             propsData:[],
-            updateNum:1
+            updateNum:1,
+            flag:false
         }
     }
     componentDidUpdate(prevProps,prevState){
@@ -38,8 +39,17 @@ class SettingCreateTopic extends React.Component {
       }
   }
     onModelCancel() {
+        // if(this.state.objectValueInput === ''){
+        //     message.warning('主题词不能为空！');
+        //     return;
+        // }
         this.setState({
-            visible: false
+            visible: false,
+            objectValueInput:1,
+            subject1ValueInput:1,
+            subject2ValueInput:1,
+            filterValueInput:1,
+            flag:false
         })
     }
     onModelOk(e){
@@ -50,15 +60,15 @@ class SettingCreateTopic extends React.Component {
         let  subject1Value=this.state.subject1ValueInput!==1?this.state.subject1ValueInput:propsData[num]['rule2'];
         let  subject2Value=this.state.subject2ValueInput!==1?this.state.subject2ValueInput:propsData[num]['rule3'];
         let  filterValue=this.state.filterValueInput!==1?this.state.filterValueInput:propsData[num]['rule4'];        
+        if(objectValue === "") {
+            message.warning('主题词不能为空！');
+            return;            
+        }
         propsData[num]['rule1']=objectValue;
         propsData[num]['rule2']=subject1Value;
         propsData[num]['rule3']=subject2Value;
         propsData[num]['rule4']=filterValue;
         propsData[num]['id']=ruleId;
-        if(objectValue === "") {
-            message.warning('主题词不能为空！');
-            return;            
-        }
         this.setState((prevState,props)=>({
             visible: false,
             propsData:propsData,
@@ -68,9 +78,9 @@ class SettingCreateTopic extends React.Component {
             subject2ValueInput:1,
             filterValueInput:1,
             ruleId:this.state.ruleId+1 ,
-            updateNum:new Date()      
-        }),()=>{
-        })
+            updateNum:new Date() ,
+            flag:true     
+        }))
 
     }
     showModal(e) {
@@ -78,10 +88,7 @@ class SettingCreateTopic extends React.Component {
         this.setState({
             visible: true,
             inputIndex:inputIndex
-        },()=>{
-              
         })
-        
     }
   
     onChangeObject(e) {
@@ -174,7 +181,7 @@ class SettingCreateTopic extends React.Component {
     let objectValueInput=this.props.num1;
     objectValueInput.splice(this.state.index,1);
     this.setState({
-                   visible1: false
+        visible1: false
     });
     this.props.onDelwayRule(this.state.index)
     this.props.onCreateTopic(objectValueInput)
@@ -219,7 +226,7 @@ class SettingCreateTopic extends React.Component {
         <Modal
         visible={this.state.visible}
         title="设置关键词"
-        okText="保存"
+        okText="确定"
         onCancel={this.onModelCancel.bind(this)}
         onOk={this.onModelOk.bind(this)}
     > 
@@ -227,7 +234,7 @@ class SettingCreateTopic extends React.Component {
             <FormItem label={objectValueTip}>  
                 <Input type="textarea"
                        onChange={this.onChangeObject.bind(this)}
-                       value={this.state.objectValueInput!==1?this.state.objectValueInput:this.props.num1[inputIndex]['rule1']}
+                       value={this.state.objectValueInput!==1 ?this.state.objectValueInput:this.props.num1[inputIndex]['rule1']}
                        data-index={inputIndex}
                        maxLength={'50'} 
                        />
@@ -266,8 +273,8 @@ class SettingCreateTopic extends React.Component {
                                 placeholder="主题词"
                                 readOnly
                                 onClick={this.showModal.bind(this)}
-                                value={this.state.propsData[index]!==undefined?this.state.propsData[index]['rule1']:item['rule1']}
-                                suffix={suffix}
+                                value={this.state.propsData[index]!==undefined && this.state.flag?this.state.propsData[index]['rule1']:item['rule1']}
+                                // suffix={suffix}
                                 data-num='0'
                                 data-index={index}
                                                          
@@ -280,7 +287,7 @@ class SettingCreateTopic extends React.Component {
                             <Input placeholder="关联词1"
                                    readOnly
                                    onClick={this.showModal.bind(this)}
-                                   value={this.state.propsData[index]!==undefined?this.state.propsData[index]['rule2']:item['rule2']}
+                                   value={this.state.propsData[index]!==undefined  && this.state.flag?this.state.propsData[index]['rule2']:item['rule2']}
                                    suffix={suffix}
                                    data-num='1'
                                 data-index={index}
@@ -294,7 +301,7 @@ class SettingCreateTopic extends React.Component {
                             <Input placeholder="关联词2"
                                    readOnly
                                    onClick={this.showModal.bind(this)}
-                                   value={this.state.propsData[index]!==undefined?this.state.propsData[index]['rule3']:item['rule3']}
+                                   value={this.state.propsData[index]!==undefined  && this.state.flag?this.state.propsData[index]['rule3']:item['rule3']}
                                    suffix={suffix}
                                    data-num='2'
                                    data-index={index}
@@ -307,7 +314,7 @@ class SettingCreateTopic extends React.Component {
                             <Input placeholder="排除词"
                                    readOnly
                                    onClick={this.showModal.bind(this)}
-                                   value={this.state.propsData[index]!==undefined?this.state.propsData[index]['rule4']:item['rule4']}
+                                   value={this.state.propsData[index]!==undefined  && this.state.flag?this.state.propsData[index]['rule4']:item['rule4']}
                                    suffix={suffix}
                                    data-num='3'
                                    data-index={index}

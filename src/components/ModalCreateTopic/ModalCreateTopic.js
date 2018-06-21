@@ -13,6 +13,9 @@ class ModalCreateTopic extends React.Component{
         this.props.onModelCancel(false)  
     }
     onModelOk(){
+        if(this.state.InputValue === ''){
+            message.error('关键词不可为空')
+        }
         this.props.onModelOk(false,this.state.InputValue);
         this.setState({
             InputValue:''
@@ -32,7 +35,7 @@ class ModalCreateTopic extends React.Component{
             <Modal
             visible={this.props.visible}
             title="设置关键词"
-            okText="保存"
+            okText="确定"
             onCancel={this.onModelCancel.bind(this)}
             onOk={this.onModelOk.bind(this)}          
         >  
@@ -42,8 +45,8 @@ class ModalCreateTopic extends React.Component{
                      style={{height:'60px'}}
                      onChange={this.OnChange.bind(this)}
                      value={this.state.InputValue!==1?this.state.InputValue:
-                        this.props.propsData[this.props.inputIndex]['rule']}
-                      maxLength={'500'}
+                     this.props.propsData[this.props.inputIndex]['rule']}
+                     maxLength={'500'}
                     />
                 </FormItem>
             </Form>

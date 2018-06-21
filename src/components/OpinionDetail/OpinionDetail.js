@@ -644,7 +644,7 @@ class OpinionDetail extends React.Component {
   render() {
     const {page} = this.props;
     const flag = this.props.docList&& this.props.docList.length === 0?true:false;
-    const docList = this.props.docList ? this.props.docList : [{carry: '新闻'}];
+    const docList = this.props.docList ? this.props.docList : [];
     // 素材库的目录
     const putinReportMenu = (
       <Menu onClick={this.putIntoMaterial.bind(this)}>

@@ -72,7 +72,6 @@ class SettingSeniorTopic extends React.Component {
         })
     }
     showModal1 = (e) => {
-    
     this.setState({
       visible1: true,
       index:parseInt(e.target.dataset.index,10),

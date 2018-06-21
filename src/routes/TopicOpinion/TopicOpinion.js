@@ -67,7 +67,6 @@ class TopicOpinion extends React.Component {
          this.props.topicNavMessageRequested(new Date());
          this.topichomeTimer = setTimeout( ()=>{
           let topicMessage=this.props.topicNavMessageSucceededState;
-          console.log(topicMessage)
           if(topicMessage!==1){
             let firstTopicid={topicid:1,topicname:'test'};
             topicMessage.forEach((item)=>{
