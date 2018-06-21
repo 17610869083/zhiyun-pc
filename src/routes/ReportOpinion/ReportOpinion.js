@@ -7,11 +7,7 @@ import {Button,  Tooltip, Modal, Input, Form,  message,Checkbox,Pagination} from
 import {history} from '../../utils/history';
 import { api_add_report, api_delete_report, api_edit_report ,
     api_allopinion_exportskip,api_check_report,api_del_report} from '../../services/api';
-import {
-    getReportListRequested,
-    exportSkip,
-    reportMessage
-} from '../../redux/actions/createActions';
+import {getReportListRequested,exportSkip,reportMessage} from '../../redux/actions/createActions';
 import {formatDateTime} from '../../utils/format';
 import BlankPage from '../../base/Exception/BlankPage';
 import {GRAY} from '../../utils/colors';
@@ -432,7 +428,6 @@ class TopicReport extends React.Component {
             </div>
         </div>
                 <div className="report">
-
                     <div className="middle">
                         {/* <Table
                             bordered
@@ -443,6 +438,8 @@ class TopicReport extends React.Component {
 
                             // /> */}
                             <ul>
+                                {
+                                reportData[0]!==undefined?
                                 <li className="opinion-detail-item">
                                 <div className="reportConent">
                                     <div className="checkBox">
@@ -464,7 +461,8 @@ class TopicReport extends React.Component {
                                           操作
                                     </div>
                                     </div>
-                                </li>
+                                </li>:(null)
+                                }
                                 {dataNewList}
                             </ul>
                     </div>

@@ -330,6 +330,10 @@ class OpinionDetail extends React.Component {
     this.setState({
       seltype: value
     });
+    this.props.searchKeywordSync({
+      seltype: value,
+      keyword: this.state.searchInputValue, type: 0
+    });
   }
 
   searchInput(e) {
@@ -368,8 +372,8 @@ class OpinionDetail extends React.Component {
       }
       this.setState({isSearch: true})
      }
+     this.props.remove();
   }
-
   // 推送到素材库
   putIntoMaterial(e) {
     const materialId = e.key;
@@ -480,20 +484,25 @@ class OpinionDetail extends React.Component {
     const param = this.props.param;
     param.page = pagenumber;
     if (this.props.type === 1) {
-      this.props.opinionSearchRequest({
-        seltype: 'content', keyword: this.props.searchKeyword.keyword,
+      Object.assign(param, {
+        seltype: this.state.seltype, keyword: this.props.searchKeyword.keyword,
         page: pagenumber
       });
+      this.props.opinionSearchRequest(param);
+      console.log(1)
     } else if (this.props.searchKeyword.type === 1) {
       this.props.opinionSearchRequest({
-        seltype: 'content', keyword: this.props.searchKeyword.keyword,
+        seltype: this.state.seltype, keyword: this.props.searchKeyword.keyword,
         page: pagenumber
       });
+      console.log(2)
     }
     else if (this.props.propsType === 'AllopinionList') {
       this.props.opinionSearchRequest(param);
+      console.log(3)
     } else {
       this.props.onDataChange(pagenumber);
+      console.log(4)
     }
   }
 
@@ -941,10 +950,8 @@ class OpinionDetail extends React.Component {
                   onChange={this.searchInput.bind(this)}
                   onKeyDown = {this.keyDown.bind(this)}
                 />
-
               </InputGroup>
             </div>
-            {/* <Button className="search" onClick={this.handleSearchBtn.bind(this)}>搜索</Button> */}
           </div>
         </div>
         <div className="bottom">

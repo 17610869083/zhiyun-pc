@@ -46,7 +46,7 @@ class SortedSetting extends React.Component {
     e.preventDefault();
     let rules = '';
     const addtype = this.state.addType;
-    const clfId = this.props.clfId;
+    const clfId = this.props.clfId.clfid;
     const getSortedMenuRequested = this.props.getSortedMenuRequested;
     if (this.state.addType === 3) {
       rules = JSON.stringify(this.state.SeniorTopicRule.length === 0 ?
@@ -55,6 +55,11 @@ class SortedSetting extends React.Component {
     } else {
       rules = JSON.stringify(this.state.createTopicRule.length === 0 ?
         topicData(this.state.topicAlldata.rulearr, this.state.addType) : this.state.createTopicRule);
+    }
+    let rulelist = JSON.parse(rules)[0];
+    if( rulelist.rule1 ==='' && rulelist.rule2 ==='' && rulelist.rule3 === '' && rulelist.rule4 === ''){
+     message.success('规则不能为空');
+      return;
     }
     this.props.form.validateFields((err, values) => {
       if (!err) {
