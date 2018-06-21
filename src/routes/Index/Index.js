@@ -34,6 +34,7 @@ const ReportTemplate = AsyncComponent(() => import('../ReportTemplate/ReportTemp
 const ChooseTemplate = AsyncComponent(() => import('../ChooseTemplate/ChooseTemplate'))
 const CustomHome= AsyncComponent(() => import('../CustomHome/CustomHome'))
 const MyReport= AsyncComponent(() => import('../MyReport/MyReport'))
+const Drag= AsyncComponent(() => import('../Drag/Drag'))
 const {Header, Sider, Content} = Layout;
 const SubMenu = Menu.SubMenu;
 
@@ -271,6 +272,7 @@ class Index extends React.Component {
                 <Route path="/choosetemplate" component={ChooseTemplate}/>
                 <Route path="/customhome" component={CustomHome}/>
                 <Route path="/myreport" component={MyReport}/>
+                <Route path="/drag" component={Drag}/>
               </Switch>
               <div className="suspensionBox">
                 <div>
