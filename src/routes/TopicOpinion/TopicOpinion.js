@@ -39,8 +39,23 @@ class TopicOpinion extends React.Component {
             browserHeight:300
         };
 
-    }
+		}
+		// 添加分类
+		addHandleClick(e) {
+			this.setState({
+				current: e.key,
+				isAddTopicShow: false,
+				visible:true,
+				addClass:0,
+				addTopic:1
+			});
+			history.push({
+				pathname:`/topic/${e.key}`,
+				search:`?topicid=${this.state.topicId}`
+			});
+		}
     handleClick(e) {
+			console.log("1");
         if(e.key==='addsort'){
             this.setState({
                 current: e.key,
@@ -58,7 +73,13 @@ class TopicOpinion extends React.Component {
         this.setState({
             current: e.key,
         });
-    }
+		}
+		addZhuanClick(e) {
+			history.push({
+				pathname:`/topic/${e.key}`,
+				search:`?topicid=${this.state.topicId}`
+			});
+		}
     componentWillUnmount(){
         this.props.searchState({data:true});
         clearTimeout( this.topichomeTimer);
@@ -237,11 +258,13 @@ class TopicOpinion extends React.Component {
         this.setState({visibleThree:false})
     }
     onDelitem({key}){
-           if(key==='1'){
-           	   this.setState({visibleOne:true})
-           }else{
-            this.setState({visibleThree:true})
-           }
+			if(key==='1'){
+					this.setState({visibleOne:true})
+			} else if(key === '2'){
+			this.setState({visibleThree:true})
+			} else if(key === '3') {
+				this.handleAddTopic();
+			}
     }
     onCatid(catid){
          this.setState({
@@ -272,6 +295,7 @@ class TopicOpinion extends React.Component {
             <Menu onClick={this.onDelitem.bind(this)}>
                 <Menu.Item key="2">重命名</Menu.Item>
                 <Menu.Item key="1">删除</Menu.Item>
+                <Menu.Item key="3">添加专题</Menu.Item>
             </Menu>
        );
         let {topicNavMessageSucceededState} =this.props;
@@ -279,7 +303,7 @@ class TopicOpinion extends React.Component {
           <div className="a-class" key={index}>
           <div className="class-name" >
           <div className="leftBox" onClick={this.dropDown.bind(this,item.catid)} data-index='1' title={item.catname}>
-            <i>< Iconfont type="icon-wenjianjia2" style={{fontSize:'18px'}}/></i><span className='mar'>{item.catname}</span>
+            <span className='mar'>{item.catname}</span>
           </div>
           <Dropdown overlay={delItems} trigger={['click']}>
             <i onClick={this.onCatid.bind(this,item.catid)}><Iconfont type="icon-icon02" className="icon-setting"/></i>
@@ -327,12 +351,12 @@ class TopicOpinion extends React.Component {
                         <Menu.Item key="setting" style={{fontSize:'16px'}}>
                             修改专题设置
                         </Menu.Item>
-                        <Menu.Item key="addtopic" style={{fontSize:'16px'}}>
+                        {/* <Menu.Item key="addtopic" style={{fontSize:'16px'}}>
                             添加专题
-                        </Menu.Item>
-                        <Menu.Item key="addsort" style={{fontSize:'16px'}} >
+                        </Menu.Item> */}
+                        {/* <Menu.Item key="addsort" style={{fontSize:'16px'}} >
                             添加分类
-                        </Menu.Item>
+                        </Menu.Item> */}
                     </Menu>
                     </div>
                     <div className="close"  onClick={this.triggerTopShow.bind(this)} style={this.state.current==='topiclist'?{display:'block',color:BLACK}:{display:'none'}}>
@@ -355,6 +379,9 @@ class TopicOpinion extends React.Component {
                     <div className="first-box">
                         <div className="add-topic-class" style={{background:GRAY}}>
                           专题
+													<div onClick={this.addHandleClick.bind(this)} style={{ marginTop: -40, textAlign: "right", marginRight: 7 }}>
+														<Iconfont type="icon-tianjiawenjianjia" style={{ width: 20, height: 20 }} />
+													</div>
                         </div>
                         <div className="classes" style={{maxHeight:this.state.browserHeight+'px'}}>
                         {LeftTopicLists}

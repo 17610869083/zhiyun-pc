@@ -128,6 +128,8 @@ class SortedOpinion extends React.Component {
           message.info("您取消了操作！");
         }
       });
+    } else if (e.key === 'add') {
+      history.push({pathname: '/sortedopinion/addrule'})
     }
   }
   // 设置catid
@@ -178,6 +180,12 @@ class SortedOpinion extends React.Component {
       history.push({pathname: '/sortedopinion/addrule'})
     }
 
+  }
+  // 添加分类
+  addHandleMenuClick() {
+    // if (e.key === 'addsort') {
+      this.setState({sortVisible: true})
+    // }
   }
   // 切换分类路由
   changeSortRoute(clfId,clfname,e) {
@@ -245,11 +253,12 @@ class SortedOpinion extends React.Component {
     const OperateItems = (<Menu onClick={this.operateItems.bind(this)}>
       <Menu.Item key="rename">重命名</Menu.Item>
       <Menu.Item key="delete">删除</Menu.Item>
+      <Menu.Item key="add">添加话题</Menu.Item>
     </Menu>);
     const SortedMenu = sortedMenu.map((item) => (<ul key={item.catid} className="sort-menu-ul">
       <li className="catname">
         <div className="name" onClick={this.toggleClfUl.bind(this, item.catid)}>
-          <i>< Iconfont type="icon-wenjianjia2" style={{fontSize:'18px'}}/></i>
+          {/* <i>< Iconfont type="icon-wenjianjia2" style={{fontSize:'18px'}}/></i> */}
           <span className='mar'>{item.catname}</span>
         </div>
         <div className="setting" style={item.cattype === 1
@@ -282,6 +291,9 @@ class SortedOpinion extends React.Component {
       <div className="sorted-menu">
         <div className="operation" style={{background:GRAY}}>
           分类
+          <div onClick={this.addHandleMenuClick.bind(this)} style={{ marginTop: -40, textAlign: "right", marginRight: 7 }}>
+            <Iconfont type="icon-tianjiawenjianjia" style={{ width: 20, height: 20 }} />
+          </div>
         </div>
         <div className="sort-conent" style={{maxHeight:this.state.browserHeight+'px'}}>
         {SortedMenu}
@@ -315,16 +327,16 @@ class SortedOpinion extends React.Component {
                 }}>
                 修改话题设置
               </Menu.Item>
-              <Menu.Item key="addtopic" style={{
+              {/* <Menu.Item key="addtopic" style={{
                   fontSize: '16px'
                 }}>
                 添加话题
-              </Menu.Item>
-              <Menu.Item key="addsort" style={{
+              </Menu.Item> */}
+              {/* <Menu.Item key="addsort" style={{
                   fontSize: '16px'
                 }}>
                 添加分类
-              </Menu.Item>
+              </Menu.Item> */}
             </Menu>
           </div>
           <div className="close" onClick={this.triggerTopShow.bind(this)} style={this.state.current === 'sortlist'?{display:'block',color:BLACK}:{display:'none'}}>
