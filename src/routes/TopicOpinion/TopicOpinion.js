@@ -335,8 +335,8 @@ class TopicOpinion extends React.Component {
                     </Menu>
                     </div>
                     <div className="close"  onClick={this.triggerTopShow.bind(this)} style={this.state.current==='topiclist'?{display:'block',color:BLACK}:{display:'none'}}>
-                    <span>{this.state.isTopShow ? '显示' : '隐藏'}</span>
-                    <Icon type={this.state.isTopShow ? 'down' : 'right'} />
+                    	<span>{this.state.isTopShow ? '显示' : '隐藏'}</span>
+                    	<Icon type={this.state.isTopShow ? 'down' : 'right'} />
                     </div>
                     </div>
                     <div className="topic-wrapper">
