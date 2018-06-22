@@ -683,6 +683,32 @@ class MaterialOpinion extends React.Component {
 				sm: { span: 14 },
 			},
 		};
+		// 单条舆情加入简报
+		// const addReportMenu = (
+		// 	<Menu onClick={this.handleAddReportMenu.bind(this)}>
+		// 		{
+		// 			reportData ? reportData.map(item =>
+		// 				<Menu.Item key={item.id}>{item.name}</Menu.Item>
+		// 			) : <Menu.Item key="0">默认简报</Menu.Item>
+		// 		}
+		// 	</Menu>
+		// );
+
+		// 收藏夹的目录
+		// const collectionMenu = (
+		// 	<Menu onClick={this.putIntoCollection.bind(this)}>
+		// 		{
+		// 			this.props.favCatList.map(item =>
+		// 				<Menu.Item key={item.id}>
+		// 					<Icon type="folder"/>
+		// 					<span>{item.catname}</span>
+		// 				</Menu.Item>
+		// 			)
+		// 		}
+		// 	</Menu>
+		// );
+
+
 		// 多项加入简报
 		const addMultipleReportMenu = (
 			<Menu onClick={this.handleAddMultipleReportMenu.bind(this)}>
