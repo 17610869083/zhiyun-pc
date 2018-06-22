@@ -13,7 +13,6 @@
       width: 11%;
       margin-right: 20px;
       position: fixed;
-      left:85.6%;
       .first-box {
         background-color: #FFFFFF;
         .top {
@@ -21,15 +20,26 @@
           line-height: 40px;
           text-align: center;
           // border:1px solid #008cee;
-          color:#fff;
-          background-color: #0c1224;
           cursor: pointer;
           .btn {
             width: 100%;
             height: 100%;
           }
         }
+        .bottom::-webkit-scrollbar {
+          display: none;
+        }
         .bottom {
+          overflow: auto;
+          -ms-scroll-chaining: chained;
+          -ms-overflow-style: none;
+          -ms-content-zooming: zoom;
+          -ms-scroll-rails: none;
+          -ms-content-zoom-limit-min: 100%;
+          -ms-content-zoom-limit-max: 500%;
+          -ms-scroll-snap-type: proximity;
+          -ms-scroll-snap-points-x: snapList(100%, 200%, 300%, 400%, 500%);
+          -ms-overflow-style: none;
           .material-list {
             .material-list-item {
               height: 40px;
@@ -39,6 +49,9 @@
               padding-left: 10px;
               padding-right: 10px;
               border-bottom: 1px solid #E4EBF7;
+              .ant-dropdown-trigger{
+                cursor: pointer;
+              }
               .material-name {
                 cursor: pointer;
                 width: 80%;
@@ -54,13 +67,13 @@
             .material-list-item-active {
               height: 40px;
               line-height: 40px;
-              background-color: #f2f2f2;
-              color: #5a8bff;
-              border-left: 2px solid #5a8bff;
+              color: #000;
               display: flex;
               justify-content: space-between;
               padding-left: 10px;
               padding-right: 10px;
+              border-bottom: 1px solid #E4EBF7;
+              background: #5a8bff;
               .material-name {
                 cursor: pointer;
                 width: 80%;
@@ -98,14 +111,19 @@
         justify-content: space-between;
         padding-left: 20px;
         border-bottom: 1px solid #eeeeee;
-        background: #0c1224;
+        background: #2d324f;
         color: #fff;
+        font-size: 16px;
         .left {
           display: flex;
           justify-content: flex-start;
-          margin-left: -6px;
           .colors{
             color: #5a8bff;
+          }
+          .choose-all{
+            span{
+              font-size: 16px;
+            }
           }
           .operate-all {
             margin-left: 30px;
@@ -126,7 +144,6 @@
         margin-top: 20px;
         .opinion-detail-wrapper {
           .opinion-detail-item {
-            background-color: #fff;
             border-bottom: 1px solid #eeeeee;
             padding-left: 20px;
             padding-right: 20px;
@@ -134,7 +151,7 @@
             display: flex;
             align-items: center;
             &:nth-child(even) {
-              // background: #f7f7f7;
+              background: #f7f7f7;
             }
             label{
               left: -10px;
@@ -150,7 +167,7 @@
                  display: flex;
                 }
               .item-bottom{
-                margin-top: 10px;
+                margin-top: 20px;
               }
               .negative {
                 margin-left: 20px;
@@ -170,8 +187,7 @@
             }
             .item-middle {
               display: flex;
-              // padding-bottom: 10px;
-              margin-top: 5%;
+              padding-bottom: 10px;
               margin-left: 8%;
               .left {
                 width: 80%;
@@ -221,14 +237,12 @@
         justify-content: center;
         .pagintion {
           margin-bottom: 20px;
+          .ant-pagination-item-active{
+            background: #5a8bff;
+            border-color:#5a8bff;
+        }
         }
       }
     }
-  }
-  .ant-input-suffix {
-    display: none;
-  }
-  .ant-dropdown-menu {
-    background-color: #e4ebf7;
   }
 }

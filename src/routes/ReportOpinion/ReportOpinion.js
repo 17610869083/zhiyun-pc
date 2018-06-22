@@ -227,11 +227,12 @@ class TopicReport extends React.Component {
         }).then(res => {
             message.success(res.data.msg);
             this.props.getReportListRequested({pagesize:10,page:1});
+            this.setState({
+                createReportModalVisible: false,
+                reportValue:''
+            });
         })
-        this.setState({
-            createReportModalVisible: false,
-            reportValue:''
-        });
+  
     }
     // 取消创建简报
     handleCreateReportCancel() {
@@ -346,6 +347,7 @@ class TopicReport extends React.Component {
          if(value.length>=28){
               message.error('简报名称请不要超过28个字符')
          }
+         console.log(value)
          this.setState({
             reportValue: value
          })

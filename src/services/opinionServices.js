@@ -79,7 +79,8 @@ const apiGetMaterialOpinionDetail = (param) => {
         headers: {
             "Content-Type": "application/x-www-form-urlencoded"
         },
-        body: param
+        // body: param
+        body: 'catid=' + param
     })
 };
 

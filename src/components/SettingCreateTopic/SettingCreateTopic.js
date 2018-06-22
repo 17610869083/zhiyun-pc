@@ -33,6 +33,7 @@ class SettingCreateTopic extends React.Component {
             flag:false
         }
     }
+
     componentDidUpdate(prevProps,prevState){
         if(prevState.updateNum!==this.state.updateNum){
         this.props.onCreateTopic(this.state.propsData)

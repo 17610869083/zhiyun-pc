@@ -20,19 +20,41 @@ class CustomHome extends React.Component{
     }
     dragOver = (e) => {
       e.preventDefault();
-      console.log(e.currentTarget)
+    }
+    drop = () => {
+       
+    }
+    dragenter = () => {
+     
+    }
+    dragleave = () => {
+   
+    }
+    mousedown(e){
+       let cloneNode = e.target.cloneNode(true);
+        cloneNode.style.position = 'absolute';
+        cloneNode.style.left = '500px';
+        cloneNode.style.top = '500px';
+        cloneNode.style.opacity = 0.5;
+        document.body.appendChild(cloneNode);
+    }
+    mousemove(){
+        // cloneNode.style.left = eve.clientX-50+'px';
+        // cloneNode.style.top = eve.clientY-50+'px';
     }
     render(){
         return (
             <div className="custom-home">
-            <div>
-                
+            <div onDrop={this.drop}   onDragEnter={this.dragenter} onDragLeave = {this.dragleave} className="drop-container">
+                 
             </div>
             <div className="slider-module"
             style={this.state.flag?{top:this.state.browserHeight + 'px',height:'50px'}:{top:this.state.browserHeight-418 + 'px',height:'500px'}}>
             <p className="slider-switch" onClick = {this.showList}></p>
             <ul className="slider-module-list" >
-                <li draggable="true" onDragOver = {this.dragOver}>1</li>
+                <li  onMouseDown={this.mousedown.bind(this)}
+                onMouseMove={this.mousemove.bind(this)}
+                >1</li>
                 <li draggable="true">2</li>
                 <li draggable="true">3</li>
                 <li draggable="true">4</li>
