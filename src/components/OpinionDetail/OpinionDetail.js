@@ -73,7 +73,8 @@ class OpinionDetail extends React.Component {
       type: 0,
       downloadFlag:false,
       materialList:[],
-      favCatList:[]
+      favCatList:[],
+      isSearch: false
     };
   }
   componentDidUpdate(prevProps, prevState) {
@@ -350,6 +351,7 @@ class OpinionDetail extends React.Component {
   }
   keyDown(e){
      if(e.keyCode === 13){
+      const docList = this.props.docList ? this.props.docList : [{carry: '新闻'}];
       const param = {
         seltype: this.state.seltype,
         keyword: this.state.searchInputValue,
@@ -368,6 +370,7 @@ class OpinionDetail extends React.Component {
       if (this.props.propsType === 'AllopinionList') {
         this.props.searchType(1);
       }
+      this.setState({isSearch: true})
      }
      this.props.remove();
   }
@@ -695,15 +698,36 @@ class OpinionDetail extends React.Component {
           <div className="content">
             <div className="item-top">
               <div className="title"
-                   title={item.title} onClick={this.clickItemTitle.bind(this, item.sid)}
-              >{(item.title && item.title.length > 35) ? item.title.slice(0, 35) + '...' : item.title}
+                   title={item.title}
+                   onClick={this.clickItemTitle.bind(this, item.sid)}
+              >
+                {
+                  (() => {
+                    if (this.state.isSearch && this.state.seltype === 'title') {
+                      return <span dangerouslySetInnerHTML={{__html: (item.title && item.title.length > 35) ? setHighlightTags(item.title.slice(0, 35), Array(this.state.searchInputValue).concat([''])) + '...' : setHighlightTags(item.title, Array(this.state.searchInputValue).concat(['']))}}></span>
+                    } else {
+                      return (item.title && item.title.length > 35) ? item.title.slice(0, 35) + '...' : item.title
+                    }
+                  })()
+                } 
               </div>
             </div>
             <div className="item-middle">
               <div className="left" style={this.state.isSummaryShow ? {display: 'block'} : {display: 'none'}}>
                 <div>
-                            <span className="summary"
-                                  dangerouslySetInnerHTML={{__html: setHighlightTags(item.summary, item.nztags.split(' '))}}></span>
+                    { 
+                      (() => {
+                        if (this.state.isSearch) {
+                            if (this.state.seltype === 'content') {
+                              return <span className="summary" dangerouslySetInnerHTML={{__html: setHighlightTags(item.summary, Array(this.state.searchInputValue).concat(['']) )}}></span>
+                            } else if (this.state.seltype === 'title') {
+                              return <span className="summary" dangerouslySetInnerHTML={{__html: item.summary}}></span>
+                            }
+                        } else {
+                          return <span className="summary" dangerouslySetInnerHTML={{__html: setHighlightTags(item.summary, item.nztags.split(' '))}}></span>
+                        }
+                      })()
+                    }
                 </div>
               </div>
             </div>
@@ -724,7 +748,7 @@ class OpinionDetail extends React.Component {
                     </a>
                   </div>
                   <div className="title">关键词：</div>
-                  <div className="keywords">
+                  <div className={this.state.isSearch ? '' : 'keywords' }>
                     {item.nztags}
                   </div>
 

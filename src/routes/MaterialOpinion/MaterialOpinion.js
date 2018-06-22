@@ -305,8 +305,8 @@ class MaterialOpinion extends React.Component {
 	handleMeterialNavigation(itemId, index) {
 		this.setState({
 			current: itemId,
-			materialCurrent: index
-
+			materialCurrent: index,
+			currentPage: 1
 		});
 		this.props.getMaterialOpinionDetailRequested(`catid=${itemId}`);
 	}
@@ -326,7 +326,8 @@ class MaterialOpinion extends React.Component {
 	// 每页显示数量
 	// 每页显示数量
 	onShowSizeChange(current, pageSize) {
-		this.props.getMaterialOpinionDetailRequested(`catid=${current}&page=${this.state.currentPage}&pagesize=${pageSize}`);
+		console.log(current);
+		this.props.getMaterialOpinionDetailRequested(`catid=${this.state.current}&page=${this.state.currentPage}&pagesize=${pageSize}`);
 		this.setState({ pageSize: pageSize })
 	}
 
@@ -335,7 +336,8 @@ class MaterialOpinion extends React.Component {
 			.then(res => {
 				if (res.data) {
 					this.setState({
-						materialList: res.data.reportCatList
+						materialList: res.data.reportCatList,
+						current: res.data.reportCatList[0]['id']
 					})
 					this.props.getMaterialOpinionDetailRequested(`catid=${res.data.reportCatList[0]['id']}`);
 				}
@@ -761,7 +763,7 @@ class MaterialOpinion extends React.Component {
 																className="carryImg"
 																style={{ cursor: "pointer", width: 38, height: 38, display: "block" }}/>
 														</div>
-														<p className="docsummary" style={{ marginLeft: 67, marginTop: -50 }}>{items.docsummary}</p>						
+														<p className="docsummary" style={{ marginLeft: 67, marginTop: -50, height: 45, overflow: "hidden" }}>{items.docsummary}</p>						
 														<div className="item-bottom">
 															<div className="time" style={{ color: "#ccc", marginLeft: 25 }}>
 																{items.pubdate}
@@ -849,7 +851,7 @@ class MaterialOpinion extends React.Component {
 																className="carryImg"
 																style={{ cursor: "pointer", width: 38, height: 38, display: "block" }}/>
 														</div>
-														<p className="docsummary" style={{ marginLeft: 67, marginTop: -50 }}>{items.docsummary}</p>						
+														<p className="docsummary" style={{ marginLeft: 67, marginTop: -50, height: 45, overflow: "hidden" }}>{items.docsummary}</p>						
 														<div className="item-bottom">
 															<div className="time" style={{ color: "#ccc", marginLeft: 25 }}>
 																{items.pubdate}
@@ -940,6 +942,7 @@ class MaterialOpinion extends React.Component {
 										checked={this.state.checkedAll}
 										onChange={this.onAllChange.bind(this)}
 										className="colors"
+										style={{ fontSize: 16 }}
 									>全选</Checkbox>
 								</div>
 								<div className="operate-all">
