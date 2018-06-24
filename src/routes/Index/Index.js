@@ -10,6 +10,8 @@ import {api_get_channel} from '../../services/api';
 import request from '../../utils/request';
 import {urlTokey} from '../../utils/format';
 import AsyncComponent from '../../components/AsyncComponent/AsyncComponent'
+// import Bidding from '../BiddingOpinion/BiddingOpinion'
+
 const NewHome = AsyncComponent(() => import('../NewHome'))
 const TopicReportList = AsyncComponent(() => import('../TopicReportList/TopicReportList'))
 const SortedAdd = AsyncComponent(() => import('../SortedOpinion/SortedAdd'))
@@ -35,6 +37,7 @@ const ChooseTemplate = AsyncComponent(() => import('../ChooseTemplate/ChooseTemp
 const CustomHome= AsyncComponent(() => import('../CustomHome/CustomHome'))
 const MyReport= AsyncComponent(() => import('../MyReport/MyReport'))
 const Drag= AsyncComponent(() => import('../Drag/Drag'))
+const Bidding= AsyncComponent(() => import('../BiddingOpinion/BiddingOpinion'))
 const {Header, Sider, Content} = Layout;
 const SubMenu = Menu.SubMenu;
 
@@ -273,6 +276,7 @@ class Index extends React.Component {
                 <Route path="/customhome" component={CustomHome}/>
                 <Route path="/myreport" component={MyReport}/>
                 <Route path="/drag" component={Drag}/>
+                <Route path="/bidding" component={Bidding}/>
               </Switch>
               <div className="suspensionBox">
                 <div>
