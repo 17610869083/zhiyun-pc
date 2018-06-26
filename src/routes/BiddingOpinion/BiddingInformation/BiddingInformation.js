@@ -4,7 +4,6 @@ import {connect} from 'react-redux';
 import {Pagination, DatePicker, Form, message, Button} from 'antd';
 import request from '../../../utils/request';
 import OpinionDetail from '../../../components/OpinionDetail/OpinionDetail';
-// import './TopicList.less';
 import './BiddingInformation.less'
 import {getTopicRequested, paginationPage, searchKeywordSync} from '../../../redux/actions/createActions';
 import {api_topic_message_list} from '../../../services/api';
@@ -13,7 +12,7 @@ import { setTimeout } from 'timers';
 
 const FormItem = Form.Item;
 
-class TopicList extends React.Component {
+class BiddingInformation extends React.Component {
   constructor() {
     super();
     this.state = {
@@ -355,17 +354,20 @@ class TopicList extends React.Component {
         let topicID=this.props.getRouter;
         if(topicID.topicid){
                 request(api_topic_message_list + '&topicid=' + topicID.topicid).then((res) => {
-                  console.log(res)
-                    if(res.data && res.data.code!==0){
-                    this.setState({
-                        docList: res.data.docList,
-                        media: res.data.carryCount,
-                        pageCount: res.data.pageInfo.pageCount,
-                        count: res.data.pageInfo.count,
-                        pageInfo:res.data.pageInfo,
-                        topicID:topicID.topicid
-                    });
-                }
+                    if(res.data.code === 1){
+                      this.setState({
+                          docList: res.data.docList,
+                          media: res.data.carryCount,
+                          pageCount: res.data.pageInfo.pageCount,
+                          count: res.data.pageInfo.count,
+                          pageInfo:res.data.pageInfo,
+                          topicID:topicID.topicid
+                      });
+                    }else{
+                      this.setState({
+                        docList:'[]'
+                      })
+                    }
                 });
         }
        },700)   
@@ -375,7 +377,7 @@ class TopicList extends React.Component {
       let topicID = this.props.getRouter;
       if (topicID.topicid) {
         request(api_topic_message_list +`&topicid=${topicID.topicid}`).then((res) => {
-          if (res.data && res.data.code!==0) {
+          if (res.data.code === 1) {
             this.setState({
               docList: res.data.docList,
               media: res.data.carryCount,
@@ -389,6 +391,10 @@ class TopicList extends React.Component {
               mediaIndex: 0,
               trendIndex: 0
             });
+          }else{
+            this.setState({
+              docList:'[]'
+            })
           }
         });
       }
@@ -396,7 +402,6 @@ class TopicList extends React.Component {
     if (prevProps.current !== this.props.current) {
       this.setState({
         checkedAll: false
-        // checkedArray:this.state.checkedArray.fill(false)
       })
     }
   }
@@ -586,4 +591,4 @@ const mapDispatchToProps = dispatch => {
   }
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)((Form.create()(TopicList)));
+export default connect(mapStateToProps, mapDispatchToProps)((Form.create()(BiddingInformation)));

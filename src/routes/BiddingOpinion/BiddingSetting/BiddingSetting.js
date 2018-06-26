@@ -15,7 +15,7 @@ const TabPane = Tabs.TabPane;
 const FormItem = Form.Item;
 const Option = Select.Option;
 const history = createHashHistory();
-class TopicSetting extends React.Component {
+class BiddingSetting extends React.Component {
     constructor() {
         super();
         this.state = {
@@ -67,11 +67,11 @@ class TopicSetting extends React.Component {
                   })
               }
                 request(api_top_nav).then(res=>{
-                 if(res.data){
-                    this.setState({
-                        topicCatList:res.data,                   
-                       })
-                 }
+                    if(res.data){
+                        this.setState({
+                            topicCatList:res.data,                   
+                        })
+                    }
                  })
           })
 
@@ -197,8 +197,6 @@ class TopicSetting extends React.Component {
              return;
            }
         let topicId=Store.getState().getRouterReducer.topicid;
-        console.log(topicId)
-        debugger
         this.props.form.validateFields((err, values) => {
             if (!err) {
                 if(getSecondTime(this.state.topicbDate)>=getSecondTime(this.state.topiceDate)){
@@ -418,84 +416,6 @@ class TopicSetting extends React.Component {
                             </Form>
                         </div>
                     </TabPane>
-                    {/* <TabPane tab="精准设置" key="2"> */}
-                    {/* <div className="fast-setting">
-                    <Form onSubmit={this.handleSubmit.bind(this)} className="login-form">
-                                <FormItem
-                                    label="专题名称"
-                                    {...formItemLayout}
-                                >
-                     {getFieldDecorator('topicName', {
-                    rules: [{ required: true, message: '请输入您要设置的专题名称！' }],
-                                    })(
-                           <Input placeholder="专题名称" style={{width: '300px'}}/>
-                                    )}
-               <span className="floatRigth">关键词同步到采集
-               <Switch defaultChecked={false} onChange={this.onChange.bind(this)} className="Switch"/>
-               </span>    
-                                </FormItem> 
-                                <FormItem
-                                    label="类型"
-                                    {...formItemLayout}
-                                >
-                                <Select style={{width: '154px'}} onSelect={this.onSelect.bind(this)} 
-                                value={this.state.select!==0?this.state.select.toString():topicCatid.toString()}>
-                                         {topicCatList}
-                                        </Select>                                 
-                                </FormItem>
-                                <FormItem
-                                    {...formItemLayout}
-                                    label="开始时间"
-                                >
-                                    {getFieldDecorator('start-time', config)(
-                                        <DatePicker showTime format="YYYY-MM-DD HH:mm:ss" />
-                                    )}
-                                </FormItem>
-                                <FormItem
-                                    {...formItemLayout}
-                                    label="结束时间"
-                                >
-                                    {getFieldDecorator('end-time', config)(
-                                        <DatePicker showTime format="YYYY-MM-DD HH:mm:ss" />
-                                    )}
-                                </FormItem>
-                                <FormItem
-                                    {...formItemLayout}
-                                    label="匹配关键词"
-                                >
-      <SettingPreciseTopic num2={this.state.num2}  
-               onDelrule={this.onDelrule.bind(this)}
-               onDelwayRule={this.onDelwayRule.bind(this)}
-               ruleId={this.state.ruleId}
-               onPreciseTopic={this.onPreciseTopic.bind(this)}
-      />
-                                    
-                                </FormItem>
-                                
-                                
-                                <FormItem className="addRule"
-                                    {...tailFormItemLayout} 
-                                >
-             <Button  type="primary" size="small" onClick={this.PreciseRule.bind(this)} >
-                                      + 添加规则
-                                 </Button>      
-                                </FormItem>                               
-                                <FormItem
-                                    {...tailFormItemLayout}
-                                >
-                     <Button type="primary" htmlType="submit" className="gap" 
-                       onClick={this.onAddtypeOne.bind(this)}
-                     >
-                                        保存
-                                    </Button>
-                                    <Button  type="primary" htmlType="submit">
-                                        取消
-                                    </Button>
-                                </FormItem>
-                                
-                            </Form>
-                        </div> */}
-                        {/* </TabPane> */}
                     <TabPane tab="高级设置" key="3">
                      <div className="fast-setting">
                      <Form onSubmit={this.handleSubmit.bind(this)} className="login-form">
@@ -601,4 +521,4 @@ const mapDispatchToProps = dispatch => {
         }
     }
 };
-export default connect(null,mapDispatchToProps)(Form.create()(TopicSetting));
+export default connect(null,mapDispatchToProps)(Form.create()(BiddingSetting));

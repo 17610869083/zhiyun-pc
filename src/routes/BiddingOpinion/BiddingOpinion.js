@@ -5,7 +5,7 @@ import {history} from '../../utils/history';
 import TopicList from '../TopicOpinion/TopicList/TopicList';
 import Information from './BiddingInformation/BiddingInformation';
 import Setting from './BiddingSetting/BiddingSetting'
-import {api_topic_del,api_topic_typeAdd,api_topic_typeDel,api_classify_revise, api_top_nav} from '../../services/api';
+import {api_topic_del,api_topic_typeAdd,api_topic_typeDel,api_classify_revise} from '../../services/api';
 import request from '../../utils/request';
 import './BiddingOpinion.less';
 import Iconfont from '../../components/IconFont';
@@ -14,7 +14,7 @@ import {connect} from 'react-redux';
 import { setTimeout } from 'timers';
 import {GRAY,BLACK} from '../../utils/colors';
 import Del from '../../assets/img/grayDel.svg'; 
-class TopicOpinion extends React.Component {
+class BiddingOpinion extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -68,8 +68,6 @@ class TopicOpinion extends React.Component {
             let firstTopicid={topicid:1,topicname:'test'};
             topicMessage.forEach((item)=>{
                       if(item['topicList'][0]!==undefined){
-                          debugger
-                          console.log(item['topicList'][0]['topicid'])
                            firstTopicid.topicid = item['topicList'][0]['topicid'];
                            firstTopicid.topicname = item['topicList'][0]['topicname'];
                            return firstTopicid;
@@ -110,14 +108,7 @@ class TopicOpinion extends React.Component {
             current: 'information',
             topicId:topicid
         })
-        // this.props.setlocationPathname({topicId:topicid,topicname:topicname});
-        request(api_top_nav+'&topcid=' + topicid).then(res=>{
-            // if(res.data){
-            //    this.setState({
-                //    topicCatList:res.data,                   
-                // })
-        //    s }
-            })
+        this.props.setlocationPathname({topicid:topicid,topicname:topicname});
           history.push({
             pathname:`/bidding/information`,
             search:`?topicId=${topicid}`
@@ -241,11 +232,20 @@ class TopicOpinion extends React.Component {
     delCancelThree(){
         this.setState({visibleThree:false})
     }
-    onDelitem({key}){
+    onDelitem(catid, {key}){
            if(key==='1'){
            	   this.setState({visibleOne:true})
-           }else{
-            this.setState({visibleThree:true})
+           }else if (key === '2'){
+               this.setState({visibleThree:true})
+           }else {
+                history.push({
+                    pathname:`/bidding/setting`,
+                    search: `?type=add`
+                })
+                this.setState({
+                    current: 'setting'
+                })
+                this.props.setlocationPathname({catid:catid});
            }
     }
     onCatid(catid){
@@ -273,12 +273,13 @@ class TopicOpinion extends React.Component {
         this.props.searchState({data:!this.state.isTopShow})
     }
     render() {
-    	const delItems = (
-            <Menu onClick={this.onDelitem.bind(this)}>
-                <Menu.Item key="2">重命名</Menu.Item>
-                <Menu.Item key="1">删除</Menu.Item>
-            </Menu>
-       );
+        const delItems = item => {
+            return <Menu onClick={this.onDelitem.bind(this,item.catid)}>
+            <Menu.Item key="2">重命名</Menu.Item>
+            <Menu.Item key="1">删除</Menu.Item>
+            <Menu.Item key="3">添加</Menu.Item>
+        </Menu>
+        }
         let {topicNavMessageSucceededState} =this.props;
         const LeftTopicLists=topicNavMessageSucceededState!==1&&topicNavMessageSucceededState.map((item,index)=>
           <div className="a-class" key={index}>
@@ -286,7 +287,7 @@ class TopicOpinion extends React.Component {
           <div className="leftBox" onClick={this.dropDown.bind(this,item.catid)} data-index='1' title={item.catname}>
             <i>< Iconfont type="icon-wenjianjia2" style={{fontSize:'18px'}}/></i><span className='mar'>{item.catname}</span>
           </div>
-          <Dropdown overlay={delItems} trigger={['click']}>
+          <Dropdown overlay={delItems(item)} trigger={['click']}>
             <i onClick={this.onCatid.bind(this,item.catid)}><Iconfont type="icon-icon02" className="icon-setting"/></i>
           </Dropdown>
           </div>
@@ -408,7 +409,6 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         setlocationPathname: req => {
-            console.log(req)
             dispatch(setlocationPathname(req));
         },
         getTopicLocationRequested: req => {
@@ -423,4 +423,4 @@ const mapDispatchToProps = dispatch => {
     }
 };
 
-export default  connect(mapStateToProps,mapDispatchToProps)(TopicOpinion);
+export default  connect(mapStateToProps,mapDispatchToProps)(BiddingOpinion);
