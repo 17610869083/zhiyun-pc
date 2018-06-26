@@ -810,7 +810,7 @@ class MaterialOpinion extends React.Component {
 																			aria-hidden="true"
 																			onClick={this.props.getCollectionOpinionListRequested.bind(this)}
 																		>
-																			< Iconfont type="icon-shoucang" style={{ width: 17, height: 17, marginBottom: 2, marginLeft: 20 }} />
+																			< Iconfont type="icon-shoucang-copy" style={{ width: 17, height: 17, marginBottom: 2, marginLeft: 20 }} />
 																		</i>
 																	</Dropdown>
 																</Tooltip>
@@ -898,7 +898,7 @@ class MaterialOpinion extends React.Component {
 																			aria-hidden="true"
 																			onClick={this.props.getCollectionOpinionListRequested.bind(this)}
 																		>
-																			< Iconfont type="icon-shoucang" style={{ width: 17, height: 17, marginBottom: 2, marginLeft: 20 }} />
+																			< Iconfont type="icon-shoucang-copy" style={{ width: 17, height: 17, marginBottom: 2, marginLeft: 20 }} />
 																		</i>
 																	</Dropdown>
 																</Tooltip>
@@ -1012,7 +1012,7 @@ class MaterialOpinion extends React.Component {
 												aria-hidden="true"
 												onClick={this.props.getCollectionOpinionListRequested.bind(this)}
 											>
-												< Iconfont type="icon-shoucang" style={{ width: 17, height: 17, marginLeft: 20 }} />
+												< Iconfont type="icon-shoucang-copy" style={{ width: 17, height: 17, marginLeft: 20 }} />
 											</i>
 										</Dropdown>
 									</Tooltip>
