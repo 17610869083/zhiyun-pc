@@ -7,6 +7,7 @@ import {exportSkip} from '../../redux/actions/createActions';
 import logo from '../../assets/img/logo.png';
 import CRcode from '../LoginPage/crcode.jpg';
 import {api_get_channel} from '../../services/api';
+import Iconfont from '../../components/IconFont'
 import request from '../../utils/request';
 import {urlTokey} from '../../utils/format';
 import AsyncComponent from '../../components/AsyncComponent/AsyncComponent'
@@ -145,7 +146,7 @@ class Index extends React.Component {
       if (item.channelurl === '/reportopinion/list') {
         menuList.push(<SubMenu
           key={item.key}
-          title={<Link to="/historyopinion"><span><Icon type={item.type} style={{fontSize: '16px'}}/><span
+          title={<Link to="/historyopinion"><span><i className="anticon"><Iconfont type={item.type} style={{fontSize: '16px'}}/></i><span
             style={{fontSize: '16px'}}>舆情报告</span></span></Link>}>
           <Menu.Item key="reportopinion" style={{fontSize: '16px'}}>
             <Link to="/reportopinion/list">
@@ -170,8 +171,8 @@ class Index extends React.Component {
         </SubMenu>)
       } else if (item.channelurl === '../systemMan/systemManDo?action=userList') {
         menuList.push(<SubMenu key={item.key} 
-                               title={<Link to="/noticesetting"><span><Icon type={item.type}
-                                 style={{fontSize: '16px'}}/><span
+                               title={<Link to="/noticesetting"><span><i className="anticon"><Iconfont type={item.type}
+                                 style={{fontSize: '16px'}}/></i><span
                                  style={{fontSize: '16px'}}>系统设置</span></span> </Link>}>
           <Menu.Item key="noticesetting" style={{fontSize: '16px'}}>
             <Link to="/noticesetting">
@@ -198,10 +199,10 @@ class Index extends React.Component {
         menuList.push(<Menu.Item key={item.key} style={{fontSize: '16px'}}>
           {item.channelurl.indexOf('http') !== -1 ?
             <a href={item.channelurl} target="blank">
-              <Icon type={item.type} style={{fontSize: '16px'}}/>
+              <i className="anticon"><Iconfont type={item.type} style={{fontSize: '16px'}}/></i>
               <span>{item.channelname}</span>
             </a> : <Link to={item.channelurl}>
-              <Icon type={item.type} style={{fontSize: '16px'}}></Icon>
+            <i className="anticon"><Iconfont type={item.type} style={{fontSize: '16px'}}/></i>
               <span>{item.channelname}</span>
             </Link>
           }
