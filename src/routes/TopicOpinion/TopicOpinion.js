@@ -69,14 +69,13 @@ class TopicOpinion extends React.Component {
           let topicMessage=this.props.topicNavMessageSucceededState;
           if(topicMessage!==1){
             let firstTopicid={topicid:1,topicname:'test'};
-            topicMessage.forEach((item)=>{
-                      if(item['topicList'][0]!==undefined){
-                           firstTopicid.topicid = topicMessage[0]['topicList'][0]['topicid'];
-                           firstTopicid.topicname = topicMessage[0]['topicList'][0]['topicname'];
-                           return firstTopicid;
-                      }
-            })
-            
+            for(let i in topicMessage){
+                if(topicMessage[i]['topicList'][0]!==undefined){
+                     firstTopicid.topicid = topicMessage[i]['topicList'][0]['topicid'];
+                     firstTopicid.topicname = topicMessage[i]['topicList'][0]['topicname'];
+                     break;
+                }
+            } 
             this.props.setlocationPathname(firstTopicid);
             this.setState({
                 topicLists:topicMessage,
