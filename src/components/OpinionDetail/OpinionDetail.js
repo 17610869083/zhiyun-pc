@@ -22,6 +22,7 @@ import {
   exportSkip,
   paginationPage
 } from '../../redux/actions/createActions';
+import IconFont from '../IconFont';
 import Store from '../../redux/store/index';
 import weixin from '../../assets/icon-img/weixin.png';
 import news from '../../assets/icon-img/news.png';
@@ -644,10 +645,14 @@ class OpinionDetail extends React.Component {
           })
     })
   }
+  //跳转到报告页
+  goReport(){
+     history.push('/choosetemplate') 
+  }
   render() {
     const {page} = this.props;
     const flag = this.props.docList&& this.props.docList.length === 0?true:false;
-    const docList = this.props.docList ? this.props.docList : [{carry: '新闻'}];
+    const docList = this.props.docList ? this.props.docList : [];
     // 素材库的目录
     const putinReportMenu = (
       <Menu onClick={this.putIntoMaterial.bind(this)}>
@@ -827,6 +832,13 @@ class OpinionDetail extends React.Component {
                         </Dropdown>
                       </Tooltip>
                     </div>
+                    <div>
+                    <Tooltip title='生成报告' placement="bottom">
+                      <span className="add-report" onClick={this.goReport.bind(this)}>
+                      <IconFont type="icon-icon-shengchengbaogao" />  
+                      </span>
+                    </Tooltip>
+                    </div>
                   </div>
               </div>
             </div>
@@ -920,6 +932,11 @@ class OpinionDetail extends React.Component {
                 <img src={Collection} alt="收藏"  style={{height:'18px'}}/>
                 </div>
               </Dropdown>
+            </Tooltip>
+            <Tooltip title='生成报告' placement="bottom">
+               <div className="operate-all">
+               <IconFont type="icon-icon-shengchengbaogao"></IconFont>  
+               </div>
             </Tooltip>
           </div>
           <Pagination

@@ -279,6 +279,7 @@ class TopicList extends React.Component {
                 pageCount: res.data.pageInfo.pageCount,
                 pageInfo:res.data.pageInfo,
                 media: res.data.carryCount,
+                count:res.data.pageInfo.count
             });
         }
         })
@@ -354,7 +355,7 @@ class TopicList extends React.Component {
         let topicID=this.props.getRouter;  
         if(topicID.topicid){
                 request(api_topic_message_list + '&topicid=' + topicID.topicid).then((res) => {
-                    if(res.data){
+                    if(res.data.code === 1){
                     this.setState({
                         docList: res.data.docList,
                         media: res.data.carryCount,
@@ -363,6 +364,10 @@ class TopicList extends React.Component {
                         pageInfo:res.data.pageInfo,
                         topicID:topicID.topicid
                     });
+                }else{
+                  this.setState({
+                    docList:'[]'
+                  })
                 }
                 });
         }
@@ -373,7 +378,7 @@ class TopicList extends React.Component {
       let topicID = this.props.getRouter;
       if (topicID.topicid) {
         request(api_topic_message_list +`&topicid=${topicID.topicid}`).then((res) => {
-          if (res.data) {
+          if (res.data.code === 1) {
             this.setState({
               docList: res.data.docList,
               media: res.data.carryCount,
@@ -387,6 +392,10 @@ class TopicList extends React.Component {
               mediaIndex: 0,
               trendIndex: 0
             });
+          }else{
+            this.setState({
+              docList:'[]'
+            })
           }
         });
       }
