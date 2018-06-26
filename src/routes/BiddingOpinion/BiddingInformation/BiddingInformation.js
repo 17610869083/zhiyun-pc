@@ -1,14 +1,19 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {connect} from 'react-redux';
-import {Pagination, DatePicker, Form, Icon, message, Button} from 'antd';
+import {Pagination, DatePicker, Form, message, Button} from 'antd';
+import request from '../../../utils/request';
 import OpinionDetail from '../../../components/OpinionDetail/OpinionDetail';
-import {opinionSearchRequested, searchKeywordSync, paginationPage} from '../../../redux/actions/createActions';
-import {URLToObject, getSecondTime} from '../../../utils/format';
-import {GRAY} from '../../../utils/colors';
-import './BiddingInformation.less';
+// import './TopicList.less';
+import './BiddingInformation.less'
+import {getTopicRequested, paginationPage, searchKeywordSync} from '../../../redux/actions/createActions';
+import {api_topic_message_list} from '../../../services/api';
+import {getSecondTime} from '../../../utils/format';
+import { setTimeout } from 'timers';
+
 const FormItem = Form.Item;
-class AllOpinion extends React.Component {
+
+class TopicList extends React.Component {
   constructor() {
     super();
     this.state = {
@@ -39,7 +44,33 @@ class AllOpinion extends React.Component {
         }
       ],
       isTopShow: true,
+      loading: true,
+      timeIndex: 0,
       timeValue: 'all',
+      trend: [
+        {
+          name: '全部',
+          value: 'all'
+        },
+        {
+          name: '正面',
+          value: -1
+        },
+        {
+          name: '中性',
+          value: 0
+        },
+        {
+          name: '负面',
+          value: 1
+        },
+        {
+          name: '预警',
+          value: 2
+        }
+      ],
+      trendIndex: 0,
+      trendValue: 'all',
       sort: [
         {
           name: '时间降序',
@@ -54,6 +85,7 @@ class AllOpinion extends React.Component {
           value: 'hot'
         },
       ],
+      sortIndex: 0,
       sortValue: 'timedown',
       filter: [
         {
@@ -65,67 +97,56 @@ class AllOpinion extends React.Component {
           value: 0
         }
       ],
+      filterIndex: 0,
       filterValue: 1,
       media: [
         {count: 0, value: "全部", key: "docApp"},
-
-        {count: 0, value: "APP", key: "docApp"},
-
       ],
+      mediaIndex: 0,
       mediaValue: '全部',
       page: 1,
       pagesize: 20,
-      pageCount: 500,
+      pageCount: 0,
       count: 0,
       docList: [],
-      begin: '0000-00-00 01:00:00',
-      end: '0000-00-00 02:00:00',
-      current: 1,
-      type: 0,
-      endTime: '',     
-      mediaList:{
-        'app':'APP',
-        'blog':'博客',
-        'medium':'平媒',
-        'wechat':'微信',
-        'weibo':'微博',
-        'news':'新闻',
-        'forum':'论坛'
-     }
+      begin: '0000-00-00 00:00:00',
+      end: '2222-22-22 22:22:22',
+      timePickerShow: false,
+      topicID: 1,
+      pageInfo: {},
+      current: 1
     }
   }
 
-  timeClick(value) {
+  timeClick(index, value) {
     this.setState({
+      timeIndex: index,
       timeValue: value
     });
-    if (this.state.type !== 1) {
-      const param = {
-        datetag: value,
-        order: this.state.sortValue,
-        similer: this.state.filterValue,
-        carry: this.state.mediaValue,
-        pagesize: this.state.pagesize
-      };
-      this.props.opinionSearchRequest(param);
-      this.props.paginationPage(1);
-      //this.props.searchKeywordSync({keyword: "", seltype: "1", type: 0});
+    if (index === 5) {
+      this.setState({
+        timePickerShow: !this.state.timePickerShow
+      })
+      return
     } else {
-      const param = {
-        datetag: value,
-        seltype:  this.props.ks.seltype,
-        keyword: this.props.ks.keyword,
-        order: this.state.sortValue,
-        similer: this.state.filterValue,
-        carry: this.state.mediaValue,
-        begin: this.state.begin,
-        end: this.state.end,
-        pagesize: this.state.pagesize
-      };
-      this.props.opinionSearchRequest(param);
-      this.props.paginationPage(1);
+      this.setState({
+        timePickerShow: false
+      })
     }
-
+    request(api_topic_message_list + `&pagesize=${this.state.pagesize}&topicid=${this.state.topicID}&datetag=${value}&neg=${this.state.trendValue}&order=${this.state.sortValue}&similer=${this.state.filterValue}&carry=${this.state.mediaValue}`
+     ).then((res) => {
+      if (res.data && res.data.docList) {
+        this.setState({
+          docList: res.data.docList,
+          pageCount: res.data.pageInfo.pageCount,
+          count: res.data.pageInfo.count,
+          pageInfo: res.data.pageInfo,
+          media: res.data.carryCount,
+        });
+      }
+    })
+    this.props.paginationPage(1);
+    this.props.searchKeywordSync({keyword: "1", seltype: "1", type: 0});
   }
 
   // 选择具体时间
@@ -135,7 +156,7 @@ class AllOpinion extends React.Component {
       if (err) {
         return;
       }
-      let rangeTimeValue = fieldsValue['range-time-picker'];
+      const rangeTimeValue = fieldsValue['range-time-picker'];
       const rangeEndTimeValue = fieldsValue['range-endtime-picker'];
       const values = {
         ...fieldsValue,
@@ -146,11 +167,7 @@ class AllOpinion extends React.Component {
       };
       const begin = values['range-time-picker'][0];
       const end = values['range-time-picker'][1];
-      if (getSecondTime(begin) > Math.round(new Date())) {
-        message.error('开始时间请不要大于当前时间');
-        return;
-      }
-      else if (getSecondTime(begin) > getSecondTime(end)) {
+      if (getSecondTime(begin) > getSecondTime(end)) {
         message.error('开始时间请不要大于结束时间');
         return;
       }
@@ -159,338 +176,240 @@ class AllOpinion extends React.Component {
         begin: begin,
         end: end,
         timeValue: 'custom',
+        timeIndex: 0
       });
 
-      if (this.state.type !== 1) {
-        const param = {
-          datetag: timeValue,
-          order: this.state.sortValue,
-          similer: this.state.filterValue,
-          carry: this.state.mediaValue,
-          begin: begin,
-          end: end,
-          pagesize: this.state.pagesize
-        };
-        this.props.opinionSearchRequest(param);
-        this.props.paginationPage(1);
-        //this.props.searchKeywordSync({keyword: "", seltype: "1", type: 0});
-      } else {
-        const param = {
-          datetag: timeValue,
-          seltype:  this.props.ks.seltype,
-          keyword: this.props.ks.keyword,
-          order: this.state.sortValue,
-          similer: this.state.filterValue,
-          carry: this.state.mediaValue,
-          begin: begin,
-          end: end,
-          pagesize: this.state.pagesize
-        };
-        this.props.opinionSearchRequest(param);
-        this.props.paginationPage(1);
-      }
+      request(api_topic_message_list + `&pagesize=${this.state.pagesize}&topicid=${this.state.topicID}&datetag=${timeValue}&neg=${this.state.trendValue}&order=${this.state.sortValue}&similer=${this.state.filterValue}&carry=${this.state.mediaValue}&begin=${begin}&end=${end}`)
+      .then((res) => {
+        if (res.data && res.data.docList) {
+          this.setState({
+            docList: res.data.docList,
+            pageCount: res.data.pageInfo.pageCount,
+            count: res.data.pageInfo.count,
+            pageInfo: res.data.pageInfo,
+            media: res.data.carryCount,
+          });
+        }
+      })
     });
+    this.props.paginationPage(1);
+    this.props.searchKeywordSync({keyword: "1", seltype: "1", type: 0});
   }
 
-  sortClick(value) {
+  trendClick(index, value) {
     this.setState({
+      trendIndex: index,
+      trendValue: value
+    });
+    const requestStr = this.state.timeValue !== 'custom' ?
+    `topicid=${this.state.topicID}&datetag=${this.state.timeValue}&neg=${value}&order=${this.state.sortValue}&similer=${this.state.filterValue}&carry=${this.state.mediaValue}`
+    :`topicid=${this.state.topicID}&datetag=custom&neg=${value}&order=${this.state.sortValue}&similer=${this.state.filterValue}&carry=${this.state.mediaValue}&begin=${this.state.begin}&end=${this.state.end}`
+    request(api_topic_message_list + `&${requestStr}` ).then((res) => {
+      if (res.data ) {
+        this.setState({
+          docList: res.data.docList,
+          pageCount: res.data.pageInfo.pageCount,
+          count: res.data.pageInfo.count,
+          pageInfo: res.data.pageInfo,
+          media: res.data.carryCount,
+        });
+      }
+    })
+    this.props.paginationPage(1);
+    this.props.searchKeywordSync({keyword: "1", seltype: "1", type: 0});
+  }
+
+  sortClick(index, value) {
+    this.setState({
+      sortIndex: index,
       sortValue: value
     });
-    if (this.state.type !== 1) {
-      const param = {
-        datetag: this.state.timeValue,
-        order: value,
-        similer: this.state.filterValue,
-        carry: this.state.mediaValue,
-        begin: this.state.begin,
-        end: this.state.end,
-        pagesize: this.state.pagesize
-      };
-      this.props.opinionSearchRequest(param);
-      this.props.paginationPage(1);
-      //this.props.searchKeywordSync({keyword: "", seltype: "1", type: 0});
-    } else {
-      const param = {
-        datetag: this.state.timeValue,
-        seltype:  this.props.ks.seltype,
-        keyword: this.props.ks.keyword,
-        order: value,
-        similer: this.state.filterValue,
-        carry: this.state.mediaValue,
-        begin: this.state.begin,
-        end: this.state.end,
-        pagesize: this.state.pagesize
-      };
-      this.props.opinionSearchRequest(param);
-      this.props.paginationPage(1);
+        const requestStr = this.state.timeValue !== 'custom' ?
+        `topicid=${this.state.topicID}&datetag=${this.state.timeValue}&neg=${this.state.trendValue}&order=${value}&similer=${this.state.filterValue}&carry=${this.state.mediaValue}`
+        :`topicid=${this.state.topicID}&datetag=custom&neg=${this.state.trendValue}&order=${value}&similer=${this.state.filterValue}&carry=${this.state.mediaValue}&begin=${this.state.begin}&end=${this.state.end}`
+        request(api_topic_message_list +`&${requestStr}`).then((res) => {
+            if(res.data&&res.data.code!==0){
+            this.setState({
+                docList: res.data.docList,
+                pageCount: res.data.pageInfo.pageCount,
+                count: res.data.pageInfo.count,
+                pageInfo:res.data.pageInfo,
+                media: res.data.carryCount,
+            });
+        }
+        })
+        this.props.paginationPage(1);
+        this.props.searchKeywordSync({keyword: "1", seltype: "1",type:0});
     }
-  }
 
-  filterClick(value) {
+  filterClick(index, value) {
     this.setState({
+      filterIndex: index,
       filterValue: value
     });
-    if (this.state.type !== 1) {
-      const param = {
-        datetag: this.state.timeValue,
-        order: this.state.sortValue,
-        similer: value,
-        carry: this.state.mediaValue,
-        begin: this.state.begin,
-        end: this.state.end,
-        pagesize: this.state.pagesize
-      };
-      this.props.opinionSearchRequest(param);
-      this.props.paginationPage(1);
-      //this.props.searchKeywordSync({keyword: "", seltype: "1", type: 0});
-    } else {
-      const param = {
-        datetag: this.state.timeValue,
-        seltype:  this.props.ks.seltype,
-        keyword: this.props.ks.keyword,
-        order: this.state.sortValue,
-        similer: value,
-        carry: this.state.mediaValue,
-        begin: this.state.begin,
-        end: this.state.end,
-        pagesize: this.state.pagesize
-      };
-      this.props.opinionSearchRequest(param);
-      this.props.paginationPage(1);
+        const requestStr = this.state.timeValue !== 'custom' ?
+        `topicid=${this.state.topicID}&datetag=${this.state.timeValue}&neg=${this.state.trendValue}&order=${this.state.sortValue}&similer=${value}&carry=${this.state.mediaValue}`
+        :`topicid=${this.state.topicID}&datetag=custom&neg=${this.state.trendValue}&order=${this.state.sortValue}&similer=${value}&carry=${this.state.mediaValue}&begin=${this.state.begin}&end=${this.state.end}`
+        request(api_topic_message_list + `&${requestStr}`).then((res) => {
+            if(res.data&&res.data.docList){
+            this.setState({
+                docList: res.data.docList,
+                pageCount: res.data.pageInfo.pageCount,
+                count: res.data.pageInfo.count,
+                pageInfo:res.data.pageInfo,
+                media: res.data.carryCount,
+            });
+           }
+        })
+        this.props.paginationPage(1);
+        this.props.searchKeywordSync({keyword: "1", seltype: "1",type:0});
     }
-  }
 
-  mediaClick(value) {
+  mediaClick(index, value) {
     this.setState({
+      mediaIndex: index,
       mediaValue: value
     });
-    if (this.state.type !== 1) {
-      const param = {
-        datetag: this.state.timeValue,
-        order: this.state.sortValue,
-        similer: this.state.filterValue,
-        carry: value,
-        begin: this.state.begin,
-        end: this.state.end,
-        pagesize: this.state.pagesize
-      };
-      this.props.opinionSearchRequest(param);
-      this.props.paginationPage(1);
-      //this.props.searchKeywordSync({keyword: "", seltype: "1", type: 0});
-    } else {
-      const param = {
-        datetag: this.state.timeValue,
-        seltype:  this.props.ks.seltype,
-        keyword: this.props.ks.keyword,
-        order: this.state.sortValue,
-        similer: this.state.filterValue,
-        carry: value,
-        begin: this.state.begin,
-        end: this.state.end,
-        pagesize: this.state.pagesize
-      };
-      this.props.opinionSearchRequest(param);
-      this.props.paginationPage(1);
+        const requestStr = this.state.timeValue !== 'custom' ?
+        `topicid=${this.state.topicID}&datetag=${this.state.timeValue}&neg=${this.state.trendValue}&order=${this.state.sortValue}&similer=${value}&carry=${value}`
+        :`topicid=${this.state.topicID}&datetag=custom&neg=${this.state.trendValue}&order=${this.state.sortValue}&similer=${value}&carry=${value}&begin=${this.state.begin}&end=${this.state.end}`
+        request(api_topic_message_list +`&${requestStr}`).then((res) => {
+            if(res.data&&res.data.docList){
+            this.setState({
+                docList: res.data.docList,
+                pageCount: res.data.pageInfo.pageCount,
+                pageInfo:res.data.pageInfo,
+                media: res.data.carryCount,
+            });
+        }
+        })
+        this.props.paginationPage(1);
+        this.props.searchKeywordSync({keyword: "1", seltype: "1",type:0});
     }
-  }
 
   onShowSizeChange(current, pageSize) {
     this.setState({
       page: current,
       pagesize: pageSize
     });
-    if (this.state.type !== 1) {
-      const param = {
-        datetag: this.state.timeValue,
-        order: this.state.sortValue,
-        similer: this.state.filterValue,
-        carry: this.state.mediaValue,
-        begin: this.state.begin,
-        end: this.state.end,
-        pagesize: pageSize
-      };
-      this.props.opinionSearchRequest(param);
-      this.props.paginationPage(1);
-     // this.props.searchKeywordSync({keyword: "", seltype: "1", type: 0});
-    } else {
-      const param = {
-        datetag: this.state.timeValue,
-        seltype:  this.props.ks.seltype,
-        keyword: this.props.ks.keyword,
-        order: this.state.sortValue,
-        similer: this.state.filterValue,
-        carry: this.state.mediaValue,
-        begin: this.state.begin,
-        end: this.state.end,
-        pagesize: pageSize
-      };
-      this.props.opinionSearchRequest(param);
-      this.props.paginationPage(1);
-    }
+    const requestStr = this.state.timeValue !== 'custom' ?
+      `topicid=${this.state.topicID}&datetag=${this.state.timeValue}&neg=${this.state.trendValue}&order=${this.state.sortValue}&similer=${this.state.filterValue}&carry=${this.state.mediaValue}&pagesize=${pageSize}`
+      : `topicid=${this.state.topicID}&datetag=custom&neg=${this.state.trendValue}&order=${this.state.sortValue}&similer=${this.state.filterValue}&carry=${this.state.mediaValue}&begin=${this.state.begin}&end=${this.state.end}&pagesize=${pageSize}`
+    request(api_topic_message_list + `&${requestStr}`).then((res) => {
+      if (res.data && res.data.docList) {
+        this.setState({
+          docList: res.data.docList,
+          pageCount: res.data.pageInfo.pageCount,
+          count: res.data.pageInfo.count,
+          pageInfo: res.data.pageInfo,
+          media: res.data.carryCount,
+        });
+      }
+    })
+    this.props.paginationPage(1);
+    this.props.searchKeywordSync({keyword: "1", seltype: "1", type: 0});
   }
 
   onPaginationChange(pagenumber) {
     this.setState({
       page: pagenumber
     });
-    let param='';
-    if(this.props.ks.keyword===''){
-      param = {
-      datetag: this.state.timeValue,
-      order: this.state.sortValue,
-      similer: this.state.filterValue,
-      carry: this.state.mediaValue,
-      begin: this.state.begin,
-      end: this.state.end,
-      page: pagenumber,
-      pagesize: this.state.pagesize
-    };
-   }else{
-      param = {
-      seltype: this.props.ks.seltype,
-      keyword:this.props.ks.keyword,
-      page:pagenumber,
-      similer:1
-     }
-   }
-    this.props.opinionSearchRequest(param);
     this.props.paginationPage(pagenumber);
+    const requestStr = this.state.timeValue !== 'custom' ?
+      `topicid=${this.state.topicID}&datetag=${this.state.timeValue}&neg=${this.state.trendValue}&order=${this.state.sortValue}&similer=${this.state.filterValue}&carry=${this.state.mediaValue}&page=${pagenumber}&pagesize=${this.state.pagesize}`
+      : `topicid=${this.state.topicID}&datetag=custom&neg=${this.state.trendValue}&order=${this.state.sortValue}&similer=${this.state.filterValue}&carry=${this.state.mediaValue}&page=${pagenumber}&pagesize=${this.state.pagesize}&begin=${this.state.begin}&end=${this.state.end}`
+    request(api_topic_message_list + `&${requestStr}`).then((res) => {
+      if (res.data && res.data.code !== 0) {
+        this.setState({
+          docList: res.data.docList,
+          pageCount: res.data.pageInfo.pageCount,
+          count: res.data.pageInfo.count,
+          pageInfo: res.data.pageInfo,
+          media: res.data.carryCount
+        });
+      }
+    })
     ReactDOM.findDOMNode(this).scrollIntoView();
   }
 
-  dataChanged() {
-    const searchMessage = this.props.ks;
-    if (this.state.type !== 1) {
-      const param = {
-        datetag: this.state.timeValue,
-        order: this.state.sortValue,
-        similer: this.state.filterValue,
-        carry: this.state.mediaValue,
-        begin: this.state.begin,
-        end: this.state.end,
-        page: this.props.page,
-        pagesize: this.state.pagesize
-      };
-      this.props.opinionSearchRequest(param);
-    } else {
-      const param = {
-        seltype: searchMessage.seltype,
-        keyword: searchMessage.keyword,
-        similer:this.state.filterValue,
-        datetag:this.state.timeValue,
-        order:this.state.sortValue,
-        carry:this.state.mediaValue,
-        page:this.props.page
-      };
-      this.props.opinionSearchRequest(param);
-      this.props.paginationPage(1);
-    }
+  dataChanged(data) {
+    this.dataChangeTimer = setTimeout(() => {
+      const requestStr = this.state.timeValue !== 'custom' ?
+      `topicid=${this.state.topicID}&datetag=${this.state.timeValue}&neg=${this.state.trendValue}&order=${this.state.sortValue}&similer=${this.state.filterValue}&carry=${this.state.mediaValue}&page=${this.props.page}&pagesize=${this.state.pagesize}`
+      : `topicid=${this.state.topicID}&datetag=custom&neg=${this.state.trendValue}&order=${this.state.sortValue}&similer=${this.state.filterValue}&carry=${this.state.mediaValue}&page=${this.props.page}&pagesize=${this.state.pagesize}&begin=${this.state.begin}&end=${this.state.end}`
+      request(api_topic_message_list + `&${requestStr}`).then((res) => {
+      if (res.data) {
+        this.setState({
+          docList: res.data.docList,
+          media: res.data.carryCount,
+          pageCount: res.data.pageInfo.pageCount,
+          count: res.data.pageInfo.count,
+          pageInfo: res.data.pageInfo,
+        });
+      }
+      }); 
+    },10)
   }
-
-  homepageMore(pathname) {
-    if (pathname === '#/allopinion?datetag=today') {
+      componentDidMount() {  
+        this.topicTimer = setTimeout( ()=>{
+        let topicID=this.props.getRouter;
+        if(topicID.topicid){
+                request(api_topic_message_list + '&topicid=' + topicID.topicid).then((res) => {
+                  console.log(res)
+                    if(res.data && res.data.code!==0){
+                    this.setState({
+                        docList: res.data.docList,
+                        media: res.data.carryCount,
+                        pageCount: res.data.pageInfo.pageCount,
+                        count: res.data.pageInfo.count,
+                        pageInfo:res.data.pageInfo,
+                        topicID:topicID.topicid
+                    });
+                }
+                });
+        }
+       },700)   
+    }
+  componentDidUpdate(prevProps, prevState) {
+    if (prevProps.location.search !== this.props.location.search) {
+      let topicID = this.props.getRouter;
+      if (topicID.topicid) {
+        request(api_topic_message_list +`&topicid=${topicID.topicid}`).then((res) => {
+          if (res.data && res.data.code!==0) {
+            this.setState({
+              docList: res.data.docList,
+              media: res.data.carryCount,
+              pageCount: res.data.pageInfo.pageCount,
+              count: res.data.pageInfo.count,
+              pageInfo: res.data.pageInfo,
+              topicID: topicID.topicid,
+              timeIndex: 0,
+              sortIndex: 0,
+              filterIndex: 0,
+              mediaIndex: 0,
+              trendIndex: 0
+            });
+          }
+        });
+      }
+    }
+    if (prevProps.current !== this.props.current) {
       this.setState({
-        timeValue: 'today'
-      })
-    } else if (pathname === '#/allopinion?datetag=today&neg=1') {
-      this.setState({
-        timeValue: 'today',
-      })
-    } else if (pathname === '#/allopinion?datetag=all&neg=1') {
-      this.setState({
-        timeValue: 'all',
+        checkedAll: false
+        // checkedArray:this.state.checkedArray.fill(false)
       })
     }
-    else if (pathname === '#/allopinion?datetag=today&neg=2') {
-      this.setState({
-        timeValue: 'today',
-      })
-    }else if (pathname === '#/allopinion?datetag=today&neg=all') {
-      this.setState({
-        timeValue: 'today',
-      })
-    }else if (pathname === '#/allopinion?datetag=all&neg=2') {
-      this.setState({
-        timeValue: 'all',
-      })
-    } 
-    else if (pathname === '#/allopinion?carry=weibo&neg=all') {
-      this.setState({
-        mediaValue: '微博',
-      })
-    } else if (pathname === '#/allopinion?carry=weibo&neg=1') {
-      this.setState({
-        mediaValue: '微博',
-      })
-    }else if (pathname.indexOf('media') !== -1){
-       let media =  pathname.split('&')[0].split('=')[1];
-       let day =  pathname.split('&')[1].split('=')[1];
-       this.setState({
-        mediaValue: this.state.mediaList[media],
-        timeValue: day
-       })
-    } else {
-      this.setState({
-        timeValue: 'all'
-      })
-    }
-    const obj = URLToObject(pathname);
-    const param = {
-      datetag: this.state.timeValue,
-      order: this.state.sortValue,
-      similer: this.state.filterValue,
-      carry: this.state.mediaValue,
-      begin: this.state.begin,
-      end: this.state.end,
-      page: this.state.page,
-      pagesize: this.state.pagesize
-    };
-    const newParam = Object.assign(param, obj);
-    this.props.opinionSearchRequest(newParam);
-  }
-
-  componentWillMount() {
-    if (this.props.location && this.props.location.search !== "?type=search") {
-      this.homepageMore(window.location.hash);
-    }
-
-  }
-
-  componentDidMount() {
-    ReactDOM.findDOMNode(this).scrollIntoView();
-    if(this.props.ks.keyword !==''){
-      this.setState({
-          type:1
-      })
-   }
   }
 
   componentWillUnmount() {
     this.props.paginationPage(1);
+    clearTimeout(this.dataChangeTimer); 
+    clearTimeout(this.topicTimer); 
   }
 
-  dateChange(date, dateString) {
-    this.setState({
-      endTime: dateString
-    })
-  }
-
-  searchType(data) {
-    this.setState({
-      type: data
-    })
-  }
-  remove(){
-    this.setState({
-       timeValue:'all', 
-       filterValue:1,
-       mediaValue:'全部',
-       sortValue:'timedown'
-    })
-  }
   render() {
-    const {docList, carryCount, pageInfo, page} = this.props;
     const {getFieldDecorator} = this.props.form;
+    const {page} = this.props;
     const formItemLayout = {
       labelCol: {
         xs: {span: 24},
@@ -501,13 +420,21 @@ class AllOpinion extends React.Component {
         sm: {span: 16},
       },
     };
-
     // 时间
     const Time = this.state.time.map((item, index) =>
       <div
         key={index}
-        onClick={this.timeClick.bind(this, item.value)}
-        className={item.value === this.state.timeValue ? 'item active' : 'item'}
+        onClick={this.timeClick.bind(this, index, item.value)}
+        className={index === this.state.timeIndex ? 'item active' : 'item'}
+      ><span className="item-inner">{item.name}</span></div>
+    );
+
+    // 倾向
+    const Trend = this.state.trend.map((item, index) =>
+      <div
+        key={index}
+        onClick={this.trendClick.bind(this, index, item.value)}
+        className={index === this.state.trendIndex ? 'item active' : 'item'}
       ><span className="item-inner">{item.name}</span></div>
     );
 
@@ -515,8 +442,8 @@ class AllOpinion extends React.Component {
     const Sort = this.state.sort.map((item, index) =>
       <div
         key={index}
-        onClick={this.sortClick.bind(this, item.value)}
-        className={item.value === this.state.sortValue ? 'fours active' : 'fours'}
+        onClick={this.sortClick.bind(this, index, item.value)}
+        className={index === this.state.sortIndex ? 'fours active' : 'fours'}
       ><span className="item-inner">{item.name}</span></div>
     );
 
@@ -524,25 +451,24 @@ class AllOpinion extends React.Component {
     const Filter = this.state.filter.map((item, index) =>
       <div
         key={index}
-        onClick={this.filterClick.bind(this, item.value)}
-        className={item.value === this.state.filterValue ? 'item active' : 'item'}
+        onClick={this.filterClick.bind(this, index, item.value)}
+        className={index === this.state.filterIndex ? 'item active' : 'item'}
       ><span className="item-inner">{item.name}</span></div>
     );
 
-
     // 媒体类型
-    const Media = carryCount.map((item, index) =>
+    const Media = this.state.media.map((item, index) =>
       <div
         key={index}
-        onClick={this.mediaClick.bind(this, item.value)}
-        className={item.value === this.state.mediaValue ? 'item active' : 'item'}
+        onClick={this.mediaClick.bind(this, index, item.value)}
+        className={index === this.state.mediaIndex ? 'item active' : 'item'}
       ><p className="item-inner">{item.key === 'docSearch' ? '其它' : item.value}</p>
         <p className="count">{item.count}</p>
       </div>
     );
-
     const param = {
       datetag: this.state.timeValue,
+      neg: this.state.trendValue,
       order: this.state.sortValue,
       similer: this.state.filterValue,
       carry: this.state.mediaValue,
@@ -552,34 +478,27 @@ class AllOpinion extends React.Component {
       pagesize: this.state.pagesize
     };
     return (
-      <div className="all-opinion" id="anchor">
-       
+      <div className="topic-list-opinion">
         <div className="sort-top" style={this.props.search ? {display: 'block'} : {display: 'none'}}>
           <div className="sort-items">
             <div className="left">时间：</div>
             <div className="right">
               {Time}
             </div>
-            <div className="other">
+            <div className="other" style={this.state.timePickerShow ? {display: 'block'} : {display: 'none'}}>
               <Form onSubmit={this.handleSubmit.bind(this)}>
                 <FormItem
                   {...formItemLayout}
                 >
-                  {getFieldDecorator('range-time-picker'
-                  )(
-                    <DatePicker showTime placeholder="开始日期" format="YYYY-MM-DD HH:mm:ss"
-                                className="DatePicker"
-
-                    />
+                  {getFieldDecorator('range-time-picker')(
+                    <DatePicker showTime placeholder="开始日期" format="YYYY-MM-DD HH:mm:ss"/>
                   )}
                 </FormItem>
                 <FormItem
                   {...formItemLayout}
                 >
-                  {getFieldDecorator('range-endtime-picker'
-                  )(
+                  {getFieldDecorator('range-endtime-picker')(
                     <DatePicker showTime placeholder="结束日期" format="YYYY-MM-DD HH:mm:ss"
-                                className="DatePicker"
                     />
                   )}
                 </FormItem>
@@ -587,6 +506,12 @@ class AllOpinion extends React.Component {
                   确定
                 </Button>
               </Form>
+            </div>
+          </div>
+          <div className="sort-items">
+            <div className="left">倾向：</div>
+            <div className="right">
+              {Trend}
             </div>
           </div>
           <div className="sort-items">
@@ -609,17 +534,14 @@ class AllOpinion extends React.Component {
           </div>
         </div>
         <div className="middle">
-          <div className="count">根据您的条件，为您筛选出<span className="number">{pageInfo.count}</span>条数据！</div>
-          <OpinionDetail docList={docList}
+          <div className="count">根据您的条件，为您筛选出<span className="number">{this.state.pageInfo.count}</span>条数据！</div>
+          <OpinionDetail docList={this.state.docList}
                          onDataChange={this.dataChanged.bind(this)}
                          param={param}
                          pageSize={this.state.pagesize}
-                         propsType='AllopinionList'
-                         pageInfo={pageInfo}
+                         propsType='TopicList'
+                         pageInfo={this.state.pageInfo}
                          current={page}
-                         type={this.state.type}
-                         searchType={this.searchType.bind(this)}
-                         remove = {this.remove.bind(this)}
           />
         </div>
         <div className="bottom">
@@ -629,9 +551,9 @@ class AllOpinion extends React.Component {
                         defaultPageSize={20}
                         onChange={this.onPaginationChange.bind(this)}
                         onShowSizeChange={this.onShowSizeChange.bind(this)}
-                        total={pageInfo.count}
-                        getPopupContainer={() => document.querySelector('.all-opinion')}
+                        total={this.state.count}
                         current={page}
+                        getPopupContainer={() => document.querySelector('.topic-list-opinion')}
             />
           </div>
         </div>
@@ -639,30 +561,29 @@ class AllOpinion extends React.Component {
     )
   }
 }
+
+
 const mapStateToProps = state => {
   return {
     themeColor: state.changeThemeReducer,
-    docList: state.opinionSearchSucceededReducer.data.docList,
-    carryCount: state.opinionSearchSucceededReducer.data.carryCount,
-    pageInfo: state.opinionSearchSucceededReducer.data.pageInfo,
-    ks: state.searchKeywordSyncReducer.ks,
+    keyword: state.onSearchContentReducer.keyword,
     page: state.paginationPageReducer,
     search: state.searchStateReducer.data,
+    getRouter: state.getRouterReducer
   }
 };
-
 const mapDispatchToProps = dispatch => {
   return {
-    opinionSearchRequest: req => {
-      dispatch(opinionSearchRequested(req));
-    },
-    searchKeywordSync: ks => {
-      dispatch(searchKeywordSync(ks));
+    topicListRequest: req => {
+      dispatch(getTopicRequested(req));
     },
     paginationPage: req => {
       dispatch(paginationPage(req));
+    },
+    searchKeywordSync: ks => {
+      dispatch(searchKeywordSync(ks));
     }
   }
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)((Form.create()(AllOpinion)));
+export default connect(mapStateToProps, mapDispatchToProps)((Form.create()(TopicList)));

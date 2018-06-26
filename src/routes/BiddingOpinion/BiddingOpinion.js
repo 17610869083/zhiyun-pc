@@ -3,11 +3,9 @@ import {Icon, Menu,Modal,Input,Dropdown,message} from 'antd';
 import { Route, Switch} from 'react-router-dom';
 import {history} from '../../utils/history';
 import TopicList from '../TopicOpinion/TopicList/TopicList';
-import Analysis from './BiddingAnalysis/BiddingAnalysis';
 import Information from './BiddingInformation/BiddingInformation';
-import Setting from './BiddingSetting/BiddingSetting';
-
-import {api_topic_del,api_topic_typeAdd,api_topic_typeDel,api_classify_revise} from '../../services/api';
+import Setting from './BiddingSetting/BiddingSetting'
+import {api_topic_del,api_topic_typeAdd,api_topic_typeDel,api_classify_revise, api_top_nav} from '../../services/api';
 import request from '../../utils/request';
 import './BiddingOpinion.less';
 import Iconfont from '../../components/IconFont';
@@ -51,7 +49,8 @@ class TopicOpinion extends React.Component {
             return
         }
         history.push({
-            pathname:`/bidding/${e.key}`
+            pathname:`/bidding/${e.key}`,
+            search:`?topicid=${this.state.topicId}`
         });
         this.setState({
             current: e.key
@@ -69,8 +68,10 @@ class TopicOpinion extends React.Component {
             let firstTopicid={topicid:1,topicname:'test'};
             topicMessage.forEach((item)=>{
                       if(item['topicList'][0]!==undefined){
-                           firstTopicid.topicid = topicMessage[0]['topicList'][0]['topicid'];
-                           firstTopicid.topicname = topicMessage[0]['topicList'][0]['topicname'];
+                          debugger
+                          console.log(item['topicList'][0]['topicid'])
+                           firstTopicid.topicid = item['topicList'][0]['topicid'];
+                           firstTopicid.topicname = item['topicList'][0]['topicname'];
                            return firstTopicid;
                       }
             })
@@ -106,14 +107,21 @@ class TopicOpinion extends React.Component {
     queryTopic(topicid,topicname,e){
         this.setState({
             materialCurrent: topicid,
-            current: 'topiclist',
+            current: 'information',
             topicId:topicid
         })
-          this.props.setlocationPathname({topicid:topicid,topicname:topicname});
+        // this.props.setlocationPathname({topicId:topicid,topicname:topicname});
+        request(api_top_nav+'&topcid=' + topicid).then(res=>{
+            // if(res.data){
+            //    this.setState({
+                //    topicCatList:res.data,                   
+                // })
+        //    s }
+            })
           history.push({
-            pathname:`/topic/topiclist`,
+            pathname:`/bidding/information`,
             search:`?topicId=${topicid}`
-            });
+        });
 
     }
     onChange(e){
@@ -301,7 +309,7 @@ class TopicOpinion extends React.Component {
         );
         return (
             <div className="topic-opinion">
-             {TopicList}
+                {TopicList}
                 <div className="topic-opinion-wrapper">
                 <div className="topic-info">
                     <div className="topic-top" style={{background:GRAY}}>
@@ -332,7 +340,7 @@ class TopicOpinion extends React.Component {
                         <Switch>
                             <Route path="/bidding/information" component={Information} />
                             {/* <Route path="/bidding/analysis" component={Analysis} /> */}
-                            {/* <Route path="/bidding/setting" component={Setting}/> */}
+                            <Route path="/bidding/setting" component={Setting}/>
                         </Switch>
                     </div>
                 </div>
@@ -400,6 +408,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         setlocationPathname: req => {
+            console.log(req)
             dispatch(setlocationPathname(req));
         },
         getTopicLocationRequested: req => {
