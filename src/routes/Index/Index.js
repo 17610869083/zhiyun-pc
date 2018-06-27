@@ -235,7 +235,7 @@ class Index extends React.Component {
               style={this.state.collapsed && this.state.flag ? {
                 backgroundColor: '#fff',
                 maxHeight: '600px'
-              } : {backgroundColor: '#fff', maxHeight: '600px', overflow: 'auto'}}
+              } : {backgroundColor: '#fff', overflow: 'auto'}}
               className="selectMenu"
               selectedKeys={[urlTokey()]}
             >
