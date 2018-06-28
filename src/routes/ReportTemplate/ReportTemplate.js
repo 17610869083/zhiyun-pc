@@ -62,6 +62,9 @@ class ReportTemplate extends React.Component{
                 templateIndex:index
              })
         }
+        onBriefing = () => {
+					history.push('/briefing')          
+        }
        render(){
           const templateType = this.state.templateType.map( (item,index) => {
                 return <li className={this.state.templateIndex === index ? 'template-type template-type-active':'template-type'} 
@@ -99,7 +102,7 @@ class ReportTemplate extends React.Component{
                   <div className="report-preview">
                       <div className="report-title" style={{background:GRAY}}>
                         <span>报告预览</span>
-                        <Button type="primary">确定模板</Button>
+                        <Button type="primary" onClick={this.onBriefing.bind(this)}>确定模板</Button>
                       </div>
                   </div>
               </div>
