@@ -175,6 +175,7 @@ class Index extends React.Component {
               <span>通知设置</span>
             </Link>
           </Menu.Item>
+          
           <Menu.Item key="warnsetting" style={{fontSize: '16px'}}>
             <Link to="/warnsetting">
               <span>预警设置</span>
