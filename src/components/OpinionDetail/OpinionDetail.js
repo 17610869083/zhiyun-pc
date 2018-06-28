@@ -490,20 +490,16 @@ class OpinionDetail extends React.Component {
         page: pagenumber
       });
       this.props.opinionSearchRequest(param);
-      console.log(1)
     } else if (this.props.searchKeyword.type === 1) {
       this.props.opinionSearchRequest({
         seltype: this.state.seltype, keyword: this.props.searchKeyword.keyword,
         page: pagenumber
       });
-      console.log(2)
     }
     else if (this.props.propsType === 'AllopinionList') {
       this.props.opinionSearchRequest(param);
-      console.log(3)
     } else {
       this.props.onDataChange(pagenumber);
-      console.log(4)
     }
   }
 
@@ -647,7 +643,12 @@ class OpinionDetail extends React.Component {
   }
   //跳转到报告页
   goReport(){
-     history.push('/choosetemplate') 
+     if(this.checkedTrue().length !== 0) {
+          history.push('/choosetemplate?reportType=01')   
+     }else{
+          history.push('/choosetemplate')   
+     }
+    
   }
   render() {
     const {page} = this.props;

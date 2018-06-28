@@ -3,6 +3,7 @@ import {connect} from 'react-redux';
 import {Row, Col, Table} from 'antd';
 import ReactEchartsCore from 'echarts-for-react/lib/core';
 import './TopicCount.less';
+import {topicLengend} from '../../../utils/format'
 import echarts from 'echarts/lib/echarts';
 import 'echarts/lib/chart/line';
 import 'echarts/lib/chart/bar';
@@ -82,10 +83,10 @@ class TopicCount extends React.Component {
             topicGlobal:{},
             trendOptionData:[],
             mediaTypeData:[],
-            mediaSiteData:{},
-            mediaTypeTrendData:{},
-            negativeCarryData:{},
-            negativeMediaData:{}
+            mediaSiteData:[],
+            mediaTypeTrendData:[],
+            negativeCarryData:[],
+            negativeMediaData:[]
         }
     }
     componentDidMount(){
@@ -305,11 +306,11 @@ class TopicCount extends React.Component {
                 },
                     show: true
                     },
-            legend: {
-                orient: 'vertical',
-                left: 'left',
-                data: ['直接访问','邮件营销','联盟广告','视频广告','搜索引擎']
-            },
+            // legend: {
+            //     orient: 'horizontal',
+            //     left: 'center',
+            //     data: this.state.trendOptionData.length!==0?topicLengend(this.state.trendOptionData):[],
+            // },
 
             series : [
                 {
@@ -389,6 +390,7 @@ class TopicCount extends React.Component {
                 trigger: 'item',
                 formatter: "{a} <br/>{b} : {c} ({d}%)"
             },
+            //color:['#ff73a9','#ff73a9','#ffb96a','#499bff','#5bcf3c','#2fdce0','#52c6ff'],
             toolbox: {
                 right:30,
                 feature: {
@@ -434,11 +436,11 @@ class TopicCount extends React.Component {
                 },
                     show: true
                     },
-            legend: {
-                orient: 'vertical',
-                left: 'left',
-                data: ['直接访问','邮件营销','联盟广告','视频广告','搜索引擎']
-            },
+            // legend: {
+            //     orient: 'horizontal',
+            //     left: 'center',
+            //     data: this.state.mediaTypeData.length!==0?topicLengend(this.state.mediaTypeData):[],
+            // },
             series : [
                 {
                     name: '访问来源',
@@ -551,6 +553,11 @@ class TopicCount extends React.Component {
                     return tar.name + '<br/>' + tar.seriesName + ' : ' + tar.value;
                 }
             },
+            // legend: {
+            //     orient: 'horizontal',
+            //     left: 'center',
+            //     data: this.state.mediaTypeTrendData.length!==0?topicLengend(this.state.mediaTypeTrendData.series):[],
+            // },   
             toolbox: {
                 right:30,
                 feature: {
@@ -623,11 +630,12 @@ class TopicCount extends React.Component {
                 trigger: 'item',
                 formatter: "{a} <br/>{b}: {c} ({d}%)"
             },
-            legend: {
-                orient: 'vertical',
-                x: 'left',
-                data:['直接访问','邮件营销','联盟广告','视频广告','搜索引擎']
-            },
+            // legend: {
+            //     orient: 'horizontal',
+            //     left: 'center',
+            //     data: this.state.negativeCarryData.length!==0?topicLengend(this.state.negativeCarryData.series[0]['data']):[],
+            // },
+            //color:['#ff73a9','#ff73a9','#ffb96a','#499bff','#5bcf3c','#2fdce0','#52c6ff'],
             toolbox: {
                 right:30,
                 feature: {
