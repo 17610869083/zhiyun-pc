@@ -4,6 +4,7 @@ import './ReportTemplate.less';
 import './swiper.css';
 import {GRAY} from '../../utils/colors'
 import {Input,Button} from 'antd';
+import {history} from '../../utils/history';
 class ReportTemplate extends React.Component{
       constructor(){
           super()
@@ -58,6 +59,9 @@ class ReportTemplate extends React.Component{
                 flag:false
              })
         }
+        onBriefing = () => {
+					history.push('/briefing')          
+        }
        render(){
           const templateType = this.state.templateType.map( (item,index) => {
                 return <li className={this.state.templateIndex === index ? 'template-type template-type-active':'template-type'} 
@@ -97,7 +101,7 @@ class ReportTemplate extends React.Component{
                   <div className="report-preview">
                       <div className="report-title" style={{background:GRAY}}>
                         <span>报告预览</span>
-                        <Button type="primary">确定模板</Button>
+                        <Button type="primary" onClick={this.onBriefing.bind(this)}>确定模板</Button>
                       </div>
                       <div className="cellbox">
                       <div className="cells" style={{transitionDuration: '300ms',transform: 'translate3d('+this.state.num + 'px, 0px, 0px)'}}
