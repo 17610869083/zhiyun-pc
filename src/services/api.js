@@ -350,4 +350,13 @@ export const api_export_small=host+'exp/ExportData?action=getListBySource';
 //报告列表页
 export const api_get_all_report = host + 'Report?action=getAllReport';
 //报告模板
-export const api_get_template_report = host + 'reportDo?action=getAllForm';
+export const api_get_template_report = host + 'Report?action=getAllForm';
+//预览模板
+export const api_get_template_report_preview = host + 'Report?action=previewTemplate';
+//修改报告名称
+export const api_update_report_name = host + 'Report?action=updateReportName';
+//搜索报告
+export const api_search_report = host + 'Report?action=searchReport';
+//删除报告
+export const api_new_delete_report = host + 'Report?action=deleteReport'; 
+

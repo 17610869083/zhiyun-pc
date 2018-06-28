@@ -5,7 +5,12 @@
         height: 50px;
         display: flex;
         align-items: center;
-        padding-left: 24px;
+        justify-content: space-between;
+        padding:0 24px;
+        .ant-input{
+             width: 188px;
+             color:#838383;
+        }
     }
     .template-list{
         height: 46px;
@@ -23,16 +28,32 @@
         min-height: 700px;
         background: #fff;
         margin-top: 24px;
-        padding:60px 0 0 14px;
+        padding:40px 0 0 14px;
         ul{
             width: 87%;
-            li{
-                float:left;
-                width: 177px;
-                height: 266px;
-                border: 1px solid #5a8bff;
-                margin-left: 46px;
+            .cont{
+                width: 200px;
                 border-radius:6px;
+                display: inline-block;
+                margin: 20px 20px;
+                cursor: pointer;
+                padding:0 22px;
+                height: 266px;
+                img{
+                    width: 150px;
+                    height: 196px;
+                    display: block;
+                    margin: 20px auto;
+                   }
+                p{
+                    text-align: center;
+                }
+            }
+            .normal{
+                border:1px solid #6893ff;
+            }
+            .active{
+                border:2px solid #6893ff;
             }
         }
     }
