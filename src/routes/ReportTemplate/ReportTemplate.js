@@ -31,8 +31,6 @@ class ReportTemplate extends React.Component{
             if(this.props.location.search ){
             let typeList = [];
             let search = this.props.location.search.split('&');
-
-            console.log(this.props.location.search)
             request(api_get_template_report + `&reportType=${search[0].split('=')[1]}`)
             .then( res => {
                 if(res.data.code === 1){     
