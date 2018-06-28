@@ -11,9 +11,9 @@
  */
 
 (function (global, factory) {
-  typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
+  return typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
   ''
-}(this, (function () { 'use strict';
+}(this, (function () { 
 
   /**
    * SSR Window 1.0.0
@@ -334,7 +334,7 @@
     var listener = args[2];
     var capture = args[3];
     if (typeof args[1] === 'function') {
-      (assign = args, eventType = assign[0], listener = assign[1], capture = assign[2]);
+      assign = args; eventType = assign[0]; listener = assign[1]; capture = assign[2];
       targetSelector = undefined;
     }
     if (!capture) { capture = false; }
@@ -403,7 +403,7 @@
     var listener = args[2];
     var capture = args[3];
     if (typeof args[1] === 'function') {
-      (assign = args, eventType = assign[0], listener = assign[1], capture = assign[2]);
+      assign = args; eventType = assign[0]; listener = assign[1];capture = assign[2];
       targetSelector = undefined;
     }
     if (!capture) { capture = false; }
@@ -3208,11 +3208,11 @@
     var el = swiper.el;
     var wrapperEl = swiper.wrapperEl;
 
-    {
+    
       swiper.onTouchStart = onTouchStart.bind(swiper);
       swiper.onTouchMove = onTouchMove.bind(swiper);
       swiper.onTouchEnd = onTouchEnd.bind(swiper);
-    }
+    
 
     swiper.onClick = onClick.bind(swiper);
 
@@ -3220,7 +3220,7 @@
     var capture = !!params.nested;
 
     // Touch Events
-    {
+    
       if (!Support.touch && (Support.pointerEvents || Support.prefixedPointerEvents)) {
         target.addEventListener(touchEvents.start, swiper.onTouchStart, false);
         doc.addEventListener(touchEvents.move, swiper.onTouchMove, capture);
@@ -3242,7 +3242,7 @@
       if (params.preventClicks || params.preventClicksPropagation) {
         target.addEventListener('click', swiper.onClick, true);
       }
-    }
+    
 
     // Resize handler
     swiper.on((Device.ios || Device.android ? 'resize orientationchange observerUpdate' : 'resize observerUpdate'), onResize, true);
@@ -3260,7 +3260,7 @@
     var capture = !!params.nested;
 
     // Touch Events
-    {
+    
       if (!Support.touch && (Support.pointerEvents || Support.prefixedPointerEvents)) {
         target.removeEventListener(touchEvents.start, swiper.onTouchStart, false);
         doc.removeEventListener(touchEvents.move, swiper.onTouchMove, capture);
@@ -3282,7 +3282,7 @@
       if (params.preventClicks || params.preventClicksPropagation) {
         target.removeEventListener('click', swiper.onClick, true);
       }
-    }
+    
 
     // Resize handler
     swiper.off((Device.ios || Device.android ? 'resize orientationchange observerUpdate' : 'resize observerUpdate'), onResize);
@@ -3643,7 +3643,7 @@
       if (args.length === 1 && args[0].constructor && args[0].constructor === Object) {
         params = args[0];
       } else {
-        (assign = args, el = assign[0], params = assign[1]);
+        assign = args; el = assign[0]; params = assign[1];
       }
       if (!params) { params = {}; }
 

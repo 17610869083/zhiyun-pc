@@ -75,7 +75,7 @@
   -o-transition-property: transform;
   transition-property: transform;
   transition-property: transform, -webkit-transform;
-  margin: 40px 0 ;
+  margin: 40px 40px 40px 0;
 }
 .swiper-invisible-blank-slide {
   visibility: hidden;

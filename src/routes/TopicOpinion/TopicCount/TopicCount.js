@@ -3,7 +3,6 @@ import {connect} from 'react-redux';
 import {Row, Col, Table} from 'antd';
 import ReactEchartsCore from 'echarts-for-react/lib/core';
 import './TopicCount.less';
-import {topicLengend} from '../../../utils/format'
 import echarts from 'echarts/lib/echarts';
 import 'echarts/lib/chart/line';
 import 'echarts/lib/chart/bar';

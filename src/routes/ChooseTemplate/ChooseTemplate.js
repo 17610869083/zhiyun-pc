@@ -11,7 +11,7 @@ class ChooseTemplate extends React.Component{
         super(props);
         this.state = {
             reportTypeList:[],
-            typeIndex:0,
+            type:'00',
             contentList:[],
             searchValue:'',
             typeKeyList:{
@@ -27,9 +27,9 @@ class ChooseTemplate extends React.Component{
             },
         }
     }
-    checkType (index,type) {
+    checkType (type) {
           this.setState({
-            typeIndex:index
+            type:type
           })
           request(api_get_template_report + '&reportType=' + type)
           .then( res => {
@@ -40,11 +40,14 @@ class ChooseTemplate extends React.Component{
               }
           })
     }
-    checkTemplate (index) {
+    checkTemplate (id) {
           this.setState({
-            contentIndex:index
+            contentId:id
           })
-          history.push('/reporttemplate')
+          history.push({
+              pathname:'/reporttemplate',
+              search:`?type=${this.state.type}&id=${id}`
+          })
     }
     componentWillMount(){
         let typeList = [] ; 
@@ -89,15 +92,13 @@ class ChooseTemplate extends React.Component{
     }
     render(){
     const templateList = this.state.reportTypeList.map((item,index) => {
-        return <li onClick={this.checkType.bind(this,index,item.type)} 
-               style={this.state.typeIndex === index ?{color:BLUES}:{color:'#000'}}
+        return <li onClick={this.checkType.bind(this,item.type)} 
+               style={this.state.type === item.type ?{color:BLUES}:{color:'#000'}}
                key={index}
                >{item.name}</li>
     });
     const contentList = this.state.contentList.map((item,index) => {
-        return <li key = {index} className={this.state.contentIndex === index ?'cont active':'cont normal'}
-               onClick= {this.checkTemplate.bind(this,index,item.reportType)}
-               > 
+        return <li key = {index} className="cont normal" onClick= {this.checkTemplate.bind(this,item.id)}> 
                 <img src={img} alt=""/>
                 <p>{item.name}</p>
                 </li> 
