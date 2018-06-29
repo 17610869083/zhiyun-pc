@@ -590,6 +590,7 @@ class AllOpinion extends React.Component {
     })
   }
   render() {
+    console.log(this.props);
     const {docList, carryCount, pageInfo, page} = this.props;
     const {getFieldDecorator} = this.props.form;
     const formItemLayout = {

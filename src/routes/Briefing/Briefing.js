@@ -1,11 +1,17 @@
 import React from 'react';
 import './briefing.less';
 import { Row, Col, Button, Select, DatePicker } from 'antd';
+import EditText from '../../components/editText/editText';
+import EditData from '../../components/editData/editData';
+import request from '../../utils/request';
+import {
+	api_new_preview_report,
+} from '../../services/api';
 // import {history} from '../../utils/history';
-import moment from 'moment';
+// import moment from 'moment';
 const { RangePicker } = DatePicker;
 const Option = Select.Option;
-const dateFormat = 'YYYY/MM/DD';
+// const dateFormat = 'YYYY/MM/DD';
 class Briefing extends React.Component{
 	constructor(){
 		super()
@@ -19,14 +25,28 @@ class Briefing extends React.Component{
 		let search = this.props.location.search.split('&');
 		let templateType = search[0].split('=')[1];
 		let templateId = parseInt(search[1].split('=')[1],10);
+		request(api_new_preview_report + '&reportFormId=' + templateId).then((res) => {
+			console.log(res);
+			// if (res.data.code === 1) {
+				// message.success(res.data.msg);
+			// }
+		});
 		this.setState({
 			type: templateType,
 			typeId: templateId
 		})
+		// api_new_preview_report
 		console.log(templateType, templateId);
 	}
 	handleChange(value) {
 		console.log(`selected ${value}`);
+	}
+	onChange(dates, dateStrings) {
+		console.log('From: ', dates[0], ', to: ', dates[1]);
+		console.log('From: ', dateStrings[0], ', to: ', dateStrings[1]);
+	}
+	onOkData() {
+
 	}
 	render() {
 		return (
@@ -43,7 +63,6 @@ class Briefing extends React.Component{
 							<Row type="flex" justify="space-between">
 								<Col span={3}>
 								</Col>
-								{/* 简报 */}
 								{
 									(() => {
 										if (this.state.type === "01") {
@@ -64,24 +83,25 @@ class Briefing extends React.Component{
 											return <div>
 												<div className="rangeData">
 													<RangePicker
-														style={{ marginRight: 20 }}
-														defaultValue={[moment('2015/01/01', dateFormat), moment('2015/01/01', dateFormat)]}
-														format={dateFormat}
+														// ranges={{ Today: [moment(), moment()], 'This Month': [moment(), moment().endOf('month')] }}
+														showTime
+														format="YYYY/MM/DD"
+														onChange={this.onChange}
+														onOk={this.onOkData}
 													/>
-													<Button type="primary" style={{ backgroundColor: "#5a8bff" }}>确定</Button>
 												</div>
 												<span style={{ color: "red" }}>*可以通过时间范围获取素材</span>
 											</div>
 										}
 									})()
 								}
-								{/* 专报 */}
-								{/* 日报 */}
 							</Row>
 						</div>
 					</div>
 				  <div className="briefingWapper">
-					  <div className="briefingTitle">网络舆情简报</div>
+					  <div className="briefingTitle">
+						  <EditText/>
+						</div>
 						<div className="briefingData"><p>第52期</p></div>
 						<Row type="flex" justify="space-around" style={{ padding: 25 }}>
 							<Col span={12}>
@@ -91,8 +111,15 @@ class Briefing extends React.Component{
 							</Col>
 							<Col span={4}>
 							  <div className="briefingDate">
-									<span className="data">2017-11-16</span>								  
+									<span className="data"><EditData/></span>								  
 								</div>
+							</Col>
+						</Row>
+						<Row type="flex" justify="space-around" style={{ padding: "0 0 20px 0", display: "none" }}>
+							<Col span={12}>
+							</Col>
+							<Col span={4}>
+							  <Button style={{ marginLeft: 38 }}>编辑</Button>
 							</Col>
 						</Row>
 						<Row>

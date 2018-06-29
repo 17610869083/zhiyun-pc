@@ -359,4 +359,6 @@ export const api_update_report_name = host + 'Report?action=updateReportName';
 export const api_search_report = host + 'Report?action=searchReport';
 //删除报告
 export const api_new_delete_report = host + 'Report?action=deleteReport'; 
+//删除报告
+export const api_new_preview_report = host + 'Report?action=previewTemplate'; 
 
