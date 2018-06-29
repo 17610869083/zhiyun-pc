@@ -9,7 +9,6 @@ import { createHashHistory } from 'history';
 import {getLocalTime,topicData,getSecondTime} from '../../../utils/format';
 import {connect} from 'react-redux';
 import {topicNavMessageRequested} from '../../../redux/actions/createActions';
-import moment from 'moment';
 import './BiddingSetting.less'
 const TabPane = Tabs.TabPane;
 const FormItem = Form.Item;
@@ -39,8 +38,6 @@ class BiddingSetting extends React.Component {
             disNone: {visibility: 'hidden'},
             topicCatList:[],
             topicAlldata:Store.getState().getTopicLocationSucceededReducer.res,
-            topicbDate:'',
-            topiceDate:'',
             addType:1,
             select:0,
             delRule:[],
@@ -61,15 +58,13 @@ class BiddingSetting extends React.Component {
                      "rulecode4":""}]:res.data.rulearr,
                      addType: res.data.addtype ,
                      select:res.data.catid,
-                     topicbDate:getLocalTime(res.data.topicbdate.time) ,
-                     topiceDate:getLocalTime(res.data.topicedate.time) ,
-                     topicNameValue:res.data.topicname                     
+                     topicNameValue:res.data.topicname
                   })
               }
                 request(api_top_nav).then(res=>{
                     if(res.data){
                         this.setState({
-                            topicCatList:res.data,                   
+                            topicCatList:res.data,
                         })
                     }
                  })
@@ -107,7 +102,10 @@ class BiddingSetting extends React.Component {
             addType:parseInt(key,10)
         })
      }else{
-         return;
+        this.setState({
+            addType:parseInt(key,10)
+        })
+        //  return;
      }
     }
     onAddtype(){
@@ -177,7 +175,7 @@ class BiddingSetting extends React.Component {
        })
     }
     handleSubmit(e) { 
-          e.preventDefault();        
+          e.preventDefault();
            let rules;
            if(this.state.addType===3){
                rules=JSON.stringify(this.state.SeniorTopicRule.length===0?
@@ -199,19 +197,12 @@ class BiddingSetting extends React.Component {
         let topicId=Store.getState().getRouterReducer.topicid;
         this.props.form.validateFields((err, values) => {
             if (!err) {
-                if(getSecondTime(this.state.topicbDate)>=getSecondTime(this.state.topiceDate)){
-                    message.error('开始时间请不要大于或等于结束时间');
-                    return ;
-                }else if (this.state.topicNameValue.length===0){
-                    message.error('专题名称请不要为空');
-                    return ;
-                }
             request(api_topic_revise,{
         	   method: 'POST',
             headers: {
                   "Content-Type": "application/x-www-form-urlencoded"
             },
-            body:`action=editTopic&topicid=${topicId}&addtype=${this.state.addtype}&begin=${this.state.topicbDate}&end=${this.state.topiceDate}&bind=${this.state.checked}&tname=${this.state.topicNameValue}&catid=${this.state.select}&rule=${encodeURIComponent(rules)}`
+            body:`action=editTopic&topicid=${topicId}&addtype=${this.state.addtype}&bind=${this.state.checked}&tname=${this.state.topicNameValue}&catid=${this.state.select}&rule=${encodeURIComponent(rules)}`
         }).then((res) => {
         	if(res.data.code===1){
                   message.success('关键词修改成功');
@@ -269,16 +260,7 @@ class BiddingSetting extends React.Component {
   goTopiclist(){
         history.push('/topic/topiclist')
   }
-  startTime(date,dateString){
-           this.setState({
-               topicbDate:dateString
-           })
-  }
-  endTime(date,dateString){
-          this.setState({
-               topiceDate:dateString
-          })
-  }
+
   TopicNameChange(e){
         const {value} = e.target;
         if(value.length>=28){
@@ -312,8 +294,6 @@ class BiddingSetting extends React.Component {
         },
       },
     };
-    let topicbDateTime=this.state.topicbDate!==0?this.state.topicbDate:new Date();
-    let topiceDateTime=this.state.topiceDate!==0?this.state.topiceDate:new Date();
     let topicCatid=this.state.topicAlldata.catid?this.state.topicAlldata.catid:75;
         const topicCatList=this.state.topicCatList.length!==0?
         this.state.topicCatList.map((item,index)=> 
@@ -359,29 +339,34 @@ class BiddingSetting extends React.Component {
                                 </Select>
 
                                 </FormItem>
-                                <FormItem
-                                    {...formItemLayout}
-                                    label="开始时间"
-                                >                
-                            <DatePicker showTime format="YYYY-MM-DD HH:mm:ss" 
-                               value={moment(topicbDateTime,'YYYY-MM-DD HH:mm:ss')}
-                               onChange={this.startTime.bind(this)}
-                               allowClear={false}
-                            />
-                                </FormItem>
-                                <FormItem
-                                    {...formItemLayout}
-                                    label="结束时间"
-                                >
-                                    
-                           <DatePicker showTime format="YYYY-MM-DD HH:mm:ss"
-                            value={moment(topiceDateTime,'YYYY-MM-DD HH:mm:ss')}
-                            onChange={this.endTime.bind(this)}
-                            allowClear={false}
-                           />
 
-                              
+                                <FormItem
+                                     label="行业"
+                                     {...formItemLayout}
+                                >
+                                    <Select style={{width: '154px'}} onSelect={this.onSelect.bind(this)} 
+                                        value={this.state.select!==0?this.state.select.toString():topicCatid.toString()}>
+                                        <Option value="lucy">lucy</Option>
+                                        <Option value="lucy">lucy</Option>
+                                        <Option value="lucy">lucy</Option>
+                                        <Option value="lucy">lucy</Option>
+                                        <Option value="lucy">lucy</Option>
+                                    </Select>
                                 </FormItem>
+
+                                <FormItem
+                                     label="地区"
+                                     {...formItemLayout}
+                                >
+                                    <Select style={{width: '154px'}} onSelect={this.onSelect.bind(this)}>
+                                        <Option value="lucy2">lucy</Option>
+                                        <Option value="lucy3">1</Option>
+                                        <Option value="lucy4">2</Option>
+                                        <Option value="lucy7">l3ucy</Option>
+                                        <Option value="lucy">l3ucy</Option>
+                                    </Select>
+                                </FormItem>
+
                                 <FormItem
                                     {...formItemLayout}
                                     label={tipMessage}
@@ -439,27 +424,6 @@ class BiddingSetting extends React.Component {
                                          {topicCatList}
                                         </Select>
                                 
-                                </FormItem>
-                                <FormItem
-                                    {...formItemLayout}
-                                    label="开始时间"
-                                >
-                                        <DatePicker showTime format="YYYY-MM-DD HH:mm:ss"
-                                        value={moment(topicbDateTime,'YYYY-MM-DD HH:mm:ss')}
-                                        onChange={this.startTime.bind(this)}
-                                        allowClear={false}
-                                        />
-                                </FormItem>
-                                <FormItem
-                                    {...formItemLayout}
-                                    label="结束时间"
-                                >
-                                        <DatePicker showTime format="YYYY-MM-DD HH:mm:ss"
-                                        value={moment(topiceDateTime,'YYYY-MM-DD HH:mm:ss')}
-                                        onChange={this.endTime.bind(this)}
-                                        allowClear={false}
-                                        />
-                       
                                 </FormItem>
                                 <div className="text" >匹配关键词
                                 <Tooltip placement="bottom" title={titleTip}>

@@ -39,6 +39,7 @@ const CustomHome= AsyncComponent(() => import('../CustomHome/CustomHome'))
 const MyReport= AsyncComponent(() => import('../MyReport/MyReport'))
 const Drag= AsyncComponent(() => import('../Drag/Drag'))
 const Bidding= AsyncComponent(() => import('../BiddingOpinion/BiddingOpinion'))
+const Multilingual= AsyncComponent(() => import('../Multilingual/Multilingual'))
 const {Header, Sider, Content} = Layout;
 const SubMenu = Menu.SubMenu;
 
@@ -195,7 +196,33 @@ class Index extends React.Component {
             </Link>
           </Menu.Item>
         </SubMenu>)
-      } else {
+      } else if (item.channelurl === '/multilingual') {
+        menuList.push(<SubMenu key={item.key} 
+          title={<Link to="/multilingual/0"><span><i className="anticon"><Iconfont type={item.type}
+            style={{fontSize: '16px'}}/></i><span
+            style={{fontSize: '16px'}}>多语种检测</span></span> </Link>}>
+            <Menu.Item key="noticesetting" style={{fontSize: '16px'}}>
+            <Link to="/multilingual/1">
+            <span><Iconfont type='icon-hanyu' style={{fontSize: '16px'}}/>韩语检测</span>
+            </Link>
+            </Menu.Item>
+            <Menu.Item key="warnsetting" style={{fontSize: '16px'}}>
+            <Link to="/multilingual/2">
+            <span><Iconfont type='icon-riyu1' style={{fontSize: '16px'}}/>日语检测</span>
+            </Link>
+            </Menu.Item>
+            <Menu.Item key="excludesetting" style={{fontSize: '16px'}}>
+            <Link to="/multilingual/3">
+            <span><Iconfont type='icon-xinjiang' style={{fontSize: '16px'}}/>维语检测</span>
+            </Link>
+            </Menu.Item>
+            <Menu.Item key="publicopinion" style={{fontSize: '16px'}}>
+            <Link to="/multilingual/4">
+            <span><Iconfont type='icon-xicangzizhiqu' style={{fontSize: '16px'}}/>藏语检测</span>
+            </Link>
+            </Menu.Item>
+            </SubMenu>)
+      }else {
         menuList.push(<Menu.Item key={item.key} style={{fontSize: '16px'}}>
           {item.channelurl.indexOf('http') !== -1 ?
             <a href={item.channelurl} target="blank">
@@ -278,6 +305,7 @@ class Index extends React.Component {
                 <Route path="/myreport" component={MyReport}/>
                 <Route path="/drag" component={Drag}/>
                 <Route path="/bidding" component={Bidding}/>
+                <Route path="/multilingual/:languages" component={Multilingual}/>
               </Switch>
               <div className="suspensionBox">
                 <div>
