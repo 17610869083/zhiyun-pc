@@ -11,7 +11,7 @@ import {opinionColor, setHighlightTags, formatDateTime} from '../../../utils/for
 import request from '../../../utils/request';
 import {
   api_edit_doc_neg, api_del_doc, api_push_material, api_push_collection,
-  api_allopinion_exportskip, api_topic_export_word,api_material_opinion_list ,api_collection_opinion_list} from '../../../services/api';
+  api_allopinion_exportskip, api_topic_export_word ,api_collection_opinion_list} from '../../../services/api';
 import {GRAY} from '../../../utils/colors';
 import {
   opinionSearchRequested,
@@ -74,7 +74,6 @@ class OpinionDetail extends React.Component {
       type: 0,
       downloadFlag:false,
       materialList:[],
-      favCatList:[],
       isSearch: false,
       negText: {
         positive: ['正面', '정면', '正面', 'ئۇدۇل.', 'དྲང་ཕྱོགས་'],
@@ -385,26 +384,6 @@ class OpinionDetail extends React.Component {
      }
      this.props.remove();
   }
-  // 推送到素材库
-  putIntoMaterial(e) {
-    const materialId = e.key;
-    const arr = this.checkedTrue();
-    const size = arr.length;
-    if (size === 0) {
-      message.warning("至少选择一项！");
-    } else {
-      const sidList = JSON.stringify(arr);
-      request(api_push_material + '&catid=' + materialId + '&sid=' + sidList, {}).then((res) => {
-        if (res.data.code === 1) {
-          message.success(res.data.msg);
-          this.setState({
-            checkedAll: false,
-            checkedArray: new Array(40).fill(false)
-          });
-        }
-      });
-    }
-  }
 
   // 推送到收藏夹
   putIntoCollection(e) {
@@ -500,20 +479,16 @@ class OpinionDetail extends React.Component {
         page: pagenumber
       });
       this.props.opinionSearchRequest(param);
-      console.log(1)
     } else if (this.props.searchKeyword.type === 1) {
       this.props.opinionSearchRequest({
         seltype: this.state.seltype, keyword: this.props.searchKeyword.keyword,
         page: pagenumber
       });
-      console.log(2)
     }
     else if (this.props.propsType === 'AllopinionList') {
       this.props.opinionSearchRequest(param);
-      console.log(3)
     } else {
       this.props.onDataChange(pagenumber);
-      console.log(4)
     }
   }
 
@@ -637,31 +612,9 @@ class OpinionDetail extends React.Component {
       }
     });
   }
-  //素材库目录列表
-  getCollectionOpinionList(){
-        request(api_material_opinion_list)
-        .then(res => {
-              this.setState({
-                materialList:res.data.reportCatList                
-              })
-        })
-  }
-  //收藏夹目录列表
-  getMaterialOpinionList(){
-    request(api_collection_opinion_list)
-    .then(res => {
-          this.setState({
-             favCatList:res.data.favCatList
-          })
-    })
-  }
-  //跳转到报告页
-  goReport(){
-     history.push('/choosetemplate') 
-  }
+
   // 舆情负面类型
   opinionTrend(num) {
-    console.log(this.props.languageType)
     let type = '正面';
     if (num === -1) {
         type = this.state.negText.positive[this.props.languageType];
@@ -675,37 +628,12 @@ class OpinionDetail extends React.Component {
     return type;
   }
   render() {
-    console.log(this.props.languageType)
     const {page} = this.props;
+    // console.log
     const flag = this.props.docList&& this.props.docList.length === 0?true:false;
-    const docList = this.props.docList ? this.props.docList : [];
-    // 素材库的目录
-    const putinReportMenu = (
-      <Menu onClick={this.putIntoMaterial.bind(this)}>
-        {
-          this.state.materialList.map(item =>
-            <Menu.Item key={item.id}>
-              <Icon type="folder"/>
-              <span>{item.catname}</span>
-            </Menu.Item>
-          )
-        }
-      </Menu>
-    );       
+    const docList = this.props.docList ? this.props.docList : [];    
 
-    // 收藏夹的目录
-    const collectionMenu = (
-      <Menu onClick={this.putIntoCollection.bind(this)}>
-        {
-          this.state.favCatList.map(item =>
-            <Menu.Item key={item.id}>
-              <Icon type="folder"/>
-              <span>{item.catname}</span>
-            </Menu.Item>
-          )
-        }
-      </Menu>
-    );
+
     const OpinionDetailItems = docList[0] !== undefined && docList[0]['negative'] !== undefined ? docList.map((item, index) =>
         <li key={item.sid} className="opinion-detail-item">
           <div className="cheackBox">
@@ -819,52 +747,7 @@ class OpinionDetail extends React.Component {
                         </Popover>
                       </Tooltip>
                     </div>
-                    <div>
-                      <Dropdown overlay={
-                        <Menu style={{width:'200px'}} onClick={this.materialConfirm.bind(this, item.sid)}>
-                          {
-                            this.state.materialList.map(iitem =>
-                              <Menu.Item key={iitem.id}>
-                                <Icon type="folder"/>
-                                <span>{iitem.catname}</span>
-                              </Menu.Item>
-                            )
-                          }
-                        </Menu>
-                      } trigger={['click']} getPopupContainer={() => document.querySelector('.opinion-detail-item')} 
-                      >
-                        <Tooltip title='素材库' placement="bottom">
-                        <img src={Material} alt="素材库" style={{height:'18px'}} onClick={this.getCollectionOpinionList.bind(this)}/>
-                        </Tooltip>
-                      </Dropdown>
-                    </div>
-                    <div>
-                      <Tooltip title='收藏' placement="bottom">
-                        <Dropdown overlay={
-                          <Menu onClick={this.collectionlConfirm.bind(this, item.sid)}>
-                            {
-                              this.state.favCatList.map(iitem =>
-                                <Menu.Item key={iitem.id}>
-                                  <Icon type="folder"/>
-                                  <span>{iitem.catname}</span>
-                                </Menu.Item>
-                              )
-                            }
-                          </Menu>
-                        } trigger={['click']}
-                                  getPopupContainer={() => document.querySelector('.opinion-detail-item')}
-                        >
-                        <img src={Collection} alt="收藏"  style={{height:'18px'}} onClick={this.getMaterialOpinionList.bind(this)}/>
-                        </Dropdown>
-                      </Tooltip>
-                    </div>
-                    <div>
-                    <Tooltip title='生成报告' placement="bottom">
-                      <span className="add-report" onClick={this.goReport.bind(this)}>
-                      <IconFont type="icon-icon-shengchengbaogao" />  
-                      </span>
-                    </Tooltip>
-                    </div>
+                   
                   </div>
               </div>
             </div>
@@ -941,29 +824,6 @@ class OpinionDetail extends React.Component {
                 </div>
               </Tooltip>
             </Dropdown>
-            <Dropdown overlay={putinReportMenu} trigger={['click']}
-                      getPopupContainer={() => document.querySelector('.opinion-detail')}
-            >
-              <Tooltip title='素材库' placement="bottom">
-                <div className="operate-all" onClick={this.getCollectionOpinionList.bind(this)}>
-                <img src={Material} alt="素材库" style={{height:'16px'}}/>
-                </div>
-              </Tooltip>
-            </Dropdown>
-            <Tooltip title='收藏' placement="bottom">
-              <Dropdown overlay={collectionMenu} trigger={['click']}
-                        getPopupContainer={() => document.querySelector('.opinion-detail')}
-              >
-                <div className="operate-all" onClick={this.getMaterialOpinionList.bind(this)}>
-                <img src={Collection} alt="收藏"  style={{height:'18px'}}/>
-                </div>
-              </Dropdown>
-            </Tooltip>
-            <Tooltip title='生成报告' placement="bottom">
-               <div className="operate-all">
-               <IconFont type="icon-icon-shengchengbaogao"></IconFont>  
-               </div>
-            </Tooltip>
           </div>
           <Pagination
             simple

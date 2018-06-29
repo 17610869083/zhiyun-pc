@@ -1,12 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {connect} from 'react-redux';
-import {Pagination, DatePicker, Form, Icon, message, Button} from 'antd';
+import {Pagination, DatePicker, Form, Icon, message, Button, LocaleProvider} from 'antd';
 import OpinionDetail from './MultilingualDetail/MultilingualDetail';
 import {opinionSearchRequested, searchKeywordSync, paginationPage} from '../../redux/actions/createActions';
 import {URLToObject, getSecondTime} from '../../utils/format';
 import {GRAY} from '../../utils/colors';
 import './Multilingual.less';
+import { stat } from 'fs';
 const FormItem = Form.Item;
 class AllOpinion extends React.Component {
   constructor(props) {
@@ -96,13 +97,12 @@ class AllOpinion extends React.Component {
       pagesize: 20,
       pageCount: 500,
       count: 0,
-      docList: [],
       begin: '0000-00-00 01:00:00',
       end: '0000-00-00 02:00:00',
       timePickerShow: false,
       current: 1,
       type: 0,
-      endTime: '',     
+      endTime: '',
       mediaList:{
         'app':'APP',
         'blog':'博客',
@@ -121,9 +121,14 @@ class AllOpinion extends React.Component {
         removal: ['去重', '중복배제','重複' , 'تەكرار ', 'གོ་རིམ།'],
         media: ['媒体', '미디어', 'メディア', 'ئاخبارات ۋاستىلىرى.', 'ཆ་འཕྲིན་'],
       },
-      // infoList: ['信息列表', ''],
+      infoList: ['信息列表', '정보 목록', '情報リスト', 'ئۇچۇر جەدۋىلى', 'ཆ་འཕྲིན་རེའུ་མིག་བཀོད།'],
       language: ['', 'kr', 'jp', 'uygur', 'zang'],
-      CHlan: ['中文', '韩文', '日文', '维语', '藏语']
+      CHlan: ['中文', '한국어', '日本語', 'ئۇيغۇر يېزىقى', 'བོད་ཡིག། '],
+      timePlaceholder: {
+        begin: ['开始日期', '시작일', '開始日', 'باشلىنىش كۈنى ', 'འགོ་ཚུགས་པའི་ཉིན།'],
+        end: ['结束日期', '종료일', '終了日', 'ئاخىرلاشتۇرغان كۈن ', 'ཚར་བའི་ཉིན་'],
+        submit: ['确定', '확인', '確定', 'بېكىتىلگەن ', 'གཏན་ཁེལ།']
+      }
     }
     
   }
@@ -451,15 +456,17 @@ class AllOpinion extends React.Component {
         languageType: 0
       })
     }
-    this.setState({
-      timeValue: 'all',
-      trendValue: 'all',
-      sortValue: 'timedown',
-      filterValue: 1,
-      mediaValue: '全部',
-      begin: '0000-00-00 01:00:00',
-      end: '0000-00-00 02:00:00',
-    })
+    if(newProps.match.params.languages !== this.state.languageType){
+      this.setState({
+        timeValue: 'all',
+        trendValue: 'all',
+        sortValue: 'timedown',
+        filterValue: 1,
+        mediaValue: '全部',
+        begin: '0000-00-00 01:00:00',
+        end: '0000-00-00 02:00:00',
+      })
+    }
     let param = {
       datetag: this.state.timeValue,
       neg: this.state.trendValue,
@@ -470,8 +477,10 @@ class AllOpinion extends React.Component {
       end: this.state.end,
       page: this.state.page,
       pagesize: this.state.pagesize,
-      lang: this.state.language[this.props.match.params.languages],
+      lang: this.state.language[newProps.match.params.languages],
     }
+    if (this.state.languageType === newProps.match.params.languages) return false;
+
     this.props.opinionSearchRequest(param);
     this.props.paginationPage(1);
   }
@@ -500,7 +509,8 @@ class AllOpinion extends React.Component {
     })
   }
   render() {
-    const {docList, carryCount=[{count: 0, key: "all", value: "全部"}], pageInfo={count:0}, page} = this.props;
+    let {docList, carryCount=[{count: 0, key: "all", value: "全部"}], pageInfo={count:0}, page} = this.props;
+    if(!carryCount instanceof Array) carryCount = [{count: 0, key: "all", value: "全部"}];
     const {getFieldDecorator} = this.props.form;
     const formItemLayout = {
       labelCol: {
@@ -580,10 +590,9 @@ class AllOpinion extends React.Component {
     return (
       <div className="all-opinion" id="anchor">
         <div className="close-open" style={{background:GRAY}}>
-          <div className="count"> 信息列表</div>
+          <div className="count">{this.state.infoList[this.state.languageType]}</div>
           <div className="close" onClick={this.triggerTopShow.bind(this)}>
             <span className="closeBtn">{this.state.languageType === 0 ? this.state.CHlan[this.props.match.params.languages] : '中文'}</span>
-            <Icon type={this.state.isTopShow ? 'down' : 'right'}/>
           </div>
         </div>
         <div className="sort-top" style={this.state.isTopShow ? {display: 'block'} : {display: 'none'}}>
@@ -599,9 +608,11 @@ class AllOpinion extends React.Component {
                 >
                   {getFieldDecorator('range-time-picker'
                   )(
-                    <DatePicker showTime placeholder="开始日期" format="YYYY-MM-DD HH:mm:ss"
-                                className="DatePicker"
-
+                    <DatePicker
+                        showTime
+                        placeholder={this.state.timePlaceholder.begin[this.state.languageType]}
+                        format="YYYY-MM-DD HH:mm:ss"
+                        className="DatePicker"
                     />
                   )}
                 </FormItem>
@@ -610,13 +621,17 @@ class AllOpinion extends React.Component {
                 >
                   {getFieldDecorator('range-endtime-picker'
                   )(
-                    <DatePicker showTime placeholder="结束日期" format="YYYY-MM-DD HH:mm:ss"
-                                className="DatePicker"
-                    />
+                    <LocaleProvider>
+                      <DatePicker showTime
+                        placeholder={this.state.timePlaceholder.end[this.state.languageType]}
+                        format="YYYY-MM-DD HH:mm:ss"
+                        className="DatePicker"
+                      />
+                    </LocaleProvider>
                   )}
                 </FormItem>
                 <Button type="primary" htmlType="submit" style={{marginTop: '2px'}}>
-                  确定
+                  {this.state.timePlaceholder.submit[this.state.languageType]}
                 </Button>
               </Form>
             </div>
