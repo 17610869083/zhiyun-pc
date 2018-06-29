@@ -7,11 +7,12 @@ import {Input,Button} from 'antd';
 import {api_get_template_report} from '../../services/api';
 import request from '../../utils/request';
 import img from '../../assets/img/1.png';
+import {history} from '../../utils/history';
 class ReportTemplate extends React.Component{
       constructor(){
           super()
           this.state={
-              templateType:[],
+              templateTypeList:[],
               templateIndex:0,
               typeKeyList:{
                 '00':'全部报告',
@@ -24,14 +25,17 @@ class ReportTemplate extends React.Component{
                 '07':'季报',
                 '08':'年报'
             },
-            contentList:[]
+            contentList:[],
+            templateId:0
           }
         }  
         componentWillMount(){ 
             if(this.props.location.search ){
             let typeList = [];
             let search = this.props.location.search.split('&');
-            request(api_get_template_report + `&reportType=${search[0].split('=')[1]}`)
+            let templateType = search[0].split('=')[1];
+            let templateId = parseInt(search[1].split('=')[1],10);
+            request(api_get_template_report + `&reportType=${templateType}`)
             .then( res => {
                 if(res.data.code === 1){     
                     res.data.data.repotTypeList.forEach(item => {
@@ -39,7 +43,9 @@ class ReportTemplate extends React.Component{
                     });
                     this.setState({
                         contentList: res.data.data.pageBean.content,
-                        templateType:typeList
+                        templateTypeList:typeList,
+                        templateType:templateType,
+                        templateId:templateId
                     })  
               }
             })
@@ -57,22 +63,36 @@ class ReportTemplate extends React.Component{
                 })
             }
         }
-        checkTemplate(index){
+        checkTemplateType(type){
              this.setState({
-                templateIndex:index
+                templateType:type
+             })
+             request(api_get_template_report + '&reportType=' + type)
+             .then( res => {
+                 if(res.data){
+                   this.setState({
+                       contentList: res.data.data.pageBean.content
+                   })
+                 }
+             })
+        }
+        checkTemplate(id){
+            this.setState({
+                templateId:id
              })
         }
         onBriefing = () => {
-					history.push('/briefing')          
+			history.push(`/briefing?type=${this.state.templateType}&id=${this.state.templateId}`)          
         }
        render(){
-          const templateType = this.state.templateType.map( (item,index) => {
-                return <li className={this.state.templateIndex === index ? 'template-type template-type-active':'template-type'} 
-                       key={index} onClick={this.checkTemplate.bind(this,index)}>{item.name}</li>
+          const templateType = this.state.templateTypeList.map( (item,index) => {
+                return <li className={this.state.templateType === item.type ? 'template-type template-type-active':'template-type'} 
+                       key={index} onClick={this.checkTemplateType.bind(this,item.type)}>{item.name}</li>
           } )
 
           const slideList = this.state.contentList.map( (item,index) => {
-                return <div className="swiper-slide cont" key = {index}>
+                return <div className={this.state.templateId === item.id? 'swiper-slide cont active':'swiper-slide cont normal'} 
+                       key = {index} onClick = {this.checkTemplate.bind(this,item.id)}>
                        <img src={img} alt=""/>
                        <p>{item.name}</p>
                        </div>
