@@ -1,16 +1,65 @@
 import React from 'react';
 import './briefing.less';
-import { Row, Col} from 'antd';
+import { Row, Col, Button, Select, DatePicker } from 'antd';
 // import {history} from '../../utils/history';
+// import moment from 'moment';
+// const { RangePicker } = DatePicker;
+// const Option = Select.Option;
+// const dateFormat = 'YYYY/MM/DD';
 class Briefing extends React.Component{
 	constructor(){
-			super()
-			this.state={}
+		super()
+		this.state={
+			www: null
 		}
+	}
+	handleChange(value) {
+		console.log(`selected ${value}`);
+	}
 	render() {
 		return (
 			<Row>
 				<Col span={12} offset={6}>
+				  <div className="headers">
+						<Row type="flex" justify="space-between" className="one">
+							<Col span={3}>
+								<span className="yulan"><b>报告预览</b></span>
+							</Col>
+								<Button type="primary" className="report" style={{ backgroundColor: "#5a8bff" }}>生成报告</Button>
+						</Row>
+					  <div className="two">
+							<Row type="flex" justify="space-between">
+								<Col span={3}>
+								</Col>
+								{/* 简报 */}
+								<div className="oneButton"><Button type="primary" style={{ backgroundColor: "#5a8bff" }} className="editReport">编辑报告素材</Button></div>
+								{/* 专报 */}
+								{/* <div>
+									<div className="twoButton">
+										<Select defaultValue="lucy" style={{ width: 200, marginRight: 20 }} onChange={this.handleChange.bind(this)}>
+											<Option value="jack">Jack</Option>
+											<Option value="lucy">Lucy</Option>
+											<Option value="Yiminghe">yiminghe</Option>
+										</Select>
+										<Button type="primary" style={{ backgroundColor: "#5a8bff" }}>确定</Button>
+									</div>
+									<span style={{ color: "red" }}>*选择专题</span>
+								</div> */}
+								{/* 日报 */}
+								{/* <div>
+									<div className="rangeData">
+										<RangePicker
+										  style={{ marginRight: 20 }}
+											defaultValue={[moment('2015/01/01', dateFormat), moment('2015/01/01', dateFormat)]}
+											format={dateFormat}
+										/>
+										<Button type="primary" style={{ backgroundColor: "#5a8bff" }}>确定</Button>
+									</div>
+									<span style={{ color: "red" }}>*可以通过时间范围获取素材</span>
+								</div> */}
+							</Row>
+						</div>
+					</div>
 				  <div className="briefingWapper">
 					  <div className="briefingTitle">网络舆情简报</div>
 						<div className="briefingData"><p>第52期</p></div>

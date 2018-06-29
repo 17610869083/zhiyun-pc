@@ -7,6 +7,8 @@ import {Input,Button} from 'antd';
 import {api_get_template_report} from '../../services/api';
 import request from '../../utils/request';
 import img from '../../assets/img/1.png';
+import {history} from '../../utils/history';
+
 class ReportTemplate extends React.Component{
       constructor(){
           super()
