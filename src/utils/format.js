@@ -479,3 +479,13 @@ export function topicLengend (data){
       })
       return legend;
 }
+// 报告模板类型排序
+export function templateTypeSort (data){
+     let arr = data.map( item => {
+           return parseInt(item,10)
+     })
+     let sortArr = arr.sort().map( item => {
+         return  item<10? `0${item}` : item.toString();
+     })
+     return sortArr;
+}

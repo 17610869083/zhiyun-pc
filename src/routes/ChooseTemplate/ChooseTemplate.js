@@ -6,6 +6,7 @@ import request from '../../utils/request';
 import {Input} from 'antd';
 import img from '../../assets/img/1.png';
 import {history} from '../../utils/history';
+import {templateTypeSort} from '../../utils/format';
 class ChooseTemplate extends React.Component{
     constructor(props){
         super(props);
@@ -65,8 +66,8 @@ class ChooseTemplate extends React.Component{
         }else{
         request(api_get_template_report)
         .then( res => {
-            if(res.data.code === 1){     
-                res.data.data.repotTypeList.forEach(item => {
+            if(res.data.code === 1){    
+                templateTypeSort(res.data.data.reportTypeList).forEach(item => {
                     typeList.push({type:item,name:this.state.typeKeyList[item]}) 
                 });
                 this.setState({
