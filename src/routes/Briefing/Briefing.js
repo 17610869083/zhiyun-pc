@@ -2,16 +2,28 @@ import React from 'react';
 import './briefing.less';
 import { Row, Col, Button, Select, DatePicker } from 'antd';
 // import {history} from '../../utils/history';
-// import moment from 'moment';
-// const { RangePicker } = DatePicker;
-// const Option = Select.Option;
-// const dateFormat = 'YYYY/MM/DD';
+import moment from 'moment';
+const { RangePicker } = DatePicker;
+const Option = Select.Option;
+const dateFormat = 'YYYY/MM/DD';
 class Briefing extends React.Component{
 	constructor(){
 		super()
 		this.state={
-			www: null
+			type: "",
+			typeId: ""
 		}
+	}
+	componentWillMount(){
+		console.log(this.props.location.search);
+		let search = this.props.location.search.split('&');
+		let templateType = search[0].split('=')[1];
+		let templateId = parseInt(search[1].split('=')[1],10);
+		this.setState({
+			type: templateType,
+			typeId: templateId
+		})
+		console.log(templateType, templateId);
 	}
 	handleChange(value) {
 		console.log(`selected ${value}`);
@@ -32,31 +44,39 @@ class Briefing extends React.Component{
 								<Col span={3}>
 								</Col>
 								{/* 简报 */}
-								<div className="oneButton"><Button type="primary" style={{ backgroundColor: "#5a8bff" }} className="editReport">编辑报告素材</Button></div>
+								{
+									(() => {
+										if (this.state.type === "01") {
+											return <div className="oneButton"><Button type="primary" style={{ backgroundColor: "#5a8bff" }} className="editReport">编辑报告素材</Button></div>
+										} else if (this.state.type === "02") {
+                      return <div>
+												<div className="twoButton">
+													<Select defaultValue="lucy" style={{ width: 200, marginRight: 20 }} onChange={this.handleChange.bind(this)}>
+														<Option value="jack">Jack</Option>
+														<Option value="lucy">Lucy</Option>
+														<Option value="Yiminghe">yiminghe</Option>
+													</Select>
+													<Button type="primary" style={{ backgroundColor: "#5a8bff" }}>确定</Button>
+												</div>
+												<span style={{ color: "red" }}>*选择专题</span>
+											</div>
+										} else if (this.state.type === "03") {
+											return <div>
+												<div className="rangeData">
+													<RangePicker
+														style={{ marginRight: 20 }}
+														defaultValue={[moment('2015/01/01', dateFormat), moment('2015/01/01', dateFormat)]}
+														format={dateFormat}
+													/>
+													<Button type="primary" style={{ backgroundColor: "#5a8bff" }}>确定</Button>
+												</div>
+												<span style={{ color: "red" }}>*可以通过时间范围获取素材</span>
+											</div>
+										}
+									})()
+								}
 								{/* 专报 */}
-								{/* <div>
-									<div className="twoButton">
-										<Select defaultValue="lucy" style={{ width: 200, marginRight: 20 }} onChange={this.handleChange.bind(this)}>
-											<Option value="jack">Jack</Option>
-											<Option value="lucy">Lucy</Option>
-											<Option value="Yiminghe">yiminghe</Option>
-										</Select>
-										<Button type="primary" style={{ backgroundColor: "#5a8bff" }}>确定</Button>
-									</div>
-									<span style={{ color: "red" }}>*选择专题</span>
-								</div> */}
 								{/* 日报 */}
-								{/* <div>
-									<div className="rangeData">
-										<RangePicker
-										  style={{ marginRight: 20 }}
-											defaultValue={[moment('2015/01/01', dateFormat), moment('2015/01/01', dateFormat)]}
-											format={dateFormat}
-										/>
-										<Button type="primary" style={{ backgroundColor: "#5a8bff" }}>确定</Button>
-									</div>
-									<span style={{ color: "red" }}>*可以通过时间范围获取素材</span>
-								</div> */}
 							</Row>
 						</div>
 					</div>

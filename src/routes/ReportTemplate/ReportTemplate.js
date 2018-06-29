@@ -27,7 +27,8 @@ class ReportTemplate extends React.Component{
             },
             contentList:[],
             templateId:0,
-            reportType:'00'
+						reportType:'00',
+						templateType: ""
           }
         }  
         componentWillMount(){ 
@@ -77,14 +78,15 @@ class ReportTemplate extends React.Component{
                  }
              })
         }
-        checkTemplate(id,type){
+        checkTemplate(id, type){
             this.setState({
                 templateId:id,
                 reportType:type
              })
         }
         onBriefing = () => {
-			history.push(`/briefing?type=${this.state.reportType}&id=${this.state.templateId}`)          
+					console.log(this.state.templateType)
+					history.push(`/briefing?type=${this.state.templateType}&id=${this.state.templateId}`)          
         }
        render(){
           const templateType = this.state.templateTypeList.map( (item,index) => {
