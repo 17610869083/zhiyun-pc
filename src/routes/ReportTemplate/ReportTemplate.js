@@ -8,6 +8,7 @@ import {api_get_template_report} from '../../services/api';
 import request from '../../utils/request';
 import img from '../../assets/img/1.png';
 import {history} from '../../utils/history';
+import {templateTypeSort} from '../../utils/format';
 class ReportTemplate extends React.Component{
       constructor(){
           super()
@@ -40,7 +41,7 @@ class ReportTemplate extends React.Component{
             request(api_get_template_report + `&reportType=${templateType}`)
             .then( res => {
                 if(res.data.code === 1){     
-                    res.data.data.repotTypeList.forEach(item => {
+                    templateTypeSort(res.data.data.reportTypeList).forEach(item => {
                         typeList.push({type:item,name:this.state.typeKeyList[item]}) 
                     });
                     this.setState({
@@ -54,7 +55,7 @@ class ReportTemplate extends React.Component{
           }
         }
         componentDidUpdate(){
-             if(this.state.templateType.length !== 0){
+             if(this.state.templateTypeList.length !== 0){
                 new Swiper('.swiper-container', {
                     slidesPerView: 6.5,
                     spaceBetween: 30,
@@ -127,6 +128,9 @@ class ReportTemplate extends React.Component{
                       <div className="report-title" style={{background:GRAY}}>
                         <span>报告预览</span>
                         <Button type="primary" onClick={this.onBriefing.bind(this)}>确定模板</Button>
+                      </div>
+                      <div className="report-content">   
+                      <iframe width="80%" height="90%" frameBorder="1" src="http://119.90.61.155/om31/document/work/贵州省舆情简报_137_.html"/>    
                       </div>
                   </div>
               </div>
