@@ -40,13 +40,13 @@ class ChooseTemplate extends React.Component{
               }
           })
     }
-    checkTemplate (id) {
+    checkTemplate (id,type) {
           this.setState({
             contentId:id
           })
           history.push({
               pathname:'/reporttemplate',
-              search:`?type=${this.state.type}&id=${id}`
+              search:`?type=${type}&id=${id}`
           })
     }
     componentWillMount(){
@@ -98,7 +98,7 @@ class ChooseTemplate extends React.Component{
                >{item.name}</li>
     });
     const contentList = this.state.contentList.map((item,index) => {
-        return <li key = {index} className="cont normal" onClick= {this.checkTemplate.bind(this,item.id)}> 
+        return <li key = {index} className="cont normal" onClick= {this.checkTemplate.bind(this,item.id,item.reportType)}> 
                 <img src={img} alt=""/>
                 <p>{item.name}</p>
                 </li> 

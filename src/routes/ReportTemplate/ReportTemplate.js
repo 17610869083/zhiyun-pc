@@ -26,7 +26,8 @@ class ReportTemplate extends React.Component{
                 '08':'年报'
             },
             contentList:[],
-            templateId:0
+            templateId:0,
+            reportType:'00'
           }
         }  
         componentWillMount(){ 
@@ -76,13 +77,14 @@ class ReportTemplate extends React.Component{
                  }
              })
         }
-        checkTemplate(id){
+        checkTemplate(id,type){
             this.setState({
-                templateId:id
+                templateId:id,
+                reportType:type
              })
         }
         onBriefing = () => {
-			history.push(`/briefing?type=${this.state.templateType}&id=${this.state.templateId}`)          
+			history.push(`/briefing?type=${this.state.reportType}&id=${this.state.templateId}`)          
         }
        render(){
           const templateType = this.state.templateTypeList.map( (item,index) => {
@@ -92,7 +94,7 @@ class ReportTemplate extends React.Component{
 
           const slideList = this.state.contentList.map( (item,index) => {
                 return <div className={this.state.templateId === item.id? 'swiper-slide cont active':'swiper-slide cont normal'} 
-                       key = {index} onClick = {this.checkTemplate.bind(this,item.id)}>
+                       key = {index} onClick = {this.checkTemplate.bind(this,item.id,item.reportType)}>
                        <img src={img} alt=""/>
                        <p>{item.name}</p>
                        </div>
