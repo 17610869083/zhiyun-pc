@@ -1,6 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {Layout, Menu, Icon, Button} from 'antd';
+import {Layout, Menu,Button} from 'antd';
 import {Route, Switch, Link} from 'react-router-dom';
 import './Index.less';
 import {exportSkip} from '../../redux/actions/createActions';

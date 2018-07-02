@@ -352,7 +352,7 @@ class OpinionDetail extends React.Component {
   }
   keyDown(e){
      if(e.keyCode === 13){
-      const docList = this.props.docList ? this.props.docList : [{carry: '新闻'}];
+      //const docList = this.props.docList ? this.props.docList : [{carry: '新闻'}];
       const param = {
         seltype: this.state.seltype,
         keyword: this.state.searchInputValue,

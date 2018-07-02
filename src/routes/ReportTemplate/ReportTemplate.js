@@ -4,7 +4,7 @@ import './ReportTemplate.less';
 import './swiper.css';
 import {GRAY} from '../../utils/colors'
 import {Input,Button} from 'antd';
-import {api_get_template_report} from '../../services/api';
+import {api_get_template_report,api_search_template} from '../../services/api';
 import request from '../../utils/request';
 import img from '../../assets/img/1.png';
 import {history} from '../../utils/history';
@@ -87,6 +87,19 @@ class ReportTemplate extends React.Component{
         onBriefing = () => {
 			history.push(`/briefing?type=${this.state.reportType}&id=${this.state.templateId}`)          
         }
+        //搜索模板
+        keydown = (e) => {
+            if(e.keyCode === 13) {
+                request(api_search_template +`&reportType=${this.state.templateType}&formName=${e.target.value}`)
+                .then( res => {
+                      if(res.data.code === 1){
+                        this.setState({
+                            contentList: res.data.data.content
+                        })
+                      }
+                })
+            }
+        }
        render(){
           const templateType = this.state.templateTypeList.map( (item,index) => {
                 return <li className={this.state.templateType === item.type ? 'template-type template-type-active':'template-type'} 
@@ -105,7 +118,7 @@ class ReportTemplate extends React.Component{
                   <div className="report-template-title" style={{background:GRAY}}>
                   <p style={{fontSize:'18px'}}>请选择报告模板</p>
                   <p>
-                  <Input placeholder="请输入模板名称或模板类型"/>
+                  <Input placeholder="请输入模板名称" onKeyDown={this.keydown}/>
                   </p>
                   </div>
                   <div className="report-template-type">
@@ -128,7 +141,8 @@ class ReportTemplate extends React.Component{
                         <Button type="primary" onClick={this.onBriefing.bind(this)}>确定模板</Button>
                       </div>
                       <div className="report-content">   
-                      <iframe width="80%" height="90%" frameBorder="1" src="http://119.90.61.155/om31/document/work/贵州省舆情简报_137_.html"/>    
+                      <iframe width="80%" height="90%" title="模板预览" frameBorder="0" 
+                      src="http://119.90.61.155/om31/document/work/贵州省舆情简报_137_.html" />    
                       </div>
                   </div>
               </div>
