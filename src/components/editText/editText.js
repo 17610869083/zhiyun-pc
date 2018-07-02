@@ -33,6 +33,7 @@ export default class editText extends Component {
     }, 500);
   };
   render() {
+    console.log(this.props.value);
     const { value, editable } = this.state;
     return (
       <div className="editable-cell">
@@ -52,8 +53,8 @@ export default class editText extends Component {
             title={value}
             onClick={this.edit.bind(this, this.state.count)}
           >
-            {/* {value || " "} */}
-            网络舆情简报
+            {value || " "}
+            {/* 网络舆情简报 */}
           </div>
         )}
       </div>
