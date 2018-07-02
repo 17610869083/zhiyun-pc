@@ -1,5 +1,5 @@
 import React from 'react';
-import './briefing.less';
+import './BriefingSecond.less';
 import { Row, Col, Button, Select, DatePicker, message } from 'antd';
 import EditText from '../../components/editText/editText';
 // import EditData from '../../components/editData/editData';
@@ -13,7 +13,7 @@ import {
 const { RangePicker } = DatePicker;
 const Option = Select.Option;
 // const dateFormat = 'YYYY/MM/DD';
-class Briefing extends React.Component{
+class BriefingSecond extends React.Component{
 	constructor(){
 		super()
 		this.state={
@@ -259,4 +259,4 @@ class Briefing extends React.Component{
 		)
 	}
 }
-export default Briefing;
+export default BriefingSecond;
