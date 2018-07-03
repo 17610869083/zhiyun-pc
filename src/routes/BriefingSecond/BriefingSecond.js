@@ -1,5 +1,5 @@
 import React from 'react';
-import './briefing.less';
+import './BriefingSecond.less';
 import { Row, Col, Button, Select, DatePicker, message } from 'antd';
 import EditText from '../../components/editText/editText';
 import request from '../../utils/request';
@@ -11,7 +11,7 @@ import {
 import {connect} from 'react-redux';
 const { RangePicker } = DatePicker;
 const Option = Select.Option;
-class Briefing extends React.Component{
+class BriefingSecond extends React.Component{
 	constructor(){
 		super()
 		this.state={
@@ -25,7 +25,7 @@ class Briefing extends React.Component{
 		}
 	}
 	componentWillMount(){
-		console.log(this.props);
+		console.log(this.props.location.search);
 		let search = this.props.location.search.split('&');
 		let templateType = search[0].split('=')[1];
 		let templateId = parseInt(search[1].split('=')[1],10);
@@ -43,8 +43,7 @@ class Briefing extends React.Component{
 				})
 			});
 		} else if (this.props.briefingData.length > 0) {
-			const sidList = JSON.stringify(this.props.briefingData);
-			request(api_add_brief_report + '&reportFormId=' + templateId + '&reportType=' + templateType + '&sids=' + sidList).then((res) => {
+			request(api_add_brief_report + '&reportFormId=' + templateId + '&reportType=' + templateType + '&sids=["' + this.props.briefingData + '"]').then((res) => {
 				console.log(res);
 				// 遍历对象Object.keys()
 				// Object.values(）对象转数组
@@ -305,161 +304,164 @@ class Briefing extends React.Component{
 						} else if(this.props.briefingData.length === 0) {
 							return (
 								<div>
-								<Row>
-									<Col span={12} offset={6}>
-										<div className="headers">
-											<Row type="flex" justify="space-between" className="one">
-												<Col span={3}>
-													<span className="yulan"><b>报告预览</b></span>
-												</Col>
-												{
-													(() => {
-														if(this.props.briefingData.length > 0) {
-															return (
-																<Button type="primary" className="report" style={{ backgroundColor: "#5a8bff" }}>生成报告</Button>
-															)
-														} else if (this.props.briefingData.length === 0) {
-															return (
-																<Button type="primary" className="report" style={{ backgroundColor: "#5a8bff", display: "none" }}>生成报告</Button>
-															)
-														}
-													})()
-												}
-											</Row>
-											<div className="two">
-												<Row type="flex" justify="space-between">
+									<Row>
+										<Col span={12} offset={6}>
+											<div className="headers">
+												<Row type="flex" justify="space-between" className="one">
 													<Col span={3}>
+														<span className="yulan"><b>报告预览</b></span>
 													</Col>
 													{
 														(() => {
-															if (this.state.type === "01") {
-																return <div className="oneButton"><Button type="primary" style={{ backgroundColor: "#5a8bff" }} className="editReport">编辑报告素材</Button></div>
-															} else if (this.state.type === "02") {
-																return <div>
-																	<div className="twoButton">
-																		<Select defaultValue="lucy" style={{ width: 200, marginRight: 20 }} onChange={this.handleChange.bind(this)}>
-																			<Option value="jack">Jack</Option>
-																			<Option value="lucy">Lucy</Option>
-																			<Option value="Yiminghe">yiminghe</Option>
-																		</Select>
-																		<Button type="primary" style={{ backgroundColor: "#5a8bff" }}>确定</Button>
-																	</div>
-																	<span style={{ color: "red" }}>*选择专题</span>
-																</div>
-															} else if (this.state.type === "03") {
-																return <div>
-																	<div className="rangeData">
-																		<RangePicker
-																			// ranges={{ Today: [moment(), moment()], 'This Month': [moment(), moment().endOf('month')] }}
-																			showTime
-																			format="YYYY/MM/DD"
-																			onChange={this.onChange}
-																			onOk={this.onOkData}
-																		/>
-																	</div>
-																	<span style={{ color: "red" }}>*可以通过时间范围获取素材</span>
-																</div>
+															if(this.props.briefingData.length > 0) {
+																return (
+																	<Button type="primary" className="report" style={{ backgroundColor: "#5a8bff" }}>生成报告</Button>
+																)
+															} else if (this.props.briefingData.length === 0) {
+																return (
+																	<Button type="primary" className="report" style={{ backgroundColor: "#5a8bff", display: "none" }}>生成报告</Button>
+																)
 															}
 														})()
 													}
 												</Row>
-											</div>
-										</div>
-										{
-											Object.keys(this.state.date).map(item => (
-												<div className="briefingWapper" key={item}>
-													{
-														this.state.dataID === item ? (
-															<div>
-																<div className="briefingTitle">
-																	{this.state.date[item].reportTitle}
-																</div>
-																<div className="briefingData">
-																	<span style={{ textAlign: "center", display: "block" }}>
-																		{this.state.date[item].periods}
-																	</span>
-																</div>
-																<Row type="flex" justify="space-around" style={{ padding: "15px 25px 25px 55px" }}>
-																	<Col span={12}>
-																		<div className="briefingBan">
-																			<span className="ardrss">
-																				{this.state.date[item].editor}
-																			</span>
-																		</div>
-																	</Col>
-																	<Col span={4}>
-																		<div className="briefingDate">
-																			<span className="data">
-																				{this.state.date[item].date}  
-																			</span>								  
-																		</div>
-																	</Col>
-																</Row>
-															</div>
-														) : null
-													}
-													{/* <Row type="flex" justify="space-around" style={{ padding: "0 0 20px 0", display: "none" }}>
-														<Col span={12}>
+												<div className="two">
+													<Row type="flex" justify="space-between">
+														<Col span={3}>
 														</Col>
-														<Col span={4}>
-															<Button style={{ marginLeft: 38 }}>编辑</Button>
-														</Col>
-													</Row> */}
-													{
-														this.state.date[item].briefing !== undefined ? (
-															this.state.date[item].briefing.map((i, index) => 
-															<div key={index}>
-																<Row key={index}>
-																	<Col span={12} offset={2}>
-																		<div className="briefingContent">
-																			<div className="title">
-																				<strong>
-																					<span>{index + 1}. </span>
-																					<span>{i.title}</span>
-																				</strong>
-																			</div>
-																			<div className="pubdate">
-																				<strong>
-																					<span>发布时间：</span>
-																				</strong>
-																				<span>{i.pubdate}</span>										                  
-																			</div>
-																			<div className="source">
-																				<strong>
-																					<span>来源：</span>
-																				</strong>
-																				<span>{i.source}</span>		
-																			</div>
-																			<div className="tremUrl">
-																				<strong>
-																					<span>链接：</span>
-																				</strong>
-																				<span>{i.url}</span>	
-																			</div>
-																			<div className="content">
-																				<strong>
-																					<p>内容：</p>
-																				</strong>
-																				<p className="contentText">{i.content}</p>	
-																			</div>
+														{
+															(() => {
+																if (this.state.type === "01") {
+																	return <div className="oneButton"><Button type="primary" style={{ backgroundColor: "#5a8bff" }} className="editReport">编辑报告素材</Button></div>
+																} else if (this.state.type === "02") {
+																	return <div>
+																		<div className="twoButton">
+																			<Select defaultValue="lucy" style={{ width: 200, marginRight: 20 }} onChange={this.handleChange.bind(this)}>
+																				<Option value="jack">Jack</Option>
+																				<Option value="lucy">Lucy</Option>
+																				<Option value="Yiminghe">yiminghe</Option>
+																			</Select>
+																			<Button type="primary" style={{ backgroundColor: "#5a8bff" }}>确定</Button>
 																		</div>
-																	</Col>
-																	<Col span={4}>
-																		<div className="briefingExamine">
-																			<p><b>领导批示:</b></p>
+																		<span style={{ color: "red" }}>*选择专题</span>
+																	</div>
+																} else if (this.state.type === "03") {
+																	return <div>
+																		<div className="rangeData">
+																			<RangePicker
+																				// ranges={{ Today: [moment(), moment()], 'This Month': [moment(), moment().endOf('month')] }}
+																				showTime
+																				format="YYYY/MM/DD"
+																				onChange={this.onChange}
+																				onOk={this.onOkData}
+																			/>
 																		</div>
-																	</Col>
-																</Row>
-																</div>
-															)
-														) : null
-													}
+																		<span style={{ color: "red" }}>*可以通过时间范围获取素材</span>
+																	</div>
+																}
+															})()
+														}
+													</Row>
 												</div>
-											))
-										}
-									</Col>
-								</Row>
-							</div>
+											</div>
+											{
+												Object.keys(this.state.date).map(item => (
+													<div className="briefingWapper" key={item}>
+														{
+															this.state.dataID === item ? (
+																<div>
+																	<div className="briefingTitle">
+																		{this.state.date[item].reportTitle}
+																	</div>
+																	<Row type="flex" justify="space-around" style={{ padding: "15px 25px 25px 55px" }}>
+																		<Col span={5}>
+																			<div className="briefingBan">
+																				<span className="ardrss">
+																					{this.state.date[item].editor}
+																				</span>
+																			</div>
+																		</Col>
+																		<Col span={8}>
+																			<div className="briefingData">
+																				<span style={{ textAlign: "center", display: "block" }}>
+																					{this.state.date[item].periods}
+																				</span>
+																			</div>
+																		</Col>
+																		<Col span={6}>
+																			<div className="briefingDate">
+																				<span className="data">
+																					{this.state.date[item].date}  
+																				</span>								  
+																			</div>
+																		</Col>
+																	</Row>
+																</div>
+															) : null
+														}	
+														<div style={{ border: "2px solid red", borderBottom: "none", borderLeft: "none", borderRight: "none", color: "red", width: "78%", marginLeft: 100 }}></div>
+														{/* <Row type="flex" justify="space-around" style={{ padding: "0 0 20px 0", display: "none" }}>
+															<Col span={12}>
+															</Col>
+															<Col span={4}>
+																<Button style={{ marginLeft: 38 }}>编辑</Button>
+															</Col>
+														</Row> */}
+														{/* {
+															this.state.date[item].briefing !== undefined ? (
+																this.state.date[item].briefing.map((i, index) => 
+																<div key={index}>
+																	<Row key={index}>
+																		<Col span={12} offset={2}>
+																			<div className="briefingContent">
+																				<div className="title">
+																					<strong>
+																						<span>{index + 1}. </span>
+																						<span>{i.title}</span>
+																					</strong>
+																				</div>
+																				<div className="pubdate">
+																					<strong>
+																						<span>发布时间：</span>
+																					</strong>
+																					<span>{i.pubdate}</span>										                  
+																				</div>
+																				<div className="source">
+																					<strong>
+																						<span>来源：</span>
+																					</strong>
+																					<span>{i.source}</span>		
+																				</div>
+																				<div className="tremUrl">
+																					<strong>
+																						<span>链接：</span>
+																					</strong>
+																					<span>{i.url}</span>	
+																				</div>
+																				<div className="content">
+																					<strong>
+																						<p>内容：</p>
+																					</strong>
+																					<p className="contentText">{i.content}</p>	
+																				</div>
+																			</div>
+																		</Col>
+																		<Col span={4}>
+																			<div className="briefingExamine">
+																				<p><b>领导批示:</b></p>
+																			</div>
+																		</Col>
+																	</Row>
+																	</div>
+																)
+															) : null
+														} */}
+													</div>
+												))
+											}
+										</Col>
+									</Row>
+								</div>
 							)
 						}
 					})()
@@ -473,4 +475,4 @@ const mapStateToProps = state => {
 		briefingData:state.briefingSwitchDataReducer.data
 	}
  };
- export default connect(mapStateToProps,null)(Briefing);
+ export default connect(mapStateToProps,null)(BriefingSecond);
