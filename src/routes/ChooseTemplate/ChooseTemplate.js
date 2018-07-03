@@ -154,4 +154,5 @@ class ChooseTemplate extends React.Component{
          )
     }
 }
+
 export default ChooseTemplate;

@@ -41,7 +41,8 @@ import {
   HOME_MODULE,
   SEARCH_STATE,
   INFORMS_STATE,
-  CLF_CAT_STATE
+  CLF_CAT_STATE,
+  BRIEFING_SWITCH_DATA
 } from './actionTypes';
 
 
@@ -124,3 +125,6 @@ export const informsState = createAction(INFORMS_STATE);
 
 //分类文件夹状态
 export const clfCatState = createAction(CLF_CAT_STATE);
+
+//生成简报选择数据
+export const briefingSwitch = createAction(BRIEFING_SWITCH_DATA);

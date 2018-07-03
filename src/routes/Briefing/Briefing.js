@@ -1,6 +1,7 @@
 import React from 'react';
 import './briefing.less';
 import { Row, Col} from 'antd';
+import {connect} from 'react-redux';
 // import {history} from '../../utils/history';
 class Briefing extends React.Component{
 	constructor(){
@@ -114,4 +115,9 @@ class Briefing extends React.Component{
 		)
 	}
 }
-export default Briefing;
+const mapStateToProps = state => {
+	return {
+			briefingData:state.briefingSwitchDataReducer.data
+	}
+};
+export default connect(mapStateToProps,null)(Briefing);

@@ -86,8 +86,8 @@ class ReportTemplate extends React.Component{
              })
         }
         onBriefing = () => {
-					console.log(this.state.templateType)
-					history.push(`/briefing?type=${this.state.templateType}&id=${this.state.templateId}`)          
+            console.log(this.state.templateType)
+            history.push(`/briefing?type=${this.state.templateType}&id=${this.state.templateId}`)          
         }
         //搜索模板
         keydown = (e) => {

@@ -20,7 +20,8 @@ import {
   // getMaterialOpinionListRequested,
   // getCollectionOpinionListRequested,
   exportSkip,
-  paginationPage
+  paginationPage,
+  briefingSwitch
 } from '../../redux/actions/createActions';
 import IconFont from '../IconFont';
 import Store from '../../redux/store/index';
@@ -644,6 +645,7 @@ class OpinionDetail extends React.Component {
   //跳转到报告页
   goReport(){
      if(this.checkedTrue().length !== 0) {
+          this.props.briefingSwitch(this.checkedTrue());
           history.push('/choosetemplate?reportType=01')   
      }else{
           history.push('/choosetemplate')   
@@ -651,7 +653,6 @@ class OpinionDetail extends React.Component {
     
   }
   render() {
-    console.log(this.props);
     const {page} = this.props;
     const flag = this.props.docList&& this.props.docList.length === 0?true:false;
     const docList = this.props.docList ? this.props.docList : [];
@@ -936,7 +937,7 @@ class OpinionDetail extends React.Component {
               </Dropdown>
             </Tooltip>
             <Tooltip title='生成报告' placement="bottom">
-               <div className="operate-all">
+               <div className="operate-all" onClick={this.goReport.bind(this)}>
                <IconFont type="icon-icon-shengchengbaogao"></IconFont>  
                </div>
             </Tooltip>
@@ -1047,6 +1048,9 @@ const mapDispatchToProps = dispatch => {
     },
     paginationPage: req => {
       dispatch(paginationPage(req));
+    },
+    briefingSwitch: req => {
+      dispatch(briefingSwitch(req))
     }
   }
 };
