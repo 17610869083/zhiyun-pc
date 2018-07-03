@@ -1,6 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {Layout, Menu, Icon, Button} from 'antd';
+import {Layout, Menu,Button} from 'antd';
 import {Route, Switch, Link} from 'react-router-dom';
 import './Index.less';
 import {exportSkip} from '../../redux/actions/createActions';
@@ -278,7 +278,7 @@ class Index extends React.Component {
                 <Route path="/myreport" component={MyReport}/>
                 <Route path="/drag" component={Drag}/>
                 <Route path="/briefing" component={Briefing}/>
-                <Route path="/BriefingSecond " component={BriefingSecond}/>
+                <Route path="/briefingsecond " component={BriefingSecond}/>
               </Switch>
               <div className="suspensionBox">
                 <div>

@@ -32,7 +32,8 @@ import {
   TOPIC_NAV_MESSAGE_REQUESTED,
   PAGINATION_PAGE,
   INFORMS_STATE,
-  CLF_CAT_STATE
+  CLF_CAT_STATE,
+  BRIEFING_SWITCH_DATA
 } from '../actions/actionTypes';
 
 const opinionSearchSucceededReducer = handleAction(OPINION_SEARCH_SUCCEEDED, (state, action) => ({
@@ -188,6 +189,10 @@ export const informsstate = handleAction(INFORMS_STATE, (state, action) => ({
 export const clfCatState = handleAction(CLF_CAT_STATE, (state, action) => ({
   data: action.payload
 }), {data: {state:true,catid:1}}); 
+//生成简报选择数据
+export const briefingSwitchDataReducer = handleAction(BRIEFING_SWITCH_DATA, (state,action) => ({
+  data:action.payload
+}),{data:[]})
 export {
   opinionSearchRequestedReducer,
   searchKeywordSyncReducer,
@@ -205,5 +210,5 @@ export {
   getCollectionOpinionDetailRequested,
   getCollectionOpinionDetailSucceeded,
   getCollectionLocationRequestedReducer,
-  getCollectionLocationSucceededReducer
+  getCollectionLocationSucceededReducer,
 }

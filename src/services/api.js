@@ -359,9 +359,11 @@ export const api_update_report_name = host + 'Report?action=updateReportName';
 export const api_search_report = host + 'Report?action=searchReport';
 //删除报告
 export const api_new_delete_report = host + 'Report?action=deleteReport'; 
+//查询模板
+export const api_search_template = host +'Report?action=getFormByReportType';
 //删除报告
 export const api_new_preview_report = host + 'Report?action=previewTemplate'; 
 // 修改报告标题
 export const api_update_report = host + 'Report?action=updateTitle';
 // 简报分析数据预览
-export const api_add_brief_report = host + 'Report?action= briefReport';
+export const api_add_brief_report = host + 'Report?action=briefReport';

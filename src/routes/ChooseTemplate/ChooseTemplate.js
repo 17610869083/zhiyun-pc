@@ -1,12 +1,13 @@
 import React from 'react';
 import {GRAY,BLUES} from '../../utils/colors';
 import './ChooseTemplate.less';
-import {api_get_template_report} from '../../services/api';
+import {api_get_template_report,api_search_template} from '../../services/api';
 import request from '../../utils/request';
-import {Input} from 'antd';
+import {Input,Modal,Button} from 'antd';
 import img from '../../assets/img/1.png';
 import {history} from '../../utils/history';
 import {templateTypeSort} from '../../utils/format';
+import ModalReport from '../../components/ModalReport/ModalReport';
 class ChooseTemplate extends React.Component{
     constructor(props){
         super(props);
@@ -26,6 +27,7 @@ class ChooseTemplate extends React.Component{
                 '07':'季报',
                 '08':'年报'
             },
+            visible:false
         }
     }
     checkType (type) {
@@ -85,11 +87,30 @@ class ChooseTemplate extends React.Component{
            searchValue:value
        }) 
     }
-
+    //搜索模板
     keydown = (e) => {
         if(e.keyCode === 13){
-
+            request(api_search_template +`&reportType=${this.state.type}&formName=${e.target.value}`)
+            .then( res => {
+                  if(res.data.code === 1){
+                    this.setState({
+                        contentList: res.data.data.content
+                    })
+                  }
+            })
         } 
+    }
+
+    //弹出框
+    showModal = () => {
+        this.setState({
+            visible:true
+        })
+    }
+    hideModal = () => {
+        this.setState({
+            visible:false
+        })
     }
     render(){
     const templateList = this.state.reportTypeList.map((item,index) => {
@@ -108,7 +129,7 @@ class ChooseTemplate extends React.Component{
              <div className="choose-template">
                 <div className="choose-template-title" style={{background:GRAY}}>
                    <span>请选择报告模板</span>
-                   <Input onChange = {this.change} value={this.state.searchValue} placeholder="搜索模板名称、模板类型"
+                   <Input onChange = {this.change} value={this.state.searchValue} placeholder="搜索模板名称"
                    onKeyDown = {this.keydown}
                    />
                 </div>
@@ -123,8 +144,15 @@ class ChooseTemplate extends React.Component{
                       {contentList}
                  </ul>                
                 </div>
+                <Button onClick={this.showModal}>编辑</Button>
+                <Modal  visible={this.state.visible} footer={null} onCancel={this.hideModal}
+                width="70%"
+                >
+                      <ModalReport/>
+                </Modal>
              </div>
          )
     }
 }
+
 export default ChooseTemplate;

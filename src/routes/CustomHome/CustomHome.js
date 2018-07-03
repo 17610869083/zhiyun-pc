@@ -1,7 +1,7 @@
 import React from 'react';
 import './CustomHome.less';
 import IcontFont from '../../components/IconFont';
-import request from '../../utils/request';
+//import request from '../../utils/request';
 class CustomHome extends React.Component{
     constructor(props){
         super(props);

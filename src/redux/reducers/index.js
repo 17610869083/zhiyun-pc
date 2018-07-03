@@ -41,7 +41,8 @@ import {opinionSearchRequestedReducer,
     getTopicMessageRequested,
     getTopicMessageSucceeded,
     informsstate,
-    clfCatState
+    clfCatState,
+    briefingSwitchDataReducer
 } from './opinionReducer';
 
 const reducer = combineReducers({
@@ -88,7 +89,8 @@ const reducer = combineReducers({
     homeModuleReducer,
     searchStateReducer,
     informsstate,
-    clfCatState
+    clfCatState,
+    briefingSwitchDataReducer
 });
 
 export default reducer;
