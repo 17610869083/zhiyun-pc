@@ -1,14 +1,14 @@
 // host
-const host = 'http://119.90.61.155/om3/webpart/';
+const host = 'http://119.90.61.155/om31/webpart/';
 //const host = 'http://web.is8.com.cn/om/webpart/';
 //const host = './';
 //-------------------登录
 //export const api_login = 'http://web.is8.com.cn/om/common/login/loginDo?action=login2';
-export const api_login = 'http://119.90.61.155/om3/common/login/loginDo?action=login2';
+export const api_login = 'http://119.90.61.155/om31/common/login/loginDo?action=login2';
 //export const api_login = '../common/login/loginDo?action=login2';
 
 //export const api_logout = 'http://web.is8.com.cn/om/common/login/loginDo?action=loginOut';
-export const api_logout = 'http://119.90.61.155/om3/common/login/loginDo?action=loginOut';
+export const api_logout = 'http://119.90.61.155/om31/common/login/loginDo?action=loginOut';
 //export const api_logout ='../common/login/loginDo?action=loginOut';
 /**
  * 首页模块
@@ -162,6 +162,7 @@ export const api_add_doc_from_top = host + 'oWork/reportDo?action=catMoveToTop';
 export const api_add_doc_from_mat = host + 'oWork/reportDo?action=oDataAdd';
 // 素材库收藏
 export const api_res_fav_cat= host + 'oWork/reportDo?action=resAddFavCat';
+
 export {
     api_newest_warning_opinion,
     api_today_opinion,
@@ -351,3 +352,9 @@ export const api_export_small=host+'exp/ExportData?action=getListBySource';
 export const api_get_all_report = host + 'Report?action=getAllReport';
 //报告模板
 export const api_get_template_report = host + 'reportDo?action=getAllForm';
+// 多语种删除
+export const api_delete_multilingual= host+'docDetail/docDetailDo?action=docDel'
+// 多语种详情
+export const api_get_DetailForeign= host+'docDetail/docDetailDo?action=getDetailForeign'
+// 招投标主题文件列表
+export const api_get_BiddingFolderList = host+ 'oClf/BidDo?action=getGradeMemu'

@@ -5,7 +5,7 @@ import {history} from '../../utils/history';
 import TopicList from '../TopicOpinion/TopicList/TopicList';
 import Information from './BiddingInformation/BiddingInformation';
 import Setting from './BiddingSetting/BiddingSetting'
-import {api_topic_del,api_topic_typeAdd,api_topic_typeDel,api_classify_revise} from '../../services/api';
+import {api_topic_del,api_topic_typeAdd,api_topic_typeDel,api_classify_revise, api_get_BiddingFolderList} from '../../services/api';
 import request from '../../utils/request';
 import './BiddingOpinion.less';
 import Iconfont from '../../components/IconFont';
@@ -14,6 +14,7 @@ import {connect} from 'react-redux';
 import { setTimeout } from 'timers';
 import {GRAY,BLACK} from '../../utils/colors';
 import Del from '../../assets/img/grayDel.svg'; 
+import { deepEqual } from 'assert';
 class BiddingOpinion extends React.Component {
     constructor(props) {
         super(props);
@@ -33,7 +34,8 @@ class BiddingOpinion extends React.Component {
             addTopic:0,
             addClass:1,
             isTopShow:true,
-            browserHeight:300
+            browserHeight:300,
+            topicNavMessage: []
         };
 
     }
@@ -56,6 +58,17 @@ class BiddingOpinion extends React.Component {
             current: e.key
         });
     }
+    componentWillMount() {
+        let current = window.location.hash.split('?')[0].split('/')[2];
+        this.setState({
+            current
+        })
+        request(api_get_BiddingFolderList).then((res) => {
+            this.setState({
+                topicNavMessage: res.data
+            })
+        })
+    }
     componentWillUnmount(){
         this.props.searchState({data:true});
         clearTimeout( this.topichomeTimer);
@@ -63,13 +76,15 @@ class BiddingOpinion extends React.Component {
     componentDidMount(){
          this.props.topicNavMessageRequested(new Date());
          this.topichomeTimer = setTimeout( ()=>{
-          let topicMessage=this.props.topicNavMessageSucceededState;
+          let topicMessage=this.state.topicNavMessage;
+          console.log(topicMessage instanceof Array)
+        //   debugger
           if(topicMessage!==1){
             let firstTopicid={topicid:1,topicname:'test'};
             topicMessage.forEach((item)=>{
-                      if(item['topicList'][0]!==undefined){
-                           firstTopicid.topicid = item['topicList'][0]['topicid'];
-                           firstTopicid.topicname = item['topicList'][0]['topicname'];
+                      if(item['clflist'][0]!==undefined){
+                           firstTopicid.topicid = item['clflist'][0]['topicid'];
+                           firstTopicid.topicname = item['clflist'][0]['topicname'];
                            return firstTopicid;
                       }
             })
@@ -84,6 +99,7 @@ class BiddingOpinion extends React.Component {
           }
           },600)
     }
+
     // 添加专题
     handleAddTopic() {
         this.setState({
@@ -272,6 +288,10 @@ class BiddingOpinion extends React.Component {
         })
         this.props.searchState({data:!this.state.isTopShow})
     }
+    // 文件夹添加
+    addFolder(){
+        console.log(123)
+    }
     render() {
         const delItems = item => {
             return <Menu onClick={this.onDelitem.bind(this,item.catid)}>
@@ -280,8 +300,10 @@ class BiddingOpinion extends React.Component {
             <Menu.Item key="3">添加</Menu.Item>
         </Menu>
         }
-        let {topicNavMessageSucceededState} =this.props;
-        const LeftTopicLists=topicNavMessageSucceededState!==1&&topicNavMessageSucceededState.map((item,index)=>
+        // let {topicNavMessageSucceededState} = this.state.topicNavMessage
+        console.log(this.state.topicNavMessage instanceof Array )
+        // debugger
+        const LeftTopicLists=this.state.topicNavMessage!==1&&this.state.topicNavMessage.map((item,index)=>
           <div className="a-class" key={index}>
           <div className="class-name" >
           <div className="leftBox" onClick={this.dropDown.bind(this,item.catid)} data-index='1' title={item.catname}>
@@ -349,6 +371,7 @@ class BiddingOpinion extends React.Component {
                     <div className="first-box">
                         <div className="add-topic-class" style={{background:GRAY}}>
                           主题
+                          <i onClick={this.addFolder.bind(this)}><Iconfont type='icon-tianjiawenjianjia' style={{fontSize: '18px'}}  className="add-folder"></Iconfont></i>
                         </div>
                         <div className="classes" style={{maxHeight:this.state.browserHeight+'px'}}>
                         {LeftTopicLists}
@@ -401,7 +424,6 @@ class BiddingOpinion extends React.Component {
 
 const mapStateToProps = state => {
     return {
-        topicNavMessageSucceededState:state.getTopicMessageSucceeded.data ,
         search:state.searchStateReducer.data
     }
 };

@@ -2,7 +2,7 @@ import "babel-polyfill";
 import React from 'react';
 import {connect} from 'react-redux';
 import {
-  Checkbox, Icon, Input, Menu, Dropdown, Popconfirm, message, Popover, Button,
+  Checkbox, Input, Menu, Dropdown, Popconfirm, message, Popover, Button,
   Spin, Alert, Select, Pagination, Modal,Tooltip
 } from 'antd';
 import {history} from '../../../utils/history';
@@ -11,18 +11,16 @@ import {opinionColor, setHighlightTags, formatDateTime} from '../../../utils/for
 import request from '../../../utils/request';
 import {
   api_edit_doc_neg, api_del_doc, api_push_material, api_push_collection,
-  api_allopinion_exportskip, api_topic_export_word ,api_collection_opinion_list} from '../../../services/api';
+  api_allopinion_exportskip, api_topic_export_word, api_delete_multilingual } from '../../../services/api';
 import {GRAY} from '../../../utils/colors';
 import {
   opinionSearchRequested,
   searchKeywordSync,
   setOpinionTypeRequested,
-  // getMaterialOpinionListRequested,
-  // getCollectionOpinionListRequested,
+  deleteMultilingual,
   exportSkip,
   paginationPage
 } from '../../../redux/actions/createActions';
-import IconFont from '../../../components/IconFont';
 import Store from '../../../redux/store/index';
 import weixin from '../../../assets/icon-img/weixin.png';
 import news from '../../../assets/icon-img/news.png';
@@ -35,11 +33,10 @@ import boke from '../../../assets/icon-img/boke.png';
 import app from '../../../assets/icon-img/app.png';
 import twitter from '../../../assets/icon-img/twitter.png';
 import BlankPage from '../../../base/Exception/BlankPage';
-import Collection from '../../../assets/img/collection.svg';
-import Material from '../../../assets/img/material.svg';
 import Qing from '../../../assets/img/qing.svg';
 import Del from '../../../assets/img/del.svg'; 
 import Dowload from '../../../assets/img/dowload.svg';
+import { SSL_OP_NETSCAPE_DEMO_CIPHER_CHANGE_BUG } from "constants";
 const InputGroup = Input.Group;
 const Option = Select.Option;
 class OpinionDetail extends React.Component {
@@ -117,12 +114,13 @@ class OpinionDetail extends React.Component {
   }
 
   clickItemTitle(sid, e) {
-    window.open(window.location.origin + window.location.pathname + '#/detail/' + sid);
+    // window.open(window.location.origin + window.location.pathname + '#/detail/' + sid);
+    window.open(window.location.origin + window.location.pathname + '#/multilingual/detail/' + sid + '/'+ this.props.languageType +'/'+ this.props.lang)
   }
 
-  // 删除舆情
+  // 删除
   deleteConfirm(sid) {
-    request(api_del_doc + '&sid=["' + sid + '"]', {}).then((res) => {
+    request(api_delete_multilingual + '&lang=' + this.props.lang  + '&sid=["' + sid + '"]', {}).then((res) => {
       if (res.data.code === 1) {
         message.success(res.data.msg);
         this.props.onDataChange(1);
@@ -133,9 +131,10 @@ class OpinionDetail extends React.Component {
     });
   }
 
-  // 设为预警
-  warningConfirm(sid) {
-    request(api_edit_doc_neg + '&neg=2&sid=["' + sid + '"]', {}).then((res) => {
+
+  // 倾向设置
+  editDocNeg(sid,neg) {
+    request(api_edit_doc_neg + '&lang='+ this.props.lang +'&neg='+ neg +'&sid=["' + sid + '"]', {}).then(res => {
       if (res.data.code === 1) {
         message.success(res.data.msg);
         this.props.onDataChange(1);
@@ -143,54 +142,7 @@ class OpinionDetail extends React.Component {
           checkedArray:new Array(40).fill(false)
         })
       }
-    });
-  }
-
-  // 设置正负面
-  editDocNeg(sid, type) {
-    if (type === 'neg') {
-      request(api_edit_doc_neg + '&neg=1&sid=["' + sid + '"]', {}).then(res => {
-        if (res.data.code === 1) {
-          message.success(res.data.msg);
-          this.props.onDataChange(1);
-          this.setState({
-            checkedArray:new Array(40).fill(false)
-          })
-        }
-      })
-
-    } else if (type === 'mid') {
-      request(api_edit_doc_neg + '&neg=0&sid=["' + sid + '"]', {}).then((res) => {
-        if (res.data.code === 1) {
-          message.success(res.data.msg);
-          this.props.onDataChange(1);
-          this.setState({
-            checkedArray:new Array(40).fill(false)
-          })
-        }
-      });
-    } else if (type === 'warin') {
-      request(api_edit_doc_neg + '&neg=2&sid=["' + sid + '"]', {}).then((res) => {
-        if (res.data.code === 1) {
-          message.success(res.data.msg);
-          this.props.onDataChange(1);
-          this.setState({
-            checkedArray:new Array(40).fill(false)
-          })
-        }
-      });
-    }
-    else {
-      request(api_edit_doc_neg + '&neg=-1&sid=["' + sid + '"]', {}).then((res) => {
-        if (res.data.code === 1) {
-          message.success(res.data.msg);
-          this.props.onDataChange(1);
-          this.setState({
-            checkedArray:new Array(40).fill(false)
-          })
-        }
-      });
-    }
+    })
     this.setState({
       popVisible: false,
     });
@@ -203,8 +155,6 @@ class OpinionDetail extends React.Component {
     });
   }
 
-  onChangeOtherOperate({key}) {
-  }
 
   // 取消操作
   deleteCancel(e) {
@@ -212,12 +162,6 @@ class OpinionDetail extends React.Component {
   }
 
 
-  // 是否显示摘要
-  triggerSummaryShow() {
-    this.setState({
-      isSummaryShow: !this.state.isSummaryShow
-    })
-  }
 
   // -----------批量操作
   checkedTrue() {
@@ -238,7 +182,7 @@ class OpinionDetail extends React.Component {
       message.warning("至少选择一项！");
     } else {
       const sidList = JSON.stringify(arr);
-      request(api_edit_doc_neg + '&neg=-1&sid=' + sidList, {}).then((res) => {
+      request(api_edit_doc_neg + '&lang='+ this.props.lang + '&neg=-1&sid=' + sidList, {}).then((res) => {
         if (res.data.code === 1) {
           message.success(res.data.msg);
           this.props.onDataChange(1);
@@ -259,7 +203,7 @@ class OpinionDetail extends React.Component {
       message.warning("至少选择一项！");
     } else {
       const sidList = JSON.stringify(arr);
-      request(api_edit_doc_neg + '&neg=0&sid=' + sidList, {}).then((res) => {
+      request(api_edit_doc_neg + '&lang='+ this.props.lang + '&neg=0&sid=' + sidList, {}).then((res) => {
         if (res.data.code === 1) {
           message.success(res.data.msg);
           this.props.onDataChange(1);
@@ -280,7 +224,7 @@ class OpinionDetail extends React.Component {
       message.warning("至少选择一项！");
     } else {
       const sidList = JSON.stringify(arr);
-      request(api_edit_doc_neg + '&neg=1&sid=' + sidList, {}).then((res) => {
+      request(api_edit_doc_neg + '&lang='+ this.props.lang + '&neg=1&sid=' + sidList, {}).then((res) => {
         if (res.data.code === 1) {
           message.success(res.data.msg);
           this.props.onDataChange(1);
@@ -301,7 +245,7 @@ class OpinionDetail extends React.Component {
       message.warning("至少选择一项！");
     } else {
       const sidList = JSON.stringify(arr);
-      request(api_edit_doc_neg + '&neg=2&sid=' + sidList, {}).then((res) => {
+      request(api_edit_doc_neg + '&lang='+ this.props.lang + '&neg=2&sid=' + sidList, {}).then((res) => {
         if (res.data.code === 1) {
           message.success(res.data.msg);
           this.props.onDataChange(1);
@@ -322,7 +266,7 @@ class OpinionDetail extends React.Component {
       message.warning("至少选择一项！");
     } else {
       const sidList = JSON.stringify(arr);
-      request(api_del_doc + '&sid=' + sidList, {}).then((res) => {
+      request(api_delete_multilingual + '&lang='+ this.props.lang + '&sid=' + sidList, {}).then((res) => {
         if (res.data.code === 1) {
           message.success(res.data.msg);
           this.props.onDataChange(1);
@@ -361,7 +305,6 @@ class OpinionDetail extends React.Component {
   }
   keyDown(e){
      if(e.keyCode === 13){
-      const docList = this.props.docList ? this.props.docList : [{carry: '新闻'}];
       const param = {
         seltype: this.state.seltype,
         keyword: this.state.searchInputValue,
@@ -523,47 +466,18 @@ class OpinionDetail extends React.Component {
       propsParamData.sid = arr + ',';
     }
     let time = formatDateTime(new Date());
-    if (propsType === 'AllopinionList') {
-      request(api_allopinion_exportskip, {
-        method: 'POST',
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded"
-        },
-        body: `page=${propsParamData.page}&sids=${propsParamData.sid}&pagesize=${propsParamData.pagesize}&datetag=${propsParamData.datetag}&taskname=${this.state.fileName}&documenttype=excel&createdate=${time}&taskstate=0&source=monitor&order=${propsParamData.order}&begin=${propsParamData.begin}&end=${propsParamData.end}&neg=${propsParamData.neg}&carry=${propsParamData.carry}&similer=${propsParamData.similer}&seltype=conten&keyword=`
-      }).then(res => {
-            this.setState({
-              downloadFlag:false
-            })
-            window.location.href = res.data.downloadUrl
-      })
-
-    } else if (propsType === 'TopicList') {
-      request(api_allopinion_exportskip, {
-        method: 'POST',
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded"
-        },
-        body: `topicName=${this.state.fileName}&topicid=${this.props.getRouterReducer.topicid}&sids=${propsParamData.sid}&page=${propsParamData.page}&pagesize=${propsParamData.pagesize}&datetag=${propsParamData.datetag}&taskname=${this.state.fileName}&documenttype=excel&createdate=${time}&taskstate=0&source=topic&order=${propsParamData.order}&begin=${propsParamData.begin}&end=${propsParamData.end}&neg=${propsParamData.neg}&carry=${propsParamData.carry}&similer=${propsParamData.similer}&seltype=conten&keyword=`
-      }).then(res => {
-        this.setState({
-          downloadFlag:false
-        })
-        window.location.href = res.data.downloadUrl
-      })
-    } else {
-      request(api_topic_export_word, {
-        method: 'POST',
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded"
-        },
-        body: `clfname=${this.state.fileName}&clfid=${this.props.clfId.clfid}&sids=${propsParamData.sid}&page=${propsParamData.page}&pagesize=${propsParamData.pagesize}&datetag=${propsParamData.datetag}&taskname=${this.state.fileName}&documenttype=excel&createdate=${time}&taskstate=0&source=clf&order=${propsParamData.order}&begin=${propsParamData.begin}&end=${propsParamData.end}&neg=${propsParamData.neg}&carry=${propsParamData.carry}&similer=${propsParamData.similer}&seltype=conten&keyword=`
-      }).then(res => {
-        this.setState({
-          downloadFlag:false
-        })
-        window.location.href = res.data.downloadUrl
-     })
-    }
+    request(api_allopinion_exportskip, {
+      method: 'POST',
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded"
+      },
+      body: `page=${propsParamData.page}&sids=${propsParamData.sid}&lang=${this.props.lang}&pagesize=${propsParamData.pagesize}&datetag=${propsParamData.datetag}&taskname=${this.state.fileName}&documenttype=excel&createdate=${time}&taskstate=0&source=monitor&order=${propsParamData.order}&begin=${propsParamData.begin}&end=${propsParamData.end}&neg=${propsParamData.neg}&carry=${propsParamData.carry}&similer=${propsParamData.similer}&seltype=conten&keyword=`
+    }).then(res => {
+          this.setState({
+            downloadFlag:false
+          })
+          window.location.href = res.data.downloadUrl
+    })
   }
 
   handleCancel() {
@@ -729,13 +643,13 @@ class OpinionDetail extends React.Component {
                           content={
                             <div>
                               <Button type="primary" size="small"
-                                      onClick={this.editDocNeg.bind(this, item.sid, 'neg')}>负面</Button>
+                                      onClick={this.editDocNeg.bind(this, item.sid, 1)}>负面</Button>
                               <Button type="primary" size="small" style={{marginLeft: '30px'}}
-                                      onClick={this.editDocNeg.bind(this, item.sid, 'mid')}>中性</Button>
+                                      onClick={this.editDocNeg.bind(this, item.sid, 0)}>中性</Button>
                               <Button type="primary" size="small" style={{marginLeft: '30px'}}
-                                      onClick={this.editDocNeg.bind(this, item.sid, 'pos')}>正面</Button>
+                                      onClick={this.editDocNeg.bind(this, item.sid, -1)}>正面</Button>
                               <Button type="primary" size="small" style={{marginLeft: '30px'}}
-                                      onClick={this.editDocNeg.bind(this, item.sid, 'warin')}>预警</Button>
+                                      onClick={this.editDocNeg.bind(this, item.sid, 2)}>预警</Button>
                             </div>
                           }
                           title="设置这条信息的倾向"
@@ -912,6 +826,9 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     opinionSearchRequest: req => {
+      dispatch(opinionSearchRequested(req));
+    },
+    deleteMultilingual: req => {
       dispatch(opinionSearchRequested(req));
     },
     searchKeywordSync: ks => {

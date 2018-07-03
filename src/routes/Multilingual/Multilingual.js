@@ -7,7 +7,6 @@ import {opinionSearchRequested, searchKeywordSync, paginationPage} from '../../r
 import {URLToObject, getSecondTime} from '../../utils/format';
 import {GRAY} from '../../utils/colors';
 import './Multilingual.less';
-import { stat } from 'fs';
 const FormItem = Form.Item;
 class AllOpinion extends React.Component {
   constructor(props) {
@@ -128,6 +127,16 @@ class AllOpinion extends React.Component {
         begin: ['开始日期', '시작일', '開始日', 'باشلىنىش كۈنى ', 'འགོ་ཚུགས་པའི་ཉིན།'],
         end: ['结束日期', '종료일', '終了日', 'ئاخىرلاشتۇرغان كۈن ', 'ཚར་བའི་ཉིན་'],
         submit: ['确定', '확인', '確定', 'بېكىتىلگەن ', 'གཏན་ཁེལ།']
+      },
+      StateMediaList: {
+        '全部': ['全部', '전부', 'すべて', 'بارلىق ', 'ཚང་མ།'],
+        '新闻': ['新闻', '뉴스', 'ニュース', 'ئاخبارات.', 'གསར་འགྱུར།'],
+        '论坛': ['论坛', '포럼', 'フォーラム', 'مۇنبەر.', 'གླེང་སྟེགས།'],
+        '博客': ['博客', '블로그', 'ブログ', 'بىلوگ.', 'པོད་ཁུག་'],
+        '微博': ['微博', '웨이보', '微博', 'مىكرو بىلوگ.', 'དཔོད་ཆུང།'],
+        '微信': ['微信', 'WeChat', 'WeChat', 'ئۈندىدار.', 'འཕྲིན་ཐུང།'],
+        '平媒': ['平媒', '플랫 미디어', '平面メディア', 'تەكشى ۋاسىتىسى', 'ངོས་མཉམ་གྱི་ཆ་འཕྲིན'],
+        'APP': ['APP', 'APP', 'アプリ', 'APP', 'APP']
       }
     }
     
@@ -299,18 +308,8 @@ class AllOpinion extends React.Component {
       end: this.state.end,
       page: pagenumber,
       pagesize: this.state.pagesize,
-      lang:this.state.language[this.props.match.params.languages],
+      lang:this.state.language[this.props.match.params.languages]
     };
-    // lang:this.state.language[this.props.match.params.languages],
-    // pagesize: this.state.pagesize,
-    // datetag: value,
-    // neg: this.state.trendValue,
-    // order: this.state.sortValue,
-    // similer: this.state.filterValue,
-    // page:pagenumber,
-    // carry: this.state.mediaValue
-    // begin: this.state.begin,
-    // end: this.state.end,
     this.props.opinionSearchRequest(param);
     this.props.paginationPage(pagenumber);
     ReactDOM.findDOMNode(this).scrollIntoView();
@@ -340,7 +339,8 @@ class AllOpinion extends React.Component {
         begin: this.state.begin,
         end: this.state.end,
         page: this.props.page,
-        pagesize: this.state.pagesize
+        pagesize: this.state.pagesize,
+        lang: this.state.language[this.props.match.params.languages]
       };
       this.props.opinionSearchRequest(param);
     } else {
@@ -352,7 +352,8 @@ class AllOpinion extends React.Component {
         neg:this.state.trendValue,
         order:this.state.sortValue,
         carry:this.state.mediaValue,
-        page:this.props.page
+        page:this.props.page,
+        lang: this.state.language[this.props.match.params.languages]
       };
       this.props.opinionSearchRequest(param);
       this.props.paginationPage(1);
@@ -559,14 +560,13 @@ class AllOpinion extends React.Component {
       ><span className="item-inner">{item.name[this.state.languageType]}</span></div>
     );
 
-
     // 媒体类型
     const Media = carryCount.map((item, index) =>
       <div
         key={index}
         onClick={this.mediaClick.bind(this, item.value)}
         className={item.value === this.state.mediaValue ? 'item active' : 'item'}
-      ><p className="item-inner">{item.key === 'docSearch' ? '其它' : item.value}</p>
+      ><p className="item-inner">{item.key === 'docSearch' ? '其它' : this.state.StateMediaList[item.value][this.state.languageType]}</p>
         <p className="count">{item.count}</p>
       </div>
     );
@@ -671,6 +671,7 @@ class AllOpinion extends React.Component {
                          current={page}
                          remove = {this.remove.bind(this)}
                          languageType={this.state.languageType}
+                         lang={this.state.language[this.props.match.params.languages]}
           />
         </div>
         <div className="bottom">
