@@ -91,8 +91,8 @@ class ReportTemplate extends React.Component{
 							history.push(`/briefing?type=${this.state.templateType}&id=${this.state.templateId}`)          
 						} else if (this.state.templateType === '01' && this.state.templateId === 2) {
 							history.push(`/briefingsecond?type=${this.state.templateType}&id=${this.state.templateId}`)          
-						} else if (this.state.templateType === '02') {
-							
+						} else if (this.state.templateType === '03') {
+							history.push(`/daily?type=${this.state.templateType}&id=${this.state.templateId}`)          
 						}
         }
         //搜索模板

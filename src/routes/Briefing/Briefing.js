@@ -25,7 +25,6 @@ class Briefing extends React.Component{
 		}
 	}
 	componentWillMount(){
-		console.log(this.props);
 		let search = this.props.location.search.split('&');
 		let templateType = search[0].split('=')[1];
 		let templateId = parseInt(search[1].split('=')[1],10);
@@ -45,7 +44,6 @@ class Briefing extends React.Component{
 		} else if (this.props.briefingData.length > 0) {
 			const sidList = JSON.stringify(this.props.briefingData);
 			request(api_add_brief_report + '&reportFormId=' + templateId + '&reportType=' + templateType + '&sids=' + sidList).then((res) => {
-				console.log(res);
 				// 遍历对象Object.keys()
 				// Object.values(）对象转数组
 				this.setState({
@@ -67,9 +65,7 @@ class Briefing extends React.Component{
 
 	}
 	onChangeCellTitle(e) {
-		console.log(e)
-    request(api_update_report + '&reportId=' + this.state.reportId + '&reportTitle=' + e).then((res) => {
-			console.log(res.data.code);
+    request(api_update_report + '&reportId=' + this.state.reportId + '&reportTitle=' + e + '&moduleId=' + this.state.dataID).then((res) => {
 			if(res.data.code === 1) {
 				message.success(res.data.msg);
 			} else {
@@ -78,8 +74,7 @@ class Briefing extends React.Component{
  		})
 	}
 	onChangeCellEditor(e) {
-		request(api_update_report + '&reportId=' + this.state.reportId + '&editor=' + e).then((res) => {
-			console.log(res.data.code);
+		request(api_update_report + '&reportId=' + this.state.reportId + '&editor=' + e + '&moduleId=' + this.state.dataID).then((res) => {
 			if(res.data.code === 1) {
 				message.success(res.data.msg);
 			} else {
@@ -88,8 +83,7 @@ class Briefing extends React.Component{
  		})
 	}
 	onChangeCellDate(e) {
-		request(api_update_report + '&reportId=' + this.state.reportId + '&date=' + e).then((res) => {
-			console.log(res.data.code);
+		request(api_update_report + '&reportId=' + this.state.reportId + '&date=' + e + '&moduleId=' + this.state.dataID).then((res) => {
 			if(res.data.code === 1) {
 				message.success(res.data.msg);
 			} else {
@@ -98,9 +92,8 @@ class Briefing extends React.Component{
  		})
 	}
 	onChangeCellPeriods(e) {
-		console.log(e)
-		request(api_update_report + '&reportId=' + this.state.reportId + '&periods=' + e).then((res) => {
-			console.log(res.data.code);
+		const num = e.replace(/[^0-9]/ig,"");
+		request(api_update_report + '&reportId=' + this.state.reportId + '&periods=' + num + '&moduleId=' + this.state.dataID).then((res) => {
 			if(res.data.code === 1) {
 				message.success(res.data.msg);
 			} else {
@@ -109,7 +102,6 @@ class Briefing extends React.Component{
  		})
 	}
 	render() {
-		console.log(this.props.briefingData.length);
 		return (
 			<div>
 				{
@@ -162,7 +154,6 @@ class Briefing extends React.Component{
 																return <div>
 																	<div className="rangeData">
 																		<RangePicker
-																			// ranges={{ Today: [moment(), moment()], 'This Month': [moment(), moment().endOf('month')] }}
 																			showTime
 																			format="YYYY/MM/DD"
 																			onChange={this.onChange}
@@ -196,9 +187,9 @@ class Briefing extends React.Component{
 																		/>
 																	</span>
 																</div>
-																<Row type="flex" justify="space-around" style={{ padding: "0px 25px 0px 0px" }}>
-																	<Col span={12}>
-																		<div className="briefingBan">
+																<Row type="flex" justify="space-around">
+																	<Col span={4}>
+																		<div className="briefingBan" style={{ marginLeft: 50 }}>
 																			<span className="ardrss">
 																				<EditText
 																					value={this.state.date[item].editor}
@@ -208,7 +199,11 @@ class Briefing extends React.Component{
 																		</div>
 																	</Col>
 																	<Col span={4}>
-																		<div className="briefingDate">
+																	</Col>
+																	<Col span={4}>
+																	</Col>
+																	<Col span={4}>
+																		<div className="briefingDate" style={{ marginLeft: -35 }}>
 																			<span className="data">
 																				<EditText
 																					value={this.state.date[item].date}
@@ -281,7 +276,7 @@ class Briefing extends React.Component{
 																				<strong>
 																					<p>内容：</p>
 																				</strong>
-																				<p className="contentText" dangerouslySetInnerHTML={{__html: i.content}}></p>	
+																				<p className="contentText">{i.content}</p>	
 																			</div>
 																		</div>
 																	</Col>
@@ -298,6 +293,7 @@ class Briefing extends React.Component{
 												</div>
 											))
 										}
+									  <div style={{ height: 100, backgroundColor: "#fff" }}></div>
 									</Col>
 								</Row>
 							</div>
@@ -350,7 +346,6 @@ class Briefing extends React.Component{
 																return <div>
 																	<div className="rangeData">
 																		<RangePicker
-																			// ranges={{ Today: [moment(), moment()], 'This Month': [moment(), moment().endOf('month')] }}
 																			showTime
 																			format="YYYY/MM/DD"
 																			onChange={this.onChange}
@@ -379,13 +374,17 @@ class Briefing extends React.Component{
 																		{this.state.date[item].periods}
 																	</span>
 																</div>
-																<Row type="flex" justify="space-around" style={{ padding: "15px 25px 25px 55px" }}>
-																	<Col span={12}>
+																<Row type="flex" justify="space-around" style={{ padding: "15px 25px 25px 55px", height: -1 }}>
+																	<Col span={4}>
 																		<div className="briefingBan">
 																			<span className="ardrss">
 																				{this.state.date[item].editor}
 																			</span>
 																		</div>
+																	</Col>
+																	<Col span={4}>
+																	</Col>
+																	<Col span={4}>
 																	</Col>
 																	<Col span={4}>
 																		<div className="briefingDate">
@@ -398,13 +397,6 @@ class Briefing extends React.Component{
 															</div>
 														) : null
 													}
-													{/* <Row type="flex" justify="space-around" style={{ padding: "0 0 20px 0", display: "none" }}>
-														<Col span={12}>
-														</Col>
-														<Col span={4}>
-															<Button style={{ marginLeft: 38 }}>编辑</Button>
-														</Col>
-													</Row> */}
 													{
 														this.state.date[item].briefing !== undefined ? (
 															this.state.date[item].briefing.map((i, index) => 
@@ -450,13 +442,14 @@ class Briefing extends React.Component{
 																		</div>
 																	</Col>
 																</Row>
-																</div>
+															</div>
 															)
 														) : null
 													}
 												</div>
 											))
 										}
+										<div style={{ height: 100, backgroundColor: "#fff" }}></div>
 									</Col>
 								</Row>
 							</div>
