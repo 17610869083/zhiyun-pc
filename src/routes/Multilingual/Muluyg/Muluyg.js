@@ -114,11 +114,11 @@ class AllOpinion extends React.Component {
       languageType: 0,
       // allLanguage: ['中文', '韩文']
       OptiionTitle:{
-        time: ['时间：', '시간：', '時間：', '：ۋاقىت ', 'དུས་ཚོད：་'],
-        inclination: ['倾向：', '경향：', '倾向：', '：خاھىش',  'ཁ་ཕྱོགས་པ་：'],
-        sort: ['排序：', '정렬：', '順位：', '：تەرتىپ بويىچە ', 'གོ་རིམ།：'],
-        removal: ['去重：', '중복배제：','重複：' , '：تەكرار ', 'གོ་རིམ།：'],
-        media: ['媒体：', '미디어：', 'メディア：', '：ئاخبارات ۋاستىلىرى.', 'ཆ་འཕྲིན་：'],
+        time: ['时间', '시간', '時間', 'ۋاقىت ', 'དུས་ཚོད་'],
+        inclination: ['倾向', '경향', '倾向', 'خاھىش', 'خاھىش ', 'ཁ་ཕྱོགས་པ་'],
+        sort: ['排序', '정렬', '順位', 'تەرتىپ بويىچە ', 'གོ་རིམ།'],
+        removal: ['去重', '중복배제','重複' , 'تەكرار ', 'གོ་རིམ།'],
+        media: ['媒体', '미디어', 'メディア', 'ئاخبارات ۋاستىلىرى.', 'ཆ་འཕྲིན་'],
       },
       infoList: ['信息列表', '정보 목록', '情報リスト', 'ئۇچۇر جەدۋىلى', 'ཆ་འཕྲིན་རེའུ་མིག་བཀོད།'],
       language: ['', 'kr', 'jp', 'uygur', 'zang'],
@@ -439,9 +439,11 @@ class AllOpinion extends React.Component {
         languageType: 0
       })
     }
+    // console.log(this.props.match.params.languages)
     if (this.props.location && this.props.location.search !== "?type=search") {
       this.homepageMore(window.location.hash);
     }
+    
   }
 
   componentWillReceiveProps(newProps){
@@ -507,10 +509,6 @@ class AllOpinion extends React.Component {
        sortValue:'timedown'
     })
   }
-  myReverse (arr) {
-    let [...newArr] = arr
-    return newArr.reverse()
-  }
   render() {
     let {docList, carryCount=[{count: 0, key: "all", value: "全部"}], pageInfo={count:0}, page} = this.props;
     if(!carryCount instanceof Array) carryCount = [{count: 0, key: "all", value: "全部"}];
@@ -526,164 +524,56 @@ class AllOpinion extends React.Component {
       },
     };
 
-    // const Time = this.state.time.map((item, index) =>
-    //   <div
-    //     key={index}
-    //     onClick={this.timeClick.bind(this, item.value)}
-    //     className={item.value === this.state.timeValue ? 'item active' : 'item'}
-    //   ><span className="item-inner">{item.name[this.state.languageType]}</span></div>
-    // );
     // 时间
-    const Time =  () => {
-      console.log(this.myReverse(this.state.time))
-      if (this.state.languageType-0 === 3) {
-        return this.myReverse(this.state.time).map((item, index) =>
-          <div
-            key={index}
-            onClick={this.timeClick.bind(this, item.value)}
-            className={item.value === this.state.timeValue ? 'item active' : 'item'}
-          ><span className="item-inner">{item.name[this.state.languageType]}</span></div>
-        );
-        
-      } else{
-        return this.state.time.map((item, index) =>
-          <div
-            key={index}
-            onClick={this.timeClick.bind(this, item.value)}
-            className={item.value === this.state.timeValue ? 'item active' : 'item'}
-          ><span className="item-inner">{item.name[this.state.languageType]}</span></div>
-        );
-      }
-    }
-
+    const Time = this.state.time.map((item, index) =>
+      <div
+        key={index}
+        onClick={this.timeClick.bind(this, item.value)}
+        className={item.value === this.state.timeValue ? 'item active' : 'item'}
+      ><span className="item-inner">{item.name[this.state.languageType]}</span></div>
+    );
 
     // 倾向
-    // const Trend = this.state.trend.map((item, index) =>
-    //   <div
-    //     key={index}
-    //     onClick={this.trendClick.bind(this, item.value)}
-    //     className={item.value === this.state.trendValue ? 'item active' : 'item'}
-    //   ><span className="item-inner">{item.name[this.state.languageType]}</span></div>
-    // );
-   // 倾向
-    const Trend = () => {
-      if (this.state.languageType-0 === 3) {
-          return this.myReverse(this.state.trend).map((item, index) =>
-          <div
-            key={index}
-            onClick={this.trendClick.bind(this, item.value)}
-            className={item.value === this.state.trendValue ? 'item active' : 'item'}
-          ><span className="item-inner">{item.name[this.state.languageType]}</span></div>
-        );
-      }else {
-        return this.state.trend.map((item, index) =>
-                <div
-                  key={index}
-                  onClick={this.trendClick.bind(this, item.value)}
-                  className={item.value === this.state.trendValue ? 'item active' : 'item'}
-                ><span className="item-inner">{item.name[this.state.languageType]}</span></div>
-        );
-      }
-    }
-    // 排序
-    // const Sort = this.state.sort.map((item, index) =>
-    //   <div
-    //     key={index}
-    //     onClick={this.sortClick.bind(this, item.value)}
-    //     className={item.value === this.state.sortValue ? 'fours active' : 'fours'}
-    //   ><span className="item-inner">{item.name[this.state.languageType]}</span></div>
-    // );
+    const Trend = this.state.trend.map((item, index) =>
+      <div
+        key={index}
+        onClick={this.trendClick.bind(this, item.value)}
+        className={item.value === this.state.trendValue ? 'item active' : 'item'}
+      ><span className="item-inner">{item.name[this.state.languageType]}</span></div>
+    );
 
     // 排序
-    const Sort = () => {
-      if (this.state.languageType-0 === 3) {
-        return this.myReverse(this.state.sort).map((item, index) =>
-                <div
-                  key={index}
-                  onClick={this.sortClick.bind(this, item.value)}
-                  className={item.value === this.state.sortValue ? 'fours active' : 'fours'}
-                ><span className="item-inner">{item.name[this.state.languageType]}</span></div>
-                );
-      } else {
-        return this.state.sort.map((item, index) =>
-                  <div
-                    key={index}
-                    onClick={this.sortClick.bind(this, item.value)}
-                    className={item.value === this.state.sortValue ? 'fours active' : 'fours'}
-                  ><span className="item-inner">{item.name[this.state.languageType]}</span></div>
-                );
-      }      
-    }
+    const Sort = this.state.sort.map((item, index) =>
+      <div
+        key={index}
+        onClick={this.sortClick.bind(this, item.value)}
+        className={item.value === this.state.sortValue ? 'fours active' : 'fours'}
+      ><span className="item-inner">{item.name[this.state.languageType]}</span></div>
+    );
 
     // 去重
-    // const Filter = this.state.filter.map((item, index) =>
-    //   <div
-    //     key={index}
-    //     onClick={this.filterClick.bind(this, item.value)}
-    //     className={item.value === this.state.filterValue ? 'item active' : 'item'}
-    //   ><span className="item-inner">{item.name[this.state.languageType]}</span></div>
-    // );
-
-    // 去重
-    const Filter = () => {
-      if(this.state.languageType-0 === 3) {
-        return this.myReverse(this.state.filter).map((item, index) =>
-                <div
-                  key={index}
-                  onClick={this.filterClick.bind(this, item.value)}
-                  className={item.value === this.state.filterValue ? 'item active' : 'item'}
-                ><span className="item-inner">{item.name[this.state.languageType]}</span></div>
-              );
-      }else{
-        return this.state.filter.map((item, index) =>
-                <div
-                  key={index}
-                  onClick={this.filterClick.bind(this, item.value)}
-                  className={item.value === this.state.filterValue ? 'item active' : 'item'}
-                ><span className="item-inner">{item.name[this.state.languageType]}</span></div>
-              );
-      }
-    }
+    const Filter = this.state.filter.map((item, index) =>
+      <div
+        key={index}
+        onClick={this.filterClick.bind(this, item.value)}
+        className={item.value === this.state.filterValue ? 'item active' : 'item'}
+      ><span className="item-inner">{item.name[this.state.languageType]}</span></div>
+    );
 
     // 媒体类型
-    // const Media = carryCount.map((item, index) =>
-    //   <div
-    //     key={index}
-    //     onClick={this.mediaClick.bind(this, item.value)}
-    //     className={item.value === this.state.mediaValue ? 'item active' : 'item'}
-    //   ><p className="item-inner">{item.key === 'docSearch' ? '其它' : this.state.StateMediaList[item.value][this.state.languageType]}</p>
-    //     <p className="count">{item.count}</p>
-    //   </div>
-    // );
-
-    // 媒体类型
-    const Media = () => {
-      if (this.state.languageType-0 === 3) {
-        return this.myReverse(carryCount).map((item, index) =>
-                  <div
-                    key={index}
-                    onClick={this.mediaClick.bind(this, item.value)}
-                    className={item.value === this.state.mediaValue ? 'item active' : 'item'}
-                  ><p className="item-inner">{item.key === 'docSearch' ? '其它' : this.state.StateMediaList[item.value][this.state.languageType]}</p>
-                    <p className="count">{item.count}</p>
-                  </div>
-                );
-      }else {
-        return carryCount.map((item, index) =>
-                <div
-                  key={index}
-                  onClick={this.mediaClick.bind(this, item.value)}
-                  className={item.value === this.state.mediaValue ? 'item active' : 'item'}
-                ><p className="item-inner">{item.key === 'docSearch' ? '其它' : this.state.StateMediaList[item.value][this.state.languageType]}</p>
-                  <p className="count">{item.count}</p>
-                </div>
-              );
-      }
-    }
+    const Media = carryCount.map((item, index) =>
+      <div
+        key={index}
+        onClick={this.mediaClick.bind(this, item.value)}
+        className={item.value === this.state.mediaValue ? 'item active' : 'item'}
+      ><p className="item-inner">{item.key === 'docSearch' ? '其它' : this.state.StateMediaList[item.value][this.state.languageType]}</p>
+        <p className="count">{item.count}</p>
+      </div>
+    );
     // 搜索数据数量 
     const searchNum = (num) => {
-      let leftarr = ['根据您的条件，为您筛选出','님이 지정한 조건에 부합되는', 'あなたの条件によると、', '', 'ལ་གཞིགས་ནས་ཁྱེད་ཀྱི་ཆ་རྐྱེན་ཁྱེད་འདེམས་སྒྲུག་ཐོན་'];
-      let rightarr = ['条数据', '개의 데이터를 검색하였습니다', '件のデータをピックアップします!', '','དོན་ཚན་གཞི་གྲངས།']
+      let leftarr = ['根据您的条件，为您筛选出','님이 지정한 조건에 부합되는', 'あなたの条件によると、', '', ''];
+      let rightarr = ['条数据', '개의 데이터를 검색하였습니다!', '件のデータをピックアップします!', '','']
       return `${leftarr[this.state.languageType]}<span class="number">${num}</span>${rightarr[this.state.languageType]}！`
     }
     const param = {
@@ -706,11 +596,10 @@ class AllOpinion extends React.Component {
           </div>
         </div>
         <div className="sort-top" style={this.state.isTopShow ? {display: 'block'} : {display: 'none'}}>
-        {console.log(this.state.languageType)}
-          <div className={this.state.languageType-0 === 3? 'uygur sort-items' : 'sort-items'}>
-            <div className="left">{this.state.OptiionTitle.time[this.state.languageType]}</div>
+          <div className="sort-items">
+            <div className="left">{this.state.OptiionTitle.time[this.state.languageType]}：</div>
             <div className="right">
-              {Time()}
+              {Time}
             </div>
             <div className="other" style={this.state.timePickerShow ? {display: 'block'} : {display: 'none'}}>
               <Form onSubmit={this.handleSubmit.bind(this)}>
@@ -747,28 +636,28 @@ class AllOpinion extends React.Component {
               </Form>
             </div>
           </div>
-          <div className={this.state.languageType-0 === 3? 'uygur sort-items' : 'sort-items'}>
-            <div className="left">{this.state.OptiionTitle.inclination[this.state.languageType]}</div>
+          <div className="sort-items">
+            <div className="left">{this.state.OptiionTitle.inclination[this.state.languageType]}：</div>
             <div className="right">
-              {Trend()}
+              {Trend}
             </div>
           </div>
-          <div className={this.state.languageType-0 === 3? 'uygur sort-items' : 'sort-items'}>
-            <div className="left">{this.state.OptiionTitle.sort[this.state.languageType]}</div>
+          <div className="sort-items">
+            <div className="left">{this.state.OptiionTitle.sort[this.state.languageType]}：</div>
             <div className="right">
-              {Sort()}
+              {Sort}
             </div>
           </div>
-          <div className={this.state.languageType-0 === 3? 'uygur sort-items' : 'sort-items'}>
-            <div className="left">{this.state.OptiionTitle.removal[this.state.languageType]}</div>
+          <div className="sort-items">
+            <div className="left">{this.state.OptiionTitle.removal[this.state.languageType]}：</div>
             <div className="right">
-              {Filter()}
+              {Filter}
             </div>
           </div>
-          <div className={this.state.languageType-0 === 3? 'uygur media-items' : 'media-items'}>
-            <div className="left">{this.state.OptiionTitle.media[this.state.languageType]}</div>
+          <div className="media-items">
+            <div className="left">{this.state.OptiionTitle.media[this.state.languageType]}：</div>
             <div className="right">
-              {Media()}
+              {Media}
             </div>
           </div>
         </div>

@@ -5,7 +5,16 @@ import {history} from '../../utils/history';
 import TopicList from '../TopicOpinion/TopicList/TopicList';
 import Information from './BiddingInformation/BiddingInformation';
 import Setting from './BiddingSetting/BiddingSetting'
-import {api_topic_del,api_topic_typeAdd,api_topic_typeDel,api_classify_revise, api_get_BiddingFolderList} from '../../services/api';
+import {api_topic_del,
+        api_topic_typeAdd,
+        api_topic_typeDel,
+        api_classify_revise,
+        api_get_BiddingFolderList,
+        api_get_BiddingddGradeC,
+        api_get_BiddingeditGradeCat,
+        api_get_BiddingdelCat,
+        api_get_BiddingdelGrade
+} from '../../services/api';
 import request from '../../utils/request';
 import './BiddingOpinion.less';
 import Iconfont from '../../components/IconFont';
@@ -14,7 +23,6 @@ import {connect} from 'react-redux';
 import { setTimeout } from 'timers';
 import {GRAY,BLACK} from '../../utils/colors';
 import Del from '../../assets/img/grayDel.svg'; 
-import { deepEqual } from 'assert';
 class BiddingOpinion extends React.Component {
     constructor(props) {
         super(props);
@@ -35,9 +43,16 @@ class BiddingOpinion extends React.Component {
             addClass:1,
             isTopShow:true,
             browserHeight:300,
-            topicNavMessage: []
+            topicNavMessage: [],
         };
 
+    }
+    initCard(){
+        request(api_get_BiddingFolderList).then((res) => {
+            this.setState({
+                topicNavMessage: res.data
+            })
+        })
     }
     handleClick(e) {
         if(e.key==='addsort'){
@@ -50,6 +65,13 @@ class BiddingOpinion extends React.Component {
             });
             return
         }
+        if(e.key === 'setting') {
+            history.push({
+                pathname:`/bidding/${e.key}`,
+                search:`?topicid=${this.state.topicId}`
+            });
+            return
+        }
         history.push({
             pathname:`/bidding/${e.key}`,
             search:`?topicid=${this.state.topicId}`
@@ -58,27 +80,28 @@ class BiddingOpinion extends React.Component {
             current: e.key
         });
     }
+    componentWillReceiveProps(nextprops){
+        if (nextprops.location.pathname === '/bidding/information') {
+            this.initCard()
+        }
+    }
     componentWillMount() {
         let current = window.location.hash.split('?')[0].split('/')[2];
         this.setState({
             current
         })
-        request(api_get_BiddingFolderList).then((res) => {
-            this.setState({
-                topicNavMessage: res.data
-            })
-        })
+        this.initCard()
+        
     }
     componentWillUnmount(){
         this.props.searchState({data:true});
         clearTimeout( this.topichomeTimer);
     }
     componentDidMount(){
-         this.props.topicNavMessageRequested(new Date());
+        //  this.props.topicNavMessageRequested(new Date());
+        this.initCard()
          this.topichomeTimer = setTimeout( ()=>{
           let topicMessage=this.state.topicNavMessage;
-          console.log(topicMessage instanceof Array)
-        //   debugger
           if(topicMessage!==1){
             let firstTopicid={topicid:1,topicname:'test'};
             topicMessage.forEach((item)=>{
@@ -111,7 +134,7 @@ class BiddingOpinion extends React.Component {
     }
     delTopic(e){
         e.stopPropagation();
-         let topicID=e.target.dataset.topicid;
+         let topicID=e.target.dataset.clfid;
     	  this.setState({
     	  	visibleTwo:true,
     	  	topicId:topicID,
@@ -139,115 +162,11 @@ class BiddingOpinion extends React.Component {
           } 
     	  this.setState({inputValue:e.target.value})
     }
-    handleOk(e){
-    	 request(api_topic_typeAdd,{
-    	 	  method:'POST',
-    	 	  headers:{
-    	 	  	  "Content-Type": "application/x-www-form-urlencoded"
-    	 	  },
-    	 	  body:`catname=${this.state.inputValue}`
-    	 }).then(res=>{
-    	 	  if(res.data.code===1){
-    	 	  	   history.push({
-                    pathname:`/topic/topiclist`,
-                    search:`?catid=${this.state.inputValue}`
-              });
-               }
-               this.props.topicNavMessageRequested(new Date())
-    	 })
-    	 this.setState({
-    	 	  visible:false,
-    	 	  inputValue:''
-    	 })
-    }
-    handleCancel(){
-    	  this.setState({
-    	 	  visible:false
-    	 })
-    }
-    delOkOne(){
-        this.setState({visibleOne:false});
-    	if(this.state.childRen!==0){
-                Modal.info({
-                   title: '系统提示',
-                   content: (
-                   <div>
-                   <p>请先删除该分类下的所有专题</p>
-                   </div>
-                    ),
-                    onOk() {},
-                   });
-    	}else{
-    		 request(api_topic_typeDel,{
-    		 method:'POST',
-    		 headers:{
-    	 	  	  "Content-Type": "application/x-www-form-urlencoded"
-    	 	  },
-    	 	  body:`catid=${this.state.catid}`
-    	}).then(res=>{
-    		  if(res.data.code===1){
-    	 	  	   history.push({
-    	 	  	   	  pathname:`/topic/topiclist`,
-    	 	  	   	  search:`?catid=${this.state.catid}`
-    	 	  	   });
-               }
-               this.props.topicNavMessageRequested(new Date())
-    	})
-    	}
-
-    }
-    delCancelOne(){
-    	this.setState({visibleOne:false})
-    }
-    delOkTwo(){
-    	 this.setState({
-    	 	visibleTwo:false,
-    	    childRen:this.state.childRen-1
-    	 });
-    	  request(api_topic_del,{
-    	  	 method:'POST',
-    	  	 headers:{
-    	  	 	 "Content-Type": "application/x-www-form-urlencoded"
-    	  	 },
-    	  	 body:`topicid=${this.state.topicId}`
-    	  }).then(res=>{
-    	  	   if(res.data.code===1){
-    	  	   	    history.push({
-    	  	   	    	pathname:`/topic/topiclist`,
-    	  	   	    	search:`?delTopicId=${this.state.topicId}`
-    	  	   	    	});
-                 }
-                 this.props.topicNavMessageRequested(new Date())
-    	  });
-    }
-    delCancelTwo(){
-    	this.setState({visibleTwo:false})
-
-    }
-    delOkThree(){
-        this.setState({
-            visibleThree:false,
-            inputValue:''
-        })
-        request(api_classify_revise,{
-            method:'POST',
-            headers:{
-                 "Content-Type": "application/x-www-form-urlencoded"
-            },
-            body:`catname=${this.state.inputValue}&id=${this.state.catid}`
-        }).then(res=>{
-              if(res.data.code===1){
-                history.push({
-                    pathname:`/topic/topiclist`,
-                    search:`?catId=${this.state.catid}`
-                    });
-                 this.props.topicNavMessageRequested(new Date())
-              }
-        })
-    }
-    delCancelThree(){
-        this.setState({visibleThree:false})
-    }
+    
+    
+    
+    
+    
     onDelitem(catid, {key}){
            if(key==='1'){
            	   this.setState({visibleOne:true})
@@ -256,10 +175,10 @@ class BiddingOpinion extends React.Component {
            }else {
                 history.push({
                     pathname:`/bidding/setting`,
-                    search: `?type=add`
+                    search: `?type=add&catid=${catid}`
                 })
                 this.setState({
-                    current: 'setting'
+                    current: 'setting',
                 })
                 this.props.setlocationPathname({catid:catid});
            }
@@ -288,10 +207,125 @@ class BiddingOpinion extends React.Component {
         })
         this.props.searchState({data:!this.state.isTopShow})
     }
+
+    /**
+     * 
+     * 
+     * 
+     * 
+     *   newCode
+     * 
+     * 
+     * 
+     */
     // 文件夹添加
     addFolder(){
-        console.log(123)
+        this.setState({
+            visible: true
+        })
     }
+    // 确认文件夹添加
+    handleOk(e){
+        request(api_get_BiddingddGradeC,{
+              method:'POST',
+              headers:{
+                    "Content-Type": "application/x-www-form-urlencoded"
+              },
+              body:`catname=${this.state.inputValue}`
+        })
+        .then(() => {
+            this.initCard()
+        })
+        this.setState({
+              visible:false,
+              inputValue:''
+        })
+   }
+    // 取消文件夹添加
+    handleCancel(){
+        this.setState({
+            visible:false
+        })
+    }
+    // 确认重命名文件夹
+    delOkThree(){
+        this.setState({
+            visibleThree:false,
+            inputValue:''
+        })
+        request(api_get_BiddingeditGradeCat,{
+            method:'POST',
+            headers:{
+                 "Content-Type": "application/x-www-form-urlencoded"
+            },
+            body:`catname=${this.state.inputValue}&id=${this.state.catid}`
+        }).then( () =>{
+            this.initCard()
+        })
+        this.setState({
+            visibleThree:false,
+            inputValue:''
+        })
+    }
+    // 取消重命名文件夹
+    delCancelThree(){
+        this.setState({visibleThree:false})
+    }
+    // 确认删除文件夹
+    delOkOne(){
+        this.setState({visibleOne:false});
+    	if(this.state.childRen!==0){
+                Modal.info({
+                   title: '系统提示',
+                   content: (
+                   <div>
+                   <p>请先删除该分类下的所有专题</p>
+                   </div>
+                    ),
+                    onOk() {},
+                   });
+    	}else{
+            request(api_get_BiddingdelCat,{
+                method:'POST',
+                headers:{
+                    "Content-Type": "application/x-www-form-urlencoded"
+                },
+                body:`catid=${this.state.catid}`
+            }).then(()=>{
+                this.initCard()
+    	    })
+    	}
+
+    }
+    // 取消删除文件夹
+    delCancelOne(){
+    	this.setState({visibleOne:false})
+    }
+    // 确认删除专题
+    delOkTwo(){
+        this.setState({
+            visibleTwo:false,
+            childRen:this.state.childRen-1
+        });
+         request(api_get_BiddingdelGrade,{
+              method:'POST',
+              headers:{
+                   "Content-Type": "application/x-www-form-urlencoded"
+              },
+              body:`clfid=${this.state.topicId}`
+         }).then(res=>{
+                if(res.data.code===1){
+                    history.push({
+                        pathname:`/bidding/information/`
+                    });
+                }
+                this.initCard()
+         });
+   }
+   // 取消删除分类
+   delCancelTwo(){
+       this.setState({visibleTwo:false})
+   }
     render() {
         const delItems = item => {
             return <Menu onClick={this.onDelitem.bind(this,item.catid)}>
@@ -300,9 +334,6 @@ class BiddingOpinion extends React.Component {
             <Menu.Item key="3">添加</Menu.Item>
         </Menu>
         }
-        // let {topicNavMessageSucceededState} = this.state.topicNavMessage
-        console.log(this.state.topicNavMessage instanceof Array )
-        // debugger
         const LeftTopicLists=this.state.topicNavMessage!==1&&this.state.topicNavMessage.map((item,index)=>
           <div className="a-class" key={index}>
           <div className="class-name" >
@@ -314,16 +345,16 @@ class BiddingOpinion extends React.Component {
           </Dropdown>
           </div>
            <ul className="topics" ref={'topicList'+item.catid}>
-              {item.topicList && item.topicList.map((iitem,iindex) =>
-                 <li  key={iitem.topicid}
-                 className={this.state.materialCurrent === iitem.topicid ? 'backGroundBlue' : 'a-topic'}
+              {item.clflist && item.clflist.map((iitem,iindex) =>
+                 <li  key={iitem.clfid}
+                 className={this.state.materialCurrent === iitem.clfid ? 'backGroundBlue' : 'a-topic'}
                   >
-                  <span className="topicTitle" onClick={this.queryTopic.bind(this,iitem.topicid,iitem.topicname)}
-                   title={iitem.topicname}
+                  <span className="topicTitle" onClick={this.queryTopic.bind(this,iitem.clfid,iitem.clfname)}
+                   title={iitem.clfname}
                   >
-                        {iitem.topicname}
+                        {iitem.clfname}
                   </span>
-                  <img src={Del} alt="删除" className="icon-delete"  data-topicid={iitem.topicid} onClick={this.delTopic.bind(this)}/>
+                  <img src={Del} alt="删除" className="icon-delete"  data-clfid={iitem.clfid} onClick={this.delTopic.bind(this)}/>
                 </li>
              )}
              </ul>
@@ -380,12 +411,12 @@ class BiddingOpinion extends React.Component {
                 </div>
                 </div>
                 <Modal
-                    title="添加分类"
+                    title="添加主题"
                     visible={this.state.visible}
                     onOk={this.handleOk.bind(this)}
                     onCancel={this.handleCancel.bind(this)}
                     >
-                    <p className="textCenter">输入分类名</p>
+                    <p className="textCenter">输入主题名</p>
                     <Input className="gapInput" onChange={this.onChange.bind(this)}
                     value={this.state.inputValue}
                     maxLength={'28'}
@@ -397,7 +428,7 @@ class BiddingOpinion extends React.Component {
                     onOk={this.delOkOne.bind(this)}
                     onCancel={this.delCancelOne.bind(this)}
                     >
-                    <p className="textCenter">确认删除此分类吗?</p>
+                    <p className="textCenter">确认删除此主题吗?</p>
                     </Modal>
                     <Modal
                     title="删除专题"

@@ -4,7 +4,15 @@ import SettingCreateTopic from '../../../components/SettingCreateTopic/SettingCr
 import SettingSeniorTopic from '../../../components/SettingSeniorTopic/SettingSeniorTopic';
 import request from '../../../utils/request';
 import Store from '../../../redux/store/index';
-import {api_topic_revise,api_topic_message,api_top_nav} from '../../../services/api';
+import {
+        api_topic_revise,
+        api_topic_message,
+        api_top_nav,
+        api_get_BiddingetGradeAndRule,
+        api_get_BiddingetgradeCatList,
+        api_get_BiddingaddGrade,
+        api_get_BiddinggetGradeAndRule
+} from '../../../services/api';
 import { createHashHistory } from 'history';
 import {getLocalTime,topicData,getSecondTime} from '../../../utils/format';
 import {connect} from 'react-redux';
@@ -43,33 +51,84 @@ class BiddingSetting extends React.Component {
             delRule:[],
             DelwayRule:[],
             ruleId:[],
-            topicNameValue:''
+            topicNameValue:'',
+            addOrSetting:''
         }
     }
-    componentWillMount(){   
-         let topicid=this.props.location.search.split('=')[1];
-         request(api_topic_message +'&topicid=' +topicid).then(res=>{
-             if(res.data && res.data.code!==0){
-                let addtypeStr='num'+(res.data.addtype);
-                  this.setState({
-                     topicAlldata:res.data,
-                     [addtypeStr]:res.data.rulearr.length === 0?[{"rule1":"","rulecode1":"","id":"","rule2":"",
-                     "rulecode2":"","rule3":"","rulecode3":"","rule4":"",
-                     "rulecode4":""}]:res.data.rulearr,
-                     addType: res.data.addtype ,
-                     select:res.data.catid,
-                     topicNameValue:res.data.topicname
-                  })
-              }
-                request(api_top_nav).then(res=>{
-                    if(res.data){
-                        this.setState({
-                            topicCatList:res.data,
-                        })
-                    }
-                 })
-          })
+    componentWillReceiveProps(nextprops){
+            if (this.search2Obj(nextprops.location.search).type === 'add') {
+                request(api_get_BiddingetgradeCatList).then((res) => {
+                    this.setState({
+                        topicCatList: res.data.gradeCatList,
+                        topicNameValue: '',
+                        select: this.tsearch2Obj(nextprops.location.search).catid
+                    })
+                })
+            }
+            this.setState({
+                addOrSetting: this.search2Obj(nextprops.location.search).type || 'setting'
+            })
+    }
+    componentWillMount(){
+        if (this.search2Obj(this.props.location.search).type === 'add') {
+            // this.setState({
 
+            // })
+            
+            request(api_get_BiddingetgradeCatList).then((res) => {
+                this.setState({
+                    topicCatList: res.data.gradeCatList
+                })
+            })
+        } else {
+            let topicid = this.search2Obj(this.props.location.search).topicid
+            request(api_get_BiddinggetGradeAndRule +'&clfid=' +topicid).then(res=>{
+                if(res.data && res.data.code!==0){
+                let addtypeStr='num'+(res.data.addtype);
+                    this.setState({
+                        topicAlldata:res.data,
+                        [addtypeStr]:res.data.rulearr.length === 0?[{"rule1":"","rulecode1":"","id":"","rule2":"",
+                        "rulecode2":"","rule3":"","rulecode3":"","rule4":"",
+                        "rulecode4":""}]:res.data.rulearr,
+                        addType: res.data.addtype ,
+                        select:res.data.catid,
+                        topicNameValue:res.data.clfname
+                    })
+                }
+            })
+        }
+        
+        //  let topicid=this.props.location.search.split('=')[1];
+        //  request(api_topic_message +'&topicid=' +topicid).then(res=>{
+        //      if(res.data && res.data.code!==0){
+        //         let addtypeStr='num'+(res.data.addtype);
+        //           this.setState({
+        //              topicAlldata:res.data,
+        //              [addtypeStr]:res.data.rulearr.length === 0?[{"rule1":"","rulecode1":"","id":"","rule2":"",
+        //              "rulecode2":"","rule3":"","rulecode3":"","rule4":"",
+        //              "rulecode4":""}]:res.data.rulearr,
+        //              addType: res.data.addtype ,
+        //              select:res.data.catid,
+        //              topicNameValue:res.data.topicname
+        //           })
+        //       }
+        //         request(api_top_nav).then(res=>{
+        //             if(res.data){
+        //                 this.setState({
+        //                     topicCatList:res.data,
+        //                 })
+        //             }
+        //          })
+        //   })
+
+    }
+    search2Obj(str) {
+        let obj = {}, sumarr = []
+        str.slice(1, str.length).split('&').forEach(item => {
+            sumarr = item.split('=')
+            obj[sumarr[0]] = sumarr[1]
+        })
+        return obj
     }
      //快速添加规则
      addRule(e){
@@ -92,21 +151,27 @@ class BiddingSetting extends React.Component {
     // 改变设置方式
     handleOnChange(key) {
         if(key===this.state.addType){
-        let ruleIdArr=[];
-        let oldruleId=this.state.topicAlldata.rulearr;  
-        for(let i in oldruleId){
-            ruleIdArr.push(oldruleId[i]['id'])
+            let ruleIdArr=[];
+            let oldruleId=this.state.topicAlldata.rulearr;  
+            for(let i in oldruleId){
+                ruleIdArr.push(oldruleId[i]['id'])
+            }
+            this.setState({
+                ruleId:ruleIdArr,
+                addType:parseInt(key,10)
+            })
+        }else{
+            // this.setState({
+            //     addType:parseInt(key,10)
+            // })
+            return;
+
         }
-        this.setState({
-            ruleId:ruleIdArr,
-            addType:parseInt(key,10)
-        })
-     }else{
-        this.setState({
-            addType:parseInt(key,10)
-        })
-        //  return;
-     }
+        // if(this.state.topicNameValue.trim().length <= 0 && this.state.createTopicRule.length <= 0 ) {
+        //     this.setState({
+        //         addType:parseInt(key,10)
+        //     })
+        // }
     }
     onAddtype(){
     	 this.setState({addtype:1})
@@ -174,7 +239,7 @@ class BiddingSetting extends React.Component {
            preciseTopicRule:rule
        })
     }
-    handleSubmit(e) { 
+    handleSubmit(e) {
           e.preventDefault();
            let rules;
            if(this.state.addType===3){
@@ -197,22 +262,22 @@ class BiddingSetting extends React.Component {
         let topicId=Store.getState().getRouterReducer.topicid;
         this.props.form.validateFields((err, values) => {
             if (!err) {
-            request(api_topic_revise,{
-        	   method: 'POST',
-            headers: {
-                  "Content-Type": "application/x-www-form-urlencoded"
-            },
-            body:`action=editTopic&topicid=${topicId}&addtype=${this.state.addtype}&bind=${this.state.checked}&tname=${this.state.topicNameValue}&catid=${this.state.select}&rule=${encodeURIComponent(rules)}`
-        }).then((res) => {
-        	if(res.data.code===1){
-                  message.success('关键词修改成功');
-                  this.props.topicNavMessageRequested(new Date())
-          	      history.push({
-                   pathname: '/topic/topiclist'
-                   })
-        	}
-        })
-         }               
+                request(api_get_BiddingaddGrade,{
+                    method: 'POST',
+                    headers: {
+                        "Content-Type": "application/x-www-form-urlencoded"
+                    },
+                    // body:`action=editTopic&topicid=${topicId}&addtype=${this.state.addtype}&bind=${this.state.checked}&tname=${this.state.topicNameValue}&catid=${this.state.select}&rule=${encodeURIComponent(rules)}`
+                    body:`action=addGrade&addtype=${this.state.addtype}&clfname=${this.state.topicNameValue}&catid=${this.search2Obj(this.props.location.search).catid}&rule=${encodeURIComponent(rules)}`
+                }).then((res) => {
+                    if(res.data.code===1){
+                        message.success('关键词添加成功');
+                        history.push({
+                            pathname: '/bidding/information'
+                        })
+                    }
+                })
+            }               
         }); 	
     }
     onChange(checked){
@@ -236,7 +301,7 @@ class BiddingSetting extends React.Component {
   }
   handleCancel1 = (e) => {
     this.setState({
-      visible1: false
+        visible1: false
     });
   }
   onSelect(value){
@@ -246,9 +311,9 @@ class BiddingSetting extends React.Component {
   }
      //删除单条规则
   onDelrule(data){
-        this.setState({
-              delRule:data
-        })
+    this.setState({
+        delRule:data
+    })
   }
   //删除整行规则
   onDelwayRule(data){
@@ -294,11 +359,11 @@ class BiddingSetting extends React.Component {
         },
       },
     };
-    let topicCatid=this.state.topicAlldata.catid?this.state.topicAlldata.catid:75;
+    let topicCatid=this.search2Obj(this.props.location.search).catid? this.search2Obj(this.props.location.search).catid:116;
         const topicCatList=this.state.topicCatList.length!==0?
-        this.state.topicCatList.map((item,index)=> 
-        <Option value={(item.catid).toString()} key={index}>{item.catname}</Option>
-         ):<Option value={'75'}>默认文件夹</Option>;    
+        this.state.topicCatList.map((item,index)=>
+        <Option value={(item.id).toString()} key={index}>{item.catname}</Option>
+         ):<Option value={'75'}>默认文件夹</Option>;
          const titleTip= <div>
          <p>关键词组合：关键词之间用“+”、“-”或者“*”连接，符号均为英文状态。</p>
          <p>①“+”代表或(或者) </p>
@@ -340,7 +405,7 @@ class BiddingSetting extends React.Component {
 
                                 </FormItem>
 
-                                <FormItem
+                                {/* <FormItem
                                      label="行业"
                                      {...formItemLayout}
                                 >
@@ -365,7 +430,7 @@ class BiddingSetting extends React.Component {
                                         <Option value="lucy7">l3ucy</Option>
                                         <Option value="lucy">l3ucy</Option>
                                     </Select>
-                                </FormItem>
+                                </FormItem> */}
 
                                 <FormItem
                                     {...formItemLayout}

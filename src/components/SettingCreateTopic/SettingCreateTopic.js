@@ -37,7 +37,14 @@ class SettingCreateTopic extends React.Component {
         if(prevState.updateNum!==this.state.updateNum){
         this.props.onCreateTopic(this.state.propsData)
       }
-  }
+    }
+    getInitialState () {
+        
+    }
+    componentDidMount() {
+        // console.log(this.props.clearAll)
+        this.props.clearAll(this)
+    }
     onModelCancel() {
         // if(this.state.objectValueInput === ''){
         //     message.warning('主题词不能为空！');
@@ -191,7 +198,11 @@ class SettingCreateTopic extends React.Component {
       visible1: false,
     });
   }   
- 
+  clearAll = () => {
+    this.setState({
+        propsData: []
+    })
+  }
     render() { 
         let inputIndex=this.state.inputIndex<0?0:this.state.inputIndex;
     	const suffix=<span onClick={this.onDel.bind(this)} className="del"><Icon type="close"/></span>;
@@ -267,6 +278,7 @@ class SettingCreateTopic extends React.Component {
     </Modal></div> ;
         const list=this.props.num1.map((item,index)=>
         <div key={index} className="mate-key"><div>
+            {console.log(this.state.propsData)}
                     <Row>
                         <Col span={4}>
                             <Input

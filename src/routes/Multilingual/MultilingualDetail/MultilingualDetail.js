@@ -78,7 +78,7 @@ class OpinionDetail extends React.Component {
         negative: ['负面', '반면', '悪い面', 'پاسسىپ.', 'ལྡོག་ངོས'],
         warning: ['预警', '예보', '警報', 'ئالدىن سىگنال بېرىش ', 'ཉེ་བརྡ་']
       },
-      allSelect: ['全选', '전부', 'すべて', 'بارلىق ', 'ཚང་མ།'],
+      allSelect: ['全选：', '전부：', 'すべて：', '： بارلىق ', 'ཚང་མ།：'],
       similarInfo: ['相似信息', '비슷 한 정보', '相似信息', 'ئوخشاش ئۇچۇر.', 'འདྲ་མཚུངས་ཀྱི་ཆ་འཕྲིན།'],
       infoCompany: ['条', '건수', '条', 'ماددا ', 'དོན་ཚན།'],
       keyWord:['关键词', '키워드', 'キーワード', 'ھالقىلىق سۆز بولۇپ قالدى.', 'གནད་ཚིག་འགའ།']
@@ -708,28 +708,10 @@ class OpinionDetail extends React.Component {
           />
       </Spin>
     );
-    return (
-      <div className="opinion-detail">
-        <div className="top" style={{background:GRAY}}>
-          <div className="left">
-            <div className="choose-all">
-              <Checkbox onChange={this.chooseAllOnChange.bind(this)} checked={this.state.checkedAll}
-                        className="check"></Checkbox>
-            </div>
-            <div className="operate-all-operation">{this.state.allSelect[this.props.languageType]}：</div>
-            <Popconfirm title="是否删除您选择的舆情？" onConfirm={this.deleteOpinionLists.bind(this)}
-                        onCancel={this.deleteCancel.bind(this)} okText="是" cancelText="否">
-              <Tooltip title='删除' placement="bottom">
-                <div className="operate-all">
-                  <img src={Del} alt="删除" style={{ height:'22px',marginTop:'2px'}}/>
-                </div>
-              </Tooltip>
-            </Popconfirm>
-            <Tooltip title='未勾选默认导出5000条' placement="bottom">
-              <div className="operate-all" onClick={this.showModal.bind(this)}>
-              <img src={Dowload} alt="export" style={{height:'18px',marginTop:'2px'}}/>
-              </div>
-            </Tooltip>
+    const left = () => {
+      console.log(this.props.lang, this.props.languageType)
+      if(this.props.languageType-0 === 3) {
+        return <div className="left">
             <Dropdown overlay={ChangeTrendMenu} trigger={['click']}
                       getPopupContainer={() => document.querySelector('.opinion-detail')}>
               <Tooltip title='倾向' placement="bottom">
@@ -738,7 +720,91 @@ class OpinionDetail extends React.Component {
                 </div>
               </Tooltip>
             </Dropdown>
+            <Tooltip title='未勾选默认导出5000条' placement="bottom">
+              <div className="operate-all" onClick={this.showModal.bind(this)}>
+              <img src={Dowload} alt="export" style={{height:'18px',marginTop:'2px'}}/>
+              </div>
+            </Tooltip>
+            <Popconfirm title="是否删除您选择的舆情？" onConfirm={this.deleteOpinionLists.bind(this)}
+                        onCancel={this.deleteCancel.bind(this)} okText="是" cancelText="否">
+              <Tooltip title='删除' placement="bottom">
+                <div className="operate-all">
+                  <img src={Del} alt="删除" style={{ height:'22px',marginTop:'2px'}}/>
+                </div>
+              </Tooltip>
+            </Popconfirm>
+            <div className="choose-all">
+                <Checkbox onChange={this.chooseAllOnChange.bind(this)} checked={this.state.checkedAll}
+                          className="check">
+                </Checkbox>
+            </div>
+            <div className="operate-all-operation">{this.state.allSelect[this.props.languageType]}</div>
           </div>
+      } else {
+        return <div className="left">
+            <div className="choose-all">
+                <Checkbox onChange={this.chooseAllOnChange.bind(this)} checked={this.state.checkedAll}
+                          className="check"></Checkbox>
+              </div>
+              <div className="operate-all-operation">{this.state.allSelect[this.props.languageType]}</div>
+              <Popconfirm title="是否删除您选择的舆情？" onConfirm={this.deleteOpinionLists.bind(this)}
+                          onCancel={this.deleteCancel.bind(this)} okText="是" cancelText="否">
+                <Tooltip title='删除' placement="bottom">
+                  <div className="operate-all">
+                    <img src={Del} alt="删除" style={{ height:'22px',marginTop:'2px'}}/>
+                  </div>
+                </Tooltip>
+              </Popconfirm>
+              <Tooltip title='未勾选默认导出5000条' placement="bottom">
+                <div className="operate-all" onClick={this.showModal.bind(this)}>
+                <img src={Dowload} alt="export" style={{height:'18px',marginTop:'2px'}}/>
+                </div>
+              </Tooltip>
+              <Dropdown overlay={ChangeTrendMenu} trigger={['click']}
+                        getPopupContainer={() => document.querySelector('.opinion-detail')}>
+                <Tooltip title='倾向' placement="bottom">
+                  <div className="operate-all">
+                  <img src={Qing} alt="倾向" style={{height:'18px',width:'18px'}}/>
+                  </div>
+                </Tooltip>
+              </Dropdown>
+          </div>
+      }
+    }
+    
+    return (
+      <div className="opinion-detail">
+        <div className={this.props.languageType-0 === 3 ? 'uygur top' : 'top'} style={{background:GRAY}} >
+        {left()}
+          {/* <div className="left">
+            <div className="choose-all">
+                <Checkbox onChange={this.chooseAllOnChange.bind(this)} checked={this.state.checkedAll}
+                          className="check"></Checkbox>
+              </div>
+              <div className="operate-all-operation">{this.state.allSelect[this.props.languageType]}：</div>
+              <Popconfirm title="是否删除您选择的舆情？" onConfirm={this.deleteOpinionLists.bind(this)}
+                          onCancel={this.deleteCancel.bind(this)} okText="是" cancelText="否">
+                <Tooltip title='删除' placement="bottom">
+                  <div className="operate-all">
+                    <img src={Del} alt="删除" style={{ height:'22px',marginTop:'2px'}}/>
+                  </div>
+                </Tooltip>
+              </Popconfirm>
+              <Tooltip title='未勾选默认导出5000条' placement="bottom">
+                <div className="operate-all" onClick={this.showModal.bind(this)}>
+                <img src={Dowload} alt="export" style={{height:'18px',marginTop:'2px'}}/>
+                </div>
+              </Tooltip>
+              <Dropdown overlay={ChangeTrendMenu} trigger={['click']}
+                        getPopupContainer={() => document.querySelector('.opinion-detail')}>
+                <Tooltip title='倾向' placement="bottom">
+                  <div className="operate-all">
+                  <img src={Qing} alt="倾向" style={{height:'18px',width:'18px'}}/>
+                  </div>
+                </Tooltip>
+              </Dropdown>
+          </div> */}
+
           <Pagination
             simple
             defaultCurrent={1}

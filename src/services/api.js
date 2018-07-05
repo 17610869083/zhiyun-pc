@@ -356,5 +356,21 @@ export const api_get_template_report = host + 'reportDo?action=getAllForm';
 export const api_delete_multilingual= host+'docDetail/docDetailDo?action=docDel'
 // 多语种详情
 export const api_get_DetailForeign= host+'docDetail/docDetailDo?action=getDetailForeign'
-// 招投标主题文件列表
+// 招投标主题文件文件夹列表
 export const api_get_BiddingFolderList = host+ 'oClf/BidDo?action=getGradeMemu'
+// 招投标主题文件夹添加
+export const api_get_BiddingddGradeC = host+ 'oClf/BidDo?action=addGradeCat'
+// 招投标主题文件夹重命名
+export const api_get_BiddingeditGradeCat = host+ 'oClf/BidDo?action=editGradeCat'
+// 招投标主题文件夹删除
+export const api_get_BiddingdelCat = host+ 'oClf/BidDo?action=delCat'
+// 招投标分类及规则
+export const api_get_BiddingetGradeAndRule = host+ 'oClf/BidDo?action=getGradeAndRule'
+// 招投标类型文件夹列表
+export const api_get_BiddingetgradeCatList = host+ 'oClf/BidDo?action=gradeCatList'
+// 招投标分类添加
+export const api_get_BiddingaddGrade = host+ 'oClf/BidDo'
+// 招投标主题删除
+export const api_get_BiddingdelGrade = host+ 'oClf/BidDo?action=delGrade'
+// 招投标主题获取分类及规则
+export const api_get_BiddinggetGradeAndRule = host+ 'oClf/BidDo?action=getGradeAndRule'

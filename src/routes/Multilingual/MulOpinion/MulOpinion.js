@@ -19,7 +19,7 @@ import {
   api_get_DetailForeign
 } from '../../../services/api';
 import EditOpinionDetail from '../../../components/EditOpinionDetail/EditOpinionDetail';
-import {Tag, Popconfirm, message, Icon, Modal, Menu, Dropdown, Select, Input} from 'antd';
+import {Tag, Popconfirm, message, Icon, Modal, Menu, Dropdown, Select, Input, Button } from 'antd';
 import {history} from '../../../utils/history';
 import {setHighlightTags, opinionTypeToColor, getMeailMessage} from '../../../utils/format';
 import './MulOpinion.less';
@@ -45,14 +45,24 @@ class DetailOpinion extends React.Component {
       selectValue: [],
       emailInput: '',
       contents: '',
-      sid: ''
+      sid: '',
+      describe: {
+        reltime: ['发布时间','发布时间','发布时间','发布时间','发布时间'],
+        source: ['来源','来源','来源','来源','来源'],
+        author: ['作者','作者','作者','作者','作者'],
+        keyword: ['关键词','关键词','关键词','关键词','关键词'],
+        factor: ['要素','要素','要素','要素','要素']
+      },
+      language: ['中文', '韩文', '日文', '维吾尔文','藏文'],
+      languageType: 0
     }
   }
   componentDidMount() {
     const sid = this.props.match.params.sid;
     const lang = this.props.match.params.param;
     this.setState({
-      sid: this.props.match.params.sid
+      sid: this.props.match.params.sid,
+      languageType: this.props.match.params.languages
     })
     request(api_get_DetailForeign + '&sid=' + sid + '&lang=' + lang ).then((res) => {
       this.setState({
@@ -197,6 +207,17 @@ class DetailOpinion extends React.Component {
     })
   }
 
+  toggleLan () {
+    if(this.state.languageType === 0 ){
+      this.setState({
+        languageType: this.props.match.params.languages
+      })
+    }else{
+      this.setState({
+        languageType: 0
+      })
+    }
+  }
   render() {
     const children = [];
     if (this.state.emailData.emailAddressee) {
@@ -239,30 +260,31 @@ class DetailOpinion extends React.Component {
                             </div>
                             <p className="title">{data.title}</p>
                         </div>
+                        <Button type="primary" className="btn" onClick={this.toggleLan.bind(this)}>{this.state.languageType === 0? '中文': this.state.language[this.state.languageType]}</Button>
                         <div className="info">
                             <div className="pubdate">
-                                <span className="name">发布时间：</span>
+                                <span className="name">{this.state.describe.reltime[this.state.languageType]}：</span>
                                 <span className="value">{data.pubdate}</span>
                             </div>
                             <div className="pubdate">
-                                <span className="name">来源：</span>
+                                <span className="name">{this.state.describe.source[this.state.languageType]}：</span>
                                 <span className="value"><a href={data.url} target="blank">{data.source}</a></span>
                             </div>
                             <div className="pubdate">
-                                <span className="name">作者：</span>
+                                <span className="name">{this.state.describe.author[this.state.languageType]}：</span>
                                 <span className="value">{data.author}</span>
                             </div>
                         </div>
                         <div className="keywords">
                             <div className="keywords-left">
-                                <span className="name">关键词：</span>
+                                <span className="name">{this.state.describe.keyword[this.state.languageType]}：</span>
                                 <div className="value">
                                     {Keywords}
                                 </div>
                             </div>
                         </div>
                         <div className="mention-topic">
-                            <span className="name">要素：</span>
+                            <span className="name">{this.state.describe.factor[this.state.languageType]}：</span>
                             <div className="value">
                                     {factorElement}
                             </div>
