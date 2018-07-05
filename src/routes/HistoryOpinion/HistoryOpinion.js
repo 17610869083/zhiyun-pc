@@ -582,13 +582,13 @@ class HistoryOpinion extends React.Component {
                data-id={text[0]['Id']}
             />
           </Tooltip>
-          <Tooltip title="预览报告">
+          {/* <Tooltip title="预览报告">
             <i className="fa fa-eye" aria-hidden="true"
                style={this.state.type === '1' ? {display: 'none'} : this.state.type === '2' && text[0]['taskstate'] === '2' ? {color: 'black'} : {color: 'gray'}}
                data-source={text[0]['source']}
                onClick={this.previewReport.bind(this, text[0]['Id'])}
             />
-          </Tooltip>
+          </Tooltip> */}
           {/* <Tooltip title="发送报告">
         <i className="fa fa-envelope-o" aria-hidden="true" onClick={text[0]['taskstate']==='2'?this.sendReport.bind(this):''}
         style={text[0]['taskstate']==='2'?{color:'black'}:{color:'gray',cursor:'text'}}

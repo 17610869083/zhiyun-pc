@@ -36,23 +36,27 @@ class CustomHome extends React.Component{
     }
     dragover(e) {
       e.preventDefault();
-    //   console.log(e.currentTarget)
     }
-    drop(e){
-        console.log(123)
-        e.preventDefault();
-        console.log(123)
+    drop = () => {
+       
     }
-    dragenter(){
-        console.log(11)
+    dragenter = () => {
+     
     }
-    dragstart(defaultSize){
-       console.log(defaultSize)
+    dragleave = () => {
+   
     }
-    dragend(defaultSize,name){
-        this.setState({
-            moduleCont:this.state.moduleCont.concat({name:name,defaultSize:defaultSize-2})
-        })
+    mousedown(e){
+       let cloneNode = e.target.cloneNode(true);
+        cloneNode.style.position = 'absolute';
+        cloneNode.style.left = '500px';
+        cloneNode.style.top = '500px';
+        cloneNode.style.opacity = 0.5;
+        document.body.appendChild(cloneNode);
+    }
+    mousemove(){
+        // cloneNode.style.left = eve.clientX-50+'px';
+        // cloneNode.style.top = eve.clientY-50+'px';
     }
     render(){
         let num = (this.state.browserHeight+110)/3 +'px';
@@ -68,24 +72,26 @@ class CustomHome extends React.Component{
             return  <li key = {index} className="moduleCont" style={{width:item.defaultSize+'%'}}>{item.name}</li>
         })
         return (
-            <div className="custom-home" >
-                <div className="custom-title">首页布局设置</div>   
-                <div style={{height:this.state.browserHeight+'px',overflowY: 'auto'}}
-                onDrop = {this.drop.bind(this)}
-                onDragEnter = {this.dragenter.bind(this)}>   
-                    <ul>
-                        {moduleCont}
-                    </ul>    
-                </div>     
-                <div className="slider-module"
-                style={this.state.flag?{bottom:'0px',height:'50px'}:{bottom:'0px',height:num}}>
-                <div className="slider-switch" onClick = {this.showList}>
-                    <IcontFont type="icon-caidanshousuoicon" ></IcontFont>
-                </div>
-                <ul className="slider-module-list" >
-                   {moduleList}
-                </ul>
-                </div>
+            <div className="custom-home">
+            <div onDrop={this.drop}   onDragEnter={this.dragenter} onDragLeave = {this.dragleave} className="drop-container">
+                 
+            </div>
+            <div className="slider-module"
+            style={this.state.flag?{top:this.state.browserHeight + 'px',height:'50px'}:{top:this.state.browserHeight-418 + 'px',height:'500px'}}>
+            <p className="slider-switch" onClick = {this.showList}></p>
+            <ul className="slider-module-list" >
+                <li  onMouseDown={this.mousedown.bind(this)}
+                onMouseMove={this.mousemove.bind(this)}
+                >1</li>
+                <li draggable="true">2</li>
+                <li draggable="true">3</li>
+                <li draggable="true">4</li>
+                <li draggable="true">5</li>
+                <li draggable="true">6</li>
+                <li draggable="true">7</li>
+                <li draggable="true">8</li>
+            </ul>
+            </div>
             </div>
         )
     }
