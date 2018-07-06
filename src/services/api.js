@@ -370,4 +370,6 @@ export const api_add_brief_report = host + 'Report?action=briefReport';
 //预览模板的hmtl
 export const api_get_preview_html = host + 'Report?action=previewHtml';
 //报告下载
-export const api_download_report = host +'report/exportReport?action=downloadReport'; 
+export const api_download_report = host +'report/exportReport?action=downloadReport';
+// 日期选择
+export const api_get_data_daily_preview = host +'Report?action=dailyPreview';

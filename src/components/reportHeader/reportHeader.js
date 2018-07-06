@@ -1,15 +1,103 @@
 import React from 'react';
 import './reportHeader.less';
-import { Row, Col, Button, Select, DatePicker } from 'antd';
-const { RangePicker } = DatePicker;
+import { Row, Col, Button, Select, DatePicker, message } from 'antd';
+import request from '../../utils/request';
+import {
+	api_get_data_daily_preview,
+} from '../../services/api';
 const Option = Select.Option;
 class reportHeader extends React.Component{
 	constructor(){
 		super()
-		this.state={}
+		this.state={
+			startValue: null,
+			endValue: null,
+			endOpen: false,
+			startMsDate: "",
+			endMsDate: "",
+			startDate: "",
+			endDate: "",
+		}
+	}
+  disabledStartDate = (startValue) => {
+    const endValue = this.state.endValue;
+    if (!startValue || !endValue) {
+      return false;
+    }
+    return startValue.valueOf() > endValue.valueOf();
+  }
+
+  disabledEndDate = (endValue) => {
+    const startValue = this.state.startValue;
+    if (!endValue || !startValue) {
+      return false;
+    }
+    return endValue.valueOf() <= startValue.valueOf();
+  }
+
+  onChange = (field, value) => {
+		console.log(field, value)
+    this.setState({
+      [field]: value,
+    });
+  }
+
+  onStartChange = (value, dateString) => {
+		console.log(value, dateString);
+		// const starttime = dateString.replace(new RegExp("-","gm"),"/");
+		const starttimeHaoMiao = (new Date(dateString)).getTime();
+		console.log(starttimeHaoMiao)
+		this.setState({
+			startMsDate: starttimeHaoMiao,
+			startDate: dateString
+		})
+    this.onChange('startValue', value);
+  }
+
+  onEndChange = (value, dateString) => {
+		console.log(value, dateString);
+		// const starttime = dateString.replace(new RegExp("-","gm"),"/");
+		const starttimeHaoMiao = (new Date(dateString)).getTime();
+		console.log(starttimeHaoMiao)
+		this.setState({
+			endMsDate: starttimeHaoMiao,
+			endDate: dateString
+		})
+    this.onChange('endValue', value);
+  }
+
+  handleStartOpenChange = (open) => {
+    if (!open) {
+      this.setState({ endOpen: true });
+    }
+  }
+
+  handleEndOpenChange = (open) => {
+    this.setState({ endOpen: open });
+  }
+  onOkDate(value) {
+		request(api_get_data_daily_preview + '&reportFormId=' + this.props.typeId + '&reportType=' + this.props.type + '&starttime=' + this.state.startDate + '&endtime=' + this.state.endDate).then((res) => {
+			const myDate = new Date();
+			const starttimeHaoMiao = (new Date(myDate)).getTime();
+			console.log(starttimeHaoMiao);
+			if (this.state.startMsDate > starttimeHaoMiao && this.state.endMsDate > starttimeHaoMiao) {
+				message.warning("您的选的日期超出了当前时间，请重新选择");
+			} else if (this.state.startMsDate > starttimeHaoMiao && this.state.endMsDate < starttimeHaoMiao) {
+				message.warning("您的选的日期超出了当前时间，请重新选择");
+			} else if (this.state.startMsDate < starttimeHaoMiao && this.state.endMsDate > starttimeHaoMiao) {
+				message.warning("您的选的日期超出了当前时间，请重新选择");
+			} else if (this.state.endMsDate - this.state.startMsDate > 86400) {
+				console.log(this.state.endMsDate - this.state.startMsDate)
+				message.warning("您选择的时间超过了24个小时，请重新选择");
+			} else if (this.state.startMsDate < starttimeHaoMiao && this.state.endMsDate < starttimeHaoMiao) {
+				message.success(res.data.msg);
+				this.props.hanldle(res.data)				
+			}
+		});
 	}
 	render() {
 		const { type, briefingData } = this.props;
+		const { startValue, endValue, endOpen } = this.state;
 		return (
 			<div className="headers">
 				<Row type="flex" justify="space-between" className="one">
@@ -53,14 +141,28 @@ class reportHeader extends React.Component{
 								} else if (type === "03") {
 									return <div>
 										<div className="rangeData">
-											<RangePicker
+											<DatePicker
+												disabledDate={this.disabledStartDate.bind(this)}
 												showTime
-												format="YYYY/MM/DD"
-												onChange={this.onChange}
-												onOk={this.onOkData}
+												format="YYYY-MM-DD HH:mm:ss"
+												value={startValue}
+												placeholder="Start"
+												onChange={this.onStartChange.bind(this)}
+												onOpenChange={this.handleStartOpenChange.bind(this)}
+											/>
+											<DatePicker
+												disabledDate={this.disabledEndDate.bind(this)}
+												showTime
+												format="YYYY-MM-DD HH:mm:ss"
+												value={endValue}
+												placeholder="End"
+												onChange={this.onEndChange.bind(this)}
+												open={endOpen}
+												onOpenChange={this.handleEndOpenChange.bind(this)}
+												onOk={this.onOkDate.bind(this)}
 											/>
 										</div>
-										<span style={{ color: "red" }}>*可以通过时间范围获取素材</span>
+										<span style={{ color: "red" }}>*可以通过时间范围获取素材,时间周期为24时制</span>
 									</div>
 								}
 							})()
