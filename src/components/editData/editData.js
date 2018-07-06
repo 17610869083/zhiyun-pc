@@ -2,13 +2,14 @@ import React, { Component } from "react";
 import { DatePicker } from "antd";
 import moment from 'moment';
 import "./editData.less";
-const dateFormat = 'YYYY/MM/DD';
+const dateFormat = 'YYYY-MM-DD';
 
 export default class editData extends Component {
   state = {
     value: this.props.value,
     editable: false,
-    count: 1
+    count: 1,
+    dateString: ""
   };
   componentDidMount() {}
   componentWillReceiveProps(props) {
@@ -26,6 +27,20 @@ export default class editData extends Component {
       this.props.onChange(this.state.value);
     }
   };
+  onChangeDate = (value, dateString) => {
+    console.log(dateString);
+    this.setState({
+      dateString: dateString
+    })
+    console.log(value, dateString)
+  }
+  onOk = (values) => {
+    console.log(values);
+    this.setState({ editable: false, value: this.state.dateString });
+    if (this.props.onChange) {
+      this.props.onChange(this.state.dateString);
+    }
+  }
   edit = num => {
     num++;
     setTimeout(() => {
@@ -47,7 +62,14 @@ export default class editData extends Component {
               onBlur={this.check}
               style={{ width: 150, outline: "none", border: 0 }}
             /> */}
-            <DatePicker defaultValue={moment('2017-11-16', dateFormat)} showTime format={dateFormat} blur={this.check}/>
+            <DatePicker
+              showTime
+              format={dateFormat}
+              onOk={this.onOk.bind(this)}
+              // blur={this.check}
+              defaultValue={moment(value, dateFormat)}
+              onChange={this.onChangeDate.bind(this)}
+            />
           </div>
         ) : (
           <div
@@ -55,8 +77,8 @@ export default class editData extends Component {
             title={value}
             onClick={this.edit.bind(this, this.state.count)}
           >
-            {/* {value || " "} */}
-            2017-11-16
+            {value || " "}
+            {/* 2017-11-16 */}
           </div>
         )}
       </div>

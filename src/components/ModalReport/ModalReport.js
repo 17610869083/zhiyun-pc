@@ -20,10 +20,10 @@ class ModalReport extends React.Component{
          
      }
      componentDidMount(){
-        request('http://119.90.61.155/om31/webpart/main/DocSearchDo?action=docList')
-        .then( res => {
+        let {requestUrl} = this.props; 
+        request(requestUrl).then( res => {
               this.setState({
-                docList:res.data.docList,
+                docList:res.data.data,
                 flag:false
               })
         })

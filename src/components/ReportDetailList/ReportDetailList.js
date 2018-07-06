@@ -91,7 +91,7 @@ class ReportDetailList extends React.Component{
                <div className="item-middle">
                  <div className="left">
                    <div>
-                      { type === 'report' ?<span className="summary" dangerouslySetInnerHTML={{__html: setHighlightTags(item.summary, item.nztags.split(' '))}}></span> 
+                      { type === 'report' ?<span className="summary" dangerouslySetInnerHTML={{__html: setHighlightTags(item.summary, item.keywords.split(' '))}}></span> 
                       :<span className="summary" >{item.docsummary}</span>}
                    </div>
                  </div>

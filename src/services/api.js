@@ -368,3 +368,9 @@ export const api_get_preview_html = host + 'Report?action=previewHtml';
 //报告下载
 export const api_download_report = host +'report/exportReport?action=downloadReport';         
 
+// 修改报告标题
+export const api_update_report = host + 'Report?action=updateTitle';
+// 简报分析数据预览
+export const api_add_brief_report = host + 'Report?action=briefReport';
+//获取简报素材修改页面数据
+export const api_update_brief_item = host + 'Report?action=updateBriefItem';

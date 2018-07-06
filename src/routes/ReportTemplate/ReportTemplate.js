@@ -100,8 +100,14 @@ class ReportTemplate extends React.Component{
              })
         }
         onBriefing = () => {
-            console.log(this.state.templateType)
-            history.push(`/briefing?type=${this.state.templateType}&id=${this.state.templateId}`)          
+						console.log(this.state.templateType)
+						if (this.state.templateType === '01' && this.state.templateId === 1) {
+							history.push(`/briefing?type=${this.state.templateType}&id=${this.state.templateId}`)          
+						} else if (this.state.templateType === '01' && this.state.templateId === 2) {
+							history.push(`/briefingsecond?type=${this.state.templateType}&id=${this.state.templateId}`)          
+						} else if (this.state.templateType === '03') {
+							history.push(`/daily?type=${this.state.templateType}&id=${this.state.templateId}`)          
+						}
         }
         //搜索模板
         keydown = (e) => {
