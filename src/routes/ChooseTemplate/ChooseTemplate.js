@@ -121,7 +121,7 @@ class ChooseTemplate extends React.Component{
     });
     const contentList = this.state.contentList.map((item,index) => {
         return <li key = {index} className="cont normal" onClick= {this.checkTemplate.bind(this,item.id,item.reportType)}> 
-                <img src={img} alt=""/>
+                <img src={'http://119.90.61.155/om31/'+item.imagepath} alt=""/>
                 <p>{item.name}</p>
                 </li> 
     })
@@ -148,7 +148,7 @@ class ChooseTemplate extends React.Component{
                 <Modal  visible={this.state.visible} footer={null} onCancel={this.hideModal}
                 width="70%"
                 >
-                      <ModalReport/>
+                <ModalReport/>
                 </Modal>
              </div>
          )

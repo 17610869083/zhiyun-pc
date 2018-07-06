@@ -1,8 +1,9 @@
 import React from 'react';
 import './Daily.less';
-import { Row, Col, Button, Select, DatePicker, message, Table } from 'antd';
+import { Row, Col, message, Table } from 'antd';
 import EditText from '../../components/editText/editText';
 import EditData from '../../components/editData/editData';
+import ReportHeader from '../../components/reportHeader/reportHeader';
 import ReactEchartsCore from 'echarts-for-react/lib/core';
 import echarts from 'echarts/lib/echarts';
 import 'echarts/lib/component/tooltip';
@@ -15,8 +16,6 @@ import {
 	api_update_report,
 } from '../../services/api';
 import {connect} from 'react-redux';
-const { RangePicker } = DatePicker;
-const Option = Select.Option;
 class Daily extends React.Component{
 	constructor(){
 		super()
@@ -31,7 +30,6 @@ class Daily extends React.Component{
 		}
 	}
 	componentWillMount(){
-		console.log(this.props);
 		let search = this.props.location.search.split('&');
 		let templateType = search[0].split('=')[1];
 		let templateId = parseInt(search[1].split('=')[1],10);
@@ -40,8 +38,6 @@ class Daily extends React.Component{
 			typeId: templateId
 		})
 		request(api_new_preview_report + '&reportFormId=' + templateId).then((res) => {
-			console.log(res.data.data);
-			console.log(res.data.component);
 			// 遍历对象Object.keys()
 			// Object.values(）对象转数组
 			this.setState({
@@ -77,7 +73,6 @@ class Daily extends React.Component{
  		})
 	}
 	render() {
-		console.log(this.state.componentId[0])
 		const mediaOption= {
 			title: {
         text: '媒体分布图',
@@ -176,63 +171,10 @@ class Daily extends React.Component{
 			<div>
 				<Row>
 					<Col span={12} offset={6}>
-						<div className="headers">
-							<Row type="flex" justify="space-between" className="one">
-								<Col span={3}>
-									<span className="yulan"><b>报告预览</b></span>
-								</Col>
-									{
-										(() => {
-											if(this.props.briefingData.length > 0) {
-												return (
-													<Button type="primary" className="report" style={{ backgroundColor: "#5a8bff" }}>生成报告</Button>
-												)
-											} else if (this.props.briefingData.length === 0) {
-												return (
-													<Button type="primary" className="report" style={{ backgroundColor: "#5a8bff", display: "none" }}>生成报告</Button>
-												)
-											}
-										})()
-									}
-							</Row>
-							<div className="two">
-								<Row type="flex" justify="space-between">
-									<Col span={3}>
-									</Col>
-									{
-										(() => {
-											if (this.state.type === "01") {
-												return <div className="oneButton"><Button type="primary" style={{ backgroundColor: "#5a8bff" }} className="editReport">编辑报告素材</Button></div>
-											} else if (this.state.type === "02") {
-												return <div>
-													<div className="twoButton">
-														<Select defaultValue="lucy" style={{ width: 200, marginRight: 20 }} onChange={this.handleChange.bind(this)}>
-															<Option value="jack">Jack</Option>
-															<Option value="lucy">Lucy</Option>
-															<Option value="Yiminghe">yiminghe</Option>
-														</Select>
-														<Button type="primary" style={{ backgroundColor: "#5a8bff" }}>确定</Button>
-													</div>
-													<span style={{ color: "red" }}>*选择专题</span>
-												</div>
-											} else if (this.state.type === "03") {
-												return <div>
-													<div className="rangeData">
-														<RangePicker
-															showTime
-															format="YYYY/MM/DD"
-															onChange={this.onChange}
-															onOk={this.onOkData}
-														/>
-													</div>
-													<span style={{ color: "red" }}>*可以通过时间范围获取素材</span>
-												</div>
-											}
-										})()
-									}
-								</Row>
-							</div>
-						</div>
+						<ReportHeader
+							briefingData={this.props.briefingData}
+							type={this.state.type}
+						/>
 					</Col>
 				</Row>
 				<Row>
@@ -240,7 +182,7 @@ class Daily extends React.Component{
 						<div className="daily">
 							{/* 日报模板第一页 */}
 							{
-								Object.keys(this.state.date).map(item => (
+								Object.keys(this.state.date).map((item, index) => (
 									this.state.componentId[0] === item ? (
 										<div className="dailyTitle" key={item}>
 											<div className="dailyModule">
@@ -346,7 +288,30 @@ class Daily extends React.Component{
 								</Row>
 								<Row>
 									<Col span={18} offset={3}>
-										<Table columns={columns} dataSource={this.state.data} rowKey="id"/>
+										<Table columns={columns} dataSource={this.state.data} rowKey="id" pagination={false}/>
+									</Col>
+								</Row>
+								<Row>
+									<Col span={18} offset={3}>
+										<div style={{ height: 80, lineHeight: "80px", fontSize: 16, color: "#ccc" }}>列表中事件报道摘要：</div>
+									</Col>
+								</Row>
+								<Row>
+									<Col span={18} offset={3}>
+									  {
+											this.state.data.map((item, index) => 
+												<div style={{ height: "100%", borderBottom: "1px solid #000", borderTop: "1px solid #000", padding: "10px 0px", margin: "10px 0px" }}>
+													<strong>
+														<p style={{ color: "#1E82A9", fontSize: 14 }}><span>{index + 1}.</span><span>{item.title}</span></p>
+													</strong>
+													<div><p style={{ textIndent: "2em", color: "#ccc", fontSize: 14, lineHeight: "30px" }}>{item.summary}</p></div>
+													<div>
+														<p style={{ fontSize: 14, color: "#1E82A9" }}>原文链接：</p>
+														<p style={{ fontSize: 14 }}><a>{item.url}</a></p>
+													</div>
+												</div>
+										  )
+										}
 									</Col>
 								</Row>
 							</div>

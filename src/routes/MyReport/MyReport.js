@@ -1,11 +1,12 @@
 import React from 'react';
 import './MyReport.less';
-import {Input,DatePicker,Button,message,Pagination,Tooltip,Popconfirm} from 'antd';
-import {api_get_all_report,api_update_report_name,api_search_report,api_new_delete_report} from '../../services/api';
+import {Input,DatePicker,Button,message,Pagination,Tooltip,Popconfirm,Popover,Modal} from 'antd';
+import {api_get_all_report,api_update_report_name,api_search_report,
+        api_new_delete_report,api_download_report} from '../../services/api';
 import request from '../../utils/request';
 import IconFont from '../../components/IconFont';
 import img from '../../assets/img/1.png';
-import {getLocalTime,getSecondTime} from '../../utils/format';
+import {getLocalTime,getSecondTime,templateTypeSort} from '../../utils/format';
 class MyReport extends React.Component{
      constructor(props){
          super(props);
@@ -31,7 +32,10 @@ class MyReport extends React.Component{
             endTime:'',
             recordTotal:0,
             current:1,
-            flag:false
+            flag:false,
+            visible:false,
+            hmtlUrl:'',
+            previewVisible:false
          }
      }
      componentWillMount(){
@@ -39,7 +43,7 @@ class MyReport extends React.Component{
         .then( res => {
             if(res.data.code === 1){
             let typeList = [] ;    
-            res.data.data.repotTypeList.forEach(item => {
+            templateTypeSort(res.data.data.reportTypeList).forEach(item => {
                 typeList.push({type:item,name:this.state.typeKeyList[item]}) 
             });
             this.setState({
@@ -71,7 +75,7 @@ class MyReport extends React.Component{
                 //flag: status === 2 ?true :false
             })
     }
-    editReportName(reportid,reportname,e){
+    editReportName(reportid,reportname){
         this.setState({
             editReprotName:reportid,
             inputValue:reportname
@@ -165,7 +169,17 @@ class MyReport extends React.Component{
     }
     //预览
     preview = () => {
-
+        request(api_download_report +`&reportId=${this.state.checkId}&dType=html`)
+        .then(res =>{
+             if(res.data.code ===1){
+               this.setState({
+                   hmtlUrl:res.data.fileAddress,
+                   previewVisible:true
+               })
+             }else{
+               message.error(res.data.msg)
+             }
+         } )
     }
     //删除
     delete = () => {
@@ -184,12 +198,33 @@ class MyReport extends React.Component{
         })
     }
     //下载
-    download = () => {
-        
+    downLoad(type){
+         request(api_download_report +`&reportId=${this.state.checkId}&dType=${type}`)
+         .then(res =>{
+              if(res.data.code ===1){
+                window.location.href = res.data.fileAddress
+              }else{
+                message.error(res.data.msg)
+              }
+         } )
+         this.setState({
+            visible:false
+         })
+    }
+    handleVisibleChange = () => {
+        this.setState({
+            visible:true
+         })
     }
     //复制 
     copy = () => {
         
+    }
+    //隐藏预览弹窗
+    onCancel = () => {
+        this.setState({
+            previewVisible:false
+        })
     }
      render(){
          const typeList = this.state.typeList.map( (item,index) => {
@@ -245,7 +280,21 @@ class MyReport extends React.Component{
                 </Popconfirm>
              </Tooltip>
              <Tooltip title="下载" placement="bottom">
-             <i onClick = {this.download}><IconFont type="icon-msnui-download"/></i>
+             <Popover
+              getPopupContainer={() => document.querySelector('.my-report')}
+                content={
+                <div>
+                    <Button type="primary" size="small" style={{marginLeft: '10px'}} onClick={this.downLoad.bind(this,'word')}>word</Button>
+                    <Button type="primary" size="small" style={{marginLeft: '46px'}} onClick={this.downLoad.bind(this,'excel')}>excel</Button>
+                </div>
+                }
+                title="选择下载的报告类型"
+                trigger="click"
+                visible={this.state.visible}
+                onVisibleChange={this.handleVisibleChange}
+             >
+                 <i><IconFont type="icon-msnui-download"/></i>
+             </Popover>
              </Tooltip>
              <Tooltip title="删除" placement="bottom">
                 <Popconfirm title="确定要删除该报告吗？" onConfirm={this.delete} okText="是" cancelText="否"
@@ -267,6 +316,12 @@ class MyReport extends React.Component{
               </div>
              </div>
              </div>
+             <Modal visible={this.state.previewVisible} footer={null} onCancel={this.onCancel}
+             width="60%" height="60%"
+             >
+                <iframe  title="模板预览" frameBorder="0"  width="100%" height="600px"
+                src={"http://119.90.61.155/om31/" + this.state.hmtlUrl} />  
+             </Modal>
              </div>
          )
      }

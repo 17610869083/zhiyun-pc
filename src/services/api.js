@@ -367,3 +367,7 @@ export const api_new_preview_report = host + 'Report?action=previewTemplate';
 export const api_update_report = host + 'Report?action=updateTitle';
 // 简报分析数据预览
 export const api_add_brief_report = host + 'Report?action=briefReport';
+//预览模板的hmtl
+export const api_get_preview_html = host + 'Report?action=previewHtml';
+//报告下载
+export const api_download_report = host +'report/exportReport?action=downloadReport'; 

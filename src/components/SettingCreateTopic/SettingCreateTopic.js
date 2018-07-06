@@ -64,10 +64,10 @@ class SettingCreateTopic extends React.Component {
             message.warning('主题词不能为空！');
             return;            
         }
-        propsData[num]['rule1']=objectValue;
-        propsData[num]['rule2']=subject1Value;
-        propsData[num]['rule3']=subject2Value;
-        propsData[num]['rule4']=filterValue;
+        propsData[num]['rule1']=objectValue.trim();
+        propsData[num]['rule2']=subject1Value.trim();
+        propsData[num]['rule3']=subject2Value.trim();
+        propsData[num]['rule4']=filterValue.trim();
         propsData[num]['id']=ruleId;
         this.setState((prevState,props)=>({
             visible: false,
@@ -94,23 +94,24 @@ class SettingCreateTopic extends React.Component {
     onChangeObject(e) {
         let { value } = e.target;
         let ObjectArr=value.split(' '); 
-        if(/~|!|@|#|\$|\^|&|\*|=|\?|！|￥|-|（|）|%|【|】|\{|\}|；|;|%|,|，|。|\./.test(value)){ 
+        if(/~|!|@|#|\$|\^|&|\*|=|\?|！|￥|-|（|）|%|【|】|\{|\}|；|;|%|,|，|。|\.|\+/.test(value)){ 
              message.warning('请不要带有特殊字符');
         }else if (keywordDuplicateCheck(ObjectArr)){
              message.warning('请不要出现重复的关键词或多余的空格');
         }
         this.setState({
-            objectValueInput:value
+            objectValueInput:value.trim()
         })
     }
     onChangeSubject1(e) {
         const { value } = e.target; 
         let Subject1Arr=value.split(' '); 
-        if(/~|!|@|#|\$|\^|&|\*|=|\?|！|￥|-|（|）|%|【|】|\{|\}|；|;|%|,|，|。|\./.test(value)){ 
+        if(/~|!|@|#|\$|\^|&|\*|=|\?|！|￥|-|（|）|%|【|】|\{|\}|；|;|%|,|，|。|\.|\+/.test(value)){ 
             message.warning('请不要带有特殊字符');
        }else if (keywordDuplicateCheck(Subject1Arr)){
             message.warning('请不要出现重复的关键词或多余的空格');
        }
+       console.log(value)
         this.setState({
             subject1ValueInput: value
         })
@@ -118,7 +119,7 @@ class SettingCreateTopic extends React.Component {
     onChangeSubject2(e) {
         const { value } = e.target;
         let Subject2Arr=value.split(' ');
-        if(/~|!|@|#|\$|\^|&|\*|=|\?|！|￥|-|（|）|(%)|【|】|\{|\}|；|;|(%)|,|，|。|\./.test(value)){  
+        if(/~|!|@|#|\$|\^|&|\*|=|\?|！|￥|-|（|）|(%)|【|】|\{|\}|；|;|(%)|,|，|。|\.|\+/.test(value)){  
             message.warning('请不要带有特殊字符');
        }else if (keywordDuplicateCheck(Subject2Arr)){
             message.warning('请不要出现重复的关键词或多余的空格');
@@ -130,7 +131,7 @@ class SettingCreateTopic extends React.Component {
     onChangeFilter(e) {
         const { value } = e.target;
         let FilterArr=value.split(' ');
-        if(/~|!|@|#|\$|\^|&|\*|=|\?|！|￥|-|（|）|%|【|】|\{|\}|；|;|%|,|，|。|\./.test(value)){ 
+        if(/~|!|@|#|\$|\^|&|\*|=|\?|！|￥|-|（|）|%|【|】|\{|\}|；|;|%|,|，|。|\.|\+/.test(value)){ 
             message.warning('请不要带有特殊字符');
        }else if (keywordDuplicateCheck(FilterArr)){
             message.warning('请不要出现重复的关键词或多余的空格');

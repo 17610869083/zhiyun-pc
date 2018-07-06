@@ -489,3 +489,11 @@ export function templateTypeSort (data){
      })
      return sortArr;
 }
+//选中状态的sid
+export function checkedTrueSid(data){
+    const arr = [];
+    data.forEach((item) => {
+    if(item) arr.push(item)
+    })
+    return arr;
+    }
