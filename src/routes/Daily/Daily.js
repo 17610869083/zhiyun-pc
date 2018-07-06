@@ -156,7 +156,7 @@ class Daily extends React.Component{
 			dataIndex: 'index',
 			key: 'index',
 			render: (text, record, index) => (
-				console.log(text, record, index)
+				<span>{index + 1}</span>
 			),
 		}, {
 			title: '文章标题',
@@ -168,7 +168,7 @@ class Daily extends React.Component{
 			key: 'pubdate',
 		}];
 		return (
-			<div>
+			<div className="col">
 				<Row>
 					<Col span={12} offset={6}>
 						<ReportHeader
@@ -187,14 +187,10 @@ class Daily extends React.Component{
 										<div className="dailyTitle" key={item}>
 											<div className="dailyModule">
 												<span className="dailyM">
-													<EditText
-														value={this.state.date[item].coverTitle}
-														onChange={this.onChangeCellTitle.bind(this)}
-													/>
+												  {this.state.date[item].coverTitle}
 												</span>
 											</div>
 											<div className="dailyDate">
-											<EditData/>
 												<span
 													className="month"
 													style={{ fontSize: 27, color: "red", fontWeight: 400 }}
@@ -300,7 +296,7 @@ class Daily extends React.Component{
 									<Col span={18} offset={3}>
 									  {
 											this.state.data.map((item, index) => 
-												<div style={{ height: "100%", borderBottom: "1px solid #000", borderTop: "1px solid #000", padding: "10px 0px", margin: "10px 0px" }}>
+												<div key={index} style={{ height: "100%", borderBottom: "1px solid #000", borderTop: "1px solid #000", padding: "10px 0px", margin: "10px 0px" }}>
 													<strong>
 														<p style={{ color: "#1E82A9", fontSize: 14 }}><span>{index + 1}.</span><span>{item.title}</span></p>
 													</strong>
