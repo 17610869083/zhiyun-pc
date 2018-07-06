@@ -2,6 +2,7 @@ import React from 'react';
 import './BriefingSecond.less';
 import { Row, Col, Button, Select, DatePicker, message } from 'antd';
 import EditText from '../../components/editText/editText';
+import EditData from '../../components/editData/editData';
 import request from '../../utils/request';
 import {
 	api_new_preview_report,
@@ -210,7 +211,7 @@ class BriefingSecond extends React.Component{
 																		<Col span={4}>
 																			<div className="briefingDate">
 																				<span className="data">
-																					<EditText
+																					<EditData
 																						value={this.state.date[item].date}
 																						onChange={this.onChangeCellDate.bind(this)}
 																					/> 
@@ -308,21 +309,18 @@ class BriefingSecond extends React.Component{
 																					</div>
                                           <div className="cont">
 																						<Row>
-																							<Col span={24}>
-																								<div className="source">
-																									<strong style={{ display: "inherit", marginTop: 35 }}>
-																										<span style={{ fontSize: 16, textAlign: "center", display: "inherit" }}>内容</span>
+																							<Col span={4} style={{ display: "inherit", textAlign: "center" }}>
+																								<div className="source" style={{margin: "27% 0 0 0"}}>
+																									<strong>
+																										<p style={{ fontSize: 16 }}>内容</p>
 																									</strong>
 																								</div>
+																							</Col>
+																							<Col span={20}>
 																								<div className="timeData"
+																								  ref="timeData"
 																								  style={{
-																										height: 100,
-																										width: "83.3%",
-																										wordBreak: "break-all",
-																										display: "-webkit-box",
-																										lineClamp: 4,
-																										boxOrient: "vertical",
-																										overflow: "hidden",
+																										borderLeft: "1px solid #000"
 																									}}>
 																									<p style={{ fontSize: 16, textIndent: "2em" }}>{i.content}</p>																								  
 																								</div>
@@ -552,21 +550,18 @@ class BriefingSecond extends React.Component{
 																					</div>
                                           <div className="cont">
 																						<Row>
-																							<Col span={24}>
-																								<div className="source">
-																									<strong style={{ display: "inherit", marginTop: 35 }}>
-																										<span style={{ fontSize: 16, textAlign: "center", display: "inherit" }}>内容</span>
+																							<Col span={4} style={{ display: "inherit", textAlign: "center" }}>
+																								<div className="source" style={{margin: "27% 0 0 0"}}>
+																									<strong>
+																										<p style={{ fontSize: 16 }}>内容</p>
 																									</strong>
 																								</div>
+																							</Col>
+																							<Col span={20}>
 																								<div className="timeData"
+																								  ref="timeData"
 																								  style={{
-																										height: 100,
-																										width: "83.3%",
-																										wordBreak: "break-all",
-																										display: "-webkit-box",
-																										lineClamp: 4,
-																										boxOrient: "vertical",
-																										overflow: "hidden",
+																										borderLeft: "1px solid #000"
 																									}}>
 																									<p style={{ fontSize: 16, textIndent: "2em" }}>{i.content}</p>																								  
 																								</div>

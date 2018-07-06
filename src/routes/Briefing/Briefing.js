@@ -2,6 +2,7 @@ import React from 'react';
 import './briefing.less';
 import { Row, Col, Button, Select, DatePicker, message } from 'antd';
 import EditText from '../../components/editText/editText';
+import EditData from '../../components/editData/editData';
 import request from '../../utils/request';
 import {
 	api_new_preview_report,
@@ -205,7 +206,7 @@ class Briefing extends React.Component{
 																	<Col span={4}>
 																		<div className="briefingDate" style={{ marginLeft: -35 }}>
 																			<span className="data">
-																				<EditText
+																				<EditData
 																					value={this.state.date[item].date}
 																					onChange={this.onChangeCellDate.bind(this)}
 																				/>
