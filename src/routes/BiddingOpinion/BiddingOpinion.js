@@ -65,13 +65,13 @@ class BiddingOpinion extends React.Component {
             });
             return
         }
-        if(e.key === 'setting') {
-            history.push({
-                pathname:`/bidding/${e.key}`,
-                search:`?topicid=${this.state.topicId}`
-            });
-            return
-        }
+        // if(e.key === 'setting') {
+        //     history.push({
+        //         pathname:`/bidding/${e.key}`,
+        //         search:`?topicid=${this.state.topicId}`
+        //     });
+        //     // return
+        // }
         history.push({
             pathname:`/bidding/${e.key}`,
             search:`?topicid=${this.state.topicId}`
@@ -106,12 +106,11 @@ class BiddingOpinion extends React.Component {
             let firstTopicid={topicid:1,topicname:'test'};
             topicMessage.forEach((item)=>{
                       if(item['clflist'][0]!==undefined){
-                           firstTopicid.topicid = item['clflist'][0]['topicid'];
-                           firstTopicid.topicname = item['clflist'][0]['topicname'];
+                           firstTopicid.topicid = item['clflist'][0]['clfid'];
+                           firstTopicid.topicname = item['clflist'][0]['clfname'];
                            return firstTopicid;
                       }
             })
-            
             this.props.setlocationPathname(firstTopicid);
             this.setState({
                 topicLists:topicMessage,
@@ -175,8 +174,12 @@ class BiddingOpinion extends React.Component {
            }else {
                 history.push({
                     pathname:`/bidding/setting`,
-                    search: `?type=add&catid=${catid}`
+                    search: `?type=add&catid=${catid}`,
                 })
+                // history.push({
+                //     pathname:`/biddinghidden`,
+                //     search: `?type=add&catid=${catid}`
+                // })
                 this.setState({
                     current: 'setting',
                 })
@@ -326,6 +329,7 @@ class BiddingOpinion extends React.Component {
    delCancelTwo(){
        this.setState({visibleTwo:false})
    }
+  
     render() {
         const delItems = item => {
             return <Menu onClick={this.onDelitem.bind(this,item.catid)}>

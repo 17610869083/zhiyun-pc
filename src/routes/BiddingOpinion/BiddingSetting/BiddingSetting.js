@@ -2,6 +2,7 @@ import React from 'react';
 import {Tabs, Form, Input, Button ,Select, DatePicker,message,Tooltip,Icon} from 'antd';
 import SettingCreateTopic from '../../../components/SettingCreateTopic/SettingCreateTopic';
 import SettingSeniorTopic from '../../../components/SettingSeniorTopic/SettingSeniorTopic';
+import BiddingCreate from '../BiddingCreate/BiddingCreate'
 import request from '../../../utils/request';
 import Store from '../../../redux/store/index';
 import {
@@ -28,8 +29,8 @@ class BiddingSetting extends React.Component {
         this.state = {
             visible: false,
             visible1:false,
-            num1:[{"rule1":"","rulecode1":"","id":"","rule2":"",
-            "rulecode2":"","rule3":"","rulecode3":"","rule4":"",
+            num1:[{"rule1":"1","rulecode1":"2","id":"1","rule2":"2",
+            "rulecode2":"2","rule3":"4","rulecode3":"4","rule4":"3",
             "rulecode4":""}],
             num2:[{"rule1":"","rulecode1":"","id":"","rule2":"",
             "rulecode2":"","rule3":"","rulecode3":"","rule4":"",
@@ -61,8 +62,9 @@ class BiddingSetting extends React.Component {
                     this.setState({
                         topicCatList: res.data.gradeCatList,
                         topicNameValue: '',
-                        select: this.tsearch2Obj(nextprops.location.search).catid
+                        select: this.search2Obj(nextprops.location.search).catid
                     })
+                    this.clearAll()
                 })
             }
             this.setState({
@@ -74,6 +76,8 @@ class BiddingSetting extends React.Component {
             // this.setState({
 
             // })
+           
+            
             
             request(api_get_BiddingetgradeCatList).then((res) => {
                 this.setState({
@@ -131,11 +135,11 @@ class BiddingSetting extends React.Component {
         return obj
     }
      //快速添加规则
-     addRule(e){
-           this.setState({num1:this.state.num1.concat([{"rule1":"","rulecode1":"","id":"","rule2":"",
-           "rulecode2":"","rule3":"","rulecode3":"","rule4":"",
-           "rulecode4":""}])})
-     }
+    //  addRule(e){
+    //        this.setState({num1:this.state.num1.concat([{"rule1":"","rulecode1":"","id":"","rule2":"",
+    //        "rulecode2":"","rule3":"","rulecode3":"","rule4":"",
+    //        "rulecode4":""}])})
+    //  }
      //精准添加规则
      PreciseRule(e){
         this.setState({num2:this.state.num2.concat([{"rule1":"","rulecode1":"","id":"","rule2":"",
@@ -336,6 +340,23 @@ class BiddingSetting extends React.Component {
            topicNameValue:value
         })
   }
+  clearAll() {
+      this.setState({
+        num1:[
+                {   
+                    "rule1":"",
+                    "rulecode1":"",
+                    "id":"",
+                    "rule2":"",
+                    "rulecode2":"",
+                    "rule3":"",
+                    "rulecode3":"",
+                    "rule4":"",
+                    "rulecode4":""
+                }
+            ]
+      })
+  }
     render() {
         const formItemLayout = {
             labelCol: {
@@ -437,20 +458,22 @@ class BiddingSetting extends React.Component {
                                     label={tipMessage}
                                 >
                                 <SettingCreateTopic num1={this.state.num1} name="email" 
-                                onDelrule={this.onDelrule.bind(this)}
-                                onDelwayRule={this.onDelwayRule.bind(this)}
-                                ruleId={this.state.ruleId}
-                                onCreateTopic={this.onCreateTopic.bind(this)}
-                                type="topic"
-                                />                                   
+                                    onDelrule={this.onDelrule.bind(this)}
+                                    onDelwayRule={this.onDelwayRule.bind(this)}
+                                    ruleId={this.state.ruleId}
+                                    onCreateTopic={this.onCreateTopic.bind(this)}
+                                    type="topic"
+                                    addOrSetting={this.state.addOrSetting}
+                                />
+                                <BiddingCreate num1={this.state.num1}></BiddingCreate>
                                 </FormItem> 
                                 <FormItem className="addRule"
                                     {...tailFormItemLayout} 
                                 >
-              <Button  type="primary" size="small" onClick={this.addRule.bind(this)} >
-                                      + 添加规则
-                                 </Button>
-                                </FormItem>       
+              {/* <Button  type="primary" size="small" onClick={this.addRule.bind(this)} > */}
+                                      {/* + 添加规则 */}
+                                 {/* </Button> */}
+                                </FormItem>
                                 <FormItem
                                     {...tailFormItemLayout}
                                 >
@@ -519,7 +542,6 @@ class BiddingSetting extends React.Component {
                                 <Button  type="primary" size="small"  onClick={this.seniorRule.bind(this)} >
                                       + 添加规则
                                  </Button>
-                                
                                 
                                 </FormItem>
                                 
