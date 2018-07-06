@@ -13,7 +13,8 @@ class BiddingCreate extends React.Component {
             prevhash: '',
             num1: [],
             disBlock: {visibility: 'visible',color:'#ff0000'},
-            disNone: {visibility: 'hidden',color:'#ff0000'}
+            disNone: {visibility: 'hidden',color:'#ff0000'},
+            editRoleId: 0
         }
     }
     // componentWillMount() {
@@ -31,8 +32,9 @@ class BiddingCreate extends React.Component {
             prevhash: window.location.hash
         })
     }
-    showModal() {
+    showModal(index) {
         this.setState({
+            editRoleId: index,
             visible: true
         })
     }
@@ -57,8 +59,26 @@ class BiddingCreate extends React.Component {
             num1: this.state.num1.concat(newRole)
         })
     }
-    delOneRole(a,e) {
-        console.log(e.target.dataIndex)
+    delOneRole(e) {
+        let index = e.target.getAttribute('data-index')
+        this.state.num1.splice(index,1)
+        this.setState({
+            num1: this.state.num1,
+            editRoleId: 0
+        })
+        // 
+        // console.log(index)
+        // console.log(this.state.num1, this.state.num1.splice(index,1))
+        // console.log()
+    }
+    onChangeInput(e) {
+        // let newnum =
+         this.state.num1[this.state.editRoleId]['rule1'] = e.target.value
+        // console.log(newnum)
+        this.setState({
+            num1:this.state.num1
+        })
+        console.log(e.target.value)
     }
     render() { 
         // let inputIndex=this.state.inputIndex<0?0:this.state.inputIndex;
@@ -100,27 +120,32 @@ class BiddingCreate extends React.Component {
     > 
         <Form layout="vertical">
             <FormItem label={objectValueTip}>
+            {console.log(this.state.editRoleId, this.state.num1)}
                 <Input type="textarea"
-                    //    onChange={this.onChangeObject.bind(this)}
+                       onChange={this.onChangeInput.bind(this)}
                        maxLength={'50'}
+                       value={this.state.num1.length > 0 ? this.state.num1[this.state.editRoleId]['rule1']: ''}
                        />
             </FormItem>
             <FormItem label={subject1ValueTip}>
                 <Input type="textarea"
                     //    onChange={this.onChangeSubject1.bind(this)}
                        maxLength={'500'} 
+                       value={this.state.num1.length > 0 ? this.state.num1[this.state.editRoleId]['rule2']: ''}
                 />
             </FormItem>
             <FormItem label={subject2ValueTip}>
                 <Input type="textarea"
                     //    onChange={this.onChangeSubject2.bind(this)} 
-                       maxLength={'500'}                   
+                       maxLength={'500'}
+                       value={this.state.num1.length > 0 ? this.state.num1[this.state.editRoleId]['rule3']: ''}
                 />
             </FormItem>
             <FormItem label={filterValueTip}>
                 <Input type="textarea"
                     //    onChange={this.onChangeFilter.bind(this)}  
-                       maxLength={'50'}                  
+                       maxLength={'50'}
+                       value={this.state.num1.length > 0 ? this.state.num1[this.state.editRoleId]['rule4']: ''}
                 />
             </FormItem>
         </Form>
@@ -136,7 +161,7 @@ class BiddingCreate extends React.Component {
                             <Input
                                 placeholder="主题词"
                                 readOnly
-                                onClick={this.showModal.bind(this)}
+                                onClick={this.showModal.bind(this,index)}
                                 // suffix={suffix}
                                 value={item.rule1}
                             />  
@@ -147,7 +172,7 @@ class BiddingCreate extends React.Component {
                         <Col span={4}>
                             <Input placeholder="关联词1"
                                    readOnly
-                                   onClick={this.showModal.bind(this)}
+                                   onClick={this.showModal.bind(this,index)}
                                    suffix={suffix}
                                    value={item.rule2}
                                
@@ -159,7 +184,7 @@ class BiddingCreate extends React.Component {
                         <Col span={4}>
                             <Input placeholder="关联词2"
                                    readOnly
-                                   onClick={this.showModal.bind(this)}
+                                   onClick={this.showModal.bind(this,index)}
                                    suffix={suffix}
                                    value={item.rule3}
                                    />
@@ -170,11 +195,12 @@ class BiddingCreate extends React.Component {
                         <Col span={4}>
                             <Input placeholder="排除词"
                                    readOnly
-                                   onClick={this.showModal.bind(this)}
+                                   onClick={this.showModal.bind(this,index)}
                                    suffix={suffix}
                                    value={item.rule4}
                             />
                         </Col>
+
         <Icon  type="minus-circle" className="delBtn" onClick={this.delOneRole.bind(this)}
          style={this.state.num1.length>1?this.state.disBlock:this.state.disNone}
         //  data-delid={item.id}
