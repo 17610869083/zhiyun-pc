@@ -22,6 +22,7 @@ class ModalReport extends React.Component{
      componentDidMount(){
         let {requestUrl} = this.props; 
         request(requestUrl).then( res => {
+            console.log(res.data)
               this.setState({
                 docList:res.data.data,
                 flag:false

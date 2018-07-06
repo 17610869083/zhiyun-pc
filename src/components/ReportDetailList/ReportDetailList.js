@@ -100,7 +100,7 @@ class ReportDetailList extends React.Component{
                  <div className="item-left">
                    <div className="key">
                      <div className="pubdate">
-                       <span className="date">{item.pubdate.split(' ')[0]} &nbsp;&nbsp;{item.pubdate.split(' ')[1]}</span>
+                       {/* <span className="date">{item.pubdate.split(' ')[0]} &nbsp;&nbsp;{item.pubdate.split(' ')[1]}</span> */}
                      </div>
                      {type==='report'? <div className="similar-info">相似信息：{item.similerInfo && (item.similerInfo.similerCount ? item.similerInfo.similerCount : 0)}条
                      </div>:null}

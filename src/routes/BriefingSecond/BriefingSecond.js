@@ -1,20 +1,16 @@
 import React from 'react';
 import './BriefingSecond.less';
-import { Row, Col, Button, Select, DatePicker, message,Modal} from 'antd';
+import { Row, Col,message} from 'antd';
 import EditText from '../../components/editText/editText';
 import EditData from '../../components/editData/editData';
+import ReportHeader from '../../components/reportHeader/reportHeader';
 import request from '../../utils/request';
 import {
 	api_new_preview_report,
 	api_update_report,
-	api_add_brief_report,
-	api_update_brief_item
+	api_add_brief_report
 } from '../../services/api';
 import {connect} from 'react-redux';
-import ModalReport from '../../components/ModalReport/ModalReport';
-import ModalMaterial from '../../components/ModalMaterial/ModalMaterial';
-const { RangePicker } = DatePicker;
-const Option = Select.Option;
 class BriefingSecond extends React.Component{
 	constructor(){
 		super()
@@ -114,31 +110,7 @@ class BriefingSecond extends React.Component{
 			}
  		})
 	}
-	//简报编辑按钮
-	editBriefing(type){
-		if(type === 'have'){
-			this.setState({
-				request:api_update_brief_item +`&reportId=${this.state.reportId}`,
-				visible:true
-			})
-		}else{
-			this.setState({
-			  isShowModalMaterial:true
-			})
-		}
-	}
-	//隐藏弹窗
-	hideModal = () => {
-		this.setState({
-			visible:false
-		})
-	}
-	//隐藏素材库
-	hideModalMaterial = () => {
-		this.setState({
-			isShowModalMaterial:false
-		})
-	}
+
 	render() {
 		return (
 			<div>
@@ -149,66 +121,10 @@ class BriefingSecond extends React.Component{
 								<div>
 								<Row>
 									<Col span={12} offset={6}>
-										<div className="headers">
-											<Row type="flex" justify="space-between" className="one">
-												<Col span={3}>
-													<span className="yulan"><b>报告预览</b></span>
-												</Col>
-												  {
-														(() => {
-															if(this.props.briefingData.length > 0) {
-																return (
-																	<Button type="primary" className="report" style={{ backgroundColor: "#5a8bff" }}>生成报告</Button>
-																)
-															} else if (this.props.briefingData.length === 0) {
-                                return (
-																	<Button type="primary" className="report" style={{ backgroundColor: "#5a8bff", display: "none" }}>生成报告</Button>
-																)
-															}
-														})()
-													}
-											</Row>
-											<div className="two">
-												<Row type="flex" justify="space-between">
-													<Col span={3}>
-													</Col>
-													{
-														(() => {
-															if (this.state.type === "01") {
-																return <div className="oneButton"><Button type="primary" style={{ backgroundColor: "#5a8bff" }} className="editReport"
-																       onClick={this.editBriefing.bind(this,'have')}
-																	   >编辑报告素材</Button></div>
-															} else if (this.state.type === "02") {
-																return <div>
-																	<div className="twoButton">
-																		<Select defaultValue="lucy" style={{ width: 200, marginRight: 20 }} onChange={this.handleChange.bind(this)}>
-																			<Option value="jack">Jack</Option>
-																			<Option value="lucy">Lucy</Option>
-																			<Option value="Yiminghe">yiminghe</Option>
-																		</Select>
-																		<Button type="primary" style={{ backgroundColor: "#5a8bff" }}>确定</Button>
-																	</div>
-																	<span style={{ color: "red" }}>*选择专题</span>
-																</div>
-															} else if (this.state.type === "03") {
-																return <div>
-																	<div className="rangeData">
-																		<RangePicker
-																			// ranges={{ Today: [moment(), moment()], 'This Month': [moment(), moment().endOf('month')] }}
-																			showTime
-																			format="YYYY/MM/DD"
-																			onChange={this.onChange}
-																			onOk={this.onOkData}
-																		/>
-																	</div>
-																	<span style={{ color: "red" }}>*可以通过时间范围获取素材</span>
-																</div>
-															}
-														})()
-													}
-												</Row>
-											</div>
-										</div>
+										<ReportHeader
+											briefingData={this.props.briefingData}
+											type={this.state.type}
+										/>
 										{
 												Object.keys(this.state.date).map(item => (
 													<div className="briefingWapper" key={item}>
@@ -403,66 +319,10 @@ class BriefingSecond extends React.Component{
 								<div>
 									<Row>
 										<Col span={12} offset={6}>
-											<div className="headers">
-												<Row type="flex" justify="space-between" className="one">
-													<Col span={3}>
-														<span className="yulan"><b>报告预览</b></span>
-													</Col>
-													{
-														(() => {
-															if(this.props.briefingData.length > 0) {
-																return (
-																	<Button type="primary" className="report" style={{ backgroundColor: "#5a8bff" }}>生成报告</Button>
-																)
-															} else if (this.props.briefingData.length === 0) {
-																return (
-																	<Button type="primary" className="report" style={{ backgroundColor: "#5a8bff", display: "none" }}>生成报告</Button>
-																)
-															}
-														})()
-													}
-												</Row>
-												<div className="two">
-													<Row type="flex" justify="space-between">
-														<Col span={3}>
-														</Col>
-														{
-															(() => {
-																if (this.state.type === "01") {
-																	return <div className="oneButton"><Button type="primary" style={{ backgroundColor: "#5a8bff" }} className="editReport"
-																	        onClick={this.editBriefing.bind(this,'none')}
-																	       >编辑报告素材</Button></div>
-																} else if (this.state.type === "02") {
-																	return <div>
-																		<div className="twoButton">
-																			<Select defaultValue="lucy" style={{ width: 200, marginRight: 20 }} onChange={this.handleChange.bind(this)}>
-																				<Option value="jack">Jack</Option>
-																				<Option value="lucy">Lucy</Option>
-																				<Option value="Yiminghe">yiminghe</Option>
-																			</Select>
-																			<Button type="primary" style={{ backgroundColor: "#5a8bff" }}>确定</Button>
-																		</div>
-																		<span style={{ color: "red" }}>*选择专题</span>
-																	</div>
-																} else if (this.state.type === "03") {
-																	return <div>
-																		<div className="rangeData">
-																			<RangePicker
-																				// ranges={{ Today: [moment(), moment()], 'This Month': [moment(), moment().endOf('month')] }}
-																				showTime
-																				format="YYYY/MM/DD"
-																				onChange={this.onChange}
-																				onOk={this.onOkData}
-																			/>
-																		</div>
-																		<span style={{ color: "red" }}>*可以通过时间范围获取素材</span>
-																	</div>
-																}
-															})()
-														}
-													</Row>
-												</div>
-											</div>
+											<ReportHeader
+												briefingData={this.props.briefingData}
+												type={this.state.type}
+											/>
 											{
 												Object.keys(this.state.date).map(item => (
 													<div className="briefingWapper" key={item}>
@@ -643,18 +503,7 @@ class BriefingSecond extends React.Component{
 							)
 						}
 					})()
-				}
-                <Modal  visible={this.state.visible} footer={null} onCancel={this.hideModal}
-                width="70%"
-                >
-                <ModalReport requestUrl={this.state.request}/>
-                </Modal>
-				<Modal  visible={this.state.isShowModalMaterial} footer={null} onCancel={this.hideModalMaterial}
-                width="70%"
-                >
-                <ModalMaterial/>
-                </Modal>
-				
+				}	
 			</div>
 		)
 	}
