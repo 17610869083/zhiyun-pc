@@ -108,7 +108,7 @@ class Briefing extends React.Component{
 					(() => {
             if (this.props.briefingData.length > 0) {
               return (
-								<div>
+								<div className="col">
 								<Row>
 									<Col span={12} offset={6}>
 										<ReportHeader
@@ -247,7 +247,7 @@ class Briefing extends React.Component{
 							)
 						} else if(this.props.briefingData.length === 0) {
 							return (
-								<div>
+								<div className="col">
 								<Row>
 									<Col span={12} offset={6}>
 										<ReportHeader
