@@ -17,27 +17,6 @@ class WarnSetting extends React.Component{
            }
        }
        componentDidMount(){
-            //  let type =this.props.location.search.split('=')[1];
-            //  if (type==='601'){
-            //     request(system_warning_setting,{
-            //         method:'POST',
-            //         headers: {
-            //            "Content-Type": "application/x-www-form-urlencoded"
-            //         },
-            //         body:`type=601`
-            //     }).then(res=>{
-            //         if(res.data.show601List){
-            //                this.setState({
-            //                    negative:res.data.show601List,
-            //                    type:type
-            //                })
-            //         }else{
-            //             this.setState({
-            //                 type:type
-            //             })  
-            //         }                   
-            //     })
-            //  }else{
               request(system_warning_setting,{
                 method:'POST',
                 headers: {
@@ -51,7 +30,6 @@ class WarnSetting extends React.Component{
                             })
                      }                   
               })
-            //}
        }
        componentDidUpdate(prevProps,prevState){
         if(prevState.delMessage!==this.state.delMessage){
@@ -166,15 +144,6 @@ class WarnSetting extends React.Component{
 
 
       render(){
-        //    const mediaCheckBox=<div className="mediaType">
-        //    <span style={{marginRight:'46px'}}>媒体类型</span>
-        //    <Checkbox onChange={this.onChange.bind(this)}>微博</Checkbox>
-        //    <Checkbox onChange={this.onChange.bind(this)}>微信</Checkbox>
-        //    <Checkbox onChange={this.onChange.bind(this)}>新闻</Checkbox>
-        //    <Checkbox onChange={this.onChange.bind(this)}>论坛</Checkbox>
-        //    <Checkbox onChange={this.onChange.bind(this)}>博客</Checkbox>
-        //    <Checkbox onChange={this.onChange.bind(this)}>APP</Checkbox>
-        //    </div>;
            return (
                <div className="warnBox">                   
                    <Tabs activeKey={this.state.type} onChange={this.tabsChange.bind(this)}>

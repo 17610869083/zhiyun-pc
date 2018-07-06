@@ -37,10 +37,10 @@ class SystemTopic extends React.Component {
     }
     onModelOk(e){
         let id = this.props.num1[this.state.inputIndex]['id'];
-        let objectValueInput=this.state.objectValueInput===1?this.props.num1[this.state.inputIndex]['rule1']:this.state.objectValueInput;
-        let subject1ValueInput=this.state.subject1ValueInput===1?this.props.num1[this.state.inputIndex]['rule2']:this.state.subject1ValueInput;
-        let subject2ValueInput=this.state.subject2ValueInput===1?this.props.num1[this.state.inputIndex]['rule3']:this.state.subject2ValueInput;
-        let filterValueInput=this.state.filterValueInput===1?this.props.num1[this.state.inputIndex]['rule4']:this.state.filterValueInput;
+        let objectValueInput=this.state.objectValueInput===1?this.props.num1[this.state.inputIndex]['rule1']:this.state.objectValueInput.trim();
+        let subject1ValueInput=this.state.subject1ValueInput===1?this.props.num1[this.state.inputIndex]['rule2']:this.state.subject1ValueInput.trim();
+        let subject2ValueInput=this.state.subject2ValueInput===1?this.props.num1[this.state.inputIndex]['rule3']:this.state.subject2ValueInput.trim();
+        let filterValueInput=this.state.filterValueInput===1?this.props.num1[this.state.inputIndex]['rule4']:this.state.filterValueInput.trim();
         if(objectValueInput === ""){
             message.warning('主题词不能为空！');
             return;
@@ -120,7 +120,7 @@ class SystemTopic extends React.Component {
     onChangeObject(e) {
         const { value } = e.target;
         let ObjectArr=value.split(' '); 
-        if(/~|!|@|#|\$|\^|&|\*|=|\?|！|￥|-|\(|\)|（|）|%|【|】|\{|\}|；|;|%|,|，|。|\./.test(value)){ 
+        if(/~|!|@|#|\$|\^|&|\*|=|\?|！|￥|-|\(|\)|（|）|%|【|】|\{|\}|；|;|%|,|，|。|\.|\+/.test(value)){ 
             message.warning('请不要带有特殊字符');
         }else if (keywordDuplicateCheck(ObjectArr)){
             message.warning('请不要出现重复的关键词或多余的空格');
@@ -132,7 +132,7 @@ class SystemTopic extends React.Component {
     onChangeSubject1(e) {
         const { value } = e.target; 
         let Subject1Arr=value.split(' '); 
-        if(/~|!|@|#|\$|\^|&|\*|=|\?|！|￥|-|\(|\)|（|）|%|【|】|\{|\}|；|;|%|,|，|。|\./.test(value)){  
+        if(/~|!|@|#|\$|\^|&|\*|=|\?|！|￥|-|\(|\)|（|）|%|【|】|\{|\}|；|;|%|,|，|。|\.|\+/.test(value)){  
             message.warning('请不要带有特殊字符');
         }else if (keywordDuplicateCheck(Subject1Arr)){
             message.warning('请不要出现重复的关键词或多余的空格');
@@ -144,7 +144,7 @@ class SystemTopic extends React.Component {
     onChangeSubject2(e) {
         const { value } = e.target;
         let Subject2Arr=value.split(' '); 
-        if(/~|!|@|#|\$|\^|&|\*|=|\?|！|￥|-|\(|\)|（|）|%|【|】|\{|\}|；|;|%|,|，|。|\./.test(value)){ 
+        if(/~|!|@|#|\$|\^|&|\*|=|\?|！|￥|-|\(|\)|（|）|%|【|】|\{|\}|；|;|%|,|，|。|\.|\+/.test(value)){ 
             message.warning('请不要带有特殊字符');
         }else if (keywordDuplicateCheck(Subject2Arr)){
             message.warning('请不要出现重复的关键词或多余的空格');
@@ -156,7 +156,7 @@ class SystemTopic extends React.Component {
     onChangeFilter(e) {
         const { value } = e.target;
         let FilterArr=value.split(' '); 
-        if(/~|!|@|#|\$|\^|&|\*|=|\?|！|￥|-|\(|\)|（|）|%|【|】|\{|\}|；|;|%|,|，|。|\./.test(value)){  
+        if(/~|!|@|#|\$|\^|&|\*|=|\?|！|￥|-|\(|\)|（|）|%|【|】|\{|\}|；|;|%|,|，|。|\.|\+/.test(value)){  
             message.warning('请不要带有特殊字符');
         }else if (keywordDuplicateCheck(FilterArr)){
             message.warning('请不要出现重复的关键词或多余的空格');
@@ -172,14 +172,7 @@ class SystemTopic extends React.Component {
       index:parseInt(e.target.dataset.index,10),
       inputIndex:this.state.inputIndex-1
     });
-    request(api_topic_ruleid,{
-        method:'POST',
-        headers: {
-           "Content-Type": "application/x-www-form-urlencoded"
-        },
-        body:`ruleid=${e.target.dataset.delid}`
-    }).then(res=>{
-    })
+
   }
   handleOk1 = (e) => {
     let delId=this.props.num1[this.state.index]['id'];

@@ -4,7 +4,7 @@ import './ReportTemplate.less';
 import './swiper.css';
 import {GRAY} from '../../utils/colors'
 import {Input,Button} from 'antd';
-import {api_get_template_report,api_search_template} from '../../services/api';
+import {api_get_template_report,api_search_template,api_get_preview_html} from '../../services/api';
 import request from '../../utils/request';
 import img from '../../assets/img/1.png';
 import {history} from '../../utils/history';
@@ -28,8 +28,9 @@ class ReportTemplate extends React.Component{
             },
             contentList:[],
             templateId:0,
-						reportType:'00',
-						templateType: ""
+			reportType:'00',
+            templateType: "",
+            hmtlUrl:''
           }
         }  
         componentWillMount(){ 
@@ -48,9 +49,16 @@ class ReportTemplate extends React.Component{
                         contentList: res.data.data.pageBean.content,
                         templateTypeList:typeList,
                         templateType:templateType,
-                        templateId:templateId
+                        templateId:templateId,
+                        hmtlUrl:res.data.data
                     })  
-              }
+                    request(api_get_preview_html + `&reportFormId=${templateId}`)
+                    .then( res => {
+                        this.setState({
+                        hmtlUrl:res.data.data
+                        })  
+                    })
+                }
             })
           }
         }
@@ -84,6 +92,12 @@ class ReportTemplate extends React.Component{
                 templateId:id,
                 reportType:type
              })
+             request(api_get_preview_html + `&reportFormId=${id}`)
+             .then( res => {
+                 this.setState({
+                 hmtlUrl:res.data.data
+                 })  
+             })
         }
         onBriefing = () => {
             console.log(this.state.templateType)
@@ -111,7 +125,7 @@ class ReportTemplate extends React.Component{
           const slideList = this.state.contentList.map( (item,index) => {
                 return <div className={this.state.templateId === item.id? 'swiper-slide cont active':'swiper-slide cont normal'} 
                        key = {index} onClick = {this.checkTemplate.bind(this,item.id,item.reportType)}>
-                       <img src={img} alt=""/>
+                       <img src={'http://119.90.61.155/om31/' +item.imagepath} alt=""/>
                        <p>{item.name}</p>
                        </div>
           })
@@ -144,7 +158,7 @@ class ReportTemplate extends React.Component{
                       </div>
                       <div className="report-content">   
                       <iframe width="80%" height="90%" title="模板预览" frameBorder="0" 
-                      src="http://119.90.61.155/om31/document/work/贵州省舆情简报_137_.html" />    
+                      src={"http://119.90.61.155/om31/" + this.state.hmtlUrl} />    
                       </div>
                   </div>
               </div>

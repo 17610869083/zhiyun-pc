@@ -162,7 +162,7 @@ class MaterialOpinion extends React.Component {
 	handleSearchBtn(keyword) {
 		// console.log(this.props.docList);
 		if (keyword !== '') {
-			this.props.getMaterialOpinionDetailRequested(`${this.state.current}&pagesize=${this.state.pageSize}&q=${keyword}`);
+			this.props.getMaterialOpinionDetailRequested(`catid=${this.state.current}&pagesize=${this.state.pageSize}&q=${keyword}`);
 		}
 	}
 

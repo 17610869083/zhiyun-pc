@@ -363,4 +363,8 @@ export const api_new_delete_report = host + 'Report?action=deleteReport';
 export const api_search_template = host +'Report?action=getFormByReportType';
 //删除报告
 export const api_new_preview_report = host + 'Report?action=previewTemplate'; 
+//预览模板的hmtl
+export const api_get_preview_html = host + 'Report?action=previewHtml';
+//报告下载
+export const api_download_report = host +'report/exportReport?action=downloadReport';         
 
