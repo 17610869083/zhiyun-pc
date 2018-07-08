@@ -39,8 +39,12 @@ class BiddingCreate extends React.Component {
         })
     }
     onModelCancel() {
+        Object.keys(this.state.num1[this.state.editRoleId]).forEach((k) => {
+            this.state.num1[this.state.editRoleId][k] = ''
+        })
         this.setState({
-            visible: false
+            visible: false,
+            num1: this.state.num1
         })
     }
     addRole() {
@@ -71,16 +75,16 @@ class BiddingCreate extends React.Component {
         // console.log(this.state.num1, this.state.num1.splice(index,1))
         // console.log()
     }
-    onChangeInput(e) {
+    onChangeInput(rulenum, e) {
         // let newnum =
-         this.state.num1[this.state.editRoleId]['rule1'] = e.target.value
+         this.state.num1[this.state.editRoleId][rulenum] = e.target.value
         // console.log(newnum)
         this.setState({
             num1:this.state.num1
         })
         console.log(e.target.value)
     }
-    render() { 
+    render() {
         // let inputIndex=this.state.inputIndex<0?0:this.state.inputIndex;
     	const suffix=<span className="del"><Icon type="close"/></span>;
         const objectValueTip=<span>主题词&nbsp;<Tooltip placement="bottom" title='核心词汇，例如事件的名称、地域、人名、产品名称、公司企业名称等。(不能为空)'>
@@ -122,28 +126,28 @@ class BiddingCreate extends React.Component {
             <FormItem label={objectValueTip}>
             {console.log(this.state.editRoleId, this.state.num1)}
                 <Input type="textarea"
-                       onChange={this.onChangeInput.bind(this)}
+                       onChange={this.onChangeInput.bind(this, 'rule1')}
                        maxLength={'50'}
                        value={this.state.num1.length > 0 ? this.state.num1[this.state.editRoleId]['rule1']: ''}
                        />
             </FormItem>
             <FormItem label={subject1ValueTip}>
                 <Input type="textarea"
-                    //    onChange={this.onChangeSubject1.bind(this)}
+                    onChange={this.onChangeInput.bind(this, 'rule2')}
                        maxLength={'500'} 
                        value={this.state.num1.length > 0 ? this.state.num1[this.state.editRoleId]['rule2']: ''}
                 />
             </FormItem>
             <FormItem label={subject2ValueTip}>
                 <Input type="textarea"
-                    //    onChange={this.onChangeSubject2.bind(this)} 
+                       onChange={this.onChangeInput.bind(this, 'rule3')} 
                        maxLength={'500'}
                        value={this.state.num1.length > 0 ? this.state.num1[this.state.editRoleId]['rule3']: ''}
                 />
             </FormItem>
             <FormItem label={filterValueTip}>
                 <Input type="textarea"
-                    //    onChange={this.onChangeFilter.bind(this)}  
+                       onChange={this.onChangeInput.bind(this, 'rule4')}
                        maxLength={'50'}
                        value={this.state.num1.length > 0 ? this.state.num1[this.state.editRoleId]['rule4']: ''}
                 />
