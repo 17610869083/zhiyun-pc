@@ -1,11 +1,12 @@
 import React from 'react';
 import './reportHeader.less';
-import { Row, Col, Button, Select, DatePicker,Modal } from 'antd';
+import { Row, Col, Button, Select, DatePicker,Modal,message } from 'antd';
 import ModalReport from '../../components/ModalReport/ModalReport';
 import ModalMaterial from '../../components/ModalMaterial/ModalMaterial';
-import {api_get_brief_item} from '../../services/api';
+import {api_get_brief_item,api_get_data_daily_preview} from '../../services/api';
 import {connect} from 'react-redux';
 import {briefingSwitch} from '../../redux/actions/createActions';
+import request from '../../utils/request';
 const { RangePicker } = DatePicker;
 const Option = Select.Option;
 class reportHeader extends React.Component{
@@ -53,8 +54,87 @@ class reportHeader extends React.Component{
 		})
 		//this.props.briefingSwitch(data)
 	}
+	disabledStartDate = (startValue) => {
+		const endValue = this.state.endValue;
+		if (!startValue || !endValue) {
+		  return false;
+		}
+		return startValue.valueOf() > endValue.valueOf();
+	  }
+	
+	  disabledEndDate = (endValue) => {
+		const startValue = this.state.startValue;
+		if (!endValue || !startValue) {
+		  return false;
+		}
+		return endValue.valueOf() <= startValue.valueOf();
+	  }
+	
+	  onChange = (field, value) => {
+		this.setState({
+		  [field]: value,
+		});
+	  }
+	
+	  onStartChange = (value, dateString) => {
+			// const starttime = dateString.replace(new RegExp("-","gm"),"/");
+			const starttimeHaoMiao = (new Date(dateString)).getTime();
+			console.log(starttimeHaoMiao);
+			this.setState({
+				startMsDate: starttimeHaoMiao,
+				startDate: dateString
+			})
+		this.onChange('startValue', value);
+	  }
+	
+	  onEndChange = (value, dateString) => {
+			// const starttime = dateString.replace(new RegExp("-","gm"),"/");
+			const starttimeHaoMiao = (new Date(dateString)).getTime();
+			console.log(starttimeHaoMiao);
+			this.setState({
+				endMsDate: starttimeHaoMiao,
+				endDate: dateString
+			})
+		this.onChange('endValue', value);
+	  }
+	
+	  handleStartOpenChange = (open) => {
+		if (!open) {
+		  this.setState({ endOpen: true });
+		}
+	  }
+	
+	  handleEndOpenChange = (open) => {
+		this.setState({ endOpen: open });
+		}
+		onOkDateStart(value, dateString) {
+			console.log(value, dateString)
+		}
+	  onOkDate(value) {
+			request(api_get_data_daily_preview + '&reportFormId=' + this.props.typeId + '&reportType=' + this.props.type + '&starttime=' + this.state.startDate + '&endtime=' + this.state.endDate).then((res) => {
+				const myDate = new Date();
+				const starttimeHaoMiao = (new Date(myDate)).getTime();
+				if (this.state.startMsDate > starttimeHaoMiao && this.state.endMsDate > starttimeHaoMiao) {
+					message.warning("您的选的日期超出了当前时间，请重新选择");
+				} else if (this.state.startMsDate > starttimeHaoMiao && this.state.endMsDate < starttimeHaoMiao) {
+					message.warning("您的选的日期超出了当前时间，请重新选择");
+				} else if (this.state.startMsDate < starttimeHaoMiao && this.state.endMsDate > starttimeHaoMiao) {
+					message.warning("您的选的日期超出了当前时间，请重新选择");
+				} else if (this.state.endMsDate - this.state.startMsDate > 86400000) {
+					console.log(this.state.endMsDate - this.state.startMsDate)
+					message.warning("您选择的时间超过了24个小时，请重新选择");
+				} else if (this.state.startMsDate < starttimeHaoMiao && this.state.endMsDate < starttimeHaoMiao) {
+					message.success(res.data.msg);
+					this.props.hanldle(res.data)				
+				}
+			});
+		}
+		handleChange (e) {
+		console.log(e)
+		}
 	render() {
-		const { type, briefingData ,reportId} = this.props;
+		const { type, briefingData,reportId } = this.props;
+		const { startValue, endValue, endOpen } = this.state;
 		let haveData = reportId !== '' ?'have':'none';
 		return (
 			<div className="headers">
@@ -99,14 +179,29 @@ class reportHeader extends React.Component{
 								} else if (type === "03") {
 									return <div>
 										<div className="rangeData">
-											<RangePicker
+											<DatePicker
+												disabledDate={this.disabledStartDate.bind(this)}
 												showTime
-												format="YYYY/MM/DD"
-												onChange={this.onChange}
-												onOk={this.onOkData}
+												format="YYYY-MM-DD HH:mm:ss"
+												value={startValue}
+												placeholder="Start"
+												onChange={this.onStartChange.bind(this)}
+												onOpenChange={this.handleStartOpenChange.bind(this)}
+												onOk={this.onOkDateStart.bind(this)}
+											/>
+											<DatePicker
+												disabledDate={this.disabledEndDate.bind(this)}
+												showTime
+												format="YYYY-MM-DD HH:mm:ss"
+												value={endValue}
+												placeholder="End"
+												onChange={this.onEndChange.bind(this)}
+												open={endOpen}
+												onOpenChange={this.handleEndOpenChange.bind(this)}
+												onOk={this.onOkDate.bind(this)}
 											/>
 										</div>
-										<span style={{ color: "red" }}>*可以通过时间范围获取素材</span>
+										<span style={{ color: "red" }}>*可以通过时间范围获取素材,时间周期为24时制</span>
 									</div>
 								}
 							})()

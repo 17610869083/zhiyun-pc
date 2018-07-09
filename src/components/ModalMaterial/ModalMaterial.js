@@ -254,7 +254,7 @@ class ModalMaterial extends React.Component{
                     <span>全选</span>
                     <InputGroup compact>
                     <Select defaultValue="material" onChange={this.handleChange.bind(this)} 
-                       getPopupContainer={() => document.querySelector('.briefingWapper')}
+                      getPopupContainer={() => document.querySelector('.briefingWapper')}
                      className="select"
                      >
                     <Option value="material">素材库</Option>
