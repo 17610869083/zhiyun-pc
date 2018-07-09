@@ -28,7 +28,9 @@ class Daily extends React.Component{
 			data: [],
 			number: [],
 			jiaData: {},
-			reportId: ""
+			reportId: "",
+			emotionDistributionImg: {},
+			mediaDistributionImg: {}
 		}
 	}
 	componentWillMount(){
@@ -105,6 +107,7 @@ class Daily extends React.Component{
  		})
 	}
 	hanldle= data => {
+		console.log(data)
 		this.setState({
 			jiaData: data
 		})
@@ -113,8 +116,15 @@ class Daily extends React.Component{
 			if (this.state.componentId[2] === item) {
 				this.setState({
 					reportId: this.state.jiaData.reportId,
-					data: this.state.jiaData.data[item].informationExcerpt
+					data: this.state.jiaData.data[item].informationExcerpt,
 				})
+			} else if (this.state.componentId[1] === item) {
+        this.setState({
+					emotionDistributionImg: this.state.jiaData.data[item].emotionDistributionImg,
+					mediaDistributionImg: this.state.jiaData.data[item].mediaDistributionImg
+				})
+				console.log(this.state.jiaData.data[item].emotionDistributionImg)
+				console.log(this.state.jiaData.data[item].mediaDistributionImg)
 			}
 		})
 	}
@@ -480,7 +490,7 @@ class Daily extends React.Component{
 																		<div style={{ height: 500 }}>
 																			<ReactEchartsCore
 																				echarts={echarts}
-																				option={mediaOption}
+																				option={this.state.emotionDistributionImg}
 																				lazyUpdate={true}
 																				style={{ height:'400px', width: 300 }}
 																			/>												  
@@ -490,7 +500,7 @@ class Daily extends React.Component{
 																		<div style={{ height: 500, float: "right" }}>
 																			<ReactEchartsCore
 																				echarts={echarts}
-																				option={mediaOptionEmotional}
+																				option={this.state.mediaDistributionImg}
 																				lazyUpdate={true}
 																				style={{ height:'400px', width: 300 }}
 																			/>
@@ -549,7 +559,9 @@ class Daily extends React.Component{
 																			<div><p style={{ textIndent: "2em", color: "#ccc", fontSize: 14, lineHeight: "30px" }}>{item.summary}</p></div>
 																			<div>
 																				<p style={{ fontSize: 14, color: "#1E82A9" }}>原文链接：</p>
-																				<p style={{ fontSize: 14 }}><a>{item.url}</a></p>
+																				<p style={{ fontSize: 14, color: "#1E82A9", wordBreak: "break-word" }}>
+																				  {item.url}
+																				</p>
 																			</div>
 																		</div>
 																	)

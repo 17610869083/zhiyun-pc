@@ -134,6 +134,42 @@ class Special extends React.Component{
 				<Row>
 					<Col span={12} offset={6}>
 						<div className="special">
+						  {/* 标题 */}
+						  <div className="specialTitle">
+							  <div className="specialModule">
+									<span className="specialM">这是专报</span>
+								</div>
+								<div className="specialEditorDate">
+									<Row>
+										<Col span={20} offset={2}>
+											<div className="editor">
+											  <span>北京软云神州科技有限公司</span>
+											</div>
+											<div className="date">
+												<span>2018年03月01日</span>											
+											</div>
+										</Col>
+									</Row>
+								</div>
+								<div className="line">
+									<Row>
+										<Col span={20} offset={2}>
+											<div style={{borderBottom: "3px solid red"}}></div>
+										</Col>
+									</Row>
+								</div>
+							</div>
+							{/* 导读 */}
+							<div className="specialTakeaway">
+								<Row>
+									<Col span={20} offset={2}>
+										<div className="takeAway"><span>一. 导读</span></div>
+										<div>
+											<p style={{ textIndent: "2em", fontSize: 14, lineHeight: "30px" }}>通过对平面媒体、网络媒体、微博平台等全网范围信息监测，2018-06-27至2018-06-28期间，共产生相关报道795篇。从报道倾向性观察，本时段正面报道599篇，占75.35%，负面报道10篇，占比1.26%，中性169篇占比21.26%，预警17篇，占比2.14%。按媒体类型进行分析，微博报道最多占报道总数的75.97%，微信次之占报道总数的17.74%，新闻报道最少仅占报道总数的6.29%。</p>
+										</div>									
+									</Col>
+								</Row>
+							</div>
 						</div>
 						{/* 结束 */}
 					</Col>
