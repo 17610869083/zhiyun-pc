@@ -78,7 +78,7 @@ class OpinionDetail extends React.Component {
         negative: ['负面', '반면', '悪い面', 'پاسسىپ.', 'ལྡོག་ངོས'],
         warning: ['预警', '예보', '警報', 'ئالدىن سىگنال بېرىش ', 'ཉེ་བརྡ་']
       },
-      allSelect: ['全选：', '전부：', 'すべて：', '： بارلىق ', 'ཚང་མ།：'],
+      allSelect: ['全选：', '모두 선택:', '全選：', '：بارلىق ', 'ཡོངས་འདེམས།：'],
       similarInfo: ['相似信息', '비슷 한 정보', '相似信息', 'ئوخشاش ئۇچۇر.', 'འདྲ་མཚུངས་ཀྱི་ཆ་འཕྲིན།'],
       infoCompany: ['条', '건수', '条', 'ماددا ', 'དོན་ཚན།'],
       keyWord:['关键词', '키워드', 'キーワード', 'ھالقىلىق سۆز بولۇپ قالدى.', 'གནད་ཚིག་འགའ།']
@@ -677,16 +677,16 @@ class OpinionDetail extends React.Component {
     const ChangeTrendMenu = (
       <Menu>
         <Menu.Item key="0">
-          <span onClick={this.setPositiveLists.bind(this)}>正面</span>
+          <span onClick={this.setPositiveLists.bind(this)} className="inclination">正面</span>
         </Menu.Item>
         <Menu.Item key="1">
-          <span onClick={this.setMiddleLists.bind(this)}>中性</span>
+          <span onClick={this.setMiddleLists.bind(this)} className="inclination">中性</span>
         </Menu.Item>
         <Menu.Item key="2">
-          <span onClick={this.setNegativeLists.bind(this)}>负  面</span>
+          <span onClick={this.setNegativeLists.bind(this)} className="inclination">负  面</span>
         </Menu.Item>
         <Menu.Item key="3">
-          <span onClick={this.setWarningLists.bind(this)}>预  警</span>
+          <span onClick={this.setWarningLists.bind(this)} className="inclination">预  警</span>
         </Menu.Item>
       </Menu>
     );
@@ -709,7 +709,7 @@ class OpinionDetail extends React.Component {
       </Spin>
     );
     const left = () => {
-      console.log(this.props.lang, this.props.languageType)
+      // console.log(this.props.lang, this.props.languageType)
       if(this.props.languageType-0 === 3) {
         return <div className="left">
             <Dropdown overlay={ChangeTrendMenu} trigger={['click']}
@@ -811,7 +811,7 @@ class OpinionDetail extends React.Component {
             pageSize={this.props.pageSize}
             onChange={this.onPaginationChange.bind(this)}
             total={this.props.pageInfo && this.props.pageInfo.count}
-            getPopupContainer={() => document.querySelector('.all-opinion')}
+            getPopupContainer={() => document.querySelector('.all-opinion2')}
             current={page}
           />
           <div className="inputSearch"

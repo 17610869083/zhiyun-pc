@@ -137,7 +137,8 @@ class AllOpinion extends React.Component {
         '微信': ['微信', 'WeChat', 'WeChat', 'ئۈندىدار.', 'འཕྲིན་ཐུང།'],
         '平媒': ['平媒', '플랫 미디어', '平面メディア', 'تەكشى ۋاسىتىسى', 'ངོས་མཉམ་གྱི་ཆ་འཕྲིན'],
         'APP': ['APP', 'APP', 'アプリ', 'APP', 'APP']
-      }
+      },
+      prevhash: ''
     }
     
   }
@@ -177,6 +178,7 @@ class AllOpinion extends React.Component {
         return;
       }
       let rangeTimeValue = fieldsValue['range-time-picker'];
+      // debugger
       const rangeEndTimeValue = fieldsValue['range-endtime-picker'];
       const values = {
         ...fieldsValue,
@@ -327,7 +329,7 @@ class AllOpinion extends React.Component {
     }
   }
 
-  dataChanged() {
+    dataChanged(pagenum) {
     const searchMessage = this.props.ks;
     if (this.state.type !== 1) {
       const param = {
@@ -338,7 +340,7 @@ class AllOpinion extends React.Component {
         carry: this.state.mediaValue,
         begin: this.state.begin,
         end: this.state.end,
-        page: this.props.page,
+        page: pagenum,
         pagesize: this.state.pagesize,
         lang: this.state.language[this.props.match.params.languages]
       };
@@ -429,33 +431,31 @@ class AllOpinion extends React.Component {
   }
 
   componentWillMount() {
-    let reg = /^[0-4]$/
-    if(reg.test(this.props.match.params.languages)) {
-      this.setState({
-        languageType: this.props.match.params.languages
-      })
-    } else {
-      this.setState({
-        languageType: 0
-      })
-    }
+      let reg = /^[0-4]$/
+      if(reg.test(this.props.match.params.languages)) {
+        this.setState({
+          languageType: this.props.match.params.languages
+        })
+      }
     if (this.props.location && this.props.location.search !== "?type=search") {
       this.homepageMore(window.location.hash);
     }
   }
 
   componentWillReceiveProps(newProps){
-    let reg = /^[0-4]$/
-    if(reg.test(newProps.match.params.languages)) {
-      this.setState({
-        languageType: newProps.match.params.languages
-      })
-    } else {
-      this.setState({
-        languageType: 0
-      })
+    if( this.state.prevhash !== window.location.hash ) {
+      let reg = /^[0-4]$/
+      if(reg.test(newProps.match.params.languages)) {
+        this.setState({
+          languageType: newProps.match.params.languages
+        })
+      }
     }
-    if(newProps.match.params.languages !== this.state.languageType){
+    this.setState({
+      prevhash: window.location.hash
+    })
+    if(newProps.match.params.languages !== this.props.match.params.languages){
+      
       this.setState({
         timeValue: 'all',
         trendValue: 'all',
@@ -478,7 +478,9 @@ class AllOpinion extends React.Component {
       pagesize: this.state.pagesize,
       lang: this.state.language[newProps.match.params.languages],
     }
-    if (this.state.languageType === newProps.match.params.languages) return false;
+    // console.log(this.props.match.params.languages, newProps.match.params.languages)
+    // debugger
+    if (this.props.match.params.languages === newProps.match.params.languages) return false;
 
     this.props.opinionSearchRequest(param);
     this.props.paginationPage(1);
@@ -535,7 +537,6 @@ class AllOpinion extends React.Component {
     // );
     // 时间
     const Time =  () => {
-      console.log(this.myReverse(this.state.time))
       if (this.state.languageType-0 === 3) {
         return this.myReverse(this.state.time).map((item, index) =>
           <div
@@ -698,7 +699,7 @@ class AllOpinion extends React.Component {
       pagesize: this.state.pagesize,
     };
     return (
-      <div className="all-opinion" id="anchor">
+      <div className="all-opinion2" id="anchor">
         <div className="close-open" style={{background:GRAY}}>
           <div className="count">{this.state.infoList[this.state.languageType]}</div>
           <div className="close" onClick={this.triggerTopShow.bind(this)}>
@@ -706,7 +707,6 @@ class AllOpinion extends React.Component {
           </div>
         </div>
         <div className="sort-top" style={this.state.isTopShow ? {display: 'block'} : {display: 'none'}}>
-        {console.log(this.state.languageType)}
           <div className={this.state.languageType-0 === 3? 'uygur sort-items' : 'sort-items'}>
             <div className="left">{this.state.OptiionTitle.time[this.state.languageType]}</div>
             <div className="right">
@@ -732,13 +732,11 @@ class AllOpinion extends React.Component {
                 >
                   {getFieldDecorator('range-endtime-picker'
                   )(
-                    <LocaleProvider>
                       <DatePicker showTime
                         placeholder={this.state.timePlaceholder.end[this.state.languageType]}
                         format="YYYY-MM-DD HH:mm:ss"
                         className="DatePicker"
                       />
-                    </LocaleProvider>
                   )}
                 </FormItem>
                 <Button type="primary" htmlType="submit" style={{marginTop: '2px'}}>
@@ -791,7 +789,7 @@ class AllOpinion extends React.Component {
                         defaultPageSize={20}
                         onChange={this.onPaginationChange.bind(this)}
                         total={pageInfo.count}
-                        getPopupContainer={() => document.querySelector('.all-opinion')}
+                        getPopupContainer={() => document.querySelector('.all-opinion2')}
                         current={page}
             />
           </div>

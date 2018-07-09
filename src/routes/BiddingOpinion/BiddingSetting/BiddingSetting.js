@@ -457,15 +457,15 @@ class BiddingSetting extends React.Component {
                                     {...formItemLayout}
                                     label={tipMessage}
                                 >
-                                <SettingCreateTopic num1={this.state.num1} name="email" 
+                                {/* <SettingCreateTopic num1={this.state.num1} name="email" 
                                     onDelrule={this.onDelrule.bind(this)}
                                     onDelwayRule={this.onDelwayRule.bind(this)}
                                     ruleId={this.state.ruleId}
                                     onCreateTopic={this.onCreateTopic.bind(this)}
                                     type="topic"
                                     addOrSetting={this.state.addOrSetting}
-                                />
-                                <BiddingCreate num1={this.state.num1}></BiddingCreate>
+                                /> */}
+                                <BiddingCreate num1={JSON.stringify(this.state.num1)}></BiddingCreate>
                                 </FormItem> 
                                 <FormItem className="addRule"
                                     {...tailFormItemLayout} 

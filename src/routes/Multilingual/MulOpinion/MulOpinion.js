@@ -16,7 +16,8 @@ import {
   api_docedit_save,
   api_email_push,
   api_docsend_push,
-  api_get_DetailForeign
+  api_get_DetailForeign,
+  api_delete_multilingual,
 } from '../../../services/api';
 import EditOpinionDetail from '../../../components/EditOpinionDetail/EditOpinionDetail';
 import {Tag, Popconfirm, message, Icon, Modal, Menu, Dropdown, Select, Input, Button } from 'antd';
@@ -47,14 +48,14 @@ class DetailOpinion extends React.Component {
       contents: '',
       sid: '',
       describe: {
-        reltime: ['发布时间','发布时间','发布时间','发布时间','发布时间'],
-        source: ['来源','来源','来源','来源','来源'],
-        author: ['作者','作者','作者','作者','作者'],
-        keyword: ['关键词','关键词','关键词','关键词','关键词'],
-        factor: ['要素','要素','要素','要素','要素']
+        reltime: ['发布时间','게시 시간','発行時間','نام زمان','ཁྱབ་བསྒྲགས་བྱེད་ཡུན།'],
+        source: ['来源','소스','ソース','منبع ','ཡོང་ཁུངས།'],
+        author: ['作者','저자','著者','ساخت شخص','ساخت شخص'],
+        keyword: ['关键词','키워드','キーワード','کلید کلمه','གནད་ཚིག་འགའ།'],
+        factor: ['要素','요소','要素','عناصر','རྒྱུ་རྐྱེན་གཙོ་བོ།']
       },
-      language: ['中文', '韩文', '日文', '维吾尔文','藏文'],
-      languageType: 0
+      language: ['中文', '한국어', '日本語', 'ئۇيغۇر يېزىقى', 'བོད་ཡིག། '],
+      languageType: 0,
     }
   }
   componentDidMount() {
@@ -90,9 +91,9 @@ class DetailOpinion extends React.Component {
     })
   }
 
-  // 确认删除
+  // 删除
   deleteConfirm(sid) {
-    request(api_del_doc + '&sid=["' + sid + '"]&lang=' + this.props.match.params.param , {}).then((res) => {
+    request(api_delete_multilingual + '&lang=' + this.props.match.params.param  + '&sid=["' + sid + '"]', {}).then((res) => {
       if (res.data.code === 1) {
         message.success(res.data.msg);
         setTimeout(() => {
@@ -102,75 +103,109 @@ class DetailOpinion extends React.Component {
     });
   }
 
-  // 确定设为负面
-  negativeConfirm(sid) {
-    request(api_edit_doc_neg + '&neg=1&sid=["' + sid + '"]' + '&lang='+ this.props.match.params.param, {}).then((res) => {
+  // 确认删除
+  // deleteConfirm(sid) {
+  //   request(api_del_doc + '&sid=["' + sid + '"]&lang=' + this.props.match.params.param , {}).then((res) => {
+  //     if (res.data.code === 1) {
+  //       message.success(res.data.msg);
+  //       setTimeout(() => {
+  //         window.close()
+  //       }, 500);
+  //     }
+  //   });
+  // }
+
+
+
+  // 倾向设置
+  editDocNeg(sid, neg) {
+    request(api_edit_doc_neg + '&lang='+ this.props.match.params.param +'&neg='+ neg +'&sid=["' + sid + '"]', {}).then(res => {
       if (res.data.code === 1) {
         message.success(res.data.msg);
-        request(api_get_DetailForeign + '&sid=' + sid + '&lang=' + this.props.match.params.param, {})
-          .then((res) => {
-            const keywords = (res.data.nrtags) ? (res.data.nrtags) : [''];
-            this.setState({
-              data: res.data,
-              keywords: keywords
-            })
+        request(api_get_DetailForeign + '&sid=' + sid + '&lang=' + this.props.match.params.param ).then((res) => {
+          this.setState({
+            data: res.data,
+            keywords: res.data.keyword,
+            content: res.data.content
           });
+        })
       }
-    });
+    })
+  } 
 
 
-  }
 
-  // 确定设为预警
-  warningConfirm(sid) {
-    request(api_edit_doc_neg + '&neg=2&sid=["' + sid + '"]' + '&lang='+ this.props.match.params.param, {}).then((res) => {
-      if (res.data.code === 1) {
-        message.success(res.data.msg);
-        request(api_get_DetailForeign + '&sid=' + sid + '&lang=' + this.props.match.params.param, {})
-          .then((res) => {
-            const keywords = (res.data.nrtags) ? (res.data.nrtags) : [''];
-            this.setState({
-              data: res.data,
-              keywords: keywords
-            })
-          });
-      }
-    });
-  }
 
-  // 确定设为正面
-  positiveConfirm(sid) {
-    request(api_edit_doc_neg + '&neg=-1&sid=["' + sid + '"]' + '&lang='+ this.props.match.params.param, {}).then((res) => {
-      if (res.data.code === 1) {
-        message.success(res.data.msg);
-        request(api_get_DetailForeign + '&sid=' + sid + '&lang=' + this.props.match.params.param, {})
-          .then((res) => {
-            const keywords = (res.data.nrtags) ? (res.data.nrtags) : [''];
-            this.setState({
-              data: res.data,
-              keywords: keywords
-            })
-          });
-      }
-    });
-  }
 
-  // 确定设为中性
-  neutralConfirm(sid) {
-    request(api_edit_doc_neg + '&neg=0&sid=["' + sid + '"]' + '&lang='+ this.props.match.params.param, {}).then((res) => {
-      if (res.data.code === 1) {
-        message.success(res.data.msg);
-        request(api_get_DetailForeign + '&sid=' + sid + '&lang=' + this.props.match.params.param, {})
-          .then((res) => {
-            const keywords = (res.data.nrtags) ? (res.data.nrtags) : [''];
-            this.setState({
-              data: res.data,
-              keywords: keywords
-            })
-          });
-      }
-    });
-  }
+  // // 确定设为负面
+  // negativeConfirm(sid) {
+  //   request(api_edit_doc_neg + '&neg=1&sid=["' + sid + '"]' + '&lang='+ this.props.match.params.param, {}).then((res) => {
+  //     if (res.data.code === 1) {
+  //       message.success(res.data.msg);
+  //       request(api_get_DetailForeign + '&sid=' + sid + '&lang=' + this.props.match.params.param, {})
+  //         .then((res) => {
+  //           const keywords = (res.data.nrtags) ? (res.data.nrtags) : [''];
+  //           this.setState({
+  //             data: res.data,
+  //             keywords: keywords
+  //           })
+  //         });
+  //     }
+  //   });
+
+
+  // }
+
+  // // 确定设为预警
+  // warningConfirm(sid) {
+  //   request(api_edit_doc_neg + '&neg=2&sid=["' + sid + '"]' + '&lang='+ this.props.match.params.param, {}).then((res) => {
+  //     if (res.data.code === 1) {
+  //       message.success(res.data.msg);
+  //       request(api_get_DetailForeign + '&sid=' + sid + '&lang=' + this.props.match.params.param, {})
+  //         .then((res) => {
+  //           const keywords = (res.data.nrtags) ? (res.data.nrtags) : [''];
+  //           this.setState({
+  //             data: res.data,
+  //             keywords: keywords
+  //           })
+  //         });
+  //     }
+  //   });
+  // }
+
+  // // 确定设为正面
+  // positiveConfirm(sid) {
+  //   request(api_edit_doc_neg + '&neg=-1&sid=["' + sid + '"]' + '&lang='+ this.props.match.params.param, {}).then((res) => {
+  //     if (res.data.code === 1) {
+  //       message.success(res.data.msg);
+  //       request(api_get_DetailForeign + '&sid=' + sid + '&lang=' + this.props.match.params.param, {})
+  //         .then((res) => {
+  //           const keywords = (res.data.nrtags) ? (res.data.nrtags) : [''];
+  //           this.setState({
+  //             data: res.data,
+  //             keywords: keywords
+  //           })
+  //         });
+  //     }
+  //   });
+  // }
+
+  // // 确定设为中性
+  // neutralConfirm(sid) {
+  //   request(api_edit_doc_neg + '&neg=0&sid=["' + sid + '"]' + '&lang='+ this.props.match.params.param, {}).then((res) => {
+  //     if (res.data.code === 1) {
+  //       message.success(res.data.msg);
+  //       request(api_get_DetailForeign + '&sid=' + sid + '&lang=' + this.props.match.params.param, {})
+  //         .then((res) => {
+  //           const keywords = (res.data.nrtags) ? (res.data.nrtags) : [''];
+  //           this.setState({
+  //             data: res.data,
+  //             keywords: keywords
+  //           })
+  //         });
+  //     }
+  //   });
+  // }
 
   // 取消操作
   deleteCancel(e) {
@@ -260,7 +295,8 @@ class DetailOpinion extends React.Component {
                             </div>
                             <p className="title">{data.title}</p>
                         </div>
-                        <Button type="primary" className="btn" onClick={this.toggleLan.bind(this)}>{this.state.languageType === 0? '中文': this.state.language[this.state.languageType]}</Button>
+                        {/* <Button type="primary" className="btn" onClick={this.toggleLan.bind(this)}>{this.state.languageType === 0? this.state.language[this.state.languageType]: '中文'}</Button> */}
+                        <Button type="primary" className="btn" onClick={this.toggleLan.bind(this)}>{this.state.languageType-0 === 0 ? this.state.language[this.props.match.params.languages] : '中文'}</Button>
                         <div className="info">
                             <div className="pubdate">
                                 <span className="name">{this.state.describe.reltime[this.state.languageType]}：</span>
@@ -291,22 +327,22 @@ class DetailOpinion extends React.Component {
                         </div>
                         <div className="operation">
                         <div className="itemBox">
-                            <Popconfirm title="确定要将这条信息设置为预警吗？" onConfirm={this.warningConfirm.bind(this, this.state.sid)} onCancel={this.deleteCancel.bind(this)} okText="是" cancelText="否">
+                            <Popconfirm title="确定要将这条信息设置为预警吗？" onConfirm={this.editDocNeg.bind(this, this.state.sid, 2)} onCancel={this.deleteCancel.bind(this)} okText="是" cancelText="否">
                                 <div className="operation-item" title="设为预警">
                                 <IconFont type="icon-shandian" />
                                 </div>
                             </Popconfirm>
-                            <Popconfirm title="确定要将这条信息设置为负面吗？" onConfirm={this.negativeConfirm.bind(this, this.state.sid)} onCancel={this.deleteCancel.bind(this)} okText="是" cancelText="否">
+                            <Popconfirm title="确定要将这条信息设置为负面吗？" onConfirm={this.editDocNeg.bind(this, this.state.sid, 1)} onCancel={this.deleteCancel.bind(this)} okText="是" cancelText="否">
                                 <div className="operation-item" title="设为负面">
                                 <IconFont type="icon-fumianxinxi"/>
                                 </div>
                             </Popconfirm>
-                            <Popconfirm title="确定要将这条信息设置为正面吗？" onConfirm={this.positiveConfirm.bind(this, this.state.sid)} onCancel={this.deleteCancel.bind(this)} okText="是" cancelText="否">
+                            <Popconfirm title="确定要将这条信息设置为正面吗？" onConfirm={this.editDocNeg.bind(this, this.state.sid, -1)} onCancel={this.deleteCancel.bind(this)} okText="是" cancelText="否">
                                 <div className="operation-item" title="设为正面">
                                 <IconFont type="icon-zheng" style={{fontSize:'22px',marginTop:'2px'}}/>
                                 </div>
                             </Popconfirm>
-                            <Popconfirm title="确定要将这条信息设置为中性吗？" onConfirm={this.neutralConfirm.bind(this, this.state.sid)} onCancel={this.deleteCancel.bind(this)} okText="是" cancelText="否">
+                            <Popconfirm title="确定要将这条信息设置为中性吗？" onConfirm={this.editDocNeg.bind(this, this.state.sid, 0)} onCancel={this.deleteCancel.bind(this)} okText="是" cancelText="否">
                                 <div className="operation-item item-font" title="设为中性">
                                 <IconFont type="icon-zhong1" style={{fontSize:'21px'}}/> 
                                 </div>

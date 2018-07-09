@@ -14,7 +14,8 @@ class BiddingCreate extends React.Component {
             num1: [],
             disBlock: {visibility: 'visible',color:'#ff0000'},
             disNone: {visibility: 'hidden',color:'#ff0000'},
-            editRoleId: 0
+            editRoleId: 0,
+            editInput: []
         }
     }
     // componentWillMount() {
@@ -24,7 +25,7 @@ class BiddingCreate extends React.Component {
         if(this.state.prevhash !== window.location.hash) {
             console.log(nextprops.num1)
             this.setState({
-                num1: nextprops.num1
+                num1: JSON.parse(nextprops.num1)
             }, () =>{console.log(this.state.num1)})
             
         }
@@ -39,8 +40,10 @@ class BiddingCreate extends React.Component {
         })
     }
     onModelCancel() {
+        console.log(this.props.num1)
         Object.keys(this.state.num1[this.state.editRoleId]).forEach((k) => {
-            this.state.num1[this.state.editRoleId][k] = ''
+            // console.log()
+            this.state.num1[this.state.editRoleId][k] = this.props.num1[this.state.editRoleId][k]
         })
         this.setState({
             visible: false,
@@ -77,6 +80,7 @@ class BiddingCreate extends React.Component {
     }
     onChangeInput(rulenum, e) {
         // let newnum =
+        this.state.editInput.indexOf(rulenum) === -1 ? this.state.editInput.push(rulenum) : this.state.editInput
          this.state.num1[this.state.editRoleId][rulenum] = e.target.value
         // console.log(newnum)
         this.setState({
@@ -84,9 +88,12 @@ class BiddingCreate extends React.Component {
         })
         console.log(e.target.value)
     }
+    clear(e) {
+        console.log(e)
+    }
     render() {
         // let inputIndex=this.state.inputIndex<0?0:this.state.inputIndex;
-    	const suffix=<span className="del"><Icon type="close"/></span>;
+    	const suffix=<span className="del" onClick={this.clear.bind(this)}><Icon type="close"/></span>;
         const objectValueTip=<span>主题词&nbsp;<Tooltip placement="bottom" title='核心词汇，例如事件的名称、地域、人名、产品名称、公司企业名称等。(不能为空)'>
             <Icon type="question-circle" className="iconMessageTip"></Icon>
             </Tooltip>
@@ -124,7 +131,7 @@ class BiddingCreate extends React.Component {
     > 
         <Form layout="vertical">
             <FormItem label={objectValueTip}>
-            {console.log(this.state.editRoleId, this.state.num1)}
+            {/* {console.log(this.state.editRoleId, this.state.num1)} */}
                 <Input type="textarea"
                        onChange={this.onChangeInput.bind(this, 'rule1')}
                        maxLength={'50'}
@@ -133,8 +140,8 @@ class BiddingCreate extends React.Component {
             </FormItem>
             <FormItem label={subject1ValueTip}>
                 <Input type="textarea"
-                    onChange={this.onChangeInput.bind(this, 'rule2')}
-                       maxLength={'500'} 
+                       onChange={this.onChangeInput.bind(this, 'rule2')}
+                       maxLength={'500'}
                        value={this.state.num1.length > 0 ? this.state.num1[this.state.editRoleId]['rule2']: ''}
                 />
             </FormItem>
@@ -159,7 +166,7 @@ class BiddingCreate extends React.Component {
     </Modal></div> ;
         const list=this.state.num1.map((item,index)=>
         <div key={index} className="mate-key"><div>
-            {console.log(item)}
+            {/* {console.log(item)} */}
                     <Row>
                         <Col span={4}>
                             <Input
