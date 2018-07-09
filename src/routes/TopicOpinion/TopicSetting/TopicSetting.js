@@ -97,19 +97,28 @@ class TopicSetting extends React.Component {
      }
     // 改变设置方式
     handleOnChange(key) {
-        if(key===this.state.addType){
-        let ruleIdArr=[];
-        let oldruleId=this.state.topicAlldata.rulearr;  
-        for(let i in oldruleId){
-            ruleIdArr.push(oldruleId[i]['id'])
-        }
-        this.setState({
-            ruleId:ruleIdArr,
-            addType:parseInt(key,10)
-        })
-     }else{
-         return;
-     }
+            if(key===this.state.addType){
+                let ruleIdArr=[];
+                let oldruleId=this.state.topicAlldata.rulearr;  
+                for(let i in oldruleId){
+                    ruleIdArr.push(oldruleId[i]['id'])
+                }
+                this.setState({
+                    ruleId:ruleIdArr,
+                    addType:parseInt(key,10)
+                })
+             }else if(this.state.createTopicRule[0] !==undefined && this.state.createTopicRule[0]['rule1'] ===''){
+                this.setState({
+                    addType:parseInt(key,10)
+                }) 
+             }else if (this.state.SeniorTopicRule[0] !==undefined &&this.state.SeniorTopicRule[0]['rule'] ===''){
+                this.setState({
+                    addType:parseInt(key,10)
+                }) 
+             }
+             else{
+                 return;
+             }
     }
     onAddtype(){
     	 this.setState({addtype:1})
@@ -140,8 +149,6 @@ class TopicSetting extends React.Component {
          })
     }
     onCreateTopic(e){
-
-
         let rule=[];
         if(e.length>0){
             for(let i in e){
@@ -195,7 +202,7 @@ class TopicSetting extends React.Component {
            console.log(JSON.parse(rules)) 
            let rulelist = JSON.parse(rules)[0];
            if( rulelist.rule1 ===''){
-            message.success('主题词不能为空');
+            message.error('主题词不能为空');
              return;
            }
         let topicId=Store.getState().getRouterReducer.topicid;

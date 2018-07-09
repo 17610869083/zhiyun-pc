@@ -201,6 +201,7 @@ function* getReportDetailSaga() {
 function* getSortedContent(action) {
     try {
         const result = yield call(apiGetSortedDoclist, action.payload);
+        result.docList = result.docList.length === 0 ? '[]' :result.docList;
         yield put(getSortedContentSucceeded(result));
     } catch (e) {
         console.log(e);

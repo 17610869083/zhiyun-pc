@@ -189,13 +189,16 @@ class ExcludeSetting extends React.Component{
                saveMessage:data
            })
       }
-      addRule(){
-          this.setState({
-            negativeExclusion:this.state.negativeExclusion.concat({"rule1":"","id":"","rule2":"","rule3":"","rule4":"","scope":""}),
-            allKeywords:this.state.allKeywords.concat({"rule1":"","id":"","rule2":"","rule3":"","rule4":"","scope":""}),
-            negativeDiscontinuation:this.state.negativeDiscontinuation.concat({"rule1":"","id":"","rule2":"","rule3":"","rule4":"","scope":""}),
-            waring:this.state.waring.concat({"rule1":"","id":"","rule2":"","rule3":"","rule4":"","scope":""}),
-          })
+      addRule(type){
+        this.setState({
+           [type]:this.state[type].concat({"rule1":"","id":"","rule2":"","rule3":"","rule4":"","scope":""})
+        })
+          // this.setState({
+          //   negativeExclusion:this.state.negativeExclusion.concat({"rule1":"","id":"","rule2":"","rule3":"","rule4":"","scope":""}),
+          //   allKeywords:this.state.allKeywords.concat({"rule1":"","id":"","rule2":"","rule3":"","rule4":"","scope":""}),
+          //   negativeDiscontinuation:this.state.negativeDiscontinuation.concat({"rule1":"","id":"","rule2":"","rule3":"","rule4":"","scope":""}),
+          //   waring:this.state.waring.concat({"rule1":"","id":"","rule2":"","rule3":"","rule4":"","scope":""}),
+          // })
       }
       onDelwayRule(data){
              this.setState({
@@ -230,7 +233,7 @@ class ExcludeSetting extends React.Component{
                      </div>
                      </Row>
                      <Button type="primary" style={{marginLeft:'131px',marginTop:'30px'}}
-                     onClick={this.addRule.bind(this)}
+                     onClick={this.addRule.bind(this,'allKeywords')}
                      >+添加规则</Button>
                    </TabPane>
                    <TabPane tab="负面排除" key="2020">
@@ -255,7 +258,7 @@ class ExcludeSetting extends React.Component{
                      </div>
                      </Row>
                      <Button type="primary" style={{marginLeft:'131px'}}
-                     onClick={this.addRule.bind(this)}
+                     onClick={this.addRule.bind(this,'negativeExclusion')}
                      >+添加规则</Button>
                    </TabPane>
 
@@ -282,7 +285,7 @@ class ExcludeSetting extends React.Component{
                      </div>
                      </Row>
                      <Button type="primary" style={{marginLeft:'131px'}}
-                     onClick={this.addRule.bind(this)}
+                     onClick={this.addRule.bind(this,'negativeDiscontinuation')}
                      >+添加规则</Button>
                    </TabPane>
 
@@ -308,7 +311,7 @@ class ExcludeSetting extends React.Component{
                      </div>
                      </Row>
                      <Button type="primary" style={{marginLeft:'131px'}}
-                     onClick={this.addRule.bind(this)}
+                     onClick={this.addRule.bind(this,'waring')}
                      >+添加规则</Button>
                    </TabPane>
                    </Tabs>

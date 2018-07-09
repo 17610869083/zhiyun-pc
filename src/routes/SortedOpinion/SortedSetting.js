@@ -58,7 +58,7 @@ class SortedSetting extends React.Component {
     }
     let rulelist = JSON.parse(rules)[0];
     if( rulelist.rule1 ==='' && rulelist.rule2 ==='' && rulelist.rule3 === '' && rulelist.rule4 === ''){
-     message.success('规则不能为空');
+     message.error('规则不能为空');
       return;
     }
     this.props.form.validateFields((err, values) => {
@@ -122,19 +122,28 @@ class SortedSetting extends React.Component {
 
   // 改变设置方式
   handleOnChange(key) {
-    if(key===this.state.addType){
-    let ruleIdArr = [];
-    let oldruleId = this.state.topicAlldata.rulearr;
-    for (let i in oldruleId) {
-      ruleIdArr.push(oldruleId[i]['id'])
-    }
-    this.setState({
-      ruleId: ruleIdArr,
-      addType: parseInt(key, 10)
-    })
-   }else{
-     return;
-   }
+          if(key===this.state.addType){
+            let ruleIdArr=[];
+            let oldruleId=this.state.topicAlldata.rulearr;  
+            for(let i in oldruleId){
+                ruleIdArr.push(oldruleId[i]['id'])
+            }
+            this.setState({
+                ruleId:ruleIdArr,
+                addType:parseInt(key,10)
+            })
+        }else if(this.state.createTopicRule[0] !==undefined && this.state.createTopicRule[0]['rule1'] ===''){
+            this.setState({
+                addType:parseInt(key,10)
+            }) 
+        }else if (this.state.SeniorTopicRule[0] !==undefined &&this.state.SeniorTopicRule[0]['rule'] ===''){
+            this.setState({
+                addType:parseInt(key,10)
+            }) 
+        }
+        else{
+            return;
+        }
   }
 
   //删除单条规则
