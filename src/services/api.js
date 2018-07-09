@@ -373,4 +373,8 @@ export const api_update_report = host + 'Report?action=updateTitle';
 // 简报分析数据预览
 export const api_add_brief_report = host + 'Report?action=briefReport';
 //获取简报素材修改页面数据
-export const api_update_brief_item = host + 'Report?action=updateBriefItem';
+export const api_get_brief_item = host + 'Report?action=getBriefItem';
+//修改简报素材
+export const api_update_brief_item = host + 'Report?action=updateBriefItem'; 
+//简报编辑素材后刷新列表
+export const api_refresh_brief = host +'Report?action=refreshBrief';

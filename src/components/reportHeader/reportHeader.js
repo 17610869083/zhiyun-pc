@@ -3,21 +3,23 @@ import './reportHeader.less';
 import { Row, Col, Button, Select, DatePicker,Modal } from 'antd';
 import ModalReport from '../../components/ModalReport/ModalReport';
 import ModalMaterial from '../../components/ModalMaterial/ModalMaterial';
-import {api_update_brief_item} from '../../services/api';
+import {api_get_brief_item} from '../../services/api';
 const { RangePicker } = DatePicker;
 const Option = Select.Option;
 class reportHeader extends React.Component{
 	constructor(){
 		super()
 		this.state={
-		   requestUrl:''
+		   requestUrl:'',
+		   visible:false,
+		   isShowModalMaterial:false,
 		}
 	}
 	//简报编辑按钮
 	editBriefing(type){
 			if(type === 'have'){
 				this.setState({
-					requestUrl:api_update_brief_item +`&reportId=${this.state.reportId}`,
+					requestUrl:api_get_brief_item +`&reportId=${this.props.reportId}`,
 					visible:true
 				})
 			}else{
@@ -38,6 +40,10 @@ class reportHeader extends React.Component{
 			isShowModalMaterial:false
 		})
 	}	
+	//报告弹窗确定按钮回调
+	checkReport = (data) => {
+	    this.props.refreshBrief(data);
+	}
 	render() {
 		const { type, briefingData } = this.props;
 		let haveData = briefingData.length>0?'have':'none'
@@ -99,14 +105,18 @@ class reportHeader extends React.Component{
 					</Row>
 				</div>
 				<Modal  visible={this.state.visible} footer={null} onCancel={this.hideModal}
-                width="70%"
+                width="70%" maskClosable={false}
                 >
-                <ModalReport requestUrl={this.state.request}/>
+				<ModalReport 
+				requestUrl={this.state.requestUrl} 
+				reportId={this.props.reportId}
+				checkReport={this.checkReport}
+				/>
                 </Modal>
 				<Modal  visible={this.state.isShowModalMaterial} footer={null} onCancel={this.hideModalMaterial}
-                width="70%"
+                width="70%" maskClosable={false}
                 >
-                <ModalMaterial/>
+                <ModalMaterial reportId={this.props.reportId}/>  
                 </Modal>
 			</div>							
 		)

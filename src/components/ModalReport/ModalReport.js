@@ -6,6 +6,7 @@ import request from '../../utils/request';
 import ReportDetailList from '../ReportDetailList/ReportDetailList';
 import ModalMaterial from '../ModalMaterial/ModalMaterial';
 import {checkedTrueSid} from '../../utils/format';
+import {api_refresh_brief} from '../../services/api';
 class ModalReport extends React.Component{
      constructor(){
          super();
@@ -22,7 +23,6 @@ class ModalReport extends React.Component{
      componentDidMount(){
         let {requestUrl} = this.props; 
         request(requestUrl).then( res => {
-            console.log(res.data)
               this.setState({
                 docList:res.data.data,
                 flag:false
@@ -33,6 +33,7 @@ class ModalReport extends React.Component{
         this.setState({
             flag:true
         })
+        let {requestUrl} = this.props; 
         request('http://119.90.61.155/om31/webpart/main/DocSearchDo?action=docList&page='+ this.state.page+1)
         .then( res => {
             this.setState({
@@ -79,6 +80,14 @@ class ModalReport extends React.Component{
       }
       //确定按钮
       confirm = () => {
+         if(this.props.checkReport){
+         request(api_refresh_brief + `&reportId=${this.props.reportId}`)
+         .then(res => {
+             if(res.data.code === 1){
+                this.props.checkReport(res.data.data); 
+             }
+         })
+        }
       }
       //显示素材库弹窗
       showMaterialModal = () => {
@@ -91,6 +100,13 @@ class ModalReport extends React.Component{
           this.setState({
             materialvisible:false
           })
+      }
+      //素材库弹窗回调数据
+      checkMaterial = (data) => {
+          let {docList} = this.state;
+           this.setState({
+             docList:docList.concat(data)
+           })
       }
      render(){
 
@@ -117,7 +133,10 @@ class ModalReport extends React.Component{
                       />
                  </div>  
                  <Modal width="70%" visible={this.state.materialvisible} footer={null} onCancel={this.cancel}>
-                     <ModalMaterial />
+                     <ModalMaterial 
+                     reportId={this.props.reportId}
+                     checkMaterial ={this.checkMaterial}
+                     />
                  </Modal>
              </div>
          )

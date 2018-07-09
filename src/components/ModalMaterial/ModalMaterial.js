@@ -2,7 +2,7 @@ import React from 'react'
 import {Checkbox,Input,Button,Modal,Select} from 'antd';
 import IconFont from '../IconFont';
 import './ModalMaterial.less';
-import {api_material_opinion_list,api_material_opinion_detail} from '../../services/api';
+import {api_material_opinion_list,api_material_opinion_detail,api_update_brief_item} from '../../services/api';
 import request from '../../utils/request';
 import ReportDetailList from '../ReportDetailList/ReportDetailList';
 import ModalAllOpinion from '../ModalAllOpinion/ModalAllOpinion';
@@ -61,7 +61,20 @@ class ModalMaterial extends React.Component{
      }
      //确定按钮
      confirm = () => {
-       console.log(checkedTrueSid(this.state.checkedArray))
+         const _this = this;
+         if(this.props.checkMaterial){
+         request(api_update_brief_item ,{
+          method:'POST',
+          headers: {
+             "Content-Type": "application/x-www-form-urlencoded"
+          }, 
+          body:`reportId=${this.props.reportId}&code=1&sids=${JSON.stringify(checkedTrueSid(_this.state.checkedArray))}`
+        }).then(res => {
+            if(res.data.code === 1){
+              this.props.checkMaterial(res.data.data)
+            }
+        })
+       }
      }
     //获取sid
     checkedTrue() {
@@ -165,6 +178,12 @@ class ModalMaterial extends React.Component{
           visible:false
         })
      }
+     //监测弹窗数据回调
+     checkAllOpinion = (data) => {
+       if(this.props.checkMaterial){
+         this.props.checkMaterial(data)
+       }  
+     }
      render(){
          const docList = this.state.docList.map((item,index) => {
                return this.state.flag ?<div className="blank-page" key={index}>该文件夹下无加入的素材</div>:<div key={index}>
@@ -217,11 +236,13 @@ class ModalMaterial extends React.Component{
                    {catList}
                 </div>
                 <Modal visible={this.state.visible} footer={null} onCancel={this.cancel}
-                width="70%"
+                width="70%" maskClosable={false}
                 >
                 <ModalAllOpinion 
                 seltype='title' 
                 keyword={this.state.q}
+                checkAllOpinion ={this.checkAllOpinion}
+                reportId = {this.props.reportId}
                 />
                 </Modal>
              </div>

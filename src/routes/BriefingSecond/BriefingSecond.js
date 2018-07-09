@@ -27,10 +27,7 @@ class BriefingSecond extends React.Component{
 				'0': "中性",
 				'1': "负面",
 				'2': "预警"
-			},
-			visible:false,
-			isShowModalMaterial:false,
-			request:''
+			}
 		}
 	}
 	componentWillMount(){
@@ -110,7 +107,19 @@ class BriefingSecond extends React.Component{
 			}
  		})
 	}
-
+	//筛选数据后，刷新报告
+	refreshBrief = (data) => {
+		let {date} = this.state;
+		Object.keys(date).forEach((item,index) => {
+			 if(date[item]['briefing']!==undefined){
+				date[item]['briefing'] = data.briefing;
+			 }
+		})
+		console.log(date)
+		this.setState({
+			date:date
+		})
+	}
 	render() {
 		return (
 			<div>
@@ -124,6 +133,8 @@ class BriefingSecond extends React.Component{
 										<ReportHeader
 											briefingData={this.props.briefingData}
 											type={this.state.type}
+											reportId={this.state.reportId}
+											refreshBrief={this.refreshBrief}
 										/>
 										{
 												Object.keys(this.state.date).map(item => (
@@ -322,6 +333,8 @@ class BriefingSecond extends React.Component{
 											<ReportHeader
 												briefingData={this.props.briefingData}
 												type={this.state.type}
+												reportId={this.state.reportId}
+												refreshBrief={this.refreshBrief}
 											/>
 											{
 												Object.keys(this.state.date).map(item => (

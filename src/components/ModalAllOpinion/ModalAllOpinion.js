@@ -7,7 +7,7 @@ import {Select,Input,Button,DatePicker,Form,Checkbox,message} from 'antd';
 import IconFont from '../IconFont';
 import ReportDetailList from '../ReportDetailList/ReportDetailList';
 import BlankPage from '../../base/Exception/BlankPage';
-import {api_total_opinion} from '../../services/api';
+import {api_total_opinion,api_update_brief_item} from '../../services/api';
 import request from '../../utils/request';
 import {getSecondTime,checkedTrueSid} from '../../utils/format';
 const Option = Select.Option;
@@ -465,7 +465,20 @@ class ModalAllOpinion extends React.Component{
      }
      //确定按钮
      confim = () => {
-           console.log(checkedTrueSid(this.state.checkedArray))
+      const _this = this;
+      if(this.props.checkAllOpinion){
+        request(api_update_brief_item ,{
+          method:'POST',
+          headers: {
+             "Content-Type": "application/x-www-form-urlencoded"
+          }, 
+          body:`reportId=${this.props.reportId}&code=1&sids=${JSON.stringify(checkedTrueSid(_this.state.checkedArray))}`
+        }).then(res => {
+            if(res.data.code === 1){
+              this.props.checkAllOpinion(res.data.data)
+            }
+        })
+      }
      }
      render(){
             const {getFieldDecorator} = this.props.form;
