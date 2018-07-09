@@ -209,7 +209,7 @@ class TopicSetting extends React.Component {
                     return ;
                 }
             request(api_topic_revise,{
-        	   method: 'POST',
+        	method: 'POST',
             headers: {
                   "Content-Type": "application/x-www-form-urlencoded"
             },

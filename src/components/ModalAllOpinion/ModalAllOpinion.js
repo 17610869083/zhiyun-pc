@@ -7,7 +7,7 @@ import {Select,Input,Button,DatePicker,Form,Checkbox,message} from 'antd';
 import IconFont from '../IconFont';
 import ReportDetailList from '../ReportDetailList/ReportDetailList';
 import BlankPage from '../../base/Exception/BlankPage';
-import {api_total_opinion,api_update_brief_item} from '../../services/api';
+import {api_total_opinion,api_update_brief_item,api_add_brief_report} from '../../services/api';
 import request from '../../utils/request';
 import {getSecondTime,checkedTrueSid} from '../../utils/format';
 const Option = Select.Option;
@@ -466,19 +466,37 @@ class ModalAllOpinion extends React.Component{
      //确定按钮
      confim = () => {
       const _this = this;
-      if(this.props.checkAllOpinion){
-        request(api_update_brief_item ,{
-          method:'POST',
+      const {type,typeId} = this.props;
+      if(this.props.reportId === ''){
+        request(api_add_brief_report,{
+          method: 'POST',
           headers: {
-             "Content-Type": "application/x-www-form-urlencoded"
-          }, 
-          body:`reportId=${this.props.reportId}&code=1&sids=${JSON.stringify(checkedTrueSid(_this.state.checkedArray))}`
-        }).then(res => {
-            if(res.data.code === 1){
-              this.props.checkAllOpinion(res.data.data)
-            }
-        })
+                "Content-Type": "application/x-www-form-urlencoded"
+          },
+          body:`reportFormId=${typeId}&reportType=${type}&sids=${JSON.stringify(checkedTrueSid(_this.state.checkedArray))}`
+          }).then(res => {
+             if(res.data.code === 1){
+               this.props.checkAllOpinion(res.data,false) 
+             }
+          })
+      }else{
+          if(this.props.checkAllOpinion){ 
+            request(api_update_brief_item ,{
+              method:'POST',
+              headers: {
+                "Content-Type": "application/x-www-form-urlencoded"
+              }, 
+              body:`reportId=${this.props.reportId}&code=1&sids=${JSON.stringify(checkedTrueSid(_this.state.checkedArray))}`
+            }).then(res => {
+                if(res.data.code === 1){
+                  this.props.checkAllOpinion(res.data.data,true)
+                }
+            })
+          }
       }
+      this.setState({
+        checkedArray:this.state.checkedArray.fill(false)
+      })
      }
      render(){
             const {getFieldDecorator} = this.props.form;
@@ -639,7 +657,7 @@ class ModalAllOpinion extends React.Component{
                     checkItem = {this.checkItem.bind(this)}
                     dropDown={this.dropDown.bind(this)}
                     flag={this.state.flag}
-                    type='report'
+                    type='allOpinion'
                     />: <BlankPage desc='<span>空空如也，赶紧去<a href="index.html#/sortedopinion/addrule">添加</a>关键词</span>'/>
                     }
                     </div>

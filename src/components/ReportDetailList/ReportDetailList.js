@@ -91,8 +91,8 @@ class ReportDetailList extends React.Component{
                <div className="item-middle">
                  <div className="left">
                    <div>
-                      {/* { type === 'report' ?<span className="summary" dangerouslySetInnerHTML={{__html: setHighlightTags(item.summary, item.keywords.split(' '))}}></span> 
-                      :<span className="summary" >{item.docsummary}</span>} */}
+                      {type === 'allOpinion'? <span className="summary" dangerouslySetInnerHTML={{__html: setHighlightTags(item.summary, item.nztags.split(' '))}}></span>: type === 'report' ?<span className="summary" dangerouslySetInnerHTML={{__html: setHighlightTags(item.summary, item.keywords.split(' '))}}></span> 
+                      :<span className="summary" >{item.docsummary}</span>}
                    </div>
                  </div>
                </div>
@@ -100,7 +100,7 @@ class ReportDetailList extends React.Component{
                  <div className="item-left">
                    <div className="key">
                      <div className="pubdate">
-                       {/* <span className="date">{item.pubdate.split(' ')[0]} &nbsp;&nbsp;{item.pubdate.split(' ')[1]}</span> */}
+                       <span className="date">{item.pubdate}</span>
                      </div>
                      {type==='report'? <div className="similar-info">相似信息：{item.similerInfo && (item.similerInfo.similerCount ? item.similerInfo.similerCount : 0)}条
                      </div>:null}
@@ -111,7 +111,7 @@ class ReportDetailList extends React.Component{
                      </div>
                      <div className="title">关键词：</div>
                      <div className='keywords'>
-                       {type==='report'?item.nztags:item.dockeywords}
+                       {type==='report'?item.keywords:item.dockeywords}
                      </div>
                    </div>
                  </div>

@@ -42,6 +42,7 @@ class BriefingSecond extends React.Component{
 			request(api_new_preview_report + '&reportFormId=' + templateId).then((res) => {
 				// 遍历对象Object.keys()
 				// Object.values(）对象转数组
+				console.log(res.data.data)
 				this.setState({
 					date: res.data.data,
 					dataID: res.data.component[0]
@@ -108,14 +109,24 @@ class BriefingSecond extends React.Component{
  		})
 	}
 	//筛选数据后，刷新报告
-	refreshBrief = (data) => {
+	refreshBrief = (data,status) => {
 		let {date} = this.state;
-		Object.keys(date).forEach((item,index) => {
-			 if(date[item]['briefing']!==undefined){
-				date[item]['briefing'] = data.briefing;
-			 }
-		})
-		console.log(date)
+		if(status){
+			Object.keys(data.data).forEach((item,index) => {
+				if(date[item]['briefing']!==undefined){
+				   date[item]['briefing'] = data.data[item]['briefing'];
+				}
+		    })
+			this.setState({
+				reportId:data.reportId
+			})
+		}else{
+			Object.keys(date).forEach((item,index) => {
+				if(date[item]['briefing']!==undefined){
+				   date[item]['briefing'] = data.briefing;
+				}
+		   })
+		}
 		this.setState({
 			date:date
 		})
@@ -135,6 +146,7 @@ class BriefingSecond extends React.Component{
 											type={this.state.type}
 											reportId={this.state.reportId}
 											refreshBrief={this.refreshBrief}
+											typeId={this.state.typeId}
 										/>
 										{
 												Object.keys(this.state.date).map(item => (
@@ -335,6 +347,7 @@ class BriefingSecond extends React.Component{
 												type={this.state.type}
 												reportId={this.state.reportId}
 												refreshBrief={this.refreshBrief}
+												typeId={this.state.typeId}
 											/>
 											{
 												Object.keys(this.state.date).map(item => (

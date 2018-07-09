@@ -16,7 +16,8 @@ class ModalReport extends React.Component{
               page:1,
               flag:true,
               checkedAll:false,
-              materialvisible:false
+              materialvisible:false,
+              isDropDown:true
          }
          
      }
@@ -30,11 +31,12 @@ class ModalReport extends React.Component{
         })
     }
     dropDown(){
+        if(this.state.isDropDown){
         this.setState({
             flag:true
         })
         let {requestUrl} = this.props; 
-        request('http://119.90.61.155/om31/webpart/main/DocSearchDo?action=docList&page='+ this.state.page+1)
+        request(requestUrl +'&page='+ this.state.page+1)
         .then( res => {
             this.setState({
             docList:this.state.docList.concat(res.data.docList),
@@ -43,6 +45,7 @@ class ModalReport extends React.Component{
             checkedArray:this.state.checkedArray.concat(new Array(20).fill(false))
             })
         })
+       }
      }
      //全选
      checkAll(e){
@@ -84,10 +87,13 @@ class ModalReport extends React.Component{
          request(api_refresh_brief + `&reportId=${this.props.reportId}`)
          .then(res => {
              if(res.data.code === 1){
-                this.props.checkReport(res.data.data); 
+                this.props.checkReport(res.data.data,false); 
              }
          })
         }
+        this.setState({
+            materialvisible:false
+        })
       }
       //显示素材库弹窗
       showMaterialModal = () => {
@@ -103,13 +109,13 @@ class ModalReport extends React.Component{
       }
       //素材库弹窗回调数据
       checkMaterial = (data) => {
-          let {docList} = this.state;
            this.setState({
-             docList:docList.concat(data)
+             docList:data,
+             isDropDown:false,
+             materialvisible:false
            })
       }
      render(){
-
          return (
              <div className="modal-report opinion-detail">
                  <div className="modal-top">

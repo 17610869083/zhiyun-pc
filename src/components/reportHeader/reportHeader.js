@@ -4,6 +4,8 @@ import { Row, Col, Button, Select, DatePicker,Modal } from 'antd';
 import ModalReport from '../../components/ModalReport/ModalReport';
 import ModalMaterial from '../../components/ModalMaterial/ModalMaterial';
 import {api_get_brief_item} from '../../services/api';
+import {connect} from 'react-redux';
+import {briefingSwitch} from '../../redux/actions/createActions';
 const { RangePicker } = DatePicker;
 const Option = Select.Option;
 class reportHeader extends React.Component{
@@ -13,6 +15,7 @@ class reportHeader extends React.Component{
 		   requestUrl:'',
 		   visible:false,
 		   isShowModalMaterial:false,
+		   flag:true
 		}
 	}
 	//简报编辑按钮
@@ -41,12 +44,18 @@ class reportHeader extends React.Component{
 		})
 	}	
 	//报告弹窗确定按钮回调
-	checkReport = (data) => {
-	    this.props.refreshBrief(data);
+	checkReport = (data,status) => {
+		this.props.refreshBrief(data,status);
+		this.setState({
+			isShowModalMaterial:false,
+			flag:false,
+			visible:false
+		})
+		//this.props.briefingSwitch(data)
 	}
 	render() {
-		const { type, briefingData } = this.props;
-		let haveData = briefingData.length>0?'have':'none'
+		const { type, briefingData ,reportId} = this.props;
+		let haveData = reportId !== '' ?'have':'none';
 		return (
 			<div className="headers">
 				<Row type="flex" justify="space-between" className="one">
@@ -116,10 +125,23 @@ class reportHeader extends React.Component{
 				<Modal  visible={this.state.isShowModalMaterial} footer={null} onCancel={this.hideModalMaterial}
                 width="70%" maskClosable={false}
                 >
-                <ModalMaterial reportId={this.props.reportId}/>  
+                <ModalMaterial
+				 checkReport={this.checkReport}
+				 typeId={this.props.typeId}
+				 type={this.props.type}
+				 reportId={this.props.reportId}
+				/>  
                 </Modal>
 			</div>							
 		)
 	}
 }
- export default reportHeader;
+  const mapDispatchToProps = dispatch => {
+    return {
+		briefingSwitch: req => {
+			dispatch(briefingSwitch(req))
+		}
+    }
+  };
+  
+export default connect(null, mapDispatchToProps)(reportHeader);
