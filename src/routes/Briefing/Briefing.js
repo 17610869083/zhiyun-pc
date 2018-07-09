@@ -101,6 +101,30 @@ class Briefing extends React.Component{
 			}
  		})
 	}
+
+	//筛选数据后，刷新报告
+	refreshBrief = (data,status) => {
+		let {date} = this.state;
+		if(status){
+			Object.keys(data.data).forEach((item,index) => {
+				if(date[item]['briefing']!==undefined){
+				   date[item]['briefing'] = data.data[item]['briefing'];
+				}
+		    })
+			this.setState({
+				reportId:data.reportId
+			})
+		}else{
+			Object.keys(date).forEach((item,index) => {
+				if(date[item]['briefing']!==undefined){
+				   date[item]['briefing'] = data.briefing;
+				}
+		   })
+		}
+		this.setState({
+			date:date
+		})
+	}
 	render() {
 		return (
 			<div>
@@ -114,6 +138,9 @@ class Briefing extends React.Component{
 										<ReportHeader
 											briefingData={this.props.briefingData}
 											type={this.state.type}
+											reportId={this.state.reportId}
+											refreshBrief={this.refreshBrief}
+											typeId={this.state.typeId}
 										/>
 										{
 											Object.keys(this.state.date).map(item => (
@@ -253,6 +280,9 @@ class Briefing extends React.Component{
 										<ReportHeader
 											briefingData={this.props.briefingData}
 											type={this.state.type}
+											reportId={this.state.reportId}
+											refreshBrief={this.refreshBrief}
+											typeId={this.state.typeId}
 										/>
 										{
 											Object.keys(this.state.date).map(item => (

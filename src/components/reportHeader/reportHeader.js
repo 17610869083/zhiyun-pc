@@ -1,105 +1,141 @@
 import React from 'react';
 import './reportHeader.less';
-import { Row, Col, Button, Select, DatePicker, message } from 'antd';
+import { Row, Col, Button, Select, DatePicker,Modal,message } from 'antd';
+import ModalReport from '../../components/ModalReport/ModalReport';
+import ModalMaterial from '../../components/ModalMaterial/ModalMaterial';
+import {api_get_brief_item,api_get_data_daily_preview} from '../../services/api';
+import {connect} from 'react-redux';
+import {briefingSwitch} from '../../redux/actions/createActions';
 import request from '../../utils/request';
-import {
-	api_get_data_daily_preview,
-} from '../../services/api';
+const { RangePicker } = DatePicker;
 const Option = Select.Option;
 class reportHeader extends React.Component{
 	constructor(){
 		super()
 		this.state={
-			startValue: null,
-			endValue: null,
-			endOpen: false,
-			startMsDate: "",
-			endMsDate: "",
-			startDate: "",
-			endDate: "",
+		   requestUrl:'',
+		   visible:false,
+		   isShowModalMaterial:false,
+		   flag:true
 		}
 	}
-  disabledStartDate = (startValue) => {
-    const endValue = this.state.endValue;
-    if (!startValue || !endValue) {
-      return false;
-    }
-    return startValue.valueOf() > endValue.valueOf();
-  }
-
-  disabledEndDate = (endValue) => {
-    const startValue = this.state.startValue;
-    if (!endValue || !startValue) {
-      return false;
-    }
-    return endValue.valueOf() <= startValue.valueOf();
-  }
-
-  onChange = (field, value) => {
-    this.setState({
-      [field]: value,
-    });
-  }
-
-  onStartChange = (value, dateString) => {
-		// const starttime = dateString.replace(new RegExp("-","gm"),"/");
-		const starttimeHaoMiao = (new Date(dateString)).getTime();
-		console.log(starttimeHaoMiao);
-		this.setState({
-			startMsDate: starttimeHaoMiao,
-			startDate: dateString
-		})
-    this.onChange('startValue', value);
-  }
-
-  onEndChange = (value, dateString) => {
-		// const starttime = dateString.replace(new RegExp("-","gm"),"/");
-		const starttimeHaoMiao = (new Date(dateString)).getTime();
-		console.log(starttimeHaoMiao);
-		this.setState({
-			endMsDate: starttimeHaoMiao,
-			endDate: dateString
-		})
-    this.onChange('endValue', value);
-  }
-
-  handleStartOpenChange = (open) => {
-    if (!open) {
-      this.setState({ endOpen: true });
-    }
-  }
-
-  handleEndOpenChange = (open) => {
-    this.setState({ endOpen: open });
-	}
-	onOkDateStart(value, dateString) {
-		console.log(value, dateString)
-	}
-  onOkDate(value) {
-		request(api_get_data_daily_preview + '&reportFormId=' + this.props.typeId + '&reportType=' + this.props.type + '&starttime=' + this.state.startDate + '&endtime=' + this.state.endDate).then((res) => {
-			const myDate = new Date();
-			const starttimeHaoMiao = (new Date(myDate)).getTime();
-			if (this.state.startMsDate > starttimeHaoMiao && this.state.endMsDate > starttimeHaoMiao) {
-				message.warning("您的选的日期超出了当前时间，请重新选择");
-			} else if (this.state.startMsDate > starttimeHaoMiao && this.state.endMsDate < starttimeHaoMiao) {
-				message.warning("您的选的日期超出了当前时间，请重新选择");
-			} else if (this.state.startMsDate < starttimeHaoMiao && this.state.endMsDate > starttimeHaoMiao) {
-				message.warning("您的选的日期超出了当前时间，请重新选择");
-			} else if (this.state.endMsDate - this.state.startMsDate > 86400000) {
-				console.log(this.state.endMsDate - this.state.startMsDate)
-				message.warning("您选择的时间超过了24个小时，请重新选择");
-			} else if (this.state.startMsDate < starttimeHaoMiao && this.state.endMsDate < starttimeHaoMiao) {
-				message.success(res.data.msg);
-				this.props.hanldle(res.data)				
+	//简报编辑按钮
+	editBriefing(type){
+			if(type === 'have'){
+				this.setState({
+					requestUrl:api_get_brief_item +`&reportId=${this.props.reportId}`,
+					visible:true
+				})
+			}else{
+				this.setState({
+				  isShowModalMaterial:true
+				})
 			}
+		}
+	//隐藏弹窗
+	hideModal = () => {
+		this.setState({
+			visible:false
+		})
+	}
+	//隐藏素材库
+	hideModalMaterial = () => {
+		this.setState({
+			isShowModalMaterial:false
+		})
+	}	
+	//报告弹窗确定按钮回调
+	checkReport = (data,status) => {
+		this.props.refreshBrief(data,status);
+		this.setState({
+			isShowModalMaterial:false,
+			flag:false,
+			visible:false
+		})
+		//this.props.briefingSwitch(data)
+	}
+	disabledStartDate = (startValue) => {
+		const endValue = this.state.endValue;
+		if (!startValue || !endValue) {
+		  return false;
+		}
+		return startValue.valueOf() > endValue.valueOf();
+	  }
+	
+	  disabledEndDate = (endValue) => {
+		const startValue = this.state.startValue;
+		if (!endValue || !startValue) {
+		  return false;
+		}
+		return endValue.valueOf() <= startValue.valueOf();
+	  }
+	
+	  onChange = (field, value) => {
+		this.setState({
+		  [field]: value,
 		});
-	}
-	handleChange (e) {
-    console.log(e)
-	}
+	  }
+	
+	  onStartChange = (value, dateString) => {
+			// const starttime = dateString.replace(new RegExp("-","gm"),"/");
+			const starttimeHaoMiao = (new Date(dateString)).getTime();
+			console.log(starttimeHaoMiao);
+			this.setState({
+				startMsDate: starttimeHaoMiao,
+				startDate: dateString
+			})
+		this.onChange('startValue', value);
+	  }
+	
+	  onEndChange = (value, dateString) => {
+			// const starttime = dateString.replace(new RegExp("-","gm"),"/");
+			const starttimeHaoMiao = (new Date(dateString)).getTime();
+			console.log(starttimeHaoMiao);
+			this.setState({
+				endMsDate: starttimeHaoMiao,
+				endDate: dateString
+			})
+		this.onChange('endValue', value);
+	  }
+	
+	  handleStartOpenChange = (open) => {
+		if (!open) {
+		  this.setState({ endOpen: true });
+		}
+	  }
+	
+	  handleEndOpenChange = (open) => {
+		this.setState({ endOpen: open });
+		}
+		onOkDateStart(value, dateString) {
+			console.log(value, dateString)
+		}
+	  onOkDate(value) {
+			request(api_get_data_daily_preview + '&reportFormId=' + this.props.typeId + '&reportType=' + this.props.type + '&starttime=' + this.state.startDate + '&endtime=' + this.state.endDate).then((res) => {
+				const myDate = new Date();
+				const starttimeHaoMiao = (new Date(myDate)).getTime();
+				if (this.state.startMsDate > starttimeHaoMiao && this.state.endMsDate > starttimeHaoMiao) {
+					message.warning("您的选的日期超出了当前时间，请重新选择");
+				} else if (this.state.startMsDate > starttimeHaoMiao && this.state.endMsDate < starttimeHaoMiao) {
+					message.warning("您的选的日期超出了当前时间，请重新选择");
+				} else if (this.state.startMsDate < starttimeHaoMiao && this.state.endMsDate > starttimeHaoMiao) {
+					message.warning("您的选的日期超出了当前时间，请重新选择");
+				} else if (this.state.endMsDate - this.state.startMsDate > 86400000) {
+					console.log(this.state.endMsDate - this.state.startMsDate)
+					message.warning("您选择的时间超过了24个小时，请重新选择");
+				} else if (this.state.startMsDate < starttimeHaoMiao && this.state.endMsDate < starttimeHaoMiao) {
+					message.success(res.data.msg);
+					this.props.hanldle(res.data)				
+				}
+			});
+		}
+		handleChange (e) {
+		console.log(e)
+		}
 	render() {
-		const { type, briefingData } = this.props;
+		const { type, briefingData,reportId } = this.props;
 		const { startValue, endValue, endOpen } = this.state;
+		let haveData = reportId !== '' ?'have':'none';
 		return (
 			<div className="headers">
 				<Row type="flex" justify="space-between" className="one">
@@ -110,11 +146,11 @@ class reportHeader extends React.Component{
 							(() => {
 								if(briefingData.length > 0) {
 									return (
-										<Button type="primary" className="report" style={{ backgroundColor: "#5a8bff" }}>生成报告</Button>
+										<Button type="primary" className="report" style={{ backgroundColor: "#5a8bff" }} >生成报告</Button>
 									)
 								} else if (briefingData.length === 0) {
 									return (
-										<Button type="primary" className="report" style={{ backgroundColor: "#5a8bff", display: "none" }}>生成报告</Button>
+										<Button type="primary" className="report" style={{ backgroundColor: "#5a8bff", display: "none" }} >生成报告</Button>
 									)
 								}
 							})()
@@ -127,7 +163,7 @@ class reportHeader extends React.Component{
 						{
 							(() => {
 								if (type === "01") {
-									return <div className="oneButton"><Button type="primary" style={{ backgroundColor: "#5a8bff" }} className="editReport">编辑报告素材</Button></div>
+									return <div className="oneButton"><Button type="primary" style={{ backgroundColor: "#5a8bff" }} className="editReport" onClick={this.editBriefing.bind(this,haveData)}>编辑报告素材</Button></div>
 								} else if (type === "02") {
 									return <div>
 										<div className="twoButton">
@@ -172,8 +208,35 @@ class reportHeader extends React.Component{
 						}
 					</Row>
 				</div>
+				<Modal  visible={this.state.visible} footer={null} onCancel={this.hideModal}
+                width="70%" maskClosable={false}
+                >
+				<ModalReport 
+				requestUrl={this.state.requestUrl} 
+				reportId={this.props.reportId}
+				checkReport={this.checkReport}
+				/>
+                </Modal>
+				<Modal  visible={this.state.isShowModalMaterial} footer={null} onCancel={this.hideModalMaterial}
+                width="70%" maskClosable={false}
+                >
+                <ModalMaterial
+				 checkReport={this.checkReport}
+				 typeId={this.props.typeId}
+				 type={this.props.type}
+				 reportId={this.props.reportId}
+				/>  
+                </Modal>
 			</div>							
 		)
 	}
 }
- export default reportHeader;
+  const mapDispatchToProps = dispatch => {
+    return {
+		briefingSwitch: req => {
+			dispatch(briefingSwitch(req))
+		}
+    }
+  };
+  
+export default connect(null, mapDispatchToProps)(reportHeader);

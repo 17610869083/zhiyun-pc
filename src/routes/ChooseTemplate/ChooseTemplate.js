@@ -3,11 +3,9 @@ import {GRAY,BLUES} from '../../utils/colors';
 import './ChooseTemplate.less';
 import {api_get_template_report,api_search_template} from '../../services/api';
 import request from '../../utils/request';
-import {Input,Modal,Button} from 'antd';
-import img from '../../assets/img/1.png';
+import {Input} from 'antd';
 import {history} from '../../utils/history';
 import {templateTypeSort} from '../../utils/format';
-import ModalReport from '../../components/ModalReport/ModalReport';
 class ChooseTemplate extends React.Component{
     constructor(props){
         super(props);
@@ -144,12 +142,6 @@ class ChooseTemplate extends React.Component{
                       {contentList}
                  </ul>                
                 </div>
-                <Button onClick={this.showModal}>编辑</Button>
-                <Modal  visible={this.state.visible} footer={null} onCancel={this.hideModal}
-                width="70%"
-                >
-                <ModalReport/>
-                </Modal>
              </div>
          )
     }

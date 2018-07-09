@@ -251,7 +251,7 @@ class MyReport extends React.Component{
              <div className="my-report-top">
              <div className="my-add-report">
                  <span>+&nbsp;&nbsp;新建报告</span>
-                 <span>导入报告</span>
+                 {/* <span>导入报告</span> */}
              </div>
              <div className="my-search-report">
                  <Input placeholder="请输入报告名称或报告类型" className="input-search"
@@ -272,13 +272,13 @@ class MyReport extends React.Component{
              </div>
              <div className="my-report-content">
              <p style={this.state.flag ? {opacity:1,transition:'all 0.5s ease-in 0.5s'}:{opacity:0}}>
-             <Tooltip title="复制" placement="bottom">
+             {/* <Tooltip title="复制" placement="bottom">
                 <Popconfirm title="确定要复制该报告吗？" onConfirm={this.copy} okText="是" cancelText="否"
                 getPopupContainer={() => document.querySelector('.my-report')}  placement="topLeft"
                 >
                 <i> <IconFont type="icon-fuzhi1"/></i>
                 </Popconfirm>
-             </Tooltip>
+             </Tooltip> */}
              <Tooltip title="下载" placement="bottom">
              <Popover
               getPopupContainer={() => document.querySelector('.my-report')}

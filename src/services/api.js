@@ -363,13 +363,20 @@ export const api_new_delete_report = host + 'Report?action=deleteReport';
 export const api_search_template = host +'Report?action=getFormByReportType';
 //删除报告
 export const api_new_preview_report = host + 'Report?action=previewTemplate'; 
+//预览模板的hmtl
+export const api_get_preview_html = host + 'Report?action=previewHtml';
+//报告下载
+export const api_download_report = host +'report/exportReport?action=downloadReport';         
+
 // 修改报告标题
 export const api_update_report = host + 'Report?action=updateTitle';
 // 简报分析数据预览
 export const api_add_brief_report = host + 'Report?action=briefReport';
-//预览模板的hmtl
-export const api_get_preview_html = host + 'Report?action=previewHtml';
-//报告下载
-export const api_download_report = host +'report/exportReport?action=downloadReport';
+//获取简报素材修改页面数据
+export const api_get_brief_item = host + 'Report?action=getBriefItem';
+//修改简报素材
+export const api_update_brief_item = host + 'Report?action=updateBriefItem'; 
+//简报编辑素材后刷新列表
+export const api_refresh_brief = host +'Report?action=refreshBrief';
 // 日期选择
 export const api_get_data_daily_preview = host +'Report?action=dailyPreview';

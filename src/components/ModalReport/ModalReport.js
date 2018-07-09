@@ -6,6 +6,7 @@ import request from '../../utils/request';
 import ReportDetailList from '../ReportDetailList/ReportDetailList';
 import ModalMaterial from '../ModalMaterial/ModalMaterial';
 import {checkedTrueSid} from '../../utils/format';
+import {api_refresh_brief} from '../../services/api';
 class ModalReport extends React.Component{
      constructor(){
          super();
@@ -15,24 +16,27 @@ class ModalReport extends React.Component{
               page:1,
               flag:true,
               checkedAll:false,
-              materialvisible:false
+              materialvisible:false,
+              isDropDown:true
          }
          
      }
      componentDidMount(){
-        request('http://119.90.61.155/om31/webpart/main/DocSearchDo?action=docList')
-        .then( res => {
+        let {requestUrl} = this.props; 
+        request(requestUrl).then( res => {
               this.setState({
-                docList:res.data.docList,
+                docList:res.data.data,
                 flag:false
               })
         })
     }
     dropDown(){
+        if(this.state.isDropDown){
         this.setState({
             flag:true
         })
-        request('http://119.90.61.155/om31/webpart/main/DocSearchDo?action=docList&page='+ this.state.page+1)
+        let {requestUrl} = this.props; 
+        request(requestUrl +'&page='+ this.state.page+1)
         .then( res => {
             this.setState({
             docList:this.state.docList.concat(res.data.docList),
@@ -41,6 +45,7 @@ class ModalReport extends React.Component{
             checkedArray:this.state.checkedArray.concat(new Array(20).fill(false))
             })
         })
+       }
      }
      //全选
      checkAll(e){
@@ -78,6 +83,17 @@ class ModalReport extends React.Component{
       }
       //确定按钮
       confirm = () => {
+         if(this.props.checkReport){
+         request(api_refresh_brief + `&reportId=${this.props.reportId}`)
+         .then(res => {
+             if(res.data.code === 1){
+                this.props.checkReport(res.data.data,false); 
+             }
+         })
+        }
+        this.setState({
+            materialvisible:false
+        })
       }
       //显示素材库弹窗
       showMaterialModal = () => {
@@ -91,8 +107,15 @@ class ModalReport extends React.Component{
             materialvisible:false
           })
       }
+      //素材库弹窗回调数据
+      checkMaterial = (data) => {
+           this.setState({
+             docList:data,
+             isDropDown:false,
+             materialvisible:false
+           })
+      }
      render(){
-
          return (
              <div className="modal-report opinion-detail">
                  <div className="modal-top">
@@ -116,7 +139,10 @@ class ModalReport extends React.Component{
                       />
                  </div>  
                  <Modal width="70%" visible={this.state.materialvisible} footer={null} onCancel={this.cancel}>
-                     <ModalMaterial />
+                     <ModalMaterial 
+                     reportId={this.props.reportId}
+                     checkMaterial ={this.checkMaterial}
+                     />
                  </Modal>
              </div>
          )
