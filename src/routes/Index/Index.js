@@ -39,6 +39,7 @@ const Drag= AsyncComponent(() => import('../Drag/Drag'))
 const Briefing= AsyncComponent(() => import('../Briefing/Briefing'))
 const BriefingSecond = AsyncComponent(() => import('../BriefingSecond/BriefingSecond'))
 const Daily = AsyncComponent(() => import('../Daily/Daily'))
+const Special = AsyncComponent(() => import('../Special/Special'))
 const {Header, Sider, Content} = Layout;
 const SubMenu = Menu.SubMenu;
 
@@ -281,6 +282,7 @@ class Index extends React.Component {
                 <Route path="/briefing" component={Briefing}/>
                 <Route path="/briefingsecond" component={BriefingSecond}/>
                 <Route path="/daily" component={Daily}/>
+                <Route path="/special" component={Special}/>
               </Switch>
               <div className="suspensionBox">
                 <div>

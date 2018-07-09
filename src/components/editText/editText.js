@@ -6,7 +6,8 @@ export default class editText extends Component {
   state = {
     value: this.props.value,
     editable: false,
-    count: 1
+    count: 1,
+    displays: this.props.style
   };
   componentDidMount() {}
   componentWillReceiveProps(props) {
@@ -33,9 +34,10 @@ export default class editText extends Component {
     }, 500);
   };
   render() {
+    console.log(this.state);
     const { value, editable } = this.state;
     return (
-      <div className="editable-cell">
+      <div className="editable-cell" style={this.props.style}>
         {editable ? (
           <div className="editable-cell-input-wrapper">
             <Input

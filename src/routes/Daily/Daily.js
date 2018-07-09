@@ -1,6 +1,6 @@
 import React from 'react';
 import './Daily.less';
-import { Row, Col, message, Table } from 'antd';
+import { Row, Col, message, Table, Button } from 'antd';
 import EditText from '../../components/editText/editText';
 // import EditData from '../../components/editData/editData';
 import ReportHeader from '../../components/reportHeader/reportHeader';
@@ -67,8 +67,36 @@ class Daily extends React.Component{
 			}
  		})
 	}
+	onChangeCellEditor(e) {
+		request(api_update_report + '&reportId=' + this.state.reportId + '&editor=' + e + '&moduleId=' + this.state.dataID).then((res) => {
+			console.log(res);
+			if(res.data.code === 1) {
+				message.success(res.data.msg);
+			} else {
+				message.error(res.data.msg);
+			}
+ 		})
+	}
 	onChangeCellMonth(e) {
-		request(api_update_report + '&reportId=' + this.state.reportId + '&date=' + e + '&moduleId=' + this.state.dataID).then((res) => {
+		request(api_update_report + '&reportId=' + this.state.reportId + '&coverMonth=' + e + '&moduleId=' + this.state.dataID).then((res) => {
+			if(res.data.code === 1) {
+				message.success(res.data.msg);
+			} else {
+				message.error(res.data.msg);
+			}
+ 		})
+	}
+	onChangeCellDay(e) {
+		request(api_update_report + '&reportId=' + this.state.reportId + '&coverDay=' + e + '&moduleId=' + this.state.dataID).then((res) => {
+			if(res.data.code === 1) {
+				message.success(res.data.msg);
+			} else {
+				message.error(res.data.msg);
+			}
+ 		})
+	}
+	onChangeCellYear(e) {
+		request(api_update_report + '&reportId=' + this.state.reportId + '&coverYear=' + e + '&moduleId=' + this.state.dataID).then((res) => {
 			if(res.data.code === 1) {
 				message.success(res.data.msg);
 			} else {
@@ -309,7 +337,7 @@ class Daily extends React.Component{
 														</Row>
 														<Row>
 															<Col span={18} offset={3}>
-																<Table columns={columns} dataSource={this.state.data} rowKey="id" pagination={false}/>
+																<Table rowKey="id" columns={columns} dataSource={this.state.data} pagination={false}/>
 															</Col>
 														</Row>
 														<Row>
@@ -358,12 +386,20 @@ class Daily extends React.Component{
 																			className="month"
 																			style={{ fontSize: 27, color: "red", fontWeight: 400 }}
 																		>
-																			{this.state.jiaData.data[item].coverMonth}月
+																			<EditText
+																			  style={{ display: "inline-block", width: 40 }}
+																			  value={this.state.jiaData.data[item].coverMonth}
+																				onChange={this.onChangeCellMonth.bind(this)}
+																			/>月
 																			<span
 																				className="day"
 																				style={{ fontSize: 67, color: "red", fontWeight: 400 }}
 																			>
-																				{this.state.jiaData.data[item].coverDay}
+																			  <EditText
+																					style={{ display: "inline-block", width: 82 }}
+																					value={this.state.jiaData.data[item].coverDay}
+																					onChange={this.onChangeCellDay.bind(this)}
+																				/>
 																			</span>
 																			日
 																		</span>
@@ -379,11 +415,20 @@ class Daily extends React.Component{
 																		<span className="dailyY"
 																			style={{ fontSize: 27, color: "red", fontWeight: 400 }}
 																		>
-																			{this.state.jiaData.data[item].coverYear}年
+																			<EditText
+																				style={{ display: "inline-block", width: 70 }}
+																				value={this.state.jiaData.data[item].coverYear}
+																				onChange={this.onChangeCellYear.bind(this)}
+																			/>年
 																		</span>
 																	</div>
 																	<div className="zhiyun">
-																		<span className="dailyZ" style={{ fontSize: 29 }}>{this.state.jiaData.data[item].coverEditor}</span>
+																		<span className="dailyZ" style={{ fontSize: 29 }}>
+																			<EditText
+																				value={this.state.jiaData.data[item].coverEditor}
+																				onChange={this.onChangeCellEditor.bind(this)}
+																			/>
+																		</span>
 																	</div>
 																</div>
 															) : null
@@ -402,6 +447,19 @@ class Daily extends React.Component{
 																		))
 																	}
 																</strong>
+																{
+																	Object.keys(this.state.jiaData.data).map(item => (
+																		this.state.componentId[1] === item ? (
+																			(() => {
+                                        if (this.state.jiaData.data[item].edit === "1") {
+																					return <Button key={item} style={{ display: "inline-block", float: "right" }}>编辑</Button>
+																				} else if (this.state.jiaData.data[item].edit === "0") {
+																					return <Button key={item} style={{ display: "none" }}>编辑</Button>
+																				}
+																			})()
+																		) : null
+																	))
+																}
 															</Col>
 														</Row>
 														<Row>
@@ -455,11 +513,24 @@ class Daily extends React.Component{
 																		))
 																	}
 																</strong>
+																{
+																	Object.keys(this.state.jiaData.data).map(item => (
+																		this.state.componentId[2] === item ? (
+																			(() => {
+                                        if (this.state.jiaData.data[item].edit === "1") {
+																					return <Button key={item} style={{ display: "inline-block", float: "right" }}>编辑</Button>
+																				} else if (this.state.jiaData.data[item].edit === "0") {
+																					return <Button key={item} style={{ display: "none" }}>编辑</Button>
+																				}
+																			})()
+																		) : null
+																	))
+																}
 															</Col>
 														</Row>
 														<Row>
 															<Col span={18} offset={3}>
-																<Table columns={columns} dataSource={this.state.data} rowKey="id" pagination={false}/>
+																<Table rowKey="id" columns={columns} dataSource={this.state.data} pagination={false}/>
 															</Col>
 														</Row>
 														<Row>

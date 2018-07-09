@@ -36,17 +36,15 @@ class reportHeader extends React.Component{
   }
 
   onChange = (field, value) => {
-		console.log(field, value)
     this.setState({
       [field]: value,
     });
   }
 
   onStartChange = (value, dateString) => {
-		console.log(value, dateString);
 		// const starttime = dateString.replace(new RegExp("-","gm"),"/");
 		const starttimeHaoMiao = (new Date(dateString)).getTime();
-		console.log(starttimeHaoMiao)
+		console.log(starttimeHaoMiao);
 		this.setState({
 			startMsDate: starttimeHaoMiao,
 			startDate: dateString
@@ -55,10 +53,9 @@ class reportHeader extends React.Component{
   }
 
   onEndChange = (value, dateString) => {
-		console.log(value, dateString);
 		// const starttime = dateString.replace(new RegExp("-","gm"),"/");
 		const starttimeHaoMiao = (new Date(dateString)).getTime();
-		console.log(starttimeHaoMiao)
+		console.log(starttimeHaoMiao);
 		this.setState({
 			endMsDate: starttimeHaoMiao,
 			endDate: dateString
@@ -74,19 +71,21 @@ class reportHeader extends React.Component{
 
   handleEndOpenChange = (open) => {
     this.setState({ endOpen: open });
-  }
+	}
+	onOkDateStart(value, dateString) {
+		console.log(value, dateString)
+	}
   onOkDate(value) {
 		request(api_get_data_daily_preview + '&reportFormId=' + this.props.typeId + '&reportType=' + this.props.type + '&starttime=' + this.state.startDate + '&endtime=' + this.state.endDate).then((res) => {
 			const myDate = new Date();
 			const starttimeHaoMiao = (new Date(myDate)).getTime();
-			console.log(starttimeHaoMiao);
 			if (this.state.startMsDate > starttimeHaoMiao && this.state.endMsDate > starttimeHaoMiao) {
 				message.warning("您的选的日期超出了当前时间，请重新选择");
 			} else if (this.state.startMsDate > starttimeHaoMiao && this.state.endMsDate < starttimeHaoMiao) {
 				message.warning("您的选的日期超出了当前时间，请重新选择");
 			} else if (this.state.startMsDate < starttimeHaoMiao && this.state.endMsDate > starttimeHaoMiao) {
 				message.warning("您的选的日期超出了当前时间，请重新选择");
-			} else if (this.state.endMsDate - this.state.startMsDate > 86400) {
+			} else if (this.state.endMsDate - this.state.startMsDate > 86400000) {
 				console.log(this.state.endMsDate - this.state.startMsDate)
 				message.warning("您选择的时间超过了24个小时，请重新选择");
 			} else if (this.state.startMsDate < starttimeHaoMiao && this.state.endMsDate < starttimeHaoMiao) {
@@ -94,6 +93,9 @@ class reportHeader extends React.Component{
 				this.props.hanldle(res.data)				
 			}
 		});
+	}
+	handleChange (e) {
+    console.log(e)
 	}
 	render() {
 		const { type, briefingData } = this.props;
@@ -149,6 +151,7 @@ class reportHeader extends React.Component{
 												placeholder="Start"
 												onChange={this.onStartChange.bind(this)}
 												onOpenChange={this.handleStartOpenChange.bind(this)}
+												onOk={this.onOkDateStart.bind(this)}
 											/>
 											<DatePicker
 												disabledDate={this.disabledEndDate.bind(this)}
