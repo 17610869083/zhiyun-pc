@@ -37,7 +37,6 @@ class ReportDetailList extends React.Component{
     loading(e){
     var bScrollH = e.target.scrollHeight; 
     if(e.target.scrollTop + 600 >= bScrollH){
-      console.log(123)
         this.props.dropDown();
       }
     }

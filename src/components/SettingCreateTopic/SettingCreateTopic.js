@@ -111,7 +111,6 @@ class SettingCreateTopic extends React.Component {
        }else if (keywordDuplicateCheck(Subject1Arr)){
             message.warning('请不要出现重复的关键词或多余的空格');
        }
-       console.log(value)
         this.setState({
             subject1ValueInput: value
         })

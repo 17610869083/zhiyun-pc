@@ -209,7 +209,7 @@ class TopicAdd extends React.Component {
             headers: {
                   "Content-Type": "application/x-www-form-urlencoded"
             }, 
-            body:`action=addTopic&addtype=${this.state.addtype}&begin=${startTime}&end=${endTime}&bind=${this.state.checked}&tname=${this.state.topicNameValue}&catid=${values['topicFile']}&rule=${encodeURIComponent(rules)}`
+            body:`addtype=${this.state.addtype}&begin=${startTime}&end=${endTime}&bind=${this.state.checked}&tname=${this.state.topicNameValue}&catid=${values['topicFile']}&rule=${encodeURIComponent(rules)}`
             }).then((res) => {
         	 if(res.data.code===1){
                 this.props.topicNavMessageRequested(new Date())

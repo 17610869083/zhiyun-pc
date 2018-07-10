@@ -1,6 +1,6 @@
 import React from 'react';
 import './Daily.less';
-import { Row, Col, message, Table, Button } from 'antd';
+import { Row, Col, message, Table, Button ,Modal} from 'antd';
 import EditText from '../../components/editText/editText';
 // import EditData from '../../components/editData/editData';
 import ReportHeader from '../../components/reportHeader/reportHeader';
@@ -13,9 +13,10 @@ import 'echarts/lib/chart/pie';
 import request from '../../utils/request';
 import {
 	api_new_preview_report,
-	api_update_report,
+	api_update_report
 } from '../../services/api';
 import {connect} from 'react-redux';
+import ModalReport from '../../components/ModalReport/ModalReport';
 class Daily extends React.Component{
 	constructor(){
 		super()
@@ -30,7 +31,11 @@ class Daily extends React.Component{
 			jiaData: {},
 			reportId: "",
 			emotionDistributionImg: {},
-			mediaDistributionImg: {}
+			mediaDistributionImg: {},
+			visible:false,
+			startDate:'',
+			endDate:'',
+			modalId:8
 		}
 	}
 	componentWillMount(){
@@ -106,17 +111,21 @@ class Daily extends React.Component{
 			}
  		})
 	}
-	hanldle= data => {
+	hanldle= (data,startDate,endDate) => {
 		console.log(data)
 		this.setState({
-			jiaData: data
+			jiaData: data,
+			startDate:startDate,
+			endDate:endDate
 		})
 		console.log(this.state.jiaData);
 		Object.keys(this.state.jiaData.data).map(item => {
 			if (this.state.componentId[2] === item) {
+				console.log(item)
 				this.setState({
 					reportId: this.state.jiaData.reportId,
 					data: this.state.jiaData.data[item].informationExcerpt,
+					modalId:item
 				})
 			} else if (this.state.componentId[1] === item) {
         this.setState({
@@ -126,6 +135,12 @@ class Daily extends React.Component{
 				console.log(this.state.jiaData.data[item].emotionDistributionImg)
 				console.log(this.state.jiaData.data[item].mediaDistributionImg)
 			}
+		})
+	}
+	//显示信息摘录弹窗
+	showDailyEdit = () => {
+		this.setState({
+			visible:true
 		})
 	}
 	render() {
@@ -528,7 +543,10 @@ class Daily extends React.Component{
 																		this.state.componentId[2] === item ? (
 																			(() => {
                                         if (this.state.jiaData.data[item].edit === "1") {
-																					return <Button key={item} style={{ display: "inline-block", float: "right" }}>编辑</Button>
+																					return <Button key={item} 
+																					style={{ display: "inline-block", float: "right" }}
+																					onClick={this.showDailyEdit}
+																					>编辑</Button>
 																				} else if (this.state.jiaData.data[item].edit === "0") {
 																					return <Button key={item} style={{ display: "none" }}>编辑</Button>
 																				}
@@ -579,6 +597,14 @@ class Daily extends React.Component{
 						{/* 结束 */}
 					</Col>
 				</Row>
+				<Modal visible={this.state.visible} width="70%" footer={null}>
+				<ModalReport docList={this.state.data}
+				startDate={this.state.startDate}
+				endDate={this.state.endDate}
+				reportId={this.state.reportId}
+				modalId={this.state.modalId}
+				/>
+				</Modal>
 			</div>
 		)
 	}

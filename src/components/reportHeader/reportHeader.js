@@ -125,7 +125,7 @@ class reportHeader extends React.Component{
 					message.warning("您选择的时间超过了24个小时，请重新选择");
 				} else if (this.state.startMsDate < starttimeHaoMiao && this.state.endMsDate < starttimeHaoMiao) {
 					message.success(res.data.msg);
-					this.props.hanldle(res.data)				
+					this.props.hanldle(res.data,this.state.startDate,this.state.endDate)				
 				}
 			});
 		}
@@ -210,23 +210,23 @@ class reportHeader extends React.Component{
 				</div>
 				<Modal  visible={this.state.visible} footer={null} onCancel={this.hideModal}
                 width="70%" maskClosable={false}
-                >
+        >
 				<ModalReport 
 				requestUrl={this.state.requestUrl} 
 				reportId={this.props.reportId}
 				checkReport={this.checkReport}
 				/>
-                </Modal>
+         </Modal>
 				<Modal  visible={this.state.isShowModalMaterial} footer={null} onCancel={this.hideModalMaterial}
                 width="70%" maskClosable={false}
-                >
-                <ModalMaterial
+        >
+         <ModalMaterial
 				 checkReport={this.checkReport}
 				 typeId={this.props.typeId}
 				 type={this.props.type}
 				 reportId={this.props.reportId}
 				/>  
-                </Modal>
+        </Modal>
 			</div>							
 		)
 	}

@@ -377,7 +377,7 @@ class TopicList extends React.Component {
     if (prevProps.location.search !== this.props.location.search) {
       let topicID = this.props.getRouter;
       if (topicID.topicid) {
-        request(api_topic_message_list +`&topicid=${topicID.topicid}`).then((res) => {
+        request(api_topic_message_list +`&topicid=${topicID.topicid}`).then( res => {
           if (res.data.code === 1) {
             this.setState({
               docList: res.data.docList,

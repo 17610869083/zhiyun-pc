@@ -1,12 +1,14 @@
 import React from 'react';
-import {Checkbox,Input,Button,Modal} from 'antd';
+import {Checkbox,Input,Button,Modal,message} from 'antd';
 import './ModalReport.less';
 import IconFont from '../IconFont';
 import request from '../../utils/request';
 import ReportDetailList from '../ReportDetailList/ReportDetailList';
 import ModalMaterial from '../ModalMaterial/ModalMaterial';
+import ModalAllOpinion from '../ModalAllOpinion/ModalAllOpinion';
 import {checkedTrueSid} from '../../utils/format';
-import {api_refresh_brief} from '../../services/api';
+import {api_refresh_brief,api_edit_excerpt} from '../../services/api';
+const InputGroup = Input.Group;
 class ModalReport extends React.Component{
      constructor(){
          super();
@@ -17,18 +19,28 @@ class ModalReport extends React.Component{
               flag:true,
               checkedAll:false,
               materialvisible:false,
-              isDropDown:true
+              allOpinionvisible:false,
+              isDropDown:true,
+              keyword:''
          }
          
      }
      componentDidMount(){
-        let {requestUrl} = this.props; 
-        request(requestUrl).then( res => {
-              this.setState({
-                docList:res.data.data,
-                flag:false
-              })
-        })
+         if(this.props.docList){
+            this.setState({
+                docList:this.props.docList,
+                flag:false,
+                isDropDown:false
+            })
+         }else{
+            let {requestUrl} = this.props; 
+            request(requestUrl).then( res => {
+                this.setState({
+                    docList:res.data.data,
+                    flag:false
+                })
+            })
+         }
     }
     dropDown(){
         if(this.state.isDropDown){
@@ -79,7 +91,18 @@ class ModalReport extends React.Component{
 
       //删除
       delete(){
-          console.log(checkedTrueSid(this.state.checkedArray))
+          request(api_edit_excerpt,{
+            method:'POST',
+            headers: {
+              "Content-Type": "application/x-www-form-urlencoded"
+            }, 
+            body:`reportId=${this.props.reportId}&moduleId=${this.props.modalId}&code=0&sids=${JSON.stringify(checkedTrueSid(this.state.checkedArray))}`
+          }).then(res => {
+            if(res.data.code === 1){
+                console.log(res.data)
+              //this.props.checkMaterial(res.data.data)
+            }
+          })
       }
       //确定按钮
       confirm = () => {
@@ -115,6 +138,26 @@ class ModalReport extends React.Component{
              materialvisible:false
            })
       }
+
+      handleChange(){
+
+      }
+      //监测弹窗
+      keyDown = (e) => {
+          this.setState({
+            keyword:e.target.value
+          })
+         if(e.keyCode === 13){
+            if(this.checkedTrue().length>=50){
+                message.error('当前数据已达到最大数50条');
+                return;
+            }else{
+                this.setState({
+                    allOpinionvisible:true
+                })
+            }
+         }
+      }
      render(){
          return (
              <div className="modal-report opinion-detail">
@@ -124,8 +167,11 @@ class ModalReport extends React.Component{
                     <span>全选</span>
                     <i onClick={this.delete.bind(this)}><IconFont type="icon-shanchu1-copy-copy" style={{marginLeft:'16px'}}/></i>
                     <span style={{marginLeft:'36px'}} onClick={this.showMaterialModal}> 素材库</span>
-                    <Input/>
                     </div>
+                    <InputGroup compact>
+                    <p className="all-search">全站搜索</p>
+                    <Input onKeyDown={this.keyDown}/>
+                    </InputGroup>
                     <Button type="primary" onClick={this.confirm}>确定</Button>
                  </div> 
                  <div className="modal-list bottom">
@@ -142,6 +188,17 @@ class ModalReport extends React.Component{
                      <ModalMaterial 
                      reportId={this.props.reportId}
                      checkMaterial ={this.checkMaterial}
+                     />
+                 </Modal>
+                 <Modal width="70%" visible={this.state.allOpinionvisible} footer={null} onCancel={this.cancel}>
+                     <ModalAllOpinion 
+                     reportId={this.props.reportId}
+                     startDate={this.props.startDate}
+                     endDate={this.props.endDate}
+                     seltype='title'
+                     keyword={this.state.keyword}
+                     checkMaterial ={this.checkMaterial}
+                     modalId={this.props.modalId}
                      />
                  </Modal>
              </div>
