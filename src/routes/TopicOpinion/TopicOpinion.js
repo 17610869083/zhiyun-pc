@@ -273,6 +273,7 @@ class TopicOpinion extends React.Component {
             </Menu>
        );
         let {topicNavMessageSucceededState} =this.props;
+        console.log(this.props);
         const LeftTopicLists=topicNavMessageSucceededState!==1&&topicNavMessageSucceededState.map((item,index)=>
           <div className="a-class" key={index}>
           <div className="class-name" >

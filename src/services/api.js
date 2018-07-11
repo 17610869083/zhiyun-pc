@@ -380,3 +380,5 @@ export const api_update_brief_item = host + 'Report?action=updateBriefItem';
 export const api_refresh_brief = host +'Report?action=refreshBrief';
 // 日期选择
 export const api_get_data_daily_preview = host +'Report?action=dailyPreview';
+// 专题请求
+export const api_get_special_preview = host +'Report?action=specialReport';

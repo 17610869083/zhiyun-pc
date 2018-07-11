@@ -44,6 +44,7 @@ class Briefing extends React.Component{
 		} else if (this.props.briefingData.length > 0) {
 			const sidList = JSON.stringify(this.props.briefingData);
 			request(api_add_brief_report + '&reportFormId=' + templateId + '&reportType=' + templateType + '&sids=' + sidList).then((res) => {
+				console.log(res);
 				// 遍历对象Object.keys()
 				// Object.values(）对象转数组
 				this.setState({
