@@ -1051,9 +1051,10 @@ class MaterialOpinion extends React.Component {
 											visible={this.state.opinionVisible}
 											onOk={this.opinionHandleAddOk.bind(this)}
 											onCancel={this.opinionHandleAddCancel.bind(this)}
+											className="report-modal"
 										>
 											<AllOpinion
-            						searchType={this.searchType.bind(this)}											  
+            						         searchType={this.searchType.bind(this)}											  
 											/>
 										</Modal>
 									</InputGroup>

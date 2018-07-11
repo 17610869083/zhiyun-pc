@@ -178,9 +178,9 @@ class ModalReport extends React.Component{
                     <Checkbox onChange={this.checkAll.bind(this)} checked={this.state.checkedAll}/>
                     <span>全选</span>
                     <i onClick={this.delete.bind(this)}><IconFont type="icon-shanchu1-copy-copy" style={{marginLeft:'16px'}}/></i>
-                    <span style={{marginLeft:'36px'}} onClick={this.showMaterialModal}> 素材库</span>
+                    <span style={this.props.requestUrl?{marginLeft:'36px'}:{display:'none'}} onClick={this.showMaterialModal}> 素材库</span>
                     </div>
-                    <InputGroup compact>
+                    <InputGroup compact style={this.props.requestUrl?{display:'none'}:{display:'inline-block'}}>
                     <p className="all-search">全站搜索</p>
                     <Input onKeyDown={this.keyDown}/>
                     </InputGroup>
@@ -196,13 +196,13 @@ class ModalReport extends React.Component{
                        type='report'
                       />
                  </div>  
-                 <Modal width="70%" visible={this.state.materialvisible} footer={null} onCancel={this.cancel}>
+                 <Modal width="70%" visible={this.state.materialvisible} footer={null} onCancel={this.cancel} className="report-modal">
                      <ModalMaterial 
                      reportId={this.props.reportId}
                      checkMaterial ={this.checkMaterial}
                      />
                  </Modal>
-                 <Modal width="70%" visible={this.state.allOpinionvisible} footer={null} onCancel={this.cancel}>
+                 <Modal width="70%" visible={this.state.allOpinionvisible} footer={null} onCancel={this.cancel} className="report-modal">
                      <ModalAllOpinion 
                      reportId={this.props.reportId}
                      startDate={this.props.startDate}
@@ -211,6 +211,7 @@ class ModalReport extends React.Component{
                      keyword={this.state.keyword}
                      checkMaterial ={this.checkMaterial}
                      modalId={this.props.modalId}
+                     topicId={this.props.topicid}
                      />
                  </Modal>
              </div>

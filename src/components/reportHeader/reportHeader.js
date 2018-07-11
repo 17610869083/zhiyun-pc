@@ -3,12 +3,17 @@ import './reportHeader.less';
 import { Row, Col, Button, Select, DatePicker,Modal,message } from 'antd';
 import ModalReport from '../../components/ModalReport/ModalReport';
 import ModalMaterial from '../../components/ModalMaterial/ModalMaterial';
-import {api_get_brief_item,api_get_data_daily_preview} from '../../services/api';
+import {
+	api_get_brief_item,
+	api_get_data_daily_preview,
+	api_top_nav,
+	api_get_special_preview
+} from '../../services/api';
 import {connect} from 'react-redux';
 import {briefingSwitch} from '../../redux/actions/createActions';
 import request from '../../utils/request';
-const { RangePicker } = DatePicker;
-const Option = Select.Option;
+// const { RangePicker } = DatePicker;
+const { Option, OptGroup } = Select;
 class reportHeader extends React.Component{
 	constructor(){
 		super()
@@ -16,8 +21,19 @@ class reportHeader extends React.Component{
 		   requestUrl:'',
 		   visible:false,
 		   isShowModalMaterial:false,
-		   flag:true
+			 flag:true,
+			 catNameArr: [],
+			 topicList: [],
+			 topicId: ""
 		}
+	}
+	componentWillMount() {
+		request(api_top_nav).then(res=>{
+			console.log(res.data)
+			this.setState({
+				catNameArr: res.data
+			})
+		})
 	}
 	//简报编辑按钮
 	editBriefing(type){
@@ -110,6 +126,16 @@ class reportHeader extends React.Component{
 		onOkDateStart(value, dateString) {
 			console.log(value, dateString)
 		}
+		handleChange(value) {
+			this.setState({
+				topicId: value
+			})
+		}
+		specialOk () {
+			request(api_get_special_preview + '&topicId=' + this.state.topicId + '&reportFormId=' + this.props.typeId + '&reportType=' + this.props.type).then(res=>{
+				this.props.hanldle(res.data,this.state.topicId)				
+			})
+		}
 	  onOkDate(value) {
 			request(api_get_data_daily_preview + '&reportFormId=' + this.props.typeId + '&reportType=' + this.props.type + '&starttime=' + this.state.startDate + '&endtime=' + this.state.endDate).then((res) => {
 				const myDate = new Date();
@@ -128,9 +154,6 @@ class reportHeader extends React.Component{
 					this.props.hanldle(res.data,this.state.startDate,this.state.endDate)				
 				}
 			});
-		}
-		handleChange (e) {
-		console.log(e)
 		}
 	render() {
 		const { type, briefingData,reportId } = this.props;
@@ -167,12 +190,23 @@ class reportHeader extends React.Component{
 								} else if (type === "02") {
 									return <div>
 										<div className="twoButton">
-											<Select defaultValue="lucy" style={{ width: 200, marginRight: 20 }} onChange={this.handleChange.bind(this)}>
-												<Option value="jack">Jack</Option>
-												<Option value="lucy">Lucy</Option>
-												<Option value="Yiminghe">yiminghe</Option>
+											<Select
+												style={{ width: 200 }}
+												onChange={this.handleChange.bind(this)}
+											>
+											{
+												this.state.catNameArr.map((item, index) => 
+													<OptGroup label={item.catname} key={index}>
+													  {
+															item.topicList.map((i) => 
+														    <Option key={i.topicid.toString()} value={i.topicid.toString()}>{i.topicname}</Option>
+														  )
+														}
+													</OptGroup>
+											  )
+											}
 											</Select>
-											<Button type="primary" style={{ backgroundColor: "#5a8bff" }}>确定</Button>
+											<Button type="primary" onClick={this.specialOk.bind(this)} style={{ backgroundColor: "#5a8bff" }}>确定</Button>
 										</div>
 										<span style={{ color: "red" }}>*选择专题</span>
 									</div>
@@ -209,7 +243,7 @@ class reportHeader extends React.Component{
 					</Row>
 				</div>
 				<Modal  visible={this.state.visible} footer={null} onCancel={this.hideModal}
-                width="70%" maskClosable={false}
+                width="70%" maskClosable={false} className="report-modal"
         >
 				<ModalReport 
 				requestUrl={this.state.requestUrl} 
@@ -218,7 +252,7 @@ class reportHeader extends React.Component{
 				/>
          </Modal>
 				<Modal  visible={this.state.isShowModalMaterial} footer={null} onCancel={this.hideModalMaterial}
-                width="70%" maskClosable={false}
+                width="70%" maskClosable={false} className="report-modal"
         >
          <ModalMaterial
 				 checkReport={this.checkReport}

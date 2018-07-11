@@ -7,6 +7,7 @@ import request from '../../utils/request';
 import IconFont from '../../components/IconFont';
 import img from '../../assets/img/1.png';
 import {getLocalTime,getSecondTime,templateTypeSort} from '../../utils/format';
+import {history} from '../../utils/history';
 class MyReport extends React.Component{
      constructor(props){
          super(props);
@@ -35,7 +36,8 @@ class MyReport extends React.Component{
             flag:false,
             visible:false,
             hmtlUrl:'',
-            previewVisible:false
+            previewVisible:false,
+            popoverVisible:false
          }
      }
      componentWillMount(){
@@ -65,6 +67,10 @@ class MyReport extends React.Component{
             this.setState({
                 contentList:res.data.data.content
             })        
+           }else{
+            this.setState({
+                contentList:[]
+            })
            }
        })
     }
@@ -169,17 +175,9 @@ class MyReport extends React.Component{
     }
     //预览
     preview = () => {
-        request(api_download_report +`&reportId=${this.state.checkId}&dType=html`)
-        .then(res =>{
-             if(res.data.code ===1){
-               this.setState({
-                   hmtlUrl:res.data.fileAddress,
-                   previewVisible:true
-               })
-             }else{
-               message.error(res.data.msg)
-             }
-         } )
+        this.setState({
+            popoverVisible:true
+        })
     }
     //删除
     delete = () => {
@@ -226,6 +224,31 @@ class MyReport extends React.Component{
             previewVisible:false
         })
     }
+    //新建报告
+    addReport = () => {
+        history.push('/choosetemplate');
+    }
+    //报告预览
+    reportPreview = (type) => {
+         this.setState({
+            popoverVisible:false
+         })
+         if(type==='preview'){
+            request(api_download_report +`&reportId=${this.state.checkId}&dType=html`)
+            .then(res =>{
+                 if(res.data.code ===1){
+                   this.setState({
+                       hmtlUrl:res.data.fileAddress,
+                       previewVisible:true
+                   })
+                 }else{
+                   message.error(res.data.msg)
+                 }
+             } )
+         }else{
+            history.push('/choosetemplate');  
+         }
+    }
      render(){
          const typeList = this.state.typeList.map( (item,index) => {
              return <li key = {index} 
@@ -250,7 +273,7 @@ class MyReport extends React.Component{
              <div className="my-report">
              <div className="my-report-top">
              <div className="my-add-report">
-                 <span>+&nbsp;&nbsp;新建报告</span>
+                 <span onClick={this.addReport}>+&nbsp;&nbsp;新建报告</span>
                  {/* <span>导入报告</span> */}
              </div>
              <div className="my-search-report">
@@ -304,7 +327,19 @@ class MyReport extends React.Component{
                 </Popconfirm>
              </Tooltip>  
              <Tooltip title="预览" placement="bottom">
+             <Popover
+              getPopupContainer={() => document.querySelector('.my-report')}
+                content={
+                <div>
+                    <Button type="primary" size="small" style={{marginLeft: '10px'}} onClick={this.reportPreview.bind(this,'preview')}>预览</Button>
+                    <Button type="primary" size="small" style={{marginLeft: '46px'}} onClick={this.reportPreview.bind(this,'edit')}>再编辑</Button>
+                </div>
+                }
+                trigger="click"
+                visible={this.state.popoverVisible}
+             >
              <i onClick = {this.preview}><IconFont type="icon-Dashboard-card-SQLchakan"/></i>
+             </Popover>
              </Tooltip>
              </p>
              <div className="content">

@@ -327,8 +327,8 @@ export function urlTokey() {
         case 'collectionopinion':
             key = 'collectionopinion';
             break;
-        case 'historyopinion':
-            key = 'historyopinion';
+        case 'myreport':
+            key = 'myreport';
             break;
         case 'noticesetting':
             key = 'noticesetting';

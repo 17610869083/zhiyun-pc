@@ -147,7 +147,7 @@ class Index extends React.Component {
       if (item.channelurl === '/reportopinion/list') {
         menuList.push(<SubMenu
           key={item.key}
-          title={<Link to="/historyopinion"><span>
+          title={<Link to="/myreport"><span>
             <i className="anticon"><Iconfont type={item.type} style={{fontSize: '16px'}}/></i>
             <span
               style={{fontSize: '16px'}}>舆情报告</span>
@@ -167,8 +167,8 @@ class Index extends React.Component {
               <span>我的收藏</span>
             </Link>
           </Menu.Item>
-          <Menu.Item key="historyopinion" style={{fontSize: '16px'}}>
-            <Link to="/historyopinion">
+          <Menu.Item key="myreport" style={{fontSize: '16px'}}>
+            <Link to="/myreport">
               <span>我的报告库</span>
             </Link>
           </Menu.Item>

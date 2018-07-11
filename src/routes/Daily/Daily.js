@@ -604,7 +604,7 @@ class Daily extends React.Component{
 						{/* 结束 */}
 					</Col>
 				</Row>
-				<Modal visible={this.state.visible} width="70%" footer={null}>
+				<Modal visible={this.state.visible} width="70%" footer={null} className="report-modal">
 				<ModalReport docList={this.state.data}
 				startDate={this.state.startDate}
 				endDate={this.state.endDate}

@@ -652,6 +652,19 @@ class OpinionDetail extends React.Component {
      }
     
   }
+    //单条跳转到报告页
+    goReportItem(){
+      if(this.checkedTrue().length === 0 ){
+        history.push('/choosetemplate')   
+      }else if(this.checkedTrue().length >1) {
+         message.error('此处按钮只对当前这条数据有效');
+         return;
+      }else{
+        this.props.briefingSwitch(this.checkedTrue());
+        history.push('/choosetemplate?reportType=01')     
+      }
+     
+   }
   render() {
     const {page} = this.props;
     const flag = this.props.docList&& this.props.docList.length === 0?true:false;
@@ -837,7 +850,7 @@ class OpinionDetail extends React.Component {
                     </div>
                     <div>
                     <Tooltip title='生成报告' placement="bottom">
-                      <span className="add-report" onClick={this.goReport.bind(this)}>
+                      <span className="add-report" onClick={this.goReportItem.bind(this)}>
                       <IconFont type="icon-icon-shengchengbaogao" />  
                       </span>
                     </Tooltip>

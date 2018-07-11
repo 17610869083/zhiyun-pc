@@ -384,3 +384,5 @@ export const api_get_data_daily_preview = host +'Report?action=dailyPreview';
 export const api_edit_excerpt = host +'Report?action=editExcerpt';
 //日报刷新数据
 export const api_get_excerpt = host +'Report?action=getExcerpt';
+// 专题请求
+export const api_get_special_preview = host +'Report?action=specialReport';
