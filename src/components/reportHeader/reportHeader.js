@@ -19,15 +19,19 @@ class reportHeader extends React.Component{
 	constructor(){
 		super()
 		this.state={
-		   requestUrl:'',
-		   visible:false,
-		   isShowModalMaterial:false,
-			 flag:true,
-			 catNameArr: [],
-			 topicList: [],
-			 topicId: "",
-			 starttime: "",
-			 endtime: ""
+			requestUrl:'',
+			visible:false,
+			isShowModalMaterial:false,
+			flag:true,
+			catNameArr: [],
+			topicList: [],
+			topicId: "",
+			starttime: "",
+			endtime: "",
+			charts: {
+				mediaDistributionImg: "",
+				emotionDistributionImg: ""
+			}
 		}
 	}
 	componentWillMount() {
@@ -153,15 +157,31 @@ class reportHeader extends React.Component{
 			})
 		}
 		generateReportDaily () {
-			if (this.props.echartsReact !== "") {
-				// let echarts_instance = this.props.echartsReact.getEchartsInstance();
-				// let base64 =encodeURIComponent(echarts_instance.getDataURL('png'));
+			if (this.props.echartsReact !== "" && this.props.echartsMediaTypeTrendOption !== "") {
+				const echarts_instance = this.props.echartsReact.getEchartsInstance();
+				const echartsMediaTypeTrendOption_instance = this.props.echartsMediaTypeTrendOption.getEchartsInstance();
+				this.setState({
+					charts: {
+						emotionDistributionImg: encodeURIComponent(echarts_instance.getDataURL('png')),
+						mediaDistributionImg: encodeURIComponent(echartsMediaTypeTrendOption_instance.getDataURL('png'))
+					}
+				}, () => {
+					let chart = JSON.stringify(this.state.charts);
+					request(api_get_generate_report,{
+						method:'POST',
+						headers: {
+							"Content-Type": "application/x-www-form-urlencoded"
+						},
+						body:`reportId=${this.props.reportId}&charts=${chart}`    
+				 	}).then(res=>{
+						if (res.data.code === 1) {
+							message.success(res.data.msg)
+						} else if (res.data.code === 0) {
+							message.error(res.data.msg)
+						}
+				 })
+				})
 			}
-			request(api_get_generate_report + '&reportId=' + this.props.reportId).then(res=>{
-				if (res.data.code === 1) {
-					message.success(res.data.msg)
-				}
-			})
 		}
 	  onOkDate(value) {
 			request(api_get_data_daily_preview + '&reportFormId=' + this.props.typeId + '&reportType=' + this.props.type + '&starttime=' + this.state.startDate + '&endtime=' + this.state.endDate).then((res) => {
@@ -186,7 +206,7 @@ class reportHeader extends React.Component{
 			});
 		}
 	render() {
-		console.log(this.props);
+		console.log(this.state);
 		const { type, briefingData,reportId } = this.props;
 		const { startValue, endValue, endOpen } = this.state;
 		let haveData = reportId !== '' ?'have':'none';
