@@ -143,6 +143,13 @@ class Daily extends React.Component{
 			visible:true
 		})
 	}
+	//数据回调
+	checkDaily = (data) => {
+         this.setState({
+			 data:data,
+			 visible:false
+		 })
+	}
 	render() {
 		const mediaOption= {
 			title: {
@@ -603,6 +610,7 @@ class Daily extends React.Component{
 				endDate={this.state.endDate}
 				reportId={this.state.reportId}
 				modalId={this.state.modalId}
+				checkDaily={this.checkDaily}
 				/>
 				</Modal>
 			</div>

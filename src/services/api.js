@@ -382,3 +382,5 @@ export const api_refresh_brief = host +'Report?action=refreshBrief';
 export const api_get_data_daily_preview = host +'Report?action=dailyPreview';
 //日报50条编辑
 export const api_edit_excerpt = host +'Report?action=editExcerpt';
+//日报刷新数据
+export const api_get_excerpt = host +'Report?action=getExcerpt';

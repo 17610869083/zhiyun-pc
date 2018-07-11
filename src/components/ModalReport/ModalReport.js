@@ -7,7 +7,7 @@ import ReportDetailList from '../ReportDetailList/ReportDetailList';
 import ModalMaterial from '../ModalMaterial/ModalMaterial';
 import ModalAllOpinion from '../ModalAllOpinion/ModalAllOpinion';
 import {checkedTrueSid} from '../../utils/format';
-import {api_refresh_brief,api_edit_excerpt} from '../../services/api';
+import {api_refresh_brief,api_edit_excerpt,api_get_excerpt} from '../../services/api';
 const InputGroup = Input.Group;
 class ModalReport extends React.Component{
      constructor(){
@@ -99,8 +99,9 @@ class ModalReport extends React.Component{
             body:`reportId=${this.props.reportId}&moduleId=${this.props.modalId}&code=0&sids=${JSON.stringify(checkedTrueSid(this.state.checkedArray))}`
           }).then(res => {
             if(res.data.code === 1){
-                console.log(res.data)
-              //this.props.checkMaterial(res.data.data)
+                this.setState({
+                    docList:res.data.data
+                })
             }
           })
       }
@@ -113,6 +114,15 @@ class ModalReport extends React.Component{
                 this.props.checkReport(res.data.data,false); 
              }
          })
+        }else{
+            if(this.checkedTrue().length>50){
+                message.error('当前数据已达到最大数50条')
+            }else{
+                request(api_get_excerpt +`&reportId=${this.props.reportId}&moduleId=${this.props.modalId}`)
+                .then(res => {
+                    this.props.checkDaily(res.data.informationExcerpt);
+                })
+            }
         }
         this.setState({
             materialvisible:false
@@ -127,7 +137,8 @@ class ModalReport extends React.Component{
       //关闭弹窗
       cancel = () => {
           this.setState({
-            materialvisible:false
+            materialvisible:false,
+            allOpinionvisible:false
           })
       }
       //素材库弹窗回调数据
@@ -135,7 +146,8 @@ class ModalReport extends React.Component{
            this.setState({
              docList:data,
              isDropDown:false,
-             materialvisible:false
+             materialvisible:false,
+             allOpinionvisible:false
            })
       }
 
