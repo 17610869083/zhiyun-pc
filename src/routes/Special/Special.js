@@ -32,7 +32,7 @@ class Special extends React.Component{
 			number: [],
 			jiaData: {},
 			reportId: "",
-			emotionDistributionImg: {},
+			emotionDistributionImg: {}, 
 			mediaDistributionImg: {},
 			mediaAnalysisImg: {},
 			negativeCarrierAnalysisImg: {},
@@ -79,7 +79,6 @@ class Special extends React.Component{
 	}
 	onChangeCellEditor(e) {
 		request(api_update_report + '&reportId=' + this.state.reportId + '&editor=' + e + '&moduleId=' + this.state.dataID).then((res) => {
-			console.log(res);
 			if(res.data.code === 1) {
 				message.success(res.data.msg);
 			} else {
@@ -96,13 +95,12 @@ class Special extends React.Component{
 			}
  		})
 	}
+
 	hanldle= (data,topicid) => {
-		console.log(data);
 		this.setState({
 			jiaData: data,
 			topicid:topicid
 		})
-		// console.log(this.state.jiaData);
 		Object.keys(this.state.jiaData.data).map(item => {
 			this.setState({
 				reportId: this.state.jiaData.reportId
@@ -358,7 +356,7 @@ class Special extends React.Component{
 							}
 					}
 			]
-		}
+		}   
 		return (
 			<div className="col">
 				<Row>
@@ -368,6 +366,12 @@ class Special extends React.Component{
 							type={this.state.type}
 							typeId={this.state.typeId}
 							hanldle={this.hanldle}
+							reportId={this.state.reportId}
+							emotionDistributionImg = {this.emotionDistributionImg}
+							mediaDistributionImg ={this.mediaDistributionImg}
+							mediaAnalysisImg={this.mediaAnalysisImg} 
+							negativeCarrierAnalysisImg={this.negativeCarrierAnalysisImg}
+							mediaEwarningDistributionImg = {this.mediaEwarningDistributionImg}
 						/>
 					</Col>
 				</Row>
@@ -674,6 +678,7 @@ class Special extends React.Component{
 																				option={this.state.emotionDistributionImg}
 																				lazyUpdate={true}
 																				style={{ height:'400px', width: 300 }}
+																				ref={(e) => { this.emotionDistributionImg = e; }}
 																			/>												  
 																		</div>
 																	</Col>
@@ -684,6 +689,7 @@ class Special extends React.Component{
 																				option={this.state.mediaDistributionImg}
 																				lazyUpdate={true}
 																				style={{ height:'400px', width: 300 }}
+																				ref={(e) => { this.mediaDistributionImg = e; }}
 																			/>
 																		</div>
 																	</Col>
@@ -763,6 +769,7 @@ class Special extends React.Component{
 																	option={this.state.mediaAnalysisImg}
 																	lazyUpdate={true}
 																	style={{ height:'400px' }}
+																	ref={(e) => { this.mediaAnalysisImg = e; }}
 																/>
 															</div>		  
 														</Col>
@@ -800,18 +807,13 @@ class Special extends React.Component{
 																))
 															}
 															<div style={{ height: 500 }}>
-															 	{
-                                  this.state.negativeCarrierAnalysisImg !== {} ? (
-																		<ReactEchartsCore
-																			echarts={echarts}
-																			option={this.state.negativeCarrierAnalysisImg}
-																			lazyUpdate={true}
-																			style={{ height:'400px' }}
-																		/>
-																	) : (
-																		<div></div>
-																	)
-																}
+																<ReactEchartsCore
+																	echarts={echarts}
+																	option={this.state.negativeCarrierAnalysisImg}
+																	lazyUpdate={true}
+																	style={{ height:'400px' }}
+																	ref={(e) => { this.negativeCarrierAnalysisImg = e; }}
+																/>
 															</div>
 														</Col>
 													</Row>
@@ -852,6 +854,7 @@ class Special extends React.Component{
 																	option={this.state.mediaEwarningDistributionImg}
 																	lazyUpdate={true}
 																	style={{ height:'400px' }}
+																	ref={(e) => { this.mediaEwarningDistributionImg = e; }}
 																/>
 															</div>
 														</Col>

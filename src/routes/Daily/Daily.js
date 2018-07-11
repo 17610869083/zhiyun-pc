@@ -35,7 +35,9 @@ class Daily extends React.Component{
 			visible:false,
 			startDate:'',
 			endDate:'',
-			modalId:8
+			modalId:8,
+			echartsReact: "",
+			echartsMediaTypeTrendOption: ""
 		}
 	}
 	componentWillMount(){
@@ -49,7 +51,6 @@ class Daily extends React.Component{
 		request(api_new_preview_report + '&reportFormId=' + templateId).then((res) => {
 			// 遍历对象Object.keys()
 			// Object.values(）对象转数组
-			console.log(res.data.data)
 			this.setState({
 				date: res.data.data,
 				dataID: res.data.component[0],
@@ -76,7 +77,6 @@ class Daily extends React.Component{
 	}
 	onChangeCellEditor(e) {
 		request(api_update_report + '&reportId=' + this.state.reportId + '&editor=' + e + '&moduleId=' + this.state.dataID).then((res) => {
-			console.log(res);
 			if(res.data.code === 1) {
 				message.success(res.data.msg);
 			} else {
@@ -118,7 +118,6 @@ class Daily extends React.Component{
 			startDate:startDate,
 			endDate:endDate
 		})
-		console.log(this.state.jiaData);
 		Object.keys(this.state.jiaData.data).map(item => {
 			if (this.state.componentId[2] === item) {
 				console.log(item)
@@ -130,12 +129,16 @@ class Daily extends React.Component{
 			} else if (this.state.componentId[1] === item) {
         this.setState({
 					emotionDistributionImg: this.state.jiaData.data[item].emotionDistributionImg,
-					mediaDistributionImg: this.state.jiaData.data[item].mediaDistributionImg
+					mediaDistributionImg: this.state.jiaData.data[item].mediaDistributionImg,
+					echartsReact: this.echarts_react,
+					echartsMediaTypeTrendOption: this.echartsMediaTypeTrendOption
 				})
-				console.log(this.state.jiaData.data[item].emotionDistributionImg)
-				console.log(this.state.jiaData.data[item].mediaDistributionImg)
 			}
 		})
+		console.log(this.echarts_react)
+		console.log(this.state.echartsReact)
+		console.log(this.state.echartsMediaTypeTrendOption)
+		console.log(this.echartsMediaTypeTrendOption)
 	}
 	//显示信息摘录弹窗
 	showDailyEdit = () => {
@@ -254,6 +257,8 @@ class Daily extends React.Component{
 							type={this.state.type}
 							typeId={this.state.typeId}
 							hanldle={this.hanldle}
+							echartsReact={this.state.echartsReact}
+							echartsMediaTypeTrendOption={this.echartsMediaTypeTrendOption}
 						/>
 					</Col>
 				</Row>
@@ -515,6 +520,7 @@ class Daily extends React.Component{
 																				option={this.state.emotionDistributionImg}
 																				lazyUpdate={true}
 																				style={{ height:'400px', width: 300 }}
+																				ref={(e) => { this.echarts_react = e; }}
 																			/>												  
 																		</div>
 																	</Col>
@@ -525,6 +531,7 @@ class Daily extends React.Component{
 																				option={this.state.mediaDistributionImg}
 																				lazyUpdate={true}
 																				style={{ height:'400px', width: 300 }}
+																				ref={(e) => { this.echartsMediaTypeTrendOption = e; }}
 																			/>
 																		</div>
 																	</Col>

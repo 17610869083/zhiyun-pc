@@ -1,17 +1,20 @@
 import React from 'react';
 import './reportHeader.less';
-import { Row, Col, Button, Select, DatePicker,Modal,message } from 'antd';
+import { Row, Col, Button, Select, DatePicker,Modal,message ,Input} from 'antd';
 import ModalReport from '../../components/ModalReport/ModalReport';
 import ModalMaterial from '../../components/ModalMaterial/ModalMaterial';
 import {
 	api_get_brief_item,
 	api_get_data_daily_preview,
 	api_top_nav,
-	api_get_special_preview
+	api_get_special_preview,
+	api_get_generate_report,
+	api_update_report_name
 } from '../../services/api';
 import {connect} from 'react-redux';
 import {briefingSwitch} from '../../redux/actions/createActions';
 import request from '../../utils/request';
+import {history} from '../../utils/history';
 // const { RangePicker } = DatePicker;
 const { Option, OptGroup } = Select;
 class reportHeader extends React.Component{
@@ -24,12 +27,17 @@ class reportHeader extends React.Component{
 			 flag:true,
 			 catNameArr: [],
 			 topicList: [],
-			 topicId: ""
+			 topicId: "",
+			 starttime: "",
+			 endtime: "",
+			 reportNameValue:'',
+			 reportNameVisible:false,
+			 finishVisible:false,
+			 repeatFlag:false
 		}
 	}
 	componentWillMount() {
 		request(api_top_nav).then(res=>{
-			console.log(res.data)
 			this.setState({
 				catNameArr: res.data
 			})
@@ -95,7 +103,6 @@ class reportHeader extends React.Component{
 	  onStartChange = (value, dateString) => {
 			// const starttime = dateString.replace(new RegExp("-","gm"),"/");
 			const starttimeHaoMiao = (new Date(dateString)).getTime();
-			console.log(starttimeHaoMiao);
 			this.setState({
 				startMsDate: starttimeHaoMiao,
 				startDate: dateString
@@ -106,7 +113,6 @@ class reportHeader extends React.Component{
 	  onEndChange = (value, dateString) => {
 			// const starttime = dateString.replace(new RegExp("-","gm"),"/");
 			const starttimeHaoMiao = (new Date(dateString)).getTime();
-			console.log(starttimeHaoMiao);
 			this.setState({
 				endMsDate: starttimeHaoMiao,
 				endDate: dateString
@@ -134,6 +140,33 @@ class reportHeader extends React.Component{
 		specialOk () {
 			request(api_get_special_preview + '&topicId=' + this.state.topicId + '&reportFormId=' + this.props.typeId + '&reportType=' + this.props.type).then(res=>{
 				this.props.hanldle(res.data,this.state.topicId)				
+				if (res.data.code === 1) {
+					this.setState({
+						starttime: res.data.starttime,
+						endtime: res.data.endtime
+					})
+					message.success(res.data.msg)
+				} else if (res.data.code === 0) {
+					message.warning(res.data.msg)
+				}				
+			})
+		}
+		generateReport () {
+			request(api_get_generate_report + '&reportId=' + this.props.reportId).then(res=>{
+				if (res.data.code === 1) {
+					message.success(res.data.msg)
+				}
+			})
+		}
+		generateReportDaily () {
+			if (this.props.echartsReact !== "") {
+				// let echarts_instance = this.props.echartsReact.getEchartsInstance();
+				// let base64 =encodeURIComponent(echarts_instance.getDataURL('png'));
+			}
+			request(api_get_generate_report + '&reportId=' + this.props.reportId).then(res=>{
+				if (res.data.code === 1) {
+					message.success(res.data.msg)
+				}
 			})
 		}
 	  onOkDate(value) {
@@ -147,13 +180,80 @@ class reportHeader extends React.Component{
 				} else if (this.state.startMsDate < starttimeHaoMiao && this.state.endMsDate > starttimeHaoMiao) {
 					message.warning("您的选的日期超出了当前时间，请重新选择");
 				} else if (this.state.endMsDate - this.state.startMsDate > 86400000) {
-					console.log(this.state.endMsDate - this.state.startMsDate)
 					message.warning("您选择的时间超过了24个小时，请重新选择");
 				} else if (this.state.startMsDate < starttimeHaoMiao && this.state.endMsDate < starttimeHaoMiao) {
 					message.success(res.data.msg);
 					this.props.hanldle(res.data,this.state.startDate,this.state.endDate)				
+					this.setState({
+						starttime: res.data.starttime,
+						endtime: res.data.endtime
+					})	
 				}
 			});
+		}
+		//专报生成报告
+		specialReport = () => {
+			  this.setState({
+					reportNameVisible:true
+				})
+		}
+		//报告名称
+		reportName = (e) => {
+				let {value} = e.target;
+				this.setState({
+					reportNameValue:value
+				})
+		}
+		//确认名称
+		confimName = () => {
+				request(api_update_report_name +`&reportId=${this.props.reportId}&reportName=${this.state.reportNameValue}`)
+				.then(res => {
+						if(res.data.code === 1){
+							  this.setState({
+									repeatFlag:false,
+									reportNameVisible:false,
+									finishVisible:true
+								})
+								let emotionDistributionImg = this.props.emotionDistributionImg.getEchartsInstance();
+								let emotionDistributionImgbase64 =encodeURIComponent(emotionDistributionImg.getDataURL('png'));
+								let mediaDistributionImg = this.props.mediaDistributionImg.getEchartsInstance();
+								let mediaDistributionImgbase64 =encodeURIComponent(mediaDistributionImg.getDataURL('png'));
+								let mediaAnalysisImg = this.props.mediaAnalysisImg.getEchartsInstance();
+								let mediaAnalysisImgbase64 =encodeURIComponent(mediaAnalysisImg.getDataURL('png'));
+								let negativeCarrierAnalysisImg = this.props.negativeCarrierAnalysisImg.getEchartsInstance();
+								let negativeCarrierAnalysisImgbase64 =encodeURIComponent(negativeCarrierAnalysisImg.getDataURL('png'));
+								let mediaEwarningDistributionImg = this.props.mediaEwarningDistributionImg.getEchartsInstance();
+								let mediaEwarningDistributionImgbase64 =encodeURIComponent(mediaEwarningDistributionImg.getDataURL('png'));
+								let charts = {
+									emotionDistributionImg:emotionDistributionImgbase64,
+									mediaDistributionImg:mediaDistributionImgbase64,
+									mediaAnalysisImg:mediaAnalysisImgbase64,
+									negativeCarrierAnalysisImg:negativeCarrierAnalysisImgbase64,
+									mediaEwarningDistributionImg:mediaEwarningDistributionImgbase64
+								}
+								request(api_get_generate_report,{
+									method: 'POST',
+									headers: {
+												"Content-Type": "application/x-www-form-urlencoded"
+									}, 
+									body:`reportId=${this.props.reportId}&charts=${JSON.stringify(charts)}`
+								})
+						}else{
+                this.setState({
+									repeatFlag:true
+								})
+						}
+				})
+		}
+		//去我的报告
+		goMyReport = () => {
+			  history.push('/myreport');
+		}
+		cancel = () => {
+			  this.setState({
+					reportNameVisible:false,
+					finishVisible:false
+				})
 		}
 	render() {
 		const { type, briefingData,reportId } = this.props;
@@ -167,14 +267,28 @@ class reportHeader extends React.Component{
 					</Col>
 						{
 							(() => {
-								if(briefingData.length > 0) {
-									return (
-										<Button type="primary" className="report" style={{ backgroundColor: "#5a8bff" }} >生成报告</Button>
-									)
-								} else if (briefingData.length === 0) {
-									return (
-										<Button type="primary" className="report" style={{ backgroundColor: "#5a8bff", display: "none" }} >生成报告</Button>
-									)
+								if (type === "01") {
+									if(briefingData.length > 0) {
+										return (
+											<Button type="primary" onClick={this.generateReport.bind(this)} className="report" style={{ backgroundColor: "#5a8bff" }} >生成报告</Button>
+										)
+									} else if (briefingData.length === 0) {
+										return (
+											<Button type="primary" className="report" style={{ backgroundColor: "#5a8bff", display: "none" }} >生成报告</Button>
+										)
+									}
+								} else if (type === "03") {
+									if (this.state.starttime !== "" && this.state.endtime !== "") {
+										return (
+											<Button type="primary" onClick={this.generateReportDaily.bind(this)} className="report" style={{ backgroundColor: "#5a8bff" }} >生成报告</Button>
+										)
+									}
+								} else if (type === "02") {
+									if (this.state.starttime !== "" && this.state.endtime !== "") {
+										return (
+											<Button type="primary" onClick={this.specialReport} className="report" style={{ backgroundColor: "#5a8bff" }} >生成报告</Button>
+										)
+									}
 								}
 							})()
 						}
@@ -261,6 +375,18 @@ class reportHeader extends React.Component{
 				 reportId={this.props.reportId}
 				/>  
         </Modal>
+				<Modal visible={this.state.reportNameVisible} className="report-modal"
+				onOk={this.confimName} onCancel={this.cancel}
+				>
+					   <div style={{textAlign:'center'}}>请输入报告名称</div>
+					   <div style={this.state.repeatFlag?{textAlign:'center',color:'#ff0000'}:{display:'none'}}>报告名重复，请重新输入</div>
+						 <Input onChange={this.reportName} value={this.state.reportNameValue}
+						  style={{margin:'20px auto',width:'80%',display:'block'}}/>
+				</Modal>
+				<Modal visible={this.state.finishVisible} className="report-modal"
+				onOk={this.goMyReport} onCancel={this.cancel} okText='去我的报告' cancelText='返回首页'> 
+					   <div style={{textAlign:'center'}}>生成报告已完成</div>
+				</Modal>
 			</div>							
 		)
 	}

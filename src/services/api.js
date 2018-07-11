@@ -386,3 +386,5 @@ export const api_edit_excerpt = host +'Report?action=editExcerpt';
 export const api_get_excerpt = host +'Report?action=getExcerpt';
 // 专题请求
 export const api_get_special_preview = host +'Report?action=specialReport';
+// 生成报告
+export const api_get_generate_report = host +'report/exportReport?action=generateReport';

@@ -95,7 +95,7 @@ class MyReport extends React.Component{
         }
         request(api_update_report_name + `&reportId=${reportid}&reportName=${this.state.inputValue}`)
         .then( res => {
-              if(res.data.code === 0){
+              if(res.data.code === 1){
                 request(api_get_all_report)
                 .then( res => {
                     if(res.data.code === 1){

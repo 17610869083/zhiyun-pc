@@ -34,7 +34,6 @@ export default class editText extends Component {
     }, 500);
   };
   render() {
-    console.log(this.state);
     const { value, editable } = this.state;
     return (
       <div className="editable-cell" style={this.props.style}>
