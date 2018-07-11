@@ -76,7 +76,6 @@ class Special extends React.Component{
 	}
 	onChangeCellEditor(e) {
 		request(api_update_report + '&reportId=' + this.state.reportId + '&editor=' + e + '&moduleId=' + this.state.dataID).then((res) => {
-			console.log(res);
 			if(res.data.code === 1) {
 				message.success(res.data.msg);
 			} else {
@@ -94,11 +93,9 @@ class Special extends React.Component{
  		})
 	}
 	hanldle= data => {
-		console.log(data);
 		this.setState({
 			jiaData: data
 		})
-		// console.log(this.state.jiaData);
 		Object.keys(this.state.jiaData.data).map(item => {
 			this.setState({
 				reportId: this.state.jiaData.reportId
@@ -773,18 +770,12 @@ class Special extends React.Component{
 																))
 															}
 															<div style={{ height: 500 }}>
-															 	{
-                                  this.state.negativeCarrierAnalysisImg !== {} ? (
-																		<ReactEchartsCore
-																			echarts={echarts}
-																			option={this.state.negativeCarrierAnalysisImg}
-																			lazyUpdate={true}
-																			style={{ height:'400px' }}
-																		/>
-																	) : (
-																		<div></div>
-																	)
-																}
+																<ReactEchartsCore
+																	echarts={echarts}
+																	option={this.state.negativeCarrierAnalysisImg}
+																	lazyUpdate={true}
+																	style={{ height:'400px' }}
+																/>
 															</div>
 														</Col>
 													</Row>

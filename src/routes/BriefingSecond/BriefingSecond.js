@@ -42,7 +42,6 @@ class BriefingSecond extends React.Component{
 			request(api_new_preview_report + '&reportFormId=' + templateId).then((res) => {
 				// 遍历对象Object.keys()
 				// Object.values(）对象转数组
-				console.log(res.data.data)
 				this.setState({
 					date: res.data.data,
 					dataID: res.data.component[0]

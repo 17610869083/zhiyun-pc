@@ -44,7 +44,6 @@ class Daily extends React.Component{
 		request(api_new_preview_report + '&reportFormId=' + templateId).then((res) => {
 			// 遍历对象Object.keys()
 			// Object.values(）对象转数组
-			console.log(res.data.data)
 			this.setState({
 				date: res.data.data,
 				dataID: res.data.component[0],
@@ -71,7 +70,6 @@ class Daily extends React.Component{
 	}
 	onChangeCellEditor(e) {
 		request(api_update_report + '&reportId=' + this.state.reportId + '&editor=' + e + '&moduleId=' + this.state.dataID).then((res) => {
-			console.log(res);
 			if(res.data.code === 1) {
 				message.success(res.data.msg);
 			} else {
@@ -107,11 +105,9 @@ class Daily extends React.Component{
  		})
 	}
 	hanldle= data => {
-		console.log(data)
 		this.setState({
 			jiaData: data
 		})
-		console.log(this.state.jiaData);
 		Object.keys(this.state.jiaData.data).map(item => {
 			if (this.state.componentId[2] === item) {
 				this.setState({
@@ -123,8 +119,6 @@ class Daily extends React.Component{
 					emotionDistributionImg: this.state.jiaData.data[item].emotionDistributionImg,
 					mediaDistributionImg: this.state.jiaData.data[item].mediaDistributionImg
 				})
-				console.log(this.state.jiaData.data[item].emotionDistributionImg)
-				console.log(this.state.jiaData.data[item].mediaDistributionImg)
 			}
 		})
 	}
