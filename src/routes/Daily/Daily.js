@@ -259,6 +259,7 @@ class Daily extends React.Component{
 							hanldle={this.hanldle}
 							echartsReact={this.state.echartsReact}
 							echartsMediaTypeTrendOption={this.echartsMediaTypeTrendOption}
+							reportId={this.state.reportId}
 						/>
 					</Col>
 				</Row>
