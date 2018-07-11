@@ -382,3 +382,5 @@ export const api_refresh_brief = host +'Report?action=refreshBrief';
 export const api_get_data_daily_preview = host +'Report?action=dailyPreview';
 // 专题请求
 export const api_get_special_preview = host +'Report?action=specialReport';
+// 生成报告
+export const api_get_generate_report = host +'report/exportReport?action=generateReport'

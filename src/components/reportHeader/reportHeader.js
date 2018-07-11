@@ -7,7 +7,8 @@ import {
 	api_get_brief_item,
 	api_get_data_daily_preview,
 	api_top_nav,
-	api_get_special_preview
+	api_get_special_preview,
+	api_get_generate_report
 } from '../../services/api';
 import {connect} from 'react-redux';
 import {briefingSwitch} from '../../redux/actions/createActions';
@@ -24,12 +25,13 @@ class reportHeader extends React.Component{
 			 flag:true,
 			 catNameArr: [],
 			 topicList: [],
-			 topicId: ""
+			 topicId: "",
+			 starttime: "",
+			 endtime: ""
 		}
 	}
 	componentWillMount() {
 		request(api_top_nav).then(res=>{
-			console.log(res.data)
 			this.setState({
 				catNameArr: res.data
 			})
@@ -95,7 +97,6 @@ class reportHeader extends React.Component{
 	  onStartChange = (value, dateString) => {
 			// const starttime = dateString.replace(new RegExp("-","gm"),"/");
 			const starttimeHaoMiao = (new Date(dateString)).getTime();
-			console.log(starttimeHaoMiao);
 			this.setState({
 				startMsDate: starttimeHaoMiao,
 				startDate: dateString
@@ -106,7 +107,6 @@ class reportHeader extends React.Component{
 	  onEndChange = (value, dateString) => {
 			// const starttime = dateString.replace(new RegExp("-","gm"),"/");
 			const starttimeHaoMiao = (new Date(dateString)).getTime();
-			console.log(starttimeHaoMiao);
 			this.setState({
 				endMsDate: starttimeHaoMiao,
 				endDate: dateString
@@ -133,8 +133,34 @@ class reportHeader extends React.Component{
 		}
 		specialOk () {
 			request(api_get_special_preview + '&topicId=' + this.state.topicId + '&reportFormId=' + this.props.typeId + '&reportType=' + this.props.type).then(res=>{
-				console.log(res.data);
+				if (res.data.code === 1) {
+					this.setState({
+						starttime: res.data.starttime,
+						endtime: res.data.endtime
+					})
+					message.success(res.data.msg)
+				} else if (res.data.code === 0) {
+					message.warning(res.data.msg)
+				}
 				this.props.hanldle(res.data)				
+			})
+		}
+		generateReport () {
+			request(api_get_generate_report + '&reportId=' + this.props.reportId).then(res=>{
+				if (res.data.code === 1) {
+					message.success(res.data.msg)
+				}
+			})
+		}
+		generateReportDaily () {
+			if (this.props.echartsReact !== "") {
+				// let echarts_instance = this.props.echartsReact.getEchartsInstance();
+				// let base64 =encodeURIComponent(echarts_instance.getDataURL('png'));
+			}
+			request(api_get_generate_report + '&reportId=' + this.props.reportId).then(res=>{
+				if (res.data.code === 1) {
+					message.success(res.data.msg)
+				}
 			})
 		}
 	  onOkDate(value) {
@@ -148,15 +174,19 @@ class reportHeader extends React.Component{
 				} else if (this.state.startMsDate < starttimeHaoMiao && this.state.endMsDate > starttimeHaoMiao) {
 					message.warning("您的选的日期超出了当前时间，请重新选择");
 				} else if (this.state.endMsDate - this.state.startMsDate > 86400000) {
-					console.log(this.state.endMsDate - this.state.startMsDate)
 					message.warning("您选择的时间超过了24个小时，请重新选择");
 				} else if (this.state.startMsDate < starttimeHaoMiao && this.state.endMsDate < starttimeHaoMiao) {
 					message.success(res.data.msg);
-					this.props.hanldle(res.data)				
+					this.setState({
+						starttime: res.data.starttime,
+						endtime: res.data.endtime
+					})
+					this.props.hanldle(res.data)		
 				}
 			});
 		}
 	render() {
+		console.log(this.props);
 		const { type, briefingData,reportId } = this.props;
 		const { startValue, endValue, endOpen } = this.state;
 		let haveData = reportId !== '' ?'have':'none';
@@ -168,14 +198,28 @@ class reportHeader extends React.Component{
 					</Col>
 						{
 							(() => {
-								if(briefingData.length > 0) {
-									return (
-										<Button type="primary" className="report" style={{ backgroundColor: "#5a8bff" }} >生成报告</Button>
-									)
-								} else if (briefingData.length === 0) {
-									return (
-										<Button type="primary" className="report" style={{ backgroundColor: "#5a8bff", display: "none" }} >生成报告</Button>
-									)
+								if (type === "01") {
+									if(briefingData.length > 0) {
+										return (
+											<Button type="primary" onClick={this.generateReport.bind(this)} className="report" style={{ backgroundColor: "#5a8bff" }} >生成报告</Button>
+										)
+									} else if (briefingData.length === 0) {
+										return (
+											<Button type="primary" className="report" style={{ backgroundColor: "#5a8bff", display: "none" }} >生成报告</Button>
+										)
+									}
+								} else if (type === "03") {
+									if (this.state.starttime !== "" && this.state.endtime !== "") {
+										return (
+											<Button type="primary" onClick={this.generateReportDaily.bind(this)} className="report" style={{ backgroundColor: "#5a8bff" }} >生成报告</Button>
+										)
+									}
+								} else if (type === "02") {
+									if (this.state.starttime !== "" && this.state.endtime !== "") {
+										return (
+											<Button type="primary" className="report" style={{ backgroundColor: "#5a8bff" }} >生成报告</Button>
+										)
+									}
 								}
 							})()
 						}

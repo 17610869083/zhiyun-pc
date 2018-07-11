@@ -30,7 +30,9 @@ class Daily extends React.Component{
 			jiaData: {},
 			reportId: "",
 			emotionDistributionImg: {},
-			mediaDistributionImg: {}
+			mediaDistributionImg: {},
+			echartsReact: "",
+			echartsMediaTypeTrendOption: ""
 		}
 	}
 	componentWillMount(){
@@ -106,7 +108,7 @@ class Daily extends React.Component{
 	}
 	hanldle= data => {
 		this.setState({
-			jiaData: data
+			jiaData: data,
 		})
 		Object.keys(this.state.jiaData.data).map(item => {
 			if (this.state.componentId[2] === item) {
@@ -117,10 +119,16 @@ class Daily extends React.Component{
 			} else if (this.state.componentId[1] === item) {
         this.setState({
 					emotionDistributionImg: this.state.jiaData.data[item].emotionDistributionImg,
-					mediaDistributionImg: this.state.jiaData.data[item].mediaDistributionImg
+					mediaDistributionImg: this.state.jiaData.data[item].mediaDistributionImg,
+					echartsReact: this.echarts_react,
+					echartsMediaTypeTrendOption: this.echartsMediaTypeTrendOption
 				})
 			}
 		})
+		console.log(this.echarts_react)
+		console.log(this.state.echartsReact)
+		console.log(this.state.echartsMediaTypeTrendOption)
+		console.log(this.echartsMediaTypeTrendOption)
 	}
 	render() {
 		const mediaOption= {
@@ -226,6 +234,8 @@ class Daily extends React.Component{
 							type={this.state.type}
 							typeId={this.state.typeId}
 							hanldle={this.hanldle}
+							echartsReact={this.state.echartsReact}
+							echartsMediaTypeTrendOption={this.echartsMediaTypeTrendOption}
 						/>
 					</Col>
 				</Row>
@@ -487,6 +497,7 @@ class Daily extends React.Component{
 																				option={this.state.emotionDistributionImg}
 																				lazyUpdate={true}
 																				style={{ height:'400px', width: 300 }}
+																				ref={(e) => { this.echarts_react = e; }}
 																			/>												  
 																		</div>
 																	</Col>
@@ -497,6 +508,7 @@ class Daily extends React.Component{
 																				option={this.state.mediaDistributionImg}
 																				lazyUpdate={true}
 																				style={{ height:'400px', width: 300 }}
+																				ref={(e) => { this.echartsMediaTypeTrendOption = e; }}
 																			/>
 																		</div>
 																	</Col>
