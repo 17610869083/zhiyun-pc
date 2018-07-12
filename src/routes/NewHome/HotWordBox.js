@@ -3,7 +3,7 @@ import IconFont from '../../components/IconFont';
 import './HotWordBox.less';
 import {Icon} from 'antd';
 import {GRAY,BLACK,BLUES} from '../../utils/colors';
-// import 'TagCloud';
+import 'TagCloud';
 class HotWordBox extends React.Component{
     delHotWordBox(){
           this.props.delHotWordBox(1)

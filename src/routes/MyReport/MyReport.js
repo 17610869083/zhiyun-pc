@@ -76,12 +76,12 @@ class MyReport extends React.Component{
            }
        })
     }
-    changeReport(id,status,reportType){
+    changeReport(id,status,reportFormId,reportType){
             this.setState({
                 checkId:id,
                 flag:true,
                 reportType:reportType,
-                reportFormId:reportFormId
+                reportFormId: reportFormId
                 //flag: status === 2 ?true :false
             })
     }

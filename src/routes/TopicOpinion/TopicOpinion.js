@@ -290,12 +290,18 @@ class TopicOpinion extends React.Component {
     }
     render() {
     	const delItems = (
-            <Menu onClick={this.onDelitem.bind(this)}>
-                <Menu.Item key="2">重命名</Menu.Item>
-                <Menu.Item key="1">删除</Menu.Item>
-                <Menu.Item key="3">添加专题</Menu.Item>
-            </Menu>
-       );
+				<Menu onClick={this.onDelitem.bind(this)}>
+					<Menu.Item key="2">重命名</Menu.Item>
+					<Menu.Item key="1">删除</Menu.Item>
+					<Menu.Item key="3">添加专题</Menu.Item>
+				</Menu>
+			);
+			// const twoItems = (
+			// 	<Menu onClick={this.onDelitem.bind(this)}>
+			// 		<Menu.Item key="1">删除</Menu.Item>
+			// 		<Menu.Item key="2">生成报告</Menu.Item>
+			// 	</Menu>
+			// );
         let {topicNavMessageSucceededState} =this.props;
         const LeftTopicLists=topicNavMessageSucceededState!==1&&topicNavMessageSucceededState.map((item,index)=>
           <div className="a-class" key={index}>
