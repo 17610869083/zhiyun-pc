@@ -155,40 +155,6 @@ class reportHeader extends React.Component{
 				}				
 			})
 		}
-		generateReport () {
-			request(api_get_generate_report + '&reportId=' + this.props.reportId).then(res=>{
-				if (res.data.code === 1) {
-					message.success(res.data.msg)
-				}
-			})
-		}
-		generateReportDaily () {
-			if (this.props.echartsReact !== "" && this.props.echartsMediaTypeTrendOption !== "") {
-				const echarts_instance = this.props.echartsReact.getEchartsInstance();
-				const echartsMediaTypeTrendOption_instance = this.props.echartsMediaTypeTrendOption.getEchartsInstance();
-				this.setState({
-					charts: {
-						emotionDistributionImg: encodeURIComponent(echarts_instance.getDataURL('png')),
-						mediaDistributionImg: encodeURIComponent(echartsMediaTypeTrendOption_instance.getDataURL('png'))
-					}
-				}, () => {
-					let chart = JSON.stringify(this.state.charts);
-					request(api_get_generate_report,{
-						method:'POST',
-						headers: {
-							"Content-Type": "application/x-www-form-urlencoded"
-						},
-						body:`reportId=${this.props.reportId}&charts=${chart}`    
-				 	}).then(res=>{
-						if (res.data.code === 1) {
-							message.success(res.data.msg)
-						} else if (res.data.code === 0) {
-							message.error(res.data.msg)
-						}
-				 })
-				})
-			}
-		}
 	  onOkDate(value) {
 			request(api_get_data_daily_preview + '&reportFormId=' + this.props.typeId + '&reportType=' + this.props.type + '&starttime=' + this.state.startDate + '&endtime=' + this.state.endDate).then((res) => {
 				const myDate = new Date();
@@ -234,30 +200,72 @@ class reportHeader extends React.Component{
 									reportNameVisible:false,
 									finishVisible:true
 								})
-								let emotionDistributionImg = this.props.emotionDistributionImg.getEchartsInstance();
-								let emotionDistributionImgbase64 =encodeURIComponent(emotionDistributionImg.getDataURL('png'));
-								let mediaDistributionImg = this.props.mediaDistributionImg.getEchartsInstance();
-								let mediaDistributionImgbase64 =encodeURIComponent(mediaDistributionImg.getDataURL('png'));
-								let mediaAnalysisImg = this.props.mediaAnalysisImg.getEchartsInstance();
-								let mediaAnalysisImgbase64 =encodeURIComponent(mediaAnalysisImg.getDataURL('png'));
-								let negativeCarrierAnalysisImg = this.props.negativeCarrierAnalysisImg.getEchartsInstance();
-								let negativeCarrierAnalysisImgbase64 =encodeURIComponent(negativeCarrierAnalysisImg.getDataURL('png'));
-								let mediaEwarningDistributionImg = this.props.mediaEwarningDistributionImg.getEchartsInstance();
-								let mediaEwarningDistributionImgbase64 =encodeURIComponent(mediaEwarningDistributionImg.getDataURL('png'));
-								let charts = {
-									emotionDistributionImg:emotionDistributionImgbase64,
-									mediaDistributionImg:mediaDistributionImgbase64,
-									mediaAnalysisImg:mediaAnalysisImgbase64,
-									negativeCarrierAnalysisImg:negativeCarrierAnalysisImgbase64,
-									mediaEwarningDistributionImg:mediaEwarningDistributionImgbase64
+								if (this.props.type === "01") {
+									request(api_get_generate_report + '&reportId=' + this.props.reportId).then(res=>{
+										if (res.data.code === 1) {
+											message.success(res.data.msg)
+										} else if (res.data.code === 0) {
+											message.error(res.data.msg)
+										}
+									})
+								} else if (this.props.type === "02") {
+									let emotionDistributionImg = this.props.emotionDistributionImg.getEchartsInstance();
+									let emotionDistributionImgbase64 =encodeURIComponent(emotionDistributionImg.getDataURL('png'));
+									let mediaDistributionImg = this.props.mediaDistributionImg.getEchartsInstance();
+									let mediaDistributionImgbase64 =encodeURIComponent(mediaDistributionImg.getDataURL('png'));
+									let mediaAnalysisImg = this.props.mediaAnalysisImg.getEchartsInstance();
+									let mediaAnalysisImgbase64 =encodeURIComponent(mediaAnalysisImg.getDataURL('png'));
+									let negativeCarrierAnalysisImg = this.props.negativeCarrierAnalysisImg.getEchartsInstance();
+									let negativeCarrierAnalysisImgbase64 =encodeURIComponent(negativeCarrierAnalysisImg.getDataURL('png'));
+									let mediaEwarningDistributionImg = this.props.mediaEwarningDistributionImg.getEchartsInstance();
+									let mediaEwarningDistributionImgbase64 =encodeURIComponent(mediaEwarningDistributionImg.getDataURL('png'));
+									let charts = {
+										emotionDistributionImg:emotionDistributionImgbase64,
+										mediaDistributionImg:mediaDistributionImgbase64,
+										mediaAnalysisImg:mediaAnalysisImgbase64,
+										negativeCarrierAnalysisImg:negativeCarrierAnalysisImgbase64,
+										mediaEwarningDistributionImg:mediaEwarningDistributionImgbase64
+									}
+									request(api_get_generate_report,{
+										method: 'POST',
+										headers: {
+													"Content-Type": "application/x-www-form-urlencoded"
+										}, 
+										body:`reportId=${this.props.reportId}&charts=${JSON.stringify(charts)}`
+									}).then(res => {
+										if (res.data.code === 1) {
+											message.success(res.data.msg)
+										} else if (res.data.code === 0) {
+											message.error(res.data.msg)
+										}
+									})
+								} else if (this.props.type === "03") {
+									if (this.props.echartsReact !== "" && this.props.echartsMediaTypeTrendOption !== "") {
+										const echarts_instance = this.props.echartsReact.getEchartsInstance();
+										const echartsMediaTypeTrendOption_instance = this.props.echartsMediaTypeTrendOption.getEchartsInstance();
+										this.setState({
+											charts: {
+												emotionDistributionImg: encodeURIComponent(echarts_instance.getDataURL('png')),
+												mediaDistributionImg: encodeURIComponent(echartsMediaTypeTrendOption_instance.getDataURL('png'))
+											}
+										}, () => {
+											let chart = JSON.stringify(this.state.charts);
+											request(api_get_generate_report,{
+												method:'POST',
+												headers: {
+													"Content-Type": "application/x-www-form-urlencoded"
+												},
+												body:`reportId=${this.props.reportId}&charts=${chart}`    
+											 }).then(res=>{
+												if (res.data.code === 1) {
+													message.success(res.data.msg)
+												} else if (res.data.code === 0) {
+													message.error(res.data.msg)
+												}
+										 })
+										})
+									}
 								}
-								request(api_get_generate_report,{
-									method: 'POST',
-									headers: {
-												"Content-Type": "application/x-www-form-urlencoded"
-									}, 
-									body:`reportId=${this.props.reportId}&charts=${JSON.stringify(charts)}`
-								})
 						}else{
                 this.setState({
 									repeatFlag:true
@@ -291,7 +299,7 @@ class reportHeader extends React.Component{
 								if (type === "01") {
 									if(briefingData.length > 0 || this.props.reportId !== "") {
 										return (
-											<Button type="primary" onClick={this.generateReport.bind(this)} className="report" style={{ backgroundColor: "#5a8bff" }} >生成报告</Button>
+											<Button type="primary" onClick={this.specialReport} className="report" style={{ backgroundColor: "#5a8bff" }} >生成报告</Button>
 										)
 									} else if (briefingData.length === 0 || this.props.reportId === "") {
 										return (
@@ -301,7 +309,7 @@ class reportHeader extends React.Component{
 								} else if (type === "03") {
 									if (this.state.starttime !== "" && this.state.endtime !== "") {
 										return (
-											<Button type="primary" onClick={this.generateReportDaily.bind(this)} className="report" style={{ backgroundColor: "#5a8bff" }} >生成报告</Button>
+											<Button type="primary" onClick={this.specialReport} className="report" style={{ backgroundColor: "#5a8bff" }} >生成报告</Button>
 										)
 									}
 								} else if (type === "02") {

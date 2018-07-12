@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { DatePicker } from "antd";
 import moment from 'moment';
 import "./editData.less";
-const dateFormat = 'YYYY-MM-DD';
+const dateFormat = 'YYYY年MM月DD日';
 
 export default class editData extends Component {
   state = {
