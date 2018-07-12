@@ -107,9 +107,11 @@ class ModalReport extends React.Component{
       }
       //确定按钮
       confirm = () => {
+        console.log(111);
          if(this.props.checkReport){
          request(api_refresh_brief + `&reportId=${this.props.reportId}`)
          .then(res => {
+					 console.log(res);
              if(res.data.code === 1){
                 this.props.checkReport(res.data.data,false); 
              }

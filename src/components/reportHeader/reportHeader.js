@@ -276,6 +276,7 @@ class reportHeader extends React.Component{
 				})
 		}
 	render() {
+		console.log(this.props);
 		const { type, briefingData,reportId } = this.props;
 		const { startValue, endValue, endOpen } = this.state;
 		let haveData = reportId !== '' ?'have':'none';
@@ -288,11 +289,11 @@ class reportHeader extends React.Component{
 						{
 							(() => {
 								if (type === "01") {
-									if(briefingData.length > 0) {
+									if(briefingData.length > 0 || this.props.reportId !== "") {
 										return (
 											<Button type="primary" onClick={this.generateReport.bind(this)} className="report" style={{ backgroundColor: "#5a8bff" }} >生成报告</Button>
 										)
-									} else if (briefingData.length === 0) {
+									} else if (briefingData.length === 0 || this.props.reportId === "") {
 										return (
 											<Button type="primary" className="report" style={{ backgroundColor: "#5a8bff", display: "none" }} >生成报告</Button>
 										)
@@ -395,17 +396,28 @@ class reportHeader extends React.Component{
 				 reportId={this.props.reportId}
 				/>  
         </Modal>
-				<Modal visible={this.state.reportNameVisible} className="report-modal"
-				onOk={this.confimName} onCancel={this.cancel}
+				<Modal
+					visible={this.state.reportNameVisible}
+					className="report-modal"
+					onOk={this.confimName}
+					onCancel={this.cancel}
 				>
-					   <div style={{textAlign:'center'}}>请输入报告名称</div>
-					   <div style={this.state.repeatFlag?{textAlign:'center',color:'#ff0000'}:{display:'none'}}>报告名重复，请重新输入</div>
-						 <Input onChange={this.reportName} value={this.state.reportNameValue}
-						  style={{margin:'20px auto',width:'80%',display:'block'}}/>
+					<div style={{textAlign:'center'}}>请输入报告名称</div>
+					<div style={this.state.repeatFlag?{textAlign:'center',color:'#ff0000'}:{display:'none'}}>报告名重复，请重新输入</div>
+					<Input
+						onChange={this.reportName}
+						value={this.state.reportNameValue}
+					  style={{margin:'20px auto',width:'80%',display:'block'}}/>
 				</Modal>
-				<Modal visible={this.state.finishVisible} className="report-modal"
-				onOk={this.goMyReport} onCancel={this.cancel} okText='去我的报告' cancelText='返回首页'> 
-					   <div style={{textAlign:'center'}}>生成报告已完成</div>
+				<Modal
+					visible={this.state.finishVisible}
+					className="report-modal"
+					onOk={this.goMyReport}
+					onCancel={this.cancel}
+					okText='去我的报告'
+					cancelText='返回首页'
+				> 
+					<div style={{textAlign:'center'}}>生成报告已完成</div>
 				</Modal>
 			</div>							
 		)
