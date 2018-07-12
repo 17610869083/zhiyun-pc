@@ -1,6 +1,6 @@
 import React from 'react';
 import {Icon} from 'antd';
-import { LIGHT, DARK,} from '../../utils/colors';
+import { LIGHT, DARKER,BLUES} from '../../utils/colors';
 import {changeTheme} from '../../redux/actions/actions';
 import {connect} from 'react-redux';
 import './ChangeTheme.less';
@@ -14,24 +14,24 @@ class ChangeTheme extends React.Component {
             theme: [
                 {
                     topColor: {
-                        backgroundColor: LIGHT
+                        backgroundColor: BLUES
                     },
                     bottomColor: {
-                        backgroundColor: DARK
+                        backgroundColor: '#fff'
                     },
                     textColor:{
-                         color:'#000000'
+                         color:'#fff'
                     }
                 },
                 {
                     topColor: {
-                        backgroundColor: DARK
+                        backgroundColor: LIGHT
                     },
                     bottomColor: {
-                        backgroundColor: DARK
+                        backgroundColor: DARKER
                     },
                     textColor:{
-                        color:'rgba(255, 255, 255, 0.67)'
+                        color:'#fff'
                     }
                 },
                 // {

@@ -228,7 +228,7 @@ class Index extends React.Component {
             onMouseLeave={this.mouseLeaveToggle}
           >
             <div>
-              <div className="logo-wrapper">
+              <div className="logo-wrapper" style={{backgroundColor:themeColor.topColor.backgroundColor}}>
                 <img src={logo} alt="logo" className="logo" onClick={this.goBackIndex.bind(this)}/>
               </div>
               <div className="trigger-wrapper" onClick={this.toggle} >

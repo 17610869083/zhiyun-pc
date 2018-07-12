@@ -1,6 +1,6 @@
 import React from 'react';
 import request from '../../utils/request';
-import Kindeditor from '../../components/Kindeditor/Kindeditor.js';
+//import Kindeditor from '../../components/Kindeditor/Kindeditor.js';
 import {connect} from 'react-redux';
 import {
   getCollectionOpinionListRequested,
@@ -18,9 +18,9 @@ import {
   api_docsend_push
 } from '../../services/api';
 import EditOpinionDetail from '../../components/EditOpinionDetail/EditOpinionDetail';
-import {Tag, Popconfirm, message, Icon, Modal, Menu, Dropdown, Select, Input} from 'antd';
+import {Tag, Popconfirm, message, Icon, Modal, Menu, Dropdown, Select} from 'antd';
 import {history} from '../../utils/history';
-import {setHighlightTags, opinionTypeToColor, getMeailMessage} from '../../utils/format';
+import {setHighlightTags, opinionTypeToColor} from '../../utils/format';
 import './DetailOpinion.less';
 import Store from '../../redux/store/index'
 import IconFont from '../../components/IconFont'
@@ -422,7 +422,7 @@ class DetailOpinion extends React.Component {
         children.push(<Option key={emailAddressee[i]['id']}>{emailAddressee[i]['email']}</Option>);
       }
     }
-    const conent = getMeailMessage(this.state.emailData);
+    //const conent = getMeailMessage(this.state.emailData);
     const data = this.state.data;
     const sid = this.state.sid;
     const Keywords = this.state.keywords.map((item, index) =>

@@ -63,6 +63,7 @@ class Daily extends React.Component{
 						data: this.state.date[item].informationExcerpt
 					})
 				}
+				return ''
 			})
 		});
 	}
@@ -112,7 +113,6 @@ class Daily extends React.Component{
  		})
 	}
 	hanldle= (data,startDate,endDate) => {
-		console.log(data)
 		this.setState({
 			jiaData: data,
 			startDate:startDate,
@@ -134,11 +134,8 @@ class Daily extends React.Component{
 					echartsMediaTypeTrendOption: this.echartsMediaTypeTrendOption
 				})
 			}
+			return ''
 		})
-		console.log(this.echarts_react)
-		console.log(this.state.echartsReact)
-		console.log(this.state.echartsMediaTypeTrendOption)
-		console.log(this.echartsMediaTypeTrendOption)
 	}
 	//显示信息摘录弹窗
 	showDailyEdit = () => {

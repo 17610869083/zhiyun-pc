@@ -2,11 +2,10 @@ import React from 'react';
 import './MyReport.less';
 import {Input,DatePicker,Button,message,Pagination,Tooltip,Popconfirm,Popover,Modal} from 'antd';
 import {api_get_all_report,api_update_report_name,api_search_report,
-        api_new_delete_report,api_download_report} from '../../services/api';
+        api_new_delete_report,api_download_report,api_rebuild_report} from '../../services/api';
 import request from '../../utils/request';
 import IconFont from '../../components/IconFont';
-import img from '../../assets/img/1.png';
-import {getLocalTime,getSecondTime,templateTypeSort} from '../../utils/format';
+import {getSecondTime,templateTypeSort} from '../../utils/format';
 import {history} from '../../utils/history';
 class MyReport extends React.Component{
      constructor(props){
@@ -37,7 +36,9 @@ class MyReport extends React.Component{
             visible:false,
             hmtlUrl:'',
             previewVisible:false,
-            popoverVisible:false
+            popoverVisible:false,
+            reportType:'01',
+            reportFormId:2
          }
      }
      componentWillMount(){
@@ -65,7 +66,8 @@ class MyReport extends React.Component{
        .then( res => {
             if(res.data.code === 1){
             this.setState({
-                contentList:res.data.data.content
+                contentList:res.data.data.content,
+                recordTotal: res.data.data.recordTotal
             })        
            }else{
             this.setState({
@@ -74,10 +76,12 @@ class MyReport extends React.Component{
            }
        })
     }
-    changeReport(id,status){
+    changeReport(id,status,reportType){
             this.setState({
                 checkId:id,
-                flag:true
+                flag:true,
+                reportType:reportType,
+                reportFormId:reportFormId
                 //flag: status === 2 ?true :false
             })
     }
@@ -144,6 +148,8 @@ class MyReport extends React.Component{
                   this.setState({
                     contentList:res.data.data.content
                   })
+              }else{
+                  message.error('未搜索到该报告，请换个条件试试')
               }
          })
     }
@@ -175,9 +181,23 @@ class MyReport extends React.Component{
     }
     //预览
     preview = () => {
-        this.setState({
-            popoverVisible:true
-        })
+        if(this.state.reportType === '01'){
+            this.setState({
+                popoverVisible:true
+            })
+        }else{
+            request(api_download_report +`&reportId=${this.state.checkId}&dType=html`)
+            .then(res =>{
+                 if(res.data.code ===1){
+                   this.setState({
+                       hmtlUrl:res.data.fileAddress,
+                       previewVisible:true
+                   })
+                 }else{
+                   message.error(res.data.msg)
+                 }
+             } )
+        }
     }
     //删除
     delete = () => {
@@ -200,7 +220,7 @@ class MyReport extends React.Component{
          request(api_download_report +`&reportId=${this.state.checkId}&dType=${type}`)
          .then(res =>{
               if(res.data.code ===1){
-                window.location.href = res.data.fileAddress
+                window.location.href = './../'+res.data.fileAddress;
               }else{
                 message.error(res.data.msg)
               }
@@ -246,7 +266,11 @@ class MyReport extends React.Component{
                  }
              } )
          }else{
-            history.push('/choosetemplate');  
+            //console.log(this.state.reportFormId +' ---'+ this.state.reportType)
+            // request(api_rebuild_report + `&reportId=${this.state.checkId}&reportType=${this.state.reportType}`)
+            // .then(res => {
+            //     console.log(res.data)
+            // })    
          }
     }
      render(){
@@ -259,14 +283,15 @@ class MyReport extends React.Component{
          const contentList = this.state.contentList.map( (item,index) => {
              return <li key = {index} 
              className={this.state.checkId === item.id ?'cont active':'cont normal'}> 
-             <img src={img} alt="" onClick = {this.changeReport.bind(this,item.id,item.status)}/>
+             <img src={'http://119.90.61.155/om31/'+item.imagepath} alt="" onClick = {this.changeReport.bind(this,item.id,item.status,item.reportType,item.reportFormId)}/>
              {
              this.state.editReprotName === item.id ? <Input  value={this.state.inputValue} onChange={this.changeReportName.bind(this)} onBlur = {this.blur.bind(this,item.id)}/>:
              <p title="双击可修改名称" onDoubleClick={this.editReportName.bind(this,item.id,item.reportName)} style={{userSelect:'none',height:'28px'}} >{item.reportName}</p>
              }
-             <p style={{marginBottom:'6px'}}>{getLocalTime(item.updateTime)} 
+             {item.updateTime && item.updateTime!=='' ?<p style={{marginBottom:'6px'}}>{item.updateTime}
              {item.status === '2' ?<IconFont className="status" type="icon-queren"/>:<IconFont className="status" type="icon-weiwancheng"/>}
-             </p>
+             </p>:<p style={{textAlign:'center',color:'#ff0000',marginBottom:'6px'}}>该报告未完成</p>
+            }
              </li> 
          }) 
          return (
@@ -288,12 +313,12 @@ class MyReport extends React.Component{
              </div>
              </div>
              <div className="my-report-type">
-              <ul className="my-report-type-list">
+              <ul className="my-report-type-list" >
                   <li>报告类型:</li>
                   {typeList}
               </ul>
              </div>
-             <div className="my-report-content">
+             <div className="my-report-content"  style={this.state.contentList.length === 0 ?{display:'none'}:{display:'block'}}>
              <p style={this.state.flag ? {opacity:1,transition:'all 0.5s ease-in 0.5s'}:{opacity:0}}>
              {/* <Tooltip title="复制" placement="bottom">
                 <Popconfirm title="确定要复制该报告吗？" onConfirm={this.copy} okText="是" cancelText="否"
@@ -347,7 +372,8 @@ class MyReport extends React.Component{
                   {contentList}
               </ul>
               <div className="pagination">      
-              <Pagination total={this.state.recordTotal} onChange={this.paginationChange} current={this.state.current}/>    
+              <Pagination total={this.state.recordTotal} onChange={this.paginationChange}
+               current={this.state.current}/>    
               </div>
              </div>
              </div>
