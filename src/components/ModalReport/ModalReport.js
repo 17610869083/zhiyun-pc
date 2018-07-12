@@ -42,23 +42,29 @@ class ModalReport extends React.Component{
             })
          }
     }
-    dropDown(){
-        if(this.state.isDropDown){
-        this.setState({
-            flag:true
-        })
-        let {requestUrl} = this.props; 
-        request(requestUrl +'&page='+ this.state.page+1)
-        .then( res => {
-            this.setState({
-            docList:this.state.docList.concat(res.data.docList),
-            page:this.state.page+1,
-            flag:false,
-            checkedArray:this.state.checkedArray.concat(new Array(20).fill(false))
-            })
-        })
-       }
-     }
+    // dropDown(){
+    //     if(this.state.isDropDown){
+    //     this.setState({
+    //         flag:true
+    //     })
+    //     let {requestUrl} = this.props; 
+    //     request(`${requestUrl}&page=${this.state.page+1}`)
+    //     .then( res => {
+    //         if(res.data.code === 1){
+    //         this.setState({
+    //         docList:this.state.docList.concat(res.data.docList),
+    //         page:this.state.page+1,
+    //         flag:false,
+    //         checkedArray:this.state.checkedArray.concat(new Array(20).fill(false))
+    //         })
+    //       }else{
+    //         this.setState({
+    //             flag:false
+    //         })
+    //       }
+    //     })
+    //    }
+    //  }
      //全选
      checkAll(e){
          if(e.target.checked){
@@ -192,7 +198,7 @@ class ModalReport extends React.Component{
                       <ReportDetailList
                        checkedArray={this.state.checkedArray}
                        docList={this.state.docList}
-                       dropDown={this.dropDown.bind(this)}
+                    //    dropDown={this.dropDown.bind(this)}
                        flag={this.state.flag}
                        checkItem = {this.checkItem.bind(this)}
                        type='report'

@@ -26,6 +26,7 @@ class Briefing extends React.Component{
 	}
 	componentWillMount(){
 		let search = this.props.location.search.split('&');
+		console.log(search)
 		let templateType = search[0].split('=')[1];
 		let templateId = parseInt(search[1].split('=')[1],10);
 		this.setState({

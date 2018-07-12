@@ -8,7 +8,8 @@ import request from '../../utils/request';
 import {
 	api_new_preview_report,
 	api_update_report,
-	api_add_brief_report
+	api_add_brief_report,
+	api_rebuild_report
 } from '../../services/api';
 import {connect} from 'react-redux';
 class BriefingSecond extends React.Component{
@@ -34,6 +35,17 @@ class BriefingSecond extends React.Component{
 		let search = this.props.location.search.split('&');
 		let templateType = search[0].split('=')[1];
 		let templateId = parseInt(search[1].split('=')[1],10);
+        if(search.length === 3){
+            request(api_rebuild_report + `&reportId=${templateId}&reportType=${templateType}`)
+            .then(res => {
+				this.setState({
+					date: res.data.data,
+					dataID: res.data.component[0],
+					reportId: templateId,
+					type:templateType
+				})
+            })    
+		}else{
 		this.setState({
 			type: templateType,
 			typeId: templateId
@@ -59,6 +71,7 @@ class BriefingSecond extends React.Component{
 				})
 			});
 		}
+	 }
 	}
 	handleChange(value) {
 		console.log(`selected ${value}`);
@@ -127,7 +140,7 @@ class BriefingSecond extends React.Component{
 		   })
 		}
 		this.setState({
-			date: data.data
+			date: date
 		})
 	}
 	render() {

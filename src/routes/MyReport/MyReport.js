@@ -2,7 +2,7 @@ import React from 'react';
 import './MyReport.less';
 import {Input,DatePicker,Button,message,Pagination,Tooltip,Popconfirm,Popover,Modal} from 'antd';
 import {api_get_all_report,api_update_report_name,api_search_report,
-        api_new_delete_report,api_download_report,api_rebuild_report} from '../../services/api';
+        api_new_delete_report,api_download_report} from '../../services/api';
 import request from '../../utils/request';
 import IconFont from '../../components/IconFont';
 import {getSecondTime,templateTypeSort} from '../../utils/format';
@@ -76,7 +76,7 @@ class MyReport extends React.Component{
            }
        })
     }
-    changeReport(id,status,reportType){
+    changeReport(id,status,reportType,reportFormId){
             this.setState({
                 checkId:id,
                 flag:true,
@@ -266,11 +266,8 @@ class MyReport extends React.Component{
                  }
              } )
          }else{
-            //console.log(this.state.reportFormId +' ---'+ this.state.reportType)
-            // request(api_rebuild_report + `&reportId=${this.state.checkId}&reportType=${this.state.reportType}`)
-            // .then(res => {
-            //     console.log(res.data)
-            // })    
+            this.state.reportFormId === '1'?history.push(`/briefing?type=${this.state.reportType}&id=${this.state.checkId}&type=rebuild`):
+            history.push(`/briefingsecond?type=${this.state.reportType}&id=${this.state.checkId}&type=rebuild`)
          }
     }
      render(){
