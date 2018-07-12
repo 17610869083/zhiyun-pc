@@ -37,7 +37,8 @@ class MyReport extends React.Component{
             hmtlUrl:'',
             previewVisible:false,
             popoverVisible:false,
-            reportType:'01'
+            reportType:'01',
+            reportFormId:2
          }
      }
      componentWillMount(){
@@ -79,7 +80,8 @@ class MyReport extends React.Component{
             this.setState({
                 checkId:id,
                 flag:true,
-                reportType:reportType
+                reportType:reportType,
+                reportFormId:reportFormId
                 //flag: status === 2 ?true :false
             })
     }
@@ -264,12 +266,11 @@ class MyReport extends React.Component{
                  }
              } )
          }else{
-            request(api_rebuild_report + `&reportId=${this.state.checkId}&reportType=${this.state.reportType}`)
-            .then(res => {
-                console.log(res.data)
-            })
-            //history.push('/choosetemplate');
-              
+            //console.log(this.state.reportFormId +' ---'+ this.state.reportType)
+            // request(api_rebuild_report + `&reportId=${this.state.checkId}&reportType=${this.state.reportType}`)
+            // .then(res => {
+            //     console.log(res.data)
+            // })    
          }
     }
      render(){
@@ -282,7 +283,7 @@ class MyReport extends React.Component{
          const contentList = this.state.contentList.map( (item,index) => {
              return <li key = {index} 
              className={this.state.checkId === item.id ?'cont active':'cont normal'}> 
-             <img src={'http://119.90.61.155/om31/'+item.imagepath} alt="" onClick = {this.changeReport.bind(this,item.id,item.status,item.reportType)}/>
+             <img src={'http://119.90.61.155/om31/'+item.imagepath} alt="" onClick = {this.changeReport.bind(this,item.id,item.status,item.reportType,item.reportFormId)}/>
              {
              this.state.editReprotName === item.id ? <Input  value={this.state.inputValue} onChange={this.changeReportName.bind(this)} onBlur = {this.blur.bind(this,item.id)}/>:
              <p title="双击可修改名称" onDoubleClick={this.editReportName.bind(this,item.id,item.reportName)} style={{userSelect:'none',height:'28px'}} >{item.reportName}</p>

@@ -121,7 +121,6 @@ class ModalMaterial extends React.Component{
      }
      //素材库，全站搜索
      handleChange(value){
-        console.log(value)
         this.setState({
           searchType:value
         })

@@ -122,7 +122,7 @@ class Briefing extends React.Component{
 		   })
 		}
 		this.setState({
-			date:date
+			date: data.data
 		})
 	}
 	render() {

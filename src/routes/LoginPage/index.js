@@ -9,7 +9,7 @@ import {history} from '../../utils/history';
 import CRCode from './crcode.jpg';
 import IosApp from './iosapp.jpg';
 import {setItem,getPasswordItem,setPasswordItem} from '../../utils/localStorage';
-import {LIGHT,DARK} from '../../utils/colors';
+import {DARK,BLUES} from '../../utils/colors';
 
 const FormItem = Form.Item;
 
@@ -61,7 +61,7 @@ class LoginPage extends React.Component {
            }
            setItem('theme',{
             topColor: {
-                backgroundColor: LIGHT
+                backgroundColor: BLUES
             },
             bottomColor: {
                 backgroundColor: DARK
