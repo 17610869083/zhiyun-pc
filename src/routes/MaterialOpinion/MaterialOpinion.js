@@ -35,21 +35,15 @@ import media from '../../assets/icon-img/new.png';
 import boke from '../../assets/icon-img/boke.png';
 import app from '../../assets/icon-img/app.png';
 import twitter from '../../assets/icon-img/twitter.png';
-// import Collection from '../../assets/img/collection.svg';
-// import Material from '../../assets/img/material.svg';
-// import Qing from '../../assets/img/qing.svg';
-// import Del from '../../assets/img/del.svg';
 import './MaterialOpinion.less';
 import BlankPage from '../../base/Exception/BlankPage';
-import { GRAY, BLACK } from '../../utils/colors';
+import { GRAY } from '../../utils/colors';
 import Iconfont from '../../components/IconFont'
-import Sider from 'antd/lib/layout/Sider';
 const Search = Input.Search;
 const Option = Select.Option;
 const confirm = Modal.confirm;
 const FormItem = Form.Item;
 const InputGroup = Input.Group;
-// const Dragger = Upload.Dragger;
 
 class MaterialOpinion extends React.Component {
 	constructor() {

@@ -259,9 +259,9 @@ class reportHeader extends React.Component{
 									body:`reportId=${this.props.reportId}&charts=${JSON.stringify(charts)}`
 								})
 						}else{
-                this.setState({
-									repeatFlag:true
-								})
+							this.setState({
+								repeatFlag:true
+							})
 						}
 				})
 		}

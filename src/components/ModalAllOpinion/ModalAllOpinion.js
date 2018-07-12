@@ -195,7 +195,7 @@ class ModalAllOpinion extends React.Component{
                 timePickerShow:false
              })
         }
-          const {trendValue,sortValue,filterValue,mediaValue,begin,end,isSearch,searchSeltype,searchKeyword} = this.state;
+          const {trendValue,sortValue,filterValue,mediaValue,isSearch,searchSeltype,searchKeyword} = this.state;
           const {seltype,keyword,topicId} = this.props;
           let newSeltype = isSearch? searchSeltype : seltype;
           let newKeyword = isSearch? searchKeyword : keyword;
@@ -384,7 +384,7 @@ class ModalAllOpinion extends React.Component{
             begin:begin,
             end:end
         })
-        const {trendValue,sortValue,mediaValue,filterValue,page,isSearch,searchSeltype,searchKeyword} = this.state;
+        const {trendValue,sortValue,mediaValue,filterValue,isSearch,searchSeltype,searchKeyword} = this.state;
         const {seltype,keyword,topicId} = this.props;
         let newSeltype = isSearch? searchSeltype : seltype;
         let newKeyword = isSearch? searchKeyword : keyword;

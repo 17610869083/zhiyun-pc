@@ -1,5 +1,5 @@
 // host
-const host = 'http://119.90.61.155/om31/webpart/';
+const host = 'http://119.90.61.155/om31/webpart/';   
 //const host = 'http://web.is8.com.cn/om/webpart/';
 //const host = './';
 //-------------------登录
@@ -388,3 +388,5 @@ export const api_get_excerpt = host +'Report?action=getExcerpt';
 export const api_get_special_preview = host +'Report?action=specialReport';
 // 生成报告
 export const api_get_generate_report = host +'report/exportReport?action=generateReport';
+//简报再编辑
+export const api_rebuild_report = host +'Report?action=reBuildReport'; 

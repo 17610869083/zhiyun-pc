@@ -55,7 +55,7 @@ class TopicEditOpinionDetail extends React.Component {
 	handleSubmitMat(e) {
 		e.preventDefault();
 		this.props.form.validateFields((err, values) => {
-			const ids = parseInt(values.file);
+			const ids = parseInt(values.file,10);
 			if (!err) {
 				request(api_add_doc_from_mat, {
 					method: 'POST',

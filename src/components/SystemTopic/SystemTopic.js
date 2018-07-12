@@ -1,7 +1,7 @@
 import React from 'react';
 import {Input, Modal, Form, message, Row, Col, Icon,Cascader,Tooltip} from 'antd';
 import './SystemTopic.less';
-import {api_topic_ruleid,save_negative_orWarning_extend,edit_negative_orWarning_extend,
+import {save_negative_orWarning_extend,edit_negative_orWarning_extend,
     edit_disuse_extend,api_deleteNegativeOr_WarningExtend,api_delete_DisuseExtend,api_save_disuse_extend} from '../../services/api';
 import request from '../../utils/request';
 import {keywordDuplicateCheck} from '../../utils/format';

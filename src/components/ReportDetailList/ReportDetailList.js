@@ -3,7 +3,6 @@ import './ReportDetailList.less';
 import '../OpinionDetail/OpinionDetail.less';
 import {Checkbox,Tooltip,Spin} from 'antd';
 import {opinionTrend,opinionColor,setHighlightTags} from '../../utils/format';
-import request from '../../utils/request';
 import weixin from '../../assets/icon-img/weixin.png';
 import news from '../../assets/icon-img/news.png';
 import weibo from '../../assets/icon-img/weibo.png';
