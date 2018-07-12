@@ -1,4 +1,5 @@
 import React from 'react';
+import {connect} from 'react-redux';
 import IconFont from '../../components/IconFont';
 import BlankPage from '../../base/Exception/BlankPage';
 import {history} from '../../utils/history';
@@ -35,16 +36,16 @@ class OpinionCountBox extends React.PureComponent {
     });
     }
     render() {
-        const {data} = this.props;
+        const {data,themeColor} = this.props;
         const more = this.props.status!=='setting'?<span style={{color:BLACK}} onClick={this.goAllOpinion.bind(this)}>更多 
         <IconFont type="icon-jiantou" style={{color: '#9b9b9b',fontSize: '16px',marginLeft:'6px'}}/>
         </span>:<Icon type="close-circle" className="delModule" style={{fontSize: '18px',color:BLUES}}
         onClick={this.delOpinionCountBox.bind(this)}
         ></Icon>;
         return (
-            <div className="opinion-count-box">
+            <div className="opinion-count-box" style={{background:themeColor.bottomColor.backgroundColor}}>
                 <div className="container">
-                    <div className="top" style={{background:GRAY}}>
+                    <div className="top" style={{borderBottom: `1px solid ${themeColor.borderColor.color}`}}>
                         <div className="title">
                             <IconFont type="icon-tongji" style={{fontSize: '28px',color:BLUES,verticalAlign:'-8px'}}/>
                             <span className="txt" style={{color:BLACK}}>舆情统计</span>
@@ -75,5 +76,9 @@ class OpinionCountBox extends React.PureComponent {
         )
     }
 }
-
-export default OpinionCountBox;
+const mapStateToProps = state => {
+    return {
+      themeColor: state.changeThemeReducer
+    }
+  };
+export default  connect(mapStateToProps, null)(OpinionCountBox);

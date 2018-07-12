@@ -1,6 +1,6 @@
 import React from 'react';
 import {Icon} from 'antd';
-import { LIGHT, DARKER,BLUES} from '../../utils/colors';
+import { LIGHT, DARKER,BLUES,GRAY} from '../../utils/colors';
 import {changeTheme} from '../../redux/actions/actions';
 import {connect} from 'react-redux';
 import './ChangeTheme.less';
@@ -20,7 +20,13 @@ class ChangeTheme extends React.Component {
                         backgroundColor: '#fff'
                     },
                     textColor:{
-                         color:'#fff'
+                        color:'#fff'
+                    },
+                    grounding:{
+                        color:'#E4EBF7'
+                    },
+                    borderColor:{
+                        color:'#e4ebf7'
                     }
                 },
                 {
@@ -32,6 +38,12 @@ class ChangeTheme extends React.Component {
                     },
                     textColor:{
                         color:'#fff'
+                    },
+                    grounding:{
+                        color:'#181b2b'
+                    },
+                    borderColor:{
+                        color:'#35394f'
                     }
                 },
                 // {

@@ -45,6 +45,13 @@ export function formatTodayOpinion(data) {
 
 // 热搜媒体排行
 export function formatMediaChart(data) {
+    let colors = ['#5bcf3c','#ffa000','#e64a19','#5a8bff'];
+    // data.xAxis[0].axisLine={
+    //     onZero: false,
+    //     lineStyle: {
+    //         color: '#000'
+    //     }
+    // };
     const mediaChartOption = {
         tooltip: {
             trigger: 'axis'
@@ -60,8 +67,9 @@ export function formatMediaChart(data) {
             // top:20,
             bottom: 20
         },
-        color: ['#20aafc','#ff5858','#e70000','#ffbc34','#91c7ae','#749f83',  '#ca8622', '#bda29a','#6e7074', '#546570', '#c4ccd3'],
-        xAxis: data.xAxis[0],
+        color:colors, 
+        //['#20aafc','#ff5858','#e70000','#ffbc34','#91c7ae','#749f83',  '#ca8622', '#bda29a','#6e7074', '#546570', '#c4ccd3'],
+        xAxis: data.xAxis,
         yAxis: [
             {
                 type: 'value'
@@ -73,28 +81,56 @@ export function formatMediaChart(data) {
                 //name: '常规',
                 type: 'line',
                 smooth: true,
-                data: data.series[0].data
+                data: data.series[0].data,
+                areaStyle: {
+                    normal: {
+                        color:{
+                            color:colors[0]
+                        }
+                    }
+                }
             },
             {
                 name: '中性',
                 //name: '关注',
                 type: 'line',
                 smooth: true,
-                data: data.series[1].data
+                data: data.series[1].data,
+                areaStyle: {
+                    normal: {
+                        color: {
+                            color:colors[1]
+                        }
+                    }
+                }
             },
             {
                 name: '负面',
                 //name: '重点',
                 type: 'line',
                 smooth: true,
-                data: data.series[2].data
+                data: data.series[2].data,
+                areaStyle: {
+                    normal: {
+                        color:{
+                            color: colors[2]
+                        }
+                    }
+                }
             },
             {
                 name: '预警',
                 //name: '特推',
                 type: 'line',
                 smooth: true,
-                data: data.series[3].data
+                data: data.series[3].data,
+                areaStyle: {
+                    normal: {
+                        color: {
+                            color:colors[3]
+                        }
+                    }
+                }
             }
         ]
     };

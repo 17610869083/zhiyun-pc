@@ -345,7 +345,7 @@ class NewHome extends React.Component {
   render() {
     const {opinionList,todayOpinionArr, alldayOpinion,todayWarningOpinion, alldayWarningOpinion, 
       weiboAll, weiboNegative,opinionCountArr} = this.state;
-    const {userInfo, ModuleList} = this.props;
+    const {userInfo, ModuleList,themeColor} = this.props;
     const moduleList = this.state.homeMessage.length !== 0 ? homeModuleList(this.state.homeMessage).map((item, index) =>
       <li key={index}>{this.state.delMoudleList[item]}
         <Icon type="plus-circle-o" className="addModule"
@@ -358,8 +358,8 @@ class NewHome extends React.Component {
           <span> {userInfo.alerMsg}</span>
           <Icon type="close" onClick={this.informs.bind(this)} style={{color: '#fff'}}/>
         </div>
-        <div className="home-pages"
-             style={this.props.type !== undefined ? {'backgroundColor': '#ffffff'} : {'backgroundColor': '#e4ebf7'}}>
+        <div className="home-pages">
+             {/* style={this.props.type !== undefined ? {'backgroundColor': '#ffffff'} : {'backgroundColor': '#e4ebf7'}}> */}
           <div className="home-layout"
                style={this.props.type !== undefined ? {display: 'block', width: '8%'} : {display: 'none'}}>
             <div className="layout-list">
@@ -371,7 +371,7 @@ class NewHome extends React.Component {
           </div>
           <div className="container" style={this.props.type !== undefined ? {width: '92%'} : {width: '100%'}}>
             <Row gutter={16} className="row"
-                 style={ModuleList.todayOpinion === 1 ? {display: 'none'} : {display: 'block'}}
+                 style={ModuleList.todayOpinion === 1 ? {display: 'none'} : {display: 'block',background:themeColor.grounding.color}}
             >
               <Col span={24}
               >
@@ -381,6 +381,7 @@ class NewHome extends React.Component {
               </Col>
             </Row>
             <Row gutter={16} className="row"
+            style={{background:themeColor.grounding.color}}
             >
               <Col span={24}>
                 {ModuleList.opinionTrend === 1 ? '' : <OpinionTrendBox
@@ -390,7 +391,7 @@ class NewHome extends React.Component {
 
               </Col>
             </Row>
-            <Row gutter={16} className="row">
+            <Row gutter={16} className="row" style={{background:themeColor.grounding.color}}>
               <Col span={12}
                    style={ModuleList.newestWarningOpinion === 1 ? {display: 'none'} : {display: 'block'}}
               >
@@ -474,7 +475,8 @@ const mapStateToProps = state => {
   return {
     ModuleList: state.homeModuleReducer,
     userInfo: state.userFetchSuccess,
-    informsstate: state.informsstate.data
+    informsstate: state.informsstate.data,
+    themeColor: state.changeThemeReducer
   }
 };
 const mapDispatchToProps = dispatch => {

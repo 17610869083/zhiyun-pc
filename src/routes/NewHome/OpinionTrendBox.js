@@ -1,4 +1,5 @@
 import React from 'react';
+import {connect} from 'react-redux';
 import {Button,Icon} from 'antd';
 import IconFont from '../../components/IconFont';
 import ReactEchartsCore from 'echarts-for-react/lib/core';
@@ -69,10 +70,11 @@ class OpinionTrendBox extends React.Component {
     }
     render() {
         const {monthCount} = this.state;
+        const {themeColor} = this.props;
         return (
-            <div className="opinion-trend-box">
+            <div className="opinion-trend-box"  style={{background:themeColor.bottomColor.backgroundColor}}>
                 <div className="container">
-                    <div className="top" style={{background:GRAY}}>
+                    <div className="top">
                         <div className="title">
                             <IconFont type="icon-qushi" style={{color: BLUES,fontSize: '18px'}}/>
                             <span className="txt" style={{color:BLACK}}>舆情走势</span>
@@ -143,5 +145,9 @@ class OpinionTrendBox extends React.Component {
         )
     }
 }
-
-export default OpinionTrendBox;
+const mapStateToProps = state => {
+    return {
+      themeColor: state.changeThemeReducer
+    }
+  };
+export default  connect(mapStateToProps, null)(OpinionTrendBox);

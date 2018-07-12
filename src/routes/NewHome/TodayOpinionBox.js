@@ -1,4 +1,5 @@
 import React from 'react';
+import {connect} from 'react-redux';
 import {Row, Col,Icon} from 'antd';
 import IconFont from '../../components/IconFont';
 import './TodayOpinionBox.less';
@@ -99,8 +100,9 @@ class TodayOpinionBox extends React.PureComponent {
     }
     render() {
         const {todayAll,todayWarning,todayNegative,ratio} = this.state;
+        const {themeColor} = this.props;
         return (
-            <div className="today-opinion-box" draggable="true">
+            <div className="today-opinion-box" draggable="true" style={{background:themeColor.bottomColor.backgroundColor}}>
                  <div className="today-opinion-top" 
                   style={this.props.status==='setting'?{display:'block',background:GRAY}:{display:'none'}}>
                  <Icon type="close-circle" className="delModule" style={{fontSize: '18px',color:BLUES}}
@@ -176,5 +178,9 @@ class TodayOpinionBox extends React.PureComponent {
         )
     }
 }
-
-export default TodayOpinionBox;
+const mapStateToProps = state => {
+    return {
+      themeColor: state.changeThemeReducer
+    }
+  };
+export default  connect(mapStateToProps, null)(TodayOpinionBox);

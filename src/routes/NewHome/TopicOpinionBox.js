@@ -46,16 +46,17 @@ class TopicOpinionBox extends React.PureComponent {
          })
     }
     render() {  
-         const {topicOpinion} = this.state;
+        const {topicOpinion} = this.state;
+        const {themeColor} = this.props;
         const more = this.props.status!=='setting'?<span style={{color:BLACK}} onClick={this.goTopicOpinion.bind(this)}>更多
         <IconFont type="icon-jiantou" style={{color: '#9b9b9b',fontSize: '16px',marginLeft:'6px'}}/>
         </span>:<Icon type="close-circle" className="delModule" style={{fontSize: '18px',color:BLUES}}
         onClick={this.delTopicOpinionBox.bind(this)}
         ></Icon>;
         return (
-            <div className="topic-opinion-box">
+            <div className="topic-opinion-box" style={{background:themeColor.bottomColor.backgroundColor}}>
                 <div className="container">
-                    <div className="top" style={{background:GRAY}}>
+                    <div className="top" style={{borderBottom: `1px solid ${themeColor.borderColor.color}`}}>
                         <div className="title">
                             <IconFont type="icon-tesezhuanti" style={{color: BLUES,fontSize: '18px'}}/>
                             <span className="txt" style={{color:BLACK}}>专题舆情</span>
@@ -73,7 +74,9 @@ class TopicOpinionBox extends React.PureComponent {
                                         <ul className="list">
                                             {item.docList!==undefined ?
                                                 item.docList.slice(0,6).map((i,index) =>
-                                                    <li key={i.sid} className="list-item" onClick={this.clickItemTitle.bind(this,i.sid)}>
+                                                    <li key={i.sid} className="list-item" onClick={this.clickItemTitle.bind(this,i.sid)}
+                                                    style={{borderBottom: `1px solid ${themeColor.borderColor.color}`}}
+                                                    >
                                                         <div className="content">
                                                             <div className="title">{i.title}</div>
                                                             <div className="desc">
@@ -95,6 +98,11 @@ class TopicOpinionBox extends React.PureComponent {
         )
     }
 }
+const mapStateToProps = state => {
+    return {
+      themeColor: state.changeThemeReducer
+    }
+  };
 const mapDispatchToProps = dispatch => {
     return {
         setlocationPathname: req => {
@@ -102,4 +110,4 @@ const mapDispatchToProps = dispatch => {
         }
     }
 }
-export default connect(null,mapDispatchToProps)(TopicOpinionBox);
+export default connect(mapStateToProps,mapDispatchToProps)(TopicOpinionBox);

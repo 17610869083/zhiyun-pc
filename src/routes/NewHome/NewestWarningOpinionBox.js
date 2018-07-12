@@ -1,4 +1,5 @@
 import React from 'react';
+import {connect} from 'react-redux';
 import IconFont from '../../components/IconFont';
 import BlankPage from '../../base/Exception/BlankPage';
 import './NewestWarningOpinionBox.less';
@@ -36,16 +37,16 @@ class NagetiveOpinion extends React.Component {
           this.props.delNewestWarningBox(1);
     }
     render() {
-        const {todayOpinion,alldayOpinion} = this.props;
+        const {todayOpinion,alldayOpinion,themeColor} = this.props;
         const more = this.props.status!=='setting'?<span style={{color:BLACK}} onClick={this.goAllOpinion.bind(this)}>更多
         <IconFont type="icon-jiantou" style={{color: '#9b9b9b',fontSize: '16px',marginLeft:'6px'}}/>
         </span>:<Icon type="close-circle" className="delModule" style={{fontSize: '18px',color:BLUES}}
         onClick={this.delNewestWarningOpinionBox.bind(this)}
         ></Icon>;
         return (
-            <div className="newest-warning-opinion-box">
+            <div className="newest-warning-opinion-box" style={{background:themeColor.bottomColor.backgroundColor}}>
                 <div className="container">
-                    <div className="top" style={{background:GRAY}}>
+                    <div className="top" style={{borderBottom: `1px solid ${themeColor.borderColor.color}`}}>
                         <div className="title">
                             <IconFont type="icon-shandian" style={{color: BLUES,fontSize: '21px',verticalAlign:'-5px'}}/>
                             <span className="txt" style={{color:BLACK}}>预警舆情</span>
@@ -61,7 +62,9 @@ class NagetiveOpinion extends React.Component {
                                 <ul className="list">
                                     {alldayOpinion.length > 0 ?
                                         alldayOpinion.map((item,index) =>
-                                        <li key={index} className="list-item" onClick={this.clickItemTitle.bind(this,item.sid)}>
+                                        <li key={index} className="list-item" onClick={this.clickItemTitle.bind(this,item.sid)}
+                                        style={{borderBottom: `1px solid ${themeColor.borderColor.color}`}}
+                                        >
                                             <div className="content">
                                                 <div className="title">{item.title}</div>
                                                 <div className="desc">
@@ -98,5 +101,9 @@ class NagetiveOpinion extends React.Component {
         )
     }
 }
-
-export default NagetiveOpinion;
+const mapStateToProps = state => {
+    return {
+      themeColor: state.changeThemeReducer
+    }
+  };
+export default  connect(mapStateToProps, null)(NagetiveOpinion);

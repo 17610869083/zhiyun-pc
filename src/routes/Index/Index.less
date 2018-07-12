@@ -13,6 +13,9 @@
       -ms-scroll-snap-type: proximity;
       -ms-scroll-snap-points-x: snapList(100%, 200%, 300%, 400%, 500%);
       scroll-snap-coordinate: none;
+      .ant-menu-inline, .ant-menu-vertical{
+        border:none;
+      }
       .selectMenu{
         -moz-appearance: none !important; 
         scroll-snap-coordinate: none;
@@ -107,10 +110,8 @@
     .right-layout {
       height:100%;
       .header {
-        border-bottom: 1px solid #E2E8F6;
       }
       .main {
-        background-color: #E4EBF7;
         overflow-x:hidden;
         .suspensionBox{
              position: fixed;

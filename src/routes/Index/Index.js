@@ -222,7 +222,7 @@ class Index extends React.Component {
             className="sider siders"
             trigger={null}
             collapsible
-            style={{backgroundColor: '#fff'}}
+            style={{backgroundColor: themeColor.bottomColor.backgroundColor}}
             collapsed={this.state.collapsed && this.state.flag}
             onMouseEnter={this.mouseEnterToggle} 
             onMouseLeave={this.mouseLeaveToggle}
@@ -231,16 +231,18 @@ class Index extends React.Component {
               <div className="logo-wrapper" style={{backgroundColor:themeColor.topColor.backgroundColor}}>
                 <img src={logo} alt="logo" className="logo" onClick={this.goBackIndex.bind(this)}/>
               </div>
-              <div className="trigger-wrapper" onClick={this.toggle} >
+              <div className="trigger-wrapper" onClick={this.toggle}
+              style={{backgroundColor:themeColor.bottomColor.backgroundColor}}
+              >
                 <i className="fa fa-bars" aria-hidden="true" style={{fontSize: '14px', color: '#5a8bff'}}/>
               </div>
             </div>
             <Menu
               defaultSelectedKeys={['1']}
               mode="inline"
-              theme="dark"
+              // theme="dark"
               // inlineCollapsed={this.state.collapsed && this.state.flag}
-              style={ {backgroundColor: '#fff', overflow: 'auto',maxHeight: '600px'}}
+              style={ {backgroundColor: themeColor.bottomColor.backgroundColor, overflow: 'auto',maxHeight: '600px'}}
               className="selectMenu"
               selectedKeys={[urlTokey()]}
             >
@@ -251,7 +253,7 @@ class Index extends React.Component {
             <Header className="header" style={{backgroundColor: themeColor.topColor.backgroundColor, height: '60px'}}>
               <ZHeader/>
             </Header>
-            <Content className="main" ref={(main) => {
+            <Content className="main"  style={{backgroundColor: themeColor.grounding.color}} ref={(main) => {
               this.main = main
             }}>
               <Switch>

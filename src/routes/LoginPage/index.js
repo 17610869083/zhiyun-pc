@@ -1,4 +1,5 @@
 import React from 'react';
+import {connect} from 'react-redux';
 import './index.less';
 import { Form, Icon, Input, Button, Checkbox, Col, Row, message} from 'antd';
 import zhiyunImg from './zhiyun.png';
@@ -9,6 +10,7 @@ import {history} from '../../utils/history';
 import CRCode from './crcode.jpg';
 import IosApp from './iosapp.jpg';
 import {setItem,getPasswordItem,setPasswordItem} from '../../utils/localStorage';
+import {changeTheme} from '../../redux/actions/actions';
 import {DARK,BLUES} from '../../utils/colors';
 
 const FormItem = Form.Item;
@@ -59,17 +61,25 @@ class LoginPage extends React.Component {
                   checked:true
                })
            }
-           setItem('theme',{
+           let colors ={
             topColor: {
                 backgroundColor: BLUES
             },
             bottomColor: {
-                backgroundColor: DARK
+                backgroundColor: '#fff'
             },
             textColor:{
                  color:'#fff'
+            },
+            grounding:{
+                color:'#E4EBF7'
+            },
+            borderColor:{
+                color:'#e4ebf7'
             }
-        });
+           };
+           setItem('theme',colors);
+           this.props.changeTheme(colors)
     }
     handleSubmit (e){
         e.preventDefault();
@@ -220,5 +230,11 @@ class LoginPage extends React.Component {
         )
     }
 }
-
-export default Form.create()(LoginPage);
+const mapDispatchToProps = dispatch => {
+    return {
+        changeTheme: req => {
+            dispatch(changeTheme(req));
+        }
+    }
+};
+export default connect(null, mapDispatchToProps)(Form.create()(LoginPage));;

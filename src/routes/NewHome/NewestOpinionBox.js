@@ -1,4 +1,5 @@
 import React from 'react';
+import {connect} from 'react-redux';
 import IconFont from '../../components/IconFont';
 import BlankPage from '../../base/Exception/BlankPage';
 import {history} from '../../utils/history';
@@ -28,16 +29,16 @@ class NewestOpinionBox extends React.Component {
            this.props.delNewestBox(1);
      }
     render() {
-        const {opinionList} = this.props;
+        const {opinionList,themeColor} = this.props;
         const more = this.props.status!=='setting'?<span style={{color:BLACK}} onClick={this.goAllOpinion.bind(this)}>更多
         <IconFont type="icon-jiantou" style={{fontSize: '16px',color: '#9b9b9b',marginLeft:'6px'}}/>
         </span>:<Icon type="close-circle" className="delModule" style={{fontSize: '18px',color:BLUES}}
         onClick={this.delNewestOpinionBox.bind(this)}
         ></Icon>;
         return (
-            <div className="newest-opinion-box">
+            <div className="newest-opinion-box" style={{background:themeColor.bottomColor.backgroundColor}}>
                 <div className="container">
-                    <div className="top" style={{background:GRAY}}>
+                    <div className="top" style={{borderBottom: `1px solid ${themeColor.borderColor.color}`}}>
                         <div className="title">
                             <IconFont type="icon-zuixin" style={{fontSize: '18px'}}/>
                             <span className="txt" style={{color:BLACK}}>最新舆情</span>
@@ -74,5 +75,9 @@ class NewestOpinionBox extends React.Component {
         )
     }
 }
-
-export default NewestOpinionBox;
+const mapStateToProps = state => {
+    return {
+      themeColor: state.changeThemeReducer
+    }
+  };
+export default  connect(mapStateToProps, null)(NewestOpinionBox);

@@ -1,4 +1,5 @@
 import React from 'react';
+import {connect} from 'react-redux';
 import IconFont from '../../components/IconFont';
 import BlankPage from '../../base/Exception/BlankPage';
 import './WeiboOpinionBox.less';
@@ -35,16 +36,16 @@ class WeiboOpinionBox extends React.PureComponent {
         this.props.delWeiboBox(1);
     }
     render() {
-        const {weiboAll,weiboNegative} = this.props;
+        const {weiboAll,weiboNegative,themeColor} = this.props;
         const more = this.props.status!=='setting'?<span style={{color:BLACK}}  onClick={this.goAllOpinion.bind(this)}>更多
         <IconFont type="icon-jiantou" style={{color: '#9b9b9b',fontSize: '16px',marginLeft:'6px'}}/>
         </span>:<Icon type="close-circle" className="delModule" style={{fontSize: '18px',color:BLUES}}
         onClick={this.delWeiboOpinionBox.bind(this)}
         ></Icon>;
         return (
-            <div className="weibo-opinion-box">
+            <div className="weibo-opinion-box" style={{background:themeColor.bottomColor.backgroundColor}}>
                 <div className="container">
-                    <div className="top" style={{background:GRAY}}>
+                    <div className="top" style={{borderBottom: `1px solid ${themeColor.borderColor.color}`}}>
                         <div className="title">
                             <IconFont type="icon-weibo1" style={{fontSize: '20px'}}/>
                             <span className="txt" style={{color:BLACK}}>微博舆情</span>
@@ -62,7 +63,9 @@ class WeiboOpinionBox extends React.PureComponent {
                                 <ul className="list">
                                     {weiboAll !=='[]'&&weiboAll.length!==0 ?
                                         weiboAll.map((item,index) =>
-                                            <li key={index} className="list-item" onClick={this.clickItemTitle.bind(this,item.sid)}>
+                                            <li key={index} className="list-item" onClick={this.clickItemTitle.bind(this,item.sid)}
+                                            style={{borderBottom: `1px solid ${themeColor.borderColor.color}`}}
+                                            >
                                                 <div className="content">
                                                     <div className="title">{item.title}</div>
                                                     <div className="desc">
@@ -100,5 +103,9 @@ class WeiboOpinionBox extends React.PureComponent {
         )
     }
 }
-
-export default WeiboOpinionBox;
+const mapStateToProps = state => {
+    return {
+      themeColor: state.changeThemeReducer
+    }
+  };
+export default  connect(mapStateToProps, null)(WeiboOpinionBox);
