@@ -73,7 +73,6 @@ class ModalMaterial extends React.Component{
           },
           body:`reportFormId=${typeId}&reportType=${type}&sids=${JSON.stringify(checkedTrueSid(_this.state.checkedArray))}`
           }).then(res => {
-            console.log(res);
              if(res.data.code === 1){
                this.props.checkReport(res.data,true); 
              }
@@ -86,7 +85,6 @@ class ModalMaterial extends React.Component{
                 },
                 body:`reportId=${this.props.reportId}&code=1&sids=${JSON.stringify(checkedTrueSid(_this.state.checkedArray))}`
                 }).then(res => {
-                console.log(res);
                 if(res.data.code === 1){
                   if(this.props.checkMaterial){
                       this.props.checkMaterial(res.data.data)
@@ -123,7 +121,6 @@ class ModalMaterial extends React.Component{
      }
      //素材库，全站搜索
      handleChange(value){
-        console.log(value)
         this.setState({
           searchType:value
         })

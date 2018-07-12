@@ -49,17 +49,17 @@ class reportHeader extends React.Component{
 	}
 	//简报编辑按钮
 	editBriefing(type){
-			if(type === 'have'){
-				this.setState({
-					requestUrl:api_get_brief_item +`&reportId=${this.props.reportId}`,
-					visible:true
-				})
-			}else{
-				this.setState({
-				  isShowModalMaterial:true
-				})
-			}
+		if(type === 'have'){
+			this.setState({
+				requestUrl:api_get_brief_item +`&reportId=${this.props.reportId}`,
+				visible:true
+			})
+		} else {
+			this.setState({
+				isShowModalMaterial:true
+			})
 		}
+	}
 	//隐藏弹窗
 	hideModal = () => {
 		this.setState({
@@ -85,206 +85,205 @@ class reportHeader extends React.Component{
 	disabledStartDate = (startValue) => {
 		const endValue = this.state.endValue;
 		if (!startValue || !endValue) {
-		  return false;
+			return false;
 		}
 		return startValue.valueOf() > endValue.valueOf();
-	  }
+	}
 	
-	  disabledEndDate = (endValue) => {
+	disabledEndDate = (endValue) => {
 		const startValue = this.state.startValue;
 		if (!endValue || !startValue) {
-		  return false;
+			return false;
 		}
 		return endValue.valueOf() <= startValue.valueOf();
-	  }
+	}
 	
-	  onChange = (field, value) => {
+	onChange = (field, value) => {
 		this.setState({
-		  [field]: value,
+			[field]: value,
 		});
-	  }
+	}
 	
-	  onStartChange = (value, dateString) => {
-			// const starttime = dateString.replace(new RegExp("-","gm"),"/");
-			const starttimeHaoMiao = (new Date(dateString)).getTime();
-			this.setState({
-				startMsDate: starttimeHaoMiao,
-				startDate: dateString
-			})
+	onStartChange = (value, dateString) => {
+		// const starttime = dateString.replace(new RegExp("-","gm"),"/");
+		const starttimeHaoMiao = (new Date(dateString)).getTime();
+		this.setState({
+			startMsDate: starttimeHaoMiao,
+			startDate: dateString
+		})
 		this.onChange('startValue', value);
-	  }
+	}
 	
-	  onEndChange = (value, dateString) => {
-			// const starttime = dateString.replace(new RegExp("-","gm"),"/");
-			const starttimeHaoMiao = (new Date(dateString)).getTime();
-			this.setState({
-				endMsDate: starttimeHaoMiao,
-				endDate: dateString
-			})
+	onEndChange = (value, dateString) => {
+		// const starttime = dateString.replace(new RegExp("-","gm"),"/");
+		const starttimeHaoMiao = (new Date(dateString)).getTime();
+		this.setState({
+			endMsDate: starttimeHaoMiao,
+			endDate: dateString
+		})
 		this.onChange('endValue', value);
-	  }
+	}
 	
-	  handleStartOpenChange = (open) => {
-		if (!open) {
-		  this.setState({ endOpen: true });
-		}
-	  }
-	
-	  handleEndOpenChange = (open) => {
+	handleStartOpenChange = (open) => {
+	if (!open) {
+		this.setState({ endOpen: true });
+	}
+	}
+
+	handleEndOpenChange = (open) => {
 		this.setState({ endOpen: open });
-		}
-		onOkDateStart(value, dateString) {
-			console.log(value, dateString)
-		}
-		handleChange(value) {
-			this.setState({
-				topicId: value
-			})
-		}
-		specialOk () {
-			request(api_get_special_preview + '&topicId=' + this.state.topicId + '&reportFormId=' + this.props.typeId + '&reportType=' + this.props.type).then(res=>{
-				this.props.hanldle(res.data,this.state.topicId)				
-				if (res.data.code === 1) {
-					this.setState({
-						starttime: res.data.starttime,
-						endtime: res.data.endtime
-					})
-					message.success(res.data.msg)
-				} else if (res.data.code === 0) {
-					message.warning(res.data.msg)
-				}				
-			})
-		}
-	  onOkDate(value) {
-			request(api_get_data_daily_preview + '&reportFormId=' + this.props.typeId + '&reportType=' + this.props.type + '&starttime=' + this.state.startDate + '&endtime=' + this.state.endDate).then((res) => {
-				const myDate = new Date();
-				const starttimeHaoMiao = (new Date(myDate)).getTime();
-				if (this.state.startMsDate > starttimeHaoMiao && this.state.endMsDate > starttimeHaoMiao) {
-					message.warning("您的选的日期超出了当前时间，请重新选择");
-				} else if (this.state.startMsDate > starttimeHaoMiao && this.state.endMsDate < starttimeHaoMiao) {
-					message.warning("您的选的日期超出了当前时间，请重新选择");
-				} else if (this.state.startMsDate < starttimeHaoMiao && this.state.endMsDate > starttimeHaoMiao) {
-					message.warning("您的选的日期超出了当前时间，请重新选择");
-				} else if (this.state.endMsDate - this.state.startMsDate > 86400000) {
-					message.warning("您选择的时间超过了24个小时，请重新选择");
-				} else if (this.state.startMsDate < starttimeHaoMiao && this.state.endMsDate < starttimeHaoMiao) {
-					message.success(res.data.msg);
-					this.props.hanldle(res.data,this.state.startDate,this.state.endDate)				
-					this.setState({
-						starttime: res.data.starttime,
-						endtime: res.data.endtime
-					})	
-				}
-			});
-		}
-		//专报生成报告
-		specialReport = () => {
-			  this.setState({
-					reportNameVisible:true
-				})
-		}
-		//报告名称
-		reportName = (e) => {
-				let {value} = e.target;
+	}
+	onOkDateStart(value, dateString) {
+		console.log(value, dateString)
+	}
+	handleChange(value) {
+		this.setState({
+			topicId: value
+		})
+	}
+	specialOk () {
+		request(api_get_special_preview + '&topicId=' + this.state.topicId + '&reportFormId=' + this.props.typeId + '&reportType=' + this.props.type).then(res=>{
+			this.props.hanldle(res.data,this.state.topicId)				
+			if (res.data.code === 1) {
 				this.setState({
-					reportNameValue:value
+					starttime: res.data.starttime,
+					endtime: res.data.endtime
 				})
-		}
-		//确认名称
-		confimName = () => {
-				request(api_update_report_name +`&reportId=${this.props.reportId}&reportName=${this.state.reportNameValue}`)
-				.then(res => {
-						if(res.data.code === 1){
-							  this.setState({
-									repeatFlag:false,
-									reportNameVisible:false,
-									finishVisible:true
-								})
-								if (this.props.type === "01") {
-									request(api_get_generate_report + '&reportId=' + this.props.reportId).then(res=>{
-										if (res.data.code === 1) {
-											message.success(res.data.msg)
-										} else if (res.data.code === 0) {
-											message.error(res.data.msg)
-										}
-									})
-								} else if (this.props.type === "02") {
-									let emotionDistributionImg = this.props.emotionDistributionImg.getEchartsInstance();
-									let emotionDistributionImgbase64 =encodeURIComponent(emotionDistributionImg.getDataURL('png'));
-									let mediaDistributionImg = this.props.mediaDistributionImg.getEchartsInstance();
-									let mediaDistributionImgbase64 =encodeURIComponent(mediaDistributionImg.getDataURL('png'));
-									let mediaAnalysisImg = this.props.mediaAnalysisImg.getEchartsInstance();
-									let mediaAnalysisImgbase64 =encodeURIComponent(mediaAnalysisImg.getDataURL('png'));
-									let negativeCarrierAnalysisImg = this.props.negativeCarrierAnalysisImg.getEchartsInstance();
-									let negativeCarrierAnalysisImgbase64 =encodeURIComponent(negativeCarrierAnalysisImg.getDataURL('png'));
-									let mediaEwarningDistributionImg = this.props.mediaEwarningDistributionImg.getEchartsInstance();
-									let mediaEwarningDistributionImgbase64 =encodeURIComponent(mediaEwarningDistributionImg.getDataURL('png'));
-									let charts = {
-										emotionDistributionImg:emotionDistributionImgbase64,
-										mediaDistributionImg:mediaDistributionImgbase64,
-										mediaAnalysisImg:mediaAnalysisImgbase64,
-										negativeCarrierAnalysisImg:negativeCarrierAnalysisImgbase64,
-										mediaEwarningDistributionImg:mediaEwarningDistributionImgbase64
-									}
-									request(api_get_generate_report,{
-										method: 'POST',
-										headers: {
-													"Content-Type": "application/x-www-form-urlencoded"
-										}, 
-										body:`reportId=${this.props.reportId}&charts=${JSON.stringify(charts)}`
-									}).then(res => {
-										if (res.data.code === 1) {
-											message.success(res.data.msg)
-										} else if (res.data.code === 0) {
-											message.error(res.data.msg)
-										}
-									})
-								} else if (this.props.type === "03") {
-									if (this.props.echartsReact !== "" && this.props.echartsMediaTypeTrendOption !== "") {
-										const echarts_instance = this.props.echartsReact.getEchartsInstance();
-										const echartsMediaTypeTrendOption_instance = this.props.echartsMediaTypeTrendOption.getEchartsInstance();
-										this.setState({
-											charts: {
-												emotionDistributionImg: encodeURIComponent(echarts_instance.getDataURL('png')),
-												mediaDistributionImg: encodeURIComponent(echartsMediaTypeTrendOption_instance.getDataURL('png'))
-											}
-										}, () => {
-											let chart = JSON.stringify(this.state.charts);
-											request(api_get_generate_report,{
-												method:'POST',
-												headers: {
-													"Content-Type": "application/x-www-form-urlencoded"
-												},
-												body:`reportId=${this.props.reportId}&charts=${chart}`    
-											 }).then(res=>{
-												if (res.data.code === 1) {
-													message.success(res.data.msg)
-												} else if (res.data.code === 0) {
-													message.error(res.data.msg)
-												}
-										 })
-										})
-									}
-								}
-						}else{
-                this.setState({
-									repeatFlag:true
-								})
-						}
-				})
-		}
-		//去我的报告
-		goMyReport = () => {
-			  history.push('/myreport');
-		}
-		cancel = () => {
-			  this.setState({
+				message.success(res.data.msg)
+			} else if (res.data.code === 0) {
+				message.warning(res.data.msg)
+			}				
+		})
+	}
+	onOkDate(value) {
+		request(api_get_data_daily_preview + '&reportFormId=' + this.props.typeId + '&reportType=' + this.props.type + '&starttime=' + this.state.startDate + '&endtime=' + this.state.endDate).then((res) => {
+			const myDate = new Date();
+			const starttimeHaoMiao = (new Date(myDate)).getTime();
+			if (this.state.startMsDate > starttimeHaoMiao && this.state.endMsDate > starttimeHaoMiao) {
+				message.warning("您的选的日期超出了当前时间，请重新选择");
+			} else if (this.state.startMsDate > starttimeHaoMiao && this.state.endMsDate < starttimeHaoMiao) {
+				message.warning("您的选的日期超出了当前时间，请重新选择");
+			} else if (this.state.startMsDate < starttimeHaoMiao && this.state.endMsDate > starttimeHaoMiao) {
+				message.warning("您的选的日期超出了当前时间，请重新选择");
+			} else if (this.state.endMsDate - this.state.startMsDate > 86400000) {
+				message.warning("您选择的时间超过了24个小时，请重新选择");
+			} else if (this.state.startMsDate < starttimeHaoMiao && this.state.endMsDate < starttimeHaoMiao) {
+				message.success(res.data.msg);
+				this.props.hanldle(res.data,this.state.startDate,this.state.endDate)				
+				this.setState({
+					starttime: res.data.starttime,
+					endtime: res.data.endtime
+				})	
+			}
+		});
+	}
+	//专报生成报告
+	specialReport = () => {
+		this.setState({
+			reportNameVisible:true
+		})
+	}
+	//报告名称
+	reportName = (e) => {
+		let {value} = e.target;
+		this.setState({
+			reportNameValue:value
+		})
+	}
+	//确认名称
+	confimName = () => {
+		request(api_update_report_name +`&reportId=${this.props.reportId}&reportName=${this.state.reportNameValue}`)
+		.then(res => {
+			if(res.data.code === 1){
+				this.setState({
+					repeatFlag:false,
 					reportNameVisible:false,
-					finishVisible:false
+					finishVisible:true
 				})
-		}
+				if (this.props.type === "01") {
+					request(api_get_generate_report + '&reportId=' + this.props.reportId).then(res=>{
+						if (res.data.code === 1) {
+							message.success(res.data.msg)
+						} else if (res.data.code === 0) {
+							message.error(res.data.msg)
+						}
+					})
+				} else if (this.props.type === "02") {
+					let emotionDistributionImg = this.props.emotionDistributionImg.getEchartsInstance();
+					let emotionDistributionImgbase64 =encodeURIComponent(emotionDistributionImg.getDataURL('png'));
+					let mediaDistributionImg = this.props.mediaDistributionImg.getEchartsInstance();
+					let mediaDistributionImgbase64 =encodeURIComponent(mediaDistributionImg.getDataURL('png'));
+					let mediaAnalysisImg = this.props.mediaAnalysisImg.getEchartsInstance();
+					let mediaAnalysisImgbase64 =encodeURIComponent(mediaAnalysisImg.getDataURL('png'));
+					let negativeCarrierAnalysisImg = this.props.negativeCarrierAnalysisImg.getEchartsInstance();
+					let negativeCarrierAnalysisImgbase64 =encodeURIComponent(negativeCarrierAnalysisImg.getDataURL('png'));
+					let mediaEwarningDistributionImg = this.props.mediaEwarningDistributionImg.getEchartsInstance();
+					let mediaEwarningDistributionImgbase64 =encodeURIComponent(mediaEwarningDistributionImg.getDataURL('png'));
+					let charts = {
+						emotionDistributionImg:emotionDistributionImgbase64,
+						mediaDistributionImg:mediaDistributionImgbase64,
+						mediaAnalysisImg:mediaAnalysisImgbase64,
+						negativeCarrierAnalysisImg:negativeCarrierAnalysisImgbase64,
+						mediaEwarningDistributionImg:mediaEwarningDistributionImgbase64
+					}
+					request(api_get_generate_report,{
+						method: 'POST',
+						headers: {
+									"Content-Type": "application/x-www-form-urlencoded"
+						}, 
+						body:`reportId=${this.props.reportId}&charts=${JSON.stringify(charts)}`
+					}).then(res => {
+						if (res.data.code === 1) {
+							message.success(res.data.msg)
+						} else if (res.data.code === 0) {
+							message.error(res.data.msg)
+						}
+					})
+				} else if (this.props.type === "03") {
+					if (this.props.echartsReact !== "" && this.props.echartsMediaTypeTrendOption !== "") {
+						const echarts_instance = this.props.echartsReact.getEchartsInstance();
+						const echartsMediaTypeTrendOption_instance = this.props.echartsMediaTypeTrendOption.getEchartsInstance();
+						this.setState({
+							charts: {
+								emotionDistributionImg: encodeURIComponent(echarts_instance.getDataURL('png')),
+								mediaDistributionImg: encodeURIComponent(echartsMediaTypeTrendOption_instance.getDataURL('png'))
+							}
+						}, () => {
+							let chart = JSON.stringify(this.state.charts);
+							request(api_get_generate_report,{
+								method:'POST',
+								headers: {
+									"Content-Type": "application/x-www-form-urlencoded"
+								},
+								body:`reportId=${this.props.reportId}&charts=${chart}`    
+								}).then(res=>{
+								if (res.data.code === 1) {
+									message.success(res.data.msg)
+								} else if (res.data.code === 0) {
+									message.error(res.data.msg)
+								}
+							})
+						})
+					}
+				}
+			} else {
+				this.setState({
+					repeatFlag:true
+				})
+			}
+		})
+	}
+	//去我的报告
+	goMyReport = () => {
+		history.push('/myreport');
+	}
+	cancel = () => {
+		this.setState({
+			reportNameVisible:false,
+			finishVisible:false
+		})
+	}
 	render() {
-		console.log(this.props);
 		const { type, briefingData,reportId } = this.props;
 		const { startValue, endValue, endOpen } = this.state;
 		let haveData = reportId !== '' ?'have':'none';
