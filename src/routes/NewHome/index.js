@@ -373,17 +373,13 @@ class NewHome extends React.Component {
             <Row gutter={16} className="row"
                  style={ModuleList.todayOpinion === 1 ? {display: 'none'} : {display: 'block',background:themeColor.grounding.color}}
             >
-              <Col span={24}
+              <Col span={8}
               >
                 <TodayOpinionBox status={this.props.type !== undefined ? 'setting' : ''}
                                  delTodayBox={this.delTodayBox.bind(this)}                                
                 />
               </Col>
-            </Row>
-            <Row gutter={16} className="row"
-            style={{background:themeColor.grounding.color}}
-            >
-              <Col span={24}>
+              <Col span={16}>
                 {ModuleList.opinionTrend === 1 ? '' : <OpinionTrendBox
                   status={this.props.type !== undefined ? 'setting' : ''}
                   delTrendBox={this.delTrendBox.bind(this)}
@@ -391,8 +387,26 @@ class NewHome extends React.Component {
 
               </Col>
             </Row>
+             <Row gutter={16} className="row"
+            style={{background:themeColor.grounding.color}}
+            >
+              <Col span={24} style={ModuleList.opinionCount === 1 ? {display: 'none'} : {display: 'block'}}>
+                <OpinionCountBox data={opinionCountArr}
+                                 status={this.props.type !== undefined ? 'setting' : ''}
+                                 delCountBox={this.delCountBox.bind(this)}/>
+              </Col>
+            </Row>
             <Row gutter={16} className="row" style={{background:themeColor.grounding.color}}>
-              <Col span={12}
+            <Col span={8}
+                   style={ModuleList.HotWord === 1 ? {display: 'none'} : {display: 'block'}}
+              >
+                <HotWordBox data={this.state.hotWordData}
+                            status={this.props.type !== undefined ? 'setting' : ''}
+                            delHotWordBox={this.delHotWordBox.bind(this)}
+                />
+              </Col>
+
+              <Col span={8}
                    style={ModuleList.newestWarningOpinion === 1 ? {display: 'none'} : {display: 'block'}}
               >
                 <NewestWarningOpinionBox
@@ -402,7 +416,7 @@ class NewHome extends React.Component {
                   delNewestWarningBox={this.delNewestWarningBox.bind(this)}
                 />
               </Col>
-              <Col span={12}
+              <Col span={8}
                    style={ModuleList.negativeOpinion === 1 ? {display: 'none'} : {display: 'block'}}
               >
                 <NegativeOpinionBox
@@ -412,6 +426,8 @@ class NewHome extends React.Component {
                   delNegativeBox={this.delNegativeBox.bind(this)}
                 />
               </Col>
+              </Row>
+              <Row gutter={16}>
               <Col span={12}
                    style={ModuleList.newestOpinion === 1 ? {display: 'none'} : {display: 'block'}}
               >
@@ -430,38 +446,20 @@ class NewHome extends React.Component {
                   delWeiboBox={this.delWeiboBox.bind(this)}
                 />
               </Col>
-              <Col span={12}
-                   style={ModuleList.topicOpinion === 1 ? {display: 'none'} : {display: 'block'}}
-              >
-                <TopicOpinionBox status={this.props.type !== undefined ? 'setting' : ''}
-                                 delTopicBox={this.delTopicBox.bind(this)}
-                />
-              </Col>
-              <Col span={12}
-                   style={ModuleList.opinionCount === 1 ? {display: 'none'} : {display: 'block'}}
-              >
-                <OpinionCountBox data={opinionCountArr}
-                                 status={this.props.type !== undefined ? 'setting' : ''}
-                                 delCountBox={this.delCountBox.bind(this)}
-                />
-              </Col>
-
-              <Col span={12}
-                   style={ModuleList.HotWord === 1 ? {display: 'none'} : {display: 'block'}}
-              >
-                <HotWordBox data={this.state.hotWordData}
-                            status={this.props.type !== undefined ? 'setting' : ''}
-                            delHotWordBox={this.delHotWordBox.bind(this)}
-                />
-              </Col>
-              <Col span={12}
-              >
+              </Row>
+              <Row gutter={16}>
+              <Col span={12}>
                 {ModuleList.mediaDistribution === 1 ? '' : <MediaDistribution
                   data={this.state.mediaDistributionArr}
                   status={this.props.type !== undefined ? 'setting' : ''}
                   delMediaDistributionBox={this.delMediaDistributionBox.bind(this)}
                 />}
 
+              </Col>
+              <Col span={12} style={ModuleList.topicOpinion === 1 ? {display: 'none'} : {display: 'block'}}>
+                <TopicOpinionBox status={this.props.type !== undefined ? 'setting' : ''}
+                                 delTopicBox={this.delTopicBox.bind(this)}
+                />
               </Col>
             </Row>
           </div>

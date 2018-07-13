@@ -42,6 +42,7 @@ class WeiboOpinionBox extends React.PureComponent {
         </span>:<Icon type="close-circle" className="delModule" style={{fontSize: '18px',color:BLUES}}
         onClick={this.delWeiboOpinionBox.bind(this)}
         ></Icon>;
+        const haverClass = themeColor.topColor.backgroundColor === '#5a8bff' ? 'white':'black';
         return (
             <div className="weibo-opinion-box" style={{background:themeColor.bottomColor.backgroundColor}}>
                 <div className="container">
@@ -57,14 +58,13 @@ class WeiboOpinionBox extends React.PureComponent {
                     </div>
                     <div className="bottom">
                         <Tabs defaultActiveKey="1" onChange={this.datetagType.bind(this)}
-                         size='large'
-                        >
+                         size='large'>
                             <TabPane tab="全部" key="1">
                                 <ul className="list">
                                     {weiboAll !=='[]'&&weiboAll.length!==0 ?
                                         weiboAll.map((item,index) =>
-                                            <li key={index} className="list-item" onClick={this.clickItemTitle.bind(this,item.sid)}
-                                            style={{borderBottom: `1px solid ${themeColor.borderColor.color}`}}
+                                            <li key={index} className={`list-item ${haverClass}`} onClick={this.clickItemTitle.bind(this,item.sid)}
+                                           // style={{borderBottom: `1px solid ${themeColor.borderColor.color}`}}
                                             >
                                                 <div className="content">
                                                     <div className="title">{item.title}</div>

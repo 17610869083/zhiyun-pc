@@ -43,6 +43,7 @@ class NagetiveOpinion extends React.Component {
         </span>:<Icon type="close-circle" className="delModule" style={{fontSize: '18px',color:BLUES}}
         onClick={this.delNegativeOpinionBox.bind(this)}
         ></Icon>;
+        const haverClass = themeColor.topColor.backgroundColor === '#5a8bff' ? 'white':'black';
         return (
             <div className="negative-opinion-box" style={{background:themeColor.bottomColor.backgroundColor}}>
                 <div className="container">
@@ -62,8 +63,7 @@ class NagetiveOpinion extends React.Component {
                                 <ul className="list">
                                     {alldayOpinion.length > 0 ?
                                         alldayOpinion.map((item,index) =>
-                                            <li key={item.sid} className="list-item" onClick={this.clickItemTitle.bind(this,item.sid)}
-                                            style={{borderBottom: `1px solid ${themeColor.borderColor.color}`}}
+                                            <li key={item.sid} className={`list-item ${haverClass}`} onClick={this.clickItemTitle.bind(this,item.sid)}
                                             >
                                              <div className="content">
                                              <div className="title">{item.title}</div>

@@ -61,11 +61,11 @@ class OpinionCountBox extends React.PureComponent {
                             {data.length > 1 ?
                                 data.map((item, index) =>
                                 <tr key={index} className="item">
-                                    <td>{item[0]}</td>
-                                    <td title="点击可查看具体数据" style={{cursor:'pointer'}} onClick = {this.goMedia.bind(this,item[0],'today')}>{item[1]}</td>
-                                    <td title="点击可查看具体数据" style={{cursor:'pointer'}} onClick = {this.goMedia.bind(this,item[0],'7day')}>{item[2]}</td>
-                                    <td title="点击可查看具体数据" style={{cursor:'pointer'}} onClick = {this.goMedia.bind(this,item[0],'30day')}>{item[3]}</td>
-                                    <td title="点击可查看具体数据" style={{cursor:'pointer'}} onClick = {this.goMedia.bind(this,item[0],'all')}>{item[4]}</td>
+                                    <td style={{borderRight: `1px solid  ${themeColor.borderColor.color}`,borderBottom: `1px solid  ${themeColor.borderColor.color}`}}>{item[0]}</td>
+                                    <td title="点击可查看具体数据" style={{cursor:'pointer',borderRight: `1px solid  ${themeColor.borderColor.color}`,borderBottom: `1px solid  ${themeColor.borderColor.color}`}} onClick = {this.goMedia.bind(this,item[0],'today')}>{item[1]}</td>
+                                    <td title="点击可查看具体数据" style={{cursor:'pointer',borderRight: `1px solid  ${themeColor.borderColor.color}`,borderBottom: `1px solid  ${themeColor.borderColor.color}`}} onClick = {this.goMedia.bind(this,item[0],'7day')}>{item[2]}</td>
+                                    <td title="点击可查看具体数据" style={{cursor:'pointer',borderRight: `1px solid  ${themeColor.borderColor.color}`,borderBottom: `1px solid  ${themeColor.borderColor.color}`}} onClick = {this.goMedia.bind(this,item[0],'30day')}>{item[3]}</td>
+                                    <td title="点击可查看具体数据" style={{cursor:'pointer',borderRight: `1px solid  ${themeColor.borderColor.color}`,borderBottom: `1px solid  ${themeColor.borderColor.color}`}} onClick = {this.goMedia.bind(this,item[0],'all')}>{item[4]}</td>
                                 </tr>) : <tr><td><BlankPage desc='<span>空空如也，赶紧去<a href="index.html#/sortedopinion/addrule">添加</a>关键词</span>'/></td></tr>
                             }
                             </tbody>

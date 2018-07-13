@@ -53,6 +53,7 @@ class TopicOpinionBox extends React.PureComponent {
         </span>:<Icon type="close-circle" className="delModule" style={{fontSize: '18px',color:BLUES}}
         onClick={this.delTopicOpinionBox.bind(this)}
         ></Icon>;
+        const haverClass = themeColor.topColor.backgroundColor === '#5a8bff' ? 'white':'black';
         return (
             <div className="topic-opinion-box" style={{background:themeColor.bottomColor.backgroundColor}}>
                 <div className="container">
@@ -74,8 +75,7 @@ class TopicOpinionBox extends React.PureComponent {
                                         <ul className="list">
                                             {item.docList!==undefined ?
                                                 item.docList.slice(0,6).map((i,index) =>
-                                                    <li key={i.sid} className="list-item" onClick={this.clickItemTitle.bind(this,i.sid)}
-                                                    style={{borderBottom: `1px solid ${themeColor.borderColor.color}`}}
+                                                    <li key={i.sid} className={`list-item ${haverClass}`} onClick={this.clickItemTitle.bind(this,i.sid)}
                                                     >
                                                         <div className="content">
                                                             <div className="title">{i.title}</div>
