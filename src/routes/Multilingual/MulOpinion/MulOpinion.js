@@ -91,7 +91,7 @@ class DetailOpinion extends React.Component {
     const lang = this.props.match.params.param;
     this.setState({
       sid: this.props.match.params.sid,
-      languageType: this.props.pathLangType
+      languageType: this.props.match.params.languages
     })
     request(api_get_DetailForeign + '&sid=' + sid + '&lang=' + lang ).then((res) => {
       this.setState({
@@ -313,7 +313,8 @@ class DetailOpinion extends React.Component {
     const Keywords = this.state.keywords.map((item, index) =>
       <span key={index} className="value-item">{item}</span>
     );
-    const factor = data.keyword !== undefined ? data.keyword : [1];
+    // const factor = data.keyword !== undefined ? data.keyword : [1];
+    const factor = data.nztags !== undefined ? Array(data.nztags) : [''];
     const factorElement = factor.map((item, index) =>
       <span key={index} className="value-item">{item}</span>
     );

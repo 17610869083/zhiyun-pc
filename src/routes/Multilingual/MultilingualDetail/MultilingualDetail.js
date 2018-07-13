@@ -147,7 +147,7 @@ class OpinionDetail extends React.Component {
 
   clickItemTitle(sid, e) {
     // window.open(window.location.origin + window.location.pathname + '#/detail/' + sid);
-    window.open(window.location.origin + window.location.pathname + '#/multilingual/detail/' + sid + '/'+ this.props.languageType +'/'+ this.props.lang)
+    window.open(window.location.origin + window.location.pathname + '#/multilingual/detail/' + sid + '/'+ this.props.langnum +'/'+ this.props.lang)
   }
 
   // 删除
@@ -155,7 +155,7 @@ class OpinionDetail extends React.Component {
     request(api_delete_multilingual + '&lang=' + this.props.lang  + '&sid=["' + sid + '"]', {}).then((res) => {
       if (res.data.code === 1) {
         message.success(res.data.msg);
-        this.props.onDataChange(1);
+        this.props.onDataChange(this.state.page);
         this.setState({
           checkedArray:new Array(40).fill(false)
         })
@@ -169,7 +169,7 @@ class OpinionDetail extends React.Component {
     request(api_edit_doc_neg + '&lang='+ this.props.lang +'&neg='+ neg +'&sid=["' + sid + '"]', {}).then(res => {
       if (res.data.code === 1) {
         message.success(res.data.msg);
-        this.props.onDataChange(1);
+        this.props.onDataChange(this.state.page);
         this.setState({
           checkedArray:new Array(40).fill(false)
         })
@@ -217,7 +217,7 @@ class OpinionDetail extends React.Component {
       request(api_edit_doc_neg + '&lang='+ this.props.lang + '&neg=-1&sid=' + sidList, {}).then((res) => {
         if (res.data.code === 1) {
           message.success(res.data.msg);
-          this.props.onDataChange(1);
+          this.props.onDataChange(this.state.page);
           this.setState({
             checkedAll: false,
             checkedArray: new Array(40).fill(false)
@@ -238,7 +238,7 @@ class OpinionDetail extends React.Component {
       request(api_edit_doc_neg + '&lang='+ this.props.lang + '&neg=0&sid=' + sidList, {}).then((res) => {
         if (res.data.code === 1) {
           message.success(res.data.msg);
-          this.props.onDataChange(1);
+          this.props.onDataChange(this.state.page);
           this.setState({
             checkedAll: false,
             checkedArray: new Array(40).fill(false)
@@ -259,7 +259,7 @@ class OpinionDetail extends React.Component {
       request(api_edit_doc_neg + '&lang='+ this.props.lang + '&neg=1&sid=' + sidList, {}).then((res) => {
         if (res.data.code === 1) {
           message.success(res.data.msg);
-          this.props.onDataChange(1);
+          this.props.onDataChange(this.state.page);
           this.setState({
             checkedAll: false,
             checkedArray: new Array(40).fill(false)
@@ -280,7 +280,7 @@ class OpinionDetail extends React.Component {
       request(api_edit_doc_neg + '&lang='+ this.props.lang + '&neg=2&sid=' + sidList, {}).then((res) => {
         if (res.data.code === 1) {
           message.success(res.data.msg);
-          this.props.onDataChange(1);
+          this.props.onDataChange(this.state.page);
           this.setState({
             checkedAll: false,
             checkedArray: new Array(40).fill(false)
@@ -301,7 +301,7 @@ class OpinionDetail extends React.Component {
       request(api_delete_multilingual + '&lang='+ this.props.lang + '&sid=' + sidList, {}).then((res) => {
         if (res.data.code === 1) {
           message.success(res.data.msg);
-          this.props.onDataChange(1);
+          this.props.onDataChange(this.state.page);
           this.setState({
             checkedAll: false,
             checkedArray: new Array(40).fill(false)
@@ -470,13 +470,13 @@ class OpinionDetail extends React.Component {
   showModal() {
     let propsType = this.props.propsType;
     let filename = '';
-    if (propsType === 'AllopinionList') {
-      filename = '导出汇总舆情数据';
-    } else if (propsType === 'TopicList') {
-      filename = this.props.getRouterReducer.topicname;
-    } else {
-      filename = this.props.clfId.clfname;
-    }
+    // if (propsType === 'AllopinionList') {
+    //   filename = '导出汇总舆情数据';
+    // } else if (propsType === 'TopicList') {
+    //   filename = this.props.getRouterReducer.topicname;
+    // } else {
+    //   filename = this.props.clfId.clfname;
+    // }
     this.setState({
       visible: true,
       fileName: filename

@@ -156,6 +156,7 @@ class AllOpinion extends React.Component {
         timePickerShow: false
       })
     }
+
       const param = {
         lang:this.state.language[this.props.match.params.languages],
         pagesize: this.state.pagesize,
@@ -220,7 +221,7 @@ class AllOpinion extends React.Component {
         this.props.opinionSearchRequest(param);
         this.props.paginationPage(1);
     });
-  }
+  } 
 
   trendClick(value) {
     this.setState({
@@ -332,8 +333,8 @@ class AllOpinion extends React.Component {
   }
 
     dataChanged(pagenum) {
+      console.log(pagenum)
     const searchMessage = this.props.ks;
-    if (this.state.type !== 1) {
       const param = {
         datetag: this.state.timeValue,
         neg: this.state.trendValue,
@@ -347,21 +348,6 @@ class AllOpinion extends React.Component {
         lang: this.state.language[this.props.match.params.languages]
       };
       this.props.opinionSearchRequest(param);
-    } else {
-      const param = {
-        seltype: searchMessage.seltype,
-        keyword: searchMessage.keyword,
-        similer:this.state.filterValue,
-        datetag:this.state.timeValue,
-        neg:this.state.trendValue,
-        order:this.state.sortValue,
-        carry:this.state.mediaValue,
-        page:this.props.page,
-        lang: this.state.language[this.props.match.params.languages]
-      };
-      this.props.opinionSearchRequest(param);
-      this.props.paginationPage(1);
-    }
   }
 
   homepageMore(pathname) {
@@ -782,8 +768,8 @@ class AllOpinion extends React.Component {
                          current={page}
                          remove = {this.remove.bind(this)}
                          languageType={this.state.languageType}
+                         langnum={this.props.match.params.languages}
                          lang={this.state.language[this.props.match.params.languages]}
-                         pathLangType={this.props.match.params.languages}
           />
         </div>
         <div className="bottom">
