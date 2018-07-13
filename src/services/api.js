@@ -2,6 +2,7 @@
 const host = 'http://119.90.61.155/om31/webpart/';
 //const host = 'http://web.is8.com.cn/om/webpart/';
 //const host = './';
+
 //-------------------登录
 //export const api_login = 'http://web.is8.com.cn/om/common/login/loginDo?action=login2';
 export const api_login = 'http://119.90.61.155/om31/common/login/loginDo?action=login2';
@@ -377,3 +378,13 @@ export const api_get_BiddingaddGrade = host+ 'oClf/BidDo'
 export const api_get_BiddingdelGrade = host+ 'oClf/BidDo?action=delGrade'
 // 招投标主题获取分类及规则
 export const api_get_BiddinggetGradeAndRule = host+ 'oClf/BidDo?action=getGradeAndRule'
+// 招投标规则修改
+export const api_get_BiddinggetEditRule = host + 'oClf/BidDo?action=editGrade'
+// 招投标删除
+export const api_get_BiddinggetDelRule = host + 'oClf/BidDo?action=delRule'
+// 招投标文章列表
+export const api_bidding_message_list = host + 'oClf/BidDo?action=docList'
+// 招投标文章删除
+export const api_bidding_message_del = host + 'oClf/BidDo?action=docDel'
+// 招投标导出
+export const api_bidding_export = host + 'exp/ExportData?action=exportDataList'

@@ -3,10 +3,14 @@ import ReactDOM from 'react-dom';
 import {connect} from 'react-redux';
 import {Pagination, DatePicker, Form, message, Button} from 'antd';
 import request from '../../../utils/request';
-import OpinionDetail from '../../../components/OpinionDetail/OpinionDetail';
+// import OpinionDetail from '../../../components/OpinionDetail/OpinionDetail';
+import BiddingDetail from '../BiddingDetail/BiddingDetail'
 import './BiddingInformation.less'
 import {getTopicRequested, paginationPage, searchKeywordSync} from '../../../redux/actions/createActions';
-import {api_topic_message_list} from '../../../services/api';
+import {
+  api_topic_message_list,
+  api_bidding_message_list 
+} from '../../../services/api';
 import {getSecondTime} from '../../../utils/format';
 import { setTimeout } from 'timers';
 
@@ -132,7 +136,7 @@ class BiddingInformation extends React.Component {
         timePickerShow: false
       })
     }
-    request(api_topic_message_list + `&pagesize=${this.state.pagesize}&topicid=${this.state.topicID}&datetag=${value}&neg=${this.state.trendValue}&order=${this.state.sortValue}&similer=${this.state.filterValue}&carry=${this.state.mediaValue}`
+    request(api_bidding_message_list + `&pagesize=${this.state.pagesize}&clfid=${this.state.topicID}&datetag=${value}&neg=${this.state.trendValue}&order=${this.state.sortValue}&similer=${this.state.filterValue}&carry=${this.state.mediaValue}`
      ).then((res) => {
       if (res.data && res.data.docList) {
         this.setState({
@@ -178,7 +182,7 @@ class BiddingInformation extends React.Component {
         timeIndex: 0
       });
 
-      request(api_topic_message_list + `&pagesize=${this.state.pagesize}&topicid=${this.state.topicID}&datetag=${timeValue}&neg=${this.state.trendValue}&order=${this.state.sortValue}&similer=${this.state.filterValue}&carry=${this.state.mediaValue}&begin=${begin}&end=${end}`)
+      request(api_bidding_message_list + `&pagesize=${this.state.pagesize}&clfid=${this.state.topicID}&datetag=${timeValue}&neg=${this.state.trendValue}&order=${this.state.sortValue}&similer=${this.state.filterValue}&carry=${this.state.mediaValue}&begin=${begin}&end=${end}`)
       .then((res) => {
         if (res.data && res.data.docList) {
           this.setState({
@@ -201,9 +205,9 @@ class BiddingInformation extends React.Component {
       trendValue: value
     });
     const requestStr = this.state.timeValue !== 'custom' ?
-    `topicid=${this.state.topicID}&datetag=${this.state.timeValue}&neg=${value}&order=${this.state.sortValue}&similer=${this.state.filterValue}&carry=${this.state.mediaValue}`
-    :`topicid=${this.state.topicID}&datetag=custom&neg=${value}&order=${this.state.sortValue}&similer=${this.state.filterValue}&carry=${this.state.mediaValue}&begin=${this.state.begin}&end=${this.state.end}`
-    request(api_topic_message_list + `&${requestStr}` ).then((res) => {
+    `clfid=${this.state.topicID}&datetag=${this.state.timeValue}&neg=${value}&order=${this.state.sortValue}&similer=${this.state.filterValue}&carry=${this.state.mediaValue}`
+    :`clfid=${this.state.topicID}&datetag=custom&neg=${value}&order=${this.state.sortValue}&similer=${this.state.filterValue}&carry=${this.state.mediaValue}&begin=${this.state.begin}&end=${this.state.end}`
+    request(api_bidding_message_list + `&${requestStr}` ).then((res) => {
       if (res.data ) {
         this.setState({
           docList: res.data.docList,
@@ -224,9 +228,9 @@ class BiddingInformation extends React.Component {
       sortValue: value
     });
         const requestStr = this.state.timeValue !== 'custom' ?
-        `topicid=${this.state.topicID}&datetag=${this.state.timeValue}&neg=${this.state.trendValue}&order=${value}&similer=${this.state.filterValue}&carry=${this.state.mediaValue}`
-        :`topicid=${this.state.topicID}&datetag=custom&neg=${this.state.trendValue}&order=${value}&similer=${this.state.filterValue}&carry=${this.state.mediaValue}&begin=${this.state.begin}&end=${this.state.end}`
-        request(api_topic_message_list +`&${requestStr}`).then((res) => {
+        `clfid=${this.state.topicID}&datetag=${this.state.timeValue}&neg=${this.state.trendValue}&order=${value}&similer=${this.state.filterValue}&carry=${this.state.mediaValue}`
+        :`clfid=${this.state.topicID}&datetag=custom&neg=${this.state.trendValue}&order=${value}&similer=${this.state.filterValue}&carry=${this.state.mediaValue}&begin=${this.state.begin}&end=${this.state.end}`
+        request(api_bidding_message_list +`&${requestStr}`).then((res) => {
             if(res.data&&res.data.code!==0){
             this.setState({
                 docList: res.data.docList,
@@ -247,9 +251,9 @@ class BiddingInformation extends React.Component {
       filterValue: value
     });
         const requestStr = this.state.timeValue !== 'custom' ?
-        `topicid=${this.state.topicID}&datetag=${this.state.timeValue}&neg=${this.state.trendValue}&order=${this.state.sortValue}&similer=${value}&carry=${this.state.mediaValue}`
-        :`topicid=${this.state.topicID}&datetag=custom&neg=${this.state.trendValue}&order=${this.state.sortValue}&similer=${value}&carry=${this.state.mediaValue}&begin=${this.state.begin}&end=${this.state.end}`
-        request(api_topic_message_list + `&${requestStr}`).then((res) => {
+        `clfid=${this.state.topicID}&datetag=${this.state.timeValue}&neg=${this.state.trendValue}&order=${this.state.sortValue}&similer=${value}&carry=${this.state.mediaValue}`
+        :`clfid=${this.state.topicID}&datetag=custom&neg=${this.state.trendValue}&order=${this.state.sortValue}&similer=${value}&carry=${this.state.mediaValue}&begin=${this.state.begin}&end=${this.state.end}`
+        request(api_bidding_message_list + `&${requestStr}`).then((res) => {
             if(res.data&&res.data.docList){
             this.setState({
                 docList: res.data.docList,
@@ -270,9 +274,9 @@ class BiddingInformation extends React.Component {
       mediaValue: value
     });
         const requestStr = this.state.timeValue !== 'custom' ?
-        `topicid=${this.state.topicID}&datetag=${this.state.timeValue}&neg=${this.state.trendValue}&order=${this.state.sortValue}&similer=${value}&carry=${value}`
-        :`topicid=${this.state.topicID}&datetag=custom&neg=${this.state.trendValue}&order=${this.state.sortValue}&similer=${value}&carry=${value}&begin=${this.state.begin}&end=${this.state.end}`
-        request(api_topic_message_list +`&${requestStr}`).then((res) => {
+        `clfid=${this.state.topicID}&datetag=${this.state.timeValue}&neg=${this.state.trendValue}&order=${this.state.sortValue}&similer=${value}&carry=${value}`
+        :`clfid=${this.state.topicID}&datetag=custom&neg=${this.state.trendValue}&order=${this.state.sortValue}&similer=${value}&carry=${value}&begin=${this.state.begin}&end=${this.state.end}`
+        request(api_bidding_message_list +`&${requestStr}`).then((res) => {
             if(res.data&&res.data.docList){
             this.setState({
                 docList: res.data.docList,
@@ -292,9 +296,9 @@ class BiddingInformation extends React.Component {
       pagesize: pageSize
     });
     const requestStr = this.state.timeValue !== 'custom' ?
-      `topicid=${this.state.topicID}&datetag=${this.state.timeValue}&neg=${this.state.trendValue}&order=${this.state.sortValue}&similer=${this.state.filterValue}&carry=${this.state.mediaValue}&pagesize=${pageSize}`
-      : `topicid=${this.state.topicID}&datetag=custom&neg=${this.state.trendValue}&order=${this.state.sortValue}&similer=${this.state.filterValue}&carry=${this.state.mediaValue}&begin=${this.state.begin}&end=${this.state.end}&pagesize=${pageSize}`
-    request(api_topic_message_list + `&${requestStr}`).then((res) => {
+      `clfid=${this.state.topicID}&datetag=${this.state.timeValue}&neg=${this.state.trendValue}&order=${this.state.sortValue}&similer=${this.state.filterValue}&carry=${this.state.mediaValue}&pagesize=${pageSize}`
+      : `clfid=${this.state.topicID}&datetag=custom&neg=${this.state.trendValue}&order=${this.state.sortValue}&similer=${this.state.filterValue}&carry=${this.state.mediaValue}&begin=${this.state.begin}&end=${this.state.end}&pagesize=${pageSize}`
+    request(api_bidding_message_list + `&${requestStr}`).then((res) => {
       if (res.data && res.data.docList) {
         this.setState({
           docList: res.data.docList,
@@ -315,9 +319,9 @@ class BiddingInformation extends React.Component {
     });
     this.props.paginationPage(pagenumber);
     const requestStr = this.state.timeValue !== 'custom' ?
-      `topicid=${this.state.topicID}&datetag=${this.state.timeValue}&neg=${this.state.trendValue}&order=${this.state.sortValue}&similer=${this.state.filterValue}&carry=${this.state.mediaValue}&page=${pagenumber}&pagesize=${this.state.pagesize}`
-      : `topicid=${this.state.topicID}&datetag=custom&neg=${this.state.trendValue}&order=${this.state.sortValue}&similer=${this.state.filterValue}&carry=${this.state.mediaValue}&page=${pagenumber}&pagesize=${this.state.pagesize}&begin=${this.state.begin}&end=${this.state.end}`
-    request(api_topic_message_list + `&${requestStr}`).then((res) => {
+      `clfid=${this.state.topicID}&datetag=${this.state.timeValue}&neg=${this.state.trendValue}&order=${this.state.sortValue}&similer=${this.state.filterValue}&carry=${this.state.mediaValue}&page=${pagenumber}&pagesize=${this.state.pagesize}`
+      : `clfid=${this.state.topicID}&datetag=custom&neg=${this.state.trendValue}&order=${this.state.sortValue}&similer=${this.state.filterValue}&carry=${this.state.mediaValue}&page=${pagenumber}&pagesize=${this.state.pagesize}&begin=${this.state.begin}&end=${this.state.end}`
+    request(api_bidding_message_list + `&${requestStr}`).then((res) => {
       if (res.data && res.data.code !== 0) {
         this.setState({
           docList: res.data.docList,
@@ -334,9 +338,9 @@ class BiddingInformation extends React.Component {
   dataChanged(data) {
     this.dataChangeTimer = setTimeout(() => {
       const requestStr = this.state.timeValue !== 'custom' ?
-      `topicid=${this.state.topicID}&datetag=${this.state.timeValue}&neg=${this.state.trendValue}&order=${this.state.sortValue}&similer=${this.state.filterValue}&carry=${this.state.mediaValue}&page=${this.props.page}&pagesize=${this.state.pagesize}`
-      : `topicid=${this.state.topicID}&datetag=custom&neg=${this.state.trendValue}&order=${this.state.sortValue}&similer=${this.state.filterValue}&carry=${this.state.mediaValue}&page=${this.props.page}&pagesize=${this.state.pagesize}&begin=${this.state.begin}&end=${this.state.end}`
-      request(api_topic_message_list + `&${requestStr}`).then((res) => {
+      `clfid=${this.state.topicID}&datetag=${this.state.timeValue}&neg=${this.state.trendValue}&order=${this.state.sortValue}&similer=${this.state.filterValue}&carry=${this.state.mediaValue}&page=${this.props.page}&pagesize=${this.state.pagesize}`
+      : `clfid=${this.state.topicID}&datetag=custom&neg=${this.state.trendValue}&order=${this.state.sortValue}&similer=${this.state.filterValue}&carry=${this.state.mediaValue}&page=${this.props.page}&pagesize=${this.state.pagesize}&begin=${this.state.begin}&end=${this.state.end}`
+      request(api_bidding_message_list + `&${requestStr}`).then((res) => {
       if (res.data) {
         this.setState({
           docList: res.data.docList,
@@ -353,22 +357,22 @@ class BiddingInformation extends React.Component {
         this.topicTimer = setTimeout( ()=>{
         let topicID=this.props.getRouter;
         if(topicID.topicid){
-                request(api_topic_message_list + '&topicid=' + topicID.topicid).then((res) => {
-                    if(res.data.code === 1){
-                      this.setState({
-                          docList: res.data.docList,
-                          media: res.data.carryCount,
-                          pageCount: res.data.pageInfo.pageCount,
-                          count: res.data.pageInfo.count,
-                          pageInfo:res.data.pageInfo,
-                          topicID:topicID.topicid
-                      });
-                    }else{
-                      this.setState({
-                        docList:'[]'
-                      })
-                    }
+          request(api_bidding_message_list + '&clfid=' + topicID.topicid).then((res) => {
+              if(res.data.code === 1){
+                this.setState({
+                    docList: res.data.docList,
+                    media: res.data.carryCount,
+                    pageCount: res.data.pageInfo.pageCount,
+                    count: res.data.pageInfo.count,
+                    pageInfo:res.data.pageInfo,
+                    topicID:topicID.topicid
                 });
+              }else{
+                this.setState({
+                  docList:'[]'
+                })
+              }
+          });
         }
        },700)   
     }
@@ -376,7 +380,7 @@ class BiddingInformation extends React.Component {
     if (prevProps.location.search !== this.props.location.search) {
       let topicID = this.props.getRouter;
       if (topicID.topicid) {
-        request(api_topic_message_list +`&topicid=${topicID.topicid}`).then((res) => {
+        request(api_bidding_message_list +`&clfid=${topicID.topicid}`).then((res) => {
           if (res.data.code === 1) {
             this.setState({
               docList: res.data.docList,
@@ -540,7 +544,7 @@ class BiddingInformation extends React.Component {
         </div>
         <div className="middle">
           <div className="count">根据您的条件，为您筛选出<span className="number">{this.state.pageInfo.count}</span>条数据！</div>
-          <OpinionDetail docList={this.state.docList}
+          <BiddingDetail docList={this.state.docList}
                          onDataChange={this.dataChanged.bind(this)}
                          param={param}
                          pageSize={this.state.pagesize}

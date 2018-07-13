@@ -78,10 +78,42 @@ class OpinionDetail extends React.Component {
         negative: ['负面', '반면', '悪い面', 'پاسسىپ.', 'ལྡོག་ངོས'],
         warning: ['预警', '예보', '警報', 'ئالدىن سىگنال بېرىش ', 'ཉེ་བརྡ་']
       },
-      allSelect: ['全选：', '모두 선택:', '全選：', '：بارلىق ', 'ཡོངས་འདེམས།：'],
+      allSelect: ['全选：', '모두 선택:', '全選：', '：ھەممىنى تاللايمەن.', 'ཡོངས་འདེམས།：'],
       similarInfo: ['相似信息', '비슷 한 정보', '相似信息', 'ئوخشاش ئۇچۇر.', 'འདྲ་མཚུངས་ཀྱི་ཆ་འཕྲིན།'],
       infoCompany: ['条', '건수', '条', 'ماددا ', 'དོན་ཚན།'],
-      keyWord:['关键词', '키워드', 'キーワード', 'ھالقىلىق سۆز بولۇپ قالدى.', 'གནད་ཚིག་འགའ།']
+      keyWord:['关键词', '키워드', 'キーワード', 'ھالقىلىق سۆز بولۇپ قالدى.', 'གནད་ཚིག་འགའ།'],
+      deltips:{
+        tip: ['删除', '삭제', '削除', 'ئۆچۈرۈش', ' སུབ་པ་ ཞེས་པ་'],
+        title: ['确定要删除这条信息吗？', '이 메시지를 삭제 해야 하나요?', 'この情報を削除するか？', 'بۇ ئۇچۇرنى ئۆچۈرەمسىز ؟', 'གཏན་འཁེལ་དོན་ཚན་འདི་བསུབ་ཆ་འཕྲིན་ཡོད་དམ་།'],
+        yes: ['是', '이', 'はい', 'پۈتۈن دولەتتىن', 'རེད་'],
+        no: ['否', '아니요', 'いいえ', 'ياق', 'ཧྥོའུ་']
+      },
+      trendtips: {
+        tips: ['设置倾向', '경향을 세우다', '傾向性を設定する', 'تەسىس قىلىش خاھىشى ', 'ཕྱོགས་ལྷུང་བཀོད་སྒྲིག་'],
+        title: ['设置这条信息的倾向', '이 소식을 세우는 경향', 'このメッセージの傾向性を設定する', 'بۇ خەۋەر تەسىس قىلىش خاھىشىz', 'གནས་ཚུལ་འདི་བཀོད་སྒྲིག་བྱེད་པའི་ཕྱོགས་ལྷུང་'],
+        Positive: ['正面', '정면', '正面', 'ئۇدۇل.', 'དྲང་ཕྱོགས་'],
+        neutral: ['中性', '중성', '中性', 'نېيترال ', 'མ་ནིང།'],
+        negative: ['负面', '반면', '悪い面', 'پاسسىپ.', 'ལྡོག་ངོས་'],
+        warning: ['预警', '예보', '警報', 'ئالدىن سىگنال بېرىش', 'ཉེ་བརྡ་']
+      },
+      delActiveTips: {
+        tip: ['删除', '삭제', '削除', 'ئۆچۈرۈش', ' སུབ་པ་ ཞེས་པ་'],
+        title: ['是否删除您选择的舆情？', '당신이 선택 한 언론 정보를 삭제하 는가？', '選択した世論情報を削除するか？', 'مەشغۇلاتنى بىكار قىلىش？', 'ཁྱོད་ཀྱིས་གདམས་པའི་གླེང་ཕྱོགས་སུབ་པ་མིན་？'],
+        yes: ['是', '이', 'はい', 'پۈتۈن دولەتتىن', 'རེད་'],
+        no: ['否', '아니요', 'いいえ', 'ياق', 'ཧྥོའུ་'] 
+      },
+      trendActiveTips: {
+        trend: ['倾向','경향', '倾向', 'خاھىش', 'ཁ་ཕྱོགས་པ་'],
+        Positive: ['正面', '정면', '正面', 'ئۇدۇل.', 'དྲང་ཕྱོགས་'],
+        neutral: ['中性', '중성', '中性', 'نېيترال ', 'མ་ནིང།'],
+        negative: ['负面', '반면', '悪い面', 'پاسسىپ.', 'ལྡོག་ངོས་'],
+        warning: ['预警', '예보', '警報', 'ئالدىن سىگنال بېرىش', 'ཉེ་བརྡ་']
+      },
+      export: {
+        tip: ['未勾选默认导出5000条', '선택이 없는 상태에서 5000 건을 묵인 했다', '未選択の場合、5000件を導出する', 'كۆڭۈلدىكى تېخى تاللىسىڭىز ، 5000 كەلتۈرۈپ چىقىرىلغان ماددا', 'མ་5000 དྲངས་ཕྱུང་ཀུན་གྱི་ཁས་ལེན་བཅད་བདམས་།'],
+        title: ['命名该文件', '이 문건을 명명하다', 'この文書を命名する', 'بۇ ھۆججەت نام بېرىش', 'མིང་བཏགས་ཡིག་ཆ་'],
+        submit: ['确定', '확정', '確定', 'ئېنىق', 'གཏན་ལ་ཕབ་པ་']
+      }
     };
   }
   componentDidUpdate(prevProps, prevState) {
@@ -543,11 +575,8 @@ class OpinionDetail extends React.Component {
   }
   render() {
     const {page} = this.props;
-    // console.log
     const flag = this.props.docList&& this.props.docList.length === 0?true:false;
-    const docList = this.props.docList ? this.props.docList : [];    
-
-
+    const docList = this.props.docList ? this.props.docList : [];
     const OpinionDetailItems = docList[0] !== undefined && docList[0]['negative'] !== undefined ? docList.map((item, index) =>
         <li key={item.sid} className="opinion-detail-item">
           <div className="cheackBox">
@@ -630,29 +659,29 @@ class OpinionDetail extends React.Component {
               <div className="item-right">
               <div className="cirleBox">
                     <div>
-                      <Tooltip title='删除' placement="bottom">
-                        <Popconfirm title="确定要删除这条信息吗？" onConfirm={this.deleteConfirm.bind(this, item.sid)}
-                                    onCancel={this.deleteCancel.bind(this)} okText="是" cancelText="否">
+                      <Tooltip title={this.state.deltips.tip[this.props.languageType]} placement="bottom">
+                        <Popconfirm title={this.state.deltips.title[this.props.languageType]} onConfirm={this.deleteConfirm.bind(this, item.sid)}
+                                    onCancel={this.deleteCancel.bind(this)} okText={this.state.deltips.yes[this.props.languageType]} cancelText={this.state.deltips.no[this.props.languageType]}>
                           <img src={Del}  alt="删除"/>
                         </Popconfirm>
                       </Tooltip>
                     </div>
                     <div>
-                      <Tooltip title='设置倾向' placement="bottom">
+                      <Tooltip title={this.state.trendtips.tips[this.props.languageType]} placement="bottom">
                         <Popover
                           content={
                             <div>
                               <Button type="primary" size="small"
-                                      onClick={this.editDocNeg.bind(this, item.sid, 1)}>负面</Button>
+                                      onClick={this.editDocNeg.bind(this, item.sid, 1)}>{this.state.trendtips.negative[this.props.languageType]}</Button>
                               <Button type="primary" size="small" style={{marginLeft: '30px'}}
-                                      onClick={this.editDocNeg.bind(this, item.sid, 0)}>中性</Button>
+                                      onClick={this.editDocNeg.bind(this, item.sid, 0)}>{this.state.trendtips.neutral[this.props.languageType]}</Button>
                               <Button type="primary" size="small" style={{marginLeft: '30px'}}
-                                      onClick={this.editDocNeg.bind(this, item.sid, -1)}>正面</Button>
+                                      onClick={this.editDocNeg.bind(this, item.sid, -1)}>{this.state.trendtips.Positive[this.props.languageType]}</Button>
                               <Button type="primary" size="small" style={{marginLeft: '30px'}}
-                                      onClick={this.editDocNeg.bind(this, item.sid, 2)}>预警</Button>
+                                      onClick={this.editDocNeg.bind(this, item.sid, 2)}>{this.state.trendtips.warning[this.props.languageType]}</Button>
                             </div>
                           }
-                          title="设置这条信息的倾向"
+                          title={this.state.trendtips.title[this.props.languageType]}
                           trigger="click"
                           onVisibleChange={this.handleVisibleChange.bind(this, index)}
                           visible={this.state.popVisible && this.state.popIndex === index}
@@ -677,16 +706,16 @@ class OpinionDetail extends React.Component {
     const ChangeTrendMenu = (
       <Menu>
         <Menu.Item key="0">
-          <span onClick={this.setPositiveLists.bind(this)} className="inclination">正面</span>
+          <span onClick={this.setPositiveLists.bind(this)} className="inclination">{this.state.trendActiveTips.Positive[this.props.languageType]}</span>
         </Menu.Item>
         <Menu.Item key="1">
-          <span onClick={this.setMiddleLists.bind(this)} className="inclination">中性</span>
+          <span onClick={this.setMiddleLists.bind(this)} className="inclination">{this.state.trendActiveTips.neutral[this.props.languageType]}</span>
         </Menu.Item>
         <Menu.Item key="2">
-          <span onClick={this.setNegativeLists.bind(this)} className="inclination">负  面</span>
+          <span onClick={this.setNegativeLists.bind(this)} className="inclination">{this.state.trendActiveTips.negative[this.props.languageType]}</span>
         </Menu.Item>
         <Menu.Item key="3">
-          <span onClick={this.setWarningLists.bind(this)} className="inclination">预  警</span>
+          <span onClick={this.setWarningLists.bind(this)} className="inclination">{this.state.trendActiveTips.warning[this.props.languageType]}</span>
         </Menu.Item>
       </Menu>
     );
@@ -714,20 +743,20 @@ class OpinionDetail extends React.Component {
         return <div className="left">
             <Dropdown overlay={ChangeTrendMenu} trigger={['click']}
                       getPopupContainer={() => document.querySelector('.opinion-detail')}>
-              <Tooltip title='倾向' placement="bottom">
+              <Tooltip title={this.state.trendActiveTips.trend[this.props.languageType]} placement="bottom">
                 <div className="operate-all">
                 <img src={Qing} alt="倾向" style={{height:'18px',width:'18px'}}/>
                 </div>
               </Tooltip>
             </Dropdown>
-            <Tooltip title='未勾选默认导出5000条' placement="bottom">
+            <Tooltip title={this.state.export.tip[this.props.languageType]} placement="bottom">
               <div className="operate-all" onClick={this.showModal.bind(this)}>
               <img src={Dowload} alt="export" style={{height:'18px',marginTop:'2px'}}/>
               </div>
             </Tooltip>
-            <Popconfirm title="是否删除您选择的舆情？" onConfirm={this.deleteOpinionLists.bind(this)}
-                        onCancel={this.deleteCancel.bind(this)} okText="是" cancelText="否">
-              <Tooltip title='删除' placement="bottom">
+            <Popconfirm title={this.state.delActiveTips.title[this.props.languageType]} onConfirm={this.deleteOpinionLists.bind(this)}
+                        onCancel={this.deleteCancel.bind(this)} okText={this.state.delActiveTips.yes[this.props.languageType]} cancelText={this.state.delActiveTips.no[this.props.languageType]}>
+              <Tooltip title={this.state.delActiveTips.tip[this.props.languageType]} placement="bottom">
                 <div className="operate-all">
                   <img src={Del} alt="删除" style={{ height:'22px',marginTop:'2px'}}/>
                 </div>
@@ -747,22 +776,22 @@ class OpinionDetail extends React.Component {
                           className="check"></Checkbox>
               </div>
               <div className="operate-all-operation">{this.state.allSelect[this.props.languageType]}</div>
-              <Popconfirm title="是否删除您选择的舆情？" onConfirm={this.deleteOpinionLists.bind(this)}
-                          onCancel={this.deleteCancel.bind(this)} okText="是" cancelText="否">
-                <Tooltip title='删除' placement="bottom">
-                  <div className="operate-all">
-                    <img src={Del} alt="删除" style={{ height:'22px',marginTop:'2px'}}/>
-                  </div>
-                </Tooltip>
-              </Popconfirm>
-              <Tooltip title='未勾选默认导出5000条' placement="bottom">
+              <Popconfirm title={this.state.delActiveTips.title[this.props.languageType]} onConfirm={this.deleteOpinionLists.bind(this)}
+                        onCancel={this.deleteCancel.bind(this)} okText={this.state.delActiveTips.yes[this.props.languageType]} cancelText={this.state.delActiveTips.no[this.props.languageType]}>
+              <Tooltip title={this.state.delActiveTips.tip[this.props.languageType]} placement="bottom">
+                <div className="operate-all">
+                  <img src={Del} alt="删除" style={{ height:'22px',marginTop:'2px'}}/>
+                </div>
+              </Tooltip>
+            </Popconfirm>
+              <Tooltip title={this.state.export.tip[this.props.languageType]} placement="bottom">
                 <div className="operate-all" onClick={this.showModal.bind(this)}>
                 <img src={Dowload} alt="export" style={{height:'18px',marginTop:'2px'}}/>
                 </div>
               </Tooltip>
               <Dropdown overlay={ChangeTrendMenu} trigger={['click']}
                         getPopupContainer={() => document.querySelector('.opinion-detail')}>
-                <Tooltip title='倾向' placement="bottom">
+                <Tooltip title={this.state.trendActiveTips.trend[this.props.languageType]} placement="bottom">
                   <div className="operate-all">
                   <img src={Qing} alt="倾向" style={{height:'18px',width:'18px'}}/>
                   </div>
@@ -773,7 +802,7 @@ class OpinionDetail extends React.Component {
     }
     
     return (
-      <div className="opinion-detail">
+      <div className="mul-detail">
         <div className={this.props.languageType-0 === 3 ? 'uygur top' : 'top'} style={{background:GRAY}} >
         {left()}
           {/* <div className="left">
@@ -845,7 +874,7 @@ class OpinionDetail extends React.Component {
           </ul>
         </div>
         <Modal
-          title="命名该文件"
+          title={this.state.export.title[this.props.languageType]}
           visible={this.state.visible}
           onCancel={this.handleCancel.bind(this)}
           footer={null}
@@ -858,7 +887,7 @@ class OpinionDetail extends React.Component {
           <Button type="primary"
                   style={{margin: '20px 0 0 214px', width: '60px', height: '30px'}}
                   onClick={this.handleOk.bind(this)}
-          >确定
+          >{this.state.export.submit[this.props.languageType]}
           </Button>
         </Modal>
         {/* <Modal

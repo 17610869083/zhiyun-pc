@@ -42,7 +42,7 @@ class AllOpinion extends React.Component {
       timeValue: 'all',
       trend: [
         {
-          name: ['全部', '전부', 'すべて','ھەممىسى.', 'ཚང་མ།'],
+          name: ['全部', '전부', 'すべて','بارلىق .', 'ཚང་མ།'],
           value: 'all'
         },
         {
@@ -178,7 +178,6 @@ class AllOpinion extends React.Component {
         return;
       }
       let rangeTimeValue = fieldsValue['range-time-picker'];
-      // debugger
       const rangeEndTimeValue = fieldsValue['range-endtime-picker'];
       const values = {
         ...fieldsValue,
@@ -196,6 +195,9 @@ class AllOpinion extends React.Component {
       else if (getSecondTime(begin) > getSecondTime(end)) {
         message.error('开始时间请不要大于结束时间');
         return;
+      }
+      else if (getSecondTime(end) > Math.round(new Date())){
+        message.error('结束时间请不要大于当前时间')
       }
       const timeValue = 'custom';
       this.setState({
@@ -683,8 +685,8 @@ class AllOpinion extends React.Component {
     }
     // 搜索数据数量 
     const searchNum = (num) => {
-      let leftarr = ['根据您的条件，为您筛选出','님이 지정한 조건에 부합되는', 'あなたの条件によると、', '', 'ལ་གཞིགས་ནས་ཁྱེད་ཀྱི་ཆ་རྐྱེན་ཁྱེད་འདེམས་སྒྲུག་ཐོན་'];
-      let rightarr = ['条数据', '개의 데이터를 검색하였습니다', '件のデータをピックアップします!', '','དོན་ཚན་གཞི་གྲངས།']
+      let leftarr = ['根据您的条件，为您筛选出','님이 지정한 조건에 부합되는', 'あなたの条件によると、', ' - ماددا سانلىق مەلۇمات', 'ལ་གཞིགས་ནས་ཁྱེད་ཀྱི་ཆ་རྐྱེན་ཁྱེད་འདེམས་སྒྲུག་ཐོན་'];
+      let rightarr = ['条数据', '개의 데이터를 검색하였습니다', '件のデータをピックアップします!', 'سىزنىڭ شەرتىڭىز ئاساسەن ، سىز ئۈچۈن تاللاپ چىقىلغان','དོན་ཚན་གཞི་གྲངས།']
       return `${leftarr[this.state.languageType]}<span class="number">${num}</span>${rightarr[this.state.languageType]}！`
     }
     const param = {
@@ -781,6 +783,7 @@ class AllOpinion extends React.Component {
                          remove = {this.remove.bind(this)}
                          languageType={this.state.languageType}
                          lang={this.state.language[this.props.match.params.languages]}
+                         pathLangType={this.props.match.params.languages}
           />
         </div>
         <div className="bottom">

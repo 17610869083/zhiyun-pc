@@ -12,7 +12,9 @@ import {
         api_get_BiddingetGradeAndRule,
         api_get_BiddingetgradeCatList,
         api_get_BiddingaddGrade,
-        api_get_BiddinggetGradeAndRule
+        api_get_BiddinggetGradeAndRule,
+        api_get_BiddinggetEditRule,
+        api_get_BiddinggetDelRule
 } from '../../../services/api';
 import { createHashHistory } from 'history';
 import {getLocalTime,topicData,getSecondTime} from '../../../utils/format';
@@ -29,9 +31,7 @@ class BiddingSetting extends React.Component {
         this.state = {
             visible: false,
             visible1:false,
-            num1:[{"rule1":"1","rulecode1":"2","id":"1","rule2":"2",
-            "rulecode2":"2","rule3":"4","rulecode3":"4","rule4":"3",
-            "rulecode4":""}],
+            num1:[],
             num2:[{"rule1":"","rulecode1":"","id":"","rule2":"",
             "rulecode2":"","rule3":"","rulecode3":"","rule4":"",
             "rulecode4":""}],
@@ -53,18 +53,22 @@ class BiddingSetting extends React.Component {
             DelwayRule:[],
             ruleId:[],
             topicNameValue:'',
-            addOrSetting:''
+            addOrSetting:'',
+            roleArr: []
         }
     }
     componentWillReceiveProps(nextprops){
-            if (this.search2Obj(nextprops.location.search).type === 'add') {
+            if (this.search2Obj(nextprops.location.search).type === 'add' && this.props.location.search !== nextprops.location.search) {
                 request(api_get_BiddingetgradeCatList).then((res) => {
                     this.setState({
                         topicCatList: res.data.gradeCatList,
                         topicNameValue: '',
-                        select: this.search2Obj(nextprops.location.search).catid
+                        select: this.search2Obj(nextprops.location.search).catid,
+                        addType: 1,
+                        num3: [{"rule1":"","rulecode1":"","id":"","rule2":"",
+                        "rulecode2":"","rule3":"","rulecode3":"","rule4":"",
+                        "rulecode4":""}]
                     })
-                    this.clearAll()
                 })
             }
             this.setState({
@@ -86,19 +90,25 @@ class BiddingSetting extends React.Component {
             })
         } else {
             let topicid = this.search2Obj(this.props.location.search).topicid
-            request(api_get_BiddinggetGradeAndRule +'&clfid=' +topicid).then(res=>{
-                if(res.data && res.data.code!==0){
-                let addtypeStr='num'+(res.data.addtype);
-                    this.setState({
-                        topicAlldata:res.data,
-                        [addtypeStr]:res.data.rulearr.length === 0?[{"rule1":"","rulecode1":"","id":"","rule2":"",
-                        "rulecode2":"","rule3":"","rulecode3":"","rule4":"",
-                        "rulecode4":""}]:res.data.rulearr,
-                        addType: res.data.addtype ,
-                        select:res.data.catid,
-                        topicNameValue:res.data.clfname
-                    })
-                }
+            
+            request(api_get_BiddingetgradeCatList).then((res) => {
+                request(api_get_BiddinggetGradeAndRule +'&clfid=' +topicid).then(res2=>{
+                    if(res.data && res.data.code!==0){
+                    let addtypeStr='num'+(res2.data.addtype);
+                        this.setState({
+                            topicAlldata:res2.data,
+                            [addtypeStr]:res2.data.rulearr.length === 0?[{"rule1":"","rulecode1":"","id":"","rule2":"",
+                            "rulecode2":"","rule3":"","rulecode3":"","rule4":"",
+                            "rulecode4":""}]:res2.data.rulearr,
+                            addType: res2.data.addtype ,
+                            select:res2.data.catid,
+                            topicNameValue:res2.data.clfname
+                        })
+                    }
+                })
+                this.setState({
+                    topicCatList: res.data.gradeCatList
+                })
             })
         }
         
@@ -154,9 +164,14 @@ class BiddingSetting extends React.Component {
      }
     // 改变设置方式
     handleOnChange(key) {
+        if(this.search2Obj(this.props.location.search).type === 'add') {
+            this.setState({
+                addType: this.state.addType-0 === 3? 1 : 3 
+            })
+        }
         if(key===this.state.addType){
             let ruleIdArr=[];
-            let oldruleId=this.state.topicAlldata.rulearr;  
+            let oldruleId=this.state.topicAlldata.rulearr;
             for(let i in oldruleId){
                 ruleIdArr.push(oldruleId[i]['id'])
             }
@@ -206,8 +221,6 @@ class BiddingSetting extends React.Component {
          })
     }
     onCreateTopic(e){
-
-
         let rule=[];
         if(e.length>0){
             for(let i in e){
@@ -244,45 +257,83 @@ class BiddingSetting extends React.Component {
        })
     }
     handleSubmit(e) {
-          e.preventDefault();
-           let rules;
-           if(this.state.addType===3){
-               rules=JSON.stringify(this.state.SeniorTopicRule.length===0?
-                topicData(this.state.topicAlldata.rulearr,this.state.addType):this.state.SeniorTopicRule);
+        //   e.preventDefault();
+        //    let rules;
+        //    if(this.state.addType===3){
+        //        rules=JSON.stringify(this.state.SeniorTopicRule.length===0?
+        //         topicData(this.state.topicAlldata.rulearr,this.state.addType):this.state.SeniorTopicRule);
            
-            }else if(this.state.addType===1){
-               rules=JSON.stringify(this.state.createTopicRule.length===0?
-                topicData(this.state.topicAlldata.rulearr,this.state.addType):this.state.createTopicRule);
+        //     }else if(this.state.addType===1){
+        //        rules=JSON.stringify(this.state.createTopicRule.length===0?
+        //         topicData(this.state.topicAlldata.rulearr,this.state.addType):this.state.createTopicRule);
             
-           }else if(this.state.addType===2){
-               rules=JSON.stringify(this.state.preciseTopicRule.length===0?
-                topicData(this.state.topicAlldata.rulearr,this.state.addType):this.state.preciseTopicRule);     
-           }
-           let rulelist = JSON.parse(rules)[0];
-           if( rulelist.rule1 ==='' && rulelist.rule2 ==='' && rulelist.rule3 === '' && rulelist.rule4 === ''){
-            message.success('规则不能为空');
-             return;
-           }
-        let topicId=Store.getState().getRouterReducer.topicid;
-        this.props.form.validateFields((err, values) => {
-            if (!err) {
-                request(api_get_BiddingaddGrade,{
-                    method: 'POST',
-                    headers: {
-                        "Content-Type": "application/x-www-form-urlencoded"
-                    },
-                    // body:`action=editTopic&topicid=${topicId}&addtype=${this.state.addtype}&bind=${this.state.checked}&tname=${this.state.topicNameValue}&catid=${this.state.select}&rule=${encodeURIComponent(rules)}`
-                    body:`action=addGrade&addtype=${this.state.addtype}&clfname=${this.state.topicNameValue}&catid=${this.search2Obj(this.props.location.search).catid}&rule=${encodeURIComponent(rules)}`
-                }).then((res) => {
-                    if(res.data.code===1){
-                        message.success('关键词添加成功');
-                        history.push({
-                            pathname: '/bidding/information'
-                        })
-                    }
-                })
-            }               
-        }); 	
+        //    }else if(this.state.addType===2){
+        //        rules=JSON.stringify(this.state.preciseTopicRule.length===0?
+        //         topicData(this.state.topicAlldata.rulearr,this.state.addType):this.state.preciseTopicRule);     
+        //    }
+        //    let rulelist = JSON.parse(rules)[0];
+        //    if( rulelist.rule1 ==='' && rulelist.rule2 ==='' && rulelist.rule3 === '' && rulelist.rule4 === ''){
+        //     message.success('规则不能为空');
+        //      return;
+        //    }
+        // let topicId=Store.getState().getRouterReducer.topicid;
+        // this.props.form.validateFields((err, values) => {
+        //     if (!err) {
+        //         request(api_get_BiddingaddGrade,{
+        //             method: 'POST',
+        //             headers: {
+        //                 "Content-Type": "application/x-www-form-urlencoded"
+        //             },
+        //             // body:`action=editTopic&topicid=${topicId}&addtype=${this.state.addtype}&bind=${this.state.checked}&tname=${this.state.topicNameValue}&catid=${this.state.select}&rule=${encodeURIComponent(rules)}`
+        //             body:`action=addGrade&addtype=${this.state.addtype}&clfname=${this.state.topicNameValue}&catid=${this.search2Obj(this.props.location.search).catid}&rule=${encodeURIComponent(rules)}`
+        //         }).then((res) => {
+        //             if(res.data.code===1){
+        //                 message.success('关键词添加成功');
+        //                 history.push({
+        //                     pathname: '/bidding/information'
+        //                 })
+        //             }
+        //         })
+        //     }               
+        // });
+        if( this.search2Obj(this.props.location.search).type === 'add' ) {
+            let rules = this.state.roleArr.length === 0 ? JSON.stringify([{"rule1":"","rulecode1":"","id":"","rule2":"",
+            "rulecode2":"","rule3":"","rulecode3":"","rule4":"",
+            "rulecode4":""}]) : JSON.stringify(this.state.roleArr)
+            request(api_get_BiddingaddGrade, {
+                method: 'POST',
+                headers: {
+                    "Content-Type": "application/x-www-form-urlencoded"
+                },
+                body:`action=addGrade&addtype=${this.state.addtype}&clfname=${this.state.topicNameValue}&catid=${this.state.select}&rule=${this.state.addType-0 === 3 ? encodeURIComponent(JSON.stringify(this.state.SeniorTopicRule)) :encodeURIComponent(rules)}`
+            }).then((res) => {
+                if(res.data.code===1){
+                    message.success('关键词添加成功');
+                    history.push({
+                        pathname: '/bidding/information'
+                    })
+                }
+            })
+        } else {
+            let rules = this.state.roleArr.length === 0 ? JSON.stringify([{"rule1":"","rulecode1":"","id":"","rule2":"",
+            "rulecode2":"","rule3":"","rulecode3":"","rule4":"",
+            "rulecode4":""}]) : JSON.stringify(this.state.roleArr)
+            request(api_get_BiddinggetEditRule, {
+                method: 'POST',
+                headers: {
+                    "Content-Type": "application/x-www-form-urlencoded"
+                },
+                body:`action=editGrade&addtype=${this.state.addtype}&catid=${this.state.select}&clfid=${this.props.location.search.split('=')[1]}&clfname=${this.state.topicNameValue}&rule=${this.state.addType-0 === 3 ? encodeURIComponent(JSON.stringify(this.state.SeniorTopicRule)) :encodeURIComponent(rules)}`
+            }).then((res) => {
+                if(res.data.code===1){
+                    message.success('关键词修改成功');
+                    history.push({
+                        pathname: '/bidding/information'
+                    })
+                }
+            })
+        }
+        e.preventDefault()
     }
     onChange(checked){
     	   this.setState({checked:checked===true?1:0})
@@ -327,7 +378,7 @@ class BiddingSetting extends React.Component {
   }
  
   goTopiclist(){
-        history.push('/topic/topiclist')
+        history.push('/bidding/information')
   }
 
   TopicNameChange(e){
@@ -356,6 +407,44 @@ class BiddingSetting extends React.Component {
                 }
             ]
       })
+  }
+
+  addRole(role) {
+    const [...newArr] = role
+    this.setState({
+        roleArr: newArr
+    })
+  }
+  editRole(role) {
+    const [...newArr] = role
+    this.setState({
+        roleArr: newArr
+    })
+  }
+  delOne(role) {
+    const [...newArr] = role
+    this.setState({
+        roleArr: newArr
+    })
+  }
+  delRow(delrole) {
+      console.log()
+      if ( this.search2Obj(this.props.location.search).type === 'add' ) {
+      }else {
+        console.log(delrole)
+        request(api_get_BiddinggetDelRule, {
+            method: 'POST',
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded"
+            },
+            body: `&ruleid=${delrole[0].id}`
+        }).then((res) => {
+            if(res.code === 1) {
+                message.success('删除成功');
+            }
+        })
+      }
+
   }
     render() {
         const formItemLayout = {
@@ -465,7 +554,14 @@ class BiddingSetting extends React.Component {
                                     type="topic"
                                     addOrSetting={this.state.addOrSetting}
                                 /> */}
-                                <BiddingCreate num1={JSON.stringify(this.state.num1)}></BiddingCreate>
+                                <BiddingCreate 
+                                    num1={JSON.stringify(this.state.num1)}
+                                    onAddRole={this.addRole.bind(this)}
+                                    onEditRole={this.editRole.bind(this)}
+                                    onDelOne={this.delOne.bind(this)}
+                                    onDelRow={this.delRow.bind(this)}
+                                >
+                                </BiddingCreate>
                                 </FormItem> 
                                 <FormItem className="addRule"
                                     {...tailFormItemLayout} 

@@ -81,6 +81,11 @@ class BiddingOpinion extends React.Component {
         });
     }
     componentWillReceiveProps(nextprops){
+        // let current =  
+        let current = nextprops.location.pathname.split('/bidding/')[1]
+        this.setState({
+            current
+        })
         if (nextprops.location.pathname === '/bidding/information') {
             this.initCard()
         }
@@ -317,7 +322,7 @@ class BiddingOpinion extends React.Component {
               },
               body:`clfid=${this.state.topicId}`
          }).then(res=>{
-                if(res.data.code===1){
+                if(res.data && res.data.code===1){
                     history.push({
                         pathname:`/bidding/information/`
                     });
@@ -381,9 +386,9 @@ class BiddingOpinion extends React.Component {
                         <Menu.Item key="information" style={{fontSize:'16px'}}>
                             招标信息
                         </Menu.Item>
-                        <Menu.Item key="analysis" style={{fontSize:'16px'}}>
+                        {/* <Menu.Item key="analysis" style={{fontSize:'16px'}}>
                             招投分析
-                        </Menu.Item>
+                        </Menu.Item> */}
                         <Menu.Item key="setting" style={{fontSize:'16px'}}>
                             方案设置
                         </Menu.Item>

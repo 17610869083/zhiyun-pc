@@ -105,7 +105,7 @@
       height: 60px;
       padding-top: 7px;
       .left {
-        max-width: 150px;
+        max-width: 130px;
         color: #0c1124;
         font-size: 14px;
         line-height: 40px;
@@ -170,7 +170,25 @@
       }
     }
   }
-}
-.uygur{
-  flex-direction: row-reverse;
+  .uygur{
+    flex-direction: row-reverse;
+    &>.left{
+      width: 330px !important;
+      text-align: left !important;
+      margin-left: 20px;
+    }
+    .right{
+      .item{
+        margin-right: 0 !important;
+        margin-left: 20px;
+        text-align: right;
+      }
+      .fours:last-child{
+        margin-right: 0 !important;
+      }
+    }
+    &.media-items{
+      margin-left: 0;
+    }
+  }
 }
