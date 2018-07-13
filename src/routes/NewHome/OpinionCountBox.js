@@ -11,7 +11,7 @@ import request from '../../utils/request';
 import {formatOpinionCount} from '../../utils/format';
 import ReactEchartsCore from 'echarts-for-react/lib/core';
 import echarts from 'echarts/lib/echarts';
-import 'echarts/lib/chart/line';
+import 'echarts/lib/chart/pie';
 import 'echarts/lib/component/tooltip';
 import 'echarts/lib/component/legend';
 class OpinionCountBox extends React.PureComponent {
@@ -27,9 +27,10 @@ class OpinionCountBox extends React.PureComponent {
                 '新闻':'news',
                 '论坛':'forum'
             },
-            data:[]
-        }
+            data:[],
+            charts:{}
     }
+ }
     goAllOpinion() {
         history.push({
             pathname: '/allopinion?datetag=all'
@@ -51,7 +52,10 @@ class OpinionCountBox extends React.PureComponent {
           });
           request(api_count_charts +`&data=${JSON.stringify(res.data.all)}`)
           .then(res => {
-              console.log(res.data)
+              console.log(res.data.pic)
+              this.setState({
+                 charts:res.data.pic
+              })
           })
         })
     }
@@ -62,6 +66,42 @@ class OpinionCountBox extends React.PureComponent {
         </span>:<Icon type="close-circle" className="delModule" style={{fontSize: '18px',color:BLUES}}
         onClick={this.delOpinionCountBox.bind(this)}
         ></Icon>;
+        console.log(this.state.charts)
+        const mediaOption= {
+            tooltip: {
+                trigger: 'item',
+                formatter: "{b}: {c} ({d}%)",
+            },
+            legend:{
+                data:["APP","博客","平媒","微信","微博","新闻","论坛"],
+                itemGap:20,
+                orient:"vertical",
+                x:'right',
+                // padding:[40,0,0,0],
+                right:'10'
+            },
+            grid:{
+              left:'left',
+              top:200
+            },
+            series: [
+                {
+                    type:'pie',
+                },
+                {
+                    name:'访问来源',
+                    type:'pie',
+                    radius: ['42%', '55%'],
+                    color: ['#8378ea', '#37a2da', '#e7bcf3', '#fb7293','#ffa07f','#ffdc5c','#9fe6b8'],
+                    label: {
+                        normal: {
+                            formatter: '{b}\n{d}%'
+                        },
+                    },
+                    data: this.state.charts.series!==undefined?this.state.charts.series[0].data:[],
+                }
+            ]
+        };    
         return (
             <div className="opinion-count-box" style={{background:themeColor.bottomColor.backgroundColor}}>
                 <div className="container">
@@ -92,10 +132,9 @@ class OpinionCountBox extends React.PureComponent {
                         </table>
                         <ReactEchartsCore
                             echarts={echarts}
-                            option={this.state.mediaChartOption}
+                            option={mediaOption}
                             lazyUpdate={true}
-                            style={{height: '310px', width: '75%', marginBottom: '-20px'}}
-                            ref={(e) => { this.echarts_react = e; }}
+                            style={{height: '310px', width: '40%', marginBottom: '-20px'}}
                             />
                     </div>
                 </div>
