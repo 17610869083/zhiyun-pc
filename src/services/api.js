@@ -390,3 +390,5 @@ export const api_get_special_preview = host +'Report?action=specialReport';
 export const api_get_generate_report = host +'report/exportReport?action=generateReport';
 //简报再编辑
 export const api_rebuild_report = host +'Report?action=reBuildReport'; 
+//首页舆情统计图表 
+export const api_count_charts= host +'main/DocSearchDo?action=mainCountPic';

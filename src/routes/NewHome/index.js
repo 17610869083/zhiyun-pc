@@ -38,7 +38,6 @@ class NewHome extends React.Component {
       alldayWarningOpinion: [],
       weiboAll: [],
       weiboNegative: [],
-      opinionCountArr: [],
       hotWordData: [],
       mediaDistributionArr: [],
       homeMessage: [],
@@ -124,12 +123,6 @@ class NewHome extends React.Component {
                             }
 
                             // 舆情统计
-                            request(api_count_opinion)
-                              .then((res) => {
-                                const {opinionCountArr} = formatOpinionCount(res.data);
-                                this.setState({
-                                  opinionCountArr: opinionCountArr
-                                });
                                     request(api_hot_word)
                                       .then(res => {
                                         this.setState({
@@ -147,7 +140,6 @@ class NewHome extends React.Component {
                           });
                       });
                   });
-              });
   }
 
   delHotWordBox(type) {
@@ -344,7 +336,7 @@ class NewHome extends React.Component {
 
   render() {
     const {opinionList,todayOpinionArr, alldayOpinion,todayWarningOpinion, alldayWarningOpinion, 
-      weiboAll, weiboNegative,opinionCountArr} = this.state;
+      weiboAll, weiboNegative} = this.state;
     const {userInfo, ModuleList,themeColor} = this.props;
     const moduleList = this.state.homeMessage.length !== 0 ? homeModuleList(this.state.homeMessage).map((item, index) =>
       <li key={index}>{this.state.delMoudleList[item]}
@@ -391,8 +383,7 @@ class NewHome extends React.Component {
             style={{background:themeColor.grounding.color}}
             >
               <Col span={24} style={ModuleList.opinionCount === 1 ? {display: 'none'} : {display: 'block'}}>
-                <OpinionCountBox data={opinionCountArr}
-                                 status={this.props.type !== undefined ? 'setting' : ''}
+                <OpinionCountBox status={this.props.type !== undefined ? 'setting' : ''}
                                  delCountBox={this.delCountBox.bind(this)}/>
               </Col>
             </Row>

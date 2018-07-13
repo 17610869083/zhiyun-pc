@@ -5,8 +5,15 @@ import BlankPage from '../../base/Exception/BlankPage';
 import {history} from '../../utils/history';
 import {Icon} from 'antd';
 import './OpinionCountBox.less';
-import {GRAY,BLACK,BLUES} from '../../utils/colors';
-
+import {BLACK,BLUES} from '../../utils/colors';
+import {api_count_charts,api_count_opinion} from '../../services/api';
+import request from '../../utils/request';
+import {formatOpinionCount} from '../../utils/format';
+import ReactEchartsCore from 'echarts-for-react/lib/core';
+import echarts from 'echarts/lib/echarts';
+import 'echarts/lib/chart/line';
+import 'echarts/lib/component/tooltip';
+import 'echarts/lib/component/legend';
 class OpinionCountBox extends React.PureComponent {
     constructor(props){
         super(props);
@@ -19,7 +26,8 @@ class OpinionCountBox extends React.PureComponent {
                 '微博':'weibo',
                 '新闻':'news',
                 '论坛':'forum'
-            }
+            },
+            data:[]
         }
     }
     goAllOpinion() {
@@ -35,8 +43,20 @@ class OpinionCountBox extends React.PureComponent {
         pathname: `/allopinion?media=${this.state.mediaList[media]}&datetag=${day}`
     });
     }
+    componentDidMount(){
+        request(api_count_opinion)
+        .then((res) => {
+          this.setState({
+            data: formatOpinionCount(res.data).opinionCountArr
+          });
+          request(api_count_charts +`&data=${JSON.stringify(res.data.all)}`)
+          .then(res => {
+              console.log(res.data)
+          })
+        })
+    }
     render() {
-        const {data,themeColor} = this.props;
+        const {themeColor} = this.props;
         const more = this.props.status!=='setting'?<span style={{color:BLACK}} onClick={this.goAllOpinion.bind(this)}>更多 
         <IconFont type="icon-jiantou" style={{color: '#9b9b9b',fontSize: '16px',marginLeft:'6px'}}/>
         </span>:<Icon type="close-circle" className="delModule" style={{fontSize: '18px',color:BLUES}}
@@ -58,8 +78,8 @@ class OpinionCountBox extends React.PureComponent {
                     <div className="bottom">
                         <table className="count-table">
                             <tbody>
-                            {data.length > 1 ?
-                                data.map((item, index) =>
+                            {this.state.data.length > 1 ?
+                                this.state.data.map((item, index) =>
                                 <tr key={index} className="item">
                                     <td style={{borderRight: `1px solid  ${themeColor.borderColor.color}`,borderBottom: `1px solid  ${themeColor.borderColor.color}`}}>{item[0]}</td>
                                     <td title="点击可查看具体数据" style={{cursor:'pointer',borderRight: `1px solid  ${themeColor.borderColor.color}`,borderBottom: `1px solid  ${themeColor.borderColor.color}`}} onClick = {this.goMedia.bind(this,item[0],'today')}>{item[1]}</td>
@@ -70,6 +90,13 @@ class OpinionCountBox extends React.PureComponent {
                             }
                             </tbody>
                         </table>
+                        <ReactEchartsCore
+                            echarts={echarts}
+                            option={this.state.mediaChartOption}
+                            lazyUpdate={true}
+                            style={{height: '310px', width: '75%', marginBottom: '-20px'}}
+                            ref={(e) => { this.echarts_react = e; }}
+                            />
                     </div>
                 </div>
             </div>
