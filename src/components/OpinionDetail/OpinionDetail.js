@@ -359,7 +359,8 @@ class OpinionDetail extends React.Component {
         neg:'all',
         order:'timedown',
         carry:'全部',
-        page:1
+        page:1,
+        pagesize:this.props.pageSize
       };
       this.props.opinionSearchRequest(param);
       this.props.searchKeywordSync({

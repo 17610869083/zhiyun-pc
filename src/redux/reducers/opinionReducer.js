@@ -37,11 +37,11 @@ import {
 
 const opinionSearchSucceededReducer = handleAction(OPINION_SEARCH_SUCCEEDED, (state, action) => ({
   data: action.payload,
-}), {data: {docList: [], pageInfo: {}, carryCount: [{count: 257740, value: "APP", key: "docApp"}]}});
+}), {data: {docList: [], pageInfo: {}, carryCount: [{count: 0, value: "全部", key: "docApp"}]}});
 
 export const topicListSucceededReducer = handleAction(GET_TOPIC_SHOWLIST_SUCCEEDED, (state, action) => ({
   data: action.payload,
-}), {data: {docList: [], pageInfo: {}, carryCount: [{count: 257740, value: "APP", key: "docApp"}]}});
+}), {data: {docList: [], pageInfo: {}, carryCount: [{count: 0, value: "全部", key: "docApp"}]}});
 
 export const topicListRequestedReducer = handleAction(GET_TOPIC_SHOWLIST_REQUESTED, (state, action) => ({
   request: action.payload,

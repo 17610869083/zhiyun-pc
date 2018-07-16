@@ -354,7 +354,8 @@ class TopicList extends React.Component {
         this.topicTimer = setTimeout( ()=>{
         let topicID=this.props.getRouter;  
         if(topicID.topicid){
-                request(api_topic_message_list + '&topicid=' + topicID.topicid).then((res) => {
+                request(api_topic_message_list + '&topicid=' + topicID.topicid).then(res => {
+                    console.log(res)
                     if(res.data.code === 1){
                     this.setState({
                         docList: res.data.docList,
@@ -366,7 +367,9 @@ class TopicList extends React.Component {
                     });
                 }else{
                   this.setState({
-                    docList:'[]'
+                    docList:'[]',
+                    media:[{count: 0, value: "全部", key: "docApp"}],
+                    pageInfo:{count: 0, pageCount: 0}
                   })
                 }
                 });
@@ -394,7 +397,9 @@ class TopicList extends React.Component {
             });
           }else{
             this.setState({
-              docList:'[]'
+              docList:'[]',
+              media:[{count: 0, value: "全部", key: "docApp"}],
+              pageInfo:{count: 0, pageCount: 0}
             })
           }
         });

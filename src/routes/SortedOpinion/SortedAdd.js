@@ -39,6 +39,7 @@ class SortedAdd extends React.Component {
         const getSortedMenuRequested = this.props.getSortedMenuRequested;
         const clfId = this.props.clfId;
         let rules=JSON.stringify(this.state.rule);
+        console.log(rules)
         this.props.form.validateFields((err, values) => {
             if (!err) {
                 if(this.state.sortedNameValue===''){
@@ -88,7 +89,7 @@ class SortedAdd extends React.Component {
     //高级添加规则
     seniorRule(e){
         this.setState({num3:this.state.num3.concat([{"rule1":"","rulecode1":"","id":"","rule2":"",
-            "rulecode2":"","rule3":"","rulecode3":"","rule4":"",
+            "rulecode2":"","rule3":"","rulecode3":"","rule4":"","rule":"",
             "rulecode4":""}])});
     }
     onAddtype(){
@@ -300,7 +301,7 @@ class SortedAdd extends React.Component {
                                         </Select>
                                     )}
                                 </FormItem>
-                                <div className="text">匹配关键词 <Tooltip placement="bottom" title={titleTip}>
+                                <div className="text" style={{margin:' 0 0 20px 41%',color: '#66baf5'}}>匹配关键词 <Tooltip placement="bottom" title={titleTip}>
                                 <Icon type="question-circle" className="iconMessage"></Icon>
                                 </Tooltip></div>
                                 <FormItem

@@ -67,6 +67,7 @@ class SortedOpinion extends React.Component {
           if (res.data) {
             message.info(res.data.msg);
             getSortedMenuRequested();
+            history.push('/sortedopinion/list')
           }
         });
       },

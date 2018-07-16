@@ -123,6 +123,19 @@ class ExcludeSetting extends React.Component{
                             negativeDiscontinuation:res.data.show1020List
                            })
                     }
+                    request(exclude_discontinuation,{
+                      method:'POST',
+                      headers: {
+                         "Content-Type": "application/x-www-form-urlencoded"
+                      },
+                      body:`type=3020`
+                  }).then(res=>{
+                      if(res.data.show3020List){
+                             this.setState({
+                              waring:res.data.show3020List
+                             })
+                      }
+                    })
                 })
               })
         })

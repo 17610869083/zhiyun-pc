@@ -433,7 +433,8 @@ class AllOpinion extends React.Component {
       seltype: this.props.ks.seltype,
       keyword:this.props.ks.keyword,
       page:pagenumber,
-      similer:1
+      similer:1,
+      pagesize: this.state.pagesize
      }
    }
     this.props.opinionSearchRequest(param);
@@ -567,6 +568,10 @@ class AllOpinion extends React.Component {
 
   componentWillUnmount() {
     this.props.paginationPage(1);
+    this.props.searchKeywordSync({
+      seltype: '',
+      keyword: '', type: 0
+    });
   }
 
   dateChange(date, dateString) {

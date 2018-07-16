@@ -25,7 +25,7 @@ class TopicAdd extends React.Component {
             num2:[{"rule1":"","rulecode1":"","id":"","rule2":"",
             "rulecode2":"","rule3":"","rulecode3":"","rule4":"",
             "rulecode4":""}],
-            num3:[{"rule1":"","rulecode1":"","id":"","rule2":"",
+            num3:[{"rule1":"","rulecode1":"","id":"","rule2":"","rule":"",
             "rulecode2":"","rule3":"","rulecode3":"","rule4":"",
             "rulecode4":""}],
             data:[],
@@ -70,7 +70,7 @@ class TopicAdd extends React.Component {
      //高级添加规则
      seniorRule(e){
      	  this.setState({num3:this.state.num3.concat([{"rule1":"","rulecode1":"","id":"","rule2":"",
-           "rulecode2":"","rule3":"","rulecode3":"","rule4":"",
+           "rulecode2":"","rule3":"","rulecode3":"","rule4":"","rule":"",
            "rulecode4":""}])});   	  
      }
     // 改变设置方式
@@ -224,8 +224,6 @@ class TopicAdd extends React.Component {
             })
           }               
         });
-
-      	
     }
     onChange(checked){
     	   this.setState({checked:checked===true?1:0})

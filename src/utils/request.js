@@ -43,7 +43,7 @@ const option = {
  */
 let flag=true;
 export default function request(url, options) {
-    return fetch(url, Object.assign(option, options))
+    return fetch(url, Object.assign({},option, options))
         .then(checkStatus)
         .then(parseJSON)
         .then(data => {          

@@ -114,7 +114,7 @@ class SortedSetting extends React.Component {
     this.setState({
       num3: this.state.num3.concat([{
         "rule1": "", "rulecode1": "", "id": "", "rule2": "",
-        "rulecode2": "", "rule3": "", "rulecode3": "", "rule4": "",
+        "rulecode2": "", "rule3": "", "rulecode3": "", "rule4": "","rule":"",
         "rulecode4": ""
       }])
     });
@@ -213,7 +213,9 @@ class SortedSetting extends React.Component {
         let addtypeStr = 'num' + (res.data.addtype);
         this.setState({
           topicAlldata: res.data,
-          [addtypeStr]: res.data.rulearr,
+          [addtypeStr]: res.data.rulearr.length === 0?[{"rule1":"","rulecode1":"","id":"","rule2":"",
+          "rulecode2":"","rule3":"","rulecode3":"","rule4":"",
+          "rulecode4":""}]:res.data.rulearr,
           addType: res.data.addtype,
           select: res.data.catid,
           sortedNameValue: res.data.clfname

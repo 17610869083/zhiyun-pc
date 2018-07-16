@@ -31,9 +31,13 @@ class SystemTopic extends React.Component {
         }
     }
     onModelCancel() {
-        this.setState({
-            visible: false
-        })
+        this.setState((prevState,props)=>({
+            visible: false, 
+            objectValueInput:1,
+            subject1ValueInput:1,
+            subject2ValueInput:1,
+            filterValueInput:1
+        }))
     }
     onModelOk(e){
         let id = this.props.num1[this.state.inputIndex]['id'];
@@ -102,7 +106,8 @@ class SystemTopic extends React.Component {
             objectValueInput:1,
             subject1ValueInput:1,
             subject2ValueInput:1,
-            filterValueInput:1
+            filterValueInput:1,
+            inputIndex:0
         }))
 
     }
@@ -122,8 +127,10 @@ class SystemTopic extends React.Component {
         let ObjectArr=value.split(' '); 
         if(/~|!|@|#|\$|\^|&|\*|=|\?|！|￥|-|\(|\)|（|）|%|【|】|\{|\}|；|;|%|,|，|。|\./.test(value)){ 
             message.warning('请不要带有特殊字符');
+            return ;
         }else if (keywordDuplicateCheck(ObjectArr)){
             message.warning('请不要出现重复的关键词或多余的空格');
+            return ;
         }
         this.setState({
             objectValueInput:value
@@ -134,8 +141,10 @@ class SystemTopic extends React.Component {
         let Subject1Arr=value.split(' '); 
         if(/~|!|@|#|\$|\^|&|\*|=|\?|！|￥|-|\(|\)|（|）|%|【|】|\{|\}|；|;|%|,|，|。|\./.test(value)){  
             message.warning('请不要带有特殊字符');
+            return ;
         }else if (keywordDuplicateCheck(Subject1Arr)){
             message.warning('请不要出现重复的关键词或多余的空格');
+            return ;
         }
         this.setState({
             subject1ValueInput: value
@@ -146,8 +155,10 @@ class SystemTopic extends React.Component {
         let Subject2Arr=value.split(' '); 
         if(/~|!|@|#|\$|\^|&|\*|=|\?|！|￥|-|\(|\)|（|）|%|【|】|\{|\}|；|;|%|,|，|。|\./.test(value)){ 
             message.warning('请不要带有特殊字符');
+            return ;
         }else if (keywordDuplicateCheck(Subject2Arr)){
             message.warning('请不要出现重复的关键词或多余的空格');
+            return ;
         }
         this.setState({
             subject2ValueInput: value
@@ -158,15 +169,32 @@ class SystemTopic extends React.Component {
         let FilterArr=value.split(' '); 
         if(/~|!|@|#|\$|\^|&|\*|=|\?|！|￥|-|\(|\)|（|）|%|【|】|\{|\}|；|;|%|,|，|。|\./.test(value)){  
             message.warning('请不要带有特殊字符');
+            return ;
         }else if (keywordDuplicateCheck(FilterArr)){
             message.warning('请不要出现重复的关键词或多余的空格');
+            return ;
         }
         this.setState({
             filterValueInput: value
+            
         })
     }
 
-    showModal1 = (e) => {
+    showModal1(index,e){
+        let number = 0;
+        if(this.props.num1[index]['rule1'] === ''){
+    
+        }else{
+                this.props.num1.forEach( item => {
+                        if(item.rule1 !== ''){
+                            ++number;
+                        } 
+                })
+                if(number<2 ){
+                    message.error('当前只有一组关键词，不可删除');
+                    return;
+                }
+        }
     this.setState({
       visible1: true,
       index:parseInt(e.target.dataset.index,10),
@@ -332,7 +360,6 @@ class SystemTopic extends React.Component {
                                 readOnly
                                 onClick={this.showModal.bind(this)}
                                 value={this.state.propsData[index]!==undefined?this.state.propsData[index]['rule1']:item['rule1']}
-                                suffix={suffix}
                                 data-num='0'
                                 data-index={index}                           
                             />  
@@ -345,7 +372,6 @@ class SystemTopic extends React.Component {
                                    readOnly
                                    onClick={this.showModal.bind(this)}
                                    value={this.state.propsData[index]!==undefined?this.state.propsData[index]['rule2']:item['rule2']}
-                                   suffix={suffix}
                                    data-num='1'
                                 data-index={index}
                                
@@ -359,7 +385,6 @@ class SystemTopic extends React.Component {
                                    readOnly
                                    onClick={this.showModal.bind(this)}
                                    value={this.state.propsData[index]!==undefined?this.state.propsData[index]['rule3']:item['rule3']}
-                                   suffix={suffix}
                                    data-num='2'
                                    data-index={index}
                                    />
@@ -372,12 +397,11 @@ class SystemTopic extends React.Component {
                                    readOnly
                                    onClick={this.showModal.bind(this)}
                                    value={this.state.propsData[index]!==undefined?this.state.propsData[index]['rule4']:item['rule4']}
-                                   suffix={suffix}
                                    data-num='3'
                                    data-index={index}
                             />
                         </Col>
-                            <Icon  type="minus-circle" className="delBtn" onClick={this.showModal1} 
+                            <Icon  type="minus-circle" className="delBtn" onClick={this.showModal1.bind(this,index)} 
                             style={this.props.num1.length>1?this.state.disBlock:this.state.disNone}
                             data-delid={item.id}
                             data-index={index}
