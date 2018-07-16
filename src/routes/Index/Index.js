@@ -4,7 +4,6 @@ import {Layout, Menu,Button} from 'antd';
 import {Route, Switch, Link} from 'react-router-dom';
 import './Index.less';
 import {exportSkip} from '../../redux/actions/createActions';
-import logo from '../../assets/img/logo.png';
 import CRcode from '../LoginPage/crcode.jpg';
 import {api_get_channel} from '../../services/api';
 import Iconfont from '../../components/IconFont'
@@ -40,6 +39,9 @@ const Briefing= AsyncComponent(() => import('../Briefing/Briefing'))
 const BriefingSecond = AsyncComponent(() => import('../BriefingSecond/BriefingSecond'))
 const Daily = AsyncComponent(() => import('../Daily/Daily'))
 const Special = AsyncComponent(() => import('../Special/Special'))
+const Evidence = AsyncComponent(() => import('../Evidence/Evidence'))
+const UpReport = AsyncComponent(() => import('../UpReport/UpReport'))
+const Guide = AsyncComponent(() => import('../Guide/Guide'))
 const {Header, Sider, Content} = Layout;
 const SubMenu = Menu.SubMenu;
 
@@ -143,6 +145,7 @@ class Index extends React.Component {
     // 统计报告-舆情报告   
     const {themeColor} = this.props;
     let menuList = [];
+    const haverClass = themeColor.topColor.backgroundColor === '#5a8bff' ? 'white':'black'; 
     this.state.channelList.map((item, index) => {
       if (item.channelurl === '/reportopinion/list') {
         menuList.push(<SubMenu
@@ -150,7 +153,7 @@ class Index extends React.Component {
           title={<Link to="/myreport"><span>
             <i className="anticon"><Iconfont type={item.type} style={{fontSize: '16px'}}/></i>
             <span
-              style={{fontSize: '16px'}}>舆情报告</span>
+              style={{fontSize: '16px'}} className={haverClass}>舆情报告</span>
             </span></Link>}>
           <Menu.Item key="reportopinion" style={{fontSize: '16px'}}>
             <Link to="/reportopinion/list">
@@ -180,7 +183,7 @@ class Index extends React.Component {
                                  style={{fontSize: '16px'}}>系统设置</span></span> </Link>}>
           <Menu.Item key="noticesetting" style={{fontSize: '16px'}}>
             <Link to="/noticesetting">
-              <span>通知设置</span>
+              <span >通知设置</span>
             </Link>
           </Menu.Item>
           
@@ -214,10 +217,14 @@ class Index extends React.Component {
         </Menu.Item>)
       }
       return 3
-    })
+    });
     return (
       <div className="root-container">
-        <Layout className="layout">
+       <ZHeader/> 
+        <Layout className={`layout ${haverClass}`}>
+           {/* <Header className="header" style={{backgroundColor: themeColor.topColor.backgroundColor, height: '60px'}}>
+               <ZHeader/> 
+            </Header> */}
           <Sider
             className="sider siders"
             trigger={null}
@@ -228,9 +235,6 @@ class Index extends React.Component {
             onMouseLeave={this.mouseLeaveToggle}
           >
             <div>
-              <div className="logo-wrapper" style={{backgroundColor:themeColor.topColor.backgroundColor}}>
-                <img src={logo} alt="logo" className="logo" onClick={this.goBackIndex.bind(this)}/>
-              </div>
               <div className="trigger-wrapper" onClick={this.toggle}
               style={{backgroundColor:themeColor.bottomColor.backgroundColor}}
               >
@@ -240,8 +244,6 @@ class Index extends React.Component {
             <Menu
               defaultSelectedKeys={['1']}
               mode="inline"
-              // theme="dark"
-              // inlineCollapsed={this.state.collapsed && this.state.flag}
               style={ {backgroundColor: themeColor.bottomColor.backgroundColor, overflow: 'auto',maxHeight: '600px'}}
               className="selectMenu"
               selectedKeys={[urlTokey()]}
@@ -250,9 +252,7 @@ class Index extends React.Component {
             </Menu>
           </Sider>
           <Layout className="right-layout">
-            <Header className="header" style={{backgroundColor: themeColor.topColor.backgroundColor, height: '60px'}}>
-              <ZHeader/>
-            </Header>
+
             <Content className="main"  style={{backgroundColor: themeColor.grounding.color}} ref={(main) => {
               this.main = main
             }}>
@@ -285,6 +285,9 @@ class Index extends React.Component {
                 <Route path="/briefingsecond" component={BriefingSecond}/>
                 <Route path="/daily" component={Daily}/>
                 <Route path="/special" component={Special}/>
+                <Route path="/evidence" component={Evidence}/>
+                <Route path="/upreport" component={UpReport}/>
+                <Route path="/guide" component={Guide}/>
               </Switch>
               <div className="suspensionBox">
                 <div>

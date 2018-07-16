@@ -28,7 +28,9 @@ class OpinionCountBox extends React.PureComponent {
                 '论坛':'forum'
             },
             data:[],
-            charts:{}
+            legend:[],
+            series:[],
+            opinionCount:{}
     }
  }
     goAllOpinion() {
@@ -39,36 +41,40 @@ class OpinionCountBox extends React.PureComponent {
     delOpinionCountBox(){
         this.props.delCountBox(1);
     }
-    goMedia(media,day){
-        console.log(media)
-        console.log(day)
+    goMedia(media,day,type){
         if(media === '数据来源'){
-            console.log(1)
+            request(api_count_charts +`&data=${JSON.stringify(this.state.opinionCount[type])}`)
+            .then(res => {
+              if(res.data.code === 1){
+                this.setState({
+                  legend:res.data.legend,
+                  series:res.data.series
+                })
+              }
+            })
         }else{
-            console.log(2)
+           history.push({
+            pathname: `/allopinion?media=${this.state.mediaList[media]}&datetag=${day}`
+           });
         }
-    //   history.push({
-    //     pathname: `/allopinion?media=${this.state.mediaList[media]}&datetag=${day}`
-    // });
     }
     componentDidMount(){
-        // request(api_count_opinion)
-        // .then((res) => {
-        //   this.setState({
-        //     data: formatOpinionCount(res.data).opinionCountArr
-        //   });
-        //   request(api_count_charts +`&data=${JSON.stringify(res.data.all)}`)
-        //   .then(res => {
-        //       console.log(res.data.pic)
-        //       this.setState({
-        //          charts:res.data.pic
-        //       })
-        //   })
-        // })
-    }
-    //改变饼图
-    changeChart(type){
-      console.log(type)
+        request(api_count_opinion)
+        .then((res) => {
+          this.setState({
+            data: formatOpinionCount(res.data).opinionCountArr,
+            opinionCount:res.data
+          });
+          request(api_count_charts +`&data=${JSON.stringify(res.data.all)}`)
+          .then(res => {
+            if(res.data.code === 1){
+              this.setState({
+                legend:res.data.legend,
+                series:res.data.series
+              })
+            }
+          })
+        })
     }
     render() {
         const {themeColor} = this.props;
@@ -83,11 +89,14 @@ class OpinionCountBox extends React.PureComponent {
                 formatter: "{b}: {c} ({d}%)",
             },
             legend:{
-                data:["APP","博客","平媒","微信","微博","新闻","论坛"],
+                data:this.state.legend,
                 itemGap:20,
                 orient:"vertical",
                 x:'right',
                 padding:[60,70,0,0],
+                textStyle:{
+                    color:themeColor.textColor.color
+                }
             },
             series: [
                 {
@@ -104,10 +113,10 @@ class OpinionCountBox extends React.PureComponent {
                             formatter: '{b}\n{d}%'
                         },
                     },
-                    data: this.state.charts.series!==undefined?this.state.charts.series[0].data:[],
+                    data: this.state.series,
                 }
             ]
-        };    
+        };   
         return (
             <div className="opinion-count-box" style={{background:themeColor.bottomColor.backgroundColor}}>
                 <div className="container">
@@ -122,26 +131,26 @@ class OpinionCountBox extends React.PureComponent {
                         </div>
                     </div>
                     <div className="bottom">
-                        <table className="count-table">
+                        <table className="count-table" style={{color:themeColor.textColor.color}}>
                             <tbody>
                             {this.state.data.length > 1 ?
                                 this.state.data.map((item, index) =>
                                 <tr key={index} className="item">
                                     <td style={{borderRight: `1px solid  ${themeColor.borderColor.color}`,borderBottom: `1px solid  ${themeColor.borderColor.color}`}} >{item[0]}</td>
-                                    <td title="点击可查看具体数据" style={{cursor:'pointer',borderRight: `1px solid  ${themeColor.borderColor.color}`,borderBottom: `1px solid  ${themeColor.borderColor.color}`}} onClick = {this.goMedia.bind(this,item[0],'today')}>{item[1]}</td>
-                                    <td title="点击可查看具体数据" style={{cursor:'pointer',borderRight: `1px solid  ${themeColor.borderColor.color}`,borderBottom: `1px solid  ${themeColor.borderColor.color}`}} onClick = {this.goMedia.bind(this,item[0],'7day')}>{item[2]}</td>
-                                    <td title="点击可查看具体数据" style={{cursor:'pointer',borderRight: `1px solid  ${themeColor.borderColor.color}`,borderBottom: `1px solid  ${themeColor.borderColor.color}`}} onClick = {this.goMedia.bind(this,item[0],'30day')}>{item[3]}</td>
-                                    <td title="点击可查看具体数据" style={{cursor:'pointer',borderRight: `1px solid  ${themeColor.borderColor.color}`,borderBottom: `1px solid  ${themeColor.borderColor.color}`}} onClick = {this.goMedia.bind(this,item[0],'all')}>{item[4]}</td>
+                                    <td title="点击可查看具体数据" style={{cursor:'pointer',borderRight: `1px solid  ${themeColor.borderColor.color}`,borderBottom: `1px solid  ${themeColor.borderColor.color}`}} onClick = {this.goMedia.bind(this,item[0],'today','today')}>{item[1]}</td>
+                                    <td title="点击可查看具体数据" style={{cursor:'pointer',borderRight: `1px solid  ${themeColor.borderColor.color}`,borderBottom: `1px solid  ${themeColor.borderColor.color}`}} onClick = {this.goMedia.bind(this,item[0],'7day','week')}>{item[2]}</td>
+                                    <td title="点击可查看具体数据" style={{cursor:'pointer',borderRight: `1px solid  ${themeColor.borderColor.color}`,borderBottom: `1px solid  ${themeColor.borderColor.color}`}} onClick = {this.goMedia.bind(this,item[0],'30day','month')}>{item[3]}</td>
+                                    <td title="点击可查看具体数据" style={{cursor:'pointer',borderRight: `1px solid  ${themeColor.borderColor.color}`,borderBottom: `1px solid  ${themeColor.borderColor.color}`}} onClick = {this.goMedia.bind(this,item[0],'all','all')}>{item[4]}</td>
                                 </tr>) : <tr><td><BlankPage desc='<span>空空如也，赶紧去<a href="index.html#/sortedopinion/addrule">添加</a>关键词</span>'/></td></tr>
                             }
                             </tbody>
                         </table>
-                        {/* <ReactEchartsCore
+                        <ReactEchartsCore
                             echarts={echarts}
                             option={mediaOption}
                             lazyUpdate={true}
                             style={{height: '310px', width: '40%', marginBottom: '-20px'}}
-                            /> */}
+                            />
                     </div>
                 </div>
             </div>
