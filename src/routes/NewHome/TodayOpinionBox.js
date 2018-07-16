@@ -1,7 +1,13 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {Row, Col,Icon} from 'antd';
+import {Row, Col,Icon, Card, Progress} from 'antd';
 import IconFont from '../../components/IconFont';
+import ReactEchartsCore from 'echarts-for-react/lib/core';
+import echarts from 'echarts/lib/echarts';
+import 'echarts/lib/component/tooltip';
+import 'echarts/lib/component/title';
+import 'echarts/lib/component/legend';
+import 'echarts/lib/chart/pie';
 import './TodayOpinionBox.less';
 import {api_today_opinion} from '../../services/api';
 import request from '../../utils/request';
@@ -12,9 +18,23 @@ class TodayOpinionBox extends React.PureComponent {
         super();
         this.state={
              todayAll:0,
-             todayWarning:0,
+             todayWarning:1000,
              todayNegative:0,
-             ratio:0
+						 ratio:0,
+						 echartData: [
+							 {
+								 value: 0,
+								 name: '今日预警'
+							 },
+							 {
+								value: 1,
+								name: '今日负面'
+							},
+							{
+								value: 0,
+								name: '今日舆情'
+							},
+						 ]
         }
     }
     componentWillUnmount(){
@@ -102,8 +122,406 @@ class TodayOpinionBox extends React.PureComponent {
         });
     }
     render() {
-        const {todayAll,todayWarning,todayNegative,ratio} = this.state;
-        const {themeColor} = this.props;
+				// const {todayAll ,todayNegative,} = this.state;sss
+				// ratio
+				const {themeColor} = this.props;
+				const value = this.state.todayWarning;
+				const valueNegative = this.state.todayNegative;
+				const valueAll = this.state.todayAll;
+				// const unit = "%";
+				const initcolor = "#fff";
+				const min = 0;
+				const max = 10000
+				
+				
+				const color = initcolor;
+				const background = "none"; //背景
+				const dataStyle = {
+						normal: {
+								label: {
+										show: false
+								},
+								labelLine: {
+										show: false
+								},
+								shadowBlur: 40,
+								shadowColor: 'rgba(40, 40, 40, 0.5)'
+						}
+				};
+				const placeHolderStyle = {
+						normal: {
+								color: 'rgba(44,59,70,0)', //未完成的圆环的颜色
+								label: {
+										show: false
+								},
+								labelLine: {
+										show: false
+								}
+						}
+				};
+				const mediaOption= {
+				  title: {
+						text: '今日预警\n' + this.state.todayWarning,
+						x: 'center',
+						y: 'center',
+						// top: '53%',
+						textStyle: {
+								fontWeight: 'normal',
+								color: color,
+								fontSize: 16
+						}
+					},
+					backgroundColor: background,
+					color: [color, '#313443', '#fff'],
+					tooltip: {
+							show: false,
+							formatter: "{a} <br/>{b} : {c} ({d}%)"
+					},
+					legend: {
+							show: false,
+							// itemGap: 12,
+							data: ["01", "02"],
+							// left: 'center',
+							// top: 'center',
+							// icon: 'none',
+							// align: 'center',
+							textStyle: {
+									color: "#fff",
+									fontSize: 16
+							},
+					},
+					toolbox: {
+							show: false,
+							feature: {
+									mark: {
+											show: true
+									},
+									dataView: {
+											show: true,
+											readOnly: false
+									},
+									restore: {
+											show: true
+									},
+									saveAsImage: {
+											show: true
+									}
+							}
+					},
+					series: [{
+							name: '今日预警',
+							type: 'pie',
+							clockWise: false,
+							radius: ['50%', '58%'],
+							itemStyle: dataStyle,
+							hoverAnimation: false,
+							data: [{
+											value: value - min,
+											name: '01',
+											itemStyle: {
+												normal: {
+													color: new echarts.graphic.LinearGradient(0, 0, 1, 1, [{
+														offset: 0,
+														color: '#7777eb'
+													}, {
+														offset: 1,
+														color: '#70ffac'
+													}]),
+												},
+											},
+
+									}, {
+											value: max - value,
+											name: 'invisible',
+											itemStyle: placeHolderStyle
+									}
+			
+							]
+					}, {
+							name: 'Line 2',
+							type: 'pie',
+							animation: false,
+							clockWise: false,
+							radius: ['58%', '60%'],
+							itemStyle: dataStyle,
+							hoverAnimation: false,
+							tooltip: {
+									show: false
+							},
+							data: [{
+											value: 100,
+											name: '02',
+											itemStyle: {
+													normal: {
+															color: "#3c6482",
+													},
+											}
+							}]
+					}, {
+							name: 'Line 3',
+							type: 'pie',
+							animation: false,
+							clockWise: false,
+							radius: ['48%', '50%'],
+							itemStyle: dataStyle,
+							hoverAnimation: false,
+							tooltip: {
+									show: false
+							},
+							data: [{
+											value: 100,
+											name: '02',
+											itemStyle: {
+													normal: {
+															color: "#3c6482",
+													},
+											}
+									}
+							]
+					}]
+				};
+				const mediaOptionNegative= {
+				  title: {
+						text: '今日负面\n' + this.state.todayNegative,
+						x: 'center',
+						y: 'center',
+						// top: '53%',
+						textStyle: {
+								fontWeight: 'normal',
+								color: color,
+								fontSize: 16
+						}
+					},
+					backgroundColor: background,
+					color: [color, '#313443', '#fff'],
+					tooltip: {
+							show: false,
+							formatter: "{a} <br/>{b} : {c} ({d}%)"
+					},
+					legend: {
+							show: false,
+							// itemGap: 12,
+							data: ["01", "02"],
+							// left: 'center',
+							// top: 'center',
+							// icon: 'none',
+							// align: 'center',
+							textStyle: {
+									color: "#fff",
+									fontSize: 16
+							},
+					},
+					toolbox: {
+							show: false,
+							feature: {
+									mark: {
+											show: true
+									},
+									dataView: {
+											show: true,
+											readOnly: false
+									},
+									restore: {
+											show: true
+									},
+									saveAsImage: {
+											show: true
+									}
+							}
+					},
+					series: [{
+							name: '今日负面',
+							type: 'pie',
+							clockWise: false,
+							radius: ['50%', '58%'],
+							itemStyle: dataStyle,
+							hoverAnimation: false,
+							data: [{
+											value: valueNegative - min,
+											name: '01',
+											itemStyle: {
+												normal: {
+													color: new echarts.graphic.LinearGradient(0, 0, 1, 1, [{
+														offset: 0,
+														color: '#7777eb'
+													}, {
+														offset: 1,
+														color: '#70ffac'
+													}]),
+												},
+											},
+
+									}, {
+											value: max - valueNegative,
+											name: 'invisible',
+											itemStyle: placeHolderStyle
+									}
+			
+							]
+					}, {
+							name: 'Line 2',
+							type: 'pie',
+							animation: false,
+							clockWise: false,
+							radius: ['58%', '60%'],
+							itemStyle: dataStyle,
+							hoverAnimation: false,
+							tooltip: {
+									show: false
+							},
+							data: [{
+											value: 100,
+											name: '02',
+											itemStyle: {
+													normal: {
+															color: "#3c6482",
+													},
+											}
+							}]
+					}, {
+							name: 'Line 3',
+							type: 'pie',
+							animation: false,
+							clockWise: false,
+							radius: ['48%', '50%'],
+							itemStyle: dataStyle,
+							hoverAnimation: false,
+							tooltip: {
+									show: false
+							},
+							data: [{
+											value: 100,
+											name: '02',
+											itemStyle: {
+													normal: {
+															color: "#3c6482",
+													},
+											}
+									}
+							]
+					}]
+				};
+				const mediaOptionPublic= {
+				  title: {
+						text: '今日舆情\n' + this.state.todayAll,
+						x: 'center',
+						y: 'center',
+						// top: '53%',
+						textStyle: {
+								fontWeight: 'normal',
+								color: color,
+								fontSize: 16
+						}
+					},
+					backgroundColor: background,
+					color: [color, '#313443', '#fff'],
+					tooltip: {
+							show: false,
+							formatter: "{a} <br/>{b} : {c} ({d}%)"
+					},
+					legend: {
+							show: false,
+							// itemGap: 12,
+							data: ["01", "02"],
+							// left: 'center',
+							// top: 'center',
+							// icon: 'none',
+							// align: 'center',
+							textStyle: {
+									color: "#fff",
+									fontSize: 16
+							},
+					},
+					toolbox: {
+							show: false,
+							feature: {
+									mark: {
+											show: true
+									},
+									dataView: {
+											show: true,
+											readOnly: false
+									},
+									restore: {
+											show: true
+									},
+									saveAsImage: {
+											show: true
+									}
+							}
+					},
+					series: [{
+							name: '今日舆情',
+							type: 'pie',
+							clockWise: false,
+							radius: ['50%', '58%'],
+							itemStyle: dataStyle,
+							hoverAnimation: false,
+							data: [{
+											value: valueAll - min,
+											name: '01',
+											itemStyle: {
+												normal: {
+													color: new echarts.graphic.LinearGradient(0, 0, 1, 1, [{
+														offset: 0,
+														color: '#7777eb'
+													}, {
+														offset: 1,
+														color: '#70ffac'
+													}]),
+												},
+											},
+
+									}, {
+											value: max - valueAll,
+											name: 'invisible',
+											itemStyle: placeHolderStyle
+									}
+			
+							]
+					}, {
+							name: 'Line 2',
+							type: 'pie',
+							animation: false,
+							clockWise: false,
+							radius: ['58%', '60%'],
+							itemStyle: dataStyle,
+							hoverAnimation: false,
+							tooltip: {
+									show: false
+							},
+							data: [{
+											value: 100,
+											name: '02',
+											itemStyle: {
+													normal: {
+															color: "#3c6482",
+													},
+											}
+							}]
+					}, {
+							name: 'Line 3',
+							type: 'pie',
+							animation: false,
+							clockWise: false,
+							radius: ['48%', '50%'],
+							itemStyle: dataStyle,
+							hoverAnimation: false,
+							tooltip: {
+									show: false
+							},
+							data: [{
+											value: 100,
+											name: '02',
+											itemStyle: {
+													normal: {
+															color: "#3c6482",
+													},
+											}
+									}
+							]
+					}]
+				};
         return (
             <div className="today-opinion-box" draggable="true" style={{background:themeColor.bottomColor.backgroundColor}}>
                  <div className="today-opinion-top" 
@@ -113,69 +531,46 @@ class TodayOpinionBox extends React.PureComponent {
                  ></Icon>
                  </div>
                  <div className="container">
-                 {this.state.num}
-                     <Row gutter={60}>
-                         <Col span={6}>
-                             <div className="opinion-info" onClick = {this.goAllOpinion.bind(this,2)}>
-                                 <div className="content">
-                                     <div className="icon-wrapper" style={{backgroundColor: '#f2a200'}}>
-                                         <IconFont type="icon-shandian22-copy" style={{color: '#ffffff',fontSize: '50px'}}/>
-                                     </div>
-                                     <div className="count" style={{backgroundColor: '#ffbc34'}}>
-                                         <div className="number">{todayWarning}</div>
-                                         <div className="name" style={{color:themeColor.textColor.color}}>今日预警</div>
-                                         {/* <div className="name">今日特推</div> */}
-                                     </div>
-
-                                 </div>
+								 {/* {this.state.num} */}
+								    <Card title="今日统计" style={{ width: "100%", height: 377, marginTop: 20, backgroundColor: "#25293a" }}>
+										  <Row gutter={60}>
+												<Col span={24}>
+												  <span style={{ fontSize: 14, color: "#fff", float: "right", paddingRight: 30 }}>负面同比增长：{this.state.ratio}%</span>
+												</Col>
+											</Row>
+                      <Row gutter={60} style={{ marginTop: 50 }}>
+                         <Col span={8} >
+														<div className="opinion-info" onClick = {this.goAllOpinion.bind(this,2)}>
+														 	<ReactEchartsCore
+																echarts={echarts}
+																option={mediaOption}
+																lazyUpdate={true}
+																style={{ height: 170, width: 170 }}
+															/>
+														</div>
+                         </Col>
+                         <Col span={8}>
+                            <div className="opinion-info"  onClick = {this.goAllOpinion.bind(this,'all')}>
+														 	<ReactEchartsCore
+																echarts={echarts}
+																option={mediaOptionNegative}
+																lazyUpdate={true}
+																style={{ height: 170, width: 170 }}
+															/>
                              </div>
                          </Col>
-                         <Col span={6}>
-                             <div className="opinion-info"  onClick = {this.goAllOpinion.bind(this,'all')}>
-                                 <div className="content">
-                                         <div className="icon-wrapper">
-                                         <IconFont type="icon-yuqing"
-                                                   style={{color: '#FFFFFF',fontSize: '50px'}}
-                                         />
-                                     </div>
-                                     <div className="count">
-                                         <div className="number">{todayAll}</div>
-                                         <div className="name">今日舆情</div>
-                                         {/* <div className="name">今日信息</div> */}
-                                     </div>
-
-                                 </div>
-                             </div>
+                         <Col span={8} style={{ paddingLeft: 0 }}>
+														<div className="opinion-info" onClick = {this.goAllOpinion.bind(this,1)}>
+															<ReactEchartsCore
+																echarts={echarts}
+																option={mediaOptionPublic}
+																lazyUpdate={true}
+																style={{ height: 170, width: 170 }}
+															/>
+														</div>
                          </Col>
-                         <Col span={6}>
-                             <div className="opinion-info" onClick = {this.goAllOpinion.bind(this,1)}>
-                                 <div className="content">
-                                     <div className="icon-wrapper" style={{backgroundColor: '#e70000'}}>
-                                         <IconFont type="icon-jinggao" style={{color: '#ffffff',fontSize: '50px'}}/>
-                                     </div>
-                                     <div className="count" style={{backgroundColor: '#ff3f3f'}}>
-                                         <div className="number">{todayNegative}</div>
-                                         <div className="name">今日负面</div>
-                                         {/* <div className="name">今日重点</div> */}
-                                     </div>
-                                 </div>
-                             </div>
-                         </Col>
-                         <Col span={6}>
-                             <div className="opinion-info">
-                                 <div className="content">
-                                     <div className="icon-wrapper" style={{backgroundColor: '#f26100'}}>
-                                         <IconFont type="icon-sastaishiganzhi" style={{color: '#ffffff',fontSize: '50px'}}/>
-                                     </div>
-                                     <div className="count" style={{backgroundColor: '#ff8839'}}>
-                                         <div className="number">{ratio}%</div>
-                                         <div className="name">负面同比增长</div>
-                                         {/* <div className="name">重点信息增长</div> */}
-                                     </div>
-                                 </div>
-                             </div>
-                         </Col>
-                     </Row>
+                      </Row>
+										</Card>
                  </div>
             </div>
         )
