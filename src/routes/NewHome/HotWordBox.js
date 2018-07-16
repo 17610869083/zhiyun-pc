@@ -30,7 +30,7 @@ class HotWordBox extends React.Component{
                     <div className="top" style={{borderBottom: `1px solid ${themeColor.borderColor.color}`}}>
                         <div className="title">
                             <IconFont type="icon-recigengxin" style={{fontSize: '21px',color:BLUES}}/>
-                            <span className="txt" style={{color:BLACK}}>相关热词</span>
+                            <span className="txt" style={{color:themeColor.textColor.color}}>相关热词</span>
                         </div>
                         <div className="more">
                         <Icon type="close-circle" className="delModule"

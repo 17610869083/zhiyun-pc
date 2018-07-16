@@ -49,7 +49,7 @@ class WeiboOpinionBox extends React.PureComponent {
                     <div className="top" style={{borderBottom: `1px solid ${themeColor.borderColor.color}`}}>
                         <div className="title">
                             <IconFont type="icon-weibo1" style={{fontSize: '20px'}}/>
-                            <span className="txt" style={{color:BLACK}}>微博舆情</span>
+                            <span className="txt" style={{color:themeColor.textColor.color}}>微博舆情</span>
                             {/* <span className="txt" style={{color:BLACK}}>微博信息</span> */}
                         </div>
                         <div className="more">
@@ -58,7 +58,7 @@ class WeiboOpinionBox extends React.PureComponent {
                     </div>
                     <div className="bottom">
                         <Tabs defaultActiveKey="1" onChange={this.datetagType.bind(this)}
-                         size='large'>
+                         size='large' tabBarStyle={{color:themeColor.textColor.color,borderBottom:`1px solid ${themeColor.borderColor.color}`}}>
                             <TabPane tab="全部" key="1">
                                 <ul className="list">
                                     {weiboAll !=='[]'&&weiboAll.length!==0 ?
@@ -67,7 +67,7 @@ class WeiboOpinionBox extends React.PureComponent {
                                            // style={{borderBottom: `1px solid ${themeColor.borderColor.color}`}}
                                             >
                                                 <div className="content">
-                                                    <div className="title">{item.title}</div>
+                                                    <div className="title" style={{color:themeColor.textColor.color}}>{item.title}</div>
                                                     <div className="desc">
                                                         <span className="time">{item.pubdate.substring(10)}</span>
                                                         <span className="source">{item.source}</span>
@@ -83,9 +83,9 @@ class WeiboOpinionBox extends React.PureComponent {
                                 <ul className="list">
                                     {weiboNegative !=='[]'&& weiboNegative.length!==0 ?
                                         weiboNegative.map((item,index) =>
-                                            <li key={index} className="list-item" onClick={this.clickItemTitle.bind(this,item.sid)}>
+                                            <li key={index} className={`list-item ${haverClass}`} onClick={this.clickItemTitle.bind(this,item.sid)}>
                                                 <div className="content">
-                                                    <div className="title">{item.title}</div>
+                                                    <div className="title" style={{color:themeColor.textColor.color}}>{item.title}</div>
                                                     <div className="desc">
                                                         <span className="time">{item.pubdate.substring(10)}</span>
                                                         <span className="source">{item.source}</span>

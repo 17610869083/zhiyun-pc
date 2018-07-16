@@ -42,7 +42,7 @@ class MediaDistribution extends React.Component{
             <div className="top" style={{borderBottom: `1px solid ${themeColor.borderColor.color}`}}>
                 <div className="title">
                     <IconFont type="icon-fenbutu" style={{fontSize: '22px',color:BLUES}}/>
-                    <span className="txt" style={{color:BLACK}}>媒体分布</span>
+                    <span className="txt" style={{color:themeColor.textColor.color}}>媒体分布</span>
                 </div>
                 <div className="more">
                         <Icon type="close-circle" className="delModule"

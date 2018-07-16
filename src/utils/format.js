@@ -82,13 +82,7 @@ export function formatMediaChart(data) {
                 type: 'line',
                 smooth: true,
                 data: data.series[0].data,
-                areaStyle: {
-                    normal: {
-                        color:{
-                            color:colors[0]
-                        }
-                    }
-                }
+                areaStyle: {normal: {}}
             },
             {
                 name: '中性',
@@ -96,13 +90,7 @@ export function formatMediaChart(data) {
                 type: 'line',
                 smooth: true,
                 data: data.series[1].data,
-                areaStyle: {
-                    normal: {
-                        color: {
-                            color:colors[1]
-                        }
-                    }
-                }
+                areaStyle: {normal: {}}
             },
             {
                 name: '负面',
@@ -110,13 +98,7 @@ export function formatMediaChart(data) {
                 type: 'line',
                 smooth: true,
                 data: data.series[2].data,
-                areaStyle: {
-                    normal: {
-                        color:{
-                            color: colors[2]
-                        }
-                    }
-                }
+                areaStyle: {normal: {}}
             },
             {
                 name: '预警',
@@ -124,13 +106,7 @@ export function formatMediaChart(data) {
                 type: 'line',
                 smooth: true,
                 data: data.series[3].data,
-                areaStyle: {
-                    normal: {
-                        color: {
-                            color:colors[3]
-                        }
-                    }
-                }
+                areaStyle: { normal: {}}
             }
         ]
     };

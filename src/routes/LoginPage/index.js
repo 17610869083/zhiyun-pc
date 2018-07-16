@@ -69,14 +69,15 @@ class LoginPage extends React.Component {
                 backgroundColor: '#fff'
             },
             textColor:{
-                 color:'#fff'
+                 color:'#000'
             },
             grounding:{
                 color:'#E4EBF7'
             },
             borderColor:{
                 color:'#e4ebf7'
-            }
+            },
+
            };
            setItem('theme',colors);
            this.props.changeTheme(colors)

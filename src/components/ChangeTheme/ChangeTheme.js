@@ -20,7 +20,7 @@ class ChangeTheme extends React.Component {
                         backgroundColor: '#fff'
                     },
                     textColor:{
-                        color:'#fff'
+                        color:'#000'
                     },
                     grounding:{
                         color:'#E4EBF7'
@@ -37,7 +37,7 @@ class ChangeTheme extends React.Component {
                         backgroundColor: DARKER
                     },
                     textColor:{
-                        color:'#fff'
+                        color:'#b5b5b5'
                     },
                     grounding:{
                         color:'#181b2b'
@@ -45,23 +45,7 @@ class ChangeTheme extends React.Component {
                     borderColor:{
                         color:'#35394f'
                     }
-                },
-                // {
-                //     topColor: {
-                //         backgroundColor: BLUE
-                //     },
-                //     bottomColor: {
-                //         backgroundColor: LIGHT
-                //     }
-                // },
-                // {
-                //     topColor: {
-                //         backgroundColor: RED
-                //     },
-                //     bottomColor: {
-                //         backgroundColor: LIGHT
-                //     }
-                // }
+                }
             ]
         }
     }

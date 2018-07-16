@@ -77,7 +77,7 @@ class OpinionTrendBox extends React.Component {
                     <div className="top">
                         <div className="title">
                             <IconFont type="icon-qushi" style={{color: BLUES,fontSize: '18px'}}/>
-                            <span className="txt" style={{color:BLACK}}>舆情走势</span>
+                            <span className="txt" style={{color:themeColor.textColor.color}}>舆情走势</span>
                             {/* <span className="txt" style={{color:BLACK}}>信息走势</span> */}
                             <span className="btnBox">
                             <Button onClick={this.trendChange.bind(this,'day',1)}

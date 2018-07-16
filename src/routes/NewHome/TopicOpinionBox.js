@@ -60,7 +60,7 @@ class TopicOpinionBox extends React.PureComponent {
                     <div className="top" style={{borderBottom: `1px solid ${themeColor.borderColor.color}`}}>
                         <div className="title">
                             <IconFont type="icon-tesezhuanti" style={{color: BLUES,fontSize: '18px'}}/>
-                            <span className="txt" style={{color:BLACK}}>专题舆情</span>
+                            <span className="txt" style={{color:themeColor.textColor.color}}>专题舆情</span>
                             {/* <span className="txt" style={{color:BLACK}}>专题信息</span> */}
                         </div>
                         <div className="more">
@@ -68,7 +68,7 @@ class TopicOpinionBox extends React.PureComponent {
                         </div>
                     </div>
                     <div className="bottom">
-                        <Tabs defaultActiveKey="0" onChange={this.tabClick.bind(this)}>
+                        <Tabs defaultActiveKey="0" onChange={this.tabClick.bind(this)} tabBarStyle={{color:themeColor.textColor.color,borderBottom:`1px solid ${themeColor.borderColor.color}`}}>
                             {
                                 topicOpinion.length!==0?topicOpinion.map((item,index) =>
                                     <TabPane tab={item.topicname} key={item.topicid}>
@@ -78,7 +78,7 @@ class TopicOpinionBox extends React.PureComponent {
                                                     <li key={i.sid} className={`list-item ${haverClass}`} onClick={this.clickItemTitle.bind(this,i.sid)}
                                                     >
                                                         <div className="content">
-                                                            <div className="title">{i.title}</div>
+                                                            <div className="title" style={{color:themeColor.textColor.color}}>{i.title}</div>
                                                             <div className="desc">
                                                                 <span className="time">{i.pubdate.substring(10)}</span>
                                                                 <span className="source">{i.source}</span>

@@ -219,7 +219,7 @@ class Zheader extends React.Component {
             <div className="z-header">
                 <div className="top">
                     <div className="left" onClick={this.goBackIndex.bind(this)}>
-                        <span className="name" style={{color:themeColor.textColor.color}}>{userInfo.sysname}</span>
+                        <span className="name" style={{color:'#fff'}}>{userInfo.sysname}</span>
                     </div>
                     <div className="right">
                         <div className="search">

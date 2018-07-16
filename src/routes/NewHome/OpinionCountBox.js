@@ -52,19 +52,19 @@ class OpinionCountBox extends React.PureComponent {
     // });
     }
     componentDidMount(){
-        request(api_count_opinion)
-        .then((res) => {
-          this.setState({
-            data: formatOpinionCount(res.data).opinionCountArr
-          });
-          request(api_count_charts +`&data=${JSON.stringify(res.data.all)}`)
-          .then(res => {
-              console.log(res.data.pic)
-              this.setState({
-                 charts:res.data.pic
-              })
-          })
-        })
+        // request(api_count_opinion)
+        // .then((res) => {
+        //   this.setState({
+        //     data: formatOpinionCount(res.data).opinionCountArr
+        //   });
+        //   request(api_count_charts +`&data=${JSON.stringify(res.data.all)}`)
+        //   .then(res => {
+        //       console.log(res.data.pic)
+        //       this.setState({
+        //          charts:res.data.pic
+        //       })
+        //   })
+        // })
     }
     //改变饼图
     changeChart(type){
@@ -114,7 +114,7 @@ class OpinionCountBox extends React.PureComponent {
                     <div className="top" style={{borderBottom: `1px solid ${themeColor.borderColor.color}`}}>
                         <div className="title">
                             <IconFont type="icon-tongji" style={{fontSize: '28px',color:BLUES,verticalAlign:'-8px'}}/>
-                            <span className="txt" style={{color:BLACK}}>舆情统计</span>
+                            <span className="txt" style={{color:themeColor.textColor.color}}>舆情统计</span>
                             {/* <span className="txt" style={{color:BLACK}}>信息统计</span> */}
                         </div>
                         <div className="more">
@@ -136,12 +136,12 @@ class OpinionCountBox extends React.PureComponent {
                             }
                             </tbody>
                         </table>
-                        <ReactEchartsCore
+                        {/* <ReactEchartsCore
                             echarts={echarts}
                             option={mediaOption}
                             lazyUpdate={true}
                             style={{height: '310px', width: '40%', marginBottom: '-20px'}}
-                            />
+                            /> */}
                     </div>
                 </div>
             </div>

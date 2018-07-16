@@ -123,7 +123,7 @@ class TodayOpinionBox extends React.PureComponent {
                                      </div>
                                      <div className="count" style={{backgroundColor: '#ffbc34'}}>
                                          <div className="number">{todayWarning}</div>
-                                         <div className="name">今日预警</div>
+                                         <div className="name" style={{color:themeColor.textColor.color}}>今日预警</div>
                                          {/* <div className="name">今日特推</div> */}
                                      </div>
 
