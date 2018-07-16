@@ -26,6 +26,7 @@ class TodayOpinionBox extends React.PureComponent {
     componentDidMount(){
         request(api_today_opinion)
         .then(res => {
+        if(res.data){
         const data = res.data;    
         const todayAll = data['今日舆情'] && data['今日舆情'].length!==0 ? data['今日舆情'][4]['总数'] : 0;
         const todayWarning = data['今日舆情'] && data['今日舆情'].length!==0 ? data['今日舆情'][3]['预警'] : 0;
@@ -88,7 +89,9 @@ class TodayOpinionBox extends React.PureComponent {
                     }
                 },100)  
             }
+        }    
         }) 
+        
     }
     delTodayOpinionBox(){
             this.props.delTodayBox(1);

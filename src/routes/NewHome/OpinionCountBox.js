@@ -40,9 +40,16 @@ class OpinionCountBox extends React.PureComponent {
         this.props.delCountBox(1);
     }
     goMedia(media,day){
-      history.push({
-        pathname: `/allopinion?media=${this.state.mediaList[media]}&datetag=${day}`
-    });
+        console.log(media)
+        console.log(day)
+        if(media === '数据来源'){
+            console.log(1)
+        }else{
+            console.log(2)
+        }
+    //   history.push({
+    //     pathname: `/allopinion?media=${this.state.mediaList[media]}&datetag=${day}`
+    // });
     }
     componentDidMount(){
         request(api_count_opinion)
@@ -59,6 +66,10 @@ class OpinionCountBox extends React.PureComponent {
           })
         })
     }
+    //改变饼图
+    changeChart(type){
+      console.log(type)
+    }
     render() {
         const {themeColor} = this.props;
         const more = this.props.status!=='setting'?<span style={{color:BLACK}} onClick={this.goAllOpinion.bind(this)}>更多 
@@ -66,7 +77,6 @@ class OpinionCountBox extends React.PureComponent {
         </span>:<Icon type="close-circle" className="delModule" style={{fontSize: '18px',color:BLUES}}
         onClick={this.delOpinionCountBox.bind(this)}
         ></Icon>;
-        console.log(this.state.charts)
         const mediaOption= {
             tooltip: {
                 trigger: 'item',
@@ -77,21 +87,17 @@ class OpinionCountBox extends React.PureComponent {
                 itemGap:20,
                 orient:"vertical",
                 x:'right',
-                // padding:[40,0,0,0],
-                right:'10'
-            },
-            grid:{
-              left:'left',
-              top:200
+                padding:[60,70,0,0],
             },
             series: [
                 {
                     type:'pie',
                 },
                 {
-                    name:'访问来源',
+                    name:'载体',
                     type:'pie',
                     radius: ['42%', '55%'],
+                    center:['40%','60%'],
                     color: ['#8378ea', '#37a2da', '#e7bcf3', '#fb7293','#ffa07f','#ffdc5c','#9fe6b8'],
                     label: {
                         normal: {
@@ -121,7 +127,7 @@ class OpinionCountBox extends React.PureComponent {
                             {this.state.data.length > 1 ?
                                 this.state.data.map((item, index) =>
                                 <tr key={index} className="item">
-                                    <td style={{borderRight: `1px solid  ${themeColor.borderColor.color}`,borderBottom: `1px solid  ${themeColor.borderColor.color}`}}>{item[0]}</td>
+                                    <td style={{borderRight: `1px solid  ${themeColor.borderColor.color}`,borderBottom: `1px solid  ${themeColor.borderColor.color}`}} >{item[0]}</td>
                                     <td title="点击可查看具体数据" style={{cursor:'pointer',borderRight: `1px solid  ${themeColor.borderColor.color}`,borderBottom: `1px solid  ${themeColor.borderColor.color}`}} onClick = {this.goMedia.bind(this,item[0],'today')}>{item[1]}</td>
                                     <td title="点击可查看具体数据" style={{cursor:'pointer',borderRight: `1px solid  ${themeColor.borderColor.color}`,borderBottom: `1px solid  ${themeColor.borderColor.color}`}} onClick = {this.goMedia.bind(this,item[0],'7day')}>{item[2]}</td>
                                     <td title="点击可查看具体数据" style={{cursor:'pointer',borderRight: `1px solid  ${themeColor.borderColor.color}`,borderBottom: `1px solid  ${themeColor.borderColor.color}`}} onClick = {this.goMedia.bind(this,item[0],'30day')}>{item[3]}</td>
