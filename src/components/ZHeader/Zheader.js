@@ -216,7 +216,7 @@ class Zheader extends React.Component {
         const moreMenu = (
             <Menu style={{marginTop:'16px'}}>
                 <Menu.Item key="0">
-                    <span >&nbsp;&nbsp;&nbsp;&nbsp;态势感知&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                    <Link to="/situational" >&nbsp;&nbsp;&nbsp;&nbsp;态势感知&nbsp;&nbsp;&nbsp;&nbsp;</Link>
                 </Menu.Item>
                 <Menu.Divider />
                 <Menu.Item key="1">
@@ -261,11 +261,11 @@ class Zheader extends React.Component {
                           <li><Link to="/guide">引导系统</Link></li>
                           <li>
                             <Dropdown overlay={moreMenu} trigger={['click']} placement={'bottomCenter'}>
-                              <span>更多</span>
+                              <Link to="/home">更多</Link>
                             </Dropdown> 
                           </li>
-                          <li>应用中心</li>
-                          <li>消息</li>
+                          <li> <Link to="/home">应用中心</Link></li>
+                          <li><a>消息</a></li>
                         </ul>
                         {/* <div className="notify">
                             <Popover

@@ -42,6 +42,7 @@ const Special = AsyncComponent(() => import('../Special/Special'))
 const Evidence = AsyncComponent(() => import('../Evidence/Evidence'))
 const UpReport = AsyncComponent(() => import('../UpReport/UpReport'))
 const Guide = AsyncComponent(() => import('../Guide/Guide'))
+const Situational = AsyncComponent(() => import('../Situational/Situational'))
 const {Header, Sider, Content} = Layout;
 const SubMenu = Menu.SubMenu;
 
@@ -288,6 +289,7 @@ class Index extends React.Component {
                 <Route path="/evidence" component={Evidence}/>
                 <Route path="/upreport" component={UpReport}/>
                 <Route path="/guide" component={Guide}/>
+                <Route path="/situational" component={Situational}/>
               </Switch>
               <div className="suspensionBox">
                 <div>

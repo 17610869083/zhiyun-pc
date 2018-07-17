@@ -131,9 +131,7 @@ class TodayOpinionBox extends React.PureComponent {
 				// const unit = "%";
 				const initcolor = "#fff";
 				const min = 0;
-				const max = 10000
-				
-				
+				const max = 10000	
 				const color = initcolor;
 				const background = "none"; //背景
 				const dataStyle = {
@@ -523,7 +521,7 @@ class TodayOpinionBox extends React.PureComponent {
 					}]
 				};
         return (
-            <div className="today-opinion-box" draggable="true" style={{background:themeColor.bottomColor.backgroundColor}}>
+            <div className="today-opinion-box" draggable="true">
                  <div className="today-opinion-top" 
                   style={this.props.status==='setting'?{display:'block',background:GRAY}:{display:'none'}}>
                  <Icon type="close-circle" className="delModule" style={{fontSize: '18px',color:BLUES}}
@@ -532,7 +530,7 @@ class TodayOpinionBox extends React.PureComponent {
                  </div>
                  <div className="container">
 								 {/* {this.state.num} */}
-								    <Card title="今日统计" style={{ width: "100%", height: 377, marginTop: 20, backgroundColor: "#25293a" }}>
+								    <Card title="今日统计" style={{ width: "100%", height: 377, marginTop: 20,background:themeColor.bottomColor.backgroundColor }}>
 										  <Row gutter={60}>
 												<Col span={24}>
 												  <span style={{ fontSize: 14, color: "#fff", float: "right", paddingRight: 30 }}>负面同比增长：{this.state.ratio}%</span>
