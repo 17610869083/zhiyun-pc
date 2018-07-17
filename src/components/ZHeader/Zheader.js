@@ -220,19 +220,19 @@ class Zheader extends React.Component {
                 </Menu.Item>
                 <Menu.Divider />
                 <Menu.Item key="1">
-                    <span >&nbsp;&nbsp;&nbsp;&nbsp;网站防护&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                    <Link to="/guard" >&nbsp;&nbsp;&nbsp;&nbsp;网站防护&nbsp;&nbsp;&nbsp;&nbsp;</Link>
                 </Menu.Item>
                 <Menu.Divider />
                 <Menu.Item key="2">
-                    <span >&nbsp;&nbsp;&nbsp;&nbsp;招投标&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                    <Link to="/bidding">&nbsp;&nbsp;&nbsp;&nbsp;招投标&nbsp;&nbsp;&nbsp;&nbsp;</Link>
                 </Menu.Item>
                 <Menu.Divider />
                 <Menu.Item key="3">
-                    <span>&nbsp;&nbsp;&nbsp;&nbsp;维语监测&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                    <Link to="/multilingual/3">&nbsp;&nbsp;&nbsp;&nbsp;维语监测&nbsp;&nbsp;&nbsp;&nbsp;</Link>
                 </Menu.Item>
                 <Menu.Divider />
                 <Menu.Item key="4">
-                    <span>&nbsp;&nbsp;&nbsp;&nbsp;日语监测&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                    <Link to="/multilingual/2">&nbsp;&nbsp;&nbsp;&nbsp;日语监测&nbsp;&nbsp;&nbsp;&nbsp;</Link>
                 </Menu.Item>
                 
             </Menu>
@@ -255,8 +255,8 @@ class Zheader extends React.Component {
                     <div className="right">
                         <ul className="nav-bar">
                           <li><Link to="/home">首页</Link></li>
-                          <li><Link to="/home">舆情监测</Link></li>
-                          <li><Link to="/evidence">取证新系统</Link></li>
+                          <li><Link to="/allopinion/allopiniondetail">舆情监测</Link></li>
+                          <li><Link to="/evidence">互联网取证</Link></li>
                           <li><Link to="/upreport">上报平台</Link></li>
                           <li><Link to="/guide">引导系统</Link></li>
                           <li>
@@ -264,7 +264,7 @@ class Zheader extends React.Component {
                               <Link to="/home">更多</Link>
                             </Dropdown> 
                           </li>
-                          <li> <Link to="/home">应用中心</Link></li>
+                          <li> <Link to="/appcenter">应用中心</Link></li>
                           <li><a>消息</a></li>
                         </ul>
                         {/* <div className="notify">

@@ -1,13 +1,53 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {connect} from 'react-redux';
-import {Pagination, DatePicker, Form, Icon, message, Button} from 'antd';
+import {Pagination, DatePicker, Form, Icon, message, Button,Layout,Menu} from 'antd';
 import OpinionDetail from '../../components/OpinionDetail/OpinionDetail';
 import {opinionSearchRequested, searchKeywordSync, paginationPage} from '../../redux/actions/createActions';
 import {URLToObject, getSecondTime} from '../../utils/format';
 import {GRAY} from '../../utils/colors';
 import './AllOpinion.less';
+import {urlTokey} from '../../utils/format';
+import {Route, Switch, Link,HashRouter as Router} from 'react-router-dom';
+import {api_get_channel} from '../../services/api';
+import Iconfont from '../../components/IconFont'
+import request from '../../utils/request';
+import AsyncComponent from '../../components/AsyncComponent/AsyncComponent'
+const TopicReportList = AsyncComponent(() => import('../TopicReportList/TopicReportList'))
+const AllOpinionDetail = AsyncComponent(() => import('../AllOpinionDetail/AllOpinionDetail'))
+const SortedAdd = AsyncComponent(() => import('../SortedOpinion/SortedAdd'))
+const TopicAdd = AsyncComponent(() => import('../TopicOpinion/TopicAdd/TopicAdd'))
+const SortedOpinion = AsyncComponent(() => import('../../routes/SortedOpinion'))
+const ExcludeSetting = AsyncComponent(() => import('../SystemSetting/ExcludeSetting/ExcludeSetting'))
+const WarnSetting = AsyncComponent(() => import('../SystemSetting/WarnSetting/WarnSetting'))
+const NoticeSetting = AsyncComponent(() => import('../SystemSetting/NoticeSetting/NoticeSetting'))
+const TopicEditOpinionDetail = AsyncComponent(() => import('../SystemSetting/TopicEditOpinionDetail/TopicEditOpinionDetail'))
+const EditOpinionDetail = AsyncComponent(() => import('../../components/EditOpinionDetail/EditOpinionDetail'))
+const HistoryOpinion = AsyncComponent(() => import('../HistoryOpinion/HistoryOpinion'))
+const CollectionOpinion = AsyncComponent(() => import('../CollectionOpinion/CollectionOpinion'))
+const MaterialOpinion = AsyncComponent(() => import('../MaterialOpinion/MaterialOpinion'))
+const ReportOpinionDetail = AsyncComponent(() => import('../ReportOpinion/ReportOpinionDetail'))
+const ReportOpinion = AsyncComponent(() => import('../ReportOpinion/ReportOpinion'))
+const TopicOpinion = AsyncComponent(() => import('../TopicOpinion/TopicOpinion'))
+const BigScreen = AsyncComponent(() => import('../BigScreen/BigScreen'))
+const ReportTemplate = AsyncComponent(() => import('../ReportTemplate/ReportTemplate'))
+const ChooseTemplate = AsyncComponent(() => import('../ChooseTemplate/ChooseTemplate'))
+const CustomHome= AsyncComponent(() => import('../CustomHome/CustomHome'))
+const MyReport= AsyncComponent(() => import('../MyReport/MyReport'))
+const Drag= AsyncComponent(() => import('../Drag/Drag'))
+const Briefing= AsyncComponent(() => import('../Briefing/Briefing'))
+const BriefingSecond = AsyncComponent(() => import('../BriefingSecond/BriefingSecond'))
+const Daily = AsyncComponent(() => import('../Daily/Daily'))
+const Special = AsyncComponent(() => import('../Special/Special'))
+const Evidence = AsyncComponent(() => import('../Evidence/Evidence'))
+const UpReport = AsyncComponent(() => import('../UpReport/UpReport'))
+const Guide = AsyncComponent(() => import('../Guide/Guide'))
+const Situational = AsyncComponent(() => import('../Situational/Situational'))
+const Bidding= AsyncComponent(() => import('../BiddingOpinion/BiddingOpinion'))
+const Multilingual= AsyncComponent(() => import('../Multilingual/Multilingual'))
+const {Header, Sider, Content} = Layout;
 const FormItem = Form.Item;
+const SubMenu = Menu.SubMenu;
 class AllOpinion extends React.Component {
   constructor() {
     super();
@@ -115,7 +155,8 @@ class AllOpinion extends React.Component {
         'weibo':'微博',
         'news':'新闻',
         'forum':'论坛'
-     }
+     },
+     channelList:[]
     }
   }
 
@@ -551,7 +592,16 @@ class AllOpinion extends React.Component {
 
   componentWillMount() {
     if (this.props.location && this.props.location.search !== "?type=search") {
-      this.homepageMore(window.location.hash);
+      request(api_get_channel)
+      .then(res => {
+        if (res.data.code === 1) {
+          this.setState({
+            channelList: res.data.channelList
+          })
+        }
+        this.homepageMore(window.location.hash);
+      })
+      
     }
 
   }
@@ -590,7 +640,8 @@ class AllOpinion extends React.Component {
     })
   }
   render() {
-    const {docList, carryCount, pageInfo, page} = this.props;
+    const {docList, carryCount, pageInfo, page,themeColor} = this.props;
+    const haverClass = themeColor.topColor.backgroundColor === '#5a8bff' ? 'white':'black'; 
     const {getFieldDecorator} = this.props.form;
     const formItemLayout = {
       labelCol: {
@@ -602,7 +653,105 @@ class AllOpinion extends React.Component {
         sm: {span: 16},
       },
     };
-
+    let menuList = [];
+    this.state.channelList.map((item, index) => {
+      if (item.channelurl === '/allopinion/reportopinion/list') {
+        menuList.push(<SubMenu
+          key={item.key}
+          title={<Link to="/allopinion/myreport"><span>
+            <i className="anticon"><Iconfont type={item.type} style={{fontSize: '16px'}}/></i>
+            <span
+              style={{fontSize: '16px'}} className={haverClass}>舆情报告</span>
+            </span></Link>}>
+          <Menu.Item key="reportopinion" style={{fontSize: '16px'}}>
+            <Link to="/allopinion/reportopinion/list">
+              <span>简报列表</span>
+            </Link>
+          </Menu.Item>
+          <Menu.Item key="materiaopinion" style={{fontSize: '16px'}}>
+            <Link to="/allopinion/materiaopinion">
+              <span>素材库</span>
+            </Link>
+          </Menu.Item>
+          <Menu.Item key="collectionopinion" style={{fontSize: '16px'}}>
+            <Link to="/allopinion/collectionopinion">
+              <span>我的收藏</span>
+            </Link>
+          </Menu.Item>
+          <Menu.Item key="myreport" style={{fontSize: '16px'}}>
+            <Link to="/allopinion/myreport">
+              <span>我的报告库</span>
+            </Link>
+          </Menu.Item>
+        </SubMenu>)
+      } else if (item.channelurl === '../systemMan/systemManDo?action=userList') {
+        menuList.push(<SubMenu key={item.key} 
+                               title={<Link to="/noticesetting"><span><i className="anticon"><Iconfont type={item.type}
+                                 style={{fontSize: '16px'}}/></i><span
+                                 style={{fontSize: '16px'}}>系统设置</span></span> </Link>}>
+          <Menu.Item key="noticesetting" style={{fontSize: '16px'}}>
+            <Link to="/allopinion/noticesetting">
+              <span >通知设置</span>
+            </Link>
+          </Menu.Item>
+          
+          <Menu.Item key="warnsetting" style={{fontSize: '16px'}}>
+            <Link to="/allopinion/warnsetting">
+              <span>预警设置</span>
+            </Link>
+          </Menu.Item>
+          <Menu.Item key="excludesetting" style={{fontSize: '16px'}}>
+            <Link to="/allopinion/excludesetting">
+              <span>排除停用</span>
+            </Link>
+          </Menu.Item>
+          <Menu.Item key="publicopinion" style={{fontSize: '16px'}}>
+            <Link to="/allopinion/publicopinion">
+              <span>舆情录入</span>
+            </Link>
+          </Menu.Item>
+        </SubMenu>)
+      } else if (item.channelurl === '/multilingual') {
+        menuList.push(<SubMenu key={item.key} 
+          title={<Link to="/multilingual/0"><span><i className="anticon"><Iconfont type={item.type}
+            style={{fontSize: '16px'}}/></i><span
+            style={{fontSize: '16px'}}>多语种检测</span></span> </Link>}>
+            <Menu.Item key="noticesetting" style={{fontSize: '16px'}}>
+            <Link to="/allopinion/multilingual/1">
+            <span><Iconfont type='icon-hanyu' style={{fontSize: '16px'}}/>韩语检测</span>
+            </Link>
+            </Menu.Item>
+            <Menu.Item key="warnsetting" style={{fontSize: '16px'}}>
+            <Link to="/allopinion/multilingual/2">
+            <span><Iconfont type='icon-riyu1' style={{fontSize: '16px'}}/>日语检测</span>
+            </Link>
+            </Menu.Item>
+            <Menu.Item key="excludesetting" style={{fontSize: '16px'}}>
+            <Link to="/allopinion/multilingual/3">
+            <span><Iconfont type='icon-xinjiang' style={{fontSize: '16px'}}/>维语检测</span>
+            </Link>
+            </Menu.Item>
+            <Menu.Item key="publicopinion" style={{fontSize: '16px'}}>
+            <Link to="/allopinion/multilingual/4">
+            <span><Iconfont type='icon-xicangzizhiqu' style={{fontSize: '16px'}}/>藏语检测</span>
+            </Link>
+            </Menu.Item>
+            </SubMenu>)
+      }else {
+        menuList.push(<Menu.Item key={item.key} style={{fontSize: '16px'}}>
+          {item.channelurl.indexOf('http') !== -1 ?
+            <a href={item.channelurl} target="blank">
+              <i className="anticon"><Iconfont type={item.type} style={{fontSize: '16px'}}/></i>
+              <span>{item.channelname}</span>
+            </a> : <Link to={item.channelurl}>
+            <i className="anticon"><Iconfont type={item.type} style={{fontSize: '16px'}}/></i>
+              <span>{item.channelname}</span>
+            </Link>
+          }
+        </Menu.Item>)
+      }
+      return 3
+    });
     // 时间
     const Time = this.state.time.map((item, index) =>
       <div
@@ -663,101 +812,69 @@ class AllOpinion extends React.Component {
       pagesize: this.state.pagesize
     };
     return (
-      <div className="all-opinion" id="anchor">
-        <div className="close-open" style={{background:GRAY}}>
-          <div className="count"> 信息列表</div>
-          <div className="close" onClick={this.triggerTopShow.bind(this)}>
-            <span className="closeBtn">{this.state.isTopShow ? '显示' : '隐藏'}</span>
-            <Icon type={this.state.isTopShow ? 'down' : 'right'}/>
-          </div>
-        </div>
-        <div className="sort-top" style={this.state.isTopShow ? {display: 'block'} : {display: 'none'}}>
-          <div className="sort-items">
-            <div className="left">时间：</div>
-            <div className="right">
-              {Time}
+      <div style={{display:'flex',width:"100%",height:'100%'}}>
+            <div className={`layout ${haverClass}`}>
+            <Sider
+            className="sider siders"
+            trigger={null}
+            collapsible
+            style={{backgroundColor: themeColor.bottomColor.backgroundColor}}
+            collapsed={this.state.collapsed && this.state.flag}
+            onMouseEnter={this.mouseEnterToggle} 
+            onMouseLeave={this.mouseLeaveToggle}
+          >
+            <div>
+              <div className="trigger-wrapper" onClick={this.toggle}
+              style={{backgroundColor:themeColor.bottomColor.backgroundColor}}
+              >
+                <i className="fa fa-bars" aria-hidden="true" style={{fontSize: '14px', color: '#5a8bff'}}/>
+              </div>
             </div>
-            <div className="other" style={this.state.timePickerShow ? {display: 'block'} : {display: 'none'}}>
-              <Form onSubmit={this.handleSubmit.bind(this)}>
-                <FormItem
-                  {...formItemLayout}
-                >
-                  {getFieldDecorator('range-time-picker'
-                  )(
-                    <DatePicker showTime placeholder="开始日期" format="YYYY-MM-DD HH:mm:ss"
-                                className="DatePicker"
-
-                    />
-                  )}
-                </FormItem>
-                <FormItem
-                  {...formItemLayout}
-                >
-                  {getFieldDecorator('range-endtime-picker'
-                  )(
-                    <DatePicker showTime placeholder="结束日期" format="YYYY-MM-DD HH:mm:ss"
-                                className="DatePicker"
-                    />
-                  )}
-                </FormItem>
-                <Button type="primary" htmlType="submit" style={{marginTop: '2px'}}>
-                  确定
-                </Button>
-              </Form>
-            </div>
+            <Menu
+              defaultSelectedKeys={['1']}
+              mode="inline"
+              style={ {backgroundColor: themeColor.bottomColor.backgroundColor, overflow: 'auto',maxHeight: '600px'}}
+              className="selectMenu"
+              selectedKeys={[urlTokey()]}
+            >
+              {menuList}
+              {/* <Menu.Item key="reportopinion" style={{fontSize: '16px'}}>
+            <Link to="/allopinion/topic">
+              <span>简报列表</span>
+            </Link>
+            </Menu.Item> */}
+            </Menu>
+          </Sider>
           </div>
-          <div className="sort-items">
-            <div className="left">倾向：</div>
-            <div className="right">
-              {Trend}
-            </div>
-          </div>
-          <div className="sort-items">
-            <div className="left">排序：</div>
-            <div className="right">
-              {Sort}
-            </div>
-          </div>
-          <div className="sort-items">
-            <div className="left">去重：</div>
-            <div className="right">
-              {Filter}
-            </div>
-          </div>
-          <div className="media-items">
-            <div className="left">媒体：</div>
-            <div className="right">
-              {Media}
-            </div>
-          </div>
-        </div>
-        <div className="middle">
-          <div className="count">根据您的条件，为您筛选出<span className="number">{pageInfo.count}</span>条数据！</div>
-          <OpinionDetail docList={docList}
-                         onDataChange={this.dataChanged.bind(this)}
-                         param={param}
-                         pageSize={this.state.pagesize}
-                         propsType='AllopinionList'
-                         pageInfo={pageInfo}
-                         current={page}
-                         type={this.state.type}
-                         searchType={this.searchType.bind(this)}
-                         remove = {this.remove.bind(this)}
-          />
-        </div>
-        <div className="bottom">
-          <div className="pagintion-wrapper">
-            <Pagination showSizeChanger
-                        defaultCurrent={1}
-                        defaultPageSize={20}
-                        onChange={this.onPaginationChange.bind(this)}
-                        onShowSizeChange={this.onShowSizeChange.bind(this)}
-                        total={pageInfo.count}
-                        getPopupContainer={() => document.querySelector('.all-opinion')}
-                        current={page}
-            />
-          </div>
-        </div>
+          <Switch>
+                <Route path="/allopinion/bigscreen" component={BigScreen}/>
+                <Route path="/allopinion/topic" component={TopicOpinion}/>
+                <Route path="/allopinion/topic" component={TopicOpinion}/>
+                <Route path="/allopinion/test" component={EditOpinionDetail}/>
+                <Route path="/allopinion/allopiniondetail" exact component={AllOpinionDetail}/>
+                <Route path="/allopinion/reportopinion/list" component={ReportOpinion}/>
+                <Route path="/allopinion/reportopinion/detail" component={ReportOpinionDetail}/>
+                <Route path="/allopinion/materiaopinion" component={MaterialOpinion}/>
+                <Route path="/allopinion/collectionopinion" component={CollectionOpinion}/>
+                <Route path="/allopinion/historyopinion" component={HistoryOpinion}/>
+                <Route path="/allopinion/noticesetting" component={NoticeSetting}/>
+                <Route path="/allopinion/warnsetting" component={WarnSetting}/>
+                <Route path="/allopinion/excludesetting" component={ExcludeSetting}/>
+                <Route path="/allopinion/publicopinion" component={TopicEditOpinionDetail}/>
+                <Route path="/allopinion/sortedopinion" component={SortedOpinion}/>
+                <Route path="/allopinion/topic/addtopic" component={TopicAdd}/>
+                <Route path="/allopinion/sortedopinion/addrule" component={SortedAdd}/>
+                <Route path="/allopinion/topicreportlist" component={TopicReportList}/>
+                <Route path="/allopinion/reporttemplate" component={ReportTemplate}/>
+                <Route path="/allopinion/choosetemplate" component={ChooseTemplate}/>
+                <Route path="/allopinion/customhome" component={CustomHome}/>
+                <Route path="/allopinion/myreport" component={MyReport}/>
+                <Route path="/allopinion/drag" component={Drag}/>
+                <Route path="/allopinion/briefing" component={Briefing}/>
+                <Route path="/allopinion/briefingsecond" component={BriefingSecond}/>
+                <Route path="/allopinion/daily" component={Daily}/>
+                <Route path="/special" component={Special}/>
+              </Switch>
       </div>
     )
   }

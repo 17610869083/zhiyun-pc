@@ -182,7 +182,7 @@ class TopicEditOpinionDetail extends React.Component {
 		]
 
 		return (
-			<div>
+			<div className="topicpublic-cell">
 				<div className="publicTop"></div>
 				<div className="topicpublicbox">
 					{

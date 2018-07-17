@@ -30,14 +30,24 @@ class SettingCreateTopic extends React.Component {
             inputIndex:0,
             propsData:[],
             updateNum:1,
-            flag:false
+            flag:false,
+            prevhash: ''
         }
     }
+
     componentDidUpdate(prevProps,prevState){
         if(prevState.updateNum!==this.state.updateNum){
         this.props.onCreateTopic(this.state.propsData)
       }
-  }
+    }
+    componentWillReceiveProps(nextprops) {
+        if (nextprops.addOrSetting === 'add' && window.location.hash !== this.state.prevhash) {
+        }
+        this.setState({
+            prevhash: window.location.hash
+        })
+    }
+
     onModelCancel() {
         // if(this.state.objectValueInput === ''){
         //     message.warning('主题词不能为空！');
@@ -53,7 +63,7 @@ class SettingCreateTopic extends React.Component {
         })
     }
     onModelOk(e){
-        let propsData=this.props.num1;    
+        let propsData=this.props.num1;
         let num=this.state.inputIndex;
         let ruleId=this.props.ruleId[num]!==undefined?this.props.ruleId[num]:propsData[num]['id'];
         let  objectValue=this.state.objectValueInput!==1?this.state.objectValueInput:propsData[num]['rule1'];
@@ -191,7 +201,7 @@ class SettingCreateTopic extends React.Component {
       visible1: false,
     });
   }   
- 
+
     render() { 
         let inputIndex=this.state.inputIndex<0?0:this.state.inputIndex;
     	const suffix=<span onClick={this.onDel.bind(this)} className="del"><Icon type="close"/></span>;
@@ -231,12 +241,12 @@ class SettingCreateTopic extends React.Component {
         onOk={this.onModelOk.bind(this)}
     > 
         <Form layout="vertical">
-            <FormItem label={objectValueTip}>  
+            <FormItem label={objectValueTip}>
                 <Input type="textarea"
                        onChange={this.onChangeObject.bind(this)}
                        value={this.state.objectValueInput!==1 ?this.state.objectValueInput:this.props.num1[inputIndex]['rule1']}
                        data-index={inputIndex}
-                       maxLength={'50'} 
+                       maxLength={'50'}
                        />
             </FormItem>
             <FormItem label={subject1ValueTip}>
@@ -320,7 +330,7 @@ class SettingCreateTopic extends React.Component {
                                    data-index={index}
                             />
                         </Col>
-        <Icon  type="minus-circle" className="delBtn" onClick={this.showModal1} 
+        <Icon  type="minus-circle" className="delBtn" onClick={this.showModal1}
          style={this.props.num1.length>1?this.state.disBlock:this.state.disNone}
          data-delid={item.id}
          data-index={index}

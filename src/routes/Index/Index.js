@@ -10,25 +10,12 @@ import Iconfont from '../../components/IconFont'
 import request from '../../utils/request';
 import {urlTokey} from '../../utils/format';
 import AsyncComponent from '../../components/AsyncComponent/AsyncComponent'
+// import Bidding from '../BiddingOpinion/BiddingOpinion'
+
 const NewHome = AsyncComponent(() => import('../NewHome'))
 const TopicReportList = AsyncComponent(() => import('../TopicReportList/TopicReportList'))
-const SortedAdd = AsyncComponent(() => import('../SortedOpinion/SortedAdd'))
-const TopicAdd = AsyncComponent(() => import('../TopicOpinion/TopicAdd/TopicAdd'))
-const SortedOpinion = AsyncComponent(() => import('../../routes/SortedOpinion'))
-const ExcludeSetting = AsyncComponent(() => import('../SystemSetting/ExcludeSetting/ExcludeSetting'))
-const WarnSetting = AsyncComponent(() => import('../SystemSetting/WarnSetting/WarnSetting'))
-const NoticeSetting = AsyncComponent(() => import('../SystemSetting/NoticeSetting/NoticeSetting'))
-const TopicEditOpinionDetail = AsyncComponent(() => import('../SystemSetting/TopicEditOpinionDetail/TopicEditOpinionDetail'))
-const EditOpinionDetail = AsyncComponent(() => import('../../components/EditOpinionDetail/EditOpinionDetail'))
-const HistoryOpinion = AsyncComponent(() => import('../HistoryOpinion/HistoryOpinion'))
-const CollectionOpinion = AsyncComponent(() => import('../CollectionOpinion/CollectionOpinion'))
-const MaterialOpinion = AsyncComponent(() => import('../MaterialOpinion/MaterialOpinion'))
-const ReportOpinionDetail = AsyncComponent(() => import('../ReportOpinion/ReportOpinionDetail'))
-const ReportOpinion = AsyncComponent(() => import('../ReportOpinion/ReportOpinion'))
-const TopicOpinion = AsyncComponent(() => import('../TopicOpinion/TopicOpinion'))
 const AllOpinion = AsyncComponent(() => import('../AllOpinion/AllOpinion'))
 const TrendFeeling = AsyncComponent(() => import('../TopicOpinion/TrendFeeling/TrendFeeling'))
-const BigScreen = AsyncComponent(() => import('../BigScreen/BigScreen'))
 const ZHeader = AsyncComponent(() => import('../../components/ZHeader/Zheader'))
 const ReportTemplate = AsyncComponent(() => import('../ReportTemplate/ReportTemplate'))
 const ChooseTemplate = AsyncComponent(() => import('../ChooseTemplate/ChooseTemplate'))
@@ -43,6 +30,11 @@ const Evidence = AsyncComponent(() => import('../Evidence/Evidence'))
 const UpReport = AsyncComponent(() => import('../UpReport/UpReport'))
 const Guide = AsyncComponent(() => import('../Guide/Guide'))
 const Situational = AsyncComponent(() => import('../Situational/Situational'))
+const Bidding= AsyncComponent(() => import('../BiddingOpinion/BiddingOpinion'))
+const Multilingual= AsyncComponent(() => import('../Multilingual/Multilingual'))
+const AppCenter= AsyncComponent(() => import('../AppCenter/AppCenter'))
+const Guard= AsyncComponent(() => import('../Guard/Guard'))
+
 const {Header, Sider, Content} = Layout;
 const SubMenu = Menu.SubMenu;
 
@@ -78,16 +70,16 @@ class Index extends React.Component {
     })
   }
  }
-  componentWillMount() {
-    request(api_get_channel)
-      .then(res => {
-        if (res.data.code === 1) {
-          this.setState({
-            channelList: res.data.channelList
-          })
-        }
-      })
-  }
+  // componentWillMount() {
+  //   request(api_get_channel)
+  //     .then(res => {
+  //       if (res.data.code === 1) {
+  //         this.setState({
+  //           channelList: res.data.channelList
+  //         })
+  //       }
+  //     })
+  // }
 
   goBackIndex() {
       if(this.state.collapsed){
@@ -145,137 +137,17 @@ class Index extends React.Component {
   render() {
     // 统计报告-舆情报告   
     const {themeColor} = this.props;
-    let menuList = [];
-    const haverClass = themeColor.topColor.backgroundColor === '#5a8bff' ? 'white':'black'; 
-    this.state.channelList.map((item, index) => {
-      if (item.channelurl === '/reportopinion/list') {
-        menuList.push(<SubMenu
-          key={item.key}
-          title={<Link to="/myreport"><span>
-            <i className="anticon"><Iconfont type={item.type} style={{fontSize: '16px'}}/></i>
-            <span
-              style={{fontSize: '16px'}} className={haverClass}>舆情报告</span>
-            </span></Link>}>
-          <Menu.Item key="reportopinion" style={{fontSize: '16px'}}>
-            <Link to="/reportopinion/list">
-              <span>简报列表</span>
-            </Link>
-          </Menu.Item>
-          <Menu.Item key="materiaopinion" style={{fontSize: '16px'}}>
-            <Link to="/materiaopinion">
-              <span>素材库</span>
-            </Link>
-          </Menu.Item>
-          <Menu.Item key="collectionopinion" style={{fontSize: '16px'}}>
-            <Link to="/collectionopinion">
-              <span>我的收藏</span>
-            </Link>
-          </Menu.Item>
-          <Menu.Item key="myreport" style={{fontSize: '16px'}}>
-            <Link to="/myreport">
-              <span>我的报告库</span>
-            </Link>
-          </Menu.Item>
-        </SubMenu>)
-      } else if (item.channelurl === '../systemMan/systemManDo?action=userList') {
-        menuList.push(<SubMenu key={item.key} 
-                               title={<Link to="/noticesetting"><span><i className="anticon"><Iconfont type={item.type}
-                                 style={{fontSize: '16px'}}/></i><span
-                                 style={{fontSize: '16px'}}>系统设置</span></span> </Link>}>
-          <Menu.Item key="noticesetting" style={{fontSize: '16px'}}>
-            <Link to="/noticesetting">
-              <span >通知设置</span>
-            </Link>
-          </Menu.Item>
-          
-          <Menu.Item key="warnsetting" style={{fontSize: '16px'}}>
-            <Link to="/warnsetting">
-              <span>预警设置</span>
-            </Link>
-          </Menu.Item>
-          <Menu.Item key="excludesetting" style={{fontSize: '16px'}}>
-            <Link to="/excludesetting">
-              <span>排除停用</span>
-            </Link>
-          </Menu.Item>
-          <Menu.Item key="publicopinion" style={{fontSize: '16px'}}>
-            <Link to="/publicopinion">
-              <span>舆情录入</span>
-            </Link>
-          </Menu.Item>
-        </SubMenu>)
-      } else {
-        menuList.push(<Menu.Item key={item.key} style={{fontSize: '16px'}}>
-          {item.channelurl.indexOf('http') !== -1 ?
-            <a href={item.channelurl} target="blank">
-              <i className="anticon"><Iconfont type={item.type} style={{fontSize: '16px'}}/></i>
-              <span>{item.channelname}</span>
-            </a> : <Link to={item.channelurl}>
-            <i className="anticon"><Iconfont type={item.type} style={{fontSize: '16px'}}/></i>
-              <span>{item.channelname}</span>
-            </Link>
-          }
-        </Menu.Item>)
-      }
-      return 3
-    });
     return (
       <div className="root-container">
        <ZHeader/> 
-        <Layout className={`layout ${haverClass}`}>
-           {/* <Header className="header" style={{backgroundColor: themeColor.topColor.backgroundColor, height: '60px'}}>
-               <ZHeader/> 
-            </Header> */}
-          <Sider
-            className="sider siders"
-            trigger={null}
-            collapsible
-            style={{backgroundColor: themeColor.bottomColor.backgroundColor}}
-            collapsed={this.state.collapsed && this.state.flag}
-            onMouseEnter={this.mouseEnterToggle} 
-            onMouseLeave={this.mouseLeaveToggle}
-          >
-            <div>
-              <div className="trigger-wrapper" onClick={this.toggle}
-              style={{backgroundColor:themeColor.bottomColor.backgroundColor}}
-              >
-                <i className="fa fa-bars" aria-hidden="true" style={{fontSize: '14px', color: '#5a8bff'}}/>
-              </div>
-            </div>
-            <Menu
-              defaultSelectedKeys={['1']}
-              mode="inline"
-              style={ {backgroundColor: themeColor.bottomColor.backgroundColor, overflow: 'auto',maxHeight: '600px'}}
-              className="selectMenu"
-              selectedKeys={[urlTokey()]}
-            >
-              {menuList}
-            </Menu>
-          </Sider>
           <Layout className="right-layout">
-
             <Content className="main"  style={{backgroundColor: themeColor.grounding.color}} ref={(main) => {
               this.main = main
             }}>
               <Switch>
                 <Route path="/trendfeeling" component={TrendFeeling}/>
-                <Route path="/bigscreen" component={BigScreen}/>
                 <Route path="/allopinion" component={AllOpinion}/>
-                <Route path="/topic" component={TopicOpinion}/>
-                <Route path="/test" component={EditOpinionDetail}/>
-                <Route path="/reportopinion/list" component={ReportOpinion}/>
-                <Route path="/reportopinion/detail" component={ReportOpinionDetail}/>
-                <Route path="/materiaopinion" component={MaterialOpinion}/>
-                <Route path="/collectionopinion" component={CollectionOpinion}/>
-                <Route path="/historyopinion" component={HistoryOpinion}/>
                 <Route path="/home" exact component={NewHome}/>
-                <Route path="/noticesetting" component={NoticeSetting}/>
-                <Route path="/warnsetting" component={WarnSetting}/>
-                <Route path="/excludesetting" component={ExcludeSetting}/>
-                <Route path="/publicopinion" component={TopicEditOpinionDetail}/>
-                <Route path="/sortedopinion" component={SortedOpinion}/>
-                <Route path="/topic/addtopic" component={TopicAdd}/>
-                <Route path="/sortedopinion/addrule" component={SortedAdd}/>
                 <Route path="/topicreportlist" component={TopicReportList}/>
                 <Route path="/reporttemplate" component={ReportTemplate}/>
                 <Route path="/choosetemplate" component={ChooseTemplate}/>
@@ -290,8 +162,13 @@ class Index extends React.Component {
                 <Route path="/upreport" component={UpReport}/>
                 <Route path="/guide" component={Guide}/>
                 <Route path="/situational" component={Situational}/>
+                <Route path="/bidding" component={Bidding}/>
+                <Route path="/multilingual/:languages" component={Multilingual}/>
+                <Route path="/appcenter" component={AppCenter}/> 
+                <Route path="/Guard" component={Guard}/> 
+                
               </Switch>
-              <div className="suspensionBox">
+              <div className="suspensionBox" style={{display:"none"}}>
                 <div>
                   <ul className="suspension">
                     <li
@@ -350,7 +227,6 @@ class Index extends React.Component {
               </div>
             </Content>
           </Layout>
-        </Layout>
       </div>
     )
   }

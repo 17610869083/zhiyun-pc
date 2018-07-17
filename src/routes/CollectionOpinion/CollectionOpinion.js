@@ -94,9 +94,8 @@ class CollectionOpinion extends React.Component {
     // --------------在收藏库内搜索
     handleSearchBtn(keyword) {
         if (keyword !== '') {
-            this.props.getCollectionOpinionDetailRequested(`${this.state.CollectionCurrent}&q=${keyword}`);
+            this.props.getCollectionOpinionDetailRequested(`${this.state.current}&q=${keyword}`);
         }
-        console.log(keyword);
     }
 
     // 单项加入素材库
@@ -286,13 +285,15 @@ class CollectionOpinion extends React.Component {
     }
 
     componentWillMount() {
-        this.setState({
-            browserHeight:window.innerHeight-140
-        })
         this.props.getCollectionOpinionListRequested();
-        setTimeout(() => {
-            this.props.getCollectionOpinionDetailRequested(21);
-        }, 10);
+        this.MaterialTimer =  setTimeout(() => {
+        const {favCatList} =this.props;
+        this.setState({
+              current:favCatList[0]['id'],
+              browserHeight:window.innerHeight-140
+        })
+        this.props.getCollectionOpinionDetailRequested(favCatList[0]['id']);
+        },100);
     }
 
     // ---------单选与全选
