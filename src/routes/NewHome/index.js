@@ -345,7 +345,7 @@ class NewHome extends React.Component {
         ></Icon>
       </li>) : '';
     return (
-      <div>
+      <div style={{backgroundColor: themeColor.grounding.color}}>
         <div className="informs" style={userInfo.alerMsg === '' ? {display: 'none'} : {display: 'flex'}}>
           <span> {userInfo.alerMsg}</span>
           <Icon type="close" onClick={this.informs.bind(this)} style={{color: '#fff'}}/>

@@ -46,7 +46,7 @@ class ChooseTemplate extends React.Component{
             contentId:id
           })
           history.push({
-              pathname:'/reporttemplate',
+              pathname:'/allopinion/reporttemplate',
               search:`?type=${type}&id=${id}`
           })
     }
@@ -119,7 +119,7 @@ class ChooseTemplate extends React.Component{
     });
     const contentList = this.state.contentList.map((item,index) => {
         return <li key = {index} className="cont normal" onClick= {this.checkTemplate.bind(this,item.id,item.reportType)}> 
-                <img src={'http://119.90.61.155/om31/'+item.imagepath} alt=""/>
+                <img src={'./../'+item.imagepath} alt=""/>
                 <p>{item.name}</p>
                 </li> 
     })

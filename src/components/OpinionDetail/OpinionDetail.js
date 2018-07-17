@@ -646,22 +646,22 @@ class OpinionDetail extends React.Component {
   goReport(){
      if(this.checkedTrue().length !== 0) {
           this.props.briefingSwitch(this.checkedTrue());
-          history.push('/choosetemplate?reportType=01')   
+          history.push('/allopinion/choosetemplate?reportType=01')   
      }else{
-          history.push('/choosetemplate')   
+          history.push('/allopinion/choosetemplate')   
      }
     
   }
     //单条跳转到报告页
     goReportItem(){
       if(this.checkedTrue().length === 0 ){
-        history.push('/choosetemplate')   
+        history.push('/allopinion/choosetemplate')   
       }else if(this.checkedTrue().length >1) {
          message.error('此处按钮只对当前这条数据有效');
          return;
       }else{
         this.props.briefingSwitch(this.checkedTrue());
-        history.push('/choosetemplate?reportType=01')     
+        history.push('/allopinion/choosetemplate?reportType=01')     
       }
      
    }

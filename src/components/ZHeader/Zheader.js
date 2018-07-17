@@ -203,12 +203,9 @@ class Zheader extends React.Component {
                 <Menu.Item key="2">
                     <span onClick={this.showThemeModal.bind(this)}>&nbsp;&nbsp;&nbsp;&nbsp;颜色设置&nbsp;&nbsp;&nbsp;&nbsp;</span>
                 </Menu.Item>
-                <Menu.Item key="3">
+                {/* <Menu.Item key="3">
                     <span onClick={this.showlayoutModal.bind(this)}>&nbsp;&nbsp;&nbsp;&nbsp;首页布局&nbsp;&nbsp;&nbsp;&nbsp;</span>
-                </Menu.Item>
-                {/*<Menu.Item key="3">*/}
-                    {/*<span>&nbsp;&nbsp;&nbsp;&nbsp;系统设置&nbsp;&nbsp;&nbsp;&nbsp;</span>*/}
-                {/*</Menu.Item>*/}
+                </Menu.Item> */}
                 <Menu.Divider />
                 <Menu.Item key="5"><span>&nbsp;&nbsp;&nbsp;&nbsp;退出</span></Menu.Item>
             </Menu>
@@ -260,7 +257,9 @@ class Zheader extends React.Component {
                           <li><Link to="/upreport">上报平台</Link></li>
                           <li><Link to="/guide">引导系统</Link></li>
                           <li>
-                            <Dropdown overlay={moreMenu} trigger={['click']} placement={'bottomCenter'}>
+                            <Dropdown overlay={moreMenu} trigger={['click']} placement={'bottomCenter'}
+                             getPopupContainer={() => document.querySelector('.z-header')}
+                            >
                               <Link to="/home">更多</Link>
                             </Dropdown> 
                           </li>
@@ -281,7 +280,9 @@ class Zheader extends React.Component {
                             </Popover>
                         </div> */}
                         <div className="user-info">
-                            <Dropdown overlay={menu} trigger={['click']} placement={'bottomCenter'}>
+                            <Dropdown overlay={menu} trigger={['click']} placement={'bottomCenter'}
+                            getPopupContainer={() => document.querySelector('.z-header')}
+                            >
                                 <div className="avatar">
                                     <Avatar src={user} />
                                 </div>

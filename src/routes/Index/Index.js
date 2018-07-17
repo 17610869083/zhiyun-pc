@@ -5,10 +5,6 @@ import {Route, Switch, Link} from 'react-router-dom';
 import './Index.less';
 import {exportSkip} from '../../redux/actions/createActions';
 import CRcode from '../LoginPage/crcode.jpg';
-import {api_get_channel} from '../../services/api';
-import Iconfont from '../../components/IconFont'
-import request from '../../utils/request';
-import {urlTokey} from '../../utils/format';
 import AsyncComponent from '../../components/AsyncComponent/AsyncComponent'
 // import Bidding from '../BiddingOpinion/BiddingOpinion'
 
@@ -17,15 +13,6 @@ const TopicReportList = AsyncComponent(() => import('../TopicReportList/TopicRep
 const AllOpinion = AsyncComponent(() => import('../AllOpinion/AllOpinion'))
 const TrendFeeling = AsyncComponent(() => import('../TopicOpinion/TrendFeeling/TrendFeeling'))
 const ZHeader = AsyncComponent(() => import('../../components/ZHeader/Zheader'))
-const ReportTemplate = AsyncComponent(() => import('../ReportTemplate/ReportTemplate'))
-const ChooseTemplate = AsyncComponent(() => import('../ChooseTemplate/ChooseTemplate'))
-const CustomHome= AsyncComponent(() => import('../CustomHome/CustomHome'))
-const MyReport= AsyncComponent(() => import('../MyReport/MyReport'))
-const Drag= AsyncComponent(() => import('../Drag/Drag'))
-const Briefing= AsyncComponent(() => import('../Briefing/Briefing'))
-const BriefingSecond = AsyncComponent(() => import('../BriefingSecond/BriefingSecond'))
-const Daily = AsyncComponent(() => import('../Daily/Daily'))
-const Special = AsyncComponent(() => import('../Special/Special'))
 const Evidence = AsyncComponent(() => import('../Evidence/Evidence'))
 const UpReport = AsyncComponent(() => import('../UpReport/UpReport'))
 const Guide = AsyncComponent(() => import('../Guide/Guide'))
@@ -34,10 +21,7 @@ const Bidding= AsyncComponent(() => import('../BiddingOpinion/BiddingOpinion'))
 const Multilingual= AsyncComponent(() => import('../Multilingual/Multilingual'))
 const AppCenter= AsyncComponent(() => import('../AppCenter/AppCenter'))
 const Guard= AsyncComponent(() => import('../Guard/Guard'))
-
-const {Header, Sider, Content} = Layout;
-const SubMenu = Menu.SubMenu;
-
+const { Content} = Layout;
 class Index extends React.Component {
   constructor() {
     super();
@@ -70,17 +54,6 @@ class Index extends React.Component {
     })
   }
  }
-  // componentWillMount() {
-  //   request(api_get_channel)
-  //     .then(res => {
-  //       if (res.data.code === 1) {
-  //         this.setState({
-  //           channelList: res.data.channelList
-  //         })
-  //       }
-  //     })
-  // }
-
   goBackIndex() {
       if(this.state.collapsed){
       this.setState({
@@ -136,12 +109,11 @@ class Index extends React.Component {
   }
   render() {
     // 统计报告-舆情报告   
-    const {themeColor} = this.props;
     return (
       <div className="root-container">
        <ZHeader/> 
           <Layout className="right-layout">
-            <Content className="main"  style={{backgroundColor: themeColor.grounding.color}} ref={(main) => {
+            <Content className="main" ref={(main) => {
               this.main = main
             }}>
               <Switch>
@@ -149,15 +121,6 @@ class Index extends React.Component {
                 <Route path="/allopinion" component={AllOpinion}/>
                 <Route path="/home" exact component={NewHome}/>
                 <Route path="/topicreportlist" component={TopicReportList}/>
-                <Route path="/reporttemplate" component={ReportTemplate}/>
-                <Route path="/choosetemplate" component={ChooseTemplate}/>
-                <Route path="/customhome" component={CustomHome}/>
-                <Route path="/myreport" component={MyReport}/>
-                <Route path="/drag" component={Drag}/>
-                <Route path="/briefing" component={Briefing}/>
-                <Route path="/briefingsecond" component={BriefingSecond}/>
-                <Route path="/daily" component={Daily}/>
-                <Route path="/special" component={Special}/>
                 <Route path="/evidence" component={Evidence}/>
                 <Route path="/upreport" component={UpReport}/>
                 <Route path="/guide" component={Guide}/>

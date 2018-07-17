@@ -280,7 +280,7 @@ class MyReport extends React.Component{
          const contentList = this.state.contentList.map( (item,index) => {
              return <li key = {index} 
              className={this.state.checkId === item.id ?'cont active':'cont normal'}> 
-             <img src={'http://119.90.61.155/om31/'+item.imagepath} alt="" onClick = {this.changeReport.bind(this,item.id,item.status,item.reportType,item.reportFormId)}/>
+             <img src={'./../'+item.imagepath} alt="" onClick = {this.changeReport.bind(this,item.id,item.status,item.reportType,item.reportFormId)}/>
              {
              this.state.editReprotName === item.id ? <Input  value={this.state.inputValue} onChange={this.changeReportName.bind(this)} onBlur = {this.blur.bind(this,item.id)}/>:
              <p title="双击可修改名称" onDoubleClick={this.editReportName.bind(this,item.id,item.reportName)} style={{userSelect:'none',height:'28px'}} >{item.reportName}</p>
@@ -378,7 +378,7 @@ class MyReport extends React.Component{
              width="60%" height="60%"
              >
                 <iframe  title="模板预览" frameBorder="0"  width="100%" height="600px"
-                src={"http://119.90.61.155/om31/" + this.state.hmtlUrl} />  
+                src={"./../" + this.state.hmtlUrl} />  
              </Modal>
              </div>
          )
