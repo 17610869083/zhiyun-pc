@@ -59,12 +59,12 @@ class TopicOpinionBox extends React.PureComponent {
                 <div className="container">
                     <div className="top" style={{borderBottom: `1px solid ${themeColor.borderColor.color}`}}>
                         <div className="title">
-                            <IconFont type="icon-tesezhuanti" style={{color: BLUES,fontSize: '18px'}}/>
-                            <span className="txt" style={{color:themeColor.textColor.color}}>专题舆情</span>
-                            {/* <span className="txt" style={{color:BLACK}}>专题信息</span> */}
+													<IconFont type="icon-tesezhuanti" style={{color: BLUES,fontSize: '18px'}}/>
+													<span className="txt" style={{color:themeColor.textColor.color}}>专题舆情</span>
+													{/* <span className="txt" style={{color:BLACK}}>专题信息</span> */}
                         </div>
                         <div className="more">
-                              {more}
+													{more}
                         </div>
                     </div>
                     <div className="bottom">
