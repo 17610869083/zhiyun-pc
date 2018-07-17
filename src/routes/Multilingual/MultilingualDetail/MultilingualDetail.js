@@ -10,14 +10,13 @@ import './MultilingualDetail.less';
 import {opinionColor, setHighlightTags, formatDateTime} from '../../../utils/format';
 import request from '../../../utils/request';
 import {
-  api_edit_doc_neg, api_del_doc, api_push_material, api_push_collection,
+  api_edit_doc_neg, api_push_material, api_push_collection,
   api_allopinion_exportskip, api_topic_export_word, api_delete_multilingual } from '../../../services/api';
 import {GRAY} from '../../../utils/colors';
 import {
   opinionSearchRequested,
   searchKeywordSync,
   setOpinionTypeRequested,
-  deleteMultilingual,
   exportSkip,
   paginationPage
 } from '../../../redux/actions/createActions';
@@ -36,7 +35,6 @@ import BlankPage from '../../../base/Exception/BlankPage';
 import Qing from '../../../assets/img/qing.svg';
 import Del from '../../../assets/img/del.svg'; 
 import Dowload from '../../../assets/img/dowload.svg';
-import { SSL_OP_NETSCAPE_DEMO_CIPHER_CHANGE_BUG } from "constants";
 const InputGroup = Input.Group;
 const Option = Select.Option;
 class OpinionDetail extends React.Component {
@@ -90,7 +88,7 @@ class OpinionDetail extends React.Component {
       },
       trendtips: {
         tips: ['设置倾向', '경향을 세우다', '傾向性を設定する', 'تەسىس قىلىش خاھىشى ', 'ཕྱོགས་ལྷུང་བཀོད་སྒྲིག་'],
-        title: ['设置这条信息的倾向', '이 소식을 세우는 경향', 'このメッセージの傾向性を設定する', 'بۇ خەۋەر تەسىس قىلىش خاھىشىz', 'གནས་ཚུལ་འདི་བཀོད་སྒྲིག་བྱེད་པའི་ཕྱོགས་ལྷུང་'],
+        title: ['设置这条信息的倾向', '이 소식을 세우는 경향', 'このメッセージの傾向性を設定する', 'بۇ خەۋەر تەسىس قىلىش خاھىشى', 'གནས་ཚུལ་འདི་བཀོད་སྒྲིག་བྱེད་པའི་ཕྱོགས་ལྷུང་'],
         Positive: ['正面', '정면', '正面', 'ئۇدۇل.', 'དྲང་ཕྱོགས་'],
         neutral: ['中性', '중성', '中性', 'نېيترال ', 'མ་ནིང།'],
         negative: ['负面', '반면', '悪い面', 'پاسسىپ.', 'ལྡོག་ངོས་'],
@@ -113,7 +111,10 @@ class OpinionDetail extends React.Component {
         tip: ['未勾选默认导出5000条', '선택이 없는 상태에서 5000 건을 묵인 했다', '未選択の場合、5000件を導出する', 'كۆڭۈلدىكى تېخى تاللىسىڭىز ، 5000 كەلتۈرۈپ چىقىرىلغان ماددا', 'མ་5000 དྲངས་ཕྱུང་ཀུན་གྱི་ཁས་ལེན་བཅད་བདམས་།'],
         title: ['命名该文件', '이 문건을 명명하다', 'この文書を命名する', 'بۇ ھۆججەت نام بېرىش', 'མིང་བཏགས་ཡིག་ཆ་'],
         submit: ['确定', '확정', '確定', 'ئېنىق', 'གཏན་ལ་ཕབ་པ་']
-      }
+      },
+      leastOne:  ['至少选择一项', '적어도 한 개를 선택 해라', '少なくとも1つ選択する。', 'ھېچ بولمىغاندا بىر تۈرلۈك ', 'མ་མཐར་ཡང་གདམ་ག་ཞིག་'],
+      cancel: ['取消操作', '조작을 취소하다', '取り消す', 'مەشغۇلاتنى بىكار قىلىش', 'བཀོལ་སྤྱོད་མེད་པ་བཟོས་'],
+      generation: ['生成中...', '생성 과정...', '作成中...', '...ھاسىل قىلىش داۋامىدا', 'སྐྱེས་གྲུབ་ནང་...']
     };
   }
   componentDidUpdate(prevProps, prevState) {
@@ -190,7 +191,7 @@ class OpinionDetail extends React.Component {
 
   // 取消操作
   deleteCancel(e) {
-    message.error('取消操作');
+    message.error(this.state.cancel[this.props.languageType]);
   }
 
 
@@ -211,7 +212,7 @@ class OpinionDetail extends React.Component {
     const arr = this.checkedTrue();
     const size = arr.length;
     if (size === 0) {
-      message.warning("至少选择一项！");
+      message.warning(this.state.leastOne[this.props.languageType]);
     } else {
       const sidList = JSON.stringify(arr);
       request(api_edit_doc_neg + '&lang='+ this.props.lang + '&neg=-1&sid=' + sidList, {}).then((res) => {
@@ -232,7 +233,7 @@ class OpinionDetail extends React.Component {
     const arr = this.checkedTrue();
     const size = arr.length;
     if (size === 0) {
-      message.warning("至少选择一项！");
+      message.warning(this.state.leastOne[this.props.languageType]);
     } else {
       const sidList = JSON.stringify(arr);
       request(api_edit_doc_neg + '&lang='+ this.props.lang + '&neg=0&sid=' + sidList, {}).then((res) => {
@@ -253,7 +254,7 @@ class OpinionDetail extends React.Component {
     const arr = this.checkedTrue();
     const size = arr.length;
     if (size === 0) {
-      message.warning("至少选择一项！");
+      message.warning(this.state.leastOne[this.props.languageType]);
     } else {
       const sidList = JSON.stringify(arr);
       request(api_edit_doc_neg + '&lang='+ this.props.lang + '&neg=1&sid=' + sidList, {}).then((res) => {
@@ -274,7 +275,7 @@ class OpinionDetail extends React.Component {
     const arr = this.checkedTrue();
     const size = arr.length;
     if (size === 0) {
-      message.warning("至少选择一项！");
+      message.warning(this.state.leastOne[this.props.languageType]);
     } else {
       const sidList = JSON.stringify(arr);
       request(api_edit_doc_neg + '&lang='+ this.props.lang + '&neg=2&sid=' + sidList, {}).then((res) => {
@@ -295,7 +296,7 @@ class OpinionDetail extends React.Component {
     const arr = this.checkedTrue();
     const size = arr.length;
     if (size === 0) {
-      message.warning("至少选择一项！");
+      message.warning(this.state.leastOne[this.props.languageType]);
     } else {
       const sidList = JSON.stringify(arr);
       request(api_delete_multilingual + '&lang='+ this.props.lang + '&sid=' + sidList, {}).then((res) => {
@@ -366,7 +367,7 @@ class OpinionDetail extends React.Component {
     const arr = this.checkedTrue();
     const size = arr.length;
     if (size === 0) {
-      message.warning("至少选择一项！");
+      message.warning(this.state.leastOne[this.props.languageType]);
     } else {
       const sidList = JSON.stringify(arr);
       request(api_push_collection + '&catid=' + collectionId + '&sid=' + sidList, {}).then((res) => {
@@ -468,7 +469,6 @@ class OpinionDetail extends React.Component {
   }
 
   showModal() {
-    let propsType = this.props.propsType;
     let filename = '';
     // if (propsType === 'AllopinionList') {
     //   filename = '导出汇总舆情数据';
@@ -488,7 +488,6 @@ class OpinionDetail extends React.Component {
       downloadVisible: true,
       downloadFlag:true
     })
-    let propsType = this.props.propsType;
     let propsParamData = this.props.param;
     let arr = this.checkedTrue().join(',');
 
@@ -729,7 +728,7 @@ class OpinionDetail extends React.Component {
       </Spin>
     );
     const downLoading = (
-      <Spin tip="生成中...">
+      <Spin tip={this.state.generation[this.props.languageType]}>
           <Alert
           message="正在生成文档..."
           description="请稍等..."

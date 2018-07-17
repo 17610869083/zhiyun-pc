@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {connect} from 'react-redux';
-import {Pagination, DatePicker, Form, Icon, message, Button, LocaleProvider} from 'antd';
+import {Pagination, DatePicker, Form, message, Button} from 'antd';
 import OpinionDetail from './MultilingualDetail/MultilingualDetail';
 import {opinionSearchRequested, searchKeywordSync, paginationPage} from '../../redux/actions/createActions';
 import {URLToObject, getSecondTime} from '../../utils/format';
@@ -138,6 +138,11 @@ class AllOpinion extends React.Component {
         '平媒': ['平媒', '플랫 미디어', '平面メディア', 'تەكشى ۋاسىتىسى', 'ངོས་མཉམ་གྱི་ཆ་འཕྲིན'],
         'APP': ['APP', 'APP', 'アプリ', 'APP', 'APP']
       },
+      timeError: {
+        startBigToEnd: ['开始时间请不要大于结束时间', '시간이 짧은 시간 보다는 시간을 더 주십시오', '開始時間は終了時間より大きくないでください。', 'باشلىنىش ۋاقتى قىلماڭ ئاخىرلاشقان ۋاقىت تىن يۇقىرى', 'མ་བྱེད་རོགས་། མཇུག་རྫོགས་པའི་དུས་ཚོད་ལས་ཆེ་བ་འགོ་ཚུགས་པའི་དུས་ཚོད་།'],
+        startBigToNow: ['开始时间请不要大于当前时间', '시작 시간은 현재의 시간보다 더 크게 하지 마세요', '開始時間は、現在の時間より大きくないでください。', 'باشلىنىش ۋاقتى قىلماڭ كۈندىكى ۋاقىت', 'མ་བྱེད་རོགས་། སྐབས་དེའི་དུས་ཚོད་ལས་ཆེ་བ་འགོ་ཚུགས་པའི་དུས་ཚོད་།'],
+        endBigToNow: ['结束时间请不要大于当前时间', '마감 시간은 현재의 시간보다 크게 마시지 마세요', '終了時間は、現在の時間より大きくないでください。', 'ئاخىرلاشقان ۋاقىت قىلماڭ كۈندىكى ۋاقىت ', 'དུས་ཚོད་མཇུག་རྫོགས་སྐབས་དེའི་དུས་ཚོད་ལས་ཆེ་བ་མ་བྱེད་རོགས་།']
+      },
       prevhash: ''
     }
     
@@ -190,15 +195,15 @@ class AllOpinion extends React.Component {
       const begin = values['range-time-picker'][0];
       const end = values['range-time-picker'][1];
       if (getSecondTime(begin) > Math.round(new Date())) {
-        message.error('开始时间请不要大于当前时间');
+        message.error(this.state.timeError.startBigToNow[this.state.languageType]);
         return;
       }
       else if (getSecondTime(begin) > getSecondTime(end)) {
-        message.error('开始时间请不要大于结束时间');
+        message.error(this.state.timeError.startBigToEnd[this.state.languageType]);
         return;
       }
       else if (getSecondTime(end) > Math.round(new Date())){
-        message.error('结束时间请不要大于当前时间')
+        message.error(this.state.timeError.endBigToNow[this.state.languageType])
       }
       const timeValue = 'custom';
       this.setState({
@@ -333,7 +338,6 @@ class AllOpinion extends React.Component {
   }
 
     dataChanged(pagenum) {
-    const searchMessage = this.props.ks;
       const param = {
         datetag: this.state.timeValue,
         neg: this.state.trendValue,

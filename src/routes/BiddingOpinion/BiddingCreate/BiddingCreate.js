@@ -1,10 +1,6 @@
 import React from 'react';
 import {Input, Modal, Form, message, Row, Col, Icon,Tooltip, Button} from 'antd';
 import './BiddingCreate.less';
-import {api_topic_ruleid,api_clf_ruleid} from '../../../services/api';
-import request from '../../../utils/request';
-import {keywordDuplicateCheck} from '../../../utils/format';
-import { ENETUNREACH } from 'constants';
 const FormItem = Form.Item;
 class BiddingCreate extends React.Component {
     constructor(props){

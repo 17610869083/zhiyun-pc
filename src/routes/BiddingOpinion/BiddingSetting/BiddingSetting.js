@@ -1,15 +1,10 @@
 import React from 'react';
-import {Tabs, Form, Input, Button ,Select, DatePicker,message,Tooltip,Icon} from 'antd';
-import SettingCreateTopic from '../../../components/SettingCreateTopic/SettingCreateTopic';
+import {Tabs, Form, Input, Button ,Select,message,Tooltip,Icon} from 'antd';
 import SettingSeniorTopic from '../../../components/SettingSeniorTopic/SettingSeniorTopic';
 import BiddingCreate from '../BiddingCreate/BiddingCreate'
 import request from '../../../utils/request';
 import Store from '../../../redux/store/index';
 import {
-        api_topic_revise,
-        api_topic_message,
-        api_top_nav,
-        api_get_BiddingetGradeAndRule,
         api_get_BiddingetgradeCatList,
         api_get_BiddingaddGrade,
         api_get_BiddinggetGradeAndRule,
@@ -17,7 +12,6 @@ import {
         api_get_BiddinggetDelRule
 } from '../../../services/api';
 import { createHashHistory } from 'history';
-import {getLocalTime,topicData,getSecondTime} from '../../../utils/format';
 import {connect} from 'react-redux';
 import {topicNavMessageRequested} from '../../../redux/actions/createActions';
 import './BiddingSetting.less'

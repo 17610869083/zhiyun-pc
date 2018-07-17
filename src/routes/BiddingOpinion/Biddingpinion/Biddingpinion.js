@@ -6,16 +6,14 @@ import {
   getReportListRequested,
 } from '../../../redux/actions/createActions';
 import {
-  api_del_doc,
   api_get_doc_detail,
   api_get_doc_similar,
   api_email_push,
   api_docsend_push,
   api_bidding_message_del
 } from '../../../services/api';
-import {Tag, Popconfirm, message, Select} from 'antd';
-import {history} from '../../../utils/history';
-import {setHighlightTags, opinionTypeToColor, getMeailMessage} from '../../../utils/format';
+import {Popconfirm, message, Select} from 'antd';
+import {setHighlightTags, getMeailMessage} from '../../../utils/format';
 import './Biddingpinion.less';
 import IconFont from '../../../components/IconFont'
 const Option = Select.Option;
@@ -198,7 +196,6 @@ class DetailOpinion extends React.Component {
         children.push(<Option key={emailAddressee[i]['id']}>{emailAddressee[i]['email']}</Option>);
       }
     }
-    const conent = getMeailMessage(this.state.emailData);
     const data = this.state.data;
     const sid = this.state.sid;
     const Keywords = this.state.keywords.map((item, index) =>

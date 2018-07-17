@@ -8,7 +8,6 @@ import BiddingDetail from '../BiddingDetail/BiddingDetail'
 import './BiddingInformation.less'
 import {getTopicRequested, paginationPage, searchKeywordSync} from '../../../redux/actions/createActions';
 import {
-  api_topic_message_list,
   api_bidding_message_list 
 } from '../../../services/api';
 import {getSecondTime} from '../../../utils/format';

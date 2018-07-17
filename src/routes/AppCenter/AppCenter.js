@@ -17,10 +17,10 @@ class AppCenter extends React.Component{
                         {type: 'icon-logoxinjiang', text: '维语监测', color: '#6296f1', href: '/multilingual/3', hrefType: 'history'},
                         {type: 'icon-xicanga', text: '藏语监测', color: '#4ba9eb', href: '/multilingual/4', hrefType: 'history'},
                         {type: 'icon-yingyu', text: '英语监测', color: '#04c0b3'},
-                        {type: 'icon-zhengjucailiao', text: '互联网取证', color: '#6296f1', href: 'http://103.94.42.70:5000/', hrefType: 'http'},
-                        {type: 'icon-shangbao', text: '上报管理', color: '#4ba9eb', href: 'http://hualong.v6plus.com/login', hrefType: 'http'},
+                        {type: 'icon-zhengjucailiao', text: '互联网取证', color: '#6296f1', href: '/evidence', hrefType: 'http'},
+                        {type: 'icon-shangbao', text: '上报管理', color: '#4ba9eb', href: '/upreport', hrefType: 'http'},
                         {type: 'icon-minshengminqing', text: '民情管理', color: '#4ba9eb'},
-                        {type: 'icon-pinglun', text: '网评管理', color: '#4ba9eb', href: 'http://yd.is8.com.cn/', hrefType: 'http'}
+                        {type: 'icon-pinglun', text: '网评管理', color: '#4ba9eb', href: '/guide', hrefType: 'http'}
                     ]
                 },
                 {
@@ -28,17 +28,17 @@ class AppCenter extends React.Component{
                     items: [
                         // {type: 'icon-anquan', text: '安全态势感知', color: '#04c0b3'},
                         {type: 'icon-jiance', text: '网站监测预警', color: '#4ba9eb', href: 'https://114.242.25.234:38447/', hrefType: 'http'},
-                        {type: 'icon--shujuzhiligongju', text: '网站安全治理', color: '#6296f1', href: 'https://119.88.190.68', hrefType: 'http'},   // '不能用'
-                        {type: 'icon-leidatance', text: '网站空间探测', color: '#04c0b3', href: 'https://119.88.190.71/', hrefType: 'http'}, // 不能用
+                        {type: 'icon--shujuzhiligongju', text: '网站安全治理', color: '#6296f1', href: 'https://119.88.190.68', hrefType: 'http'},
+                        {type: 'icon-leidatance', text: '网站空间探测', color: '#04c0b3', href: 'https://119.88.190.71/', hrefType: 'http'},
                         {type: 'icon-fanghu', text: '网站安全防护', color: '#4ba9eb', href: 'http://situation.jzz.aoyasafe.com/web/index.html', hrefType: 'http'},
                         {type: 'icon-jiangmurubingdugongji', text: '僵木蠕监测', color: '#4ba9eb'},
                         {type: 'icon-zonghetongbao', text: '预警通报', color: '#f7b55d', href: 'http://114.242.25.234:30005/gxwhongce2/sec/toAutoBulletin', hrefType: 'http'},
                         // {type: 'icon-huandunicon-', text: '威胁情报', color: '#4ba9eb'},
                         // {type: 'icon-zidong', text: '自动通报', color: '#4ba9eb'},
                         // {type: 'icon-wangluofangcuangai', text: '网站防篡改', color: '#6296f1'},
-                        {type: 'icon-zidong', text: '流量监测引擎', color: '#4ba9eb', href: 'https://119.88.190.68/', hrefType: 'http'}, // 图标   不能用
-                        {type: 'icon-zidong', text: '流量监测大屏', color: '#4ba9eb', href: 'http://119.88.190.68:3000/', hrefType: 'http'}, // 图标 不能用
-                        {type: 'icon-zidong', text: '通报处置', color: '#4ba9eb', href: 'http://114.242.25.234:30005/gxwhongce2/sec/toBulletinWarning', hrefType: 'http'} // 图标 不能用
+                        {type: 'icon-zidong', text: '流量监测引擎', color: '#4ba9eb', href: 'https://119.88.190.68/', hrefType: 'http'}, // 图标   
+                        {type: 'icon-zidong', text: '流量监测大屏', color: '#4ba9eb', href: 'http://119.88.190.68:3000/', hrefType: 'http'}, // 图标
+                        {type: 'icon-zidong', text: '通报处置', color: '#4ba9eb', href: 'http://114.242.25.234:30005/gxwhongce2/sec/toBulletinWarning', hrefType: 'http'} // 图标
                     ]
                 },
                 {
@@ -51,7 +51,7 @@ class AppCenter extends React.Component{
                         {type: 'icon-zhaotoubiao1', text: '招投标', color: '#6296f1', href: '/bidding/information', hrefType: 'history'},
                         {type: 'icon-qiyehuaxiang', text: '企业画像', color: '#4ba9eb'},
                         {type: 'icon-huaxiang', text: '人物画像', color: '#6296f1'},
-                        {type: 'icon-dianziweilanxitong', text: '微信围栏', color: '#4ba9eb', href: 'http://221.221.146.123:8888', hrefType: 'http'}  // 不能用
+                        {type: 'icon-dianziweilanxitong', text: '微信围栏', color: '#4ba9eb', href: 'http://221.221.146.123:8888', hrefType: 'http'}
                     ]
                 },
                 {
@@ -72,16 +72,19 @@ class AppCenter extends React.Component{
     */
     hrefTo(href, hrefType) {
         // history.push('http://www.ruanyifeng.com/blog/2015/07/flex-grammar.html')
-        console.log(window.location) //origin pathname
-        if(hrefType === 'login') {
-            request('http://web.is8.com.cn/om/common/login/loginDo?action=login2&username=ryccs&password=ryccs').then((res) => {
-                window.open(href)
-            })
-        }else if (hrefType === 'history') {
-            history.push(href)
-        }else if(hrefType === 'http') {
-            window.location.href = href
-        }
+        // console.log(window.location) //origin pathname
+        // if(hrefType === 'login') {
+        //     request('http://web.is8.com.cn/om/common/login/loginDo?action=login2&username=ryccs&password=ryccs').then((res) => {
+        //         window.open(href)
+        //     })
+        // }else if (hrefType === 'history') {
+        //     // history.push(href)
+        //     window.open(window.location.origin + window.location.pathname + '#' + href)
+        // }else if(hrefType === 'http') {
+        //     // window.location.href = href
+        //     window.open(href)
+        // }
+        history.push(href)
     }
     render () {
         return <div className="app-center">
