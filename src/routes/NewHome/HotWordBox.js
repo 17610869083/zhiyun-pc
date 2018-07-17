@@ -9,18 +9,19 @@ class HotWordBox extends React.Component{
     delHotWordBox(){
           this.props.delHotWordBox(1)
     }
-    componentDidMount(){
-        setTimeout(()=>{
-            window.tagcloud({
-                selector: ".tagcloud",  // 元素选择器
-                fontsize: 18,       // 基本字体大小
-                radius: 110,         // 滚动半径
-                mspeed: "slow",   // 滚动最大速度
-                ispeed: "slow",   // 滚动初速度
-                direction: 135,     // 初始滚动方向
-                keep: false          // 鼠标移出组件后是否继续随鼠标滚动
-              })
-        },2000)
+ 
+    componentDidUpdate(nextProps){
+        if(nextProps.data.length !== 0){
+           window.tagcloud({
+              selector: ".tagcloud",  // 元素选择器
+              fontsize: 18,       // 基本字体大小
+              radius: 110,         // 滚动半径
+              mspeed: "slow",   // 滚动最大速度
+              ispeed: "slow",   // 滚动初速度
+              direction: 135,     // 初始滚动方向
+              keep: false          // 鼠标移出组件后是否继续随鼠标滚动
+            })
+        }
     }
     render(){
         const {data,themeColor} = this.props;

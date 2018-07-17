@@ -171,18 +171,18 @@ class SortedOpinion extends React.Component {
     if (e.key === 'addsort') {
       this.setState({sortVisible: true})
     } else if (e.key === 'sortlist') {
-      history.push({pathname: `/sortedopinion/list`, search: `?cifid=${this.props.clfId.clfid}`})
+      history.push({pathname: `/allopinion/sortedopinion/list`, search: `?cifid=${this.props.clfId.clfid}`})
     } else if (e.key === 'setting') {
-      history.push({pathname: `/sortedopinion/setting`, search: `?cifid=${this.props.clfId.clfid}`})
+      history.push({pathname: `/allopinion/sortedopinion/setting`, search: `?cifid=${this.props.clfId.clfid}`})
     } else {
-      history.push({pathname: '/sortedopinion/addrule'})
+      history.push({pathname: '/allopinion/sortedopinion/addrule'})
     }
 
   }
   // 切换分类路由
   changeSortRoute(clfId,clfname,e) {
     this.setState({clfId: clfId, current: 'sortlist'});
-    history.push({pathname: `/sortedopinion/list`, search: `?cifid=${clfId}`})
+    history.push({pathname: `/allopinion/sortedopinion/list`, search: `?cifid=${clfId}`})
     this.props.changeClfId({clfid:clfId,clfname:clfname});
     //this.props.clfCatState({state:true})
   }
@@ -203,7 +203,7 @@ class SortedOpinion extends React.Component {
     // clearTimeout(this.sortTimer);
   }
   componentDidMount() {
-    if (history.location.pathname === '/sortedopinion/list') {
+    if (history.location.pathname === '/allopinion/sortedopinion/list') {
       this.setState({current: 'sortlist'});
     }
     this.props.getSortedMenuRequested();
@@ -336,9 +336,9 @@ class SortedOpinion extends React.Component {
           this.state.flag
             ? <div className="topic-wrapper">
                 <Switch>
-                  <Route path="/sortedopinion/list" component={SortedList}/>
-                  <Route path="/sortedopinion/addrule" component={SortedAdd}/>
-                  <Route path="/sortedopinion/setting" component={SortedSetting}/>
+                  <Route path="/allopinion/sortedopinion/list" component={SortedList}/>
+                  <Route path="/allopinion/sortedopinion/addrule" component={SortedAdd}/>
+                  <Route path="/allopinion/sortedopinion/setting" component={SortedSetting}/>
                 </Switch>
               </div>
             : <Spin size="large"/>

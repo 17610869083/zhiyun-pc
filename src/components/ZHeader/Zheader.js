@@ -12,8 +12,12 @@ import {changeTheme,  getUserInfo} from '../../redux/actions/actions';
 import {opinionSearchRequested,searchKeywordSync,homeModule} from '../../redux/actions/createActions';
 import ChangeTheme from '../ChangeTheme/ChangeTheme';
 import NewHome from '../../routes/NewHome';
+import logo from '../../assets/img/newLogo.png';
+import {Link} from 'react-router-dom';
 const Search = Input.Search;
 const confirm = Modal.confirm;
+const SubMenu = Menu.SubMenu;
+const MenuItemGroup = Menu.ItemGroup;
 class Zheader extends React.Component {
     constructor() {
         super();
@@ -109,7 +113,7 @@ class Zheader extends React.Component {
 
     // 点击logo返回首页
     goBackIndex() {
-        
+        history.push('/home')
     }
 
     // 点击头部搜索框
@@ -182,6 +186,9 @@ class Zheader extends React.Component {
              }
             })
     }
+    goBackIndex(){
+
+    }
     render() {
         const {onChangeTheme, userInfo,themeColor} = this.props;
         const { userInfoVisible, themeVisible, confirmLoading} = this.state;
@@ -206,7 +213,30 @@ class Zheader extends React.Component {
                 <Menu.Item key="5"><span>&nbsp;&nbsp;&nbsp;&nbsp;退出</span></Menu.Item>
             </Menu>
         );
-
+        const moreMenu = (
+            <Menu style={{marginTop:'16px'}}>
+                <Menu.Item key="0">
+                    <Link to="/situational" >&nbsp;&nbsp;&nbsp;&nbsp;态势感知&nbsp;&nbsp;&nbsp;&nbsp;</Link>
+                </Menu.Item>
+                <Menu.Divider />
+                <Menu.Item key="1">
+                    <Link to="/guard" >&nbsp;&nbsp;&nbsp;&nbsp;网站防护&nbsp;&nbsp;&nbsp;&nbsp;</Link>
+                </Menu.Item>
+                <Menu.Divider />
+                <Menu.Item key="2">
+                    <Link to="/bidding">&nbsp;&nbsp;&nbsp;&nbsp;招投标&nbsp;&nbsp;&nbsp;&nbsp;</Link>
+                </Menu.Item>
+                <Menu.Divider />
+                <Menu.Item key="3">
+                    <Link to="/multilingual/3">&nbsp;&nbsp;&nbsp;&nbsp;维语监测&nbsp;&nbsp;&nbsp;&nbsp;</Link>
+                </Menu.Item>
+                <Menu.Divider />
+                <Menu.Item key="4">
+                    <Link to="/multilingual/2">&nbsp;&nbsp;&nbsp;&nbsp;日语监测&nbsp;&nbsp;&nbsp;&nbsp;</Link>
+                </Menu.Item>
+                
+            </Menu>
+        );
         // 消息列表
         const PoverMenu = (
             <div>
@@ -216,19 +246,28 @@ class Zheader extends React.Component {
         );
         
         return (
-            <div className="z-header">
+            <div className="z-header" style={{backgroundColor:themeColor.topColor.backgroundColor}}>
                 <div className="top">
                     <div className="left" onClick={this.goBackIndex.bind(this)}>
-                        <span className="name" style={{color:'#fff'}}>{userInfo.sysname}</span>
+                         <img src={logo} alt="logo" className="logo" onClick={this.goBackIndex.bind(this)}/>
+                         {/* <span className="name" style={{color:'#fff'}}>{userInfo.sysname}</span> */}
                     </div>
                     <div className="right">
-                        <div className="search">
-                            <Search placeholder="搜索" style={{ width: 200 }} onSearch={this.handleSearchContent.bind(this)} />
-                        </div>
-                        {/* <div className="qq" onClick={() => {window.open('tencent://message/?uin=601703164&')}}>
-                            <i className="fa fa-qq" aria-hidden="true" style={{color:themeColor.textColor.color}}/>
-                        </div> */}
-                        <div className="notify">
+                        <ul className="nav-bar">
+                          <li><Link to="/home">首页</Link></li>
+                          <li><Link to="/allopinion/allopiniondetail">舆情监测</Link></li>
+                          <li><Link to="/evidence">互联网取证</Link></li>
+                          <li><Link to="/upreport">上报平台</Link></li>
+                          <li><Link to="/guide">引导系统</Link></li>
+                          <li>
+                            <Dropdown overlay={moreMenu} trigger={['click']} placement={'bottomCenter'}>
+                              <Link to="/home">更多</Link>
+                            </Dropdown> 
+                          </li>
+                          <li> <Link to="/appcenter">应用中心</Link></li>
+                          <li><a>消息</a></li>
+                        </ul>
+                        {/* <div className="notify">
                             <Popover
                                 content={PoverMenu}
                                 title="暂无通知"
@@ -240,7 +279,7 @@ class Zheader extends React.Component {
                                     <Icon type="mail" style={{color:themeColor.textColor.color}}/>
                                 </Badge>
                             </Popover>
-                        </div>
+                        </div> */}
                         <div className="user-info">
                             <Dropdown overlay={menu} trigger={['click']} placement={'bottomCenter'}>
                                 <div className="avatar">

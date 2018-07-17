@@ -10,7 +10,8 @@
         background: #eee;
         transition: all 3s ease;
         cursor: pointer;
-        
+        overflow: hidden;
+        z-index: 500;
         .slider-switch{
          display: flex;
          justify-content: center;
@@ -27,20 +28,22 @@
                margin: 2.5%;
                float: left;
                border:1px solid blue;
-               position: relative;
+               animation-fill-mode: forwards;
+               animation: dragup ease 0.2s 1;
             }
         }
     }
-    .custom-title{
-        background: #fff;
-        height: 34px;
-        line-height: 34px;
-        padding-left: 28px;
-    }
-    .moduleCont{
-        border:1px solid red;
-        float:left;
-        margin-left:20px; 
-        height: 358px;
+    .drop-container{
+        width: 100%;
+        min-height:100px;
+        border:1px solid blue;
     }
 }
+@keyframes dragup {
+    from {
+      margin-top: 10px;
+    }
+    to {
+      margin-top: 60px;
+    }
+  }

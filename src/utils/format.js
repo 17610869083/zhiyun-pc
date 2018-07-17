@@ -46,20 +46,21 @@ export function formatTodayOpinion(data) {
 // 热搜媒体排行
 export function formatMediaChart(data) {
     let colors = ['#5bcf3c','#ffa000','#e64a19','#5a8bff'];
-    // data.xAxis[0].axisLine={
-    //     onZero: false,
-    //     lineStyle: {
-    //         color: '#000'
-    //     }
-    // };
+    data.xAxis[0].axisLine= {lineStyle:{
+         color:'#787878'
+    }}
     const mediaChartOption = {
         tooltip: {
             trigger: 'axis'
         },
         legend: {
             //data:['常规', '关注', '重点','特推'],
-            data:['正面', '中性', '负面','预警'],
-            top: 30
+            data:[{name:'正面',icon:'circle'},{name:'中性',icon:'circle'},{name:'负面',icon:'circle'},{name:'预警',icon:'circle'}],
+            top: 30,
+            textStyle:{
+                color:'#787878'
+            },
+            x:'right'
         },
         grid: {
             left: '6%',
@@ -68,11 +69,15 @@ export function formatMediaChart(data) {
             bottom: 20
         },
         color:colors, 
-        //['#20aafc','#ff5858','#e70000','#ffbc34','#91c7ae','#749f83',  '#ca8622', '#bda29a','#6e7074', '#546570', '#c4ccd3'],
-        xAxis: data.xAxis,
+        xAxis: data.xAxis[0],
         yAxis: [
             {
-                type: 'value'
+                type: 'value',
+                axisLine:{
+                    lineStyle:{
+                        color:'#787878'
+                    }
+                }
             }
         ],
         series: [

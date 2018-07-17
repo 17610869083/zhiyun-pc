@@ -76,24 +76,28 @@ class OpinionTrendBox extends React.Component {
                 <div className="container">
                     <div className="top">
                         <div className="title">
+                            <div>
                             <IconFont type="icon-qushi" style={{color: BLUES,fontSize: '18px'}}/>
                             <span className="txt" style={{color:themeColor.textColor.color}}>舆情走势</span>
+                            </div>
                             {/* <span className="txt" style={{color:BLACK}}>信息走势</span> */}
+                            <div style={{marginRight:'20px'}}>
                             <span className="btnBox">
                             <Button onClick={this.trendChange.bind(this,'day',1)}
-                            style={this.state.buttonState===1?{color:'#fff',borderColor:'#108ee9',backgroundColor:'#5a8bff'}:{}}
+                            style={this.state.buttonState===1?{color:'#fff',borderColor:'#108ee9',backgroundColor:'#5a8bff'}:{color:'#108ee9',borderColor:themeColor.bottomColor.backgroundColor,backgroundColor:themeColor.bottomColor.backgroundColor}}
                             >日</Button>
                             <Button onClick={this.trendChange.bind(this,'week',2)}
-                             style={this.state.buttonState===2?{color:'#fff',borderColor:'#108ee9',backgroundColor:'#5a8bff'}:{}}
+                             style={this.state.buttonState===2?{color:'#fff',borderColor:'#108ee9',backgroundColor:'#5a8bff'}:{color:'#108ee9',borderColor:themeColor.bottomColor.backgroundColor,backgroundColor:themeColor.bottomColor.backgroundColor}}
                             >周</Button>
                             <Button onClick={this.trendChange.bind(this,'month',3)}
-                             style={this.state.buttonState===3?{color:'#fff',borderColor:'#108ee9',backgroundColor:'#5a8bff'}:{}}
+                             style={this.state.buttonState===3?{color:'#fff',borderColor:'#108ee9',backgroundColor:'#5a8bff'}:{color:'#108ee9',borderColor:themeColor.bottomColor.backgroundColor,backgroundColor:themeColor.bottomColor.backgroundColor}}
                             >月</Button>
                             </span>
                             <Icon type="close-circle" className="delModule"
                             style={this.props.status==='setting'?{'visibility':'visible',color:BLUES}:{'visibility':'hidden'}}
                             onClick={this.delOpinionTrendBox.bind(this)}
                             ></Icon>
+                            </div>
                         </div>
                     </div>
                     <div className="bottom">
@@ -101,41 +105,41 @@ class OpinionTrendBox extends React.Component {
                             echarts={echarts}
                             option={this.state.mediaChartOption}
                             lazyUpdate={true}
-                            style={{height: '310px', width: '75%', marginBottom: '-20px'}}
+                            style={{height: '310px', width: '96%', marginBottom: '-20px'}}
                             ref={(e) => { this.echarts_react = e; }}
                             />
                                 <div className="total">
                                 <div className="opinion-info">
 
                                     <div className="count">
-                                      <div className="number">{monthCount[4]['all']}</div>
+                                      <div className="number" style={{color:themeColor.textColor.color}}>{monthCount[4]['all']}</div>
                                       <div className="test">舆情总量</div>
                                       {/* <div className="test">信息总量</div> */}
                                     </div>
-                                    <div className="icon-wrapper" style={{backgroundColor: '#009efb'}}>
+                                    {/* <div className="icon-wrapper" style={{backgroundColor: '#009efb'}}>
                                          <IconFont type="icon-yuqing" style={{color: '#ffffff',fontSize: '40px'}}/>
-                                     </div>
+                                     </div> */}
 
                                 </div>
                                 <div className="opinion-info">
                                     <div className="count">
-                                        <div className="number">{monthCount[2]['negative']}</div>
+                                        <div className="number" style={{color:themeColor.textColor.color}}>{monthCount[2]['negative']}</div>
                                         <div className="test">负面总量</div>
                                         {/* <div className="test">重点总量</div> */}
                                     </div>
-                                    <div className="icon-wrapper" style={{backgroundColor: '#ff6600'}}>
+                                    {/* <div className="icon-wrapper" style={{backgroundColor: '#ff6600'}}>
                                             <IconFont type="icon-jinggao-white" style={{fontSize: '40px'}}/>
-                                        </div>
+                                    </div> */}
                                 </div>
                                 <div className="opinion-info">
                                     <div className="count">
-                                        <div className="number">{monthCount[3]['warn']}</div>
+                                        <div className="number" style={{color:themeColor.textColor.color}}>{monthCount[3]['warn']}</div>
                                         <div className="test">预警总量</div>
                                         {/* <div className="test">特推总量</div> */}
                                     </div>
-                                    <div className="icon-wrapper" style={{backgroundColor: '#ffab00'}}>
+                                    {/* <div className="icon-wrapper" style={{backgroundColor: '#ffab00'}}>
                                         <IconFont type="icon-shandian-white" style={{fontSize: '40px'}}/>
-                                    </div>
+                                    </div> */}
                                 </div>
                                 </div>
                     </div>

@@ -95,9 +95,12 @@ const getCollectionLocationSucceededReducer = handleAction(GET_COLLECTION_ANDRUL
 const getMaterialOpinionDetailRequestedReducer = handleAction(GET_MATERIAL_OPINION_DETAIL_REQUESTED, (state, action) => ({
   req: action.payload
 }), "1");
+// const getMaterialOpinionDetailSucceededReducer = handleAction(GET_MATERIAL_OPINION_DETAIL_SUCCEEDED, (state, action) => ({
+//   data: action.payload
+// }), {data: {result:[{datelist: [], ctaname: ''}]}});
 const getMaterialOpinionDetailSucceededReducer = handleAction(GET_MATERIAL_OPINION_DETAIL_SUCCEEDED, (state, action) => ({
   data: action.payload
-}), {data: {result:[{datelist: [], ctaname: ''}]}});
+}), {data: {docList: [], pageInfo: {rowcount: 3, page: 1}}});
 
 // 获取收藏夹列表
 const getCollectionOpinionListRequested = handleAction(GET_COLLECTION_OPINION_LIST_REQUESTED, (state, action) => ({

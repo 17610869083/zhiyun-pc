@@ -52,7 +52,7 @@ class TopicOpinion extends React.Component {
             return
         }
         history.push({
-            pathname:`/topic/${e.key}`,
+            pathname:`/allopinion/topic/${e.key}`,
             search:`?topicid=${this.state.topicId}`
         });
         this.setState({
@@ -93,7 +93,7 @@ class TopicOpinion extends React.Component {
             addTopic:1,
             addClass:0
         });
-        history.push(`/topic/addtopic`);
+        history.push(`/allopinion/topic/addtopic`);
     }
     delTopic(e){
         e.stopPropagation();
@@ -112,7 +112,7 @@ class TopicOpinion extends React.Component {
         })
           this.props.setlocationPathname({topicid:topicid,topicname:topicname});
           history.push({
-            pathname:`/topic/topiclist`,
+            pathname:`/allopinion/topic/topiclist`,
             search:`?topicId=${topicid}`
             });
 
@@ -135,7 +135,7 @@ class TopicOpinion extends React.Component {
     	 }).then(res=>{
     	 	  if(res.data.code===1){
     	 	  	   history.push({
-                    pathname:`/topic/topiclist`,
+                    pathname:`/allopinion/topic/topiclist`,
                     search:`?catid=${this.state.inputValue}`
               });
                }
@@ -173,7 +173,7 @@ class TopicOpinion extends React.Component {
     	}).then(res=>{
     		  if(res.data.code===1){
     	 	  	   history.push({
-    	 	  	   	  pathname:`/topic/topiclist`,
+    	 	  	   	  pathname:`/allopinion/topic/topiclist`,
     	 	  	   	  search:`?catid=${this.state.catid}`
     	 	  	   });
                }
@@ -199,7 +199,7 @@ class TopicOpinion extends React.Component {
     	  }).then(res=>{
     	  	   if(res.data.code===1){
     	  	   	    history.push({
-    	  	   	    	pathname:`/topic/topiclist`,
+    	  	   	    	pathname:`/allopinion/topic/topiclist`,
     	  	   	    	search:`?delTopicId=${this.state.topicId}`
     	  	   	    	});
                  }
@@ -224,7 +224,7 @@ class TopicOpinion extends React.Component {
         }).then(res=>{
               if(res.data.code===1){
                 history.push({
-                    pathname:`/topic/topiclist`,
+                    pathname:`/allopinion/topic/topiclist`,
                     search:`?catId=${this.state.catid}`
                     });
                  this.props.topicNavMessageRequested(new Date())
@@ -340,12 +340,12 @@ class TopicOpinion extends React.Component {
                     </div>
                     <div className="topic-wrapper">
                         <Switch>
-                            <Route path="/topic/topiclist" component={TopicList} />
-                            <Route path="/topic/addtopic" component={TopicAdd} />
-                            <Route path="/topic/report" component={TopicReport}/>
-                            <Route path="/topic/echarts" component={TopicReportEcharts}/>
-                            <Route path="/topic/count" component={TopicCount} />
-                            <Route path="/topic/setting" component={TopicSetting} />
+                            <Route path="/allopinion/topic/topiclist" component={TopicList} />
+                            <Route path="/allopinion/topic/addtopic" component={TopicAdd} />
+                            <Route path="/allopinion/topic/report" component={TopicReport}/>
+                            <Route path="/allopinion/topic/echarts" component={TopicReportEcharts}/>
+                            <Route path="/allopinion/topic/count" component={TopicCount} />
+                            <Route path="/allopinion/topic/setting" component={TopicSetting} />
                         </Switch>
                     </div>
                 </div>
