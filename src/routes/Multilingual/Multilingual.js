@@ -333,7 +333,6 @@ class AllOpinion extends React.Component {
   }
 
     dataChanged(pagenum) {
-      console.log(pagenum)
     const searchMessage = this.props.ks;
       const param = {
         datetag: this.state.timeValue,
@@ -503,7 +502,7 @@ class AllOpinion extends React.Component {
   }
   render() {
     let {docList, carryCount=[{count: 0, key: "all", value: "全部"}], pageInfo={count:0}, page} = this.props;
-    if(!carryCount instanceof Array) carryCount = [{count: 0, key: "all", value: "全部"}];
+    if (!(carryCount instanceof Array)) carryCount = [{count: 0, key: "all", value: "全部"}]
     const {getFieldDecorator} = this.props.form;
     const formItemLayout = {
       labelCol: {

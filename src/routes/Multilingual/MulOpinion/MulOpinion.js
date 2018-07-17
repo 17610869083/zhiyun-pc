@@ -28,7 +28,7 @@ import Store from '../../../redux/store/index'
 import IconFont from '../../../components/IconFont'
 const Option = Select.Option;
 
-class DetailOpinion extends React.Component {
+class MulOpinion extends React.Component {
   constructor() {
     super();
     this.state = {
@@ -94,9 +94,10 @@ class DetailOpinion extends React.Component {
       languageType: this.props.match.params.languages
     })
     request(api_get_DetailForeign + '&sid=' + sid + '&lang=' + lang ).then((res) => {
+      console.log(res)
       this.setState({
         data: res.data,
-        keywords: res.data.keyword,
+        keywords: Array(res.data.nztags),
         content: res.data.content
       });
     })
@@ -159,7 +160,7 @@ class DetailOpinion extends React.Component {
         })
       }
     })
-  } 
+  }
 
 
 
@@ -310,11 +311,12 @@ class DetailOpinion extends React.Component {
     const conent = getMeailMessage(this.state.emailData);
     const data = this.state.data;
     const sid = this.state.sid;
+    console.log(this.state.keywords)
     const Keywords = this.state.keywords.map((item, index) =>
       <span key={index} className="value-item">{item}</span>
     );
     // const factor = data.keyword !== undefined ? data.keyword : [1];
-    const factor = data.nztags !== undefined ? Array(data.nztags) : [''];
+    const factor = data.keyword !== undefined ? data.keyword : [];
     const factorElement = factor.map((item, index) =>
       <span key={index} className="value-item">{item}</span>
     );
@@ -348,30 +350,32 @@ class DetailOpinion extends React.Component {
                         <Button type="primary" className="btn" onClick={this.toggleLan.bind(this)}>{this.state.languageType-0 === 0 ? this.state.language[this.props.match.params.languages] : '中文'}</Button>
                         <div className="info">
                             <div className="pubdate">
-                                <span className="name">{this.state.describe.reltime[this.state.languageType]}：</span>
+                                <span className="name">{data.pubdate ? this.state.describe.reltime[this.state.languageType] + '：' : ''}</span>
                                 <span className="value">{data.pubdate}</span>
                             </div>
                             <div className="pubdate">
-                                <span className="name">{this.state.describe.source[this.state.languageType]}：</span>
+                                <span className="name">{data.source ? this.state.describe.source[this.state.languageType] + '：' : ''}</span>
                                 <span className="value"><a href={data.url} target="blank">{data.source}</a></span>
                             </div>
                             <div className="pubdate">
-                                <span className="name">{this.state.describe.author[this.state.languageType]}：</span>
+                                <span className="name">{data.author ? this.state.describe.author[this.state.languageType] + '：' : ''}</span>
                                 <span className="value">{data.author}</span>
                             </div>
                         </div>
                         <div className="keywords">
                             <div className="keywords-left">
-                                <span className="name">{this.state.describe.keyword[this.state.languageType]}：</span>
+                                {/* <span className="name">{this.state.describe.keyword[this.state.languageType]}：</span> */}
+                                <span className="name">{this.state.keywords.length >=0 ? this.state.describe.keyword[this.state.languageType] + '：' : ''}</span>
                                 <div className="value">
                                     {Keywords}
                                 </div>
                             </div>
                         </div>
                         <div className="mention-topic">
-                            <span className="name">{this.state.describe.factor[this.state.languageType]}：</span>
+                            {/* <span className="name">{this.state.describe.factor[this.state.languageType]}：</span> */}
+                            <span className="name">{factor.length >=0 && factor[0] ? this.state.describe.factor[this.state.languageType] + '：' : ''}</span>
                             <div className="value">
-                                    {factorElement}
+                                {factorElement}
                             </div>
                         </div>
                         <div className="operation">
@@ -443,4 +447,4 @@ const mapDispatchToProps = dispatch => {
     }
   }
 };
-export default connect(mapStateToProps, mapDispatchToProps)(DetailOpinion);
+export default connect(mapStateToProps, mapDispatchToProps)(MulOpinion);

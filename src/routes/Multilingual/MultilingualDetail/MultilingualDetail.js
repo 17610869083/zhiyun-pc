@@ -742,7 +742,7 @@ class OpinionDetail extends React.Component {
       if(this.props.languageType-0 === 3) {
         return <div className="left">
             <Dropdown overlay={ChangeTrendMenu} trigger={['click']}
-                      getPopupContainer={() => document.querySelector('.opinion-detail')}>
+                      getPopupContainer={() => document.querySelector('.mul-detail')}>
               <Tooltip title={this.state.trendActiveTips.trend[this.props.languageType]} placement="bottom">
                 <div className="operate-all">
                 <img src={Qing} alt="倾向" style={{height:'18px',width:'18px'}}/>
@@ -790,7 +790,7 @@ class OpinionDetail extends React.Component {
                 </div>
               </Tooltip>
               <Dropdown overlay={ChangeTrendMenu} trigger={['click']}
-                        getPopupContainer={() => document.querySelector('.opinion-detail')}>
+                        getPopupContainer={() => document.querySelector('.mul-detail')}>
                 <Tooltip title={this.state.trendActiveTips.trend[this.props.languageType]} placement="bottom">
                   <div className="operate-all">
                   <img src={Qing} alt="倾向" style={{height:'18px',width:'18px'}}/>
