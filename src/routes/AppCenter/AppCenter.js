@@ -1,8 +1,11 @@
 import React from 'react'
 import IconFont from '../../components/IconFont'
-import request from '../../utils/request'
+// import request from '../../utils/request'
 import {history} from '../../utils/history'
 import "./AppCenter.less"
+import android from '../../assets/img/android.png'
+import ios from '../../assets/img/ios.png'
+import fwh from '../../assets/img/fwh.jpg'
 class AppCenter extends React.Component{
     constructor (props) {
         super(props)
@@ -27,38 +30,38 @@ class AppCenter extends React.Component{
                     title: '安全应用',
                     items: [
                         // {type: 'icon-anquan', text: '安全态势感知', color: '#04c0b3'},
-                        {type: 'icon-jiance', text: '网站监测预警', color: '#4ba9eb', href: 'https://114.242.25.234:38447/', hrefType: 'http'},
-                        {type: 'icon--shujuzhiligongju', text: '网站安全治理', color: '#6296f1', href: 'https://119.88.190.68', hrefType: 'http'},
-                        {type: 'icon-leidatance', text: '网站空间探测', color: '#04c0b3', href: 'https://119.88.190.71/', hrefType: 'http'},
-                        {type: 'icon-fanghu', text: '网站安全防护', color: '#4ba9eb', href: 'http://situation.jzz.aoyasafe.com/web/index.html', hrefType: 'http'},
+                        {type: 'icon-jiance', text: '网站监测预警', color: '#4ba9eb', href: '/monitoringwarning', hrefType: 'http'},
+                        {type: 'icon--shujuzhiligongju', text: '网站安全治理', color: '#6296f1', href: '/securitygovernance', hrefType: 'http'}, // ***
+                        {type: 'icon-leidatance', text: '网站空间探测', color: '#04c0b3', href: '/spaceexploration', hrefType: 'http'},
+                        {type: 'icon-fanghu', text: '网站安全防护', color: '#4ba9eb', href: '/safetyprotection', hrefType: 'http'},
                         {type: 'icon-jiangmurubingdugongji', text: '僵木蠕监测', color: '#4ba9eb'},
-                        {type: 'icon-zonghetongbao', text: '预警通报', color: '#f7b55d', href: 'http://114.242.25.234:30005/gxwhongce2/sec/toAutoBulletin', hrefType: 'http'},
+                        {type: 'icon-zonghetongbao', text: '预警通报', color: '#f7b55d', href: '/alertnotifications', hrefType: 'http'},
                         // {type: 'icon-huandunicon-', text: '威胁情报', color: '#4ba9eb'},
                         // {type: 'icon-zidong', text: '自动通报', color: '#4ba9eb'},
                         // {type: 'icon-wangluofangcuangai', text: '网站防篡改', color: '#6296f1'},
-                        {type: 'icon-zidong', text: '流量监测引擎', color: '#4ba9eb', href: 'https://119.88.190.68/', hrefType: 'http'}, // 图标   
-                        {type: 'icon-zidong', text: '流量监测大屏', color: '#4ba9eb', href: 'http://119.88.190.68:3000/', hrefType: 'http'}, // 图标
-                        {type: 'icon-zidong', text: '通报处置', color: '#4ba9eb', href: 'http://114.242.25.234:30005/gxwhongce2/sec/toBulletinWarning', hrefType: 'http'} // 图标
+                        {type: 'icon-zidong', text: '流量监测引擎', color: '#4ba9eb', href: '/fmengine', hrefType: 'http'}, // 图标   
+                        {type: 'icon-zidong', text: '流量监测大屏', color: '#4ba9eb', href: '/fmLgscreen', hrefType: 'http'}, // 图标
+                        {type: 'icon-zidong', text: '通报处置', color: '#4ba9eb', href: '/disposal', hrefType: 'http'} // 图标
                     ]
                 },
                 {
                     title: '行业应用',
                     items: [
-                        {type: 'icon-md-part-outline', text: '智慧党建', color: '#4ba9eb', href: 'http://dj.meiguansoft.cn/admin/login.html', hrefType: 'http'},
-                        {type: 'icon-zixun', text: '行业资讯', color: '#4ba9eb', href: 'http://web.is8.com.cn/om/webpart/index.html#/home', hrefType: 'login'},
-                        {type: 'icon-qingbao', text: '竞争情报', color: '#f7b55d', href: 'http://web.is8.com.cn/om/webpart/index.html#/topic/topiclist', hrefType: 'login'},
+                        {type: 'icon-md-part-outline', text: '智慧党建', color: '#4ba9eb', href: '/partybuilding', hrefType: 'http'},
+                        {type: 'icon-zixun', text: '行业资讯', color: '#4ba9eb', href: '/industryinformation', hrefType: 'login'},
+                        {type: 'icon-qingbao', text: '竞争情报', color: '#f7b55d', href: '/competitiveintelligence', hrefType: 'login'},
                         {type: 'icon-yupanjingzhengweixie', text: '决策预判', color: '#4ba9eb'},
                         {type: 'icon-zhaotoubiao1', text: '招投标', color: '#6296f1', href: '/bidding/information', hrefType: 'history'},
                         {type: 'icon-qiyehuaxiang', text: '企业画像', color: '#4ba9eb'},
                         {type: 'icon-huaxiang', text: '人物画像', color: '#6296f1'},
-                        {type: 'icon-dianziweilanxitong', text: '微信围栏', color: '#4ba9eb', href: 'http://221.221.146.123:8888', hrefType: 'http'}
+                        {type: 'icon-dianziweilanxitong', text: '微信围栏', color: '#4ba9eb', href: '/wechatfence', hrefType: 'http'}
                     ]
                 },
                 {
                     title: '基础平台',
                     items: [
-                        {type: 'icon-icon-siyouyuncunchu-', text: '私有云盘', color: '#04c0b3', href: 'http://pan.ryc360.com:108/kass/basic/login/page_login.jsp', hrefType: 'http'},
-                        {type: 'icon-yunpingtaianquan', text: '华知云平台', color: '#6296f1', href: 'http://119.90.158.98:8888/auth/login/?next=/', hrefType: 'http'}
+                        {type: 'icon-icon-siyouyuncunchu-', text: '私有云盘', color: '#04c0b3', href: '/clouddisk', hrefType: 'http'},
+                        {type: 'icon-yunpingtaianquan', text: '华知云平台', color: '#6296f1', href: '/cloudplatform', hrefType: 'http'}
                     ]
                 }
             ]
@@ -87,43 +90,50 @@ class AppCenter extends React.Component{
         history.push(href)
     }
     render () {
-        return <div className="app-center">
-                {this.state.appList.map((item, i) => {
-                    return <dl key={i}>
-                                <dt className="title">{item.title}</dt>
-                                <div className="items">
-                                    {item.items.map((iitem, ii) => {
-                                        return <dd key={ii}>
-                                                    <div className="content" onClick={this.hrefTo.bind(this, iitem.href, iitem.hrefType)}>
-                                                        <div className="icon">
-                                                            <div className="icon-font" style={{backgroundColor: iitem.color}}>
-                                                                <IconFont type={iitem.type} style={{width: '100%', fontSize: '20px'}}></IconFont>
+        return <div className="apps">
+                    <div className="app-center">
+                        {this.state.appList.map((item, i) => {
+                            return <dl key={i}>
+                                        <dt className="title">{item.title}</dt>
+                                        <div className="items">
+                                            {item.items.map((iitem, ii) => {
+                                                return <dd key={ii}>
+                                                            <div className="content" onClick={this.hrefTo.bind(this, iitem.href, iitem.hrefType)}>
+                                                                <div className="icon">
+                                                                    <div className="icon-font" style={{backgroundColor: iitem.color}}>
+                                                                        <IconFont type={iitem.type} style={{width: '100%', fontSize: '20px'}}></IconFont>
+                                                                    </div>
+                                                                </div>
+                                                                <div className="text">
+                                                                    {iitem.text}
+                                                                </div>
                                                             </div>
-                                                        </div>
-                                                        <div className="text">
-                                                            {iitem.text}
-                                                        </div>
-                                                    </div>
-                                                </dd>
-                                    })}
+                                                        </dd>
+                                            })}
+                                        </div>
+                                    </dl>
+                        })}
+                    </div>
+                    <footer>
+                            <div className="top">
+                                <div className="contact">
+                                    <h3 className="title">知云网 | 知道了云给你</h3>
+                                    <ul>
+                                        <li>客服热线 ：400-618-1863</li>
+                                        <li>官方网站 ：www.ryc360.com    www.is8.com.cn</li>
+                                        <li>公司地址 ：北京市昌平区黄平路19号龙旗广场E座303-305</li>
+                                    </ul>
                                 </div>
-                            </dl>
-                })}
-                    {/* <dl>
-                        <dt className="title">舆情应用</dt>
-                        <div className="items">
-                            <dd>
-                                <div className="content">
-                                    <div className="icon">
-                                        <IconFont type="icon-icon-shengchengbaogao"></IconFont>
-                                    </div>
-                                    <div className="text">
-                                        舆情监测
-                                    </div>
+                                <div className="erweima">
+                                    <ul>
+                                        <li><img src={fwh} alt="服务号"/><span>微信服务号</span></li>
+                                        <li><img src={ios} alt="IOS"/><span>IOS版APP</span></li>
+                                        <li><img src={android} alt="安卓"/><span>安卓版APP</span></li>
+                                    </ul>
                                 </div>
-                            </dd>
-                        </div>
-                    </dl> */}
+                            </div>
+                            <div className="bottom"><span>www.ryc360.com</span></div>
+                        </footer>
                 </div>
     }
 }
