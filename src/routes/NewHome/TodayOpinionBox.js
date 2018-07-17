@@ -17,10 +17,10 @@ class TodayOpinionBox extends React.PureComponent {
     constructor(){
         super();
         this.state={
-             todayAll:3000,
-             todayWarning:1000,
-             todayNegative:2000,
-						 ratio:20,
+             todayAll:0,
+             todayWarning:0,
+             todayNegative:0,
+						 ratio:0,
 						 echartData: [
 							 {
 								 value: 0,
@@ -122,9 +122,6 @@ class TodayOpinionBox extends React.PureComponent {
         });
     }
     render() {
-				// const {todayAll ,todayNegative,} = this.state;sss
-				// ratio
-				console.log(this.props);
 				const {themeColor} = this.props;
 				const labelTop = {
 					normal : {
@@ -163,8 +160,6 @@ class TodayOpinionBox extends React.PureComponent {
 								itemStyle : labelTop,
 								hoverAnimation: false
 							},{
-								// formatter: `${this.state.todayWarning}`,
-								// name:'other', 
 								value: 10000,
 								tooltip: {
 									show: false
@@ -207,8 +202,6 @@ class TodayOpinionBox extends React.PureComponent {
 								itemStyle : labelTop,
 								hoverAnimation: false
 							},{
-								// formatter: `${this.state.todayWarning}`,
-								// name:'other', 
 								value: 10000,
 								tooltip: {
 									show: false
@@ -251,8 +244,6 @@ class TodayOpinionBox extends React.PureComponent {
 								itemStyle : labelTop,
 								hoverAnimation: false
 							},{
-								// formatter: `${this.state.todayWarning}`,
-								// name:'other', 
 								value: 10000,
 								tooltip: {
 									show: false
