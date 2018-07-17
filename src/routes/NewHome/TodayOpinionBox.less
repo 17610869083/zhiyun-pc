@@ -2,12 +2,18 @@
   width: 100%;
   font-size: 14px;
   color: #FFFFFF;
+  border-radius: 4px;
+  min-height: 377px;
+  box-shadow: 0 3px 1px -2px rgba(0,0,0,0.2),
+  0 2px 2px 0 rgba(0,0,0,0.14),
+  0 1px 5px 0px rgba(0,0,0,0.12);
+  margin-top: 20px;
   .ant-card-bordered{
     border: none;
   }
   .ant-card-head {
-    border-bottom: 1px solid #35394f;
-    background: #25293a;
+    // border-bottom: 1px solid #35394f;
+    background: none;
     .ant-card-head-title {
       color: #b5b5b5;
     }
@@ -28,6 +34,19 @@
   }
   .container {
     width: 100%;
+    .top {
+      height: 44px;
+      line-height: 43px;
+      display: flex;
+      justify-content: space-between;
+      .title {
+        font-size: 16px;
+        margin-left: 20px;
+        .txt {
+          margin-left: 20px;
+        }
+      }
+    }
     .ant-row {
       .header {
         height: 12px;
