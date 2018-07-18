@@ -516,11 +516,9 @@ class BriefingSecond extends React.Component{
 																								</strong>
 																							</div>
 																							<div className="timeData"
-																							  style={{
-																									height: 100,
-																								}}
+															
 																								>
-																								<p style={{ fontSize: 16, marginTop: 25 }}>{i.url}</p>																								  
+																								<p style={{ fontSize: 16, marginTop: 25,wordBreak:'break-all' }}>{i.url}</p>																								  
 																							</div>
 																						</Col>
 																					</div>

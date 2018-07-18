@@ -53,6 +53,7 @@ class BiddingSetting extends React.Component {
     }
     componentWillReceiveProps(nextprops){
             if (this.search2Obj(nextprops.location.search).type === 'add' && this.props.location.search !== nextprops.location.search) {
+                console.log(this.search2Obj(nextprops.location.search).catid)
                 request(api_get_BiddingetgradeCatList).then((res) => {
                     this.setState({
                         topicCatList: res.data.gradeCatList,
@@ -75,7 +76,9 @@ class BiddingSetting extends React.Component {
 
             // })
            
-            
+            this.setState({
+                select: this.search2Obj(this.props.location.search).catid
+            })
             
             request(api_get_BiddingetgradeCatList).then((res) => {
                 this.setState({
@@ -86,8 +89,9 @@ class BiddingSetting extends React.Component {
             let topicid = this.search2Obj(this.props.location.search).topicid
             
             request(api_get_BiddingetgradeCatList).then((res) => {
+
                 request(api_get_BiddinggetGradeAndRule +'&clfid=' +topicid).then(res2=>{
-                    if(res.data && res.data.code!==0){
+                    if(res2.data && res2.data.code!==0){
                     let addtypeStr='num'+(res2.data.addtype);
                         this.setState({
                             topicAlldata:res2.data,
@@ -346,7 +350,7 @@ class BiddingSetting extends React.Component {
   handleOk1 = (e) => {
     this.setState({num2:this.state.num2.splice(0,1),
                     visible1: false
-    });    
+    });
   }
   handleCancel1 = (e) => {
     this.setState({
@@ -422,10 +426,8 @@ class BiddingSetting extends React.Component {
     })
   }
   delRow(delrole) {
-      console.log()
       if ( this.search2Obj(this.props.location.search).type === 'add' ) {
       }else {
-        console.log(delrole)
         request(api_get_BiddinggetDelRule, {
             method: 'POST',
             headers: {
@@ -463,7 +465,7 @@ class BiddingSetting extends React.Component {
         },
       },
     };
-    let topicCatid=this.search2Obj(this.props.location.search).catid? this.search2Obj(this.props.location.search).catid:116;
+    let topicCatid=this.search2Obj(this.props.location.search).catid? this.search2Obj(this.props.location.search).catid:115;
         const topicCatList=this.state.topicCatList.length!==0?
         this.state.topicCatList.map((item,index)=>
         <Option value={(item.id).toString()} key={index}>{item.catname}</Option>
