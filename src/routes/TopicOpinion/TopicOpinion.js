@@ -50,7 +50,7 @@ class TopicOpinion extends React.Component {
 				addTopic:1
 			});
 			history.push({
-				pathname:`/topic/${e.key}`,
+				pathname:`/allopinion/topic/${e.key}`,
 				search:`?topicid=${this.state.topicId}`
 			});
 		}
@@ -76,7 +76,7 @@ class TopicOpinion extends React.Component {
 		}
 		addZhuanClick(e) {
 			history.push({
-				pathname:`/topic/${e.key}`,
+				pathname:`/allopinion/topic/${e.key}`,
 				search:`?topicid=${this.state.topicId}`
 			});
 		}

@@ -129,7 +129,7 @@ class SortedOpinion extends React.Component {
         }
       });
     } else if (e.key === 'add') {
-      history.push({pathname: '/sortedopinion/addrule'})
+      history.push({pathname: '/allopinion/sortedopinion/addrule'})
     }
   }
   // 设置catid

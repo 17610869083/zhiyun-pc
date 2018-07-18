@@ -248,7 +248,7 @@ class MyReport extends React.Component{
     }
     //新建报告
     addReport = () => {
-        history.push('/choosetemplate');
+        history.push('/allopinion/choosetemplate');
     }
     //报告预览
     // reportPreview = (type) => {
@@ -334,7 +334,7 @@ class MyReport extends React.Component{
                 content={
                 <div>
                     <Button type="primary" size="small" style={{marginLeft: '10px'}} onClick={this.downLoad.bind(this,'word')}>word</Button>
-                    <Button type="primary" size="small" style={{marginLeft: '46px'}} onClick={this.downLoad.bind(this,'excel')}>excel</Button>
+                    {/* <Button type="primary" size="small" style={{marginLeft: '46px'}} onClick={this.downLoad.bind(this,'excel')}>excel</Button> */}
                 </div>
                 }
                 title="选择下载的报告类型"
