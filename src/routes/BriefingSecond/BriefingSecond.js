@@ -144,11 +144,13 @@ class BriefingSecond extends React.Component{
 		})
 	}
 	render() {
+		console.log(this.props.briefingData.length)
+		console.log(this.props.reportId)
 		return (
 			<div>
 				{
 					(() => {
-            if (this.props.briefingData.length > 0) {
+            if (this.props.briefingData.length > 0 || this.props.reportId !== undefined) {
               return (
 								<div className="col">
 								<Row>
@@ -292,9 +294,9 @@ class BriefingSecond extends React.Component{
 																						</Row>
 																					</div>
                                           <div className="cont">
-																						<Row style={{display: "flex", alignItems: "center"}}>
+																						<Row style={{display: "flex", justifyContent: "center", alignItems: "center"}}>
 																							<Col span={4} style={{ textAlign: "center" }}>
-																								<div className="source" style={{margin: "27% 0 0 0"}}>
+																								<div className="source">
 																									<strong>
 																										<p style={{ fontSize: 16 }}>内容</p>
 																									</strong>
@@ -309,7 +311,7 @@ class BriefingSecond extends React.Component{
 																							</Col>
 																						</Row>
 																					</div>
-                                          <div className="yuanUrl" style={{ border: "1px solid #000"}}>
+                                          <div className="yuanUrl" style={{ border: "1px solid #000", borderBottom: "none", borderLeft: "none", borderRight: "none" }}>
 																						<Row style={{display: "flex", alignItems: "center"}}>
 																							<Col span={4} style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
 																								<div className="source" style={{ float: "left" }}>
@@ -325,7 +327,7 @@ class BriefingSecond extends React.Component{
 																									</strong>
 																								</div>
 																							</Col>
-																							<Col span={20} style={{ borderLeft: "1px solid #000" }}>
+																							<Col span={20}>
 																								<div className="timeData" style={{borderLeft: "1px solid #000"}}>
 																									<p style={{ fontSize: 16, wordBreak: 'break-all' }}>{i.url}</p>																								  
 																								</div>
@@ -480,7 +482,7 @@ class BriefingSecond extends React.Component{
 																						</Row>
 																					</div>
                                           <div className="cont">
-																						<Row style={{display: "flex", alignItems: "center"}}>
+																						<Row style={{display: "flex", justifyContent: "center", alignItems: "center"}}>
 																							<Col span={4} style={{ textAlign: "center" }}>
 																								<div className="source">
 																									<strong>
@@ -515,7 +517,7 @@ class BriefingSecond extends React.Component{
 																									</strong>
 																								</div>
 																							</Col>
-																							<Col span={20} style={{ borderLeft: "1px solid #000" }}>
+																							<Col span={20}>
 																								<div className="timeData">
 																									<p style={{ fontSize: 16, wordBreak: 'break-all' }}>{i.url}</p>																								  
 																								</div>

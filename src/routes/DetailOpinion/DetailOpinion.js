@@ -574,14 +574,14 @@ class DetailOpinion extends React.Component {
                                         <span>加入收藏</span>
                                     </div>
                                 </Dropdown>
-                                <Dropdown overlay={ReportMenu} trigger={['click']}
+                                {/* <Dropdown overlay={ReportMenu} trigger={['click']}
                                 getPopupContainer={ () => document.querySelector('.detail-opinion')}
                                 >
                                     <div className="watch" onClick={this.showReportMenu.bind(this)}>
                                         <Icon type="file-text" className="star" />
                                         <span>加入报告</span>
                                     </div>
-                                </Dropdown>
+                                </Dropdown> */}
                             </div>
                         </div>
                     </div>
