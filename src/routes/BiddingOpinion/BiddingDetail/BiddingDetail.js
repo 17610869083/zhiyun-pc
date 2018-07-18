@@ -479,7 +479,8 @@ class BiddingDetail extends React.Component {
       propsParamData.sid = arr + ',';
     }
     let time = formatDateTime(new Date());
-    let clfId = window.location.hash.split('?')[1].split('=')[1]
+    // let clfId = window.location.hash.split('?')[1].split('=')[1]
+    let clfId = this.props.catId.topicid
       request(api_bidding_export, {
         method: 'POST',
         headers: {

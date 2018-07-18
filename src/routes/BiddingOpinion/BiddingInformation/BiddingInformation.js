@@ -550,6 +550,7 @@ class BiddingInformation extends React.Component {
                          propsType='TopicList'
                          pageInfo={this.state.pageInfo}
                          current={page}
+                         catId={this.props.getRouter}
           />
         </div>
         <div className="bottom">
