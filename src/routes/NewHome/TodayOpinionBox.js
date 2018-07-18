@@ -43,7 +43,7 @@ class TodayOpinionBox extends React.PureComponent {
          if(this.negativeTimer) clearInterval(this.negativeTimer);
          if(this.ratioTimer) clearInterval(this.ratioTimer);
     }
-    componentDidMount(){
+    componentWillMount(){
         request(api_today_opinion)
         .then(res => {
         if(res.data){
@@ -118,7 +118,7 @@ class TodayOpinionBox extends React.PureComponent {
     }
     goAllOpinion(type){
         history.push({
-            pathname: '/allopinion?datetag=today&neg=' + type
+            pathname: '/allopinion/allopiniondetail?datetag=today&neg=' + type
         });
     }
     render() {
@@ -129,7 +129,7 @@ class TodayOpinionBox extends React.PureComponent {
 							show : true,
 							position : 'center',
 							formatter : '{b}',
-							padding: [25, 0, 0, 0],
+							padding: [50, 0, 0, 0],
 							textStyle: {
 								baseline : 'center',
 								fontSize: 14,
@@ -155,8 +155,8 @@ class TodayOpinionBox extends React.PureComponent {
 						},
 						data: [
 							{
-								name:'今日预警\n' + this.state.todayWarning, 
-								value: this.state.todayWarning, 
+								name:'\n今日预警\n\n' + this.state.todayWarning, 
+								value: this.state.todayWarning ===0 ? 30000:this.state.todayWarning, 
 								itemStyle : labelTop,
 								hoverAnimation: false
 							},{
@@ -197,8 +197,8 @@ class TodayOpinionBox extends React.PureComponent {
 						},
 						data: [
 							{
-								name:'今日负面\n' + this.state.todayNegative, 
-								value: this.state.todayNegative, 
+								name:'\n 今日负面\n\n' + this.state.todayNegative, 
+								value: this.state.todayNegative === 0 ?30000:this.state.todayNegative, 
 								itemStyle : labelTop,
 								hoverAnimation: false
 							},{
@@ -239,8 +239,8 @@ class TodayOpinionBox extends React.PureComponent {
 						},
 						data: [
 							{
-								name:'今日舆情\n' + this.state.todayAll, 
-								value: this.state.todayAll, 
+								name:'\n 今日舆情\n\n' + this.state.todayAll, 
+								value: this.state.todayAll === 0 ? 130000 : this.state.todayAll , 
 								itemStyle : labelTop,
 								hoverAnimation: false
 							},{
@@ -297,27 +297,27 @@ class TodayOpinionBox extends React.PureComponent {
 																echarts={echarts}
 																option={mediaOption}
 																lazyUpdate={true}
-																style={{ height: 170, width: 170 }}
+																style={{ height: 170, width: '100%' }}
 															/>
 														</div>
                          </Col>
                          <Col span={8}>
-                            <div className="opinion-info"  onClick = {this.goAllOpinion.bind(this,'all')}>
+                            <div className="opinion-info"  onClick = {this.goAllOpinion.bind(this,1)}>
 														 	<ReactEchartsCore
 																echarts={echarts}
 																option={mediaOptionNegative}
 																lazyUpdate={true}
-																style={{ height: 170, width: 170 }}
+																style={{ height: 170, width: '100%' }}
 															/>
                              </div>
                          </Col>
                          <Col span={8} style={{ paddingLeft: 0 }}>
-														<div className="opinion-info" onClick = {this.goAllOpinion.bind(this,1)}>
+														<div className="opinion-info" onClick = {this.goAllOpinion.bind(this,'all')}>
 															<ReactEchartsCore
 																echarts={echarts}
 																option={mediaOptionPublic}
 																lazyUpdate={true}
-																style={{ height: 170, width: 170 }}
+																style={{ height: 170, width: '100%' }}
 															/>
 														</div>
                          </Col>

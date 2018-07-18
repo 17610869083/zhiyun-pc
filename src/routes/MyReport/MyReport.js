@@ -57,6 +57,9 @@ class MyReport extends React.Component{
         }
         })
     }
+    componentDidMount(){
+        console.log(document.querySelector('.my-report').scrollTop)
+    }
     changeType(type){ 
        this.setState({
            type:type,
@@ -182,9 +185,8 @@ class MyReport extends React.Component{
     //预览
     preview = () => {
         if(this.state.reportType === '01'){
-            this.setState({
-                popoverVisible:true
-            })
+            this.state.reportFormId === '1'?history.push(`/briefing?type=${this.state.reportType}&id=${this.state.checkId}&type=rebuild`):
+            history.push(`/allopinion/briefingsecond?type=${this.state.reportType}&id=${this.state.checkId}&type=rebuild`)
         }else{
             request(api_download_report +`&reportId=${this.state.checkId}&dType=html`)
             .then(res =>{
@@ -249,26 +251,28 @@ class MyReport extends React.Component{
         history.push('/choosetemplate');
     }
     //报告预览
-    reportPreview = (type) => {
-         this.setState({
-            popoverVisible:false
-         })
-         if(type==='preview'){
-            request(api_download_report +`&reportId=${this.state.checkId}&dType=html`)
-            .then(res =>{
-                 if(res.data.code ===1){
-                   this.setState({
-                       hmtlUrl:res.data.fileAddress,
-                       previewVisible:true
-                   })
-                 }else{
-                   message.error(res.data.msg)
-                 }
-             } )
-         }else{
-            this.state.reportFormId === '1'?history.push(`/briefing?type=${this.state.reportType}&id=${this.state.checkId}&type=rebuild`):
-            history.push(`/briefingsecond?type=${this.state.reportType}&id=${this.state.checkId}&type=rebuild`)
-         }
+    // reportPreview = (type) => {
+    //      this.setState({
+    //         popoverVisible:false
+    //      })
+    //      if(type==='preview'){
+    //         request(api_download_report +`&reportId=${this.state.checkId}&dType=html`)
+    //         .then(res =>{
+    //              if(res.data.code ===1){
+    //                this.setState({
+    //                    hmtlUrl:res.data.fileAddress,
+    //                    previewVisible:true
+    //                })
+    //              }else{
+    //                message.error(res.data.msg)
+    //              }
+    //          } )
+    //      }else{
+
+    //      }
+    // }
+    onScroll = () => {
+        console.log('gun')
     }
      render(){
          const typeList = this.state.typeList.map( (item,index) => {
@@ -292,7 +296,7 @@ class MyReport extends React.Component{
              </li> 
          }) 
          return (
-             <div className="my-report">
+             <div className="my-report" onScroll={this.onScroll}>
              <div className="my-report-top">
              <div className="my-add-report">
                  <span onClick={this.addReport}>+&nbsp;&nbsp;新建报告</span>
@@ -316,7 +320,7 @@ class MyReport extends React.Component{
               </ul>
              </div>
              <div className="my-report-content"  style={this.state.contentList.length === 0 ?{display:'none'}:{display:'block'}}>
-             <p style={this.state.flag ? {opacity:1,transition:'all 0.5s ease-in 0.5s'}:{opacity:0}}>
+             <p>
              {/* <Tooltip title="复制" placement="bottom">
                 <Popconfirm title="确定要复制该报告吗？" onConfirm={this.copy} okText="是" cancelText="否"
                 getPopupContainer={() => document.querySelector('.my-report')}  placement="topLeft"
@@ -338,30 +342,20 @@ class MyReport extends React.Component{
                 visible={this.state.visible}
                 onVisibleChange={this.handleVisibleChange}
              >
-                 <i><IconFont type="icon-msnui-download"/></i>
+                 <i style={this.state.flag ? {opacity:1,transition:'all 0.5s ease-in 0.5s'}:{opacity:0}}><IconFont type="icon-msnui-download"/></i>
              </Popover>
              </Tooltip>
              <Tooltip title="删除" placement="bottom">
                 <Popconfirm title="确定要删除该报告吗？" onConfirm={this.delete} okText="是" cancelText="否"
                 getPopupContainer={() => document.querySelector('.my-report')}  placement="topLeft"
                 >
-                <i><IconFont type="icon-shanchu1-copy-copy"/></i>
+                <i style={this.state.flag ? {opacity:1,transition:'all 0.5s ease-in 0.5s'}:{opacity:0}}><IconFont type="icon-shanchu1-copy-copy"/></i>
                 </Popconfirm>
              </Tooltip>  
              <Tooltip title="预览" placement="bottom">
-             <Popover
-              getPopupContainer={() => document.querySelector('.my-report')}
-                content={
-                <div>
-                    <Button type="primary" size="small" style={{marginLeft: '10px'}} onClick={this.reportPreview.bind(this,'preview')}>预览</Button>
-                    <Button type="primary" size="small" style={{marginLeft: '46px'}} onClick={this.reportPreview.bind(this,'edit')}>再编辑</Button>
-                </div>
-                }
-                trigger="click"
-                visible={this.state.popoverVisible}
-             >
-             <i onClick = {this.preview}><IconFont type="icon-Dashboard-card-SQLchakan"/></i>
-             </Popover>
+
+             <i onClick = {this.preview} style={this.state.flag ? {opacity:1,transition:'all 0.5s ease-in 0.5s'}:{opacity:0}}><IconFont type="icon-Dashboard-card-SQLchakan"/></i>
+
              </Tooltip>
              </p>
              <div className="content">

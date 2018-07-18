@@ -25,7 +25,7 @@ class TopicOpinionBox extends React.PureComponent {
     goTopicOpinion() {
         this.props.setlocationPathname(this.state.topicid)
         history.push({
-            pathname: '/topic/topiclist'
+            pathname: '/allopinion/topic/topiclist'
         });
     }
     delTopicOpinionBox(){
@@ -48,8 +48,8 @@ class TopicOpinionBox extends React.PureComponent {
     render() {  
         const {topicOpinion} = this.state;
         const {themeColor} = this.props;
-        const more = this.props.status!=='setting'?<span style={{color:BLACK}} onClick={this.goTopicOpinion.bind(this)}>更多
-        <IconFont type="icon-jiantou" style={{color: '#9b9b9b',fontSize: '16px',marginLeft:'6px'}}/>
+        const more = this.props.status!=='setting'?<span onClick={this.goTopicOpinion.bind(this)}>
+        <IconFont type="icon-gengduo" style={{color: '#9b9b9b',fontSize: '16px',marginLeft:'6px'}}/>
         </span>:<Icon type="close-circle" className="delModule" style={{fontSize: '18px',color:BLUES}}
         onClick={this.delTopicOpinionBox.bind(this)}
         ></Icon>;

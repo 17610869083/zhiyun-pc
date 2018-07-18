@@ -23,7 +23,8 @@ import {
   api_hot_word,
   api_carrier_pie,
   api_homepage_message,
-  api_save_widget
+  api_save_widget,
+  api_count_charts
 } from '../../services/api';
 import {formatOpinionCount, homeModuleList} from '../../utils/format';
 
@@ -41,6 +42,8 @@ class NewHome extends React.Component {
       hotWordData: [],
       mediaDistributionArr: [],
       homeMessage: [],
+      opinionCount:{},
+      data:[],
       delMoudleList: {
         'todayOpinion': '今日舆情',
         'opinionTrend': '舆情走势',
@@ -52,11 +55,13 @@ class NewHome extends React.Component {
         'opinionCount': '舆情统计',
         'HotWord': '相关热词',
         'mediaDistribution': '媒体分布'
-      }
+      },
+      legend:[],
+      series:[]
     }
   }
 
-  componentWillMount() {
+  componentDidMount() {
     //首页模块
     request(api_homepage_message)
       .then(res => {
@@ -121,8 +126,23 @@ class NewHome extends React.Component {
                                 weiboNegative: res.data.negative
                               })
                             }
-
                             // 舆情统计
+                            request(api_count_opinion)
+                            .then( res => {
+                              if(res.data){
+                              this.setState({
+                                data: formatOpinionCount(res.data),
+                                opinionCount:res.data
+                                })
+                              }
+                                request(api_count_charts +`&data=${JSON.stringify(res.data.all)}`)
+                                .then(res => {
+                                  if(res.data.code === 1){
+                                    this.setState({
+                                      legend:res.data.legend,
+                                      series:res.data.series
+                                     })
+                                    }
                                     request(api_hot_word)
                                       .then(res => {
                                         this.setState({
@@ -137,9 +157,11 @@ class NewHome extends React.Component {
                                       })
                                   });
                               });
+                            })
                           });
                       });
                   });
+                });
   }
 
   delHotWordBox(type) {
@@ -333,7 +355,17 @@ class NewHome extends React.Component {
   informs() {
     this.props.informsState({data: false})
   }
-
+  changeChart(type){
+    request(api_count_charts +`&data=${JSON.stringify(this.state.opinionCount[type])}`)
+    .then(res => {
+      if(res.data.code === 1){
+        this.setState({
+          legend:res.data.legend,
+          series:res.data.series
+        })
+      }
+    })
+  }
   render() {
     const {opinionList,todayOpinionArr, alldayOpinion,todayWarningOpinion, alldayWarningOpinion, 
       weiboAll, weiboNegative} = this.state;
@@ -362,13 +394,13 @@ class NewHome extends React.Component {
             </div>
           </div>
           <div className="container" style={this.props.type !== undefined ? {width: '92%'} : {width: '100%'}}>
-            <Row gutter={16} className="row"
+            <Row gutter={10} className="row"
                  style={ModuleList.todayOpinion === 1 ? {display: 'none'} : {display: 'block',background:themeColor.grounding.color}}
             >
               <Col span={8}
               >
                 <TodayOpinionBox status={this.props.type !== undefined ? 'setting' : ''}
-                                 delTodayBox={this.delTodayBox.bind(this)}                                
+                                 delTodayBox={this.delTodayBox.bind(this)}                              
                 />
               </Col>
               <Col span={16}>
@@ -379,15 +411,21 @@ class NewHome extends React.Component {
 
               </Col>
             </Row>
-             <Row gutter={16} className="row"
+             <Row gutter={10} className="row"
             style={{background:themeColor.grounding.color}}
             >
               <Col span={24} style={ModuleList.opinionCount === 1 ? {display: 'none'} : {display: 'block'}}>
                 <OpinionCountBox status={this.props.type !== undefined ? 'setting' : ''}
-                                 delCountBox={this.delCountBox.bind(this)}/>
+                                 delCountBox={this.delCountBox.bind(this)}
+                                 data={this.state.data}
+                                 opinionCount={this.state.opinionCount}
+                                 legend={this.state.legend}
+                                 series={this.state.series}
+                                 changeChart={this.changeChart.bind(this)}
+                />
               </Col>
             </Row>
-            <Row gutter={16} className="row" style={{background:themeColor.grounding.color}}>
+            <Row gutter={10} className="row" style={{background:themeColor.grounding.color}}>
             <Col span={8}
                    style={ModuleList.HotWord === 1 ? {display: 'none'} : {display: 'block'}}
               >
@@ -418,7 +456,7 @@ class NewHome extends React.Component {
                 />
               </Col>
               </Row>
-              <Row gutter={16}>
+              <Row gutter={10}>
               <Col span={12}
                    style={ModuleList.newestOpinion === 1 ? {display: 'none'} : {display: 'block'}}
               >
@@ -438,7 +476,7 @@ class NewHome extends React.Component {
                 />
               </Col>
               </Row>
-              <Row gutter={16}>
+              <Row gutter={10}>
               <Col span={12}>
                 {ModuleList.mediaDistribution === 1 ? '' : <MediaDistribution
                   data={this.state.mediaDistributionArr}

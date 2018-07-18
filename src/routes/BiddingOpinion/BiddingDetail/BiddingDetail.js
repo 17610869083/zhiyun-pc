@@ -2,21 +2,18 @@ import "babel-polyfill";
 import React from 'react';
 import {connect} from 'react-redux';
 import {
-  Checkbox, Icon, Input, Menu, Dropdown, Popconfirm, message, Popover, Button,
+  Checkbox, Input, Popconfirm, message, Button,
   Spin, Alert, Select, Pagination, Modal,Tooltip
 } from 'antd';
 import {history} from '../../../utils/history';
 import './BiddingDetail.less';
-import {opinionTrend, opinionColor, setHighlightTags, formatDateTime} from '../../../utils/format';
+import {setHighlightTags, formatDateTime} from '../../../utils/format';
 import request from '../../../utils/request';
 import {
   api_edit_doc_neg,
   api_del_doc,
   api_push_material,
   api_push_collection,
-  api_allopinion_exportskip,
-  api_topic_export_word,
-  api_material_opinion_list,
   api_collection_opinion_list,
   api_bidding_export
 } from '../../../services/api';
@@ -30,8 +27,6 @@ import {
   exportSkip,
   paginationPage
 } from '../../../redux/actions/createActions';
-import IconFont from '../../../components/IconFont';
-import Store from '../../../redux/store/index';
 import weixin from '../../../assets/icon-img/weixin.png';
 import news from '../../../assets/icon-img/news.png';
 import weibo from '../../../assets/icon-img/weibo.png';
@@ -43,9 +38,6 @@ import boke from '../../../assets/icon-img/boke.png';
 import app from '../../../assets/icon-img/app.png';
 import twitter from '../../../assets/icon-img/twitter.png';
 import BlankPage from '../../../base/Exception/BlankPage';
-import Collection from '../../../assets/img/collection.svg';
-import Material from '../../../assets/img/material.svg';
-import Qing from '../../../assets/img/qing.svg';
 import Del from '../../../assets/img/del.svg'; 
 import Dowload from '../../../assets/img/dowload.svg';
 const InputGroup = Input.Group;
@@ -304,7 +296,6 @@ class BiddingDetail extends React.Component {
   }
   keyDown(e){
      if(e.keyCode === 13){
-      const docList = this.props.docList ? this.props.docList : [{carry: '新闻'}];
       const param = {
         seltype: this.state.seltype,
         keyword: this.state.searchInputValue,
@@ -460,7 +451,6 @@ class BiddingDetail extends React.Component {
   }
 
   showModal() {
-    let propsType = this.props.propsType;
     let filename = '';
     // if (propsType === 'AllopinionList') {
     //   filename = '导出汇总舆情数据';
@@ -480,7 +470,6 @@ class BiddingDetail extends React.Component {
       downloadVisible: true,
       downloadFlag:true
     })
-    let propsType = this.props.propsType;
     let propsParamData = this.props.param;
     let arr = this.checkedTrue().join(',');
 
@@ -545,34 +534,8 @@ class BiddingDetail extends React.Component {
   render() {
     const {page} = this.props;
     const flag = this.props.docList&& this.props.docList.length === 0?true:false;
-    const docList = this.props.docList ? this.props.docList : [];
-    // 素材库的目录
-    const putinReportMenu = (
-      <Menu onClick={this.putIntoMaterial.bind(this)}>
-        {
-          this.state.materialList.map(item =>
-            <Menu.Item key={item.id}>
-              <Icon type="folder"/>
-              <span>{item.catname}</span>
-            </Menu.Item>
-          )
-        }
-      </Menu>
-    );       
+    const docList = this.props.docList ? this.props.docList : [];      
 
-    // 收藏夹的目录
-    const collectionMenu = (
-      <Menu onClick={this.putIntoCollection.bind(this)}>
-        {
-          this.state.favCatList.map(item =>
-            <Menu.Item key={item.id}>
-              <Icon type="folder"/>
-              <span>{item.catname}</span>
-            </Menu.Item>
-          )
-        }
-      </Menu>
-    );
     const OpinionDetailItems = docList[0] !== undefined && docList[0]['negative'] !== undefined ? docList.map((item, index) =>
         <li key={item.sid} className="opinion-detail-item">
           <div className="cheackBox">

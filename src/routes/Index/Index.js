@@ -21,7 +21,24 @@ const Bidding= AsyncComponent(() => import('../BiddingOpinion/BiddingOpinion'))
 const Multilingual= AsyncComponent(() => import('../Multilingual/Multilingual'))
 const AppCenter= AsyncComponent(() => import('../AppCenter/AppCenter'))
 const Guard= AsyncComponent(() => import('../Guard/Guard'))
-const { Content} = Layout;
+const MonitoringWarning = AsyncComponent(() => import('../MonitoringWarning/MonitoringWarning'))
+const SecurityGovernance = AsyncComponent(() => import('../SecurityGovernance/SecurityGovernance'))
+const SpaceExploration = AsyncComponent(() => import('../SpaceExploration/SpaceExploration'))
+const SafetyProtection = AsyncComponent(() => import('../SafetyProtection/SafetyProtection'))
+const AlertNotifications = AsyncComponent(() => import('../AlertNotifications/AlertNotifications'))
+const FmEngine = AsyncComponent(() => import('../FmEngine/FmEngine'))
+const FmLgScreen = AsyncComponent(() => import('../FmLgScreen/FmLgScreen'))
+const Disposal = AsyncComponent(() => import('../Disposal/Disposal'))
+const PartyBuilding = AsyncComponent(() => import('../PartyBuilding/PartyBuilding'))
+const IndustryInformation = AsyncComponent(() => import('../IndustryInformation/IndustryInformation'))
+const CompetitiveIntelligence = AsyncComponent(() => import('../CompetitiveIntelligence/CompetitiveIntelligence'))
+const WeChatFence = AsyncComponent(() => import('../WeChatFence/WeChatFence'))
+const CloudDisk = AsyncComponent(() => import('../CloudDisk/CloudDisk'))
+const CloudPlatform = AsyncComponent(() => import('../CloudPlatform/CloudPlatform'))
+
+const {Header, Sider, Content} = Layout;
+const SubMenu = Menu.SubMenu;
+
 class Index extends React.Component {
   constructor() {
     super();
@@ -107,6 +124,9 @@ class Index extends React.Component {
   backTop() {
     document.querySelector('.main').scrollTop = 0;
   }
+  onEnter = () => {
+    console.log('进来了')
+  }
   render() {
     // 统计报告-舆情报告   
     return (
@@ -127,9 +147,22 @@ class Index extends React.Component {
                 <Route path="/situational" component={Situational}/>
                 <Route path="/bidding" component={Bidding}/>
                 <Route path="/multilingual/:languages" component={Multilingual}/>
-                <Route path="/appcenter" component={AppCenter}/> 
-                <Route path="/Guard" component={Guard}/> 
-                
+                <Route path="/appcenter" component={AppCenter}  onEnter={this.onEnter}/> 
+                <Route path="/Guard" component={Guard}/>
+                <Route path="/monitoringwarning" component={MonitoringWarning}/>
+                <Route path="/securitygovernance" component={SecurityGovernance}/>
+                <Route path="/spaceexploration" component={SpaceExploration}/>
+                <Route path="/safetyprotection" component={SafetyProtection}/>
+                <Route path="/alertnotifications" component={AlertNotifications}/>
+                <Route path="/fmengine" component={FmEngine}/>
+                <Route path="/fmlgscreen" component={FmLgScreen}/>
+                <Route path="/disposal" component={Disposal}/>
+                <Route path="/partybuilding" component={PartyBuilding}/>
+                <Route path="/industryinformation" component={IndustryInformation}/>
+                <Route path="/competitiveintelligence" component={CompetitiveIntelligence}/>
+                <Route path="/wechatfence" component={WeChatFence}/>
+                <Route path="/clouddisk" component={CloudDisk}/>
+                <Route path="/cloudplatform" component={CloudPlatform}/>
               </Switch>
               <div className="suspensionBox" style={{display:"none"}}>
                 <div>

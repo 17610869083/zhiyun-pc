@@ -6,6 +6,7 @@ import {Route, Switch, Link} from 'react-router-dom';
 import {api_get_channel} from '../../services/api';
 import Iconfont from '../../components/IconFont'
 import request from '../../utils/request';
+import {urlTokey} from '../../utils/format';
 import AsyncComponent from '../../components/AsyncComponent/AsyncComponent'
 const TopicReportList = AsyncComponent(() => import('../TopicReportList/TopicReportList'))
 const AllOpinionDetail = AsyncComponent(() => import('../AllOpinionDetail/AllOpinionDetail'))
@@ -52,6 +53,11 @@ class AllOpinion extends React.Component {
           })
         }
     })
+    if(this.props.location && this.props.location.pathname ===  "/allopinion/topic/topiclist"){
+       this.setState({
+           key:'7'
+       })
+    }
   }
   changeItem(item){
         this.setState({
@@ -71,11 +77,11 @@ class AllOpinion extends React.Component {
             <span
               style={{fontSize: '16px'}} className={haverClass}>舆情报告</span>
             </span></Link>}>
-          <Menu.Item key="reportopinion" style={{fontSize: '16px'}}>
+          {/* <Menu.Item key="reportopinion" style={{fontSize: '16px'}}>
             <Link to="/allopinion/reportopinion/list">
               <span>简报列表</span>
             </Link>
-          </Menu.Item>
+          </Menu.Item> */}
           <Menu.Item key="materiaopinion" style={{fontSize: '16px'}}>
             <Link to="/allopinion/materiaopinion">
               <span>素材库</span>
@@ -94,7 +100,7 @@ class AllOpinion extends React.Component {
         </SubMenu>)
       } else if (item.channelurl === '../systemMan/systemManDo?action=userList') {
         menuList.push(<SubMenu key={item.key} 
-                               title={<Link to="/noticesetting"><span><i className="anticon"><Iconfont type={item.type}
+                               title={<Link to="/allopinion/noticesetting"><span><i className="anticon"><Iconfont type={item.type}
                                  style={{fontSize: '16px'}}/></i><span
                                  style={{fontSize: '16px'}}>系统设置</span></span> </Link>}>
           <Menu.Item key="noticesetting" style={{fontSize: '16px'}}>
@@ -167,17 +173,16 @@ class AllOpinion extends React.Component {
             <Sider
             className="sider siders"
             trigger={null}
-            collapsible
-            style={{position: 'fixed', left: 0}}
+            style={{position: 'fixed', left: 0,marginTop:'10px',marginLeft:'10px'}}
             collapsed={this.state.collapsed && this.state.flag}
             onMouseEnter={this.mouseEnterToggle} 
             onMouseLeave={this.mouseLeaveToggle}
           >
             <div>
               <div className="trigger-wrapper" onClick={this.toggle}
-              style={{backgroundColor:'#fff'}}
+              style={{backgroundColor:'#f0f2fb'}}
               >
-                <i className="fa fa-bars" aria-hidden="true" style={{fontSize: '14px', color: '#5a8bff'}}/>
+                {/* <i className="fa fa-bars" aria-hidden="true" style={{fontSize: '14px', color: '#5a8bff'}}/> */}
               </div>
             </div>
             <Menu
@@ -220,7 +225,7 @@ class AllOpinion extends React.Component {
                 <Route path="/allopinion/briefing" component={Briefing}/>
                 <Route path="/allopinion/briefingsecond" component={BriefingSecond}/>
                 <Route path="/allopinion/daily" component={Daily}/>
-                <Route path="/special" component={Special}/>
+                <Route path="/allopinion/special" component={Special}/>
               </Switch>
               </Content>
               </Layout>

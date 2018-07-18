@@ -1,6 +1,5 @@
 import React from 'react';
 import request from '../../../utils/request';
-import Kindeditor from '../../../components/Kindeditor/Kindeditor.js';
 import {connect} from 'react-redux';
 import {
   getCollectionOpinionListRequested,
@@ -8,23 +7,13 @@ import {
 } from '../../../redux/actions/createActions';
 import {
   api_edit_doc_neg,
-  api_del_doc,
-  api_get_doc_detail,
-  api_get_doc_similar,
-  api_put_into_report,
-  api_push_collection,
-  api_docedit_save,
   api_email_push,
-  api_docsend_push,
   api_get_DetailForeign,
   api_delete_multilingual,
 } from '../../../services/api';
-import EditOpinionDetail from '../../../components/EditOpinionDetail/EditOpinionDetail';
-import {Tag, Popconfirm, message, Icon, Modal, Menu, Dropdown, Select, Input, Button } from 'antd';
-import {history} from '../../../utils/history';
-import {setHighlightTags, opinionTypeToColor, getMeailMessage} from '../../../utils/format';
+import {Tag, Popconfirm, message, Select, Button } from 'antd';
+import {opinionTypeToColor} from '../../../utils/format';
 import './MulOpinion.less';
-import Store from '../../../redux/store/index'
 import IconFont from '../../../components/IconFont'
 const Option = Select.Option;
 
@@ -308,10 +297,7 @@ class MulOpinion extends React.Component {
         children.push(<Option key={emailAddressee[i]['id']}>{emailAddressee[i]['email']}</Option>);
       }
     }
-    const conent = getMeailMessage(this.state.emailData);
     const data = this.state.data;
-    const sid = this.state.sid;
-    console.log(this.state.keywords)
     const Keywords = this.state.keywords.map((item, index) =>
       <span key={index} className="value-item">{item}</span>
     );
@@ -401,7 +387,7 @@ class MulOpinion extends React.Component {
                                 </div>
                             </Popconfirm>
 
-                            <Popconfirm title={this.state.del.title[this.state.languageType]} onConfirm={this.deleteConfirm.bind(this, this.state.sid)} onCancel={this.deleteCancel.bind(this)} okText="是" cancelText="否">
+                            <Popconfirm title={this.state.del.title[this.state.languageType]} onConfirm={this.deleteConfirm.bind(this, this.state.sid)} onCancel={this.deleteCancel.bind(this)} okText={this.state.yes[this.state.languageType]} cancelText={this.state.no[this.state.languageType]}>
                                 <div className="operation-item" title={this.state.del.tip[this.state.languageType]}>
                                 <IconFont type="icon-shanchu1-copy-copy"/>
                                 </div>

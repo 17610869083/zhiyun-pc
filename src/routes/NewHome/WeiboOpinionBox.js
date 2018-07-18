@@ -4,10 +4,9 @@ import IconFont from '../../components/IconFont';
 import BlankPage from '../../base/Exception/BlankPage';
 import './WeiboOpinionBox.less';
 import { Tabs ,Icon} from 'antd';
-import {history} from '../../utils/history';
-import {GRAY,BLACK,BLUES} from '../../utils/colors';
+import {history,unlisten} from '../../utils/history';
+import {BLUES} from '../../utils/colors';
 const TabPane = Tabs.TabPane;
-
 class WeiboOpinionBox extends React.PureComponent {
     constructor() {
         super();
@@ -19,8 +18,9 @@ class WeiboOpinionBox extends React.PureComponent {
         window.open(window.location.origin + window.location.pathname + '#/detail/' + sid);
     }
     goAllOpinion() {
+        unlisten();
         history.push({
-            pathname: '/allopinion?carry=weibo&neg='+this.state.datetagType
+            pathname: '/allopinion/allopiniondetail?carry=weibo&neg='+this.state.datetagType
         });
     }
     datetagType(key){
@@ -37,12 +37,13 @@ class WeiboOpinionBox extends React.PureComponent {
     }
     render() {
         const {weiboAll,weiboNegative,themeColor} = this.props;
-        const more = this.props.status!=='setting'?<span style={{color:BLACK}}  onClick={this.goAllOpinion.bind(this)}>更多
-        <IconFont type="icon-jiantou" style={{color: '#9b9b9b',fontSize: '16px',marginLeft:'6px'}}/>
+        const more = this.props.status!=='setting'?<span onClick={this.goAllOpinion.bind(this)}>
+        <IconFont type="icon-gengduo" style={{color: '#9b9b9b',fontSize: '16px',marginLeft:'6px'}}/>
         </span>:<Icon type="close-circle" className="delModule" style={{fontSize: '18px',color:BLUES}}
         onClick={this.delWeiboOpinionBox.bind(this)}
         ></Icon>;
         const haverClass = themeColor.topColor.backgroundColor === '#5a8bff' ? 'white':'black';
+        const blankFlag = themeColor.topColor.backgroundColor === '#5a8bff' ? true:false;
         return (
             <div className="weibo-opinion-box" style={{background:themeColor.bottomColor.backgroundColor}}>
                 <div className="container">
@@ -74,7 +75,7 @@ class WeiboOpinionBox extends React.PureComponent {
                                                     </div>
                                                 </div>
                                             </li>
-                                        ) : <BlankPage desc='<span>空空如也，赶紧去<a href="index.html#/warnsetting">添加</a>关键词</span>'/>
+                                        ) : <BlankPage status={blankFlag}  desc='<span>空空如也，赶紧去<a href="index.html#/warnsetting">添加</a>关键词</span>'/>
                                     }
                                 </ul>
                             </TabPane>
@@ -92,7 +93,7 @@ class WeiboOpinionBox extends React.PureComponent {
                                                     </div>
                                                 </div>
                                             </li>
-                                        ) : <BlankPage desc='<span>空空如也，赶紧去<a href="index.html#/warnsetting">添加</a>关键词</span>'/>
+                                        ) : <BlankPage status={blankFlag}  desc='<span>空空如也，赶紧去<a href="index.html#/warnsetting">添加</a>关键词</span>'/>
                                     }
                                 </ul>
                             </TabPane>

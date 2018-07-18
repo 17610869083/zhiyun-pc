@@ -5,10 +5,7 @@ import {history} from '../../utils/history';
 import TopicList from '../TopicOpinion/TopicList/TopicList';
 import Information from './BiddingInformation/BiddingInformation';
 import Setting from './BiddingSetting/BiddingSetting'
-import {api_topic_del,
-        api_topic_typeAdd,
-        api_topic_typeDel,
-        api_classify_revise,
+import {
         api_get_BiddingFolderList,
         api_get_BiddingddGradeC,
         api_get_BiddingeditGradeCat,

@@ -15,6 +15,7 @@ class Guide extends React.Component{
           return (
             <div>
             <iframe src="http://yd.is8.com.cn/" title="引导系统" width="100%" style={{border:'none',height:`${this.state.innerHeight}px`}} security="restricted" sandbox="allow-scripts"></iframe>
+                
             </div>
           )
       }

@@ -21,7 +21,7 @@ class NagetiveOpinion extends React.Component {
 
     goAllOpinion() {
         history.push({
-            pathname: '/allopinion?datetag='+this.state.datetagType +'&neg=2'
+            pathname: '/allopinion/allopiniondetail?datetag='+this.state.datetagType +'&neg=2'
         });
     }
     datetagType(key){
@@ -38,12 +38,13 @@ class NagetiveOpinion extends React.Component {
     }
     render() {
         const {todayOpinion,alldayOpinion,themeColor} = this.props;
-        const more = this.props.status!=='setting'?<span style={{color:BLACK}} onClick={this.goAllOpinion.bind(this)}>更多
-        <IconFont type="icon-jiantou" style={{color: '#9b9b9b',fontSize: '16px',marginLeft:'6px'}}/>
+        const more = this.props.status!=='setting'?<span  onClick={this.goAllOpinion.bind(this)}>
+        <IconFont type="icon-gengduo" style={{color: '#9b9b9b',fontSize: '16px',marginLeft:'6px'}}/>
         </span>:<Icon type="close-circle" className="delModule" style={{fontSize: '18px',color:BLUES}}
         onClick={this.delNewestWarningOpinionBox.bind(this)}
         ></Icon>;
         const haverClass = themeColor.topColor.backgroundColor === '#5a8bff' ? 'white':'black';
+        const blankFlag = themeColor.topColor.backgroundColor === '#5a8bff' ? true:false;
         return (
             <div className="newest-warning-opinion-box" style={{background:themeColor.bottomColor.backgroundColor}}>
                 <div className="container">
@@ -73,7 +74,7 @@ class NagetiveOpinion extends React.Component {
                                                 </div>
                                             </div>
                                         </li>
-                                        ) : <BlankPage desc='<span>空空如也，赶紧去<a href="index.html#/warnsetting">添加</a>关键词</span>'/>
+                                        ) : <BlankPage  status={blankFlag} desc='<span>空空如也，赶紧去<a href="index.html#/warnsetting">添加</a>关键词</span>'/>
                                     }
                                 </ul>
                             </TabPane>
@@ -90,7 +91,7 @@ class NagetiveOpinion extends React.Component {
                                                 </div>
                                             </div>
                                         </li>
-                                        ) : <BlankPage desc='<span>空空如也，赶紧去<a href="index.html#/warnsetting">添加</a>关键词</span>'/>
+                                        ) : <BlankPage  status={blankFlag} desc='<span>空空如也，赶紧去<a href="index.html#/warnsetting">添加</a>关键词</span>'/>
                                     }
                                 </ul>
                             </TabPane>

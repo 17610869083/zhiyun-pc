@@ -26,16 +26,12 @@ class OpinionCountBox extends React.PureComponent {
                 '微博':'weibo',
                 '新闻':'news',
                 '论坛':'forum'
-            },
-            data:[],
-            legend:[],
-            series:[],
-            opinionCount:{}
+            }
     }
  }
     goAllOpinion() {
         history.push({
-            pathname: '/allopinion?datetag=all'
+            pathname: '/allopinion/allopiniondetail?datetag=all'
         });
     }
     delOpinionCountBox(){
@@ -43,43 +39,17 @@ class OpinionCountBox extends React.PureComponent {
     }
     goMedia(media,day,type){
         if(media === '数据来源'){
-            request(api_count_charts +`&data=${JSON.stringify(this.state.opinionCount[type])}`)
-            .then(res => {
-              if(res.data.code === 1){
-                this.setState({
-                  legend:res.data.legend,
-                  series:res.data.series
-                })
-              }
-            })
+         this.props.changeChart(type)
         }else{
            history.push({
-            pathname: `/allopinion?media=${this.state.mediaList[media]}&datetag=${day}`
+            pathname: `/allopinion/allopiniondetail?media=${this.state.mediaList[media]}&datetag=${day}`
            });
         }
     }
-    componentDidMount(){
-        request(api_count_opinion)
-        .then((res) => {
-          this.setState({
-            data: formatOpinionCount(res.data).opinionCountArr,
-            opinionCount:res.data
-          });
-          request(api_count_charts +`&data=${JSON.stringify(res.data.all)}`)
-          .then(res => {
-            if(res.data.code === 1){
-              this.setState({
-                legend:res.data.legend,
-                series:res.data.series
-              })
-            }
-          })
-        })
-    }
     render() {
-        const {themeColor} = this.props;
-        const more = this.props.status!=='setting'?<span style={{color:BLACK}} onClick={this.goAllOpinion.bind(this)}>更多 
-        <IconFont type="icon-jiantou" style={{color: '#9b9b9b',fontSize: '16px',marginLeft:'6px'}}/>
+        const {themeColor,opinionCount,data,legend,series} = this.props;
+        const more = this.props.status!=='setting'?<span onClick={this.goAllOpinion.bind(this)}> 
+        <IconFont type="icon-gengduo" style={{color: '#9b9b9b',fontSize: '16px',marginLeft:'6px'}}/>
         </span>:<Icon type="close-circle" className="delModule" style={{fontSize: '18px',color:BLUES}}
         onClick={this.delOpinionCountBox.bind(this)}
         ></Icon>;
@@ -89,7 +59,7 @@ class OpinionCountBox extends React.PureComponent {
                 formatter: "{b}: {c} ({d}%)",
             },
             legend:{
-                data:this.state.legend,
+                data:legend,
                 itemGap:20,
                 orient:"vertical",
                 x:'right',
@@ -113,7 +83,7 @@ class OpinionCountBox extends React.PureComponent {
                             formatter: '{b}\n{d}%'
                         },
                     },
-                    data: this.state.series,
+                    data: series ? series:[{name: "APP", value: 0}, {name: "博客", value: 0}, {name: "平媒", value: 0}, {name: "微信", value: 0},{name: "微博", value: 0},{name: "新闻", value: 0},{name: "论坛", value: 0}]
                 }
             ]
         };   
@@ -122,7 +92,7 @@ class OpinionCountBox extends React.PureComponent {
                 <div className="container">
                     <div className="top" style={{borderBottom: `1px solid ${themeColor.borderColor.color}`}}>
                         <div className="title">
-                            <IconFont type="icon-tongji" style={{fontSize: '28px',color:BLUES,verticalAlign:'-8px'}}/>
+                            <IconFont type="icon-tongji" style={{fontSize: '20px',color:BLUES,verticalAlign:'-8px'}}/>
                             <span className="txt" style={{color:themeColor.textColor.color}}>舆情统计</span>
                             {/* <span className="txt" style={{color:BLACK}}>信息统计</span> */}
                         </div>
@@ -133,8 +103,8 @@ class OpinionCountBox extends React.PureComponent {
                     <div className="bottom">
                         <table className="count-table" style={{color:themeColor.textColor.color}}>
                             <tbody>
-                            {this.state.data.length > 1 ?
-                                this.state.data.map((item, index) =>
+                            {data.length > 1 ?
+                                data.map((item, index) =>
                                 <tr key={index} className="item">
                                     <td style={{borderRight: `1px solid  ${themeColor.borderColor.color}`,borderBottom: `1px solid  ${themeColor.borderColor.color}`}} >{item[0]}</td>
                                     <td title="点击可查看具体数据" style={{cursor:'pointer',borderRight: `1px solid  ${themeColor.borderColor.color}`,borderBottom: `1px solid  ${themeColor.borderColor.color}`}} onClick = {this.goMedia.bind(this,item[0],'today','today')}>{item[1]}</td>

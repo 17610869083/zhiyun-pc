@@ -164,8 +164,8 @@ class ReportTemplate extends React.Component{
                         <Button type="primary" onClick={this.onBriefing.bind(this)}>确定模板</Button>
                       </div>
                       <div className="report-content">   
-                      <iframe width="80%" height="90%" title="模板预览" frameBorder="0" 
-                      src={"./../" + this.state.hmtlUrl} />    
+                      {this.state.hmtlUrl !== '' ?<iframe width="80%" height="90%" title="模板预览" frameBorder="0" 
+                      src={"./../" + this.state.hmtlUrl} />:null}   
                       </div>
                   </div>
               </div>

@@ -175,10 +175,8 @@ export function formatOpinionCount(data) {
 
         opinionCountArr.push(arr);
     });
-    return {opinionCountArr};
+    return opinionCountArr;
 }
-
-
 
 /* ------------------------------------  */
 // 舆情负面类型
