@@ -484,7 +484,7 @@ class CollectionOpinion extends React.Component {
                                     />
                                 </Dropdown>
                             </Tooltip>
-                            <Tooltip title="加入简报">
+                            {/* <Tooltip title="加入简报">
                                 <Dropdown overlay={addReportMenu} trigger={['click']}
                                     getPopupContainer={() => document.querySelector('.collection-opinion-wrapper')}
                                 >
@@ -492,7 +492,7 @@ class CollectionOpinion extends React.Component {
                                         onClick={this.getReportOpinionList.bind(this, item.sid)}
                                     />
                                 </Dropdown>
-                            </Tooltip>
+                            </Tooltip> */}
                             <Tooltip title="从收藏夹移除">
                                 <i className="fa fa-arrow-circle-right" aria-hidden="true" onClick={this.deleteThisFormCollection.bind(this, item.id)} />
                             </Tooltip>

@@ -22,7 +22,7 @@ class AppCenter extends React.Component{
                         {type: 'icon-yingyu', text: '英语监测', color: '#04c0b3'},
                         {type: 'icon-zhengjucailiao', text: '互联网取证', color: '#6296f1', href: '/evidence', hrefType: 'http'},
                         {type: 'icon-shangbao', text: '上报管理', color: '#4ba9eb', href: '/upreport', hrefType: 'http'},
-                        {type: 'icon-minshengminqing', text: '民情管理', color: '#4ba9eb'},
+                        {type: 'icon-minshengminqing', text: '民情管理', color: '#4ba9eb',href:'/allopinion/allopiniondetail',hrefType:'http'},
                         {type: 'icon-pinglun', text: '网评管理', color: '#4ba9eb', href: '/guide', hrefType: 'http'}
                     ]
                 },
@@ -39,8 +39,8 @@ class AppCenter extends React.Component{
                         // {type: 'icon-huandunicon-', text: '威胁情报', color: '#4ba9eb'},
                         // {type: 'icon-zidong', text: '自动通报', color: '#4ba9eb'},
                         // {type: 'icon-wangluofangcuangai', text: '网站防篡改', color: '#6296f1'},
-                        {type: 'icon-zidong', text: '流量监测引擎', color: '#4ba9eb', href: '/fmengine', hrefType: 'http'}, // 图标   
-                        {type: 'icon-zidong', text: '流量监测大屏', color: '#4ba9eb', href: '/fmLgscreen', hrefType: 'http'}, // 图标
+                        {type: 'icon-zidong', text: '流量监测引擎', color: '#4ba9eb', href: 'https://119.88.190.68/', hrefType: 'login'}, // 图标   
+                        {type: 'icon-zidong', text: '流量监测大屏', color: '#4ba9eb', href: 'http://119.88.190.68:3000/', hrefType: 'login'}, // 图标
                         {type: 'icon-zidong', text: '通报处置', color: '#4ba9eb', href: '/disposal', hrefType: 'http'} // 图标
                     ]
                 },
@@ -48,12 +48,12 @@ class AppCenter extends React.Component{
                     title: '行业应用',
                     items: [
                         {type: 'icon-md-part-outline', text: '智慧党建', color: '#4ba9eb', href: '/partybuilding', hrefType: 'http'},
-                        {type: 'icon-zixun', text: '行业资讯', color: '#4ba9eb', href: '/industryinformation', hrefType: 'login'},
-                        {type: 'icon-qingbao', text: '竞争情报', color: '#f7b55d', href: '/competitiveintelligence', hrefType: 'login'},
-                        {type: 'icon-yupanjingzhengweixie', text: '决策预判', color: '#4ba9eb'},
-                        {type: 'icon-zhaotoubiao1', text: '招投标', color: '#6296f1', href: '/bidding/information', hrefType: 'history'},
-                        {type: 'icon-qiyehuaxiang', text: '企业画像', color: '#4ba9eb'},
-                        {type: 'icon-huaxiang', text: '人物画像', color: '#6296f1'},
+                        {type: 'icon-zixun', text: '行业资讯', color: '#4ba9eb', href: 'http://119.90.61.155/om33', hrefType: 'login'},
+                        {type: 'icon-qingbao', text: '竞争情报', color: '#f7b55d', href: 'http://119.90.61.155/om33', hrefType: 'login'},
+                        {type: 'icon-yupanjingzhengweixie', text: '决策预判', color: '#4ba9eb',href: 'http://119.90.61.155/om33', hrefType: 'login'},
+                        {type: 'icon-zhaotoubiao1', text: '招投标', color: '#6296f1', href: '/bidding/information', hrefType: 'http'},
+                        {type: 'icon-qiyehuaxiang', text: '企业画像', color: '#4ba9eb', href: 'http://119.90.61.155/om33', hrefType: 'login'},
+                        {type: 'icon-huaxiang', text: '人物画像', color: '#6296f1', href: 'http://119.90.61.155/om33', hrefType: 'login'},
                         {type: 'icon-dianziweilanxitong', text: '微信围栏', color: '#4ba9eb', href: '/wechatfence', hrefType: 'http'}
                     ]
                 },
@@ -61,7 +61,7 @@ class AppCenter extends React.Component{
                     title: '基础平台',
                     items: [
                         {type: 'icon-icon-siyouyuncunchu-', text: '私有云盘', color: '#04c0b3', href: '/clouddisk', hrefType: 'http'},
-                        {type: 'icon-yunpingtaianquan', text: '华知云平台', color: '#6296f1', href: '/cloudplatform', hrefType: 'http'}
+                        {type: 'icon-yunpingtaianquan', text: '华知云平台', color: '#6296f1', href: 'http://119.90.158.98:8888/auth/login/', hrefType: 'login'}
                     ]
                 }
             ]
@@ -87,7 +87,12 @@ class AppCenter extends React.Component{
         //     // window.location.href = href
         //     window.open(href)
         // }
-        history.push(href)
+        if(hrefType === 'login'){
+            window.open(href)
+        }else{
+            history.push(href)
+        }
+        
     }
     render () {
         return <div className="apps">
@@ -104,7 +109,7 @@ class AppCenter extends React.Component{
                                                                         <IconFont type={iitem.type} style={{width: '100%', fontSize: '20px'}}></IconFont>
                                                                     </div>
                                                                 </div>
-                                                                <div className="text">
+                                                                <div className="apptext">
                                                                     {iitem.text}
                                                                 </div>
                                                             </div>
@@ -117,11 +122,11 @@ class AppCenter extends React.Component{
                     <footer>
                             <div className="top">
                                 <div className="contact">
-                                    <h3 className="title">知云网 | 知道了云给你</h3>
+                                    <h3 className="title">知云网 | 北京软云神州科技有限公司</h3>
                                     <ul>
                                         <li>客服热线 ：400-618-1863</li>
                                         <li>官方网站 ：www.ryc360.com    www.is8.com.cn</li>
-                                        <li>公司地址 ：北京市昌平区黄平路19号龙旗广场E座303-305</li>
+                                    
                                     </ul>
                                 </div>
                                 <div className="erweima">
@@ -132,7 +137,7 @@ class AppCenter extends React.Component{
                                     </ul>
                                 </div>
                             </div>
-                            <div className="bottom"><span>www.ryc360.com</span></div>
+                            <div className="bottom"><span>版权所有 © 2018 软云神州</span></div>
                         </footer>
                 </div>
     }

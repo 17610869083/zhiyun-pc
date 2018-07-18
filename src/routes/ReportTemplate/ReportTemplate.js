@@ -6,7 +6,6 @@ import {GRAY} from '../../utils/colors'
 import {Input,Button} from 'antd';
 import {api_get_template_report,api_search_template,api_get_preview_html} from '../../services/api';
 import request from '../../utils/request';
-import img from '../../assets/img/1.png';
 import {history} from '../../utils/history';
 import {templateTypeSort} from '../../utils/format';
 class ReportTemplate extends React.Component{
@@ -102,13 +101,13 @@ class ReportTemplate extends React.Component{
         onBriefing = () => {
 						console.log(this.state.templateType)
 						if (this.state.templateType === '01' && this.state.templateId === 1) {
-							history.push(`/briefing?type=${this.state.templateType}&id=${this.state.templateId}`)          
+							history.push(`/allopinion/briefing?type=${this.state.templateType}&id=${this.state.templateId}`)          
 						} else if (this.state.templateType === '01' && this.state.templateId === 2) {
-							history.push(`/briefingsecond?type=${this.state.templateType}&id=${this.state.templateId}`)          
+							history.push(`/allopinion/briefingsecond?type=${this.state.templateType}&id=${this.state.templateId}`)          
 						} else if (this.state.templateType === '03') {
-							history.push(`/daily?type=${this.state.templateType}&id=${this.state.templateId}`)          
+							history.push(`/allopinion/daily?type=${this.state.templateType}&id=${this.state.templateId}`)          
 						} else if (this.state.templateType === '02') {
-							history.push(`/special?type=${this.state.templateType}&id=${this.state.templateId}`)          
+							history.push(`/allopinion/special?type=${this.state.templateType}&id=${this.state.templateId}`)          
 						}
         }
         //搜索模板
@@ -133,7 +132,7 @@ class ReportTemplate extends React.Component{
           const slideList = this.state.contentList.map( (item,index) => {
                 return <div className={this.state.templateId === item.id? 'swiper-slide cont active':'swiper-slide cont normal'} 
                        key = {index} onClick = {this.checkTemplate.bind(this,item.id,item.reportType)}>
-                       <img src={'http://119.90.61.155/om31/' +item.imagepath} alt=""/>
+                       <img src={'./../' +item.imagepath} alt=""/>
                        <p>{item.name}</p>
                        </div>
           })
@@ -165,8 +164,8 @@ class ReportTemplate extends React.Component{
                         <Button type="primary" onClick={this.onBriefing.bind(this)}>确定模板</Button>
                       </div>
                       <div className="report-content">   
-                      <iframe width="80%" height="90%" title="模板预览" frameBorder="0" 
-                      src={"http://119.90.61.155/om31/" + this.state.hmtlUrl} />    
+                      {this.state.hmtlUrl !== '' ?<iframe width="80%" height="90%" title="模板预览" frameBorder="0" 
+                      src={"./../" + this.state.hmtlUrl} />:null}   
                       </div>
                   </div>
               </div>

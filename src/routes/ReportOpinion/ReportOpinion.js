@@ -403,7 +403,7 @@ class TopicReport extends React.Component {
         </li>
     ):<BlankPage desc="报告素材夹为空，请手动添加"/>;
         return (
-           <div style={{width:'100%'}}>
+           <div style={{width:'90%'}}>
             <div className="route-report-opinion">
             <div className="top" style={{background:GRAY}}>
             <div>

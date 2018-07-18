@@ -25,7 +25,7 @@ class TopicOpinionBox extends React.PureComponent {
     goTopicOpinion() {
         this.props.setlocationPathname(this.state.topicid)
         history.push({
-            pathname: '/topic/topiclist'
+            pathname: '/allopinion/topic/topiclist'
         });
     }
     delTopicOpinionBox(){
@@ -48,8 +48,8 @@ class TopicOpinionBox extends React.PureComponent {
     render() {  
         const {topicOpinion} = this.state;
         const {themeColor} = this.props;
-        const more = this.props.status!=='setting'?<span style={{color:BLACK}} onClick={this.goTopicOpinion.bind(this)}>更多
-        <IconFont type="icon-jiantou" style={{color: '#9b9b9b',fontSize: '16px',marginLeft:'6px'}}/>
+        const more = this.props.status!=='setting'?<span onClick={this.goTopicOpinion.bind(this)}>
+        <IconFont type="icon-gengduo" style={{color: '#9b9b9b',fontSize: '16px',marginLeft:'6px'}}/>
         </span>:<Icon type="close-circle" className="delModule" style={{fontSize: '18px',color:BLUES}}
         onClick={this.delTopicOpinionBox.bind(this)}
         ></Icon>;
@@ -59,12 +59,12 @@ class TopicOpinionBox extends React.PureComponent {
                 <div className="container">
                     <div className="top" style={{borderBottom: `1px solid ${themeColor.borderColor.color}`}}>
                         <div className="title">
-                            <IconFont type="icon-tesezhuanti" style={{color: BLUES,fontSize: '18px'}}/>
-                            <span className="txt" style={{color:themeColor.textColor.color}}>专题舆情</span>
-                            {/* <span className="txt" style={{color:BLACK}}>专题信息</span> */}
+													<IconFont type="icon-tesezhuanti" style={{color: BLUES,fontSize: '18px'}}/>
+													<span className="txt" style={{color:themeColor.textColor.color}}>专题舆情</span>
+													{/* <span className="txt" style={{color:BLACK}}>专题信息</span> */}
                         </div>
                         <div className="more">
-                              {more}
+													{more}
                         </div>
                     </div>
                     <div className="bottom">

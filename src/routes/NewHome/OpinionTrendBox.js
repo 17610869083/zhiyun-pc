@@ -74,7 +74,7 @@ class OpinionTrendBox extends React.Component {
         return (
             <div className="opinion-trend-box"  style={{background:themeColor.bottomColor.backgroundColor}}>
                 <div className="container">
-                    <div className="top">
+                    <div className="top" style={{borderBottom:`1px solid ${themeColor.borderColor.color}`}}>
                         <div className="title">
                             <div>
                             <IconFont type="icon-qushi" style={{color: BLUES,fontSize: '18px'}}/>

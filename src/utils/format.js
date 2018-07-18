@@ -175,10 +175,8 @@ export function formatOpinionCount(data) {
 
         opinionCountArr.push(arr);
     });
-    return {opinionCountArr};
+    return opinionCountArr;
 }
-
-
 
 /* ------------------------------------  */
 // 舆情负面类型
@@ -309,7 +307,7 @@ export function urlTokey() {
     const hash = window.location.hash;
     let url = 'home';
     if (hash.match(/^(#\/)(\w+)/)) {
-        url = hash.match(/^(#\/)(\w+)/)[2];
+        url = hash.match(/^(#\/)(\w+)/);
     }
     let key = '0';
     switch (url)
@@ -323,13 +321,13 @@ export function urlTokey() {
         case 'bigscreen':
             key = '3';
             break;
-        case 'allopinion':
+        case 'allopinion/topic/topiclist':
             key = '4';
             break;
         case 'warningopinion':
             key = '5';
             break;
-        case 'topic':
+        case 'allopinion/topic/topiclist':
             key = '7';
             break;
         case 'sortedopinion':

@@ -14,7 +14,7 @@ class Guard extends React.Component{
       render(){
           return (
             <div>
-            <iframe src="http://situation.jzz.aoyasafe.com/web/index.html" width="100%" style={{border:'none',height:`${this.state.innerHeight}px`}} security="restricted" sandbox="allow-scripts"></iframe>
+            <iframe src="http://situation.jzz.aoyasafe.com/web/index.html" title="网站防护" width="100%" style={{border:'none',height:`${this.state.innerHeight}px`}} security="restricted" sandbox="allow-scripts"></iframe>
             </div>
           )
       }

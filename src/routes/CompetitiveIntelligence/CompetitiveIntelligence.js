@@ -14,7 +14,7 @@ import React from 'react';
          render(){
              return (
                 <div>
-                <iframe src="http://web.is8.com.cn/om/webpart/index.html#/topic/topiclist" width="100%" style={{border:'none',height:`${this.state.innerHeight}px`}}></iframe>
+                <iframe src="http://situation.jzz.aoyasafe.com/web/index.html" width="100%" style={{border:'none',height:`${this.state.innerHeight}px`}}></iframe>
                 </div>
              )
          }

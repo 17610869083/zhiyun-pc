@@ -11,7 +11,7 @@ import CRCode from './crcode.jpg';
 import IosApp from './iosapp.jpg';
 import {setItem,getPasswordItem,setPasswordItem} from '../../utils/localStorage';
 import {changeTheme} from '../../redux/actions/actions';
-import {DARK,BLUES} from '../../utils/colors';
+import {LIGHT,DARKER} from '../../utils/colors';
 
 const FormItem = Form.Item;
 
@@ -62,22 +62,36 @@ class LoginPage extends React.Component {
                })
            }
            let colors ={
+            // topColor: {
+            //     backgroundColor: BLUES
+            // },
+            // bottomColor: {
+            //     backgroundColor: '#fff'
+            // },
+            // textColor:{
+            //      color:'#000'
+            // },
+            // grounding:{
+            //     color:'#E4EBF7'
+            // },
+            // borderColor:{
+            //     color:'#e4ebf7'
+            // },
             topColor: {
-                backgroundColor: BLUES
+                backgroundColor: LIGHT
             },
             bottomColor: {
-                backgroundColor: '#fff'
+                backgroundColor: DARKER
             },
             textColor:{
-                 color:'#000'
+                color:'#b5b5b5'
             },
             grounding:{
-                color:'#E4EBF7'
+                color:'#181b2b'
             },
             borderColor:{
-                color:'#e4ebf7'
-            },
-
+                color:'#35394f'
+            }
            };
            setItem('theme',colors);
            this.props.changeTheme(colors)

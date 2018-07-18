@@ -14,7 +14,7 @@ class UpReport extends React.Component{
    render(){
        return (
            <div>
-              <iframe src="http://hualong.v6plus.com/login" width="100%" style={{border:'none',height:`${this.state.innerHeight}px`}}></iframe>
+              <iframe src="http://hualong.v6plus.com/login" title="上报平台" width="100%" style={{border:'none',height:`${this.state.innerHeight}px`}}></iframe>
            </div>
        )
    }

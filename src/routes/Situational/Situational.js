@@ -14,7 +14,7 @@ class Situational extends React.Component{
      render(){
          return (
             <div>
-            <iframe src="http://221.221.146.123:8888/#/" width="100%" style={{border:'none',height:`${this.state.innerHeight}px`}}></iframe>
+            <iframe src="http://114.242.25.234:30005/gxwhongce2/" title="态势感知" width="100%" style={{border:'none',height:`${this.state.innerHeight}px`}}></iframe>
             </div>
          )
      }

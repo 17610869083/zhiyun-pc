@@ -11,14 +11,14 @@ import 'echarts/lib/chart/pie';
 import './TodayOpinionBox.less';
 import {api_today_opinion} from '../../services/api';
 import request from '../../utils/request';
-import {GRAY,BLUES} from '../../utils/colors';
+import {GRAY,BLUES,BLACK} from '../../utils/colors';
 import {history} from '../../utils/history';
 class TodayOpinionBox extends React.PureComponent {
     constructor(){
         super();
         this.state={
              todayAll:0,
-             todayWarning:1000,
+             todayWarning:0,
              todayNegative:0,
 						 ratio:0,
 						 echartData: [
@@ -43,7 +43,7 @@ class TodayOpinionBox extends React.PureComponent {
          if(this.negativeTimer) clearInterval(this.negativeTimer);
          if(this.ratioTimer) clearInterval(this.ratioTimer);
     }
-    componentDidMount(){
+    componentWillMount(){
         request(api_today_opinion)
         .then(res => {
         if(res.data){
@@ -118,411 +118,159 @@ class TodayOpinionBox extends React.PureComponent {
     }
     goAllOpinion(type){
         history.push({
-            pathname: '/allopinion?datetag=today&neg=' + type
+            pathname: '/allopinion/allopiniondetail?datetag=today&neg=' + type
         });
     }
     render() {
-				// const {todayAll ,todayNegative,} = this.state;sss
-				// ratio
 				const {themeColor} = this.props;
-				const value = this.state.todayWarning;
-				const valueNegative = this.state.todayNegative;
-				const valueAll = this.state.todayAll;
-				// const unit = "%";
-				const initcolor = "#fff";
-				const min = 0;
-				const max = 10000	
-				const color = initcolor;
-				const background = "none"; //背景
-				const dataStyle = {
-						normal: {
-								label: {
-										show: false
-								},
-								labelLine: {
-										show: false
-								},
-								shadowBlur: 40,
-								shadowColor: 'rgba(40, 40, 40, 0.5)'
-						}
-				};
-				const placeHolderStyle = {
-						normal: {
-								color: 'rgba(44,59,70,0)', //未完成的圆环的颜色
-								label: {
-										show: false
-								},
-								labelLine: {
-										show: false
-								}
-						}
-				};
-				const mediaOption= {
-				  title: {
-						text: '今日预警\n' + this.state.todayWarning,
-						x: 'center',
-						y: 'center',
-						// top: '53%',
-						textStyle: {
-								fontWeight: 'normal',
-								color: color,
-								fontSize: 16
-						}
-					},
-					backgroundColor: background,
-					color: [color, '#313443', '#fff'],
-					tooltip: {
-							show: false,
-							formatter: "{a} <br/>{b} : {c} ({d}%)"
-					},
-					legend: {
-							show: false,
-							// itemGap: 12,
-							data: ["01", "02"],
-							// left: 'center',
-							// top: 'center',
-							// icon: 'none',
-							// align: 'center',
+				const labelTop = {
+					normal : {
+						label : {
+							show : true,
+							position : 'center',
+							formatter : '{b}',
+							padding: [50, 0, 0, 0],
 							textStyle: {
-									color: "#fff",
-									fontSize: 16
-							},
-					},
-					toolbox: {
-							show: false,
-							feature: {
-									mark: {
-											show: true
-									},
-									dataView: {
-											show: true,
-											readOnly: false
-									},
-									restore: {
-											show: true
-									},
-									saveAsImage: {
-											show: true
-									}
+								baseline : 'center',
+								fontSize: 14,
+								color: "#ccc"
 							}
-					},
+						},
+						labelLine : {
+							show : false
+						}
+					}
+			  };
+				// 今日预警\n' + this.state.todayWarning
+				const mediaOption= {
+					animation: false,
 					series: [{
-							name: '今日预警',
-							type: 'pie',
-							clockWise: false,
-							radius: ['50%', '58%'],
-							itemStyle: dataStyle,
-							hoverAnimation: false,
-							data: [{
-											value: value - min,
-											name: '01',
-											itemStyle: {
-												normal: {
-													color: new echarts.graphic.LinearGradient(0, 0, 1, 1, [{
-														offset: 0,
-														color: '#7777eb'
-													}, {
-														offset: 1,
-														color: '#70ffac'
-													}]),
-												},
-											},
-
-									}, {
-											value: max - value,
-											name: 'invisible',
-											itemStyle: placeHolderStyle
-									}
-			
-							]
-					}, {
-							name: 'Line 2',
-							type: 'pie',
-							animation: false,
-							clockWise: false,
-							radius: ['58%', '60%'],
-							itemStyle: dataStyle,
-							hoverAnimation: false,
-							tooltip: {
-									show: false
+						// name: '今日预警',
+						type: 'pie',
+						radius: ['50%', '65%'],
+						label: {
+							normal: {
+								position: 'center'
 							},
-							data: [{
-											value: 100,
-											name: '02',
-											itemStyle: {
-													normal: {
-															color: "#3c6482",
-													},
-											}
-							}]
-					}, {
-							name: 'Line 3',
-							type: 'pie',
-							animation: false,
-							clockWise: false,
-							radius: ['48%', '50%'],
-							itemStyle: dataStyle,
-							hoverAnimation: false,
-							tooltip: {
+						},
+						data: [
+							{
+								name:'\n今日预警\n\n' + this.state.todayWarning, 
+								value: this.state.todayWarning ===0 ? 30000:this.state.todayWarning, 
+								itemStyle : labelTop,
+								hoverAnimation: false
+							},{
+								value: 10000,
+								tooltip: {
 									show: false
-							},
-							data: [{
-											value: 100,
-											name: '02',
-											itemStyle: {
-													normal: {
-															color: "#3c6482",
-													},
-											}
+								},
+								itemStyle: {
+									normal: {
+											color: '#e1e7f0'
+									},
+									emphasis: {
+											color: '#e1e7f0'
 									}
-							]
+								},
+								hoverAnimation: false
+							},
+						],
+						color: [new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+						offset: 0,
+						color: '#5384b1'
+						}, {
+							offset: 1,
+							color: '#5bcf3c'
+						}]), "transparent"],
 					}]
 				};
 				const mediaOptionNegative= {
-				  title: {
-						text: '今日负面\n' + this.state.todayNegative,
-						x: 'center',
-						y: 'center',
-						// top: '53%',
-						textStyle: {
-								fontWeight: 'normal',
-								color: color,
-								fontSize: 16
-						}
-					},
-					backgroundColor: background,
-					color: [color, '#313443', '#fff'],
-					tooltip: {
-							show: false,
-							formatter: "{a} <br/>{b} : {c} ({d}%)"
-					},
-					legend: {
-							show: false,
-							// itemGap: 12,
-							data: ["01", "02"],
-							// left: 'center',
-							// top: 'center',
-							// icon: 'none',
-							// align: 'center',
-							textStyle: {
-									color: "#fff",
-									fontSize: 16
-							},
-					},
-					toolbox: {
-							show: false,
-							feature: {
-									mark: {
-											show: true
-									},
-									dataView: {
-											show: true,
-											readOnly: false
-									},
-									restore: {
-											show: true
-									},
-									saveAsImage: {
-											show: true
-									}
-							}
-					},
+					animation: false,
 					series: [{
-							name: '今日负面',
-							type: 'pie',
-							clockWise: false,
-							radius: ['50%', '58%'],
-							itemStyle: dataStyle,
-							hoverAnimation: false,
-							data: [{
-											value: valueNegative - min,
-											name: '01',
-											itemStyle: {
-												normal: {
-													color: new echarts.graphic.LinearGradient(0, 0, 1, 1, [{
-														offset: 0,
-														color: '#7777eb'
-													}, {
-														offset: 1,
-														color: '#70ffac'
-													}]),
-												},
-											},
-
-									}, {
-											value: max - valueNegative,
-											name: 'invisible',
-											itemStyle: placeHolderStyle
-									}
-			
-							]
-					}, {
-							name: 'Line 2',
-							type: 'pie',
-							animation: false,
-							clockWise: false,
-							radius: ['58%', '60%'],
-							itemStyle: dataStyle,
-							hoverAnimation: false,
-							tooltip: {
-									show: false
+						// name: '今日预警',
+						type: 'pie',
+						radius: ['50%', '65%'],
+						label: {
+							normal: {
+								position: 'center'
 							},
-							data: [{
-											value: 100,
-											name: '02',
-											itemStyle: {
-													normal: {
-															color: "#3c6482",
-													},
-											}
-							}]
-					}, {
-							name: 'Line 3',
-							type: 'pie',
-							animation: false,
-							clockWise: false,
-							radius: ['48%', '50%'],
-							itemStyle: dataStyle,
-							hoverAnimation: false,
-							tooltip: {
+						},
+						data: [
+							{
+								name:'\n 今日负面\n\n' + this.state.todayNegative, 
+								value: this.state.todayNegative === 0 ?30000:this.state.todayNegative, 
+								itemStyle : labelTop,
+								hoverAnimation: false
+							},{
+								value: 10000,
+								tooltip: {
 									show: false
-							},
-							data: [{
-											value: 100,
-											name: '02',
-											itemStyle: {
-													normal: {
-															color: "#3c6482",
-													},
-											}
+								},
+								itemStyle: {
+									normal: {
+											color: '#e1e7f0'
+									},
+									emphasis: {
+											color: '#e1e7f0'
 									}
-							]
+								},
+								hoverAnimation: false
+							},
+						],
+						color: [new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+						offset: 0,
+						color: '#fe018a'
+						}, {
+							offset: 1,
+							color: '#ffa800'
+						}]), "transparent"],
 					}]
 				};
 				const mediaOptionPublic= {
-				  title: {
-						text: '今日舆情\n' + this.state.todayAll,
-						x: 'center',
-						y: 'center',
-						// top: '53%',
-						textStyle: {
-								fontWeight: 'normal',
-								color: color,
-								fontSize: 16
-						}
-					},
-					backgroundColor: background,
-					color: [color, '#313443', '#fff'],
-					tooltip: {
-							show: false,
-							formatter: "{a} <br/>{b} : {c} ({d}%)"
-					},
-					legend: {
-							show: false,
-							// itemGap: 12,
-							data: ["01", "02"],
-							// left: 'center',
-							// top: 'center',
-							// icon: 'none',
-							// align: 'center',
-							textStyle: {
-									color: "#fff",
-									fontSize: 16
-							},
-					},
-					toolbox: {
-							show: false,
-							feature: {
-									mark: {
-											show: true
-									},
-									dataView: {
-											show: true,
-											readOnly: false
-									},
-									restore: {
-											show: true
-									},
-									saveAsImage: {
-											show: true
-									}
-							}
-					},
+					animation: false,
 					series: [{
-							name: '今日舆情',
-							type: 'pie',
-							clockWise: false,
-							radius: ['50%', '58%'],
-							itemStyle: dataStyle,
-							hoverAnimation: false,
-							data: [{
-											value: valueAll - min,
-											name: '01',
-											itemStyle: {
-												normal: {
-													color: new echarts.graphic.LinearGradient(0, 0, 1, 1, [{
-														offset: 0,
-														color: '#7777eb'
-													}, {
-														offset: 1,
-														color: '#70ffac'
-													}]),
-												},
-											},
-
-									}, {
-											value: max - valueAll,
-											name: 'invisible',
-											itemStyle: placeHolderStyle
-									}
-			
-							]
-					}, {
-							name: 'Line 2',
-							type: 'pie',
-							animation: false,
-							clockWise: false,
-							radius: ['58%', '60%'],
-							itemStyle: dataStyle,
-							hoverAnimation: false,
-							tooltip: {
-									show: false
+						// name: '今日预警',
+						type: 'pie',
+						radius: ['50%', '65%'],
+						label: {
+							normal: {
+								position: 'center'
 							},
-							data: [{
-											value: 100,
-											name: '02',
-											itemStyle: {
-													normal: {
-															color: "#3c6482",
-													},
-											}
-							}]
-					}, {
-							name: 'Line 3',
-							type: 'pie',
-							animation: false,
-							clockWise: false,
-							radius: ['48%', '50%'],
-							itemStyle: dataStyle,
-							hoverAnimation: false,
-							tooltip: {
+						},
+						data: [
+							{
+								name:'\n 今日舆情\n\n' + this.state.todayAll, 
+								value: this.state.todayAll === 0 ? 130000 : this.state.todayAll , 
+								itemStyle : labelTop,
+								hoverAnimation: false
+							},{
+								value: 10000,
+								tooltip: {
 									show: false
-							},
-							data: [{
-											value: 100,
-											name: '02',
-											itemStyle: {
-													normal: {
-															color: "#3c6482",
-													},
-											}
+								},
+								itemStyle: {
+									normal: {
+											color: '#e1e7f0'
+									},
+									emphasis: {
+											color: '#e1e7f0'
 									}
-							]
+								},
+								hoverAnimation: false
+							},
+						],
+						color: [new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+						offset: 0,
+						color: '#5a8bff'
+						}, {
+							offset: 1,
+							color: '#00deff'
+						}]), "transparent"],
 					}]
 				};
         return (
-            <div className="today-opinion-box" draggable="true">
-                 <div className="today-opinion-top" 
+            <div className="today-opinion-box" draggable="true" style={{background:themeColor.bottomColor.backgroundColor}}>
+								<div className="today-opinion-top" 
                   style={this.props.status==='setting'?{display:'block',background:GRAY}:{display:'none'}}>
                  <Icon type="close-circle" className="delModule" style={{fontSize: '18px',color:BLUES}}
                  onClick={this.delTodayOpinionBox.bind(this)}
@@ -530,12 +278,18 @@ class TodayOpinionBox extends React.PureComponent {
                  </div>
                  <div className="container">
 								 {/* {this.state.num} */}
-								    <Card title="今日统计" style={{ width: "100%", height: 377, marginTop: 20,background:themeColor.bottomColor.backgroundColor }}>
-										  <Row gutter={60}>
-												<Col span={24}>
-												  <span style={{ fontSize: 14, color: "#fff", float: "right", paddingRight: 30 }}>负面同比增长：{this.state.ratio}%</span>
-												</Col>
-											</Row>
+								 	<div className="top" style={{borderBottom: `1px solid ${themeColor.borderColor.color}`}}>
+									 	<div className="title">
+												<IconFont type="icon-tongji1" style={{fontSize: '28px',color:BLUES,verticalAlign:'-8px'}}/>
+												<span className="txt" style={{color:themeColor.textColor.color}}>今日统计</span>
+										</div>
+									</div>
+									<div className="bottom">
+										<Row gutter={60}>
+											<Col span={24}>
+												<span style={{ fontSize: 16, color: themeColor.textColor.color, float: "right", paddingRight: 30, marginTop: 15 }}>负面同比增长：{this.state.ratio}%</span>
+											</Col>
+										</Row>
                       <Row gutter={60} style={{ marginTop: 50 }}>
                          <Col span={8} >
 														<div className="opinion-info" onClick = {this.goAllOpinion.bind(this,2)}>
@@ -543,33 +297,33 @@ class TodayOpinionBox extends React.PureComponent {
 																echarts={echarts}
 																option={mediaOption}
 																lazyUpdate={true}
-																style={{ height: 170, width: 170 }}
+																style={{ height: 170, width: '100%' }}
 															/>
 														</div>
                          </Col>
                          <Col span={8}>
-                            <div className="opinion-info"  onClick = {this.goAllOpinion.bind(this,'all')}>
+                            <div className="opinion-info"  onClick = {this.goAllOpinion.bind(this,1)}>
 														 	<ReactEchartsCore
 																echarts={echarts}
 																option={mediaOptionNegative}
 																lazyUpdate={true}
-																style={{ height: 170, width: 170 }}
+																style={{ height: 170, width: '100%' }}
 															/>
                              </div>
                          </Col>
                          <Col span={8} style={{ paddingLeft: 0 }}>
-														<div className="opinion-info" onClick = {this.goAllOpinion.bind(this,1)}>
+														<div className="opinion-info" onClick = {this.goAllOpinion.bind(this,'all')}>
 															<ReactEchartsCore
 																echarts={echarts}
 																option={mediaOptionPublic}
 																lazyUpdate={true}
-																style={{ height: 170, width: 170 }}
+																style={{ height: 170, width: '100%' }}
 															/>
 														</div>
                          </Col>
                       </Row>
-										</Card>
-                 </div>
+                  </div>									
+								</div>
             </div>
         )
     }

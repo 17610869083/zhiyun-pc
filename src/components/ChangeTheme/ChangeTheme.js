@@ -4,7 +4,6 @@ import { LIGHT, DARKER,BLUES,GRAY} from '../../utils/colors';
 import {changeTheme} from '../../redux/actions/actions';
 import {connect} from 'react-redux';
 import './ChangeTheme.less';
-
 class ChangeTheme extends React.Component {
     constructor(props) {
         super(props);
@@ -56,7 +55,8 @@ class ChangeTheme extends React.Component {
         });
         this.props.changeTheme(item);
     }
-    render() {
+    render() { 
+        const {themeColor} = this.props;
         const Themes = this.state.theme.map((item, index) =>
             <div className="theme-item" key={index}
                  onClick={this.showItem.bind(this, index, item)}
@@ -65,7 +65,7 @@ class ChangeTheme extends React.Component {
                 <div className="bottom">
                     <div className="left" style={item.bottomColor}></div>
                     <div className="right">
-                        <Icon type="check-square" className="check" style={this.state.index === index ? {display: 'block'} : {display: 'none'}}/>
+                        <Icon type="check-square" className="check" style={themeColor.topColor.backgroundColor === item.topColor.backgroundColor ? {display: 'block'} : {display: 'none'}}/>
                     </div>
                 </div>
             </div>
@@ -80,6 +80,11 @@ class ChangeTheme extends React.Component {
         )
     }
 }
+const mapStateToProps = state => {
+    return {
+        themeColor: state.changeThemeReducer
+    }
+};
 const mapDispatchToProps = dispatch => {
     return {
         changeTheme: req => {
@@ -87,4 +92,4 @@ const mapDispatchToProps = dispatch => {
         }
     }
 };
-export default connect(null, mapDispatchToProps)(ChangeTheme);
+export default connect(mapStateToProps, mapDispatchToProps)(ChangeTheme);

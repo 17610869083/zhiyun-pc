@@ -14,7 +14,7 @@ class Evidence extends React.Component {
     render(){
         return (
             <div>
-              <iframe src="http://103.94.42.70:5000/" width="100%" style={{border:'none',height:`${this.state.innerHeight}px`}}></iframe>
+              <iframe src="http://103.94.42.70:5000/" title="互联网取证" width="100%" style={{border:'none',height:`${this.state.innerHeight}px`}}></iframe>
             </div>
         )
     }

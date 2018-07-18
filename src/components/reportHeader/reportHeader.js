@@ -275,13 +275,16 @@ class reportHeader extends React.Component{
 	}
 	//去我的报告
 	goMyReport = () => {
-		history.push('/myreport');
+		history.push('/allopinion/myreport');
 	}
 	cancel = () => {
 		this.setState({
 			reportNameVisible:false,
 			finishVisible:false
 		})
+	}
+	cancelhome = () => {
+		history.push('/home');
 	}
 	render() {
 		const { type, briefingData,reportId } = this.props;
@@ -420,7 +423,7 @@ class reportHeader extends React.Component{
 					visible={this.state.finishVisible}
 					className="report-modal"
 					onOk={this.goMyReport}
-					onCancel={this.cancel}
+					onCancel={this.cancelhome}
 					okText='去我的报告'
 					cancelText='返回首页'
 				> 
