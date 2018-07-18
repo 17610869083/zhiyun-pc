@@ -4,7 +4,7 @@ import IconFont from '../../components/IconFont';
 import BlankPage from '../../base/Exception/BlankPage';
 import './WeiboOpinionBox.less';
 import { Tabs ,Icon} from 'antd';
-import {history,unlisten} from '../../utils/history';
+import {history} from '../../utils/history';
 import {BLUES} from '../../utils/colors';
 const TabPane = Tabs.TabPane;
 class WeiboOpinionBox extends React.PureComponent {
@@ -18,7 +18,6 @@ class WeiboOpinionBox extends React.PureComponent {
         window.open(window.location.origin + window.location.pathname + '#/detail/' + sid);
     }
     goAllOpinion() {
-        unlisten();
         history.push({
             pathname: '/allopinion/allopiniondetail?carry=weibo&neg='+this.state.datetagType
         });
