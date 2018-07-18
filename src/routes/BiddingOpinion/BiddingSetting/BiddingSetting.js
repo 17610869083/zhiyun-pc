@@ -53,6 +53,7 @@ class BiddingSetting extends React.Component {
     }
     componentWillReceiveProps(nextprops){
             if (this.search2Obj(nextprops.location.search).type === 'add' && this.props.location.search !== nextprops.location.search) {
+                console.log(this.search2Obj(nextprops.location.search).catid)
                 request(api_get_BiddingetgradeCatList).then((res) => {
                     this.setState({
                         topicCatList: res.data.gradeCatList,
@@ -75,7 +76,9 @@ class BiddingSetting extends React.Component {
 
             // })
            
-            
+            this.setState({
+                select: this.search2Obj(this.props.location.search).catid
+            })
             
             request(api_get_BiddingetgradeCatList).then((res) => {
                 this.setState({
@@ -291,6 +294,7 @@ class BiddingSetting extends React.Component {
         //     }               
         // });
         if( this.search2Obj(this.props.location.search).type === 'add' ) {
+            console.log(this.state.select)
             let rules = this.state.roleArr.length === 0 ? JSON.stringify([{"rule1":"","rulecode1":"","id":"","rule2":"",
             "rulecode2":"","rule3":"","rulecode3":"","rule4":"",
             "rulecode4":""}]) : JSON.stringify(this.state.roleArr)
@@ -299,7 +303,10 @@ class BiddingSetting extends React.Component {
                 headers: {
                     "Content-Type": "application/x-www-form-urlencoded"
                 },
-                body:`action=addGrade&addtype=${this.state.addtype}&clfname=${this.state.topicNameValue}&catid=${this.state.select}&rule=${this.state.addType-0 === 3 ? encodeURIComponent(JSON.stringify(this.state.SeniorTopicRule)) :encodeURIComponent(rules)}`
+                body:`action=addGrade&addtype=${this.state.addtype}&
+                      clfname=${this.state.topicNameValue}&
+                      catid=${this.state.select}&
+                      rule=${this.state.addType-0 === 3 ? encodeURIComponent(JSON.stringify(this.state.SeniorTopicRule)) :encodeURIComponent(rules)}`
             }).then((res) => {
                 if(res.data.code===1){
                     message.success('关键词添加成功');
@@ -346,7 +353,7 @@ class BiddingSetting extends React.Component {
   handleOk1 = (e) => {
     this.setState({num2:this.state.num2.splice(0,1),
                     visible1: false
-    });    
+    });
   }
   handleCancel1 = (e) => {
     this.setState({
@@ -422,10 +429,8 @@ class BiddingSetting extends React.Component {
     })
   }
   delRow(delrole) {
-      console.log()
       if ( this.search2Obj(this.props.location.search).type === 'add' ) {
       }else {
-        console.log(delrole)
         request(api_get_BiddinggetDelRule, {
             method: 'POST',
             headers: {

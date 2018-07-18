@@ -127,6 +127,8 @@ class BiddingCreate extends React.Component {
         if(reg.test(value)){
             newValue  = value.replace(reg,'')
             message.warning('请不要带有特殊字符');
+        } else {
+            newValue  = value
         }
         this.state.modalinput[rulenum] = newValue
         this.setState({})

@@ -48,6 +48,7 @@ const CompetitiveIntelligence = AsyncComponent(() => import('../CompetitiveIntel
 const WeChatFence = AsyncComponent(() => import('../WeChatFence/WeChatFence'))
 const CloudDisk = AsyncComponent(() => import('../CloudDisk/CloudDisk'))
 const CloudPlatform = AsyncComponent(() => import('../CloudPlatform/CloudPlatform'))
+const DeadwoodCreep = AsyncComponent(() => import('../DeadwoodCreep/DeadwoodCreep'))
 
 const {Header, Sider, Content} = Layout;
 const SubMenu = Menu.SubMenu;
@@ -194,6 +195,7 @@ class Index extends React.Component {
                 <Route path="/wechatfence" component={WeChatFence}/>
                 <Route path="/clouddisk" component={CloudDisk}/>
                 <Route path="/cloudplatform" component={CloudPlatform}/>
+                <Route path="/deadwoodcreep" component={DeadwoodCreep}/>
               </Switch>
               <div className="suspensionBox" style={{display:"none"}}>
                 <div>

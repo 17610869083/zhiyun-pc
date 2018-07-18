@@ -34,7 +34,7 @@ class AppCenter extends React.Component{
                         {type: 'icon--shujuzhiligongju', text: '网站安全治理', color: '#6296f1', href: '/securitygovernance', hrefType: 'http'}, // ***
                         {type: 'icon-leidatance', text: '网站空间探测', color: '#04c0b3', href: '/spaceexploration', hrefType: 'http'},
                         {type: 'icon-fanghu', text: '网站安全防护', color: '#4ba9eb', href: '/safetyprotection', hrefType: 'http'},
-                        {type: 'icon-jiangmurubingdugongji', text: '僵木蠕监测', color: '#4ba9eb'},
+                        {type: 'icon-jiangmurubingdugongji', text: '僵木蠕监测', color: '#4ba9eb', href: '/deadwoodcreep'},
                         {type: 'icon-zonghetongbao', text: '预警通报', color: '#f7b55d', href: '/alertnotifications', hrefType: 'http'},
                         // {type: 'icon-huandunicon-', text: '威胁情报', color: '#4ba9eb'},
                         // {type: 'icon-zidong', text: '自动通报', color: '#4ba9eb'},
