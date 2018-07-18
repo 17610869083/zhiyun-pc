@@ -84,7 +84,7 @@ class MyReport extends React.Component{
                 checkId:id,
                 flag:true,
                 reportType:reportType,
-                reportFormId:reportFormId
+                reportFormId: reportFormId
                 //flag: status === 2 ?true :false
             })
     }

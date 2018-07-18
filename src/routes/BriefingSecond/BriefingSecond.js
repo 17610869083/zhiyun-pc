@@ -148,7 +148,7 @@ class BriefingSecond extends React.Component{
 			<div>
 				{
 					(() => {
-            if (this.props.briefingData.length > 0) {
+            if (this.props.briefingData.length > 0 || this.props.reportId !== "") {
               return (
 								<div className="col">
 								<Row>
