@@ -391,7 +391,7 @@ class Daily extends React.Component{
 																			<div><p style={{ textIndent: "2em", color: "#ccc", fontSize: 14, lineHeight: "30px" }}>{item.summary}</p></div>
 																			<div>
 																				<p style={{ fontSize: 14, color: "#1E82A9" }}>原文链接：</p>
-																				<p style={{ fontSize: 14 }}><a>{item.url}</a></p>
+																				<p style={{ fontSize: 14 }}><a href={item.url} target="_blank">{item.url}</a></p>
 																			</div>
 																		</div>
 																	)
@@ -590,7 +590,7 @@ class Daily extends React.Component{
 																			<div>
 																				<p style={{ fontSize: 14, color: "#1E82A9" }}>原文链接：</p>
 																				<p style={{ fontSize: 14, color: "#1E82A9", wordBreak: "break-word" }}>
-																				  {item.url}
+																					<a href={item.url} target="_blank">{item.url}</a>
 																				</p>
 																			</div>
 																		</div>

@@ -578,7 +578,7 @@ class Special extends React.Component{
 																				<div className="specialExcerptsContent">
 																					<p style={{ fontSize: 14, color: "#1E82A9" }}>原文链接：</p>
 																					<p style={{ fontSize: 14, color: "#1E82A9", wordBreak: "break-word" }}>
-																						{i.url}
+																						<a href={i.url} target="_blank">{i.url}</a>
 																					</p>
 																				</div>
 																			</div>
@@ -894,7 +894,7 @@ class Special extends React.Component{
 																				<div className="specialExcerptsContent">
 																					<p style={{ fontSize: 14, color: "#1E82A9" }}>原文链接：</p>
 																					<p style={{ fontSize: 14, color: "#1E82A9", wordBreak: "break-word" }}>
-																						{i.url}
+																						<a href={i.url} target="_blank">{i.url}</a>
 																					</p>
 																				</div>
 																			</div>

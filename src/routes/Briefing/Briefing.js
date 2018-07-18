@@ -127,6 +127,8 @@ class Briefing extends React.Component{
 		})
 	}
 	render() {
+		console.log(this.props.briefingData.length)
+		console.log(this.props.reportId)
 		return (
 			<div>
 				{
@@ -245,7 +247,7 @@ class Briefing extends React.Component{
 																				<strong>
 																					<span>链接：</span>
 																				</strong>
-																				<span>{i.url}</span>	
+																				<p style={{ width: "63%", wordBreak: "break-word" }}><a href={i.url} target="_blank">{i.url}</a></p>	
 																			</div>
 																			<div className="content">
 																				<strong>
@@ -351,7 +353,7 @@ class Briefing extends React.Component{
 																				<strong>
 																					<span>链接：</span>
 																				</strong>
-																				<span>{i.url}</span>	
+																				<p style={{width: "63%", wordBreak: "break-word" }}><a href={i.url} target="_blank">{i.url}</a></p>	
 																			</div>
 																			<div className="content">
 																				<strong>

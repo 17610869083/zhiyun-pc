@@ -329,7 +329,7 @@ class BriefingSecond extends React.Component{
 																							</Col>
 																							<Col span={20}>
 																								<div className="timeData" style={{borderLeft: "1px solid #000"}}>
-																									<p style={{ fontSize: 16, wordBreak: 'break-all' }}>{i.url}</p>																								  
+																									<p style={{ fontSize: 16, wordBreak: 'break-all' }}><a href={i.url} target="_blank">{i.url}</a></p>																								  
 																								</div>
 																							</Col>
 																						</Row>
@@ -519,7 +519,7 @@ class BriefingSecond extends React.Component{
 																							</Col>
 																							<Col span={20}>
 																								<div className="timeData">
-																									<p style={{ fontSize: 16, wordBreak: 'break-all' }}>{i.url}</p>																								  
+																									<p style={{ fontSize: 16, wordBreak: 'break-all' }}><a href={i.url} target="_blank">{i.url}</a></p>																								  
 																								</div>
 																							</Col>
 																						</Row>
