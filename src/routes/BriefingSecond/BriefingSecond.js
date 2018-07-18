@@ -144,11 +144,13 @@ class BriefingSecond extends React.Component{
 		})
 	}
 	render() {
+		console.log(this.props.briefingData.length)
+		console.log(this.props.reportId)
 		return (
 			<div>
 				{
 					(() => {
-            if (this.props.briefingData.length > 0 || this.props.reportId !== "") {
+            if (this.props.briefingData.length > 0 || this.props.reportId !== undefined) {
               return (
 								<div className="col">
 								<Row>
@@ -292,9 +294,9 @@ class BriefingSecond extends React.Component{
 																						</Row>
 																					</div>
                                           <div className="cont">
-																						<Row>
-																							<Col span={4} style={{ display: "inherit", textAlign: "center" }}>
-																								<div className="source" style={{margin: "27% 0 0 0"}}>
+																						<Row style={{display: "flex", justifyContent: "center", alignItems: "center"}}>
+																							<Col span={4} style={{ textAlign: "center" }}>
+																								<div className="source">
 																									<strong>
 																										<p style={{ fontSize: 16 }}>内容</p>
 																									</strong>
@@ -303,36 +305,34 @@ class BriefingSecond extends React.Component{
 																							<Col span={20}>
 																								<div className="timeData"
 																								  ref="timeData"
-																								  style={{
-																										borderLeft: "1px solid #000"
-																									}}>
+																								  style={{borderLeft: "1px solid #000"}}>
 																									<p style={{ fontSize: 16, textIndent: "2em" }}>{i.content}</p>																								  
 																								</div>
 																							</Col>
 																						</Row>
 																					</div>
-                                          <div className="yuanUrl" style={{ height: 80 }}>
-																						<Col span={24}>
-																							<div className="source" style={{ width: "16.7%", height: 78, borderRight: "1px solid #000", float: "left" }}>
-																								<strong style={{ display: "inherit", marginTop: 25 }}>
-																									<span
-																									  style={{
-																											fontSize: 16,
-																											textAlign: "center",
-																											display: "inherit"
-																										}}
-																										>原文链接
-																									</span>
-																								</strong>
-																							</div>
-																							<div className="timeData"
-																							  // style={{
-																								// 	height: 100,
-																								// }}
-																								>
-																								<p style={{ fontSize: 16, wordBreak: 'break-all' }}>{i.url}</p>																								  
-																							</div>
-																						</Col>
+                                          <div className="yuanUrl" style={{ border: "1px solid #000", borderBottom: "none", borderLeft: "none", borderRight: "none" }}>
+																						<Row style={{display: "flex", alignItems: "center"}}>
+																							<Col span={4} style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+																								<div className="source" style={{ float: "left" }}>
+																									<strong style={{ display: "inherit" }}>
+																										<span
+																											style={{
+																												fontSize: 16,
+																												textAlign: "center",
+																												display: "inherit"
+																											}}
+																											>原文链接
+																										</span>
+																									</strong>
+																								</div>
+																							</Col>
+																							<Col span={20}>
+																								<div className="timeData" style={{borderLeft: "1px solid #000"}}>
+																									<p style={{ fontSize: 16, wordBreak: 'break-all' }}>{i.url}</p>																								  
+																								</div>
+																							</Col>
+																						</Row>
 																					</div>
 																				</div>
 																			</div>
@@ -482,9 +482,9 @@ class BriefingSecond extends React.Component{
 																						</Row>
 																					</div>
                                           <div className="cont">
-																						<Row>
-																							<Col span={4} style={{ display: "inherit", textAlign: "center" }}>
-																								<div className="source" style={{margin: "27% 0 0 0"}}>
+																						<Row style={{display: "flex", justifyContent: "center", alignItems: "center"}}>
+																							<Col span={4} style={{ textAlign: "center" }}>
+																								<div className="source">
 																									<strong>
 																										<p style={{ fontSize: 16 }}>内容</p>
 																									</strong>
@@ -501,26 +501,28 @@ class BriefingSecond extends React.Component{
 																							</Col>
 																						</Row>
 																					</div>
-                                          <div className="yuanUrl" style={{ height: 80 }}>
-																						<Col span={24}>
-																							<div className="source" style={{ width: "16.7%", height: 78, borderRight: "1px solid #000", float: "left" }}>
-																								<strong style={{ display: "inherit", marginTop: 25 }}>
-																									<span
-																									  style={{
-																											fontSize: 16,
-																											textAlign: "center",
-																											display: "inherit"
-																										}}
-																										>原文链接
-																									</span>
-																								</strong>
-																							</div>
-																							<div className="timeData"
-															
-																								>
-																								<p style={{ fontSize: 16, marginTop: 25,wordBreak:'break-all' }}>{i.url}</p>																								  
-																							</div>
-																						</Col>
+                                          <div className="yuanUrl" style={{ border: "1px solid #000", borderBottom: "none", borderLeft: "none", borderRight: "none" }}>
+																						<Row style={{display: "flex", alignItems: "center"}}>
+																							<Col span={4} style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+																								<div className="source" style={{ float: "left" }}>
+																									<strong style={{ display: "inherit" }}>
+																										<span
+																											style={{
+																												fontSize: 16,
+																												textAlign: "center",
+																												display: "inherit"
+																											}}
+																											>原文链接
+																										</span>
+																									</strong>
+																								</div>
+																							</Col>
+																							<Col span={20}>
+																								<div className="timeData">
+																									<p style={{ fontSize: 16, wordBreak: 'break-all' }}>{i.url}</p>																								  
+																								</div>
+																							</Col>
+																						</Row>
 																					</div>
 																				</div>
 																			</div>
