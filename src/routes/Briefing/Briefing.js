@@ -128,12 +128,12 @@ class Briefing extends React.Component{
 	}
 	render() {
 		console.log(this.props.briefingData.length)
-		console.log(this.props.reportId)
+		console.log(this.state.reportId)
 		return (
 			<div>
 				{
 					(() => {
-            if (this.props.briefingData.length > 0 || this.props.reportId !== undefined) {
+            if (this.props.briefingData.length > 0 || this.state.reportId !== "") {
               return (
 								<div className="col">
 								<Row>

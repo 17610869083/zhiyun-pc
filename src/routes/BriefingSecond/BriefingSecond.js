@@ -140,17 +140,17 @@ class BriefingSecond extends React.Component{
 		   })
 		}
 		this.setState({
-			date: date
+			date: data.data
 		})
 	}
 	render() {
 		console.log(this.props.briefingData.length)
-		console.log(this.props.reportId)
+		console.log(this.state.date)
 		return (
 			<div>
 				{
 					(() => {
-            if (this.props.briefingData.length > 0 || this.props.reportId !== undefined) {
+            if (this.props.briefingData.length > 0 || this.state.reportId !== "") {
               return (
 								<div className="col">
 								<Row>
@@ -518,7 +518,7 @@ class BriefingSecond extends React.Component{
 																								</div>
 																							</Col>
 																							<Col span={20}>
-																								<div className="timeData">
+																								<div className="timeData" style={{borderLeft: "1px solid #000"}}>
 																									<p style={{ fontSize: 16, wordBreak: 'break-all' }}><a href={i.url} target="_blank">{i.url}</a></p>																								  
 																								</div>
 																							</Col>
