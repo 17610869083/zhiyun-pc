@@ -96,8 +96,11 @@ class ExcludeSetting extends React.Component{
                        this.setState({
                            allKeywords:res.data.show2000List,
                        })
-                }
-
+                }else{
+                        this.setState({
+                          allKeywords:[{"rule1":"","rule2":"","rule3":"","rule4":"","id":"","scope":""}]
+                        })
+                 }
                 request(exclude_discontinuation,{
                   method:'POST',
                   headers: {
@@ -109,6 +112,10 @@ class ExcludeSetting extends React.Component{
                          this.setState({
                           negativeExclusion:res.data.show2020List
                          })
+                  }else{
+                          this.setState({
+                            negativeExclusion:[{"rule1":"","rule2":"","rule3":"","rule4":"","id":"","scope":""}]
+                          })
                   }
 
                   request(exclude_discontinuation,{
@@ -122,6 +129,10 @@ class ExcludeSetting extends React.Component{
                            this.setState({
                             negativeDiscontinuation:res.data.show1020List
                            })
+                    }else{
+                            this.setState({
+                              negativeDiscontinuation:[{"rule1":"","rule2":"","rule3":"","rule4":"","id":"","scope":""}]
+                            })
                     }
                     request(exclude_discontinuation,{
                       method:'POST',
@@ -134,6 +145,10 @@ class ExcludeSetting extends React.Component{
                              this.setState({
                               waring:res.data.show3020List
                              })
+                      }else{
+                          this.setState({
+                            waring:[{"rule1":"","rule2":"","rule3":"","rule4":"","id":"","scope":""}]
+                          })
                       }
                     })
                 })

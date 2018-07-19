@@ -124,6 +124,9 @@ class SystemTopic extends React.Component {
 
     onChangeObject(e) {
         const { value } = e.target;
+        this.setState({
+            objectValueInput:value
+        })
         let ObjectArr=value.split(' '); 
         if(/~|!|@|#|\$|\^|&|\*|=|\?|！|￥|-|\(|\)|（|）|%|【|】|\{|\}|；|;|%|,|，|。|\./.test(value)){ 
             message.warning('请不要带有特殊字符');
@@ -132,12 +135,13 @@ class SystemTopic extends React.Component {
             message.warning('请不要出现重复的关键词或多余的空格');
             return ;
         }
-        this.setState({
-            objectValueInput:value
-        })
+
     }
     onChangeSubject1(e) {
         const { value } = e.target; 
+        this.setState({
+            subject1ValueInput: value
+        })
         let Subject1Arr=value.split(' '); 
         if(/~|!|@|#|\$|\^|&|\*|=|\?|！|￥|-|\(|\)|（|）|%|【|】|\{|\}|；|;|%|,|，|。|\./.test(value)){  
             message.warning('请不要带有特殊字符');
@@ -146,12 +150,13 @@ class SystemTopic extends React.Component {
             message.warning('请不要出现重复的关键词或多余的空格');
             return ;
         }
-        this.setState({
-            subject1ValueInput: value
-        })
+ 
     }
     onChangeSubject2(e) {
         const { value } = e.target;
+        this.setState({
+            subject2ValueInput: value
+        })
         let Subject2Arr=value.split(' '); 
         if(/~|!|@|#|\$|\^|&|\*|=|\?|！|￥|-|\(|\)|（|）|%|【|】|\{|\}|；|;|%|,|，|。|\./.test(value)){ 
             message.warning('请不要带有特殊字符');
@@ -160,12 +165,13 @@ class SystemTopic extends React.Component {
             message.warning('请不要出现重复的关键词或多余的空格');
             return ;
         }
-        this.setState({
-            subject2ValueInput: value
-        })
+  
     }
     onChangeFilter(e) {
         const { value } = e.target;
+        this.setState({
+            filterValueInput: value
+        })
         let FilterArr=value.split(' '); 
         if(/~|!|@|#|\$|\^|&|\*|=|\?|！|￥|-|\(|\)|（|）|%|【|】|\{|\}|；|;|%|,|，|。|\./.test(value)){  
             message.warning('请不要带有特殊字符');
@@ -174,27 +180,24 @@ class SystemTopic extends React.Component {
             message.warning('请不要出现重复的关键词或多余的空格');
             return ;
         }
-        this.setState({
-            filterValueInput: value
-            
-        })
+  
     }
 
     showModal1(index,e){
-        let number = 0;
-        if(this.props.num1[index]['rule1'] === ''){
+        // let number = 0;
+        // if(this.props.num1[index]['rule1'] === ''){
     
-        }else{
-                this.props.num1.forEach( item => {
-                        if(item.rule1 !== ''){
-                            ++number;
-                        } 
-                })
-                if(number<2 ){
-                    message.error('当前只有一组关键词，不可删除');
-                    return;
-                }
-        }
+        // }else{
+        //         this.props.num1.forEach( item => {
+        //                 if(item.rule1 !== ''){
+        //                     ++number;
+        //                 } 
+        //         })
+        //         if(number<2 ){
+        //             message.error('当前只有一组关键词，不可删除');
+        //             return;
+        //         }
+        // }
     this.setState({
       visible1: true,
       index:parseInt(e.target.dataset.index,10),
