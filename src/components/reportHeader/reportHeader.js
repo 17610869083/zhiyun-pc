@@ -74,6 +74,7 @@ class reportHeader extends React.Component{
 	}	
 	//报告弹窗确定按钮回调
 	checkReport = (data,status) => {
+
 		this.props.refreshBrief(data,status);
 		this.setState({
 			isShowModalMaterial:false,

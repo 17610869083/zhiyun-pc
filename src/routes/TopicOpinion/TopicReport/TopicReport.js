@@ -208,7 +208,7 @@ class TopicReport extends React.Component {
            
         })
         history.push({
-            pathname:'/historyopinion',
+            pathname:'/allopinion/myreport',
             search:'type=1'
         });
     }
@@ -236,7 +236,7 @@ class TopicReport extends React.Component {
             topicid:topicid.topicid
         };  
         this.props.topicReportExport(report) ;   
-        history.push('/topic/echarts'); 
+        history.push('/allopinion/topic/echarts'); 
     }
     picker(date, dateString){
             this.setState({
@@ -261,7 +261,7 @@ class TopicReport extends React.Component {
             downloadVisible:false
         })
         history.push({
-            pathname:'/historyopinion',
+            pathname:'/allopinion/myreport',
             search:'type=1'
         });
     }
@@ -321,7 +321,7 @@ class TopicReport extends React.Component {
             }) 
         }else{
             this.props.topicReportExport(report) ;   
-            history.push('/topic/echarts'); 
+            history.push('/allopinion/topic/echarts'); 
             this.setState({
                 visible:false
             }) 

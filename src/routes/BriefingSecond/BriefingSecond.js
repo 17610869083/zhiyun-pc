@@ -144,8 +144,6 @@ class BriefingSecond extends React.Component{
 		})
 	}
 	render() {
-		console.log(this.props.briefingData.length)
-		console.log(this.state.date)
 		return (
 			<div>
 				{
