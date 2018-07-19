@@ -76,7 +76,7 @@ class OpinionDetail extends React.Component {
         negative: ['负面', '반면', '悪い面', 'پاسسىپ.', 'ལྡོག་ངོས'],
         warning: ['预警', '예보', '警報', 'ئالدىن سىگنال بېرىش ', 'ཉེ་བརྡ་']
       },
-      allSelect: ['全选：', '모두 선택:', '全選：', '：ھەممىنى تاللايمەن.', 'ཡོངས་འདེམས།：'],
+      allSelect: ['全选：', '모두 선택:', '全選：', 'ھەممىسى. ', 'ཡོངས་འདེམས།：'],
       similarInfo: ['相似信息', '비슷 한 정보', '相似信息', 'ئوخشاش ئۇچۇر.', 'འདྲ་མཚུངས་ཀྱི་ཆ་འཕྲིན།'],
       infoCompany: ['条', '건수', '条', 'ماددا ', 'དོན་ཚན།'],
       keyWord:['关键词', '키워드', 'キーワード', 'ھالقىلىق سۆز بولۇپ قالدى.', 'གནད་ཚིག་འགའ།'],
@@ -114,7 +114,17 @@ class OpinionDetail extends React.Component {
       },
       leastOne:  ['至少选择一项', '적어도 한 개를 선택 해라', '少なくとも1つ選択する。', 'ھېچ بولمىغاندا بىر تۈرلۈك ', 'མ་མཐར་ཡང་གདམ་ག་ཞིག་'],
       cancel: ['取消操作', '조작을 취소하다', '取り消す', 'مەشغۇلاتنى بىكار قىلىش', 'བཀོལ་སྤྱོད་མེད་པ་བཟོས་'],
-      generation: ['生成中...', '생성 과정...', '作成中...', '...ھاسىل قىلىش داۋامىدا', 'སྐྱེས་གྲུབ་ནང་...']
+      generation: ['生成中...', '생성 과정...', '作成中...', '...ھاسىل قىلىش داۋامىدا', 'སྐྱེས་གྲུབ་ནང་...'],
+      handleTip: {
+        delsucess: ['删除成功', '성공을 지우다', '削除成功', 'ئۆچۈرۈلدى. ئۆچۈرۈلدى', 'སྐོར་བསུབས་ཡོད་པ་བཅས་གྲུབ་འབྲས་ཐོབ་པའི་ངང་'],
+        positivesucess: ['成功设置为正面', '성공', '成功', 'مۇۋەپپەقىيەت', 'གྲུབ་འབྲས་ཐོབ་པའི་ངང་འཇོག་དཔྲལ་པའི་'],
+        neutralsuccess: ['成功设置为中性', '성공', '成功', 'مۇۋەپپەقىيەت', 'གྲུབ་འབྲས་ཐོབ་པའི་ངང་མ་ནིང་འཇོག་ཆེད་།'],
+        negativesuccess: ['成功设置为负面', '성공', '成功', 'مۇۋەپپەقىيەت', 'གྲུབ་འབྲས་ཐོབ་པའི་ངང་བཀོད་ནས་ལྡོག་ཕྱོགས་'],
+        warningsuccess: ['成功设置为预警', '성공', '成功', 'مۇۋەپپەقىيەت', 'གྲུབ་འབྲས་ཐོབ་པའི་ངང་སྔོན་བརྡའི་ཆེད་འཇོག་'],
+      },
+      wait: ['请稍等', '잠깐기다 려 주세요.', 'ちょっとお待ちください', 'سەل ساقلاڭلار', 'ཏོག་ཙམ་སྒུག་གནང་ཨ་'],
+      Loading: ['加载中', '적재 중', 'ローディング中', 'يۈكلىنۋاتىدۇ', 'ཤུགས་སྣོན་ཁྲོད་'],
+      Generationdoc: ['正在生成文档', '서류 가 만들어 져 있다', '作成中， ちょっとお待ちください', 'ھازىر ھاسىل قىلىش ئارخىپ', 'སྐྱེས་གྲུབ་ཡིག་ཚགས་བཞིན་ཡོད་།']
     };
   }
   componentDidUpdate(prevProps, prevState) {
@@ -148,14 +158,14 @@ class OpinionDetail extends React.Component {
 
   clickItemTitle(sid, e) {
     // window.open(window.location.origin + window.location.pathname + '#/detail/' + sid);
-    window.open(window.location.origin + window.location.pathname + '#/multilingual/detail/' + sid + '/'+ this.props.langnum +'/'+ this.props.lang)
+    window.open(window.location.origin + window.location.pathname + '#/multilingual/detail/' + sid + '/'+ this.props.langnum +'/'+ this.props.lang+ '/'+ this.props.languageType)
   }
 
   // 删除
   deleteConfirm(sid) {
     request(api_delete_multilingual + '&lang=' + this.props.lang  + '&sid=["' + sid + '"]', {}).then((res) => {
       if (res.data.code === 1) {
-        message.success(res.data.msg);
+        message.success(this.state.handleTip.delsucess[this.props.languageType]);
         this.props.onDataChange(this.state.page);
         this.setState({
           checkedArray:new Array(40).fill(false)
@@ -169,7 +179,25 @@ class OpinionDetail extends React.Component {
   editDocNeg(sid,neg) {
     request(api_edit_doc_neg + '&lang='+ this.props.lang +'&neg='+ neg +'&sid=["' + sid + '"]', {}).then(res => {
       if (res.data.code === 1) {
-        message.success(res.data.msg);
+        switch (neg) {
+          case 1:
+            // 负面
+            message.success(this.state.handleTip.negativesuccess[this.props.languageType]);
+            break;
+          case 0:
+            // 中性
+            message.success(this.state.handleTip.neutralsuccess[this.props.languageType]);
+            break
+          case -1:
+            // 正面
+            message.success(this.state.handleTip.positivesucess[this.props.languageType]);
+            break
+          case 2:
+            // 预警
+            message.success(this.state.handleTip.warningsuccess[this.props.languageType]);
+            break
+        }
+        
         this.props.onDataChange(this.state.page);
         this.setState({
           checkedArray:new Array(40).fill(false)
@@ -217,7 +245,7 @@ class OpinionDetail extends React.Component {
       const sidList = JSON.stringify(arr);
       request(api_edit_doc_neg + '&lang='+ this.props.lang + '&neg=-1&sid=' + sidList, {}).then((res) => {
         if (res.data.code === 1) {
-          message.success(res.data.msg);
+          message.success(this.state.handleTip.positivesucess[this.props.languageType]);
           this.props.onDataChange(this.state.page);
           this.setState({
             checkedAll: false,
@@ -238,7 +266,7 @@ class OpinionDetail extends React.Component {
       const sidList = JSON.stringify(arr);
       request(api_edit_doc_neg + '&lang='+ this.props.lang + '&neg=0&sid=' + sidList, {}).then((res) => {
         if (res.data.code === 1) {
-          message.success(res.data.msg);
+          message.success(this.state.handleTip.neutralsuccess[this.props.languageType]);
           this.props.onDataChange(this.state.page);
           this.setState({
             checkedAll: false,
@@ -259,7 +287,7 @@ class OpinionDetail extends React.Component {
       const sidList = JSON.stringify(arr);
       request(api_edit_doc_neg + '&lang='+ this.props.lang + '&neg=1&sid=' + sidList, {}).then((res) => {
         if (res.data.code === 1) {
-          message.success(res.data.msg);
+          message.success(this.state.handleTip.negativesuccess[this.props.languageType]);
           this.props.onDataChange(this.state.page);
           this.setState({
             checkedAll: false,
@@ -280,7 +308,7 @@ class OpinionDetail extends React.Component {
       const sidList = JSON.stringify(arr);
       request(api_edit_doc_neg + '&lang='+ this.props.lang + '&neg=2&sid=' + sidList, {}).then((res) => {
         if (res.data.code === 1) {
-          message.success(res.data.msg);
+          message.success(this.state.handleTip.warningsuccess[this.props.languageType]);
           this.props.onDataChange(this.state.page);
           this.setState({
             checkedAll: false,
@@ -301,7 +329,7 @@ class OpinionDetail extends React.Component {
       const sidList = JSON.stringify(arr);
       request(api_delete_multilingual + '&lang='+ this.props.lang + '&sid=' + sidList, {}).then((res) => {
         if (res.data.code === 1) {
-          message.success(res.data.msg);
+          message.success(this.state.handleTip.delsucess[this.props.languageType]);
           this.props.onDataChange(this.state.page);
           this.setState({
             checkedAll: false,
@@ -719,19 +747,17 @@ class OpinionDetail extends React.Component {
       </Menu>
     );
     const Loading = (
-      <Spin tip="加载中...">
-        <Alert
-          message="正在加载数据..."
-          description="请稍等，数据即将载入..."
+      <Spin tip={this.state.Loading[this.props.languageType] + '...'}>
+        <Alert style={{height: 100}}
           type="info"
         />
       </Spin>
     );
     const downLoading = (
       <Spin tip={this.state.generation[this.props.languageType]}>
-          <Alert
-          message="正在生成文档..."
-          description="请稍等..."
+          <Alert 
+          message={this.state.Generationdoc[this.props.languageType] + '...'}
+          description={this.state.wait[this.props.languageType] + '...'}
           type="info"
           />
       </Spin>

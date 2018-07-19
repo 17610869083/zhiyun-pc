@@ -726,7 +726,7 @@ class OpinionDetail extends React.Component {
               >
                 {
                   (() => {
-                    if (this.state.isSearch && this.state.seltype === 'title') {
+                    if (this.state.isSearch) {
                       return <span dangerouslySetInnerHTML={{__html: (item.title && item.title.length > 35) ? setHighlightTags(item.title.slice(0, 35), Array(this.state.searchInputValue).concat([''])) + '...' : setHighlightTags(item.title, Array(this.state.searchInputValue).concat(['']))}}></span>
                     } else {
                       return (item.title && item.title.length > 35) ? item.title.slice(0, 35) + '...' : item.title
@@ -738,7 +738,7 @@ class OpinionDetail extends React.Component {
             <div className="item-middle">
               <div className="left" style={this.state.isSummaryShow ? {display: 'block'} : {display: 'none'}}>
                 <div>
-                    { 
+                    {
                       (() => {
                         if (this.state.isSearch) {
                             if (this.state.seltype === 'content') {

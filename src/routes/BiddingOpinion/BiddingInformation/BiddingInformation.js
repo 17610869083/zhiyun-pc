@@ -102,7 +102,7 @@ class BiddingInformation extends React.Component {
       filterIndex: 0,
       filterValue: 1,
       media: [
-        {count: 0, value: "全部", key: "docApp"},
+        {count: 0, value: "全部", key: "docApp"}
       ],
       mediaIndex: 0,
       mediaValue: '全部',
@@ -368,7 +368,8 @@ class BiddingInformation extends React.Component {
                 });
               }else{
                 this.setState({
-                  docList:'[]'
+                  docList:'[]',
+                  media: [{count: 0, value: "全部", key: "docApp"}]
                 })
               }
           });
@@ -396,7 +397,8 @@ class BiddingInformation extends React.Component {
             });
           }else{
             this.setState({
-              docList:'[]'
+              docList:'[]',
+              media: [{count: 0, value: "全部", key: "docApp"}]
             })
           }
         });

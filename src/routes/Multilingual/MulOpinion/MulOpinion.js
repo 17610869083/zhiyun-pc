@@ -80,10 +80,9 @@ class MulOpinion extends React.Component {
     const lang = this.props.match.params.param;
     this.setState({
       sid: this.props.match.params.sid,
-      languageType: this.props.match.params.languages
+      languageType: this.props.match.params.lang
     })
     request(api_get_DetailForeign + '&sid=' + sid + '&lang=' + lang ).then((res) => {
-      console.log(res)
       this.setState({
         data: res.data,
         keywords: Array(res.data.nztags),
