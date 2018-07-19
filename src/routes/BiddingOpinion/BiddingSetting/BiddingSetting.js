@@ -294,10 +294,19 @@ class BiddingSetting extends React.Component {
         //         })
         //     }               
         // });
+        if (this.state.topicNameValue === '') {
+            message.error('专题名称不能为空!')
+            return false
+        }
+        let rules = this.state.roleArr.length === 0 ? JSON.stringify([{"rule1":"","rulecode1":"","id":"","rule2":"",
+        "rulecode2":"","rule3":"","rulecode3":"","rule4":"",
+        "rulecode4":""}]) : JSON.stringify(this.state.roleArr)
+        let ruleArr = JSON.parse(rules)
+        if(ruleArr[ruleArr.length-1]['rule1'] === '' && this.state.addType === 1) {
+            message.error('请把规则填写完整!')
+            return false
+        }
         if( this.search2Obj(this.props.location.search).type === 'add' ) {
-            let rules = this.state.roleArr.length === 0 ? JSON.stringify([{"rule1":"","rulecode1":"","id":"","rule2":"",
-            "rulecode2":"","rule3":"","rulecode3":"","rule4":"",
-            "rulecode4":""}]) : JSON.stringify(this.state.roleArr)
             request(api_get_BiddingaddGrade, {
                 method: 'POST',
                 headers: {
@@ -313,9 +322,7 @@ class BiddingSetting extends React.Component {
                 }
             })
         } else {
-            let rules = this.state.roleArr.length === 0 ? JSON.stringify([{"rule1":"","rulecode1":"","id":"","rule2":"",
-            "rulecode2":"","rule3":"","rulecode3":"","rule4":"",
-            "rulecode4":""}]) : JSON.stringify(this.state.roleArr)
+            
             request(api_get_BiddinggetEditRule, {
                 method: 'POST',
                 headers: {
@@ -425,21 +432,25 @@ class BiddingSetting extends React.Component {
         roleArr: newArr
     })
   }
-  delRow(delrole) {
-      if ( this.search2Obj(this.props.location.search).type === 'add' ) {
-      }else {
-        request(api_get_BiddinggetDelRule, {
-            method: 'POST',
-            headers: {
-                "Content-Type": "application/x-www-form-urlencoded"
-            },
-            body: `&ruleid=${delrole[0].id}`
-        }).then((res) => {
-            if(res.code === 1) {
-                message.success('删除成功');
-            }
-        })
-      }
+  delRow(delrole, role) {
+    const [...newArr] = role
+    this.setState({
+        roleArr: newArr
+    })
+    if ( this.search2Obj(this.props.location.search).type === 'add' ) {
+    }else {
+    request(api_get_BiddinggetDelRule, {
+        method: 'POST',
+        headers: {
+            "Content-Type": "application/x-www-form-urlencoded"
+        },
+        body: `&ruleid=${delrole[0].id}`
+    }).then((res) => {
+        if(res.code === 1) {
+            message.success('删除成功');
+        }
+    })
+    }
 
   }
     render() {
@@ -485,7 +496,7 @@ class BiddingSetting extends React.Component {
             </Tooltip>
             匹配关键词组合</span>;
         return (
-            <div className="topic-add-wrapper">
+            <div className="bidding-setting">
                 <Tabs tabBarStyle={{color:'#C1C1C1'}} onChange={this.handleOnChange.bind(this)} type="card" activeKey={this.state.addType!==undefined?this.state.addType.toString():'1'}>
                     <TabPane tab="快速设置" key="1">                  
                         <div className="fast-setting">

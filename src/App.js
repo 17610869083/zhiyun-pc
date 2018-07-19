@@ -13,7 +13,7 @@ class App extends Component {
             <Switch>
               <Route exact path="/login" component={Login}/>
               <Route path="/detail" component={DetailOpinion}/>
-              <Route path="/multilingual/detail/:sid/:languages/:param" component={MulOpinion}/>
+              <Route path="/multilingual/detail/:sid/:languages/:param/:lang" component={MulOpinion}/>
               <Route path="/multilingual/detail/" component={BiddingOpinion}/>
               <Route path="/" component={Index} />
             </Switch>

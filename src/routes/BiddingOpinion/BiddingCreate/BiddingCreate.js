@@ -69,6 +69,10 @@ class BiddingCreate extends React.Component {
         // console.log(this.state.num1)
         // console.log(this.state.modalinput)
         // console.log(this.state.editRoleId)
+        if (this.state.modalinput['rule1'] === '') {
+            message.error('主题词不能为空！')
+            return false
+        }
         this.state.num1[this.state.editRoleId]['rule1'] = this.state.modalinput['rule1']
         this.state.num1[this.state.editRoleId]['rule2'] = this.state.modalinput['rule2']
         this.state.num1[this.state.editRoleId]['rule3'] = this.state.modalinput['rule3']
@@ -80,6 +84,10 @@ class BiddingCreate extends React.Component {
 
     }
     addRole() {
+        if (this.state.num1[this.state.num1.length - 1]['rule1'] === '') {
+            message.error('请填入上一条规则')
+            return false
+        }
         let newRole = [{
             "rule1":"",
             "rulecode1":"",
@@ -108,7 +116,7 @@ class BiddingCreate extends React.Component {
             num1: this.state.num1,
             editRoleId: 0,
             visible1: false
-        },() => {this.props.onDelRow(delrole)})
+        },() => {this.props.onDelRow(delrole, this.state.num1)})
     }
     handleCancel1() {
         this.setState({

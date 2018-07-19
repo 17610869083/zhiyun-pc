@@ -79,7 +79,7 @@ class AllOpinion extends React.Component {
           name: ['不去重', '중복허가', '重複を取り除かない', 'تەكرار يوقىتىش ئەمەس ', 'བྱེད་བསྐྱར་ཟློས།'],
           value: 1
         },
-        {
+        { 
           name: ['去重', '중복배제', '重複を取り除く', 'چىقىرىپ تەكرار.', 'མི་བྱེད་བསྐྱར་ཟློས།'],
           value: 0
         }
@@ -116,9 +116,9 @@ class AllOpinion extends React.Component {
       OptiionTitle:{
         time: ['时间：', '시간：', '時間：', '：ۋاقىت ', 'དུས་ཚོད：་'],
         inclination: ['倾向：', '경향：', '倾向：', '：خاھىش',  'ཁ་ཕྱོགས་པ་：'],
-        sort: ['排序：', '정렬：', '順位：', '：تەرتىپ بويىچە ', 'གོ་རིམ།：'],
-        removal: ['去重：', '중복배제：','重複：' , '：تەكرار ', 'གོ་རིམ།：'],
-        media: ['媒体：', '미디어：', 'メディア：', '：ئاخبارات ۋاستىلىرى.', 'ཆ་འཕྲིན་：'],
+        sort: ['排序：', '정렬：', '順位：', '：تەرتىپ بويىچە ', 'མོ་ཊ་ནས་མར་བབས་རོགས་：'],
+        removal: ['去重：', '중복배제：','重複：' , '：تەكرار ', 'བསྐྱར་ཟློས་：'],
+        media: ['媒体：', '미디어：', 'メディア：', '：ئاخبارات ۋاستىلىرى.', 'ཆ་འཕྲིན་：']
       },
       infoList: ['信息列表', '정보 목록', '情報リスト', 'ئۇچۇر جەدۋىلى', 'ཆ་འཕྲིན་རེའུ་མིག་བཀོད།'],
       language: ['', 'kr', 'jp', 'uygur', 'zang'],
@@ -232,7 +232,7 @@ class AllOpinion extends React.Component {
     this.setState({
       trendValue: value
     });
-    const param = {
+    let param = {
       lang:this.state.language[this.props.match.params.languages],
       pagesize: this.state.pagesize,
       datetag: this.state.timeValue,
@@ -242,6 +242,11 @@ class AllOpinion extends React.Component {
       page:this.props.page,
       carry: this.state.mediaValue
     };
+    if (this.state.timeValue === 'custom') {
+      param.begin = this.state.begin
+      param.end = this.state.end
+    }
+    
     this.props.opinionSearchRequest(param);
     this.props.paginationPage(1);
   }
@@ -250,7 +255,7 @@ class AllOpinion extends React.Component {
     this.setState({
       sortValue: value
     });
-    const param = {
+    let param = {
       lang:this.state.language[this.props.match.params.languages],
       pagesize: this.state.pagesize,
       datetag: this.state.timeValue,
@@ -260,6 +265,10 @@ class AllOpinion extends React.Component {
       page:this.props.page,
       carry: this.state.mediaValue
     };
+    if (this.state.timeValue === 'custom') {
+      param.begin = this.state.begin
+      param.end = this.state.end
+    }
     this.props.opinionSearchRequest(param);
     this.props.paginationPage(1);
       
@@ -269,7 +278,7 @@ class AllOpinion extends React.Component {
     this.setState({
       filterValue: value
     });
-      const param = {
+      let param = {
         lang:this.state.language[this.props.match.params.languages],
         pagesize: this.state.pagesize,
         datetag: this.state.timeValue,
@@ -279,6 +288,10 @@ class AllOpinion extends React.Component {
         page:this.props.page,
         carry: this.state.mediaValue
       };
+      if (this.state.timeValue === 'custom') {
+        param.begin = this.state.begin
+        param.end = this.state.end
+      }
       this.props.opinionSearchRequest(param);
       this.props.paginationPage(1);
       
@@ -288,7 +301,7 @@ class AllOpinion extends React.Component {
     this.setState({
       mediaValue: value
     });
-    const param = {
+    let param = {
       lang:this.state.language[this.props.match.params.languages],
       pagesize: this.state.pagesize,
       datetag: this.state.timeValue,
@@ -298,6 +311,10 @@ class AllOpinion extends React.Component {
       page:this.props.page,
       carry: value
     };
+    if (this.state.timeValue === 'custom') {
+      param.begin = this.state.begin
+      param.end = this.state.end
+    }
     this.props.opinionSearchRequest(param);
     this.props.paginationPage(1);
   }
