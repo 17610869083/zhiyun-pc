@@ -33,7 +33,7 @@ class Zheader extends React.Component {
                 { text: '日语监测', color: '#4ba9eb', href: '/multilingual/2', hrefType: 'history'},
                 { text: '维语监测', color: '#6296f1', href: '/multilingual/3', hrefType: 'history'},
                 { text: '藏语监测', color: '#4ba9eb', href: '/multilingual/4', hrefType: 'history'},
-                {text: '英语监测', color: '#04c0b3',href:'javascript();'},
+                // {text: '英语监测', color: '#04c0b3',href:'javascript();'},
                 { text: '民情管理', color: '#4ba9eb',href:'/allopinion/allopiniondetail',hrefType:'http'},
                 { text: '网站监测预警', color: '#4ba9eb', href: 'https://114.242.25.234:38447/', hrefType: 'login'},
                 { text: '网站安全治理', color: '#6296f1', href: 'https://119.88.190.68', hrefType: 'login'}, // ***

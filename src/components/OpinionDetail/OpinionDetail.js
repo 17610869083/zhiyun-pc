@@ -543,10 +543,12 @@ class OpinionDetail extends React.Component {
         },
         body: `page=${propsParamData.page}&sids=${propsParamData.sid}&pagesize=${propsParamData.pagesize}&datetag=${propsParamData.datetag}&taskname=${this.state.fileName}&documenttype=excel&createdate=${time}&taskstate=0&source=monitor&order=${propsParamData.order}&begin=${propsParamData.begin}&end=${propsParamData.end}&neg=${propsParamData.neg}&carry=${propsParamData.carry}&similer=${propsParamData.similer}&seltype=conten&keyword=`
       }).then(res => {
-            this.setState({
-              downloadFlag:false
-            })
-            window.location.href = res.data.downloadUrl
+        this.setState({
+          downloadFlag:false
+        })
+          if(res.data.code !==0){
+              window.location.href = res.data.downloadUrl
+          } 
       })
 
     } else if (propsType === 'TopicList') {

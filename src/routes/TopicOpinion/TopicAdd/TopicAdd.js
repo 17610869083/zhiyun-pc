@@ -215,7 +215,7 @@ class TopicAdd extends React.Component {
                 this.props.topicNavMessageRequested(new Date())
                 message.success('专题添加成功');
              	history.push({
-                   pathname: '/topic/topiclist',
+                   pathname: '/allopinion/topic/topiclist',
                    search:''
                    })
         	    }else{

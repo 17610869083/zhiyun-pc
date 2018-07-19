@@ -1123,8 +1123,8 @@ class MaterialOpinion extends React.Component {
 												<span>
 													{
 														item.type === 1 ?
-															<Dropdown overlay={materialSetMenu} trigger={['click']}
-																getPopupContainer={() => document.querySelector('.materia-opinion-wrapper')}
+															<Dropdown overlay={materialSetMenu} trigger={['click']} 
+																getPopupContainer={() => document.querySelector('.material-list')}
 															>
 																<i onClick={this.onClickMaterialListItem.bind(this, item.id)}>< Iconfont type="icon-icon02" style={{ color: '#000' }} /></i>
 															</Dropdown> : null
