@@ -10,6 +10,8 @@ class Evidence extends React.Component {
         this.setState({
             innerHeight:window.innerHeight
         })
+        
+        
     }
     render(){
         return (
