@@ -5,6 +5,7 @@ import {history} from '../../utils/history';
 import TopicList from '../TopicOpinion/TopicList/TopicList';
 import Information from './BiddingInformation/BiddingInformation';
 import Setting from './BiddingSetting/BiddingSetting'
+import Briefing from '../../components/Briefing/Briefing'
 import {
         api_get_BiddingFolderList,
         api_get_BiddingddGradeC,
@@ -41,6 +42,7 @@ class BiddingOpinion extends React.Component {
             isTopShow:true,
             browserHeight:300,
             topicNavMessage: [],
+            bvisible: false
         };
 
     }
@@ -339,7 +341,11 @@ class BiddingOpinion extends React.Component {
    delCancelTwo(){
        this.setState({visibleTwo:false})
    }
-  
+   toggle() {
+       this.setState({
+           bvisible: !this.state.bvisible
+       })
+   }
     render() {
         const delItems = item => {
             return <Menu onClick={this.onDelitem.bind(this,item.catid)}>
@@ -462,6 +468,8 @@ class BiddingOpinion extends React.Component {
                     <Input className="gapInput" onChange={this.onChange.bind(this)}  
                      value={this.state.inputValue}  maxLength={'28'}/>
                 </Modal>
+                <button onClick={this.toggle.bind(this)}>点击</button>
+                <Briefing visible={this.state.bvisible}></Briefing>
             </div>
         )
     }

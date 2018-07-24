@@ -532,13 +532,17 @@ class BiddingDetail extends React.Component {
           })
     })
   }
+  ondragend(e) {
+    console.log('拖动结束')
+    e.preventDefault();
+}
   render() {
     const {page} = this.props;
     const flag = this.props.docList&& this.props.docList.length === 0?true:false;
     const docList = this.props.docList ? this.props.docList : [];      
 
     const OpinionDetailItems = docList[0] !== undefined && docList[0]['negative'] !== undefined ? docList.map((item, index) =>
-        <li key={item.sid} className="opinion-detail-item">
+        <li key={item.sid} className="opinion-detail-item" draggable="true" onDragEnd={this.ondragend.bind(this)}>
           <div className="cheackBox">
             <Checkbox checked={this.state.checkedArray[index]}
                       onChange={this.onChangeItem.bind(this, index)}
