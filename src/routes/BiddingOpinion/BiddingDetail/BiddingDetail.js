@@ -433,20 +433,20 @@ class BiddingDetail extends React.Component {
         page: pagenumber
       });
       this.props.opinionSearchRequest(param);
-      console.log(1)
+      // console.log(1)
     } else if (this.props.searchKeyword.type === 1) {
       this.props.opinionSearchRequest({
         seltype: this.state.seltype, keyword: this.props.searchKeyword.keyword,
         page: pagenumber
       });
-      console.log(2)
+      // console.log(2)
     }
     else if (this.props.propsType === 'AllopinionList') {
       this.props.opinionSearchRequest(param);
-      console.log(3)
+      // console.log(3)
     } else {
       this.props.onDataChange(pagenumber);
-      console.log(4)
+      // console.log(4)
     }
   }
 

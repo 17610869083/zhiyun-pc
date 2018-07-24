@@ -72,6 +72,14 @@ class MulOpinion extends React.Component {
         negative: ['负面', '반면', '悪い面', 'پاسسىپ.', 'ལྡོག་ངོས་'],
         positive: ['正面', '정면', '正面', 'ئۇدۇل.', 'དྲང་ཕྱོགས་'],
         neutral: ['中性', '중성', '中性', 'نېيترال ', 'མ་ནིང།']
+      },
+      cancel: ['取消操作', '조작을 취소하다', '取り消す', 'مەشغۇلاتنى بىكار قىلىش', 'བཀོལ་སྤྱོད་མེད་པ་བཟོས་'],
+      handleTip: {
+        delsucess: ['删除成功', '성공을 지우다', '削除成功', 'ئۆچۈرۈلدى. ئۆچۈرۈلدى', 'སྐོར་བསུབས་ཡོད་པ་བཅས་གྲུབ་འབྲས་ཐོབ་པའི་ངང་'],
+        positivesucess: ['成功设置为正面', '성공', '成功', 'مۇۋەپپەقىيەت', 'གྲུབ་འབྲས་ཐོབ་པའི་ངང་འཇོག་དཔྲལ་པའི་'],
+        neutralsuccess: ['成功设置为中性', '성공', '成功', 'مۇۋەپپەقىيەت', 'གྲུབ་འབྲས་ཐོབ་པའི་ངང་མ་ནིང་འཇོག་ཆེད་།'],
+        negativesuccess: ['成功设置为负面', '성공', '成功', 'مۇۋەپپەقىيەت', 'གྲུབ་འབྲས་ཐོབ་པའི་ངང་བཀོད་ནས་ལྡོག་ཕྱོགས་'],
+        warningsuccess: ['成功设置为预警', '성공', '成功', 'مۇۋەپپەقىيەت', 'གྲུབ་འབྲས་ཐོབ་པའི་ངང་སྔོན་བརྡའི་ཆེད་འཇོག་'],
       }
     }
   }
@@ -112,7 +120,7 @@ class MulOpinion extends React.Component {
   deleteConfirm(sid) {
     request(api_delete_multilingual + '&lang=' + this.props.match.params.param  + '&sid=["' + sid + '"]', {}).then((res) => {
       if (res.data.code === 1) {
-        message.success(res.data.msg);
+        message.success(this.state.handleTip.delsucess[this.state.languageType]);
         setTimeout(() => {
           window.close()
         }, 500);
@@ -136,9 +144,27 @@ class MulOpinion extends React.Component {
 
   // 倾向设置
   editDocNeg(sid, neg) {
+    
     request(api_edit_doc_neg + '&lang='+ this.props.match.params.param +'&neg='+ neg +'&sid=["' + sid + '"]', {}).then(res => {
       if (res.data.code === 1) {
-        message.success(res.data.msg);
+        switch (neg) {
+          case 1:
+            // 负面
+            message.success(this.state.handleTip.negativesuccess[this.state.languageType]);
+            break;
+          case 0:
+            // 中性
+            message.success(this.state.handleTip.neutralsuccess[this.state.languageType]);
+            break
+          case -1:
+            // 正面
+            message.success(this.state.handleTip.positivesucess[this.state.languageType]);
+            break
+          case 2:
+            // 预警
+            message.success(this.state.handleTip.warningsuccess[this.state.languageType]);
+            break
+        }
         request(api_get_DetailForeign + '&sid=' + sid + '&lang=' + this.props.match.params.param ).then((res) => {
           this.setState({
             data: res.data,
@@ -226,7 +252,7 @@ class MulOpinion extends React.Component {
 
   // 取消操作
   deleteCancel(e) {
-    message.error('取消操作');
+    message.error(this.state.cancel[this.state.languageType]);
   }
 
 
@@ -260,7 +286,7 @@ class MulOpinion extends React.Component {
   }
 
   toggleLan () {
-    if(this.state.languageType === 0 ){
+    if(this.state.languageType-0 === 0 ){
       this.setState({
         languageType: this.props.match.params.languages
       })
@@ -335,7 +361,7 @@ class MulOpinion extends React.Component {
                         <Button type="primary" className="btn" onClick={this.toggleLan.bind(this)}>{this.state.languageType-0 === 0 ? this.state.language[this.props.match.params.languages] : '中文'}</Button>
                         <div className="info">
                             <div className="pubdate">
-                                <span className="name">{data.pubdate ? this.state.describe.reltime[this.state.languageType] + '：' : ''}</span>
+                                <span className="name" style={{float: 'left'}}>{data.pubdate ? this.state.describe.reltime[this.state.languageType] + '：' : ''}</span>
                                 <span className="value">{data.pubdate}</span>
                             </div>
                             <div className="pubdate">

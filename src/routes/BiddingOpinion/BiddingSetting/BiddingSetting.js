@@ -1,6 +1,7 @@
 import React from 'react';
 import {Tabs, Form, Input, Button ,Select,message,Tooltip,Icon} from 'antd';
 import SettingSeniorTopic from '../../../components/SettingSeniorTopic/SettingSeniorTopic';
+import BiddingSeniorCreate from '../BiddingSeniorCreate/BiddingSeniorCreate'
 import BiddingCreate from '../BiddingCreate/BiddingCreate'
 import request from '../../../utils/request';
 import Store from '../../../redux/store/index';
@@ -29,7 +30,7 @@ class BiddingSetting extends React.Component {
             num2:[{"rule1":"","rulecode1":"","id":"","rule2":"",
             "rulecode2":"","rule3":"","rulecode3":"","rule4":"",
             "rulecode4":""}],
-            num3:[{"rule1":"","rulecode1":"","id":"","rule2":"",
+            num3:[{"rule": "", "rule1":"","rulecode1":"","id":"","rule2":"",
             "rulecode2":"","rule3":"","rulecode3":"","rule4":"",
             "rulecode4":""}],
             data:[],
@@ -53,7 +54,6 @@ class BiddingSetting extends React.Component {
     }
     componentWillReceiveProps(nextprops){
             if (this.search2Obj(nextprops.location.search).type === 'add' && this.props.location.search !== nextprops.location.search) {
-                console.log(this.search2Obj(nextprops.location.search).catid)
                 request(api_get_BiddingetgradeCatList).then((res) => {
                     this.setState({
                         topicCatList: res.data.gradeCatList,
@@ -95,7 +95,7 @@ class BiddingSetting extends React.Component {
                     let addtypeStr='num'+(res2.data.addtype);
                         this.setState({
                             topicAlldata:res2.data,
-                            [addtypeStr]:res2.data.rulearr.length === 0?[{"rule1":"","rulecode1":"","id":"","rule2":"",
+                            [addtypeStr]:res2.data.rulearr.length === 0?[{"rule": "", "rule1":"","rulecode1":"","id":"","rule2":"",
                             "rulecode2":"","rule3":"","rulecode3":"","rule4":"",
                             "rulecode4":""}]:res2.data.rulearr,
                             addType: res2.data.addtype ,
@@ -156,9 +156,13 @@ class BiddingSetting extends React.Component {
      }
      //高级添加规则
      seniorRule(e){
-        this.setState({num3:this.state.num3.concat([{"rule1":"","rulecode1":"","id":"","rule2":"",
+        if(this.state.num3[this.state.num3.length-1].rule.trim() === '' || this.state.num3[this.state.num3.length-1].rule.trim() === undefined ) {
+            message.error('请添加上一条规则')
+            return false
+        }
+        this.setState({num3:this.state.num3.concat([{"rule": "", "rule1":"","rulecode1":"","id":"","rule2":"",
         "rulecode2":"","rule3":"","rulecode3":"","rule4":"",
-        "rulecode4":"","rule":''}])})  	  
+        "rulecode4":"","rule":''}])})
      }
     // 改变设置方式
     handleOnChange(key) {
@@ -294,31 +298,57 @@ class BiddingSetting extends React.Component {
         //         })
         //     }               
         // });
-        if (this.state.topicNameValue === '') {
+        if (this.state.topicNameValue.trim() === '') {
             message.error('专题名称不能为空!')
             return false
         }
-        let rules = this.state.roleArr.length === 0 ? JSON.stringify([{"rule1":"","rulecode1":"","id":"","rule2":"",
-        "rulecode2":"","rule3":"","rulecode3":"","rule4":"",
-        "rulecode4":""}]) : JSON.stringify(this.state.roleArr)
+        let rules = JSON.stringify(this.state.roleArr)
         let ruleArr = JSON.parse(rules)
-        if(ruleArr[ruleArr.length-1]['rule1'] === '' && this.state.addType === 1) {
-            message.error('请把规则填写完整!')
+        if(this.state.addType === 1) {
+            if(this.search2Obj(this.props.location.search).type === 'add') {
+                if(ruleArr.length === 0 || ruleArr[ruleArr.length-1]['rule1'].trim() === '') {
+                    message.error('请把规则填写完整!')
+                    return false
+                }
+            } else {
+                
+                if(ruleArr.length > 0) {
+                    if(ruleArr[ruleArr.length-1].rule1.trim() === '') {
+                        message.error('请把规则填写完整!')
+                        return false
+                    }
+                } else{
+                    if(!this.isLegitimate(this.state.num1)) {
+                        message.error('请把规则填写完整!')
+                        return false
+                    }
+                }
+    
+            }
+        }
+        
+
+
+        if(this.state.addType === 3 && this.state.num3[this.state.num3.length-1]['rule'].trim() === '' ) {
+            message.error('请把规则添加完整!')
             return false
         }
+        
         if( this.search2Obj(this.props.location.search).type === 'add' ) {
             request(api_get_BiddingaddGrade, {
                 method: 'POST',
                 headers: {
                     "Content-Type": "application/x-www-form-urlencoded"
                 },
-                body:`action=addGrade&addtype=${this.state.addtype}&clfname=${this.state.topicNameValue}&catid=${this.state.select}&rule=${this.state.addType-0 === 3 ? encodeURIComponent(JSON.stringify(this.state.SeniorTopicRule)) :encodeURIComponent(rules)}`
+                body:`action=addGrade&addtype=${this.state.addtype}&clfname=${this.state.topicNameValue}&catid=${this.state.select}&rule=${this.state.addType-0 === 3 ? encodeURIComponent(JSON.stringify(this.state.num3)) :encodeURIComponent(rules)}`
             }).then((res) => {
                 if(res.data.code===1){
                     message.success('关键词添加成功');
                     history.push({
                         pathname: '/bidding/information'
                     })
+                }else {
+                    message.error(res.data.msg)
                 }
             })
         } else {
@@ -328,13 +358,15 @@ class BiddingSetting extends React.Component {
                 headers: {
                     "Content-Type": "application/x-www-form-urlencoded"
                 },
-                body:`action=editGrade&addtype=${this.state.addtype}&catid=${this.state.select}&clfid=${this.props.location.search.split('=')[1]}&clfname=${this.state.topicNameValue}&rule=${this.state.addType-0 === 3 ? encodeURIComponent(JSON.stringify(this.state.SeniorTopicRule)) :encodeURIComponent(rules)}`
+                body:`action=editGrade&addtype=${this.state.addtype}&catid=${this.state.select}&clfid=${this.props.location.search.split('=')[1]}&clfname=${this.state.topicNameValue}&rule=${this.state.addType-0 === 3 ? encodeURIComponent(JSON.stringify(this.state.num3)) :encodeURIComponent(rules)}`
             }).then((res) => {
                 if(res.data.code===1){
                     message.success('关键词修改成功');
                     history.push({
                         pathname: '/bidding/information'
                     })
+                } else {
+                    message.error('关键词修改失败')
                 }
             })
         }
@@ -453,6 +485,42 @@ class BiddingSetting extends React.Component {
     }
 
   }
+  onroleChange(value, index) {
+      this.state.num3[index].rule = value
+  }
+  ondelrole(index) {
+    if(this.search2Obj(this.props.location.search).type !== 'add') {
+        request(api_get_BiddinggetDelRule, {
+                method: 'POST',
+                headers: {
+                    "Content-Type": "application/x-www-form-urlencoded"
+                },
+                body: `&ruleid=${this.state.num3[index].id}`
+        }).then((res) => {
+            if(res.code === 1) {
+                message.success('删除成功');
+            }
+        })
+    }
+
+    this.state.num3.splice(index, 1)
+    this.setState({})
+  }
+  isLegitimate(arr) {
+      let falg = true
+      if(arr.length === 0) {
+        return false
+      }else {
+        for (let i = 0; i < arr.length; i++) {
+            const element = arr[i];
+            if(element.rule.trim() === '') {
+                  falg =  false
+                  break
+            }
+        }
+     }
+        return falg
+  }
     render() {
         const formItemLayout = {
             labelCol: {
@@ -479,8 +547,8 @@ class BiddingSetting extends React.Component {
     let topicCatid=this.search2Obj(this.props.location.search).catid? this.search2Obj(this.props.location.search).catid:115;
         const topicCatList=this.state.topicCatList.length!==0?
         this.state.topicCatList.map((item,index)=>
-        <Option value={(item.id).toString()} key={index}>{item.catname}</Option>
-         ):<Option value={'75'}>默认文件夹</Option>;
+        <Option value={(item.id).toString()} disabled={item.id === 115} key={index}>{item.catname}</Option>
+         ):<Option value={'75'} disabled>默认文件夹</Option>;
          const titleTip= <div>
          <p>关键词组合：关键词之间用“+”、“-”或者“*”连接，符号均为英文状态。</p>
          <p>①“+”代表或(或者) </p>
@@ -603,7 +671,7 @@ class BiddingSetting extends React.Component {
                                         maxLength={'28'}
                                         onChange={this.TopicNameChange.bind(this)}
                                         value={this.state.topicNameValue}
-                                        />                                   
+                                        />
                                 </FormItem>
                                 
                                 <FormItem
@@ -628,14 +696,17 @@ class BiddingSetting extends React.Component {
                                     {...formItemLayout}
                                     label="关键词组合"
                                 >
-                                <SettingSeniorTopic num3={this.state.num3}  
+                                {/* <SettingSeniorTopic num3={this.state.num3}  
                                     onDelrule={this.onDelrule.bind(this)}
                                     onDelwayRule={this.onDelwayRule.bind(this)}
                                     ruleId={this.state.ruleId}
                                     onInputConent={this.onInputConent.bind(this)}
                                     type="topic"
+                                /> */}
+                                <BiddingSeniorCreate num3={this.state.num3}
+                                    onroleChange={this.onroleChange.bind(this)}
+                                    ondelrole={this.ondelrole.bind(this)}
                                 />
-                                    
                                 </FormItem>
                                 
                                 

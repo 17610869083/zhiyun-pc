@@ -69,7 +69,7 @@ class BiddingCreate extends React.Component {
         // console.log(this.state.num1)
         // console.log(this.state.modalinput)
         // console.log(this.state.editRoleId)
-        if (this.state.modalinput['rule1'] === '') {
+        if (this.state.modalinput['rule1'].trim() === '') {
             message.error('主题词不能为空！')
             return false
         }
@@ -84,7 +84,7 @@ class BiddingCreate extends React.Component {
 
     }
     addRole() {
-        if (this.state.num1[this.state.num1.length - 1]['rule1'] === '') {
+        if (this.state.num1[this.state.num1.length - 1]['rule1'].trim() === '') {
             message.error('请填入上一条规则')
             return false
         }

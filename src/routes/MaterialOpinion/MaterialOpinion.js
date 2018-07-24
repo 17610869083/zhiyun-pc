@@ -713,7 +713,7 @@ class MaterialOpinion extends React.Component {
 			</Menu>
 		);
 		const datelist = this.props.datelist ? this.props.datelist : [{ carry: '新闻' ,datelist:[]}];
-		console.log(datelist)
+		// console.log(datelist)
 		const OpinionDetailItems = datelist.length !== 0 ? datelist.map((item, index) => 
 			<div key={index}>
 				<div className="item_file" style={{ background: "#f7f7f7", paddingLeft: 12, borderBottom: "1px solid #fff" }}>

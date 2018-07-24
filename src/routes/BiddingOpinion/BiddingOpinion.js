@@ -231,6 +231,10 @@ class BiddingOpinion extends React.Component {
     }
     // 确认文件夹添加
     handleOk(e){
+        if(this.state.inputValue.trim() === '' ) {
+            message.error('请输入主题名!')
+            return
+        }
         request(api_get_BiddingddGradeC,{
               method:'POST',
               headers:{
@@ -238,7 +242,11 @@ class BiddingOpinion extends React.Component {
               },
               body:`catname=${this.state.inputValue}`
         })
-        .then(() => {
+        .then((res) => {
+            if(res.data.code !== 1) {
+                message.error(res.data.msg)
+                return false;
+            }
             this.initCard()
         })
         this.setState({
