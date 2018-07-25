@@ -69,7 +69,7 @@ class AllOpinion extends React.Component {
     const haverClass = themeColor.topColor.backgroundColor === '#5a8bff' ? 'white':'black'; 
     let menuList = [];
     this.state.channelList.map((item, index) => {
-      if (item.channelurl === '/allopinion/reportopinion/list') {
+      if (item.channelurl === '/topic/topiclist') {
         menuList.push(<SubMenu
           key={item.key}
           title={<Link to="/allopinion/myreport"><span>

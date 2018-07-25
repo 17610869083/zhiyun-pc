@@ -23,6 +23,7 @@ import './CollectionOpinion.less';
 import BlankPage from '../../base/Exception/BlankPage';
 import {GRAY} from '../../utils/colors';
 import Iconfont from '../../components/IconFont'
+import {Briefing} from '../../components/Briefing/Briefing'
 const Search = Input.Search;
 const confirm = Modal.confirm;
 const FormItem = Form.Item;
@@ -47,7 +48,8 @@ class CollectionOpinion extends React.Component {
             arr: new Array(40).fill(false),
             materialSid: '',
             CollectionValue: '',
-            browserHeight:300
+            browserHeight:300,
+            brieVisible: false
         };
     }
 
@@ -383,6 +385,25 @@ class CollectionOpinion extends React.Component {
             message.error('素材夹名称请不要超过14个字符');
         }
     }
+    ondragstart(sid, e) {
+        if(this.checkedTrue().length === 0) {
+            e.dataTransfer.setData('briefingsid', sid)
+            e.dataTransfer.setData('a', 'drop')
+          }else {
+            e.dataTransfer.setData('briefingsid', this.checkedTrue())
+            e.dataTransfer.setData('a', 'drop')
+          }
+    }
+    briefingCancel() {
+        this.setState({
+            brieVisible: false
+        })
+    }
+    addbriefing() {
+        this.setState({
+          brieVisible: true
+        })
+    }
     render() {
         const { pageInfo, favCatList, materialList, reportData } = this.props;
         const { getFieldDecorator } = this.props.form;
@@ -444,7 +465,7 @@ class CollectionOpinion extends React.Component {
 
         const docList = this.props.docList ? this.props.docList : [{ carry: '新闻' }];
         const OpinionDetailItems = docList.length !== 0 ? docList.map((item, index) =>
-            <li key={item.id} className="opinion-detail-item">
+            <li key={item.id} className="opinion-detail-item" draggable="true" onDragStart={this.ondragstart.bind(this, item.sid)}>
                 <Checkbox className="labe"
                     checked={this.state.arr[index]}
                     onChange={this.onChange.bind(this, index)}
@@ -462,7 +483,7 @@ class CollectionOpinion extends React.Component {
                     </div>
                     <div className="item-bottom">
                         <div className="resource">
-                            <a href="">
+                            <a href="" draggable="false">
                                 <span className="source">{item.source}</span>
                             </a>
                         </div>
@@ -495,6 +516,12 @@ class CollectionOpinion extends React.Component {
                             </Tooltip> */}
                             <Tooltip title="从收藏夹移除">
                                 <i className="fa fa-arrow-circle-right" aria-hidden="true" onClick={this.deleteThisFormCollection.bind(this, item.id)} />
+                            </Tooltip>
+
+                            <Tooltip title="加入简报">
+                                <i className="icon-qingbaogongzuojianbao" aria-hidden="true" onClick={this.addbriefing.bind(this)}>
+                                    <Iconfont type="icon-qingbaogongzuojianbao" style={{color: '#000'}}></Iconfont>
+                                </i>
                             </Tooltip>
                         </div>
                     </div>
@@ -615,7 +642,7 @@ class CollectionOpinion extends React.Component {
                         </div>
                     </div>
                 </div>
-
+                <Briefing visible={this.state.brieVisible} onCancel={this.briefingCancel.bind(this)}></Briefing>
             </div>
         </div>)
     }

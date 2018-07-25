@@ -13,6 +13,7 @@ import {
   api_edit_doc_neg, api_del_doc, api_push_material, api_push_collection,
   api_allopinion_exportskip, api_topic_export_word,api_material_opinion_list ,api_collection_opinion_list} from '../../services/api';
 import {GRAY} from '../../utils/colors';
+import {Briefing} from '../Briefing/Briefing'
 import {
   opinionSearchRequested,
   searchKeywordSync,
@@ -76,7 +77,8 @@ class OpinionDetail extends React.Component {
       downloadFlag:false,
       materialList:[],
       favCatList:[],
-      isSearch: false
+      isSearch: false,
+      brieVisible: false
     };
   }
   componentDidUpdate(prevProps, prevState) {
@@ -665,6 +667,25 @@ class OpinionDetail extends React.Component {
       }
      
    }
+   addbriefing() {
+     this.setState({
+       brieVisible: true
+     })
+   }
+   ondragstart(sid, e) {
+    if(this.checkedTrue().length === 0) {
+      e.dataTransfer.setData('briefingsid', sid)
+      e.dataTransfer.setData('a', 'drop')
+    }else {
+      e.dataTransfer.setData('briefingsid', this.checkedTrue())
+      e.dataTransfer.setData('a', 'drop')
+    }
+  }
+  briefingCancel() {
+    this.setState({
+      brieVisible: false
+    })
+  }
   render() {
     const {page} = this.props;
     const flag = this.props.docList&& this.props.docList.length === 0?true:false;
@@ -697,7 +718,7 @@ class OpinionDetail extends React.Component {
       </Menu>
     );
     const OpinionDetailItems = docList[0] !== undefined && docList[0]['negative'] !== undefined ? docList.map((item, index) =>
-        <li key={item.sid} className="opinion-detail-item">
+        <li key={item.sid} className="opinion-detail-item" draggable="true" onDragStart={this.ondragstart.bind(this, item.sid)}>
           <div className="cheackBox">
             <Checkbox checked={this.state.checkedArray[index]}
                       onChange={this.onChangeItem.bind(this, index)}
@@ -712,7 +733,7 @@ class OpinionDetail extends React.Component {
             </div>
             <div className="imgBox" style={this.state.isSummaryShow ? {display: 'block'} : {display: 'none'}}>
               <Tooltip title={item.carry === '综合' ? '其它' : item.carry} placement="bottomRight">
-                <img src={this.state.carryAll[item.carry]} alt="" className="carryImg"/>
+                <img src={this.state.carryAll[item.carry]} alt="" className="carryImg" draggable="false"/>
               </Tooltip>
             </div>
           </div>
@@ -762,7 +783,7 @@ class OpinionDetail extends React.Component {
                     className="similar-info">相似信息：{item.similerInfo && (item.similerInfo.similerCount ? item.similerInfo.similerCount : 0)}条
                   </div>
                   <div className="resource">
-                    <a href={item.url} target="_black">
+                    <a href={item.url} target="_black" draggable="false">
                                   <span className="source"
                                         title={item.source}
                                   >{item.source}</span>
@@ -855,6 +876,13 @@ class OpinionDetail extends React.Component {
                       </span>
                     </Tooltip>
                     </div>
+                    <div>
+                    <Tooltip title='加入简报' placement="bottom">
+                      <span className="add-report" onClick={this.addbriefing.bind(this)}>
+                      <IconFont type="icon-qingbaogongzuojianbao" />  
+                      </span>
+                    </Tooltip>
+                    </div>
                   </div>
               </div>
             </div>
@@ -903,6 +931,7 @@ class OpinionDetail extends React.Component {
     );
     return (
       <div className="opinion-detail">
+      <Briefing visible={this.state.brieVisible} onCancel={this.briefingCancel.bind(this)}></Briefing>
         <div className="top" style={{background:GRAY}}>
           <div className="left">
             <div className="choose-all">
@@ -952,6 +981,11 @@ class OpinionDetail extends React.Component {
             <Tooltip title='生成报告' placement="bottom">
                <div className="operate-all" onClick={this.goReport.bind(this)}>
                <IconFont type="icon-icon-shengchengbaogao"></IconFont>  
+               </div>
+            </Tooltip>
+            <Tooltip title='加入简报' placement="bottom">
+               <div className="operate-all" onClick={this.addbriefing.bind(this)}>
+               <IconFont type="icon-qingbaogongzuojianbao"></IconFont>
                </div>
             </Tooltip>
           </div>

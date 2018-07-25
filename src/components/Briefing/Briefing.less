@@ -6,7 +6,7 @@
     box-shadow: -3px 6px 14px 1px #ccc;
     overflow: auto;
     max-height: 0%;
-    z-index: 1;
+    z-index: 2;
     .title{
         width: 500px;
         background-color: rgb(240, 242, 251);
@@ -55,6 +55,11 @@
                         padding-right: 10px;
                     }
                 }
+            }
+            .active {
+                transform: scale(1.1);
+                box-shadow: -3px 6px 14px 1px #ccc;
+                border-color: aqua;
             }
         }
     }

@@ -430,5 +430,7 @@ export const api_bidding_message_list = host + 'oClf/BidDo?action=docList'
 export const api_bidding_message_del = host + 'oClf/BidDo?action=docDel'
 // 招投标导出
 export const api_bidding_export = host + 'exp/ExportData?action=exportDataList'
-// 加入简报列表
+// 加入简报 列表
 export const api_briefing_list = 'http://119.90.61.155/om33/webpart/Report?action=getAllReport'
+// 加入简报 列表
+export const api_briefing_add = 'http://119.90.61.155/om33/webpart/Report?action=addToReport'
