@@ -245,7 +245,9 @@ export function setHighlightTags(content, tags) {
     let result = "";
     if (tagLength > 0  ) {
         tags.forEach(item => {
-            result = content.replace(item, `<span style="color: red;">${item}</span>`);
+            if(content) {
+                result = content.replace(item, `<span style="color: red;">${item}</span>`);
+            }
         })
 
     } else {
