@@ -106,13 +106,22 @@ class BiddingOpinion extends React.Component {
           let topicMessage=this.state.topicNavMessage;
           if(topicMessage!==1){
             let firstTopicid={topicid:1,topicname:'test'};
-            topicMessage.forEach((item)=>{
-                      if(item['clflist'][0]!==undefined){
-                           firstTopicid.topicid = item['clflist'][0]['clfid'];
-                           firstTopicid.topicname = item['clflist'][0]['clfname'];
-                           return firstTopicid;
-                      }
-            })
+            // topicMessage.forEach((item)=>{
+            //           if(item['clflist'][0]!==undefined){
+            //                firstTopicid.topicid = item['clflist'][0]['clfid'];
+            //                firstTopicid.topicname = item['clflist'][0]['clfname'];
+            //                return firstTopicid;
+            //           }
+            // })
+            for(var i = 0; i<topicMessage.length; i++) {
+                let item = topicMessage[i]
+                if(item['clflist'][0]!==undefined){
+                    firstTopicid.topicid = item['clflist'][0]['clfid'];
+                    firstTopicid.topicname = item['clflist'][0]['clfname'];
+                    break
+               }
+            }
+            // console.log(firstTopicid)
             this.props.setlocationPathname(firstTopicid);
             this.setState({
                 topicLists:topicMessage,
