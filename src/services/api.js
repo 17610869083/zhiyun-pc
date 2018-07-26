@@ -1,11 +1,11 @@
 // host
-const host = 'http://119.90.61.155/om3/webpart/';   
+const host = 'http://119.90.61.155/om31/webpart/';   
 // const host = 'http://web.is8.com.cn/om/webpart/';
 // const host = './';
 
 //-------------------登录
 //export const api_login = 'http://web.is8.com.cn/om/common/login/loginDo?action=login2';
-export const api_login = 'http://119.90.61.155/om3/common/login/loginDo?action=login2';
+export const api_login = 'http://119.90.61.155/om31/common/login/loginDo?action=login2';
 // export const api_login = '../common/login/loginDo?action=login2';
 
 //export const api_logout = 'http://web.is8.com.cn/om/common/login/loginDo?action=loginOut';
@@ -431,6 +431,6 @@ export const api_bidding_message_del = host + 'oClf/BidDo?action=docDel'
 // 招投标导出
 export const api_bidding_export = host + 'exp/ExportData?action=exportDataList'
 // 加入简报 列表
-export const api_briefing_list = 'http://119.90.61.155/om33/webpart/Report?action=getAllReport'
+export const api_briefing_list = host + 'Report?action=getReportByUid'
 // 加入简报 列表
-export const api_briefing_add = 'http://119.90.61.155/om33/webpart/Report?action=addToReport'
+export const api_briefing_add = host + 'Report?action=addToReport'

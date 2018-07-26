@@ -41,8 +41,7 @@ class BiddingOpinion extends React.Component {
             addClass:1,
             isTopShow:true,
             browserHeight:300,
-            topicNavMessage: [],
-            bvisible: false
+            topicNavMessage: []
         };
 
     }
@@ -341,11 +340,6 @@ class BiddingOpinion extends React.Component {
    delCancelTwo(){
        this.setState({visibleTwo:false})
    }
-   toggle() {
-       this.setState({
-           bvisible: !this.state.bvisible
-       })
-   }
     render() {
         const delItems = item => {
             return <Menu onClick={this.onDelitem.bind(this,item.catid)}>
@@ -468,8 +462,6 @@ class BiddingOpinion extends React.Component {
                     <Input className="gapInput" onChange={this.onChange.bind(this)}  
                      value={this.state.inputValue}  maxLength={'28'}/>
                 </Modal>
-                <button onClick={this.toggle.bind(this)}>点击</button>
-                <Briefing visible={this.state.bvisible}></Briefing>
             </div>
         )
     }
