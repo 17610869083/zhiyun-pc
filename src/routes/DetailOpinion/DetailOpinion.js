@@ -201,7 +201,7 @@ class DetailOpinion extends React.Component {
       headers: {
         "Content-Type": "application/x-www-form-urlencoded"
       },
-      body: `sid=${editData.sid}&title=${editData.title}&pubdate=${editData.pubdate}&timestamp=${editData.timestamp}&source=${editData.source}&url=${editData.url}&clickcount=${editData.clickcount}&replycount=${editData.replycount}&hot=${editData.hot}&nrtags=${editData.nrtags}&keyword=${editData.keyword}&match=${editData.match}&carry=${editData.carry}&negative=${editData.negative}&summary=${editData.summary}&content=${editData.content}&reloadtag=${editData.reloadtag}`
+      body: `sid=${editData.sid}&title=${editData.title}&pubdate=${editData.pubdate}&timestamp=${editData.timestamp}&source=${editData.source}&url=${editData.url}&clickcount=${editData.clickcount}&replycount=${editData.replycount}&hot=${editData.hot}&nrtags=${editData.nrtags}&keyword=${editData.keyword}&match=${editData.match}&carry=${editData.carry}&negative=${editData.negative}&summary=${editData.summary}&content=${encodeURIComponent(editData.content)}&reloadtag=${editData.reloadtag}`
     }).then(res => {
       message.success(res.data.message);
       request(api_get_doc_detail + '&sid=' + id, {}).then((res) => {
