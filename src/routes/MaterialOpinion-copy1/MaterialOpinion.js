@@ -326,7 +326,7 @@ class MaterialOpinion extends React.Component {
 	// 每页显示数量
 	// 每页显示数量
 	onShowSizeChange(current, pageSize) {
-		console.log(current);
+		// console.log(current);
 		this.props.getMaterialOpinionDetailRequested(`catid=${this.state.current}&page=${this.state.currentPage}&pagesize=${pageSize}`);
 		this.setState({ pageSize: pageSize })
 	}

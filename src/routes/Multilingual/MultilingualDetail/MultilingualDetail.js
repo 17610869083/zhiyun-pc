@@ -666,8 +666,13 @@ class OpinionDetail extends React.Component {
                   <div className="pubdate">
                     <span className="date">{item.pubdate.split(' ')[0]} &nbsp;&nbsp;{item.pubdate.split(' ')[1]}</span>
                   </div>
-                  <div
-                    className="similar-info">{this.state.similarInfo[this.props.languageType]}：{item.similerInfo && (item.similerInfo.similerCount ? item.similerInfo.similerCount : 0)}{this.state.infoCompany[this.props.languageType]}
+                  <div className="similar-info">
+                    <div className="similar-left">
+                      {this.state.similarInfo[this.props.languageType]}：
+                    </div>
+                    <div className="similar-right">
+                      {item.similerInfo && (item.similerInfo.similerCount ? item.similerInfo.similerCount : 0)}{this.state.infoCompany[this.props.languageType]}
+                    </div>
                   </div>
                   <div className="resource">
                     <a href={item.url} target="_black">

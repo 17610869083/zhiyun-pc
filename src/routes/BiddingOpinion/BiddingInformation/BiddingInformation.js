@@ -12,6 +12,7 @@ import {
 } from '../../../services/api';
 import {getSecondTime} from '../../../utils/format';
 import { setTimeout } from 'timers';
+import { userFetchSuccess } from '../../../redux/actions/actions';
 
 const FormItem = Form.Item;
 
@@ -172,13 +173,18 @@ class BiddingInformation extends React.Component {
       if (getSecondTime(begin) > getSecondTime(end)) {
         message.error('开始时间请不要大于结束时间');
         return;
+      } else if(getSecondTime(begin) > Math.round(new Date())) {
+        message.error('开始时间请不要大于当前时间');
+        return;
+      } else if (getSecondTime(end) > Math.round(new Date())) {
+        message.error('结束时间请不要大于当前时间');
+        return;
       }
       const timeValue = 'custom';
       this.setState({
         begin: begin,
         end: end,
-        timeValue: 'custom',
-        timeIndex: 0
+        timeValue: 'custom'
       });
 
       request(api_bidding_message_list + `&pagesize=${this.state.pagesize}&clfid=${this.state.topicID}&datetag=${timeValue}&neg=${this.state.trendValue}&order=${this.state.sortValue}&similer=${this.state.filterValue}&carry=${this.state.mediaValue}&begin=${begin}&end=${end}`)
@@ -273,8 +279,8 @@ class BiddingInformation extends React.Component {
       mediaValue: value
     });
         const requestStr = this.state.timeValue !== 'custom' ?
-        `clfid=${this.state.topicID}&datetag=${this.state.timeValue}&neg=${this.state.trendValue}&order=${this.state.sortValue}&similer=${value}&carry=${value}`
-        :`clfid=${this.state.topicID}&datetag=custom&neg=${this.state.trendValue}&order=${this.state.sortValue}&similer=${value}&carry=${value}&begin=${this.state.begin}&end=${this.state.end}`
+        `clfid=${this.state.topicID}&datetag=${this.state.timeValue}&neg=${this.state.trendValue}&order=${this.state.sortValue}&similer=${this.state.filterValue}&carry=${value}`
+        :`clfid=${this.state.topicID}&datetag=custom&neg=${this.state.trendValue}&order=${this.state.sortValue}&similer=${this.state.filterValue}&carry=${value}&begin=${this.state.begin}&end=${this.state.end}`
         request(api_bidding_message_list +`&${requestStr}`).then((res) => {
             if(res.data&&res.data.docList){
             this.setState({
@@ -440,13 +446,13 @@ class BiddingInformation extends React.Component {
     );
 
     // 倾向
-    const Trend = this.state.trend.map((item, index) =>
-      <div
-        key={index}
-        onClick={this.trendClick.bind(this, index, item.value)}
-        className={index === this.state.trendIndex ? 'item active' : 'item'}
-      ><span className="item-inner">{item.name}</span></div>
-    );
+    // const Trend = this.state.trend.map((item, index) =>
+    //   <div
+    //     key={index}
+    //     onClick={this.trendClick.bind(this, index, item.value)}
+    //     className={index === this.state.trendIndex ? 'item active' : 'item'}
+    //   ><span className="item-inner">{item.name}</span></div>
+    // );
 
     // 排序
     const Sort = this.state.sort.map((item, index) =>
@@ -518,12 +524,12 @@ class BiddingInformation extends React.Component {
               </Form>
             </div>
           </div>
-          <div className="sort-items">
+          {/* <div className="sort-items">
             <div className="left">倾向：</div>
             <div className="right">
               {Trend}
             </div>
-          </div>
+          </div> */}
           <div className="sort-items">
             <div className="left">排序：</div>
             <div className="right">

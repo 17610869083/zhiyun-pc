@@ -14,7 +14,7 @@ class AppCenter extends React.Component{
                 {
                     title: '舆情应用',
                     items: [
-                        {type: 'icon-jiance-dianji', text: '舆情监测', color: '#4ba9eb', href: '/allopinion', hrefType: 'history'},
+                        {type: 'icon-jiance-dianji', text: '舆情监测', color: '#4ba9eb', href: '/allopinion/allopiniondetail', hrefType: 'history'},
                         {type: 'icon-hanyu1', text: '韩语监测', color: '#f7b55d', href: '/multilingual/1', hrefType: 'history'},
                         {type: 'icon-riyu1', text: '日语监测', color: '#4ba9eb', href: '/multilingual/2', hrefType: 'history'},
                         {type: 'icon-logoxinjiang', text: '维语监测', color: '#6296f1', href: '/multilingual/3', hrefType: 'history'},
