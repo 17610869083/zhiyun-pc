@@ -340,7 +340,7 @@ class BiddingSetting extends React.Component {
                 headers: {
                     "Content-Type": "application/x-www-form-urlencoded"
                 },
-                body:`action=addGrade&addtype=${this.state.addtype}&clfname=${this.state.topicNameValue}&catid=${this.state.select}&rule=${this.state.addType-0 === 3 ? encodeURIComponent(JSON.stringify(this.state.num3)) :encodeURIComponent(rules)}`
+                body:`addtype=${this.state.addtype}&clfname=${this.state.topicNameValue}&catid=${this.state.select}&rule=${this.state.addType-0 === 3 ? encodeURIComponent(JSON.stringify(this.state.num3)) :encodeURIComponent(rules)}`
             }).then((res) => {
                 if(res.data.code===1){
                     message.success('关键词添加成功');
@@ -358,7 +358,7 @@ class BiddingSetting extends React.Component {
                 headers: {
                     "Content-Type": "application/x-www-form-urlencoded"
                 },
-                body:`action=editGrade&addtype=${this.state.addtype}&catid=${this.state.select}&clfid=${this.props.location.search.split('=')[1]}&clfname=${this.state.topicNameValue}&rule=${this.state.addType-0 === 3 ? encodeURIComponent(JSON.stringify(this.state.num3)) :encodeURIComponent(rules)}`
+                body:`addtype=${this.state.addtype}&catid=${this.state.select}&clfid=${this.props.location.search.split('=')[1]}&clfname=${this.state.topicNameValue}&rule=${this.state.addType-0 === 3 ? encodeURIComponent(JSON.stringify(this.state.num3)) :encodeURIComponent(rules)}`
             }).then((res) => {
                 if(res.data.code===1){
                     message.success('关键词修改成功');
@@ -453,7 +453,7 @@ class BiddingSetting extends React.Component {
     })
   }
   editRole(role) {
-    const [...newArr] = role
+    const [...newArr] = role;
     this.setState({
         roleArr: newArr
     })

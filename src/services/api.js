@@ -1,16 +1,16 @@
 // host
- const host = 'http://119.90.61.155/om33/webpart/';   
+//const host = 'http://119.90.61.155/om33/webpart/';   
 //const host = 'http://web.is8.com.cn/om/webpart/';
-//const host = './';
+const host = './';
 
 //-------------------登录
 //export const api_login = 'http://web.is8.com.cn/om/common/login/loginDo?action=login2';
- export const api_login = 'http://119.90.61.155/om33/common/login/loginDo?action=login2';
-//export const api_login = '../common/login/loginDo?action=login2';
+// export const api_login = 'http://119.90.61.155/om33/common/login/loginDo?action=login2';
+export const api_login = '../common/login/loginDo?action=login2';
 
 //export const api_logout = 'http://web.is8.com.cn/om/common/login/loginDo?action=loginOut';
- export const api_logout = 'http://119.90.61.155/om33/common/login/loginDo?action=loginOut';
-//export const api_logout ='../common/login/loginDo?action=loginOut';
+// export const api_logout = 'http://119.90.61.155/om33/common/login/loginDo?action=loginOut';
+export const api_logout ='../common/login/loginDo?action=loginOut';
 /**
  * 首页模块
  */
@@ -415,7 +415,7 @@ export const api_get_BiddingetGradeAndRule = host+ 'oClf/BidDo?action=getGradeAn
 // 招投标类型文件夹列表
 export const api_get_BiddingetgradeCatList = host+ 'oClf/BidDo?action=gradeCatList'
 // 招投标分类添加
-export const api_get_BiddingaddGrade = host+ 'oClf/BidDo'
+export const api_get_BiddingaddGrade = host+ 'oClf/BidDo?action=addGrade'
 // 招投标主题删除
 export const api_get_BiddingdelGrade = host+ 'oClf/BidDo?action=delGrade'
 // 招投标主题获取分类及规则

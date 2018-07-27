@@ -72,11 +72,12 @@ class AllOpinion extends React.Component {
       if (item.channelurl === '/allopinion/reportopinion/list') {
         menuList.push(<SubMenu
           key={item.key}
-          title={<Link to="/allopinion/myreport"><span>
+          title={<span>
             <i className="anticon"><Iconfont type={item.type} style={{fontSize: '16px'}}/></i>
             <span
               style={{fontSize: '16px'}} className={haverClass}>舆情报告</span>
-            </span></Link>}>
+            </span>
+          }>
           {/* <Menu.Item key="reportopinion" style={{fontSize: '16px'}}>
             <Link to="/allopinion/reportopinion/list">
               <span>简报列表</span>
@@ -92,11 +93,11 @@ class AllOpinion extends React.Component {
               <span>我的收藏</span>
             </Link>
           </Menu.Item>
-          <Menu.Item key="myreport" style={{fontSize: '16px'}}>
+          {/* <Menu.Item key="myreport" style={{fontSize: '16px'}}>
             <Link to="/allopinion/myreport">
               <span>我的报告库</span>
             </Link>
-          </Menu.Item>
+          </Menu.Item> */}
         </SubMenu>)
       } else if (item.channelurl === '../systemMan/systemManDo?action=userList') {
         menuList.push(<SubMenu key={item.key} 
