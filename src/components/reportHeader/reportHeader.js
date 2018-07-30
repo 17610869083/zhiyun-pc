@@ -135,7 +135,6 @@ class reportHeader extends React.Component{
 		this.setState({ endOpen: open });
 	}
 	onOkDateStart(value, dateString) {
-		console.log(value, dateString)
 	}
 	handleChange(value) {
 		this.setState({

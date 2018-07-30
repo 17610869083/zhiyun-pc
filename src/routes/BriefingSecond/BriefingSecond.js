@@ -140,7 +140,7 @@ class BriefingSecond extends React.Component{
 		   })
 		}
 		this.setState({
-			date: data.data
+			date: date
 		})
 	}
 	render() {
@@ -172,7 +172,7 @@ class BriefingSecond extends React.Component{
 																			onChange={this.onChangeCellTitle.bind(this)}
 																		/>
 																	</div>
-																	<Row type="flex" justify="space-around">
+																	<Row type="flex" justify="space-around" style={{userSelect:'none'}}>
 																		<Col span={4}>
 																			<div className="briefingBan">
 																				<span className="ardrss">

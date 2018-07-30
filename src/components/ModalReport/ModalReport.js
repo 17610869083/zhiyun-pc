@@ -7,7 +7,7 @@ import ReportDetailList from '../ReportDetailList/ReportDetailList';
 import ModalMaterial from '../ModalMaterial/ModalMaterial';
 import ModalAllOpinion from '../ModalAllOpinion/ModalAllOpinion';
 import {checkedTrueSid} from '../../utils/format';
-import {api_refresh_brief,api_edit_excerpt,api_get_excerpt} from '../../services/api';
+import {api_refresh_brief,api_edit_excerpt,api_get_excerpt,api_update_brief_item} from '../../services/api';
 const InputGroup = Input.Group;
 class ModalReport extends React.Component{
      constructor(){
@@ -97,27 +97,43 @@ class ModalReport extends React.Component{
 
       //删除
       delete(){
-          request(api_edit_excerpt,{
-            method:'POST',
-            headers: {
-              "Content-Type": "application/x-www-form-urlencoded"
-            }, 
-            body:`reportId=${this.props.reportId}&moduleId=${this.props.modalId}&code=0&sids=${JSON.stringify(checkedTrueSid(this.state.checkedArray))}`
-          }).then(res => {
-            if(res.data.code === 1){
-                this.setState({
-                    docList:res.data.data
-                })
-            }
-          })
+        if(this.props.requestUrl){
+            request(api_update_brief_item,{
+                method:'POST',
+                headers: {
+                  "Content-Type": "application/x-www-form-urlencoded"
+                }, 
+                body:`reportId=${this.props.reportId}&code=0&sids=${JSON.stringify(checkedTrueSid(this.state.checkedArray))}`
+              }).then(res => {
+                if(res.data.code === 1){
+                    this.setState({
+                        docList:res.data.data,
+                        checkedAll:false
+                    })
+                }
+              })
+          }else{
+            request(api_edit_excerpt,{
+                method:'POST',
+                headers: {
+                  "Content-Type": "application/x-www-form-urlencoded"
+                }, 
+                body:`reportId=${this.props.reportId}&moduleId=${this.props.modalId}&code=0&sids=${JSON.stringify(checkedTrueSid(this.state.checkedArray))}`
+              }).then(res => {
+                if(res.data.code === 1){
+                    this.setState({
+                        docList:res.data.data,
+                        checkedAll:false
+                    })
+                }
+              })
+          }
       }
       //确定按钮
       confirm = () => {
-        console.log(111);
          if(this.props.checkReport){
          request(api_refresh_brief + `&reportId=${this.props.reportId}`)
          .then(res => {
-					 console.log(res);
              if(res.data.code === 1){
                 this.props.checkReport(res.data.data,false); 
              }

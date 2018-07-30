@@ -851,11 +851,11 @@ class OpinionDetail extends React.Component {
                       </Tooltip>
                     </div>
                     <div>
-                    {/* <Tooltip title='生成报告' placement="bottom">
+                    <Tooltip title='生成报告' placement="bottom">
                       <span className="add-report" onClick={this.goReportItem.bind(this)}>
                       <IconFont type="icon-icon-shengchengbaogao" />  
                       </span>
-                    </Tooltip> */}
+                    </Tooltip>
                     </div>
                   </div>
               </div>
@@ -951,11 +951,11 @@ class OpinionDetail extends React.Component {
                 </div>
               </Dropdown>
             </Tooltip>
-            {/* <Tooltip title='生成报告' placement="bottom">
+            <Tooltip title='生成报告' placement="bottom">
                <div className="operate-all" onClick={this.goReport.bind(this)}>
                <IconFont type="icon-icon-shengchengbaogao"></IconFont>  
                </div>
-            </Tooltip> */}
+            </Tooltip>
           </div>
           <Pagination
             simple

@@ -174,14 +174,14 @@ class AllOpinion extends React.Component {
             <Sider
             className="sider siders"
             trigger={null}
-            style={{position: 'fixed', left: 0,marginTop:'10px',marginLeft:'10px'}}
+            style={{position: 'fixed', left: 0,marginTop:'10px',marginLeft:'10px',backgroundColor: themeColor.bottomColor.backgroundColor}}
             collapsed={this.state.collapsed && this.state.flag}
             onMouseEnter={this.mouseEnterToggle} 
             onMouseLeave={this.mouseLeaveToggle}
           >
             <div>
               <div className="trigger-wrapper" onClick={this.toggle}
-              style={{backgroundColor:'#f0f2fb'}}
+              style={haverClass === 'white' ?{backgroundColor:'#f0f2fb'}:{backgroundColor:'#35394f'}}
               >
                 {/* <i className="fa fa-bars" aria-hidden="true" style={{fontSize: '14px', color: '#5a8bff'}}/> */}
               </div>
@@ -189,7 +189,7 @@ class AllOpinion extends React.Component {
             <Menu
               defaultSelectedKeys={['4']}
               mode="inline"
-              style={ {backgroundColor: '#fff', overflow: 'auto',maxHeight: '600px'}}
+              style={ {backgroundColor: themeColor.bottomColor.backgroundColor, overflow: 'auto',maxHeight: '600px',border:'none'}}
               className="selectMenu"
               selectedKeys={[this.state.key]}
               onClick={this.changeItem.bind(this)}

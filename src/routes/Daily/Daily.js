@@ -120,7 +120,6 @@ class Daily extends React.Component{
 		})
 		Object.keys(this.state.jiaData.data).map(item => {
 			if (this.state.componentId[2] === item) {
-				console.log(item)
 				this.setState({
 					reportId: this.state.jiaData.reportId,
 					data: this.state.jiaData.data[item].informationExcerpt,
@@ -240,6 +239,9 @@ class Daily extends React.Component{
 			title: '文章标题',
 			dataIndex: 'title',
 			key: 'title',
+			render: (text, record, index) =>(
+				<span style={{width:'550px',display:'inline-block'}}>{record.title}</span>
+			),
 		}, {
 			title: '时间',
 			dataIndex: 'pubdate',
