@@ -259,7 +259,7 @@ class BiddingSetting extends React.Component {
        })
     }
     handleSubmit(e) {
-        //   e.preventDefault();
+          e.preventDefault();
         //    let rules;
         //    if(this.state.addType===3){
         //        rules=JSON.stringify(this.state.SeniorTopicRule.length===0?
@@ -302,7 +302,7 @@ class BiddingSetting extends React.Component {
             message.error('专题名称不能为空!')
             return false
         }
-        let rules = JSON.stringify(this.state.roleArr)
+        let rules = this.state.roleArr.length === 0 ? JSON.stringify(this.state.num1) : JSON.stringify(this.state.roleArr)
         let ruleArr = JSON.parse(rules)
         if(this.state.addType === 1) {
             if(this.search2Obj(this.props.location.search).type === 'add') {
@@ -352,7 +352,6 @@ class BiddingSetting extends React.Component {
                 }
             })
         } else {
-            
             request(api_get_BiddinggetEditRule, {
                 method: 'POST',
                 headers: {
@@ -370,7 +369,6 @@ class BiddingSetting extends React.Component {
                 }
             })
         }
-        e.preventDefault()
     }
     onChange(checked){
     	   this.setState({checked:checked===true?1:0})
