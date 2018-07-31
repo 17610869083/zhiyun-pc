@@ -6,19 +6,25 @@ class ModalCreateTopic extends React.Component{
         super(prop);
         this.state={
             visible:true,
-            InputValue:1
+            InputValue:'',
+            flag:false
         }
     }
     onModelCancel(){
         this.props.onModelCancel(false)  
+        this.setState({
+            flag:false
+        })
     }
     onModelOk(){
-        if(this.state.InputValue === ''){
-            message.error('关键词不可为空')
+        let InputValue = this.state.flag?this.state.InputValue:this.props.propsData[this.props.inputIndex]['rule'];
+        if(InputValue.trim() === ''){
+            message.error('关键词不可为空');
+            return;
         }
-        this.props.onModelOk(false,this.state.InputValue);
+        this.props.onModelOk(false,InputValue);
         this.setState({
-            InputValue:''
+            flag:false
         })
     }
     OnChange(e){
@@ -27,7 +33,8 @@ class ModalCreateTopic extends React.Component{
               message.warning('请不要带有特殊字符');
           }
           this.setState({
-              InputValue:value 
+              InputValue:value ,
+              flag:true
           })
     }
     render(){
@@ -44,7 +51,7 @@ class ModalCreateTopic extends React.Component{
                     <Input type="textarea" 
                      style={{height:'60px'}}
                      onChange={this.OnChange.bind(this)}
-                     value={this.state.InputValue!==1?this.state.InputValue:
+                     value={this.state.flag?this.state.InputValue:
                      this.props.propsData[this.props.inputIndex]['rule']}
                      maxLength={'500'}
                     />

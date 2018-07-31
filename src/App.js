@@ -5,7 +5,6 @@ import Index from './routes/Index/Index';
 import DetailOpinion from './routes/DetailOpinion/DetailOpinion';
 import MulOpinion from './routes/Multilingual/MulOpinion/MulOpinion'
 import BiddingOpinion from './routes/BiddingOpinion/Biddingpinion/Biddingpinion'
-import AppCenter from './routes/AppCenter/AppCenter'
 class App extends Component {
   render() {
     return (

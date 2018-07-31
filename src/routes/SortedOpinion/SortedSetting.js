@@ -78,7 +78,7 @@ class SortedSetting extends React.Component {
             getSortedMenuRequested();
             message.success(res.data.msg)
             history.push({
-              pathname: '/sortedopinion/list',
+              pathname: '/allopinion/sortedopinion/list',
               search: `?clfid=${clfId}`
             })
           }
@@ -93,7 +93,7 @@ class SortedSetting extends React.Component {
     const clfId = this.props.clfId;
     getSortedMenuRequested();
     history.push({
-      pathname: '/sortedopinion/list',
+      pathname: '/allopinion/sortedopinion/list',
       search: `?clfid=${clfId}`
     })
   }

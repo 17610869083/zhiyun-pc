@@ -96,8 +96,11 @@ class ExcludeSetting extends React.Component{
                        this.setState({
                            allKeywords:res.data.show2000List,
                        })
-                }
-
+                }else{
+                        this.setState({
+                          allKeywords:[{"rule1":"","rule2":"","rule3":"","rule4":"","id":"","scope":""}]
+                        })
+                 }
                 request(exclude_discontinuation,{
                   method:'POST',
                   headers: {
@@ -109,6 +112,10 @@ class ExcludeSetting extends React.Component{
                          this.setState({
                           negativeExclusion:res.data.show2020List
                          })
+                  }else{
+                          this.setState({
+                            negativeExclusion:[{"rule1":"","rule2":"","rule3":"","rule4":"","id":"","scope":""}]
+                          })
                   }
 
                   request(exclude_discontinuation,{
@@ -122,6 +129,10 @@ class ExcludeSetting extends React.Component{
                            this.setState({
                             negativeDiscontinuation:res.data.show1020List
                            })
+                    }else{
+                            this.setState({
+                              negativeDiscontinuation:[{"rule1":"","rule2":"","rule3":"","rule4":"","id":"","scope":""}]
+                            })
                     }
                     request(exclude_discontinuation,{
                       method:'POST',
@@ -134,8 +145,12 @@ class ExcludeSetting extends React.Component{
                              this.setState({
                               waring:res.data.show3020List
                              })
+                      }else{
+                          this.setState({
+                            waring:[{"rule1":"","rule2":"","rule3":"","rule4":"","id":"","scope":""}]
+                          })
                       }
-                  })
+                    })
                 })
               })
         })
@@ -202,13 +217,16 @@ class ExcludeSetting extends React.Component{
                saveMessage:data
            })
       }
-      addRule(){
-          this.setState({
-            negativeExclusion:this.state.negativeExclusion.concat({"rule1":"","id":"","rule2":"","rule3":"","rule4":"","scope":""}),
-            allKeywords:this.state.allKeywords.concat({"rule1":"","id":"","rule2":"","rule3":"","rule4":"","scope":""}),
-            negativeDiscontinuation:this.state.negativeDiscontinuation.concat({"rule1":"","id":"","rule2":"","rule3":"","rule4":"","scope":""}),
-            waring:this.state.waring.concat({"rule1":"","id":"","rule2":"","rule3":"","rule4":"","scope":""}),
-          })
+      addRule(type){
+        this.setState({
+           [type]:this.state[type].concat({"rule1":"","id":"","rule2":"","rule3":"","rule4":"","scope":""})
+        })
+          // this.setState({
+          //   negativeExclusion:this.state.negativeExclusion.concat({"rule1":"","id":"","rule2":"","rule3":"","rule4":"","scope":""}),
+          //   allKeywords:this.state.allKeywords.concat({"rule1":"","id":"","rule2":"","rule3":"","rule4":"","scope":""}),
+          //   negativeDiscontinuation:this.state.negativeDiscontinuation.concat({"rule1":"","id":"","rule2":"","rule3":"","rule4":"","scope":""}),
+          //   waring:this.state.waring.concat({"rule1":"","id":"","rule2":"","rule3":"","rule4":"","scope":""}),
+          // })
       }
       onDelwayRule(data){
              this.setState({
@@ -243,7 +261,7 @@ class ExcludeSetting extends React.Component{
                      </div>
                      </Row>
                      <Button type="primary" style={{marginLeft:'131px',marginTop:'30px'}}
-                     onClick={this.addRule.bind(this)}
+                     onClick={this.addRule.bind(this,'allKeywords')}
                      >+添加规则</Button>
                    </TabPane>
                    <TabPane tab="负面排除" key="2020">
@@ -268,7 +286,7 @@ class ExcludeSetting extends React.Component{
                      </div>
                      </Row>
                      <Button type="primary" style={{marginLeft:'131px'}}
-                     onClick={this.addRule.bind(this)}
+                     onClick={this.addRule.bind(this,'negativeExclusion')}
                      >+添加规则</Button>
                    </TabPane>
 
@@ -295,7 +313,7 @@ class ExcludeSetting extends React.Component{
                      </div>
                      </Row>
                      <Button type="primary" style={{marginLeft:'131px'}}
-                     onClick={this.addRule.bind(this)}
+                     onClick={this.addRule.bind(this,'negativeDiscontinuation')}
                      >+添加规则</Button>
                    </TabPane>
 
@@ -321,7 +339,7 @@ class ExcludeSetting extends React.Component{
                      </div>
                      </Row>
                      <Button type="primary" style={{marginLeft:'131px'}}
-                     onClick={this.addRule.bind(this)}
+                     onClick={this.addRule.bind(this,'waring')}
                      >+添加规则</Button>
                    </TabPane>
                    </Tabs>

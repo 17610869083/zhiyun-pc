@@ -567,6 +567,10 @@ class AllOpinionDetail extends React.Component {
 
   componentWillUnmount() {
     this.props.paginationPage(1);
+    this.props.searchKeywordSync({
+      seltype: '',
+      keyword: '', type: 0
+    });
   }
 
   dateChange(date, dateString) {

@@ -290,7 +290,7 @@ class TodayOpinionBox extends React.PureComponent {
 												<span style={{ fontSize: 16, color: themeColor.textColor.color, float: "right", paddingRight: 30, marginTop: 15 }}>负面同比增长：{this.state.ratio}%</span>
 											</Col>
 										</Row>
-                      <Row gutter={60} style={{ marginTop: 50 }}>
+                      <Row  style={{ marginTop: 50 }}>
                          <Col span={8} >
 														<div className="opinion-info" onClick = {this.goAllOpinion.bind(this,2)}>
 														 	<ReactEchartsCore

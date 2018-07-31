@@ -31,7 +31,7 @@ class SettingCreateTopic extends React.Component {
             propsData:[],
             updateNum:1,
             flag:false,
-            prevhash: ''
+            number:0
         }
     }
 
@@ -39,15 +39,7 @@ class SettingCreateTopic extends React.Component {
         if(prevState.updateNum!==this.state.updateNum){
         this.props.onCreateTopic(this.state.propsData)
       }
-    }
-    componentWillReceiveProps(nextprops) {
-        if (nextprops.addOrSetting === 'add' && window.location.hash !== this.state.prevhash) {
-        }
-        this.setState({
-            prevhash: window.location.hash
-        })
-    }
-
+  }
     onModelCancel() {
         // if(this.state.objectValueInput === ''){
         //     message.warning('主题词不能为空！');
@@ -63,7 +55,7 @@ class SettingCreateTopic extends React.Component {
         })
     }
     onModelOk(e){
-        let propsData=this.props.num1;
+        let propsData=this.props.num1;    
         let num=this.state.inputIndex;
         let ruleId=this.props.ruleId[num]!==undefined?this.props.ruleId[num]:propsData[num]['id'];
         let  objectValue=this.state.objectValueInput!==1?this.state.objectValueInput:propsData[num]['rule1'];
@@ -74,10 +66,10 @@ class SettingCreateTopic extends React.Component {
             message.warning('主题词不能为空！');
             return;            
         }
-        propsData[num]['rule1']=objectValue.trim();
-        propsData[num]['rule2']=subject1Value.trim();
-        propsData[num]['rule3']=subject2Value.trim();
-        propsData[num]['rule4']=filterValue.trim();
+        propsData[num]['rule1']=objectValue;
+        propsData[num]['rule2']=subject1Value;
+        propsData[num]['rule3']=subject2Value;
+        propsData[num]['rule4']=filterValue;
         propsData[num]['id']=ruleId;
         this.setState((prevState,props)=>({
             visible: false,
@@ -104,22 +96,26 @@ class SettingCreateTopic extends React.Component {
     onChangeObject(e) {
         let { value } = e.target;
         let ObjectArr=value.split(' '); 
-        if(/~|!|@|#|\$|\^|&|\*|=|\?|！|￥|-|（|）|%|【|】|\{|\}|；|;|%|,|，|。|\.|\+/.test(value)){ 
+        if(/~|!|@|#|\$|\^|&|\*|=|\?|！|￥|-|（|）|%|【|】|\{|\}|；|;|%|,|，|。|\./.test(value)){ 
              message.warning('请不要带有特殊字符');
+             return ;
         }else if (keywordDuplicateCheck(ObjectArr)){
              message.warning('请不要出现重复的关键词或多余的空格');
+             return ;
         }
         this.setState({
-            objectValueInput:value.trim()
+            objectValueInput:value
         })
     }
     onChangeSubject1(e) {
         const { value } = e.target; 
         let Subject1Arr=value.split(' '); 
-        if(/~|!|@|#|\$|\^|&|\*|=|\?|！|￥|-|（|）|%|【|】|\{|\}|；|;|%|,|，|。|\.|\+/.test(value)){ 
+        if(/~|!|@|#|\$|\^|&|\*|=|\?|！|￥|-|（|）|%|【|】|\{|\}|；|;|%|,|，|。|\./.test(value)){ 
             message.warning('请不要带有特殊字符');
+            return ;
        }else if (keywordDuplicateCheck(Subject1Arr)){
             message.warning('请不要出现重复的关键词或多余的空格');
+            return ;
        }
         this.setState({
             subject1ValueInput: value
@@ -128,10 +124,12 @@ class SettingCreateTopic extends React.Component {
     onChangeSubject2(e) {
         const { value } = e.target;
         let Subject2Arr=value.split(' ');
-        if(/~|!|@|#|\$|\^|&|\*|=|\?|！|￥|-|（|）|(%)|【|】|\{|\}|；|;|(%)|,|，|。|\.|\+/.test(value)){  
+        if(/~|!|@|#|\$|\^|&|\*|=|\?|！|￥|-|（|）|(%)|【|】|\{|\}|；|;|(%)|,|，|。|\./.test(value)){  
             message.warning('请不要带有特殊字符');
+            return ;
        }else if (keywordDuplicateCheck(Subject2Arr)){
             message.warning('请不要出现重复的关键词或多余的空格');
+            return ;
        }
         this.setState({
             subject2ValueInput: value
@@ -140,10 +138,12 @@ class SettingCreateTopic extends React.Component {
     onChangeFilter(e) {
         const { value } = e.target;
         let FilterArr=value.split(' ');
-        if(/~|!|@|#|\$|\^|&|\*|=|\?|！|￥|-|（|）|%|【|】|\{|\}|；|;|%|,|，|。|\.|\+/.test(value)){ 
+        if(/~|!|@|#|\$|\^|&|\*|=|\?|！|￥|-|（|）|%|【|】|\{|\}|；|;|%|,|，|。|\./.test(value)){ 
             message.warning('请不要带有特殊字符');
+            return ;
        }else if (keywordDuplicateCheck(FilterArr)){
             message.warning('请不要出现重复的关键词或多余的空格');
+            return ;
        }
         this.setState({
             filterValueInput: value
@@ -163,29 +163,44 @@ class SettingCreateTopic extends React.Component {
         })      
 
     }
-    showModal1 = (e) => {
-    this.setState({
-      visible1: true,
-      index:parseInt(e.target.dataset.index,10),
-      inputIndex:this.state.inputIndex-1
-    });
-    if(this.props.type==="topic"){
-    request(api_topic_ruleid,{
-        method:'POST',
-        headers: {
-           "Content-Type": "application/x-www-form-urlencoded"
-        },
-        body:`ruleid=${e.target.dataset.delid}`
-    })
+    showModal1 (index,e) {
+    let number = 0;
+    if(this.props.num1[index]['rule1'] === ''){
+
     }else{
-        request(api_clf_ruleid,{
+            this.props.num1.forEach( item => {
+                    if(item.rule1 !== ''){
+                        ++number;
+                    } 
+            })
+            if(number<2 ){
+                message.error('当前只有一组关键词，不可删除');
+                return;
+            }
+    }
+
+        this.setState({
+        visible1: true,
+        index:parseInt(e.target.dataset.index,10),
+        inputIndex:this.state.inputIndex-1
+        });
+        if(this.props.type==="topic"){
+        request(api_topic_ruleid,{
             method:'POST',
             headers: {
-               "Content-Type": "application/x-www-form-urlencoded"
+                "Content-Type": "application/x-www-form-urlencoded"
             },
             body:`ruleid=${e.target.dataset.delid}`
         })
-    }
+        }else{
+            request(api_clf_ruleid,{
+                method:'POST',
+                headers: {
+                    "Content-Type": "application/x-www-form-urlencoded"
+                },
+                body:`ruleid=${e.target.dataset.delid}`
+            })
+        }
   }
   handleOk1 = (e) => {
     let objectValueInput=this.props.num1;
@@ -198,10 +213,10 @@ class SettingCreateTopic extends React.Component {
   }
   handleCancel1 = (e) => {
     this.setState({
-      visible1: false,
+      visible1: false
     });
   }   
-
+ 
     render() { 
         let inputIndex=this.state.inputIndex<0?0:this.state.inputIndex;
     	const suffix=<span onClick={this.onDel.bind(this)} className="del"><Icon type="close"/></span>;
@@ -241,12 +256,12 @@ class SettingCreateTopic extends React.Component {
         onOk={this.onModelOk.bind(this)}
     > 
         <Form layout="vertical">
-            <FormItem label={objectValueTip}>
+            <FormItem label={objectValueTip}>  
                 <Input type="textarea"
                        onChange={this.onChangeObject.bind(this)}
                        value={this.state.objectValueInput!==1 ?this.state.objectValueInput:this.props.num1[inputIndex]['rule1']}
                        data-index={inputIndex}
-                       maxLength={'50'}
+                       maxLength={'50'} 
                        />
             </FormItem>
             <FormItem label={subject1ValueTip}>
@@ -330,7 +345,7 @@ class SettingCreateTopic extends React.Component {
                                    data-index={index}
                             />
                         </Col>
-        <Icon  type="minus-circle" className="delBtn" onClick={this.showModal1}
+        <Icon  type="minus-circle" className="delBtn" onClick={this.showModal1.bind(this,index)} 
          style={this.props.num1.length>1?this.state.disBlock:this.state.disNone}
          data-delid={item.id}
          data-index={index}

@@ -45,13 +45,15 @@ class BiddingCreate extends React.Component {
         })
     }
     showModal(index) {
-        this.state.modalinput.rule1 = this.state.num1[index].rule1
-        this.state.modalinput.rule2 = this.state.num1[index].rule2
-        this.state.modalinput.rule3 = this.state.num1[index].rule3
-        this.state.modalinput.rule4 = this.state.num1[index].rule4
+        let modalinput = this.state.modalinput;
+        modalinput.rule1 = this.state.num1[index].rule1
+        modalinput.rule2 = this.state.num1[index].rule2
+        modalinput.rule3 = this.state.num1[index].rule3
+        modalinput.rule4 = this.state.num1[index].rule4
         this.setState({
             editRoleId: index,
-            visible: true
+            visible: true,
+            modalinput:modalinput
         })
     }
     onModelCancel() {
@@ -73,12 +75,14 @@ class BiddingCreate extends React.Component {
             message.error('主题词不能为空！')
             return false
         }
-        this.state.num1[this.state.editRoleId]['rule1'] = this.state.modalinput['rule1']
-        this.state.num1[this.state.editRoleId]['rule2'] = this.state.modalinput['rule2']
-        this.state.num1[this.state.editRoleId]['rule3'] = this.state.modalinput['rule3']
-        this.state.num1[this.state.editRoleId]['rule4'] = this.state.modalinput['rule4']
+        let num1 = this.state.num1;
+        num1[this.state.editRoleId]['rule1'] = this.state.modalinput['rule1']
+        num1[this.state.editRoleId]['rule2'] = this.state.modalinput['rule2']
+        num1[this.state.editRoleId]['rule3'] = this.state.modalinput['rule3']
+        num1[this.state.editRoleId]['rule4'] = this.state.modalinput['rule4']
         this.setState({
-            visible: false
+            visible: false,
+            num1:num1
         })
         this.props.onEditRole(this.state.num1)
 
@@ -125,8 +129,11 @@ class BiddingCreate extends React.Component {
         })
     }
     clear(rulenum, index) {
-        this.state.num1[index][rulenum] = ''
-        this.setState({}, () => {this.props.onDelOne(this.state.num1)})
+        let num1 = this.state.num1;
+        num1[index][rulenum] = ''
+        this.setState({
+            num1:num1
+        }, () => {this.props.onDelOne(this.state.num1)})
     }
     onChangeInput(rulenum, e) {
         let value = e.target.value
@@ -138,8 +145,11 @@ class BiddingCreate extends React.Component {
         } else {
             newValue  = value
         }
-        this.state.modalinput[rulenum] = newValue
-        this.setState({})
+        let modalinput = this.state.modalinput;
+        modalinput[rulenum] = newValue
+        this.setState({
+            modalinput:modalinput
+        })
         // let newnum =
         // this.state.editInput.indexOf(rulenum) === -1 ? this.state.editInput.push(rulenum) : this.state.editInput
         //  this.state.num1[this.state.editRoleId][rulenum] = e.target.value

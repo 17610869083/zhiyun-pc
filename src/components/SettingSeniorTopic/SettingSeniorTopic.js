@@ -28,7 +28,6 @@ class SettingSeniorTopic extends React.Component {
         let topicAlldatas=Store.getState().getTopicLocationSucceededReducer.res;
         if(topicAlldatas.rulearr){
              this.setState({
-
                 topicRulearr:topicAlldatas.rulearr
              })
         }
@@ -59,19 +58,31 @@ class SettingSeniorTopic extends React.Component {
             visible: state,
             objectValue:this.state.objectValue.concat(objectValueInput),
             objectValueInput:propsdata
-        }),()=>{
-                       
-        })
+        }))
     }
     showModal(e) {
         let inputIndex=parseInt(e.target.dataset.index,10); 
         this.setState({
             visible: true,
-            inputIndex:inputIndex,
-            propsData:e.target.value
+            inputIndex:inputIndex
+            // propsData:e.target.value
         })
     }
-    showModal1 = (e) => {
+    showModal1 (index,e){
+        let number = 0;
+        if(this.props.num3[index]['rule'] === ''){
+    
+        }else{
+                this.props.num3.forEach( item => {
+                        if(item.rule !== ''){
+                            ++number;
+                        } 
+                })
+                if(number<2 ){
+                    message.error('当前只有一组关键词，不可删除');
+                    return;
+                }
+        }
     this.setState({
       visible1: true,
       index:parseInt(e.target.dataset.index,10),
@@ -121,7 +132,7 @@ class SettingSeniorTopic extends React.Component {
                 :item['rule']}  style={{width:'300px',height:'142px'}}
                 data-index={index}
                 />
-        <Icon  type="minus-circle" className="seniorDelBtn" onClick={this.showModal1} 
+        <Icon  type="minus-circle" className="seniorDelBtn" onClick={this.showModal1.bind(this,index)} 
          style={this.props.num3.length>1?this.state.disBlock:this.state.disNone}
          data-delid={item.id}
          data-index={index}
@@ -145,7 +156,7 @@ class SettingSeniorTopic extends React.Component {
              onModelOk={this.onModelOk.bind(this)}
              onModelCancel={this.onModelCancel.bind(this)}
              propsData={this.props.num3}
-            inputIndex={this.state.inputIndex}
+             inputIndex={this.state.inputIndex}
            />
             </div>
         )

@@ -14,11 +14,11 @@ class AppCenter extends React.Component{
                 {
                     title: '舆情应用',
                     items: [
-                        {type: 'icon-jiance-dianji', text: '舆情监测', color: '#4ba9eb', href: '/allopinion/allopiniondetail', hrefType: 'history'},
-                        // {type: 'icon-hanyu1', text: '韩语监测', color: '#f7b55d', href: '/multilingual/1', hrefType: 'history'},
-                        // {type: 'icon-riyu1', text: '日语监测', color: '#4ba9eb', href: '/multilingual/2', hrefType: 'history'},
-                        // {type: 'icon-logoxinjiang', text: '维语监测', color: '#6296f1', href: '/multilingual/3', hrefType: 'history'},
-                        // {type: 'icon-xicanga', text: '藏语监测', color: '#4ba9eb', href: '/multilingual/4', hrefType: 'history'},
+                        {type: 'icon-jiance-dianji-copy', text: '舆情监测', color: '#4ba9eb', href: '/allopinion/allopiniondetail', hrefType: 'history'},
+                        // {type: 'icon-hanyu2-copy', text: '韩语监测', color: '#f7b55d', href: '/multilingual/1', hrefType: 'history'},
+                        // {type: 'icon-riyu1-copy', text: '日语监测', color: '#4ba9eb', href: '/multilingual/2', hrefType: 'history'},
+                        // {type: 'icon-logoxinjiang1-copy', text: '维语监测', color: '#6296f1', href: '/multilingual/3', hrefType: 'history'},
+                        // {type: 'icon-xicanga-copy', text: '藏语监测', color: '#4ba9eb', href: '/multilingual/4', hrefType: 'history'},
                         // {type: 'icon-yingyu', text: '英语监测', color: '#04c0b3'},
                         {type: 'icon-zhengjucailiao', text: '互联网取证', color: '#6296f1', href: '/evidence', hrefType: 'http'},
                         {type: 'icon-shangbao', text: '上报管理', color: '#4ba9eb', href: '/upreport', hrefType: 'http'},
@@ -34,7 +34,7 @@ class AppCenter extends React.Component{
                         {type: 'icon--shujuzhiligongju', text: '网站安全治理', color: '#6296f1', href: 'https://119.88.190.68', hrefType: 'login'}, // ***
                         {type: 'icon-leidatance', text: '网站空间探测', color: '#04c0b3', href: 'https://119.88.190.71/', hrefType: 'login'},
                         {type: 'icon-fanghu', text: '网站安全防护', color: '#4ba9eb', href: '/competitiveIntelligence', hrefType: 'http'},
-                        // {type: 'icon-jiangmurubingdugongji', text: '僵木蠕监测', color: '#4ba9eb', href: '/safetyprotection', hrefType: 'http'},
+                        // {type: 'icon-jiangmurubingdugongji-copy', text: '僵木蠕监测', color: '#4ba9eb', href: '/safetyprotection', hrefType: 'http'},
                         {type: 'icon-zonghetongbao', text: '预警通报', color: '#f7b55d', href: '/alertnotifications', hrefType: 'http'},
                         // {type: 'icon-huandunicon-', text: '威胁情报', color: '#4ba9eb'},
                         // {type: 'icon-zidong', text: '自动通报', color: '#4ba9eb'},

@@ -41,7 +41,9 @@ class AllOpinion extends React.Component {
     super();
     this.state = {
      channelList:[],
-     key:'4'
+     key:'4',
+     flag:true,
+     collapsed: true
     }
   }
   componentWillMount(){
@@ -64,13 +66,32 @@ class AllOpinion extends React.Component {
            key:item.key
         })
   }
+  toggle = () => {
+      this.setState({
+        flag:!this.state.flag
+      })
+  }
+  mouseEnterToggle = () => {
+    if(this.state.collapsed){
+    this.setState({
+      collapsed:false
+    })
+   }
+  }
+  mouseLeaveToggle = () => {
+    if(!this.state.collapsed){
+    this.setState({
+      collapsed:true
+    })
+  }
+ }
   render() {
     const {themeColor} = this.props;
     const haverClass = themeColor.topColor.backgroundColor === '#5a8bff' ? 'white':'black'; 
     let menuList = [];
     this.state.channelList.map((item, index) => {
       if (item.channelurl === '/allopinion/reportopinion/list') {
-        menuList.push(<SubMenu
+        menuList.push(<SubMenu className={haverClass}
           key={item.key}
           title={<span>
             <i className="anticon"><Iconfont type={item.type} style={{fontSize: '16px'}}/></i>
@@ -100,10 +121,10 @@ class AllOpinion extends React.Component {
           </Menu.Item> */}
         </SubMenu>)
       } else if (item.channelurl === '../systemMan/systemManDo?action=userList') {
-        menuList.push(<SubMenu key={item.key} 
+        menuList.push(<SubMenu key={item.key}  className={haverClass}
                                title={<Link to="/allopinion/noticesetting"><span><i className="anticon"><Iconfont type={item.type}
-                                 style={{fontSize: '16px'}}/></i><span
-                                 style={{fontSize: '16px'}}>系统设置</span></span> </Link>}>
+                               style={{fontSize: '16px'}}/></i><span
+                               style={{fontSize: '16px'}}>系统设置</span></span> </Link>}>
           <Menu.Item key="noticesetting" style={{fontSize: '16px'}}>
             <Link to="/allopinion/noticesetting">
               <span >通知设置</span>
@@ -127,7 +148,7 @@ class AllOpinion extends React.Component {
           </Menu.Item>
         </SubMenu>)
       } else if (item.channelurl === '/multilingual') {
-        menuList.push(<SubMenu key={item.key} 
+        menuList.push(<SubMenu key={item.key}  className={haverClass}
           title={<Link to="/multilingual/0"><span><i className="anticon"><Iconfont type={item.type}
             style={{fontSize: '16px'}}/></i><span
             style={{fontSize: '16px'}}>多语种检测</span></span> </Link>}>
@@ -148,12 +169,12 @@ class AllOpinion extends React.Component {
             </Menu.Item>
             <Menu.Item key="publicopinion" style={{fontSize: '16px'}}>
             <Link to="/allopinion/multilingual/4">
-            <span><Iconfont type='icon-xicangzizhiqu' style={{fontSize: '16px'}}/>藏语检测</span>
+            <i className="anticon"><Iconfont type='icon-xicangzizhiqu' style={{fontSize: '16px'}}/>藏语检测</i>
             </Link>
             </Menu.Item>
             </SubMenu>)
       }else {
-        menuList.push(<Menu.Item key={item.key} style={{fontSize: '16px'}}>
+        menuList.push(<Menu.Item key={item.key} style={{fontSize: '16px'}} className={haverClass}>
           {item.channelurl.indexOf('http') !== -1 ?
             <a href={item.channelurl} target="blank">
               <i className="anticon"><Iconfont type={item.type} style={{fontSize: '16px'}}/></i>
@@ -174,16 +195,16 @@ class AllOpinion extends React.Component {
             <Sider
             className="sider siders"
             trigger={null}
-            style={{position: 'fixed', left: 0,marginTop:'10px',marginLeft:'10px',backgroundColor: themeColor.bottomColor.backgroundColor}}
+            style={{position: 'fixed', left: 0,backgroundColor: themeColor.bottomColor.backgroundColor}}
             collapsed={this.state.collapsed && this.state.flag}
             onMouseEnter={this.mouseEnterToggle} 
             onMouseLeave={this.mouseLeaveToggle}
           >
             <div>
               <div className="trigger-wrapper" onClick={this.toggle}
-              style={haverClass === 'white' ?{backgroundColor:'#f0f2fb'}:{backgroundColor:'#35394f'}}
+              style={haverClass === 'white' ?{backgroundColor:'#fff'}:{backgroundColor:themeColor.bottomColor.backgroundColor}}
               >
-                {/* <i className="fa fa-bars" aria-hidden="true" style={{fontSize: '14px', color: '#5a8bff'}}/> */}
+                <i className="fa fa-bars" aria-hidden="true" style={{fontSize: '14px', color: '#5a8bff'}}/>
               </div>
             </div>
             <Menu
@@ -197,7 +218,7 @@ class AllOpinion extends React.Component {
               {menuList}
             </Menu>
           </Sider>
-          <Layout style={{marginLeft:'200px',background:'#E4EbF7'}}>
+          <Layout style={this.state.collapsed&&this.state.flag?{marginLeft:'64px',background:'#E4EbF7'}:{marginLeft:'200px',background:'#E4EbF7'}}>
           <Content>
           <Switch>
                 <Route path="/allopinion/bigscreen" component={BigScreen}/>

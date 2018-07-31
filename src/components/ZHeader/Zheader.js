@@ -276,13 +276,13 @@ class Zheader extends React.Component {
             </div>
         );
         const moreMenu = <div style={{marginTop:'16px',display:'flex',width:'100px'}}>
-                         <Menu selectable={true}> 
+                         <Menu> 
                          {itemMenuOne}
                          </Menu>
-                         <Menu selectable={true}> 
+                         <Menu> 
                          {itemMenuTwo}
                          </Menu>
-                         <Menu selectable={true}> 
+                         <Menu> 
                          {itemMenuThree}
                          </Menu>
                          </div>;                 
