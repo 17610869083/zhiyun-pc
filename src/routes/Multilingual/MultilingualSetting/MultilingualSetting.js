@@ -10,11 +10,15 @@ import {
         api_get_BiddingaddGrade,
         api_get_BiddinggetGradeAndRule,
         api_get_BiddinggetEditRule,
-        api_get_BiddinggetDelRule
+        api_get_BiddinggetDelRule,
+        api_sorted_cat_list,
+        api_sorted_rule_list,
+        api_sorted_rule_edit,
+        api_sorted_rule_delete
 } from '../../../services/api';
 import { createHashHistory } from 'history';
 import {connect} from 'react-redux';
-import {topicNavMessageRequested} from '../../../redux/actions/createActions';
+import {topicNavMessageRequested, setlocationPathname} from '../../../redux/actions/createActions';
 import './MultilingualSetting.less'
 const TabPane = Tabs.TabPane;
 const FormItem = Form.Item;
@@ -49,12 +53,13 @@ class BiddingSetting extends React.Component {
             ruleId:[],
             topicNameValue:'',
             addOrSetting:'',
-            roleArr: []
+            roleArr: [],
+            language: ['', 'kr', 'jp', 'uygur', 'zang', 'en']
         }
     }
     componentWillReceiveProps(nextprops){
             if (this.search2Obj(nextprops.location.search).type === 'add' && this.props.location.search !== nextprops.location.search) {
-                request(api_get_BiddingetgradeCatList).then((res) => {
+                request(api_sorted_cat_list).then((res) => {
                     this.setState({
                         topicCatList: res.data.gradeCatList,
                         topicNameValue: '',
@@ -80,7 +85,7 @@ class BiddingSetting extends React.Component {
                 select: this.search2Obj(this.props.location.search).catid
             })
             
-            request(api_get_BiddingetgradeCatList).then((res) => {
+            request(api_sorted_cat_list).then((res) => {
                 this.setState({
                     topicCatList: res.data.gradeCatList
                 })
@@ -88,9 +93,9 @@ class BiddingSetting extends React.Component {
         } else {
             let topicid = this.search2Obj(this.props.location.search).topicid
             
-            request(api_get_BiddingetgradeCatList).then((res) => {
+            request(api_sorted_cat_list).then((res) => {
 
-                request(api_get_BiddinggetGradeAndRule +'&clfid=' +topicid).then(res2=>{
+                request(api_sorted_rule_list +'&clfid=' +topicid).then(res2=>{
                     if(res2.data && res2.data.code!==0){
                     let addtypeStr='num'+(res2.data.addtype);
                         this.setState({
@@ -352,17 +357,20 @@ class BiddingSetting extends React.Component {
                 }
             })
         } else {
-            request(api_get_BiddinggetEditRule, {
+            request(api_sorted_rule_edit, {
                 method: 'POST',
                 headers: {
                     "Content-Type": "application/x-www-form-urlencoded"
                 },
-                body:`action=editGrade&addtype=${this.state.addtype}&catid=${this.state.select}&clfid=${this.props.location.search.split('=')[1]}&clfname=${this.state.topicNameValue}&rule=${this.state.addType-0 === 3 ? encodeURIComponent(JSON.stringify(this.state.num3)) :encodeURIComponent(rules)}`
+                body:`action=editGrade&addtype=${this.state.addtype}&lang=${this.state.language[this.props.match.params.languages]}&catid=${this.state.select}&clfid=${this.props.location.search.split('=')[1]}&clfname=${this.state.topicNameValue}&rule=${this.state.addType-0 === 3 ? encodeURIComponent(JSON.stringify(this.state.num3)) :encodeURIComponent(rules)}`
             }).then((res) => {
+                console.log(this.props.getRouter)
                 if(res.data.code===1){
                     message.success('关键词修改成功');
+                    this.props.setlocationPathname({topicid:this.props.getRouter.topicid});
+                    
                     history.push({
-                        pathname: '/bidding/information'
+                        pathname: `/multilingual/${this.props.match.params.languages}/multilingual`,
                     })
                 } else {
                     message.error('关键词修改失败')
@@ -469,12 +477,12 @@ class BiddingSetting extends React.Component {
     })
     if ( this.search2Obj(this.props.location.search).type === 'add' ) {
     }else {
-    request(api_get_BiddinggetDelRule, {
+    request(api_sorted_rule_delete, {
         method: 'POST',
         headers: {
             "Content-Type": "application/x-www-form-urlencoded"
         },
-        body: `&ruleid=${delrole[0].id}`
+        body: `&ruleid=${delrole[0].id}&lang=${this.state.language[this.props.match.params.languages]}`
     }).then((res) => {
         if(res.code === 1) {
             message.success('删除成功');
@@ -737,11 +745,19 @@ class BiddingSetting extends React.Component {
         )
     }
 }
+const mapStateToProps = state => {
+    return {
+        getRouter: state.getRouterReducer
+    }
+};
 const mapDispatchToProps = dispatch => {
     return {
         topicNavMessageRequested:req=>{
             dispatch(topicNavMessageRequested(req));
+        },
+        setlocationPathname: req=>{
+            dispatch(setlocationPathname(req))
         }
     }
 };
-export default connect(null,mapDispatchToProps)(Form.create()(BiddingSetting));
+export default connect(mapStateToProps,mapDispatchToProps)(Form.create()(BiddingSetting));

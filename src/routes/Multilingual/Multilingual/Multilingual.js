@@ -161,16 +161,16 @@ class AllOpinion extends React.Component {
         timePickerShow: false
       })
     }
-
       const param = {
-        lang:this.state.language[this.props.match.params.languages],
         pagesize: this.state.pagesize,
         datetag: value,
         neg: this.state.trendValue,
         order: this.state.sortValue,
         similer: this.state.filterValue,
         page:this.props.page,
-        carry: this.state.mediaValue
+        carry: this.state.mediaValue,
+        lang: this.state.language[this.props.match.params.languages],
+        clfid: this.props.getRouter.topicid
       };
       this.props.opinionSearchRequest(param);
       this.props.paginationPage(1);
@@ -212,7 +212,6 @@ class AllOpinion extends React.Component {
         timeValue: 'custom',
       });
         const param = {
-          lang:this.state.language[this.props.match.params.languages],
           pagesize: this.state.pagesize,
           datetag: timeValue,
           neg: this.state.trendValue,
@@ -221,7 +220,9 @@ class AllOpinion extends React.Component {
           page:this.props.page,
           carry: this.state.mediaValue,
           begin: begin,
-          end: end
+          end: end,
+          clfid: this.props.getRouter.topicid,
+          lang:this.state.language[this.props.match.params.languages]
         }
         this.props.opinionSearchRequest(param);
         this.props.paginationPage(1);
@@ -240,7 +241,8 @@ class AllOpinion extends React.Component {
       order: this.state.sortValue,
       similer: this.state.filterValue,
       page:this.props.page,
-      carry: this.state.mediaValue
+      carry: this.state.mediaValue,
+      clfid: this.props.getRouter.topicid
     };
     if (this.state.timeValue === 'custom') {
       param.begin = this.state.begin
@@ -263,7 +265,8 @@ class AllOpinion extends React.Component {
       order: value,
       similer: this.state.filterValue,
       page:this.props.page,
-      carry: this.state.mediaValue
+      carry: this.state.mediaValue,
+      clfid: this.props.getRouter.topicid
     };
     if (this.state.timeValue === 'custom') {
       param.begin = this.state.begin
@@ -286,7 +289,8 @@ class AllOpinion extends React.Component {
         order: this.state.sortValue,
         similer: value,
         page:this.props.page,
-        carry: this.state.mediaValue
+        carry: this.state.mediaValue,
+        clfid: this.props.getRouter.topicid
       };
       if (this.state.timeValue === 'custom') {
         param.begin = this.state.begin
@@ -309,7 +313,8 @@ class AllOpinion extends React.Component {
       order: this.state.sortValue,
       similer: this.state.filterValue,
       page:this.props.page,
-      carry: value
+      carry: value,
+      clfid: this.props.getRouter.topicid
     };
     if (this.state.timeValue === 'custom') {
       param.begin = this.state.begin
@@ -335,7 +340,8 @@ class AllOpinion extends React.Component {
       end: this.state.end,
       page: pagenumber,
       pagesize: this.state.pagesize,
-      lang:this.state.language[this.props.match.params.languages]
+      lang:this.state.language[this.props.match.params.languages],
+      clfid: this.props.getRouter.topicid
     };
     this.props.opinionSearchRequest(param);
     this.props.paginationPage(pagenumber);
@@ -366,7 +372,7 @@ class AllOpinion extends React.Component {
         page: pagenum,
         pagesize: this.state.pagesize,
         lang: this.state.language[this.props.match.params.languages],
-        clfid: this.props.clfId.clfid,
+        clfid: this.props.getRouter.topicid
       };
       this.props.opinionSearchRequest(param);
   }
@@ -427,7 +433,7 @@ class AllOpinion extends React.Component {
     }
     // debugger
     const obj = URLToObject(pathname);
-    const newabj = {clfid: obj.topicid}
+    const newabj = {clfid: this.props.getRouter.topicid}
     const param = {
       lang:this.state.language[this.props.match.params.languages],
       pagesize: this.state.pagesize,
@@ -435,7 +441,7 @@ class AllOpinion extends React.Component {
       neg: this.state.trendValue,
       order: this.state.sortValue,
       similer: this.state.filterValue,
-      page:this.props.page
+      page:this.props.page,
     }  
     const newParam = Object.assign(param, newabj);
     this.props.opinionSearchRequest(newParam);
@@ -453,27 +459,6 @@ class AllOpinion extends React.Component {
     }
   }
   componentWillReceiveProps(newProps){
-    // console.log(this.props.languages, newProps.languages)
-    // this.setState({
-    //   languageType: newProps.languages
-    // })
-    // console.log(newProps.match.params.languages, newProps.languages)
-    // console.log('更新了props', this.state.prevhash !== window.location.hash)
-            // console.log( this.state.prevhash !== window.location.hash )
-            // if( this.state.prevhash !== window.location.hash ) {
-            //   let reg = /^[0-5]$/
-            //   if(reg.test(newProps.match.params.languages)) {
-            //     this.setState({
-            //       languageType: newProps.match.params.languages
-            //     })
-            //   }
-            // }else {
-            //   console.log(newProps.languages)
-            //   this.setState({
-            //       languageType: newProps.languages
-            //   })
-            // }
-    // console.log(this.props.match.params.languages, newProps.match.params.languages)
     if(this.props.match.url === newProps.match.url) {
       this.setState({
         languageType: newProps.languages
@@ -483,14 +468,6 @@ class AllOpinion extends React.Component {
         languageType: newProps.match.params.languages
       })
     }
-
-
-
-    // else{
-    //   this.setState({
-    //       languageType: newProps.languages
-    //   })
-    // }
     this.setState({
       prevhash: window.location.hash
     })
@@ -517,11 +494,8 @@ class AllOpinion extends React.Component {
       page: this.state.page,
       pagesize: this.state.pagesize,
       lang: this.state.language[newProps.match.params.languages],
-      clfid: this.props.getRouter.topicid
+      clfid: newProps.getRouter.topicid
     }
-    // console.log(this.props.match.params.languages, newProps.match.params.languages)
-    // debugger
-    // console.log(this.props.match.params.languages === newProps.match.params.languages)
     if (this.props.location.search === newProps.location.search) return false;
     this.props.opinionSearchRequest(param);
     this.props.paginationPage(1);

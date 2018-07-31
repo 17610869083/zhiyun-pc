@@ -93,7 +93,7 @@ class BiddingOpinion extends React.Component {
         this.setState({
             current
         })
-        if (nextprops.location.pathname === '/bidding/information') {
+        if (nextprops.location.pathname.split('/')[3] === 'multilingual') {
             this.initCard()
         }
     }
@@ -138,6 +138,7 @@ class BiddingOpinion extends React.Component {
                 lang: this.state.language[this.props.match.params.languages]
             }
             this.props.getSortedContentRequested(param);
+            this.props.setlocationPathname({topicid:param.clfid});
             this.setState({
                 topicLists:topicMessage,
                 topicId:firstTopicid.topicid,
@@ -199,7 +200,7 @@ class BiddingOpinion extends React.Component {
            }else {
                 history.push({
                     pathname:`/multilingual/${this.props.match.params.languages}/setting`,
-                    search: `?type=add&cafid=${catid}&topicid=${catid}`,
+                    search: `?type=add&catid=${catid}`,
                 })
                 this.setState({
                     current: 'setting',
@@ -407,7 +408,6 @@ class BiddingOpinion extends React.Component {
                 <div className="topic-info">
                     <div className="topic-top" style={{background:GRAY}}>
                     <div>
-                    {console.log(this.state.current)}
                     <Menu
                         onClick={this.handleClick.bind(this)}
                         selectedKeys={[this.state.current]}
