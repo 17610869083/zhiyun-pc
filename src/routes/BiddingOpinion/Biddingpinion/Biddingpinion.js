@@ -10,7 +10,7 @@ import {
   api_get_doc_similar,
   api_email_push,
   api_docsend_push,
-  api_bidding_message_del
+  api_del_doc
 } from '../../../services/api';
 import {Popconfirm, message, Select} from 'antd';
 import {setHighlightTags, getMeailMessage} from '../../../utils/format';
@@ -71,7 +71,7 @@ class DetailOpinion extends React.Component {
 
   // 确认删除
   deleteConfirm(sid) {
-    request(api_bidding_message_del + '&sid=["' + sid + '"]', {}).then((res) => {
+    request(api_del_doc + '&sid=["' + sid + '"]', {}).then((res) => {
       if (res.data.code === 1) {
         message.success(res.data.msg);
         setTimeout(() => {
