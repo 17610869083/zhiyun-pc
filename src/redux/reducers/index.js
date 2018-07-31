@@ -9,6 +9,7 @@ import addMessageReducer from './addMessageReducer';
 import paginationPageReducer from './paginationPageReducer';
 import homeModuleReducer from './homeModuleReducer';
 import searchStateReducer from './searchStateReducer';
+import mulLanToggleReducer from './mulLanToggleReducer'
 import {getUserInfoReducer, userFetchSuccess} from './userInfo';
 import {opinionSearchRequestedReducer,
     opinionSearchSucceededReducer,
@@ -90,7 +91,8 @@ const reducer = combineReducers({
     searchStateReducer,
     informsstate,
     clfCatState,
-    briefingSwitchDataReducer
+    briefingSwitchDataReducer,
+    mulLanToggleReducer
 });
 
 export default reducer;

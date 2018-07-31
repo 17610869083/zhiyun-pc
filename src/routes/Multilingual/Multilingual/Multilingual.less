@@ -1,5 +1,5 @@
 .all-opinion2 {
-  margin: 10px 20px 20px 20px;
+  // margin: 10px 20px 20px 20px;
   font-size: 14px;
   background: #e4ebf7;
   position: relative;
@@ -105,11 +105,11 @@
       height: 60px;
       padding-top: 7px;
       .left {
-        max-width: 130px;
+        max-width: 150px;
         color: #0c1124;
         font-size: 14px;
         line-height: 40px;
-        margin-right: 10px;
+        margin-right: 20px;
       }
       .right {
         text-align: center;
@@ -172,11 +172,12 @@
   }
   .uygur{
     flex-direction: row-reverse;
-    &>.left{
-      width: 330px !important;
+    &.sort-items>.left,&.media-items>.left{
+      width: 140px !important;
       text-align: left !important;
       margin-left: 20px;
     }
+    
     .right{
       .item{
         margin-right: 0 !important;
@@ -190,5 +191,9 @@
     &.media-items{
       margin-left: 0;
     }
+    >.left{
+      margin-right: 20px;
+    }
   }
+
 }

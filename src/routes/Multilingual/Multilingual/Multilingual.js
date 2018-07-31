@@ -2,10 +2,10 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import {connect} from 'react-redux';
 import {Pagination, DatePicker, Form, message, Button} from 'antd';
-import OpinionDetail from './MultilingualDetail/MultilingualDetail';
-import {opinionSearchRequested, searchKeywordSync, paginationPage} from '../../redux/actions/createActions';
-import {URLToObject, getSecondTime} from '../../utils/format';
-import {GRAY} from '../../utils/colors';
+import OpinionDetail from '../MultilingualDetail/MultilingualDetail';
+import {opinionSearchRequested, searchKeywordSync, paginationPage, getSortedContentRequested} from '../../../redux/actions/createActions';
+import {URLToObject, getSecondTime} from '../../../utils/format';
+import {GRAY} from '../../../utils/colors';
 import './Multilingual.less';
 const FormItem = Form.Item;
 class AllOpinion extends React.Component {
@@ -354,7 +354,7 @@ class AllOpinion extends React.Component {
     }
   }
 
-    dataChanged(pagenum) {
+  dataChanged(pagenum) {
       const param = {
         datetag: this.state.timeValue,
         neg: this.state.trendValue,
@@ -365,7 +365,8 @@ class AllOpinion extends React.Component {
         end: this.state.end,
         page: pagenum,
         pagesize: this.state.pagesize,
-        lang: this.state.language[this.props.match.params.languages]
+        lang: this.state.language[this.props.match.params.languages],
+        clfid: this.props.clfId.clfid,
       };
       this.props.opinionSearchRequest(param);
   }
@@ -424,7 +425,9 @@ class AllOpinion extends React.Component {
         timeValue: 'all'
       })
     }
+    // debugger
     const obj = URLToObject(pathname);
+    const newabj = {clfid: obj.topicid}
     const param = {
       lang:this.state.language[this.props.match.params.languages],
       pagesize: this.state.pagesize,
@@ -434,7 +437,7 @@ class AllOpinion extends React.Component {
       similer: this.state.filterValue,
       page:this.props.page
     }  
-    const newParam = Object.assign(param, obj);
+    const newParam = Object.assign(param, newabj);
     this.props.opinionSearchRequest(newParam);
   }
 
@@ -449,16 +452,45 @@ class AllOpinion extends React.Component {
       this.homepageMore(window.location.hash);
     }
   }
-
   componentWillReceiveProps(newProps){
-    if( this.state.prevhash !== window.location.hash ) {
-      let reg = /^[0-5]$/
-      if(reg.test(newProps.match.params.languages)) {
-        this.setState({
-          languageType: newProps.match.params.languages
-        })
-      }
+    // console.log(this.props.languages, newProps.languages)
+    // this.setState({
+    //   languageType: newProps.languages
+    // })
+    // console.log(newProps.match.params.languages, newProps.languages)
+    // console.log('更新了props', this.state.prevhash !== window.location.hash)
+            // console.log( this.state.prevhash !== window.location.hash )
+            // if( this.state.prevhash !== window.location.hash ) {
+            //   let reg = /^[0-5]$/
+            //   if(reg.test(newProps.match.params.languages)) {
+            //     this.setState({
+            //       languageType: newProps.match.params.languages
+            //     })
+            //   }
+            // }else {
+            //   console.log(newProps.languages)
+            //   this.setState({
+            //       languageType: newProps.languages
+            //   })
+            // }
+    // console.log(this.props.match.params.languages, newProps.match.params.languages)
+    if(this.props.match.url === newProps.match.url) {
+      this.setState({
+        languageType: newProps.languages
+      })
+    }else{
+      this.setState({
+        languageType: newProps.match.params.languages
+      })
     }
+
+
+
+    // else{
+    //   this.setState({
+    //       languageType: newProps.languages
+    //   })
+    // }
     this.setState({
       prevhash: window.location.hash
     })
@@ -485,11 +517,12 @@ class AllOpinion extends React.Component {
       page: this.state.page,
       pagesize: this.state.pagesize,
       lang: this.state.language[newProps.match.params.languages],
+      clfid: this.props.getRouter.topicid
     }
     // console.log(this.props.match.params.languages, newProps.match.params.languages)
     // debugger
-    if (this.props.match.params.languages === newProps.match.params.languages) return false;
-
+    // console.log(this.props.match.params.languages === newProps.match.params.languages)
+    if (this.props.location.search === newProps.location.search) return false;
     this.props.opinionSearchRequest(param);
     this.props.paginationPage(1);
   }
@@ -708,12 +741,12 @@ class AllOpinion extends React.Component {
     };
     return (
       <div className="all-opinion2" id="anchor">
-        <div className="close-open" style={{background:GRAY}}>
+        {/* <div className="close-open" style={{background:GRAY}}>
           <div className="count">{this.state.infoList[this.state.languageType]}</div>
           <div className="close" onClick={this.triggerTopShow.bind(this)}>
             <span className="closeBtn">{this.state.languageType === 0 ? this.state.CHlan[this.props.match.params.languages] : '中文'}</span>
           </div>
-        </div>
+        </div> */}
         <div className="sort-top" style={this.state.isTopShow ? {display: 'block'} : {display: 'none'}}>
           <div className={this.state.languageType-0 === 3? 'uygur sort-items' : 'sort-items'}>
             <div className="left">{this.state.OptiionTitle.time[this.state.languageType]}</div>
@@ -810,18 +843,21 @@ class AllOpinion extends React.Component {
 const mapStateToProps = state => {
   return {
     themeColor: state.changeThemeReducer,
-    docList: state.opinionSearchSucceededReducer.data.docList,
-    carryCount: state.opinionSearchSucceededReducer.data.carryCount,
-    pageInfo: state.opinionSearchSucceededReducer.data.pageInfo,
+    docList: state.getSortedContentSucceeded.data.docList,
+    carryCount: state.getSortedContentSucceeded.data.carryCount,
+    // pageInfo: state.opinionSearchSucceededReducer.data.pageInfo,
     ks: state.searchKeywordSyncReducer.ks,
-    page: state.paginationPageReducer
+    page: state.paginationPageReducer,
+    pageInfo: state.getSortedContentSucceeded.data.pageInfo,
+    languages: state.mulLanToggleReducer,
+    getRouter: state.getRouterReducer,
   }
 };
 
 const mapDispatchToProps = dispatch => {
   return {
     opinionSearchRequest: req => {
-      dispatch(opinionSearchRequested(req));
+      dispatch(getSortedContentRequested(req));
     },
     searchKeywordSync: ks => {
       dispatch(searchKeywordSync(ks));

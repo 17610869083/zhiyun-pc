@@ -1,6 +1,6 @@
 import React from 'react';
 import {Input, Modal, Form, message, Row, Col, Icon,Tooltip, Button} from 'antd';
-import './BiddingCreate.less';
+import './newCreate.less';
 const FormItem = Form.Item;
 class BiddingCreate extends React.Component {
     constructor(props){

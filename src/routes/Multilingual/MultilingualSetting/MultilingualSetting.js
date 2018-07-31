@@ -15,7 +15,7 @@ import {
 import { createHashHistory } from 'history';
 import {connect} from 'react-redux';
 import {topicNavMessageRequested} from '../../../redux/actions/createActions';
-import './BiddingSetting.less'
+import './MultilingualSetting.less'
 const TabPane = Tabs.TabPane;
 const FormItem = Form.Item;
 const Option = Select.Option;

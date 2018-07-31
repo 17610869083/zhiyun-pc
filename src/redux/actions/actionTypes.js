@@ -99,3 +99,5 @@ export const INFORMS_STATE='INFORMS_STATE';
 export const CLF_CAT_STATE = 'CLF_CAT_STATE';
 //生成简报选择数据
 export const BRIEFING_SWITCH_DATA = 'BRIEFING_SWITCH_DATA';
+// 多语种文字切换
+export const MUL_LANGUAGES_TOGGLE = 'MUL_LANGUAGES_TOGGLE';

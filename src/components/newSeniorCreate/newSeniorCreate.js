@@ -1,6 +1,6 @@
 import React from 'react';
 import {Input, Modal, Icon, Form, message} from 'antd';
-import './BiddingSeniorCreate.less';
+import './newSeniorCreate.less';
 const FormItem = Form.Item
 // import {api_topic_ruleid,api_clf_ruleid} from '../../services/api';
 // import request from '../../utils/request';
