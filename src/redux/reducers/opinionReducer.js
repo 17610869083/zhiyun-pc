@@ -38,7 +38,7 @@ import {
 
 const opinionSearchSucceededReducer = handleAction(OPINION_SEARCH_SUCCEEDED, (state, action) => ({
   data: action.payload,
-}), {data: {docList: [], pageInfo: {}, carryCount: [{count:0, value: "全部", key: "docApp"}]}});
+}), {data: {docList: [], pageInfo: {count:0}, carryCount: [{count:0, value: "全部", key: "docApp"}]}});
 
 export const topicListSucceededReducer = handleAction(GET_TOPIC_SHOWLIST_SUCCEEDED, (state, action) => ({
   data: action.payload,

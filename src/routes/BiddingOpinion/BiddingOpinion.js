@@ -70,7 +70,7 @@ class BiddingOpinion extends React.Component {
         //     // return
         // }
         history.push({
-            pathname:`/bidding/${e.key}`,
+            pathname:`/allopinion/bidding/${e.key}`,
             search:`?topicid=${this.state.topicId}`
         });
         this.setState({
@@ -79,11 +79,11 @@ class BiddingOpinion extends React.Component {
     }
     componentWillReceiveProps(nextprops){
         // let current =  
-        let current = nextprops.location.pathname.split('/bidding/')[1]
+        let current = nextprops.location.pathname.split('/allopinion/bidding/')[1]
         this.setState({
             current
         })
-        if (nextprops.location.pathname === '/bidding/information') {
+        if (nextprops.location.pathname === '/allopinion/bidding/information') {
             this.initCard()
         }
     }
@@ -140,7 +140,7 @@ class BiddingOpinion extends React.Component {
             addTopic:1,
             addClass:0
         });
-        history.push(`/topic/addtopic`);
+        history.push(`/allopinion/topic/addtopic`);
     }
     delTopic(e){
         e.stopPropagation();
@@ -159,7 +159,7 @@ class BiddingOpinion extends React.Component {
         })
         this.props.setlocationPathname({topicid:topicid,topicname:topicname});
           history.push({
-            pathname:`/bidding/information`,
+            pathname:`/allopinion/bidding/information`,
             search:`?topicId=${topicid}`
         });
 
@@ -172,11 +172,6 @@ class BiddingOpinion extends React.Component {
           } 
     	  this.setState({inputValue:e.target.value})
     }
-    
-    
-    
-    
-    
     onDelitem(catid, {key}){
            if(key==='1'){
            	   this.setState({visibleOne:true})
@@ -184,7 +179,7 @@ class BiddingOpinion extends React.Component {
                this.setState({visibleThree:true})
            }else {
                 history.push({
-                    pathname:`/bidding/setting`,
+                    pathname:`/allopinion/bidding/setting`,
                     search: `?type=add&catid=${catid}`,
                 })
                 // history.push({
@@ -194,7 +189,7 @@ class BiddingOpinion extends React.Component {
                 this.setState({
                     current: 'setting',
                 })
-                this.props.setlocationPathname({catid:catid});
+                // this.props.setlocationPathname({catid:catid});
            }
     }
     onCatid(catid){
@@ -338,7 +333,7 @@ class BiddingOpinion extends React.Component {
          }).then(res=>{
                 if(res.data && res.data.code===1){
                     history.push({
-                        pathname:`/bidding/information/`
+                        pathname:`/allopinion/bidding/information/`
                     });
                 }
                 this.initCard()
@@ -415,9 +410,9 @@ class BiddingOpinion extends React.Component {
                     </div>
                     <div className="topic-wrapper">
                         <Switch>
-                            <Route path="/bidding/information" component={Information} />
+                            <Route path="/allopinion/bidding/information" component={Information} />
                             {/* <Route path="/bidding/analysis" component={Analysis} /> */}
-                            <Route path="/bidding/setting" component={Setting}/>
+                            <Route path="/allopinion/bidding/setting" component={Setting}/>
                         </Switch>
                     </div>
                 </div>

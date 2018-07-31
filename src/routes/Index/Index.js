@@ -6,8 +6,6 @@ import './Index.less';
 import {exportSkip} from '../../redux/actions/createActions';
 import CRcode from '../LoginPage/crcode.jpg';
 import AsyncComponent from '../../components/AsyncComponent/AsyncComponent'
-// import Bidding from '../BiddingOpinion/BiddingOpinion'
-
 const NewHome = AsyncComponent(() => import('../NewHome'))
 const TopicReportList = AsyncComponent(() => import('../TopicReportList/TopicReportList'))
 const AllOpinion = AsyncComponent(() => import('../AllOpinion/AllOpinion'))
@@ -17,8 +15,6 @@ const Evidence = AsyncComponent(() => import('../Evidence/Evidence'))
 const UpReport = AsyncComponent(() => import('../UpReport/UpReport'))
 const Guide = AsyncComponent(() => import('../Guide/Guide'))
 const Situational = AsyncComponent(() => import('../Situational/Situational'))
-const Bidding= AsyncComponent(() => import('../BiddingOpinion/BiddingOpinion'))
-const Multilingual= AsyncComponent(() => import('../Multilingual/Multilingual'))
 const AppCenter= AsyncComponent(() => import('../AppCenter/AppCenter'))
 const Guard= AsyncComponent(() => import('../Guard/Guard'))
 const MonitoringWarning = AsyncComponent(() => import('../MonitoringWarning/MonitoringWarning'))
@@ -146,8 +142,6 @@ class Index extends React.Component {
                 <Route path="/upreport" component={UpReport}/>
                 <Route path="/guide" component={Guide}/>
                 <Route path="/situational" component={Situational}/>
-                <Route path="/bidding" component={Bidding}/>
-                <Route path="/multilingual/:languages" component={Multilingual}/>
                 <Route path="/appcenter" component={AppCenter}  onEnter={this.onEnter}/> 
                 <Route path="/Guard" component={Guard}/>
                 <Route path="/monitoringwarning" component={MonitoringWarning}/>

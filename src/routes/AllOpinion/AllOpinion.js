@@ -34,6 +34,8 @@ const Briefing= AsyncComponent(() => import('../Briefing/Briefing'))
 const BriefingSecond = AsyncComponent(() => import('../BriefingSecond/BriefingSecond'))
 const Daily = AsyncComponent(() => import('../Daily/Daily'))
 const Special = AsyncComponent(() => import('../Special/Special'))
+const Multilingual= AsyncComponent(() => import('../Multilingual/Multilingual'))
+const BiddingOpinion = AsyncComponent(() => import('../BiddingOpinion/BiddingOpinion'))
 const { Sider, Content} = Layout;
 const SubMenu = Menu.SubMenu;
 class AllOpinion extends React.Component {
@@ -248,6 +250,9 @@ class AllOpinion extends React.Component {
                 <Route path="/allopinion/briefingsecond" component={BriefingSecond}/>
                 <Route path="/allopinion/daily" component={Daily}/>
                 <Route path="/allopinion/special" component={Special}/>
+                <Route path="/allopinion/multilingual/:languages" component={Multilingual}/>
+                <Route path="/allopinion/bidding/information" component={BiddingOpinion}/>
+                <Route path="/allopinion/bidding" component={BiddingOpinion}/>
               </Switch>
               </Content>
               </Layout>

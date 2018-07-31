@@ -361,6 +361,7 @@ class BiddingInformation extends React.Component {
       componentDidMount() {  
         this.topicTimer = setTimeout( ()=>{
         let topicID=this.props.getRouter;
+        console.log(topicID)
         if(topicID.topicid){
           request(api_bidding_message_list + '&clfid=' + topicID.topicid).then((res) => {
               if(res.data.code === 1){

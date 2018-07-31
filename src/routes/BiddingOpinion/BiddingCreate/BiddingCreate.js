@@ -30,12 +30,12 @@ class BiddingCreate extends React.Component {
         // console.log(this.state.num1)
         let jsoNextprops = JSON.stringify(nextprops.num1)
         let jsonProps = JSON.stringify(this.props.num1)
-        if(!jsonProps !== jsoNextprops && window.location.hash.split('&')[0] !== '#/bidding/setting?type=add' && this.state.num1.length <= 0) {
+        if(!jsonProps !== jsoNextprops && window.location.hash.split('&')[0] !== '#/allopinion/bidding/setting?type=add' && this.state.num1.length <= 0) {
             this.setState({
                 num1: JSON.parse(nextprops.num1)
             })
         }
-        if(this.state.prevhash !== window.location.hash && window.location.hash.split('&')[0] === '#/bidding/setting?type=add') {
+        if(this.state.prevhash !== window.location.hash && window.location.hash.split('&')[0] === '#/allopinion/bidding/setting?type=add') {
             this.setState({
                 num1: [{rule1: '', rule2: '', rule3: '', rule4: ''}]
             })

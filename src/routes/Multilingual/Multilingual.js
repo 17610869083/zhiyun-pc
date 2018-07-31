@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import {connect} from 'react-redux';
 import {Pagination, DatePicker, Form, message, Button} from 'antd';
 import OpinionDetail from './MultilingualDetail/MultilingualDetail';
-import {opinionSearchRequested, searchKeywordSync, paginationPage} from '../../redux/actions/createActions';
+import {opinionSearchRequested, searchKeywordSync, paginationPage,opinionSearchSucceeded} from '../../redux/actions/createActions';
 import {URLToObject, getSecondTime} from '../../utils/format';
 import {GRAY} from '../../utils/colors';
 import './Multilingual.less';
@@ -136,7 +136,10 @@ class AllOpinion extends React.Component {
         '微博': ['微博', '웨이보', '微博', 'مىكرو بىلوگ.', 'དཔོད་ཆུང།', 'Weibo'],
         '微信': ['微信', 'WeChat', 'WeChat', 'ئۈندىدار.', 'འཕྲིན་ཐུང།', 'WeChat'],
         '平媒': ['平媒', '플랫 미디어', '平面メディア', 'تەكشى ۋاسىتىسى', 'ངོས་མཉམ་གྱི་ཆ་འཕྲིན', 'Flat media'],
-        'APP': ['APP', 'APP', 'アプリ', 'APP', 'APP', 'APP']
+        'APP': ['APP', 'APP', 'アプリ', 'APP', 'APP', 'APP'],
+        '视频': ['视频', '视频', '视频', '视频', '视频', '视频'],
+        '综合':['综合','综合','综合','综合','综合','综合'],
+        '境外':['境外','境外','境外','境外','境外','境外']
       },
       timeError: {
         startBigToEnd: ['开始时间请不要大于结束时间', '시간이 짧은 시간 보다는 시간을 더 주십시오', '開始時間は終了時間より大きくないでください。', 'باشلىنىش ۋاقتى قىلماڭ ئاخىرلاشقان ۋاقىت تىن يۇقىرى', 'མ་བྱེད་རོགས་། མཇུག་རྫོགས་པའི་དུས་ཚོད་ལས་ཆེ་བ་འགོ་ཚུགས་པའི་དུས་ཚོད་།', 'Please do not start longer than the end time'],
@@ -442,7 +445,7 @@ class AllOpinion extends React.Component {
       let reg = /^[0-5]$/
       if(reg.test(this.props.match.params.languages)) {
         this.setState({
-          languageType: this.props.match.params.languages
+          languageType: parseInt(this.props.match.params.languages,10) 
         })
       }
     if (this.props.location && this.props.location.search !== "?type=search") {
@@ -463,7 +466,7 @@ class AllOpinion extends React.Component {
       prevhash: window.location.hash
     })
     if(newProps.match.params.languages !== this.props.match.params.languages){
-      
+      this.props.opinionSearchSucceeded({docList: [], pageInfo: {count:0}, carryCount: [{count:0, value: "全部", key: "docApp"}]});
       this.setState({
         timeValue: 'all',
         trendValue: 'all',
@@ -489,7 +492,6 @@ class AllOpinion extends React.Component {
     // console.log(this.props.match.params.languages, newProps.match.params.languages)
     // debugger
     if (this.props.match.params.languages === newProps.match.params.languages) return false;
-
     this.props.opinionSearchRequest(param);
     this.props.paginationPage(1);
   }
@@ -523,6 +525,7 @@ class AllOpinion extends React.Component {
   }
   render() {
     let {docList, carryCount=[{count: 0, key: "all", value: "全部"}], pageInfo={count:0}, page} = this.props;
+    console.log(docList)
     if (!(carryCount instanceof Array)) carryCount = [{count: 0, key: "all", value: "全部"}]
     const {getFieldDecorator} = this.props.form;
     const formItemLayout = {
@@ -828,6 +831,9 @@ const mapDispatchToProps = dispatch => {
     },
     paginationPage: req => {
       dispatch(paginationPage(req));
+    },
+    opinionSearchSucceeded:req => {
+      dispatch(opinionSearchSucceeded(req));
     }
   }
 };

@@ -345,7 +345,7 @@ class BiddingSetting extends React.Component {
                 if(res.data.code===1){
                     message.success('关键词添加成功');
                     history.push({
-                        pathname: '/bidding/information'
+                        pathname: '/allopinion/bidding/information'
                     })
                 }else {
                     message.error(res.data.msg)
@@ -362,7 +362,7 @@ class BiddingSetting extends React.Component {
                 if(res.data.code===1){
                     message.success('关键词修改成功');
                     history.push({
-                        pathname: '/bidding/information'
+                        pathname: '/allopinion/bidding/information'
                     })
                 } else {
                     message.error('关键词修改失败')
@@ -413,7 +413,7 @@ class BiddingSetting extends React.Component {
   }
  
   goTopiclist(){
-        history.push('/bidding/information')
+        history.push('/allopinion/bidding/information')
   }
 
   TopicNameChange(e){

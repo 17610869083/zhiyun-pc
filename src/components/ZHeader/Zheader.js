@@ -29,34 +29,34 @@ class Zheader extends React.Component {
             userInfoMessage:{},
             type:'',
             itemsOne: [
-                { text: '韩语监测', color: '#f7b55d', href: '/multilingual/1', hrefType: 'history'},
-                { text: '日语监测', color: '#4ba9eb', href: '/multilingual/2', hrefType: 'history'},
-                { text: '维语监测', color: '#6296f1', href: '/multilingual/3', hrefType: 'history'},
-                { text: '藏语监测', color: '#4ba9eb', href: '/multilingual/4', hrefType: 'history'},
+                // { text: '韩语监测', color: '#f7b55d', href: '/multilingual/1', hrefType: 'history'},
+                // { text: '日语监测', color: '#4ba9eb', href: '/multilingual/2', hrefType: 'history'},
+                // { text: '维语监测', color: '#6296f1', href: '/multilingual/3', hrefType: 'history'},
+                // { text: '藏语监测', color: '#4ba9eb', href: '/multilingual/4', hrefType: 'history'},
                 // {text: '英语监测', color: '#04c0b3',href:'javascript();'},
                 { text: '民情管理', color: '#4ba9eb',href:'/allopinion/allopiniondetail',hrefType:'http'},
                 { text: '网站监测预警', color: '#4ba9eb', href: 'https://114.242.25.234:38447/', hrefType: 'login'},
                 { text: '网站安全治理', color: '#6296f1', href: 'https://119.88.190.68', hrefType: 'login'}, // ***
                 { text: '网站空间探测', color: '#04c0b3', href: 'https://119.88.190.71/', hrefType: 'login'},
+                {text: '网站安全防护', color: '#4ba9eb', href: '/competitiveIntelligence', hrefType: 'http'},
+                { text: '僵木蠕监测', color: '#4ba9eb', href: '/safetyprotection', hrefType: 'http'},
+                { text: '预警通报', color: '#f7b55d', href: '/alertnotifications', hrefType: 'http'}
                 
             ],
             itemsTwo: [
-                {text: '网站安全防护', color: '#4ba9eb', href: '/competitiveIntelligence', hrefType: 'http'},
-                { text: '僵木蠕监测', color: '#4ba9eb', href: '/safetyprotection', hrefType: 'http'},
-                { text: '预警通报', color: '#f7b55d', href: '/alertnotifications', hrefType: 'http'},
                 {text: '流量监测引擎', color: '#4ba9eb', href: 'https://119.88.190.68/', hrefType: 'login'}, // 图标   
                 { text: '流量监测大屏', color: '#4ba9eb', href: 'http://119.88.190.68:3000/', hrefType: 'login'}, // 图标
                 { text: '通报处置', color: '#4ba9eb', href: '/disposal', hrefType: 'http'} ,
                 { text: '智慧党建', color: '#4ba9eb', href: '/partybuilding', hrefType: 'http'},
-                { text: '行业资讯', color: '#4ba9eb', href: 'http://119.90.61.155/om33', hrefType: 'login'},
-                { text: '竞争情报', color: '#f7b55d', href: 'http://119.90.61.155/om33', hrefType: 'login'},
+                { text: '行业资讯', color: '#4ba9eb', href: 'http://119.90.61.155/om3', hrefType: 'login'},
+                { text: '竞争情报', color: '#f7b55d', href: 'http://119.90.61.155/om3', hrefType: 'login'},
+                {text: '决策预判', color: '#4ba9eb',href: 'http://119.90.61.155/om3', hrefType: 'login'}
          
             ],
             itemsThree: [
-                {text: '决策预判', color: '#4ba9eb',href: 'http://119.90.61.155/om33', hrefType: 'login'},
-                { text: '招投标', color: '#6296f1', href: '/bidding/information', hrefType: 'http'},
-                { text: '企业画像', color: '#4ba9eb', href: 'http://119.90.61.155/om33', hrefType: 'login'},
-                { text: '人物画像', color: '#6296f1', href: 'http://119.90.61.155/om33', hrefType: 'login'},
+                // { text: '招投标', color: '#6296f1', href: '/bidding/information', hrefType: 'http'},
+                { text: '企业画像', color: '#4ba9eb', href: 'http://119.90.61.155/om3', hrefType: 'login'},
+                { text: '人物画像', color: '#6296f1', href: 'http://119.90.61.155/om3', hrefType: 'login'},
                 { text: '微信围栏', color: '#4ba9eb', href: '/wechatfence', hrefType: 'http'},
                 { text: '私有云盘', color: '#04c0b3', href: '/clouddisk', hrefType: 'http'},
                 { text: '华知云平台', color: '#6296f1', href: 'http://119.90.158.98:8888/auth/login/', hrefType: 'login'}
