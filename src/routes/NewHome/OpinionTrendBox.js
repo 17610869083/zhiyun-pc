@@ -12,7 +12,7 @@ import {api_new_total} from '../../services/api';
 import {formatMediaChart} from '../../utils/format';
 import './OpinionTrendBox.less';
 import { setTimeout } from 'timers';
-import {GRAY,BLACK,BLUES} from '../../utils/colors';
+import {BLUES} from '../../utils/colors';
 class OpinionTrendBox extends React.Component {
     constructor() {
         super();

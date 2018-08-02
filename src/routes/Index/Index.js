@@ -1,7 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {Layout, Menu,Button} from 'antd';
-import {Route, Switch, Link} from 'react-router-dom';
+import {Layout,Button} from 'antd';
+import {Route, Switch} from 'react-router-dom';
 import './Index.less';
 import {exportSkip} from '../../redux/actions/createActions';
 import CRcode from '../LoginPage/crcode.jpg';
@@ -32,10 +32,7 @@ const WeChatFence = AsyncComponent(() => import('../WeChatFence/WeChatFence'))
 const CloudDisk = AsyncComponent(() => import('../CloudDisk/CloudDisk'))
 const CloudPlatform = AsyncComponent(() => import('../CloudPlatform/CloudPlatform'))
 const DeadwoodCreep = AsyncComponent(() => import('../DeadwoodCreep/DeadwoodCreep'))
-
-const {Header, Sider, Content} = Layout;
-const SubMenu = Menu.SubMenu;
-
+const { Content} = Layout;
 class Index extends React.Component {
   constructor() {
     super();

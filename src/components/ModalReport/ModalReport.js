@@ -108,7 +108,8 @@ class ModalReport extends React.Component{
                 if(res.data.code === 1){
                     this.setState({
                         docList:res.data.data,
-                        checkedAll:false
+                        checkedAll:false,
+                        checkedArray:[]
                     })
                 }
               })
@@ -123,7 +124,8 @@ class ModalReport extends React.Component{
                 if(res.data.code === 1){
                     this.setState({
                         docList:res.data.data,
-                        checkedAll:false
+                        checkedAll:false,
+                        checkedArray:[]
                     })
                 }
               })
@@ -136,6 +138,9 @@ class ModalReport extends React.Component{
          .then(res => {
              if(res.data.code === 1){
                 this.props.checkReport(res.data.data,false); 
+             }else{
+                 message.error('当前报告无数据');
+                 this.props.checkReport({briefing:[]},false); 
              }
          })
         }else{
@@ -144,7 +149,12 @@ class ModalReport extends React.Component{
             }else{
                 request(api_get_excerpt +`&reportId=${this.props.reportId}&moduleId=${this.props.modalId}`)
                 .then(res => {
-                    this.props.checkDaily(res.data.informationExcerpt);
+                    if(res.data.code===1){
+                        this.props.checkDaily(res.data.informationExcerpt);
+                    }else{
+                        this.props.checkDaily([]);
+                    }
+                   
                 })
             }
         }

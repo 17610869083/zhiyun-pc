@@ -50,10 +50,10 @@ class AppCenter extends React.Component{
                         {type: 'icon-md-part-outline', text: '智慧党建', color: '#4ba9eb', href: '/partybuilding', hrefType: 'http'},
                         {type: 'icon-zixun', text: '行业资讯', color: '#4ba9eb', href: 'http://119.90.61.155/om3', hrefType: 'login'},
                         {type: 'icon-qingbao', text: '竞争情报', color: '#f7b55d', href: 'http://119.90.61.155/om3', hrefType: 'login'},
-                        {type: 'icon-yupanjingzhengweixie', text: '决策预判', color: '#4ba9eb',href: 'http://119.90.61.155/om3', hrefType: 'login'},
+                        //{type: 'icon-yupanjingzhengweixie', text: '决策预判', color: '#4ba9eb',href: 'http://119.90.61.155/om3', hrefType: 'login'},
                         // {type: 'icon-zhaotoubiao1', text: '招投标', color: '#6296f1', href: '/bidding/information', hrefType: 'http'},
-                        {type: 'icon-qiyehuaxiang', text: '企业画像', color: '#4ba9eb', href: 'http://119.90.61.155/om3', hrefType: 'login'},
-                        {type: 'icon-huaxiang', text: '人物画像', color: '#6296f1', href: 'http://119.90.61.155/om3', hrefType: 'login'},
+                        // {type: 'icon-qiyehuaxiang', text: '企业画像', color: '#4ba9eb', href: 'http://119.90.61.155/om3', hrefType: 'login'},
+                        //{type: 'icon-huaxiang', text: '人物画像', color: '#6296f1', href: 'http://119.90.61.155/om3', hrefType: 'login'},
                         {type: 'icon-dianziweilanxitong', text: '微信围栏', color: '#4ba9eb', href: '/wechatfence', hrefType: 'http'}
                     ]
                 },

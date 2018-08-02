@@ -5,7 +5,7 @@ import BlankPage from '../../base/Exception/BlankPage';
 import './NewestWarningOpinionBox.less';
 import { Tabs,Icon } from 'antd';
 import {history} from '../../utils/history';
-import {GRAY,BLACK,BLUES} from '../../utils/colors';
+import {BLUES} from '../../utils/colors';
 const TabPane = Tabs.TabPane;
 
 class NagetiveOpinion extends React.Component {

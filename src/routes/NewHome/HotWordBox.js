@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 import IconFont from '../../components/IconFont';
 import './HotWordBox.less';
 import {Icon} from 'antd';
-import {BLACK,BLUES} from '../../utils/colors';
+import {BLUES} from '../../utils/colors';
 import 'TagCloud';
 class HotWordBox extends React.Component{
     delHotWordBox(){

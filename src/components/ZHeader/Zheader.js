@@ -1,6 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {Input, Icon, Menu, Dropdown, Modal, Avatar, Badge, Popover,message} from 'antd';
+import {Input, Menu, Dropdown, Modal, Avatar, Badge, Popover,message} from 'antd';
 import {setItem, getItem} from '../../utils/localStorage';
 import {history} from '../../utils/history';
 import request from '../../utils/request';
@@ -297,7 +297,7 @@ class Zheader extends React.Component {
                         <ul className="nav-bar">
                           <li onClick={this.changeNav.bind(this,'home')} className={this.state.type !== 'home' ?'normal':'active'}><Link to="/home">首页</Link></li>
                           <li onClick={this.changeNav.bind(this,'allopinion')} className={this.state.type !== 'allopinion' ?'normal':'active'}><Link to="/allopinion/allopiniondetail">舆情监测</Link></li>
-                          <li onClick={this.changeNav.bind(this,'evidence')} className={this.state.type !== 'evidence' ?'normal':'active'}><Link to="/evidence">互联网取证</Link></li>
+                          {/* <li onClick={this.changeNav.bind(this,'evidence')} className={this.state.type !== 'evidence' ?'normal':'active'}><Link to="/evidence">互联网取证</Link></li>
                           <li onClick={this.changeNav.bind(this,'upreport')} className={this.state.type !== 'upreport' ?'normal':'active'}><Link to="/upreport">上报平台</Link></li>
                           <li onClick={this.changeNav.bind(this,'guide')} className={this.state.type !== 'guide' ?'normal':'active'}><Link to="/guide">网评管理</Link></li>
                           <li onClick={this.changeNav.bind(this,'more')} className={this.state.type !== 'more' ?'normal':'active'}>
@@ -306,7 +306,7 @@ class Zheader extends React.Component {
                             >
                               <a>更多</a>
                             </Dropdown> 
-                          </li>
+                          </li> */}
                           <li onClick={this.changeNav.bind(this,'appcenter')} className={this.state.type !== 'appcenter' ?'normal':'active'}> <Link to="/appcenter">应用中心</Link></li>
                           <li onClick={this.changeNav.bind(this,'message')} className={this.state.type !== 'message' ?'normal':'active'}><a>消息</a></li>
                         </ul>

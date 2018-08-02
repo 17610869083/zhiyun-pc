@@ -22,7 +22,7 @@ export default class editText extends Component {
   check = () => {
     this.setState({ editable: false });
     if (this.props.onChange) {
-      this.props.onChange(this.state.value);
+      this.props.onChange(parseInt(this.state.value,10)<10?'0'+this.state.value:this.state.value);
     }
   };
   edit = num => {

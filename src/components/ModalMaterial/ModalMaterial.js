@@ -100,7 +100,8 @@ class ModalMaterial extends React.Component{
             })
        }
        this.setState({
-        checkedArray:this.state.checkedArray.fill(false)
+        checkedArray:this.state.checkedArray.fill(false),
+        checkedAll:false
        })
      }
     //获取sid
@@ -166,7 +167,9 @@ class ModalMaterial extends React.Component{
               })
             }else{
               this.setState({
-                flag:true
+                flag:true,
+                docList:[],
+                isShowBlank:true
               })
             }
           })
@@ -268,7 +271,7 @@ class ModalMaterial extends React.Component{
                    {catList}
                 </div>
                 <Modal visible={this.state.visible} footer={null} onCancel={this.cancel}
-                width="70%" maskClosable={false}
+                width="70%" maskClosable={false} className="report-modal"
                 >
                 <ModalAllOpinion 
                 seltype='title' 

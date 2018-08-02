@@ -1,6 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {Row, Col,Icon, Card, Progress} from 'antd';
+import {Row, Col,Icon} from 'antd';
 import IconFont from '../../components/IconFont';
 import ReactEchartsCore from 'echarts-for-react/lib/core';
 import echarts from 'echarts/lib/echarts';
@@ -11,7 +11,7 @@ import 'echarts/lib/chart/pie';
 import './TodayOpinionBox.less';
 import {api_today_opinion} from '../../services/api';
 import request from '../../utils/request';
-import {GRAY,BLUES,BLACK} from '../../utils/colors';
+import {GRAY,BLUES} from '../../utils/colors';
 import {history} from '../../utils/history';
 class TodayOpinionBox extends React.PureComponent {
     constructor(){

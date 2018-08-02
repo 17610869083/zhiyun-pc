@@ -5,6 +5,7 @@ import EditText from '../../components/editText/editText';
 import EditData from '../../components/editData/editData';
 import ReportHeader from '../../components/reportHeader/reportHeader';
 import request from '../../utils/request';
+import {briefingSwitch} from '../../redux/actions/createActions';
 import {
 	api_new_preview_report,
 	api_update_report,
@@ -72,6 +73,9 @@ class BriefingSecond extends React.Component{
 			});
 		}
 	 }
+	}
+	componentWillUnmount(){
+		this.props.briefingSwitch([]);
 	}
 	handleChange(value) {
 		console.log(`selected ${value}`);
@@ -549,4 +553,11 @@ const mapStateToProps = state => {
 		briefingData:state.briefingSwitchDataReducer.data
 	}
  };
- export default connect(mapStateToProps,null)(BriefingSecond);
+ const mapDispatchToProps = dispatch => {
+	return {
+	  briefingSwitch: req => {
+		dispatch(briefingSwitch(req))
+	  }
+	}
+  };
+ export default connect(mapStateToProps,mapDispatchToProps)(BriefingSecond);

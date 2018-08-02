@@ -86,7 +86,9 @@ class Daily extends React.Component{
  		})
 	}
 	onChangeCellMonth(e) {
-		request(api_update_report + '&reportId=' + this.state.reportId + '&coverMonth=' + e + '&moduleId=' + this.state.dataID).then((res) => {
+		let date = this.state.jiaData.data[this.state.componentId[0]];
+		let editDate = `${date.coverYear}-${e}-${date.coverDay}`;
+		request(api_update_report + '&reportId=' + this.state.reportId + '&date=' + editDate + '&moduleId=' + this.state.dataID).then((res) => {
 			if(res.data.code === 1) {
 				message.success(res.data.msg);
 			} else {
@@ -95,7 +97,9 @@ class Daily extends React.Component{
  		})
 	}
 	onChangeCellDay(e) {
-		request(api_update_report + '&reportId=' + this.state.reportId + '&coverDay=' + e + '&moduleId=' + this.state.dataID).then((res) => {
+		let date = this.state.jiaData.data[this.state.componentId[0]];
+		let editDate = `${date.coverYear}-${date.coverMonth}-${e}`;
+		request(api_update_report + '&reportId=' + this.state.reportId + '&date=' + editDate + '&moduleId=' + this.state.dataID).then((res) => {
 			if(res.data.code === 1) {
 				message.success(res.data.msg);
 			} else {
@@ -104,7 +108,9 @@ class Daily extends React.Component{
  		})
 	}
 	onChangeCellYear(e) {
-		request(api_update_report + '&reportId=' + this.state.reportId + '&coverYear=' + e + '&moduleId=' + this.state.dataID).then((res) => {
+		let date = this.state.jiaData.data[this.state.componentId[0]];
+		let editDate = `${e}-${date.coverMonth}-${date.coverDay}`;
+		request(api_update_report + '&reportId=' + this.state.reportId + '&date=' + editDate + '&moduleId=' + this.state.dataID).then((res) => {
 			if(res.data.code === 1) {
 				message.success(res.data.msg);
 			} else {
@@ -148,6 +154,12 @@ class Daily extends React.Component{
 			 data:data,
 			 visible:false
 		 })
+	}
+	//关闭弹窗
+	cancel = () => {
+		this.setState({
+			visible:false
+		})
 	}
 	render() {
 		const mediaOption= {
@@ -247,6 +259,7 @@ class Daily extends React.Component{
 			dataIndex: 'pubdate',
 			key: 'pubdate',
 		}];
+		
 		return (
 			<div className="col">
 				<Row>
@@ -426,7 +439,7 @@ class Daily extends React.Component{
 																			<EditText
 																			  style={{ display: "inline-block", width: 40 }}
 																			  value={this.state.jiaData.data[item].coverMonth}
-																				onChange={this.onChangeCellMonth.bind(this)}
+																			  onChange={this.onChangeCellMonth.bind(this)}
 																			/>月
 																			<span
 																				className="day"
@@ -611,7 +624,9 @@ class Daily extends React.Component{
 						{/* 结束 */}
 					</Col>
 				</Row>
-				<Modal visible={this.state.visible} width="70%" footer={null} className="report-modal">
+				<Modal visible={this.state.visible} width="70%" footer={null} className="report-modal"
+				onCancel={this.cancel}
+				>
 				<ModalReport docList={this.state.data}
 				startDate={this.state.startDate}
 				endDate={this.state.endDate}

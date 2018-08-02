@@ -16,6 +16,7 @@ import request from '../../utils/request';
 import {
 	api_new_preview_report,
 	api_update_report,
+	api_get_special_preview
 } from '../../services/api';
 import {connect} from 'react-redux';
 import ModalReport from '../../components/ModalReport/ModalReport';
@@ -45,28 +46,59 @@ class Special extends React.Component{
 		let search = this.props.location.search.split('&');
 		let templateType = search[0].split('=')[1];
 		let templateId = parseInt(search[1].split('=')[1],10);
-		this.setState({
-			type: templateType,
-			typeId: templateId
-		})
 		request(api_new_preview_report + '&reportFormId=' + templateId).then((res) => {
-			// 遍历对象Object.keys()
-			// Object.values(）对象转数组
-
 			this.setState({
 				date: res.data.data,
 				dataID: res.data.component[0],
 				componentId: res.data.component,
 				jiaData: res.data
+			},() => {
+				if(search[2]){
+					let topicid = parseInt(search[2].split('=')[1],10);
+					request(api_get_special_preview + '&topicId=' + topicid + '&reportFormId=' + templateId + '&reportType=' + templateType)
+					.then(res => {
+						this.setState({
+							jiaData: res.data,
+							topicid:topicid
+						})
+						Object.keys(this.state.jiaData.data).map(item => {
+							this.setState({
+								reportId: this.state.jiaData.reportId
+							})
+							if (this.state.componentId[1] === item) {
+								this.setState({
+									emotionDistributionImg: this.state.jiaData.data[item].emotionDistributionImg,
+									mediaDistributionImg: this.state.jiaData.data[item].mediaDistributionImg
+								})
+							} else if (this.state.componentId[3] === item) {
+						this.setState({
+									mediaAnalysisImg: this.state.jiaData.data[item].mediaAnalysisImg,
+								})
+							} else if (this.state.componentId[4] === item) {
+						this.setState({
+									negativeCarrierAnalysisImg: this.state.jiaData.data[item].negativeCarrierAnalysisImg
+								})
+							} else if (this.state.componentId[5] === item) {
+								this.setState({
+									mediaEwarningDistributionImg: this.state.jiaData.data[item].mediaEwarningDistributionImg
+								})
+							}else if(this.state.componentId[6] === item){
+								this.setState({
+									docList:res.data.data[item].informationExcerpt,
+									modalId:item
+								})
+							}
+							return ''
+						})
+					})
+				 }
 			})
-			// Object.keys(this.state.date).map(item => {
-			// 	if (this.state.componentId[2] === item) {
-      //     this.setState({
-			// 			data: this.state.date[item].informationExcerpt
-			// 		})
-			// 	}
-			// })
 		});
+
+		this.setState({
+			type: templateType,
+			typeId: templateId
+		})
 	}
 	onChangeCellTitle(e) {
     request(api_update_report + '&reportId=' + this.state.reportId + '&reportTitle=' + e + '&moduleId=' + this.state.dataID).then((res) => {
@@ -230,18 +262,12 @@ class Special extends React.Component{
 		};
 		const analysisBar = {
 			title: {
-        // text: '2016年12月长宁区合规成本分析'
 			},
 			tooltip: {
 					trigger: 'axis',
 					axisPointer: { // 坐标轴指示器，坐标轴触发有效
 							type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'
 					}
-			},
-			legend: {
-					// data: ['包租费', '装修费', '保洁费', '物业费'],
-					// align: 'right',
-					// right: 10
 			},
 			grid: {
 					left: '3%',
@@ -264,10 +290,6 @@ class Special extends React.Component{
 					name: '负面',
 					type: 'bar',
 					data: [20, 12, 31, 34, 31, 22, 45, 54, 32, 52]
-			}, {
-					name: '中性',
-					type: 'bar',
-					data: [10, 20, 5, 9, 3, 4, 8, 9, 10, 23]
 			}, {
 					name: '正面',
 					type: 'bar',

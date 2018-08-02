@@ -116,14 +116,11 @@ class TopicOpinion extends React.Component {
         });
         history.push(`/allopinion/topic/addtopic`);
     }
-    delTopic(e){
-        e.stopPropagation();
-         let topicID=e.target.dataset.topicid;
-    	  this.setState({
-    	  	visibleTwo:true,
-    	  	topicId:topicID,
-    	  	childRen:e.target.parentNode.parentNode.children.length
-    	  });
+    delTopic(topicid,e){
+        this.setState({
+            topicId:topicid,
+            childRen:e.target.parentNode.parentNode.children.length
+        });
     }
     queryTopic(topicid,topicname,e){
         this.setState({
@@ -288,6 +285,16 @@ class TopicOpinion extends React.Component {
         })
         this.props.searchState({data:!this.state.isTopShow})
     }
+    onReportItem({key}){
+        if(key === '1'){
+            this.setState({
+              visibleTwo:true,
+            })
+        }else{
+            history.push(`/allopinion/special?type=02&id=4&topicid=${this.state.topicId}`)
+        }
+    }
+
     render() {
     	const delItems = (
 				<Menu onClick={this.onDelitem.bind(this)}>
@@ -323,7 +330,12 @@ class TopicOpinion extends React.Component {
                   >
                         {iitem.topicname}
                   </span>
-                  <img src={Del} alt="删除" className="icon-delete"  data-topicid={iitem.topicid} onClick={this.delTopic.bind(this)}/>
+                  <Dropdown overlay={<Menu onClick={this.onReportItem.bind(this)}>
+                                     <Menu.Item key="1">删除</Menu.Item>
+                                     <Menu.Item key="2">加入报告</Menu.Item>
+                                     </Menu>} trigger={['click']}>
+                  <img src={Del} alt="删除" className="icon-delete" onClick={this.delTopic.bind(this,iitem.topicid)}/>
+                </Dropdown> 
                 </li>
              )}
              </ul>
@@ -355,12 +367,6 @@ class TopicOpinion extends React.Component {
                         <Menu.Item key="setting" style={{fontSize:'16px'}}>
                             修改专题设置
                         </Menu.Item>
-                        {/* <Menu.Item key="addtopic" style={{fontSize:'16px'}}>
-                            添加专题
-                        </Menu.Item> */}
-                        {/* <Menu.Item key="addsort" style={{fontSize:'16px'}} >
-                            添加分类
-                        </Menu.Item> */}
                     </Menu>
                     </div>
                     <div className="close"  onClick={this.triggerTopShow.bind(this)} style={this.state.current==='topiclist'?{display:'block',color:BLACK}:{display:'none'}}>

@@ -6,7 +6,7 @@ import ReactEchartsCore from 'echarts-for-react/lib/core';
 import echarts from 'echarts/lib/echarts';
 import 'echarts/lib/chart/pie';
 import {Icon} from 'antd';
-import {GRAY,BLACK,BLUES} from '../../utils/colors';
+import {BLUES} from '../../utils/colors';
 class MediaDistribution extends React.Component{
     delmediaDistributionBox(){
         this.props.delMediaDistributionBox(1);

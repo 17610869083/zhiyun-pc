@@ -54,7 +54,6 @@ function* mySaga() {
 function* fetchTotalOpinion(action) {
     try {
         const opinion = yield call(apiTotalOpinion, action.payload);
-        console.log(opinion)
         yield put(opinionSearchSucceeded(opinion));
     } catch (e) {
         console.log(e);

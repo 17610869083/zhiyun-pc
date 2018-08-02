@@ -1,16 +1,16 @@
 // host
-//const host = 'http://119.90.61.155/om3/webpart/';   
-//const host = 'http://web.is8.com.cn/om/webpart/';
-const host = './';
+const host = 'http://119.90.61.155/om32/webpart/';   
+// const host = 'http://web.is8.com.cn/om/webpart/';
+//const host = './';
 
 //-------------------登录
-//export const api_login = 'http://web.is8.com.cn/om/common/login/loginDo?action=login2';
-//export const api_login = 'http://119.90.61.155/om3/common/login/loginDo?action=login2';
-export const api_login = '../common/login/loginDo?action=login2';
+// export const api_login = 'http://web.is8.com.cn/om/common/login/loginDo?action=login2';
+export const api_login = 'http://119.90.61.155/om32/common/login/loginDo?action=login2';
+//export const api_login = '../common/login/loginDo?action=login2';
 
-//export const api_logout = 'http://web.is8.com.cn/om/common/login/loginDo?action=loginOut';
-//export const api_logout = 'http://119.90.61.155/om3/common/login/loginDo?action=loginOut';
-export const api_logout ='../common/login/loginDo?action=loginOut';
+// export const api_logout = 'http://web.is8.com.cn/om/common/login/loginDo?action=loginOut';
+export const api_logout = 'http://119.90.61.155/om32/common/login/loginDo?action=loginOut';
+//export const api_logout ='../common/login/loginDo?action=loginOut';
 /**
  * 首页模块
  */
@@ -38,7 +38,7 @@ const api_media_opinion = host + 'echart/echartDo?action=yqzc_month_Chart';
 // 热搜媒体排行旁边的舆情统计
 const api_media_count = host + 'echart/echartDo?action=zfmtjChart';
 //新首页载体分布饼图
-const api_carrier_pie = host + '/echart/echartDo?action=ztfb';
+const api_carrier_pie = host + 'echart/echartDo?action=ztfb';
 // 最新舆情
 const api_newest_opinion = host + 'homePage/docSearchListDo?action=getDocListEchart';
 // 最新负面舆情

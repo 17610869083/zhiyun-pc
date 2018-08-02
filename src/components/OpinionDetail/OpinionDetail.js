@@ -214,12 +214,17 @@ class OpinionDetail extends React.Component {
   // -----------批量操作
   checkedTrue() {
     const arr = [];
-    this.props.docList.forEach((item, index) => {
-      if (this.state.checkedArray[index] === true && item.sid) {
-        arr.push(item.sid);
-      }
-    });
-    return arr;
+    if(this.props.docList==='[]'){
+      return [];
+    }else{
+      this.props.docList.forEach((item, index) => {
+        if (this.state.checkedArray[index] === true && item.sid) {
+          arr.push(item.sid);
+        }
+      });
+      return arr;
+    }
+
   }
 
   // 批量设为正面
@@ -655,9 +660,10 @@ class OpinionDetail extends React.Component {
     
   }
     //单条跳转到报告页
-    goReportItem(){
+    goReportItem(sid){
       if(this.checkedTrue().length === 0 ){
-        history.push('/allopinion/choosetemplate')   
+        this.props.briefingSwitch([sid]);
+        history.push('/allopinion/choosetemplate?reportType=01') ;  
       }else if(this.checkedTrue().length >1) {
          message.error('此处按钮只对当前这条数据有效');
          return;
@@ -851,11 +857,11 @@ class OpinionDetail extends React.Component {
                       </Tooltip>
                     </div>
                     <div>
-                    {/* <Tooltip title='生成报告' placement="bottom">
-                      <span className="add-report" onClick={this.goReportItem.bind(this)}>
+                    <Tooltip title='生成报告' placement="bottom">
+                      <span className="add-report" onClick={this.goReportItem.bind(this,item.sid)}>
                       <IconFont type="icon-icon-shengchengbaogao" />  
                       </span>
-                    </Tooltip> */}
+                    </Tooltip>
                     </div>
                   </div>
               </div>
@@ -951,11 +957,11 @@ class OpinionDetail extends React.Component {
                 </div>
               </Dropdown>
             </Tooltip>
-            {/* <Tooltip title='生成报告' placement="bottom">
+            <Tooltip title='生成报告' placement="bottom">
                <div className="operate-all" onClick={this.goReport.bind(this)}>
                <IconFont type="icon-icon-shengchengbaogao"></IconFont>  
                </div>
-            </Tooltip> */}
+            </Tooltip>
           </div>
           <Pagination
             simple

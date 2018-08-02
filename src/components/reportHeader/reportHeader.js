@@ -74,7 +74,6 @@ class reportHeader extends React.Component{
 	}	
 	//报告弹窗确定按钮回调
 	checkReport = (data,status) => {
-
 		this.props.refreshBrief(data,status);
 		this.setState({
 			isShowModalMaterial:false,
@@ -156,7 +155,7 @@ class reportHeader extends React.Component{
 		})
 	}
 	onOkDate(value) {
-		request(api_get_data_daily_preview + '&reportFormId=' + this.props.typeId + '&reportType=' + this.props.type + '&starttime=' + this.state.startDate + '&endtime=' + this.state.endDate).then((res) => {
+
 			const myDate = new Date();
 			const starttimeHaoMiao = (new Date(myDate)).getTime();
 			if (this.state.startMsDate > starttimeHaoMiao && this.state.endMsDate > starttimeHaoMiao) {
@@ -168,14 +167,19 @@ class reportHeader extends React.Component{
 			} else if (this.state.endMsDate - this.state.startMsDate > 86400000) {
 				message.warning("您选择的时间超过了24个小时，请重新选择");
 			} else if (this.state.startMsDate < starttimeHaoMiao && this.state.endMsDate < starttimeHaoMiao) {
-				message.success(res.data.msg);
-				this.props.hanldle(res.data,this.state.startDate,this.state.endDate)				
-				this.setState({
-					starttime: res.data.starttime,
-					endtime: res.data.endtime
-				})	
+				request(api_get_data_daily_preview + '&reportFormId=' + this.props.typeId + '&reportType=' + this.props.type + '&starttime=' + this.state.startDate + '&endtime=' + this.state.endDate).then((res) => {
+						if(res.data.code===1){
+						message.success(res.data.msg);
+						this.props.hanldle(res.data,this.state.startDate,this.state.endDate)				
+						this.setState({
+							starttime: res.data.starttime,
+							endtime: res.data.endtime
+						})	
+					    }else{
+						message.error(res.data.msg);	
+						}
+			  })
 			}
-		});
 	}
 	//专报生成报告
 	specialReport = () => {

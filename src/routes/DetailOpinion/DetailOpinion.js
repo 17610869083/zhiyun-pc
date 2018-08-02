@@ -461,20 +461,20 @@ class DetailOpinion extends React.Component {
       </Menu>
     );
     // 报告列表
-    const ReportMenu = (
-      <Menu
-        selectedKeys={[this.state.current]}
-        onClick={this.clickReportMenuItem.bind(this)}
-      >
-        {this.props.reportData.map(item =>
-          <Menu.Item key={item.id}>
-            <Icon type="folder-add"/>&nbsp;
-            <span>{item.name}</span>
-          </Menu.Item>
-        )}
+    // const ReportMenu = (
+    //   <Menu
+    //     selectedKeys={[this.state.current]}
+    //     onClick={this.clickReportMenuItem.bind(this)}
+    //   >
+    //     {this.props.reportData.map(item =>
+    //       <Menu.Item key={item.id}>
+    //         <Icon type="folder-add"/>&nbsp;
+    //         <span>{item.name}</span>
+    //       </Menu.Item>
+    //     )}
 
-      </Menu>
-    );
+    //   </Menu>
+    // );
       
         return (            
             <div className="detail-opinion">

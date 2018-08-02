@@ -48,6 +48,7 @@ class ReportTemplate extends React.Component{
                         contentList: res.data.data.pageBean.content,
                         templateTypeList:typeList,
                         templateType:templateType,
+                        reportType:templateType,
                         templateId:templateId,
                         hmtlUrl:res.data.data
                     })  
@@ -99,16 +100,15 @@ class ReportTemplate extends React.Component{
              })
         }
         onBriefing = () => {
-						console.log(this.state.templateType)
-						if (this.state.templateType === '01' && this.state.templateId === 1) {
-							history.push(`/allopinion/briefing?type=${this.state.templateType}&id=${this.state.templateId}`)          
-						} else if (this.state.templateType === '01' && this.state.templateId === 2) {
-							history.push(`/allopinion/briefingsecond?type=${this.state.templateType}&id=${this.state.templateId}`)          
-						} else if (this.state.templateType === '03') {
-							history.push(`/allopinion/daily?type=${this.state.templateType}&id=${this.state.templateId}`)          
-						} else if (this.state.templateType === '02') {
-							history.push(`/allopinion/special?type=${this.state.templateType}&id=${this.state.templateId}`)          
-						}
+            if (this.state.reportType === '01' && this.state.templateId === 1) {
+                history.push(`/allopinion/briefing?type=${this.state.reportType}&id=${this.state.templateId}`)          
+            } else if (this.state.reportType === '01' && this.state.templateId === 2) {
+                history.push(`/allopinion/briefingsecond?type=${this.state.reportType}&id=${this.state.templateId}`)          
+            } else if (this.state.reportType === '03') {
+                history.push(`/allopinion/daily?type=${this.state.reportType}&id=${this.state.templateId}`)          
+            } else if (this.state.reportType === '02') {
+                history.push(`/allopinion/special?type=${this.state.reportType}&id=${this.state.templateId}`)          
+            }
         }
         //搜索模板
         keydown = (e) => {

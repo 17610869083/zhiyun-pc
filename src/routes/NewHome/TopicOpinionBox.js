@@ -8,7 +8,7 @@ import {connect} from 'react-redux';
 import {setlocationPathname} from '../../redux/actions/createActions';
 import request from '../../utils/request';
 import {api_main_topic_opinion} from '../../services/api';
-import {GRAY,BLACK,BLUES} from '../../utils/colors';
+import {BLUES} from '../../utils/colors';
 const TabPane = Tabs.TabPane;
 
 class TopicOpinionBox extends React.PureComponent {

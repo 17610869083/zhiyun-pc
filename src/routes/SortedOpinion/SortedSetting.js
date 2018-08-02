@@ -67,6 +67,7 @@ class SortedSetting extends React.Component {
           message.error('话题名称请不要为空');
           return;
         }
+        console.log(rules)
         request(api_sorted_rule_edit, {
           method: 'POST',
           headers: {
@@ -115,7 +116,7 @@ class SortedSetting extends React.Component {
       num3: this.state.num3.concat([{
         "rule1": "", "rulecode1": "", "id": "", "rule2": "",
         "rulecode2": "", "rule3": "", "rulecode3": "", "rule4": "",
-        "rulecode4": ""
+        "rulecode4": "","rule":""
       }])
     });
   }
@@ -184,12 +185,12 @@ class SortedSetting extends React.Component {
 
   onInputConent(e) {
     let rule = [];
+    
     if (e.length > 0) {
       for (let i in e) {
         rule.push({});
         rule[i]['rule'] = e[i].rule;
         rule[i]['id'] = e[i].id;
-
       }
     }
     this.setState({

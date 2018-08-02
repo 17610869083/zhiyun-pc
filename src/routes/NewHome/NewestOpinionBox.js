@@ -5,7 +5,7 @@ import BlankPage from '../../base/Exception/BlankPage';
 import {history} from '../../utils/history';
 import './NewestOpinionBox.less';
 import { Icon } from 'antd';
-import {GRAY,BLACK,BLUES} from '../../utils/colors';
+import {BLUES} from '../../utils/colors';
 class NewestOpinionBox extends React.Component {
     constructor() {
         super();

@@ -694,9 +694,9 @@ class AllOpinion extends React.Component {
     }
     // 搜索数据数量  //      -ماددا سانلىق مەلۇمات
     const searchNum = (num) => {
-      let leftarr = ['根据您的条件，为您筛选出','님이 지정한 조건에 부합되는', 'あなたの条件によると、', ' ماددا سانلىق مەلۇمات'+ '-' , 'ལ་གཞིགས་ནས་ཁྱེད་ཀྱི་ཆ་རྐྱེན་ཁྱེད་འདེམས་སྒྲུག་ཐོན་', 'Filter'];
-      let rightarr = ['条数据', '개의 데이터를 검색하였습니다', '件のデータをピックアップします!', 'سىزنىڭ شەرتىڭىز ئاساسەن ، سىز ئۈچۈن تاللاپ چىقىلغان','དོན་ཚན་གཞི་གྲངས།', 'data for you based on your criteria']
-      return `<span style=float:left>${leftarr[this.state.languageType]}</span><span class="number">${num}</span><span>${rightarr[this.state.languageType]}</span>！`
+      let leftarr = ['根据您的条件，为您筛选出','님이 지정한 조건에 부합되는', 'あなたの条件によると、', ' ！ماددا سانلىق مەلۇمات'+ '-' , 'ལ་གཞིགས་ནས་ཁྱེད་ཀྱི་ཆ་རྐྱེན་ཁྱེད་འདེམས་སྒྲུག་ཐོན་', 'Filter'];
+      let rightarr = ['条数据！', '개의 데이터를 검색하였습니다！', '件のデータをピックアップします!', 'سىزنىڭ شەرتىڭىز ئاساسەن ، سىز ئۈچۈن تاللاپ چىقىلغان','དོན་ཚན་གཞི་གྲངས།！', 'data for you based on your criteria！']
+      return `<span style=float:left>${leftarr[this.state.languageType]}</span><span class="number">${num}</span><span>${rightarr[this.state.languageType]}</span>`
     }
     const param = {
       datetag: this.state.timeValue,
