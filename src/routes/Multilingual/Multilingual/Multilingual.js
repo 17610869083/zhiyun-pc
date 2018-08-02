@@ -3,7 +3,8 @@ import ReactDOM from 'react-dom';
 import {connect} from 'react-redux';
 import {Pagination, DatePicker, Form, message, Button} from 'antd';
 import OpinionDetail from '../MultilingualDetail/MultilingualDetail';
-import {opinionSearchRequested, searchKeywordSync, paginationPage, getSortedContentRequested} from '../../../redux/actions/createActions';
+import {opinionSearchRequested, searchKeywordSync, paginationPage, getSortedContentRequested, mulLanToggle} from '../../../redux/actions/createActions';
+// import {} from '../../../redux/actions/actions'
 import {URLToObject, getSecondTime} from '../../../utils/format';
 import {GRAY} from '../../../utils/colors';
 import './Multilingual.less';
@@ -143,7 +144,8 @@ class AllOpinion extends React.Component {
         startBigToNow: ['开始时间请不要大于当前时间', '시작 시간은 현재의 시간보다 더 크게 하지 마세요', '開始時間は、現在の時間より大きくないでください。', 'باشلىنىش ۋاقتى قىلماڭ كۈندىكى ۋاقىت', 'མ་བྱེད་རོགས་། སྐབས་དེའི་དུས་ཚོད་ལས་ཆེ་བ་འགོ་ཚུགས་པའི་དུས་ཚོད་།', 'Please do not start more than the current time'],
         endBigToNow: ['结束时间请不要大于当前时间', '마감 시간은 현재의 시간보다 크게 마시지 마세요', '終了時間は、現在の時間より大きくないでください。', 'ئاخىرلاشقان ۋاقىت قىلماڭ كۈندىكى ۋاقىت ', 'དུས་ཚོད་མཇུག་རྫོགས་སྐབས་དེའི་དུས་ཚོད་ལས་ཆེ་བ་མ་བྱེད་རོགས་།', 'Please do not exceed the current time at the end time']
       },
-      prevhash: ''
+      prevhash: '',
+      prevlan: ''
     }
     
   }
@@ -378,101 +380,108 @@ class AllOpinion extends React.Component {
   }
 
   homepageMore(pathname) {
-    if (pathname === '#/allopinion?datetag=today') {
-      this.setState({
-        timeValue: 'today'
-      })
-    } else if (pathname === '#/allopinion?datetag=today&neg=1') {
-      this.setState({
-        timeValue: 'today',
-        trendValue: 1
-      })
-    } else if (pathname === '#/allopinion?datetag=all&neg=1') {
-      this.setState({
-        timeValue: 'all',
-        trendValue: 1
-      })
-    }
-    else if (pathname === '#/allopinion?datetag=today&neg=2') {
-      this.setState({
-        timeValue: 'today',
-        trendValue: 2
-      })
-    }else if (pathname === '#/allopinion?datetag=today&neg=all') {
-      this.setState({
-        timeValue: 'today',
-        trendValue: 'all'
-      })
-    }else if (pathname === '#/allopinion?datetag=all&neg=2') {
-      this.setState({
-        timeValue: 'all',
-        trendValue: 2
-      })
-    } 
-    else if (pathname === '#/allopinion?carry=weibo&neg=all') {
-      this.setState({
-        mediaValue: '微博',
-        trendValue: 'all'
-      })
-    } else if (pathname === '#/allopinion?carry=weibo&neg=1') {
-      this.setState({
-        mediaValue: '微博',
-        trendValue: 1
-      })
-    }else if (pathname.indexOf('media') !== -1){
-       let media =  pathname.split('&')[0].split('=')[1];
-       let day =  pathname.split('&')[1].split('=')[1];
-       this.setState({
-        mediaValue: this.state.mediaList[media],
-        timeValue: day
-       })
-    } else {
-      this.setState({
-        timeValue: 'all'
-      })
-    }
+    // if (pathname === '#/allopinion?datetag=today') {
+    //   this.setState({
+    //     timeValue: 'today'
+    //   })
+    // } else if (pathname === '#/allopinion?datetag=today&neg=1') {
+    //   this.setState({
+    //     timeValue: 'today',
+    //     trendValue: 1
+    //   })
+    // } else if (pathname === '#/allopinion?datetag=all&neg=1') {
+    //   this.setState({
+    //     timeValue: 'all',
+    //     trendValue: 1
+    //   })
+    // }
+    // else if (pathname === '#/allopinion?datetag=today&neg=2') {
+    //   this.setState({
+    //     timeValue: 'today',
+    //     trendValue: 2
+    //   })
+    // }else if (pathname === '#/allopinion?datetag=today&neg=all') {
+    //   this.setState({
+    //     timeValue: 'today',
+    //     trendValue: 'all'
+    //   })
+    // }else if (pathname === '#/allopinion?datetag=all&neg=2') {
+    //   this.setState({
+    //     timeValue: 'all',
+    //     trendValue: 2
+    //   })
+    // } 
+    // else if (pathname === '#/allopinion?carry=weibo&neg=all') {
+    //   this.setState({
+    //     mediaValue: '微博',
+    //     trendValue: 'all'
+    //   })
+    // } else if (pathname === '#/allopinion?carry=weibo&neg=1') {
+    //   this.setState({
+    //     mediaValue: '微博',
+    //     trendValue: 1
+    //   })
+    // }else if (pathname.indexOf('media') !== -1){
+    //    let media =  pathname.split('&')[0].split('=')[1];
+    //    let day =  pathname.split('&')[1].split('=')[1];
+    //    this.setState({
+    //     mediaValue: this.state.mediaList[media],
+    //     timeValue: day
+    //    })
+    // } else {
+    //   this.setState({
+    //     timeValue: 'all'
+    //   })
+    // }
     // debugger
-    const obj = URLToObject(pathname);
-    const newabj = {clfid: this.props.getRouter.topicid}
-    const param = {
-      lang:this.state.language[this.props.match.params.languages],
-      pagesize: this.state.pagesize,
-      datetag: this.state.timeValue,
-      neg: this.state.trendValue,
-      order: this.state.sortValue,
-      similer: this.state.filterValue,
-      page:this.props.page,
-    }  
-    const newParam = Object.assign(param, newabj);
-    this.props.opinionSearchRequest(newParam);
+    // const obj = URLToObject(pathname);
+    // const newabj = {clfid: this.props.getRouter.topicid}
+    // const param = {
+    //   lang:this.state.language[this.props.match.params.languages],
+    //   pagesize: this.state.pagesize,
+    //   datetag: this.state.timeValue,
+    //   neg: this.state.trendValue,
+    //   order: this.state.sortValue,
+    //   similer: this.state.filterValue,
+    //   page:this.props.page,
+    // }  
+    // const newParam = Object.assign(param, newabj);
+    // console.log(this.props.getRouter)
+    // this.props.opinionSearchRequest(newParam);
   }
 
   componentWillMount() {
+    window.onload = () => {this.props.mulLanToggle(this.props.match.params.languages)}
+      // this.props.mulLanToggle(this.props.match.params.languages)
       let reg = /^[0-5]$/
       if(reg.test(this.props.match.params.languages)) {
         this.setState({
           languageType: this.props.match.params.languages
         })
       }
-    if (this.props.location && this.props.location.search !== "?type=search") {
-      this.homepageMore(window.location.hash);
-    }
+    // if (this.props.location && this.props.location.search !== "?type=search") {
+    //   this.homepageMore(window.location.hash);
+    // }
   }
   componentWillReceiveProps(newProps){
-    if(this.props.match.url === newProps.match.url) {
-      this.setState({
+    // if(this.props.match.url !== newProps.match.url) {
+    //   this.setState({
+    //     languageType: newProps.languages
+    //   })
+    // }
+    // else{
+    //   this.setState({
+    //     languageType: newProps.match.params.languages
+    //   })
+    // }
+    this.setState({
         languageType: newProps.languages
-      })
-    }else{
-      this.setState({
-        languageType: newProps.match.params.languages
-      })
-    }
+    })
     this.setState({
       prevhash: window.location.hash
     })
     if(newProps.match.params.languages !== this.props.match.params.languages){
-      
+      newProps.mulLanToggle(newProps.match.params.languages)
       this.setState({
         timeValue: 'all',
         trendValue: 'all',
@@ -698,9 +707,9 @@ class AllOpinion extends React.Component {
     }
     // 搜索数据数量  //      -ماددا سانلىق مەلۇمات
     const searchNum = (num) => {
-      let leftarr = ['根据您的条件，为您筛选出','님이 지정한 조건에 부합되는', 'あなたの条件によると、', ' ماددا سانلىق مەلۇمات'+ '-' , 'ལ་གཞིགས་ནས་ཁྱེད་ཀྱི་ཆ་རྐྱེན་ཁྱེད་འདེམས་སྒྲུག་ཐོན་', 'Filter'];
-      let rightarr = ['条数据', '개의 데이터를 검색하였습니다', '件のデータをピックアップします!', 'سىزنىڭ شەرتىڭىز ئاساسەن ، سىز ئۈچۈن تاللاپ چىقىلغان','དོན་ཚན་གཞི་གྲངས།', 'data for you based on your criteria']
-      return `<span style=float:left>${leftarr[this.state.languageType]}</span><span class="number">${num}</span><span>${rightarr[this.state.languageType]}</span>！`
+      let leftarr = ['根据您的条件，为您筛选出','님이 지정한 조건에 부합되는', 'あなたの条件によると、', '! ماددا سانلىق مەلۇمات'+ '-' , 'ལ་གཞིགས་ནས་ཁྱེད་ཀྱི་ཆ་རྐྱེན་ཁྱེད་འདེམས་སྒྲུག་ཐོན་', 'Filter'];
+      let rightarr = ['条数据!', '개의 데이터를 검색하였습니다!', '件のデータをピックアップします!', 'سىزنىڭ شەرتىڭىز ئاساسەن ، سىز ئۈچۈن تاللاپ چىقىلغان','དོན་ཚན་གཞི་གྲངས།!', 'data for you based on your criteria!']
+      return `<span style=float:left>${leftarr[this.state.languageType]}</span><span class="number">${num}</span><span>${rightarr[this.state.languageType]}</span>`
     }
     const param = {
       datetag: this.state.timeValue,
@@ -838,6 +847,9 @@ const mapDispatchToProps = dispatch => {
     },
     paginationPage: req => {
       dispatch(paginationPage(req));
+    },
+    mulLanToggle: req => {
+      dispatch(mulLanToggle(req))
     }
   }
 };

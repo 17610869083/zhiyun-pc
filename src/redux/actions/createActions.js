@@ -42,7 +42,8 @@ import {
   SEARCH_STATE,
   INFORMS_STATE,
   CLF_CAT_STATE,
-  BRIEFING_SWITCH_DATA
+  BRIEFING_SWITCH_DATA,
+  MUL_LANGUAGES_TOGGLE
 } from './actionTypes';
 
 
@@ -128,3 +129,6 @@ export const clfCatState = createAction(CLF_CAT_STATE);
 
 //生成简报选择数据
 export const briefingSwitch = createAction(BRIEFING_SWITCH_DATA);
+
+// 多语种语言切换
+export const mulLanToggle = createAction(MUL_LANGUAGES_TOGGLE)

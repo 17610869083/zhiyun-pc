@@ -14,7 +14,8 @@ import {
         api_sorted_cat_list,
         api_sorted_rule_list,
         api_sorted_rule_edit,
-        api_sorted_rule_delete
+        api_sorted_rule_delete,
+        api_sorted_rule_add
 } from '../../../services/api';
 import { createHashHistory } from 'history';
 import {connect} from 'react-redux';
@@ -54,12 +55,31 @@ class BiddingSetting extends React.Component {
             topicNameValue:'',
             addOrSetting:'',
             roleArr: [],
-            language: ['', 'kr', 'jp', 'uygur', 'zang', 'en']
+            language: ['', 'kr', 'jp', 'uygur', 'zang', 'en'],
+            fastSetting: ['快速设置', '빠른 설정', 'クイックセットアップ', 'تېز سۈرئەتتە بەلگىلەش ', 'མགྱོགས་མྱུར་ངང་སྒྲིག་འགོད་', 'Quick Setup'],
+            seniorSetting: ['高级设置', '고급 설정', '詳細設定', 'تەپسىلىي تەڭشەكلەر ', 'མཐོ་རིམ་སྒྲིག་འགོད་', 'advanced settings'],
+            thematicName: ['方案名称', '프로그램 이름', 'プログラム名', 'لايىھە نامى ', 'ཇུས་གཞིའི་མིང་', 'Program name'],
+            type: ['类型', '类型', '类型', '类型', '类型', '类型'],
+            fastKeyWord: ['匹配关键词组合', '키워드 조합 일치', '一致するキーワードの組み合わせ', 'ئاچقۇچلۇق سۆز ماس كېلىدىغان بىرىكمە ', 'ངང་གནད་ཚིག་དག་སྒྲིག་སྡེབ་སྒྲིག་', 'Matching keyword combination'],
+            fastKeyWordTip: ['关键词组合由主题词、关联词1、关联词2和排除词共4组词组成。', '키워드 조합은 주제 단어, 관련 단어 1, 관련 단어 2 및 제외 단어의 총 4 세트로 구성됩니다.', 'キーワードの組み合わせは、件名、関連語1、関連語2、除外語の合計4組のキーワードで構成されます。', 'ئاچقۇچلۇق سۆز گۇرپىدا باش تېما قىلىپ ، مۇناسىۋەتلىك سۆز 1 ، 2 ۋە سۆز جەمئىي تۆت سۆز بىرىكمىسى تەركىبىدىكى باغلىغۇچى . ', 'གནད་ཚིག་ཚན་སྡེབ་དེ་རེ་རེའི་1 ལ་བཀོད་པའི་ཕྲད་དང་2 ལ་བཀོད་པའི་ཕྲད་དང་ཚིག་གྲུབ་བྱེད་ཀྱི་ཚིག་4 ལས་གྲུབ་པ་ཞིག་རེད་།', 'The keyword combination consists of a total of four sets of keywords: subject words, related words 1, related words 2 and excluded words.'],
+            seniorWord: ['匹配关键词', '匹配关键词', '匹配关键词', '匹配关键词', '匹配关键词', '匹配关键词'],
+            seniorWordTip: {
+                row1: ['关键词组合：关键词之间用“+”、“-”或者“*”连接，符号均为英文状态。', '키워드 조합 : 키워드는 "+", "-"또는 "*"로 연결되며 기호는 영어로 표시됩니다.', '"キーワードの組み合わせ：キーワードは" + "、" - "、" * "で結ばれ、記号は英語で表示されます。', 'ئاچقۇچلۇق سۆز بىرىكمىسى : ھالقىلىق سۆز ئوتتۇرىسىدىكى « + » ، « - » ياكى « * » ئارقىلىق تۇتاشتۇرۇلۇپ ، بەلگىسى «?放米 ئىنگلىزچە ھالىتى .', 'གནད་ཚིག་ལ་སྒྲིག་སྟངས་གནད་ཚིག་བར་གྱི་“ + ” དང་” སྟེ་“ ཡང་ན་” “ འབྲེལ་མཐུད་རྟགས་ཚང་མ་དབྱིན་ཡིག་གི་གནས་སུ་གྱར་ཡོད་།', 'Keyword combination: Keywords are connected by "+", "-" or "*", and the symbols are in English.'],
+                row2: ['①“+”代表或(或者)','①"+"는 또는 (또는)', '①"+"は、または（または）', '① « + » ۋەكىللىرى ياكى ( ياكى )', '① “ + ” ཀྱི་འཐུས་མིའམ་ཡང་ན་（ ཡང་ན་）', '①"+" stands for or (or)'],
+                row3: ['②“-”代表排除', '②"-"는 제외를 의미합니다.', '②" - "は除外を表す', '② « - » ۋەكىللىرىنى سىرتتا', '②” སྟེ་“ འཐུས་མི་ཕྱིར་འབུད་', '②"-" stands for exclusion'],
+                row4: ['③“*”代表与(并且)', '"*"은 (와)', '③"*"は（と）', '③ « * » ۋەكىللىرى بىلەن ( )', '③”*“ འཐུས་མི་དང་( དེས་མ་ཟད་། ）', '③"*" stands for (and)'],
+                row5: ['④“( )”在多个词之间是或(或者)的关系时用括号包起来', '④“( )”여러 단어 (또는) 사이에 관계가있을 때 괄호로 묶습니다.', '④“( )”複数の単語（または）の間に関係がある場合はかっこで囲みます。', '④ « ( ) » دىن ئارتۇق سۆز ئوتتۇرىسىدىكى ياكى ( ياكى ) بولغان مۇناسىۋىتىنى بىر تەرەپ قىلغاندا ، تىرناق ئوراپ بەرسىڭىز ', '④ཚིག་བར་ནི་། ཡང་ན་“ ( ) ” མང་པོ་ཞིག་( ཡང་ན་) གྱི་འབྲེལ་བའི་སྐོར་བཤད་དུས་གུག་རྟགས་བཀོལ་ནས་ཐུམ་', '④"( )" is wrapped in parentheses when there is a relationship between multiple words or (or)'],
+                row6: ['例子：', '예 :', '例子:', 'مىسال :', 'དཔེ་:', 'example:'],
+                row7: ['关键词组合：北京*(暴雨+暴雪)*(预警+受灾+伤亡)-暴雪公司系统会匹配舆情信息中出现北京与(暴雨或者暴雪)与(预警或者受灾或者伤亡)排除暴雪公司相关的数据', '키워드 조합 : 북경 * (폭풍 + 눈보라) * (경고 + 재해 + 사상자) - 블리자드 시스템은 북경에서 블리자드를 제외하고 관련된 데이터와 (폭풍 또는 눈보라) 경고 (경고 또는 재해 또는 사상자)', '키워드 조합 : 북경 * (폭풍 + 눈보라) * (경고 + 재해 + 사상자) - 블리자드 시스템은 북경에서 블리자드를 제외하고 관련된 데이터와 (폭풍 또는 눈보라) 경고 (경고 또는 재해 또는 사상자)', 'ئاچقۇچلۇق سۆز بىرىكمىسى : بېيجىڭ * قارا يامغۇر + قار ) * ( ئاگاھلاندۇرۇش + + ئاپەتكە ئۇچرىغان تالاپەت ) - باۋشۆ شىركىتىنىڭ سىستېما ماس كېلىدىغان جامائەت پىكرى ئەھۋالىغا دائىر ئۇچۇرلارنى جەريانىدا كۆرۈلگەن بېيجىڭ بىلەن ( يامغۇر ياكى قار ) بىلەن ( ئاگاھلاندۇرۇش ياكى ئاپەتكە ئۇچرىشى ياكى تالاپەت ) باۋشۆ شىركىتىنىڭ مۇناسىۋەتلىك سانلىق مەلۇمات', 'གནད་ཚིག་ལ་སྒྲིག་སྟངས་པེ་ཅིན་། （ དྲག་ཆར་དང་གངས་ཆེན་） * （ ཉེན་བརྡ་གཏོང་བའི་གནོད་འཚེ་ཕོག་པའི་+ + ཤི་རྨས་） - གངས་བབས་ནས་ཀུང་སི་མ་ལག་སྙོམ་སྒྲིག་གི་གླེང་ཕྱོགས་གནས་འཕྲིན་འཚོ་ནང་པེ་ཅིན་དུ་（ དྲག་ཆར་ཐོན་པའམ་ཡང་ན་གངས་ཆེན་） དང་（ ཉེན་ཟོན་སྔོན་བརྡའི་པའམ་ཡང་ན་གནོད་འཚེ་ཕོག་པའམ་ཤི་རྨས་། ) ཉེན་འགོག་འགན་ལེན་ཀུང་སིའི་འབྲེལ་ཡོད་ཀྱི་གཞི་གྲངས་” དུ་གངས་དྲག་ཆེན་བཏང་', 'Keyword combination: Beijing* (storm + blizzard)* (warning + disaster + casualties) - Blizzard system will match the data related to the exclusion of Blizzard from Beijing and (storm or blizzard) and (warning or disaster or casualties)']
+            },
+            addrule: ['添加规则+', '규칙 추가+', 'ルールを追加する+', '+ قوشۇش قائىدىسى', 'སྦྱོར་རྟ་བྱེད་པ་། སྒྲིག་སྲོལ་+', 'Add rules+'],
+            save: ['保存', '保存', '保存', '保存', '保存', '保存'],
+            cancel: ['取消', '취소', 'キャンセル', 'ئەمەلدىن قالدۇرماق ', 'མི་དགོས་པར་བཟོ་བ་', 'cancel']
         }
     }
     componentWillReceiveProps(nextprops){
             if (this.search2Obj(nextprops.location.search).type === 'add' && this.props.location.search !== nextprops.location.search) {
-                request(api_sorted_cat_list).then((res) => {
+                request(api_sorted_cat_list + `&lang=${this.state.language[this.props.match.params.languages]}`).then((res) => {
                     this.setState({
                         topicCatList: res.data.gradeCatList,
                         topicNameValue: '',
@@ -85,7 +105,7 @@ class BiddingSetting extends React.Component {
                 select: this.search2Obj(this.props.location.search).catid
             })
             
-            request(api_sorted_cat_list).then((res) => {
+            request(api_sorted_cat_list + `&lang=${this.state.language[this.props.match.params.languages]}`).then((res) => {
                 this.setState({
                     topicCatList: res.data.gradeCatList
                 })
@@ -93,7 +113,7 @@ class BiddingSetting extends React.Component {
         } else {
             let topicid = this.search2Obj(this.props.location.search).topicid
             
-            request(api_sorted_cat_list).then((res) => {
+            request(api_sorted_cat_list + `&lang=${this.state.language[this.props.match.params.languages]}`).then((res) => {
 
                 request(api_sorted_rule_list +'&clfid=' +topicid).then(res2=>{
                     if(res2.data && res2.data.code!==0){
@@ -161,7 +181,8 @@ class BiddingSetting extends React.Component {
      }
      //高级添加规则
      seniorRule(e){
-        if(this.state.num3[this.state.num3.length-1].rule.trim() === '' || this.state.num3[this.state.num3.length-1].rule.trim() === undefined ) {
+         
+        if(this.state.num3.length < 0 || this.state.num3[this.state.num3.length-1].rule.trim() === '' || this.state.num3[this.state.num3.length-1].rule.trim() === undefined ) {
             message.error('请添加上一条规则')
             return false
         }
@@ -340,17 +361,17 @@ class BiddingSetting extends React.Component {
         }
         
         if( this.search2Obj(this.props.location.search).type === 'add' ) {
-            request(api_get_BiddingaddGrade, {
+            request(api_sorted_rule_add, {
                 method: 'POST',
                 headers: {
                     "Content-Type": "application/x-www-form-urlencoded"
                 },
-                body:`action=addGrade&addtype=${this.state.addtype}&clfname=${this.state.topicNameValue}&catid=${this.state.select}&rule=${this.state.addType-0 === 3 ? encodeURIComponent(JSON.stringify(this.state.num3)) :encodeURIComponent(rules)}`
+                body:`action=addGrade&addtype=${this.state.addtype}&lang=${this.state.language[this.props.match.params.languages]}&clfname=${this.state.topicNameValue}&catid=${this.state.select}&rule=${this.state.addType-0 === 3 ? encodeURIComponent(JSON.stringify(this.state.num3)) :encodeURIComponent(rules)}`
             }).then((res) => {
                 if(res.data.code===1){
                     message.success('关键词添加成功');
                     history.push({
-                        pathname: '/bidding/information'
+                        pathname: 'multilingual/'+ this.props.match.params.languages +'/multilingual'
                     })
                 }else {
                     message.error(res.data.msg)
@@ -364,7 +385,7 @@ class BiddingSetting extends React.Component {
                 },
                 body:`action=editGrade&addtype=${this.state.addtype}&lang=${this.state.language[this.props.match.params.languages]}&catid=${this.state.select}&clfid=${this.props.location.search.split('=')[1]}&clfname=${this.state.topicNameValue}&rule=${this.state.addType-0 === 3 ? encodeURIComponent(JSON.stringify(this.state.num3)) :encodeURIComponent(rules)}`
             }).then((res) => {
-                console.log(this.props.getRouter)
+
                 if(res.data.code===1){
                     message.success('关键词修改成功');
                     this.props.setlocationPathname({topicid:this.props.getRouter.topicid});
@@ -550,43 +571,43 @@ class BiddingSetting extends React.Component {
         },
       },
     };
-    let topicCatid=this.search2Obj(this.props.location.search).catid? this.search2Obj(this.props.location.search).catid:115;
+    let topicCatid=this.search2Obj(this.props.location.search).catid? this.search2Obj(this.props.location.search).catid:42;
         const topicCatList=this.state.topicCatList.length!==0?
         this.state.topicCatList.map((item,index)=>
-        <Option value={(item.id).toString()} disabled={item.id === 115} key={index}>{item.catname}</Option>
-         ):<Option value={'75'} disabled>默认文件夹</Option>;
+        <Option value={(item.id).toString()} disabled={item.id === 115} key={index}>{item.catname}</Option> 
+         ):<Option value={'75'} disabled>默认文件夹</Option> ;
          const titleTip= <div>
-         <p>关键词组合：关键词之间用“+”、“-”或者“*”连接，符号均为英文状态。</p>
-         <p>①“+”代表或(或者) </p>
-         <p>②“-”代表排除</p>
-         <p>③“*”代表与(并且)</p>
-         <p>④“( )”在多个词之间是或(或者)的关系时用括号包起来</p>
-         <p>例子：</p>
-         <p>关键词组合：北京*(暴雨+暴雪)*(预警+受灾+伤亡)-暴雪公司系统会匹配舆情信息中出现北京与(暴雨或者暴雪)与(预警或者受灾或者伤亡)排除暴雪公司相关的数据</p>
-         </div>;   
+         <p>{this.state.seniorWordTip.row1[this.props.languages]}</p>
+         <p>{this.state.seniorWordTip.row2[this.props.languages]}</p>
+         <p>{this.state.seniorWordTip.row3[this.props.languages]}</p>
+         <p>{this.state.seniorWordTip.row4[this.props.languages]}</p>
+         <p>{this.state.seniorWordTip.row5[this.props.languages]}</p>
+         <p>{this.state.seniorWordTip.row6[this.props.languages]}</p>
+         <p>{this.state.seniorWordTip.row7[this.props.languages]}</p>
+         </div>;
 
-            const tipMessage=<span> <Tooltip placement="bottom" title='关键词组合由主题词、关联词1、关联词2和排除词共4组词组成。'>
+            const tipMessage=<span> <Tooltip placement="bottom" title={this.state.fastKeyWordTip[this.props.languages]}>
             <Icon type="question-circle" className="iconMessage"></Icon>
             </Tooltip>
-            匹配关键词组合</span>;
+            {this.state.fastKeyWord[this.props.languages]}</span>;
         return (
             <div className="bidding-setting">
                 <Tabs tabBarStyle={{color:'#C1C1C1'}} onChange={this.handleOnChange.bind(this)} type="card" activeKey={this.state.addType!==undefined?this.state.addType.toString():'1'}>
-                    <TabPane tab="快速设置" key="1">                  
+                    <TabPane tab={this.state.fastSetting[this.props.languages]} key="1">                  
                         <div className="fast-setting">
                         <Form onSubmit={this.handleSubmit.bind(this)} className="login-form">
                                 <FormItem
-                                    label="专题名称"
+                                    label={this.state.thematicName[this.props.languages]}
                                     {...formItemLayout}
                                 >
-                            <Input placeholder='专题名称' style={{width: '300px'}}
+                            <Input placeholder={this.state.thematicName[this.props.languages]} style={{width: '300px'}}
                              maxLength={'28'}
                              onChange={this.TopicNameChange.bind(this)}
                              value={this.state.topicNameValue}
                             />          
                                 </FormItem>                                
                                 <FormItem
-                                    label="类型"
+                                    label={this.state.type[this.props.languages]}
                                     {...formItemLayout}
                                 >
                                 <Select style={{width: '154px'}} onSelect={this.onSelect.bind(this)} 
@@ -637,6 +658,7 @@ class BiddingSetting extends React.Component {
                                 /> */}
                                 <BiddingCreate 
                                     num1={JSON.stringify(this.state.num1)}
+                                    type="mul"
                                     onAddRole={this.addRole.bind(this)}
                                     onEditRole={this.editRole.bind(this)}
                                     onDelOne={this.delOne.bind(this)}
@@ -657,23 +679,23 @@ class BiddingSetting extends React.Component {
                       <Button type="primary" htmlType="submit" className="gap" onClick={
                       	  this.onAddtype.bind(this)
                       } >
-                                        保存
+                                        {this.state.save[this.props.languages]}
                                     </Button>
                                     <Button  type="primary" onClick={this.goTopiclist.bind(this)}>
-                                        取消
+                                        {this.state.cancel[this.props.languages]}
                                     </Button>
                                 </FormItem>
                             </Form>
                         </div>
                     </TabPane>
-                    <TabPane tab="高级设置" key="3">
+                    <TabPane tab={this.state.seniorSetting[this.props.languages]} key="3">
                      <div className="fast-setting">
                      <Form onSubmit={this.handleSubmit.bind(this)} className="login-form">
                                 <FormItem
-                                    label="专题名称"
-                                    {...formItemLayout}
+                                    label={this.state.thematicName[this.props.languages]}
+                                    {...formItemLayout} 
                                 >
-                                        <Input placeholder="专题名称" style={{width: '300px'}}
+                                        <Input placeholder={this.state.thematicName[this.props.languages]} style={{width: '300px'}}
                                         maxLength={'28'}
                                         onChange={this.TopicNameChange.bind(this)}
                                         value={this.state.topicNameValue}
@@ -681,7 +703,7 @@ class BiddingSetting extends React.Component {
                                 </FormItem>
                                 
                                 <FormItem
-                                    label="类型"
+                                    label={this.state.type[this.props.languages]}
                                     {...formItemLayout}
                                 >
                                 <Select style={{width: '154px'}} onSelect={this.onSelect.bind(this)} 
@@ -690,7 +712,7 @@ class BiddingSetting extends React.Component {
                                         </Select>
                                 
                                 </FormItem>
-                                <div className="text" >匹配关键词
+                                <div className="text" >{this.state.seniorWord[this.props.languages]}
                                 <Tooltip placement="bottom" title={titleTip}>
                                 <Icon type="question-circle" 
                                 className="iconMessage"
@@ -720,7 +742,7 @@ class BiddingSetting extends React.Component {
                                     {...tailFormItemLayout} 
                                 >
                                 <Button  type="primary" size="small"  onClick={this.seniorRule.bind(this)} >
-                                      + 添加规则
+                                      {this.state.addrule[this.props.languages]}
                                  </Button>
                                 
                                 </FormItem>
@@ -729,11 +751,11 @@ class BiddingSetting extends React.Component {
                                     {...tailFormItemLayout}
                                 >
              <Button type="primary" htmlType="submit" className="gap" onClick={this.onAddtypeTwo.bind(this)} >
-                                        保存
+                                        {this.state.save[this.props.languages]}
                                     </Button>
                                     
                                     <Button  type="primary" onClick={this.goTopiclist.bind(this)}>
-                                        取消
+                                        {this.state.cancel[this.props.languages]}
                                     </Button>
                                 </FormItem>
                                 
@@ -747,7 +769,8 @@ class BiddingSetting extends React.Component {
 }
 const mapStateToProps = state => {
     return {
-        getRouter: state.getRouterReducer
+        getRouter: state.getRouterReducer,
+        languages: state.mulLanToggleReducer
     }
 };
 const mapDispatchToProps = dispatch => {

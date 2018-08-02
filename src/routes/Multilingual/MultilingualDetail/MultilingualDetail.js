@@ -5,6 +5,7 @@ import {
   Checkbox, Input, Menu, Dropdown, Popconfirm, message, Popover, Button,
   Spin, Alert, Select, Pagination, Modal,Tooltip
 } from 'antd';
+
 import {history} from '../../../utils/history';
 import './MultilingualDetail.less';
 import {opinionColor, setHighlightTags, formatDateTime} from '../../../utils/format';
@@ -602,7 +603,8 @@ class OpinionDetail extends React.Component {
   }
   render() {
     const {page} = this.props;
-    const flag = this.props.docList&& this.props.docList.length === 0?true:false;
+    // debugger
+    const flag = this.props.docList&& this.props.docList.length === 0?true:false
     const docList = this.props.docList ? this.props.docList : [];
     const OpinionDetailItems = docList[0] !== undefined && docList[0]['negative'] !== undefined ? docList.map((item, index) =>
         <li key={item.sid} className="opinion-detail-item">

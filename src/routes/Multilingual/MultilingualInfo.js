@@ -22,8 +22,8 @@ import {
 import request from '../../utils/request';
 import './MultilingualInfo.less';
 import Iconfont from '../../components/IconFont';
-import {setlocationPathname,getTopicLocationRequested,topicNavMessageRequested,searchState, getSortedContentRequested} from '../../redux/actions/createActions';
-import {mulLanToggle} from '../../redux/actions/actions'
+import {setlocationPathname,getTopicLocationRequested,topicNavMessageRequested,searchState, getSortedContentRequested, mulLanToggle, opinionSearchSucceeded} from '../../redux/actions/createActions';
+// import {} from '../../redux/actions/actions'
 import {connect} from 'react-redux';
 import { setTimeout } from 'timers';
 import {GRAY,BLACK} from '../../utils/colors';
@@ -49,16 +49,27 @@ class BiddingOpinion extends React.Component {
             isTopShow:true,
             browserHeight:300,
             topicNavMessage: [],
-            language: ['', 'kr', 'jp', 'uygur', 'zang', 'en'],
+            language: ['cn', 'kr', 'jp', 'uygur', 'zang', 'en'],
             CHlan: ['中文', '한국어', '日本語', 'ئۇيغۇر يېزىقى', 'བོད་ཡིག། ', 'English'],
+            infoList: ['信息列表', '信息列表', '信息列表', '信息列表', '信息列表'],
+            schemeSetting: ['方案设置', '方案设置', '方案设置', '方案设置', '方案设置'],
+            theme: ['主题', '테마', 'テーマ', 'تېما ', 'ཁ་བྱང་གཙོ་བོ་', 'theme'],
+            addTheme: ['添加主题', '주제 추가', 'トピックを追加', 'تېما قوشۇش ', 'སྦྱོར་རྟ་བྱེད་པ་། བརྗོད་བྱ་གཙོ་བོ་', 'Add topic'],
+            InputThem: ['请输入主题名称', '제목을 입력하십시오.', '件名を入力してください', 'تېمىنى كىرگۈزۈڭ نامى ', 'བརྗོད་བྱ་གཙོ་བོའི་མིང་འབྲི་རོགས་།', 'Please enter a subject name'],
+            confirm: ['确认', '확인', '確認', 'بېكىتىش ', 'ཁས་ལེན་གསལ་ཐག་ཆོད་པ་', 'confirm'],
+            cancel: ['取消', '취소', 'キャンセル', 'ئەمەلدىن قالدۇرماق ', 'མི་དགོས་པར་བཟོ་བ་', 'cancel'],
+            rename: ['重命名', '이름 바꾸기', '名前を変更する', 'قايتا ناملاش ', 'མིང་བསྐྱར་འངོགས་', 'Rename'],
+            del: ['删除', '삭제', '削除', 'ئۆچۈرۈش ', '“ སུབ་པ་” ཞེས་པ་', 'delete'],
+            add: ['添加','添加','添加','添加','添加','添加']
         };
 
     }
-    initCard(){
-        request(api_sorted_menu_list + '&lang=' + this.state.language[this.props.match.params.languages]).then((res) => {
+    initCard(lang, callback){
+        const url  = lang ? api_sorted_menu_list + '&lang=' + this.state.language[lang] :  api_sorted_menu_list + '&lang=' + this.state.language[this.props.match.params.languages]
+        request(url).then((res) => {
             this.setState({
                 topicNavMessage: res.data
-            })
+            }, ()=> {callback && callback()})
         })
     }
     handleClick(e) {
@@ -93,8 +104,31 @@ class BiddingOpinion extends React.Component {
         this.setState({
             current
         })
-        if (nextprops.location.pathname.split('/')[3] === 'multilingual') {
-            this.initCard()
+        // console.log(nextprops.location.pathname, this.props.location.pathname)
+        if (nextprops.location.pathname.split('/')[3] === 'multilingual' &&  nextprops.location.pathname !== this.props.location.pathname) {
+            opinionSearchSucceeded({docList: [], pageInfo: {count:0}, carryCount: [{count:0, value: "全部", key: "docApp"}]})
+            let get = () =>{
+                let topicMessage = this.state.topicNavMessage;
+                let firstTopicid={topicid:1,topicname:'test'};
+                for(var i = 0; i<topicMessage.length; i++) {
+                    let item = topicMessage[i]
+                    if(item['clflist'][0]!==undefined){
+                        firstTopicid.topicid = item['clflist'][0]['clfid'];
+                        firstTopicid.topicname = item['clflist'][0]['clfname'];
+                        break
+                   }
+                }
+                const param = {
+                    clfid: firstTopicid.topicid,
+                    lang: this.state.language[nextprops.match.params.languages]
+                }
+                this.props.getSortedContentRequested(param);
+                this.props.setlocationPathname({topicid:param.clfid});
+                this.setState({
+                    materialCurrent: firstTopicid.topicid
+                })
+            }
+            this.initCard(nextprops.match.params.languages, get)
         }
     }
     componentWillMount() {
@@ -111,7 +145,7 @@ class BiddingOpinion extends React.Component {
     }
     componentDidMount(){
         //  this.props.topicNavMessageRequested(new Date());
-        this.initCard()
+        // this.initCard()
          this.topichomeTimer = setTimeout( ()=>{
           let topicMessage=this.state.topicNavMessage;
           if(topicMessage!==1){
@@ -205,7 +239,9 @@ class BiddingOpinion extends React.Component {
                 this.setState({
                     current: 'setting',
                 })
-                this.props.setlocationPathname({catid:catid});
+
+                // this.props.setlocationPathname({catid:catid});
+                // this.props.setlocationPathname({topicid:this.props.getRouter.topicid});
            }
     }
     onCatid(catid){
@@ -364,17 +400,17 @@ class BiddingOpinion extends React.Component {
        this.setState({visibleTwo:false})
    }
    onlang() {
-       this.props.mulLanToggle(this.props.match.params.languages)
+       this.props.languages === 0 ? this.props.mulLanToggle(this.props.match.params.languages) : this.props.mulLanToggle(0)
    }
     render() {
         const delItems = item => {
             return <Menu onClick={this.onDelitem.bind(this,item.catid)}>
-            <Menu.Item key="2">重命名</Menu.Item>
-            <Menu.Item key="1">删除</Menu.Item>
-            <Menu.Item key="3">添加</Menu.Item>
+            <Menu.Item key="2">{this.state.rename[this.props.languages]}</Menu.Item>
+            <Menu.Item key="1">{this.state.del[this.props.languages]}</Menu.Item>
+            <Menu.Item key="3">{this.state.add[this.props.languages]}</Menu.Item>
         </Menu>
         }
-        const LeftTopicLists=this.state.topicNavMessage!==1&&this.state.topicNavMessage.map((item,index)=>
+        const LeftTopicLists=this.state.topicNavMessage!==1&& this.state.topicNavMessage && this.state.topicNavMessage.map((item,index)=>
           <div className="a-class" key={index}>
           <div className="class-name" >
           <div className="leftBox" onClick={this.dropDown.bind(this,item.catid)} data-index='1' title={item.catname}>
@@ -401,6 +437,9 @@ class BiddingOpinion extends React.Component {
          </div>
 
         );
+        const modalFooter = (handleCancel, handleOk, _this) => {
+            return (<div><Button size="large" onClick={handleCancel.bind(_this)}>{this.state.cancel[this.props.languages]}</Button><Button type="primary" size="large" onClick={handleOk.bind(_this)}>{this.state.confirm[this.props.languages]}</Button></div>)
+        }
         return (
             <div className="topic-opinion">
                 {TopicList}
@@ -415,18 +454,18 @@ class BiddingOpinion extends React.Component {
                         style={{lineHeight:'26px',backgroundColor: GRAY,paddingTop:'14px',border:'none'}}
                     >
                         <Menu.Item key="multilingual" style={{fontSize:'16px'}}>
-                            信息列表
+                            {this.state.infoList[this.props.languages]}
                         </Menu.Item>
                         {/* <Menu.Item key="analysis" style={{fontSize:'16px'}}>
                             招投分析
                         </Menu.Item> */}
                         <Menu.Item key="setting" style={{fontSize:'16px'}}>
-                            方案设置
+                            {this.state.schemeSetting[this.props.languages]}
                         </Menu.Item>
                     </Menu>
                     </div>
                     <div className="close">
-                        <Button style={{textAlign: 'center'}} onClick={this.onlang.bind(this)}>{this.state.CHlan[this.props.languages]}</Button>
+                        <Button style={{textAlign: 'center'}} onClick={this.onlang.bind(this)}>{this.props.languages-0 === 0 ? this.state.CHlan[this.props.match.params.languages] : '中文' }</Button>
                     </div>
                     {/* <div className="close"  onClick={this.triggerTopShow.bind(this)} style={this.state.current==='multilingual'?{display:'block',color:BLACK}:{display:'none'}}>
                       <span>{this.state.isTopShow ? '显示' : '隐藏'}</span>
@@ -444,7 +483,7 @@ class BiddingOpinion extends React.Component {
                 <div className="left-boxes">
                     <div className="first-box">
                         <div className="add-topic-class" style={{background:GRAY}}>
-                          主题
+                          {this.state.theme[this.props.languages]}
                           <i onClick={this.addFolder.bind(this)}><Iconfont type='icon-tianjiawenjianjia' style={{fontSize: '18px'}}  className="add-folder"></Iconfont></i>
                         </div>
                         <div className="classes" style={{maxHeight:this.state.browserHeight+'px'}}>
@@ -454,12 +493,13 @@ class BiddingOpinion extends React.Component {
                 </div>
                 </div>
                 <Modal
-                    title="添加主题"
+                    title={this.state.addTheme[this.props.languages]}
                     visible={this.state.visible}
                     onOk={this.handleOk.bind(this)}
                     onCancel={this.handleCancel.bind(this)}
+                    footer={modalFooter(this.handleCancel, this.handleOk, this)}
                     >
-                    <p className="textCenter">输入主题名</p>
+                    <p className="textCenter">{this.state.InputThem[this.props.languages]}</p>
                     <Input className="gapInput" onChange={this.onChange.bind(this)}
                     value={this.state.inputValue}
                     maxLength={'28'}
@@ -470,6 +510,7 @@ class BiddingOpinion extends React.Component {
                     visible={this.state.visibleOne}
                     onOk={this.delOkOne.bind(this)}
                     onCancel={this.delCancelOne.bind(this)}
+                    footer={modalFooter(this.delCancelOne, this.delOkOne, this)}
                     >
                     <p className="textCenter">确认删除此主题吗?</p>
                     </Modal>
@@ -478,14 +519,18 @@ class BiddingOpinion extends React.Component {
                     visible={this.state.visibleTwo}
                     onOk={this.delOkTwo.bind(this)}
                     onCancel={this.delCancelTwo.bind(this)}
+                    footer={modalFooter(this.delCancelTwo, this.delOkTwo, this)}
                     >
                     <p className="textCenter">确认删除此专题吗?</p>
+                    {/* <Button onClick={this.delCancelTwo.bind(this)}>取消123</Button>
+                    <Button onClick={this.delOkTwo.bind(this)}>确定123</Button> */}
                     </Modal>
                     <Modal
                     title="重命名分类"
                     visible={this.state.visibleThree}
                     onOk={this.delOkThree.bind(this)}
                     onCancel={this.delCancelThree.bind(this)}
+                    footer={modalFooter(this.delCancelThree, this.delOkThree, this)}
                     >
                     <p className="textCenter">输入新的分类名</p>
                     <Input className="gapInput" onChange={this.onChange.bind(this)}  
@@ -499,7 +544,8 @@ class BiddingOpinion extends React.Component {
 const mapStateToProps = state => {
     return {
         search: state.searchStateReducer.data,
-        languages: state.mulLanToggleReducer
+        languages: state.mulLanToggleReducer,
+        getRouter: state.getRouterReducer
     }
 };
 
@@ -522,7 +568,10 @@ const mapDispatchToProps = dispatch => {
         },
         mulLanToggle: lang => {
             dispatch(mulLanToggle(lang))
-        }
+        },
+        opinionSearchSucceeded: req => {
+            dispatch(opinionSearchSucceeded(req))
+        } 
     }
 };
 
