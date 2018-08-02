@@ -617,9 +617,7 @@ class OpinionDetail extends React.Component {
   //单条加入素材库
   materialConfirm(sid, e) {
     request(api_push_material + '&catid=' + e.key + '&sid=["' + sid + '"]').then((res) => {
-      if (res.data.code === 1) {
         message.success(res.data.msg);
-      }
     });
   }
 

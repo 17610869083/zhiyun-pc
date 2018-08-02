@@ -488,7 +488,8 @@ class ModalAllOpinion extends React.Component{
                filterValue:1,
                mediaValue:'全部',
                begin:'0000-00-00 02:00:00',
-               end:'0000-00-00 02:00:00'
+               end:'0000-00-00 02:00:00',
+               timePickerShow:false
             })
             const {searchSeltype} = this.state;
             const {topicId,startDate,endDate} = this.props;

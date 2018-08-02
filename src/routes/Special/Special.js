@@ -380,6 +380,7 @@ class Special extends React.Component{
 					}
 			]
 		}   
+		
 		return (
 			<div className="col">
 				<Row>
@@ -395,6 +396,8 @@ class Special extends React.Component{
 							mediaAnalysisImg={this.mediaAnalysisImg} 
 							negativeCarrierAnalysisImg={this.negativeCarrierAnalysisImg}
 							mediaEwarningDistributionImg = {this.mediaEwarningDistributionImg}
+							starttime={this.state.jiaData.starttime}
+							endtime={this.state.jiaData.endtime}
 						/>
 					</Col>
 				</Row>
@@ -829,13 +832,13 @@ class Special extends React.Component{
 																	) : null
 																))
 															}
-															<div style={{ height: 500 }}>
+															<div style={this.state.negativeCarrierAnalysisImg.series?{ height: 500 }:{display:'none'}} >
 																<ReactEchartsCore
 																	echarts={echarts}
 																	option={this.state.negativeCarrierAnalysisImg}
 																	lazyUpdate={true}
 																	style={{ height:'400px' }}
-																	ref={(e) => { this.negativeCarrierAnalysisImg = e; }}
+																	ref={(e) => { this.negativeCarrierAnalysisImg = this.state.negativeCarrierAnalysisImg.series?e:'1'; }}
 																/>
 															</div>
 														</Col>
@@ -871,13 +874,13 @@ class Special extends React.Component{
 																	) : null
 																))
 															}
-															<div style={{ height: 500 }}>
+															<div style={this.state.mediaEwarningDistributionImg.series?{ height: 500 }:{display:'none'}}>
 																<ReactEchartsCore
 																	echarts={echarts}
 																	option={this.state.mediaEwarningDistributionImg}
 																	lazyUpdate={true}
 																	style={{ height:'400px' }}
-																	ref={(e) => { this.mediaEwarningDistributionImg = e; }}
+																	ref={(e) => { this.mediaEwarningDistributionImg = this.state.mediaEwarningDistributionImg.series?e:'1'; }}
 																/>
 															</div>
 														</Col>

@@ -360,7 +360,8 @@ class MaterialOpinion extends React.Component {
 			return (item === true);
 		});
 		this.setState({
-			array: arr
+			array: arr,
+			checkedAll: false
 		});
 		if (this.props.getSids !== undefined) {
 			this.props.getSids(this.checkedTrue())

@@ -47,6 +47,15 @@ class reportHeader extends React.Component{
 			})
 		})
 	}
+	componentDidUpdate(prevProps){
+		if(prevProps.starttime !==this.props.starttime){
+			this.setState({
+			  starttime:this.props.starttime,
+			  endtime:this.props.endtime,
+			  topicid:this.props.topicid
+			})
+		}
+  }
 	//简报编辑按钮
 	editBriefing(type){
 		if(type === 'have'){
@@ -219,10 +228,10 @@ class reportHeader extends React.Component{
 					let mediaDistributionImgbase64 =encodeURIComponent(mediaDistributionImg.getDataURL('png'));
 					let mediaAnalysisImg = this.props.mediaAnalysisImg.getEchartsInstance();
 					let mediaAnalysisImgbase64 =encodeURIComponent(mediaAnalysisImg.getDataURL('png'));
-					let negativeCarrierAnalysisImg = this.props.negativeCarrierAnalysisImg.getEchartsInstance();
-					let negativeCarrierAnalysisImgbase64 =encodeURIComponent(negativeCarrierAnalysisImg.getDataURL('png'));
-					let mediaEwarningDistributionImg = this.props.mediaEwarningDistributionImg.getEchartsInstance();
-					let mediaEwarningDistributionImgbase64 =encodeURIComponent(mediaEwarningDistributionImg.getDataURL('png'));
+					let negativeCarrierAnalysisImg = this.props.negativeCarrierAnalysisImg;
+					let negativeCarrierAnalysisImgbase64 =negativeCarrierAnalysisImg!=='1'?encodeURIComponent(negativeCarrierAnalysisImg.getEchartsInstance().getDataURL('png')):'';
+					let mediaEwarningDistributionImg = this.props.mediaEwarningDistributionImg;
+					let mediaEwarningDistributionImgbase64 =mediaEwarningDistributionImg!=='1'?encodeURIComponent(mediaEwarningDistributionImg.getEchartsInstance().getDataURL('png')):'';
 					let charts = {
 						emotionDistributionImg:emotionDistributionImgbase64,
 						mediaDistributionImg:mediaDistributionImgbase64,

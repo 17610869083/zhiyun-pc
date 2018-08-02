@@ -2,7 +2,6 @@ import React from 'react';
 import './CustomHome.less';
 import IcontFont from '../../components/IconFont';
 import { Container, Draggable } from 'react-smooth-dnd';
-import 'react-grid-layout/css/styles.css';
 import {Icon,message} from 'antd';
 import request from '../../utils/request';
 import {history} from '../../utils/history';
