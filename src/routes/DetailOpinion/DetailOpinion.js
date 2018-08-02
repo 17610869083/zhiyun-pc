@@ -283,7 +283,9 @@ class DetailOpinion extends React.Component {
 
   // 展示报告列表
   showReportMenu() {
-    this.props.getReportList({pagesize: '1000', page: '1'});
+    console.log(this.state.sid)
+    history.push('/home')
+    window.close();
   }
 
   // 加入收藏
@@ -300,18 +302,6 @@ class DetailOpinion extends React.Component {
       }
     });
   }
-
-  // 加入报告
-  clickReportMenuItem(e) {
-    const id = this.state.sid;
-    const reportId = e.key;
-    request(api_put_into_report + '&reportid=' + reportId + '&sid=["' + id + '"]', {}).then((res) => {
-      if (res.data.code === 1) {
-        message.success(res.data.msg);
-      }
-    });
-  }
-
   componentDidMount() {
     const id = this.props.location.pathname.split('detail/')[1]
     request(api_get_doc_detail + '&sid=' + id, {}).then((res) => {
@@ -459,23 +449,7 @@ class DetailOpinion extends React.Component {
           </Menu.Item>
         )}
       </Menu>
-    );
-    // 报告列表
-    // const ReportMenu = (
-    //   <Menu
-    //     selectedKeys={[this.state.current]}
-    //     onClick={this.clickReportMenuItem.bind(this)}
-    //   >
-    //     {this.props.reportData.map(item =>
-    //       <Menu.Item key={item.id}>
-    //         <Icon type="folder-add"/>&nbsp;
-    //         <span>{item.name}</span>
-    //       </Menu.Item>
-    //     )}
-
-    //   </Menu>
-    // );
-      
+    ); 
         return (            
             <div className="detail-opinion">
                {/* <Icon type="rollback" className="arrowLeft" title="回到上一页" onClick={this.preUrl.bind(this)}/> */}
@@ -574,14 +548,10 @@ class DetailOpinion extends React.Component {
                                         <span>加入收藏</span>
                                     </div>
                                 </Dropdown>
-                                {/* <Dropdown overlay={ReportMenu} trigger={['click']}
-                                getPopupContainer={ () => document.querySelector('.detail-opinion')}
-                                >
-                                    <div className="watch" onClick={this.showReportMenu.bind(this)}>
+                                    {/* <div className="watch" onClick={this.showReportMenu.bind(this)}>
                                         <Icon type="file-text" className="star" />
                                         <span>加入报告</span>
-                                    </div>
-                                </Dropdown> */}
+                                    </div> */}
                             </div>
                         </div>
                     </div>

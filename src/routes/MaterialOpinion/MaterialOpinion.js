@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Checkbox, Icon, Tooltip, Pagination, Input, Menu, Dropdown, Modal, Form, message, Select } from 'antd';
 import request from '../../utils/request';
+import {history} from '../../utils/history';
 import {
 	api_add_material_opinion,
 	api_delete_material_opinion,
@@ -23,7 +24,8 @@ import {
 	getReportListRequested,
 	searchKeywordSync,
 	paginationPage,
-  getCollectionOpinionListRequested	
+	getCollectionOpinionListRequested,
+	briefingSwitch	
 } from '../../redux/actions/createActions';
 import weixin from '../../assets/icon-img/weixin.png';
 import news from '../../assets/icon-img/news.png';
@@ -51,7 +53,7 @@ class MaterialOpinion extends React.Component {
 		this.state = {
 			current: 1,
 			currentPage: 1,
-			pageSize: 20,
+			pageSize: 20,   
 			removeModalVisible: false,
 			outputModalVisible: false,
 			addMaterialVisible: false,
@@ -182,14 +184,14 @@ class MaterialOpinion extends React.Component {
 	// 删除单项
 	deleteThisFormMaterial(itemId) {
 		const getDetail = this.props.getMaterialOpinionDetailRequested;
-		const current = this.state.current;
+		const {current,currentPage,pageSize }= this.state;
 		confirm({
 			title: '确定将这条舆情移出素材库?',
 			content: '移出素材库',
 			onOk() {
 				request(api_del_doc_from_cat + '&id=[' + itemId + ']', {}).then((res) => {
 					if (res.data.code === 1) {
-						getDetail(`catid=${current}`);
+						getDetail(`catid=${current}&page=${currentPage}&pagesize=${pageSize}`);
 						message.success(res.data.msg);
 					}
 				});
@@ -358,8 +360,7 @@ class MaterialOpinion extends React.Component {
 			return (item === true);
 		});
 		this.setState({
-			array: arr,
-			checkedAll: isEveryChecked
+			array: arr
 		});
 		if (this.props.getSids !== undefined) {
 			this.props.getSids(this.checkedTrue())
@@ -454,7 +455,12 @@ class MaterialOpinion extends React.Component {
 	}
 
 	getReportListRequested() {
-		this.props.getReportListRequested({ pagesize: 1000, page: 1 })
+		if(this.checkedTrue().length !== 0) {
+			this.props.briefingSwitch(this.checkedTrue());
+			history.push('/allopinion/choosetemplate?reportType=01')   
+	   }else{
+			history.push('/allopinion/choosetemplate')   
+	   }
 	}
 
 	MaterialChange(e) {
@@ -957,13 +963,13 @@ class MaterialOpinion extends React.Component {
 										<div>确定将这 <b>{this.state.checkedLength}</b> 项从素材库移出吗？</div>
 									</Modal>
 								</div>
-								{/* <div className="operate-all" onClick={this.getReportListRequested.bind(this)}>
+								<div className="operate-all" onClick={this.getReportListRequested.bind(this)}>
 									<Dropdown overlay={addMultipleReportMenu} trigger={['click']}
 										getPopupContainer={() => document.querySelector('.materia-opinion-wrapper')}
 									>
 										<Iconfont type="icon-shengchengbaogao1" style={{ width: 16, height: 16 }} />
 									</Dropdown>
-								</div> */}
+								</div>
 								<div className="operate-all">
 									<Tooltip title="舆情录入">
 										<i
@@ -1189,8 +1195,11 @@ const mapDispatchToProps = dispatch => {
       dispatch(paginationPage(req));
 		},
 		getCollectionOpinionListRequested: () => {
-      dispatch(getCollectionOpinionListRequested());
-    }
+        dispatch(getCollectionOpinionListRequested());
+		},
+		briefingSwitch: req => {
+			dispatch(briefingSwitch(req))
+		}
 	}
 };
 export default connect(mapStateToProps, mapDispatchToProps)(Form.create()(MaterialOpinion));

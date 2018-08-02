@@ -232,7 +232,7 @@ class ModalAllOpinion extends React.Component{
          const {seltype,keyword,startDate,endDate,topicId} = this.props;
          let newSeltype = isSearch? searchSeltype : seltype;
          let newKeyword = isSearch? searchKeyword : keyword;
-         const requestStr =topicId!==undefined?`topicid=${topicId}&datetag=${timeValue}&neg=${value}&order=${sortValue}&similer=${filterValue}&carry=${mediaValue}&begin=${begin}&end=${end}&page=1&seltype=${seltype}&keyword=${keyword}`: startDate?`neg=${value}&order=${sortValue}&similer=${filterValue}&carry=${mediaValue}&begin=${startDate}&end=${endDate}&page=1&seltype=${newSeltype}&keyword=${newKeyword}`:`datetag=${timeValue}&neg=${value}&order=${sortValue}&similer=${filterValue}&carry=${mediaValue}&begin=${begin}&end=${end}&page=1&seltype=${newSeltype}&keyword=${newKeyword}`
+         const requestStr =topicId!==undefined?`topicid=${topicId}&datetag=${timeValue}&neg=${value}&order=${sortValue}&similer=${filterValue}&carry=${mediaValue}&begin=${begin}&end=${end}&page=1&seltype=${newSeltype}&keyword=${newKeyword}`: startDate?`neg=${value}&order=${sortValue}&similer=${filterValue}&carry=${mediaValue}&begin=${startDate}&end=${endDate}&page=1&seltype=${newSeltype}&keyword=${newKeyword}`:`datetag=${timeValue}&neg=${value}&order=${sortValue}&similer=${filterValue}&carry=${mediaValue}&begin=${begin}&end=${end}&page=1&seltype=${newSeltype}&keyword=${newKeyword}`
          request(api_total_opinion,{
           method: 'POST',
           headers: {
@@ -265,7 +265,7 @@ class ModalAllOpinion extends React.Component{
          const {seltype,keyword,startDate,endDate,topicId} = this.props;
          let newSeltype = isSearch? searchSeltype : seltype;
          let newKeyword = isSearch? searchKeyword : keyword;
-         const requestStr =topicId!==undefined?`topicid=${topicId}&datetag=${timeValue}&neg=${trendValue}&order=${value}&similer=${filterValue}&carry=${mediaValue}&begin=${begin}&end=${end}&page=1&seltype=${seltype}&keyword=${keyword}`: startDate?`neg=${trendValue}&order=${value}&similer=${filterValue}&carry=${mediaValue}&begin=${startDate}&end=${endDate}&page=1&seltype=${newSeltype}&keyword=${newKeyword}`:`datetag=${timeValue}&neg=${trendValue}&order=${value}&similer=${filterValue}&carry=${mediaValue}&begin=${begin}&end=${end}&page=1&seltype=${newSeltype}&keyword=${newKeyword}`
+         const requestStr =topicId!==undefined?`topicid=${topicId}&datetag=${timeValue}&neg=${trendValue}&order=${value}&similer=${filterValue}&carry=${mediaValue}&begin=${begin}&end=${end}&page=1&seltype=${newSeltype}&keyword=${newKeyword}`: startDate?`neg=${trendValue}&order=${value}&similer=${filterValue}&carry=${mediaValue}&begin=${startDate}&end=${endDate}&page=1&seltype=${newSeltype}&keyword=${newKeyword}`:`datetag=${timeValue}&neg=${trendValue}&order=${value}&similer=${filterValue}&carry=${mediaValue}&begin=${begin}&end=${end}&page=1&seltype=${newSeltype}&keyword=${newKeyword}`
          request(api_total_opinion,{
           method: 'POST',
           headers: {
@@ -298,7 +298,7 @@ class ModalAllOpinion extends React.Component{
          const {seltype,keyword,startDate,endDate,topicId} = this.props;
          let newSeltype = isSearch? searchSeltype : seltype;
          let newKeyword = isSearch? searchKeyword : keyword;
-         const requestStr = topicId!==undefined?`topicid=${topicId}&datetag=${timeValue}&neg=${trendValue}&order=${sortValue}&similer=${value}&carry=${mediaValue}&begin=${begin}&end=${end}&page=1&seltype=${seltype}&keyword=${keyword}`:startDate?`neg=${trendValue}&order=${sortValue}&similer=${value}&carry=${mediaValue}&begin=${startDate}&end=${endDate}&page=1&seltype=${newSeltype}&keyword=${newKeyword}`:`datetag=${timeValue}&neg=${trendValue}&order=${sortValue}&similer=${value}&carry=${mediaValue}&begin=${begin}&end=${end}&page=1&seltype=${newSeltype}&keyword=${newKeyword}`
+         const requestStr = topicId!==undefined?`topicid=${topicId}&datetag=${timeValue}&neg=${trendValue}&order=${sortValue}&similer=${value}&carry=${mediaValue}&begin=${begin}&end=${end}&page=1&seltype=${newSeltype}&keyword=${newKeyword}`:startDate?`neg=${trendValue}&order=${sortValue}&similer=${value}&carry=${mediaValue}&begin=${startDate}&end=${endDate}&page=1&seltype=${newSeltype}&keyword=${newKeyword}`:`datetag=${timeValue}&neg=${trendValue}&order=${sortValue}&similer=${value}&carry=${mediaValue}&begin=${begin}&end=${end}&page=1&seltype=${newSeltype}&keyword=${newKeyword}`
          request(api_total_opinion,{
           method: 'POST',
           headers: {
@@ -331,7 +331,7 @@ class ModalAllOpinion extends React.Component{
          const {seltype,keyword,startDate,endDate,topicId} = this.props;
          let newSeltype = isSearch? searchSeltype : seltype;
          let newKeyword = isSearch? searchKeyword : keyword;
-         const requestStr = topicId!==undefined?`topicid=${topicId}&datetag=${timeValue}&neg=${trendValue}&order=${sortValue}&similer=${filterValue}&carry=${value}&begin=${begin}&end=${end}&page=1&seltype=${seltype}&keyword=${keyword}`:startDate?`neg=${trendValue}&order=${sortValue}&similer=${filterValue}&carry=${value}&begin=${startDate}&end=${endDate}&page=1&seltype=${newSeltype}&keyword=${newKeyword}`:`datetag=${timeValue}&neg=${trendValue}&order=${sortValue}&similer=${filterValue}&carry=${value}&begin=${begin}&end=${end}&page=1&seltype=${newSeltype}&keyword=${newKeyword}`;
+         const requestStr = topicId!==undefined?`topicid=${topicId}&datetag=${timeValue}&neg=${trendValue}&order=${sortValue}&similer=${filterValue}&carry=${value}&begin=${begin}&end=${end}&page=1&seltype=${newSeltype}&keyword=${newKeyword}`:startDate?`neg=${trendValue}&order=${sortValue}&similer=${filterValue}&carry=${value}&begin=${startDate}&end=${endDate}&page=1&seltype=${newSeltype}&keyword=${newKeyword}`:`datetag=${timeValue}&neg=${trendValue}&order=${sortValue}&similer=${filterValue}&carry=${value}&begin=${begin}&end=${end}&page=1&seltype=${newSeltype}&keyword=${newKeyword}`;
          request(api_total_opinion,{
           method: 'POST',
           headers: {

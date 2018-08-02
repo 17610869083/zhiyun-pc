@@ -100,14 +100,15 @@ class MyReport extends React.Component{
             message.success('报告名称不可为空')
             return;
         }
+        let {type,current} = this.state;
         request(api_update_report_name + `&reportId=${reportid}&reportName=${this.state.inputValue}`)
         .then( res => {
               if(res.data.code === 1){
-                request(api_get_all_report)
+                request(api_search_report +`&reportType=${type}&page=${current}`)
                 .then( res => {
                     if(res.data.code === 1){
                     this.setState({
-                        contentList: res.data.data.pageBean.content,
+                        contentList: res.data.data.content,
                         editReprotName:''
                     })  
                  }
@@ -139,11 +140,11 @@ class MyReport extends React.Component{
          }
          let str = '';
          if(this.state.inputSearchValue === ''){
-             str = `&reportType=${this.state.type}&starttime=${this.state.startTime}$endtime=${this.state.endTime}`
+             str = `&reportType=${this.state.type}&starttime=${this.state.startTime}&endtime=${this.state.endTime}`
          }else if (this.state.startTime === '' || this.state.endTime === ''){
              str = `&reportType=${this.state.type}&reportName=${this.state.inputSearchValue}`
          }else{
-             str = `&reportType=${this.state.type}&reportName=${this.state.inputSearchValue}&starttime=${this.state.startTime}$endtime=${this.state.endTime}`
+             str = `&reportType=${this.state.type}&reportName=${this.state.inputSearchValue}&starttime=${this.state.startTime}&endtime=${this.state.endTime}`
          }
          request(api_search_report + str)
          .then( res => {
@@ -206,6 +207,7 @@ class MyReport extends React.Component{
         request(api_new_delete_report + `&reportId=${this.state.checkId}`)
         .then( res => {
            if(res.data.code === 1){
+                message.success('删除成功')
                 request(api_search_report + `&reportType=${this.state.type}`)
                 .then( res => {
                     if(res.data.code === 1){
@@ -273,6 +275,9 @@ class MyReport extends React.Component{
     // }
     onScroll = () => {
         console.log('gun')
+    }
+    cancel = () => {
+        message.warning('已取消当前操作')
     }
      render(){
          const typeList = this.state.typeList.map( (item,index) => {
@@ -346,7 +351,7 @@ class MyReport extends React.Component{
              </Popover>
              </Tooltip>
              <Tooltip title="删除" placement="bottom">
-                <Popconfirm title="确定要删除该报告吗？" onConfirm={this.delete} okText="是" cancelText="否"
+                <Popconfirm title="确定要删除该报告吗？" onCancel={this.cancel} onConfirm={this.delete} okText="是" cancelText="否"
                 getPopupContainer={() => document.querySelector('.my-report')}  placement="topLeft"
                 >
                 <i style={this.state.flag ? {opacity:1,transition:'all 0.5s ease-in 0.5s'}:{opacity:0}}><IconFont type="icon-shanchu1-copy-copy"/></i>

@@ -1058,12 +1058,6 @@ const mapDispatchToProps = dispatch => {
     setOpinionType: type => {
       dispatch(setOpinionTypeRequested(type));
     },
-    // getCollectionOpinionListRequested: () => {
-    //   dispatch(getCollectionOpinionListRequested());
-    // },
-    // getMaterialOpinionListRequested: () => {
-    //   dispatch(getMaterialOpinionListRequested());
-    // },
     exportSkip: key => {
       dispatch(exportSkip(key));
     },

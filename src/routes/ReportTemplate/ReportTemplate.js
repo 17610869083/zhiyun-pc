@@ -65,7 +65,7 @@ class ReportTemplate extends React.Component{
         componentDidUpdate(){
              if(this.state.templateTypeList.length !== 0){
                 new Swiper('.swiper-container', {
-                    slidesPerView: 6.5,
+                    slidesPerView: 6,
                     spaceBetween: 30,
                     grabCursor:true,
                     scrollbar: {
@@ -132,7 +132,7 @@ class ReportTemplate extends React.Component{
           const slideList = this.state.contentList.map( (item,index) => {
                 return <div className={this.state.templateId === item.id? 'swiper-slide cont active':'swiper-slide cont normal'} 
                        key = {index} onClick = {this.checkTemplate.bind(this,item.id,item.reportType)}>
-                       <img src={'./../' +item.imagepath} alt=""/>
+                       <img src={'./../' +item.imagepath} alt="" style={{width:"100%"}}/>
                        <p>{item.name}</p>
                        </div>
           })

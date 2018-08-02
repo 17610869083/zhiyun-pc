@@ -56,6 +56,8 @@ class TopicEditOpinionDetail extends React.Component {
 		e.preventDefault();
 		this.props.form.validateFields((err, values) => {
 			const ids = parseInt(values.file,10);
+			console.log(values.title)
+			return;
 			if (!err) {
 				request(api_add_doc_from_mat, {
 					method: 'POST',
@@ -97,7 +99,6 @@ class TopicEditOpinionDetail extends React.Component {
 		})
 	}
 	negtiveChange(value) {
-
 		this.setState({
 			negtiveValue: value
 		})
