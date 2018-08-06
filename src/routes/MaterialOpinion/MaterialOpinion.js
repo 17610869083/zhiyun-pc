@@ -724,7 +724,7 @@ class MaterialOpinion extends React.Component {
 		// console.log(datelist)
 		const OpinionDetailItems = datelist.length !== 0 ? datelist.map((item, index) => 
 			<div key={index}>
-				<div className="item_file" style={{ background: "#f7f7f7", paddingLeft: 12, borderBottom: "1px solid #fff" }}>
+				<div className="item_file" style={{paddingLeft: 12, borderBottom: "1px solid #fff" }}>
 					< Iconfont type="icon-wenjianjia" style={{ width: 15, height: 15, marginRight: 30 }} />
 				  {item.catname}
 				</div>
@@ -732,9 +732,8 @@ class MaterialOpinion extends React.Component {
 					item.datelist.map((i, indexdate) => {
 						if (i.datetime !== "0000-00-00") {
 							return (
-								<div className="item_time" key={indexdate} style={{ background: "#f7f7f7" }}>
-									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-									{i.datetime}
+								<div className="item_time" key={indexdate}>
+									<span className="time_text">{i.datetime}</span>
 									<ul className="opinion-detail-wrapper">
 										{  
 											i.doclist.map((items, indexDoc) => 
@@ -827,7 +826,7 @@ class MaterialOpinion extends React.Component {
 							)
 						} else {
 							return (
-								<div className="item_time" key={indexdate} style={{ background: "#f7f7f7" }}>
+								<div className="item_time" key={indexdate}>
 									<ul className="opinion-detail-wrapper">
 										{  
 											i.doclist.map((items, indexDoc) => 
