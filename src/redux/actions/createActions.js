@@ -43,7 +43,8 @@ import {
   INFORMS_STATE,
   CLF_CAT_STATE,
   BRIEFING_SWITCH_DATA,
-  MUL_LANGUAGES_TOGGLE
+  MUL_LANGUAGES_TOGGLE,
+  EMPTY_MATERIAL_OPINION_DETAIL
 } from './actionTypes';
 
 
@@ -73,6 +74,8 @@ export const getCollectionLocationSucceeded = createAction(GET_COLLECTION_ANDRUL
 // 获取素材库素材详细信息
 export const getMaterialOpinionDetailRequested = createAction(GET_MATERIAL_OPINION_DETAIL_REQUESTED);
 export const getMaterialOpinionDetailSucceeded = createAction(GET_MATERIAL_OPINION_DETAIL_SUCCEEDED);
+// 清空列表
+export const emptyList = createAction(EMPTY_MATERIAL_OPINION_DETAIL)
 
 // 新增素材库
 export const addMaterialOpinionRequested = createAction(ADD_MATERIAL_OPINION_REQUESTED);

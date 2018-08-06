@@ -3,10 +3,8 @@ import ReactDOM from 'react-dom';
 import {connect} from 'react-redux';
 import {Pagination, DatePicker, Form, message, Button} from 'antd';
 import OpinionDetail from '../MultilingualDetail/MultilingualDetail';
-import {opinionSearchRequested, searchKeywordSync, paginationPage, getSortedContentRequested, mulLanToggle} from '../../../redux/actions/createActions';
-// import {} from '../../../redux/actions/actions'
-import {URLToObject, getSecondTime} from '../../../utils/format';
-import {GRAY} from '../../../utils/colors';
+import {searchKeywordSync, paginationPage, getSortedContentRequested, mulLanToggle, emptyList} from '../../../redux/actions/createActions';
+import {getSecondTime} from '../../../utils/format';
 import './Multilingual.less';
 const FormItem = Form.Item;
 class AllOpinion extends React.Component {
@@ -150,6 +148,7 @@ class AllOpinion extends React.Component {
     
   }
   timeClick(value) {
+    this.props.emptyList()
     this.setState({
       timeValue: value
     });
@@ -174,13 +173,14 @@ class AllOpinion extends React.Component {
         lang: this.state.language[this.props.match.params.languages],
         clfid: this.props.getRouter.topicid
       };
-      this.props.opinionSearchRequest(param);
+      this.props.getSortedContentRequest(param);
       this.props.paginationPage(1);
   }
 
   // 选择具体时间
   handleSubmit(event) {
     event.preventDefault();
+    this.props.emptyList()
     this.props.form.validateFields((err, fieldsValue) => {
       if (err) {
         return;
@@ -226,12 +226,13 @@ class AllOpinion extends React.Component {
           clfid: this.props.getRouter.topicid,
           lang:this.state.language[this.props.match.params.languages]
         }
-        this.props.opinionSearchRequest(param);
+        this.props.getSortedContentRequest(param);
         this.props.paginationPage(1);
     });
   } 
 
   trendClick(value) {
+    this.props.emptyList()
     this.setState({
       trendValue: value
     });
@@ -251,11 +252,12 @@ class AllOpinion extends React.Component {
       param.end = this.state.end
     }
     
-    this.props.opinionSearchRequest(param);
+    this.props.getSortedContentRequest(param);
     this.props.paginationPage(1);
   }
 
   sortClick(value) {
+    this.props.emptyList()
     this.setState({
       sortValue: value
     });
@@ -274,12 +276,13 @@ class AllOpinion extends React.Component {
       param.begin = this.state.begin
       param.end = this.state.end
     }
-    this.props.opinionSearchRequest(param);
+    this.props.getSortedContentRequest(param);
     this.props.paginationPage(1);
       
   }
 
   filterClick(value) {
+    this.props.emptyList()
     this.setState({
       filterValue: value
     });
@@ -298,12 +301,13 @@ class AllOpinion extends React.Component {
         param.begin = this.state.begin
         param.end = this.state.end
       }
-      this.props.opinionSearchRequest(param);
+      this.props.getSortedContentRequest(param);
       this.props.paginationPage(1);
       
   }
 
   mediaClick(value) {
+    this.props.emptyList()
     this.setState({
       mediaValue: value
     });
@@ -322,12 +326,13 @@ class AllOpinion extends React.Component {
       param.begin = this.state.begin
       param.end = this.state.end
     }
-    this.props.opinionSearchRequest(param);
+    this.props.getSortedContentRequest(param);
     this.props.paginationPage(1);
   }
 
 
   onPaginationChange(pagenumber) {
+    this.props.emptyList()
     this.setState({
       page: pagenumber
     });
@@ -345,7 +350,7 @@ class AllOpinion extends React.Component {
       lang:this.state.language[this.props.match.params.languages],
       clfid: this.props.getRouter.topicid
     };
-    this.props.opinionSearchRequest(param);
+    this.props.getSortedContentRequest(param);
     this.props.paginationPage(pagenumber);
     ReactDOM.findDOMNode(this).scrollIntoView();
   }
@@ -363,6 +368,7 @@ class AllOpinion extends React.Component {
   }
 
   dataChanged(pagenum) {
+    this.props.emptyList()
       const param = {
         datetag: this.state.timeValue,
         neg: this.state.trendValue,
@@ -376,104 +382,21 @@ class AllOpinion extends React.Component {
         lang: this.state.language[this.props.match.params.languages],
         clfid: this.props.getRouter.topicid
       };
-      this.props.opinionSearchRequest(param);
+      this.props.getSortedContentRequest(param);
   }
 
-  homepageMore(pathname) {
-    // if (pathname === '#/allopinion?datetag=today') {
-    //   this.setState({
-    //     timeValue: 'today'
-    //   })
-    // } else if (pathname === '#/allopinion?datetag=today&neg=1') {
-    //   this.setState({
-    //     timeValue: 'today',
-    //     trendValue: 1
-    //   })
-    // } else if (pathname === '#/allopinion?datetag=all&neg=1') {
-    //   this.setState({
-    //     timeValue: 'all',
-    //     trendValue: 1
-    //   })
-    // }
-    // else if (pathname === '#/allopinion?datetag=today&neg=2') {
-    //   this.setState({
-    //     timeValue: 'today',
-    //     trendValue: 2
-    //   })
-    // }else if (pathname === '#/allopinion?datetag=today&neg=all') {
-    //   this.setState({
-    //     timeValue: 'today',
-    //     trendValue: 'all'
-    //   })
-    // }else if (pathname === '#/allopinion?datetag=all&neg=2') {
-    //   this.setState({
-    //     timeValue: 'all',
-    //     trendValue: 2
-    //   })
-    // } 
-    // else if (pathname === '#/allopinion?carry=weibo&neg=all') {
-    //   this.setState({
-    //     mediaValue: '微博',
-    //     trendValue: 'all'
-    //   })
-    // } else if (pathname === '#/allopinion?carry=weibo&neg=1') {
-    //   this.setState({
-    //     mediaValue: '微博',
-    //     trendValue: 1
-    //   })
-    // }else if (pathname.indexOf('media') !== -1){
-    //    let media =  pathname.split('&')[0].split('=')[1];
-    //    let day =  pathname.split('&')[1].split('=')[1];
-    //    this.setState({
-    //     mediaValue: this.state.mediaList[media],
-    //     timeValue: day
-    //    })
-    // } else {
-    //   this.setState({
-    //     timeValue: 'all'
-    //   })
-    // }
-    // debugger
-    // const obj = URLToObject(pathname);
-    // const newabj = {clfid: this.props.getRouter.topicid}
-    // const param = {
-    //   lang:this.state.language[this.props.match.params.languages],
-    //   pagesize: this.state.pagesize,
-    //   datetag: this.state.timeValue,
-    //   neg: this.state.trendValue,
-    //   order: this.state.sortValue,
-    //   similer: this.state.filterValue,
-    //   page:this.props.page,
-    // }  
-    // const newParam = Object.assign(param, newabj);
-    // console.log(this.props.getRouter)
-    // this.props.opinionSearchRequest(newParam);
-  }
 
   componentWillMount() {
     window.onload = () => {this.props.mulLanToggle(this.props.match.params.languages)}
-      // this.props.mulLanToggle(this.props.match.params.languages)
+      this.props.mulLanToggle(this.props.match.params.languages)
       let reg = /^[0-5]$/
       if(reg.test(this.props.match.params.languages)) {
         this.setState({
           languageType: this.props.match.params.languages
         })
       }
-    // if (this.props.location && this.props.location.search !== "?type=search") {
-    //   this.homepageMore(window.location.hash);
-    // }
   }
   componentWillReceiveProps(newProps){
-    // if(this.props.match.url !== newProps.match.url) {
-    //   this.setState({
-    //     languageType: newProps.languages
-    //   })
-    // }
-    // else{
-    //   this.setState({
-    //     languageType: newProps.match.params.languages
-    //   })
-    // }
     this.setState({
         languageType: newProps.languages
     })
@@ -506,7 +429,7 @@ class AllOpinion extends React.Component {
       clfid: newProps.getRouter.topicid
     }
     if (this.props.location.search === newProps.location.search) return false;
-    this.props.opinionSearchRequest(param);
+    this.props.getSortedContentRequest(param);
     this.props.paginationPage(1);
   }
 
@@ -839,7 +762,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    opinionSearchRequest: req => {
+    getSortedContentRequest: req => {
       dispatch(getSortedContentRequested(req));
     },
     searchKeywordSync: ks => {
@@ -850,6 +773,9 @@ const mapDispatchToProps = dispatch => {
     },
     mulLanToggle: req => {
       dispatch(mulLanToggle(req))
+    },
+    emptyList: () => {
+      dispatch(emptyList())
     }
   }
 };

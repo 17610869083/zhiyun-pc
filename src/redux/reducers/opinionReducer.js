@@ -1,4 +1,4 @@
-import {handleAction} from 'redux-actions';
+import {handleAction, handleActions} from 'redux-actions';
 import {
   OPINION_SEARCH_REQUESTED,
   OPINION_SEARCH_SUCCEEDED,
@@ -33,8 +33,10 @@ import {
   PAGINATION_PAGE,
   INFORMS_STATE,
   CLF_CAT_STATE,
-  BRIEFING_SWITCH_DATA
+  BRIEFING_SWITCH_DATA,
+  EMPTY_MATERIAL_OPINION_DETAIL
 } from '../actions/actionTypes';
+import { stat } from 'fs';
 
 const opinionSearchSucceededReducer = handleAction(OPINION_SEARCH_SUCCEEDED, (state, action) => ({
   data: action.payload,
@@ -138,9 +140,20 @@ export const getReportDetailSucceeded = handleAction(GET_REPORT_DETAIL_SUCCEEDED
 export const getSortedContentRequested = handleAction(GET_SORTED_CONTENT_REQUESTED, (state, action) => ({
   req: action.payload
 }), "1");
-export const getSortedContentSucceeded = handleAction(GET_SORTED_CONTENT_SUCCEEDED, (state, action) => ({
-  data: action.payload
-}), {data: {docList: [], pageinfo: {}}});
+// export const getSortedContentSucceeded = handleAction(GET_SORTED_CONTENT_SUCCEEDED, (state, action) => ({
+//   data: action.payload
+// }), {data: {docList: [], pageinfo: {}}});
+
+export const getSortedContentSucceeded = handleActions(
+  {
+    [GET_SORTED_CONTENT_SUCCEEDED]: (state, action) => ({
+        data: action.payload
+    }),
+    [EMPTY_MATERIAL_OPINION_DETAIL]: (state, action) => (
+      {data: {docList: [], pageinfo: {}, code: undefined}}
+    )
+  }, {data: {docList: [], pageinfo: {}}}
+)
 
 export const changeClfId = handleAction(CHANGE_CLF_ID, (state, action) => ({
   id: action.payload

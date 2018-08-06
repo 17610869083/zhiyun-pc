@@ -19,7 +19,7 @@ class AppCenter extends React.Component{
                         {type: 'icon-riyu1', text: '日语监测', color: '#4ba9eb', href: '/multilingual/2/multilingual', hrefType: 'history'},
                         {type: 'icon-logoxinjiang', text: '维语监测', color: '#6296f1', href: '/multilingual/3/multilingual', hrefType: 'history'},
                         {type: 'icon-xicanga', text: '藏语监测', color: '#4ba9eb', href: '/multilingual/4/multilingual', hrefType: 'history'},
-                        {type: 'icon-yingyu', text: '英语监测', color: '#04c0b3'},
+                        {type: 'icon-yingyu', text: '英语监测', color: '#04c0b3', href: '/multilingual/5/multilingual'},
                         {type: 'icon-zhengjucailiao', text: '互联网取证', color: '#6296f1', href: '/evidence', hrefType: 'http'},
                         {type: 'icon-shangbao', text: '上报管理', color: '#4ba9eb', href: '/upreport', hrefType: 'http'},
                         {type: 'icon-minshengminqing', text: '民情管理', color: '#4ba9eb',href:'/allopinion/allopiniondetail',hrefType:'http'},

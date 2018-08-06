@@ -1,18 +1,11 @@
 import React from 'react';
-import {Icon, Menu,Modal,Input,Dropdown,message, Button} from 'antd';
+import {Menu,Modal,Input,Dropdown,message, Button} from 'antd';
 import { Route, Switch} from 'react-router-dom';
 import {history} from '../../utils/history';
 import TopicList from '../TopicOpinion/TopicList/TopicList';
-// import Information from './BiddingInformation/BiddingInformation';
-// import Setting from './BiddingSetting/BiddingSetting'
 import Multilingual from './Multilingual/Multilingual'
 import MultilingualSetting from './MultilingualSetting/MultilingualSetting'
 import {
-        api_get_BiddingFolderList,
-        api_get_BiddingddGradeC,
-        api_get_BiddingeditGradeCat,
-        api_get_BiddingdelCat,
-        api_get_BiddingdelGrade,
         api_sorted_cat_add,
         api_sorted_menu_list,
         api_sorted_grade_delete,
@@ -22,11 +15,10 @@ import {
 import request from '../../utils/request';
 import './MultilingualInfo.less';
 import Iconfont from '../../components/IconFont';
-import {setlocationPathname,getTopicLocationRequested,topicNavMessageRequested,searchState, getSortedContentRequested, mulLanToggle, opinionSearchSucceeded} from '../../redux/actions/createActions';
-// import {} from '../../redux/actions/actions'
+import {setlocationPathname, topicNavMessageRequested,searchState, getSortedContentRequested, mulLanToggle,getSortedContentSucceeded, emptyList} from '../../redux/actions/createActions';
 import {connect} from 'react-redux';
 import { setTimeout } from 'timers';
-import {GRAY,BLACK} from '../../utils/colors';
+import {GRAY} from '../../utils/colors';
 import Del from '../../assets/img/grayDel.svg'; 
 class BiddingOpinion extends React.Component {
     constructor(props) {
@@ -99,17 +91,16 @@ class BiddingOpinion extends React.Component {
         });
     }
     componentWillReceiveProps(nextprops){
-        // let current =  
+        this.props.emptyList()
         let current = nextprops.location.pathname.split('/')[3]
         this.setState({
             current
         })
-        // console.log(nextprops.location.pathname, this.props.location.pathname)
         if (nextprops.location.pathname.split('/')[3] === 'multilingual' &&  nextprops.location.pathname !== this.props.location.pathname) {
-            opinionSearchSucceeded({docList: [], pageInfo: {count:0}, carryCount: [{count:0, value: "全部", key: "docApp"}]})
+            // getSortedContentSucceeded({docList: [], pageInfo: {count:0}, carryCount: [{count:0, value: "全部", key: "docApp"}]})
             let get = () =>{
                 let topicMessage = this.state.topicNavMessage;
-                let firstTopicid={topicid:1,topicname:'test'};
+                let firstTopicid={topicid:-1,topicname:'test'};
                 for(var i = 0; i<topicMessage.length; i++) {
                     let item = topicMessage[i]
                     if(item['clflist'][0]!==undefined){
@@ -149,7 +140,7 @@ class BiddingOpinion extends React.Component {
          this.topichomeTimer = setTimeout( ()=>{
           let topicMessage=this.state.topicNavMessage;
           if(topicMessage!==1){
-            let firstTopicid={topicid:1,topicname:'test'};
+            let firstTopicid={topicid:-1,topicname:'test'};
             // topicMessage.forEach((item)=>{
             //           if(item['clflist'][0]!==undefined){
             //                firstTopicid.topicid = item['clflist'][0]['clfid'];
@@ -557,9 +548,6 @@ const mapDispatchToProps = dispatch => {
         setlocationPathname: req => {
             dispatch(setlocationPathname(req));
         },
-        getTopicLocationRequested: req => {
-            dispatch(getTopicLocationRequested(req));
-        },
         topicNavMessageRequested:req=>{
             dispatch(topicNavMessageRequested(req));
         },
@@ -569,9 +557,12 @@ const mapDispatchToProps = dispatch => {
         mulLanToggle: lang => {
             dispatch(mulLanToggle(lang))
         },
-        opinionSearchSucceeded: req => {
-            dispatch(opinionSearchSucceeded(req))
-        } 
+        getSortedContentSucceeded: req => {
+            dispatch(getSortedContentSucceeded(req))
+        },
+        emptyList: () => {
+            dispatch(emptyList())
+        }
     }
 };
 
