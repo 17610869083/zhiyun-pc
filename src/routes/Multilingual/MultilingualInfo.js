@@ -91,7 +91,7 @@ class BiddingOpinion extends React.Component {
         });
     }
     componentWillReceiveProps(nextprops){
-        this.props.emptyList()
+        this.props.location.search !== nextprops.location.search ? this.props.emptyList() : ''
         let current = nextprops.location.pathname.split('/')[3]
         this.setState({
             current
