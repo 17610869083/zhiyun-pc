@@ -102,9 +102,7 @@ class DetailOpinion extends React.Component {
     request(api_del_doc + '&sid=["' + sid + '"]', {}).then((res) => {
       if (res.data.code === 1) {
         message.success(res.data.msg);
-        setTimeout(() => {
-          history.goBack();
-        }, 500);
+          window.close();
         // this.props.onDataChange();
       }
     });
