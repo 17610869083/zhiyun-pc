@@ -355,7 +355,6 @@ class TopicList extends React.Component {
         let topicID=this.props.getRouter;  
         if(topicID.topicid){
                 request(api_topic_message_list + '&topicid=' + topicID.topicid).then(res => {
-                    console.log(res)
                     if(res.data.code === 1){
                     this.setState({
                         docList: res.data.docList,

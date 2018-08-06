@@ -31,13 +31,15 @@ class TopicOpinionBox extends React.PureComponent {
     delTopicOpinionBox(){
          this.props.delTopicBox(1);
     }
-    componentWillMount(){
+    componentDidMount(){
         request(api_main_topic_opinion)
         .then(res => {
-              this.setState({
-                topicid:res.data.topic_0.topicid ,
-                topicOpinion:Object.values(res.data)            
-              })
+            if(res.data && res.data.code === 1){
+                this.setState({
+                    topicid:res.data.topic_0.topicid ,
+                    topicOpinion:Object.values(res.data)            
+                  })
+            }
         })
     }
     tabClick(key){
@@ -54,6 +56,7 @@ class TopicOpinionBox extends React.PureComponent {
         onClick={this.delTopicOpinionBox.bind(this)}
         ></Icon>;
         const haverClass = themeColor.topColor.backgroundColor === '#5a8bff' ? 'white':'black';
+        const blankFlag = themeColor.topColor.backgroundColor === '#5a8bff' ? true:false;
         return (
             <div className="topic-opinion-box" style={{background:themeColor.bottomColor.backgroundColor}}>
                 <div className="container">
@@ -67,7 +70,7 @@ class TopicOpinionBox extends React.PureComponent {
 													{more}
                         </div>
                     </div>
-                    <div className="bottom">
+                   { topicOpinion.length!==0?<div className="bottom">
                         <Tabs defaultActiveKey="0" onChange={this.tabClick.bind(this)} tabBarStyle={{color:themeColor.textColor.color,borderBottom:`1px solid ${themeColor.borderColor.color}`}}>
                             {
                                 topicOpinion.length!==0?topicOpinion.map((item,index) =>
@@ -85,14 +88,14 @@ class TopicOpinionBox extends React.PureComponent {
                                                             </div>
                                                         </div>
                                                     </li>
-                                                ) : <BlankPage desc='<span>空空如也，赶紧去<a href="index.html#/topic/addtopic">添加</a>关键词</span>'/>
+                                                ) : <BlankPage status={blankFlag} desc='<span>空空如也，赶紧去<a href="index.html#/topic/addtopic">添加</a>关键词</span>'/>
                                             }
                                         </ul>
                                     </TabPane>
-                                ):''
+                                ): ''
                             }
                         </Tabs>
-                    </div>
+                    </div>:<BlankPage status={blankFlag} desc='<span>空空如也，赶紧去<a href="index.html#/topic/addtopic">添加</a>关键词</span>'/>}
                 </div>
             </div>
         )

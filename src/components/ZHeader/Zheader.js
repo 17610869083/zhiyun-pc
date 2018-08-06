@@ -11,13 +11,9 @@ import UserInfo from '../UserInfo/UserInfo';
 import {changeTheme,  getUserInfo} from '../../redux/actions/actions';
 import {opinionSearchRequested,searchKeywordSync,homeModule} from '../../redux/actions/createActions';
 import ChangeTheme from '../ChangeTheme/ChangeTheme';
-import NewHome from '../../routes/NewHome';
 import logo from '../../assets/img/newLogo.png';
 import {Link} from 'react-router-dom';
-const Search = Input.Search;
 const confirm = Modal.confirm;
-const SubMenu = Menu.SubMenu;
-const MenuItemGroup = Menu.ItemGroup;
 class Zheader extends React.Component {
     constructor() {
         super();
@@ -237,9 +233,9 @@ class Zheader extends React.Component {
                 <Menu.Item key="2">
                     <span onClick={this.showThemeModal.bind(this)}>&nbsp;&nbsp;&nbsp;&nbsp;颜色设置&nbsp;&nbsp;&nbsp;&nbsp;</span>
                 </Menu.Item>
-                <Menu.Item key="3">
+                {/* <Menu.Item key="3">
                     <span onClick={this.showlayoutModal.bind(this)}>&nbsp;&nbsp;&nbsp;&nbsp;首页布局&nbsp;&nbsp;&nbsp;&nbsp;</span>
-                </Menu.Item>
+                </Menu.Item> */}
                 <Menu.Divider />
                 <Menu.Item key="5"><span>&nbsp;&nbsp;&nbsp;&nbsp;退出</span></Menu.Item>
             </Menu>

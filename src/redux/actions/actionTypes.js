@@ -8,7 +8,7 @@ export const ON_SEARCH_CONTENT = 'ON_SEARCH_CONTENT';
 export const GET_USER_INFO = 'GET_USER_INFO';
 
 export const USER_FETCH_SUCCEEDED = 'USER_FETCH_SUCCEEDED';
-
+ 
 // 搜索及筛选舆情请求
 export const OPINION_SEARCH_REQUESTED = 'OPINION_SEARCH_REQUESTED';
 // 搜索及筛选舆情请求成功

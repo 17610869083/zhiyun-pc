@@ -15,7 +15,7 @@ import {
 	api_push_material
 } from '../../services/api';
 import { opinionTrend, opinionColor } from '../../utils/format';
-import AllOpinion from '../AllOpinion/AllOpinion'
+import AllOpinion from '../AllOpinionDetail/AllOpinionDetail'
 import TopicEditOpinionDetail from '../SystemSetting/TopicEditOpinionDetail/TopicEditOpinionDetail'
 import {
 	opinionSearchRequested,

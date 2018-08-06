@@ -116,11 +116,11 @@ class AllOpinion extends React.Component {
               <span>我的收藏</span>
             </Link>
           </Menu.Item>
-          <Menu.Item key="myreport" style={{fontSize: '16px'}}>
+          {/* <Menu.Item key="myreport" style={{fontSize: '16px'}}>
             <Link to="/allopinion/myreport">
               <span>我的报告库</span>
             </Link>
-          </Menu.Item>
+          </Menu.Item> */}
         </SubMenu>)
       } else if (item.channelurl === '../systemMan/systemManDo?action=userList') {
         menuList.push(<SubMenu key={item.key}  className={haverClass}

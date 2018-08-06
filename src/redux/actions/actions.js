@@ -38,7 +38,7 @@ export const getUserInfo = (info) => ({
     payload: info
 });
 export const userFetchSuccess = (info) => ({
-   type: USER_FETCH_SUCCEEDED,
+    type: USER_FETCH_SUCCEEDED,
     payload: info
 });
 //监听路由变化

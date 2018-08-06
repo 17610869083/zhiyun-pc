@@ -11,7 +11,6 @@ import {
   api_del_doc,
   api_get_doc_detail,
   api_get_doc_similar,
-  api_put_into_report,
   api_push_collection,
   api_docedit_save,
   api_email_push,
