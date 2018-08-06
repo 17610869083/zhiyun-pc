@@ -201,7 +201,7 @@ class BiddingOpinion extends React.Component {
         this.props.setlocationPathname({topicid:topicid,topicname:topicname});
           history.push({
             pathname:`/multilingual/${this.props.match.params.languages}/multilingual`,
-            search:`?topicId=${topicid}`
+            search:`?topicId=${topicid}&date=${Date.now()}`
         });
     }
     onChange(e){
