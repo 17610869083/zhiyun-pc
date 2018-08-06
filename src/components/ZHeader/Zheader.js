@@ -1,6 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {Input, Icon, Menu, Dropdown, Modal, Avatar, Badge, Popover,message} from 'antd';
+import {Input, Menu, Dropdown, Modal, Avatar, Badge, Popover,message} from 'antd';
 import {setItem, getItem} from '../../utils/localStorage';
 import {history} from '../../utils/history';
 import request from '../../utils/request';
@@ -12,8 +12,12 @@ import {changeTheme,  getUserInfo} from '../../redux/actions/actions';
 import {opinionSearchRequested,searchKeywordSync,homeModule} from '../../redux/actions/createActions';
 import ChangeTheme from '../ChangeTheme/ChangeTheme';
 import NewHome from '../../routes/NewHome';
+import logo from '../../assets/img/newLogo.png';
+import {Link} from 'react-router-dom';
 const Search = Input.Search;
 const confirm = Modal.confirm;
+const SubMenu = Menu.SubMenu;
+const MenuItemGroup = Menu.ItemGroup;
 class Zheader extends React.Component {
     constructor() {
         super();
@@ -21,8 +25,41 @@ class Zheader extends React.Component {
             userInfoVisible: false,
             themeVisible: false,
             visible: false,
-            layoutVisible:false,
-            userInfoMessage:{}
+            userInfoMessage:{},
+            type:'',
+            itemsOne: [
+                // { text: '韩语监测', color: '#f7b55d', href: '/multilingual/1', hrefType: 'history'},
+                // { text: '日语监测', color: '#4ba9eb', href: '/multilingual/2', hrefType: 'history'},
+                // { text: '维语监测', color: '#6296f1', href: '/multilingual/3', hrefType: 'history'},
+                // { text: '藏语监测', color: '#4ba9eb', href: '/multilingual/4', hrefType: 'history'},
+                // {text: '英语监测', color: '#04c0b3',href:'javascript();'},
+                { text: '民情管理', color: '#4ba9eb',href:'/allopinion/allopiniondetail',hrefType:'http'},
+                { text: '网站监测预警', color: '#4ba9eb', href: 'https://114.242.25.234:38447/', hrefType: 'login'},
+                { text: '网站安全治理', color: '#6296f1', href: 'https://119.88.190.68', hrefType: 'login'}, // ***
+                { text: '网站空间探测', color: '#04c0b3', href: 'https://119.88.190.71/', hrefType: 'login'},
+                {text: '网站安全防护', color: '#4ba9eb', href: '/competitiveIntelligence', hrefType: 'http'},
+                { text: '僵木蠕监测', color: '#4ba9eb', href: '/safetyprotection', hrefType: 'http'},
+                { text: '预警通报', color: '#f7b55d', href: '/alertnotifications', hrefType: 'http'}
+                
+            ],
+            itemsTwo: [
+                {text: '流量监测引擎', color: '#4ba9eb', href: 'https://119.88.190.68/', hrefType: 'login'}, // 图标   
+                { text: '流量监测大屏', color: '#4ba9eb', href: 'http://119.88.190.68:3000/', hrefType: 'login'}, // 图标
+                { text: '通报处置', color: '#4ba9eb', href: '/disposal', hrefType: 'http'} ,
+                { text: '智慧党建', color: '#4ba9eb', href: '/partybuilding', hrefType: 'http'},
+                { text: '行业资讯', color: '#4ba9eb', href: 'http://119.90.61.155/om3', hrefType: 'login'},
+                { text: '竞争情报', color: '#f7b55d', href: 'http://119.90.61.155/om3', hrefType: 'login'},
+                {text: '决策预判', color: '#4ba9eb',href: 'http://119.90.61.155/om3', hrefType: 'login'}
+         
+            ],
+            itemsThree: [
+                // { text: '招投标', color: '#6296f1', href: '/bidding/information', hrefType: 'http'},
+                { text: '企业画像', color: '#4ba9eb', href: 'http://119.90.61.155/om3', hrefType: 'login'},
+                { text: '人物画像', color: '#6296f1', href: 'http://119.90.61.155/om3', hrefType: 'login'},
+                { text: '微信围栏', color: '#4ba9eb', href: '/wechatfence', hrefType: 'http'},
+                { text: '私有云盘', color: '#04c0b3', href: '/clouddisk', hrefType: 'http'},
+                { text: '华知云平台', color: '#6296f1', href: 'http://119.90.158.98:8888/auth/login/', hrefType: 'login'}
+            ]
         }
     }
     componentDidMount(){
@@ -109,7 +146,7 @@ class Zheader extends React.Component {
 
     // 点击logo返回首页
     goBackIndex() {
-        
+        history.push('/home')
     }
 
     // 点击头部搜索框
@@ -166,21 +203,25 @@ class Zheader extends React.Component {
     }
 
     showlayoutModal(){
-          this.setState({
-              layoutVisible:true
-          })
+         history.push('/allopinion/customhome')
     }
 
     handleLayoutCancel(){
-          this.setState({
-            layoutVisible:false
-          })
           request(api_homepage_message)
           .then(res => {
              if(res.data){
                  this.props.homeModule(res.data); 
              }
             })
+    }
+    goBackIndex(){
+
+    }
+
+    changeNav(type){
+          this.setState({
+            type:type
+          })
     }
     render() {
         const {onChangeTheme, userInfo,themeColor} = this.props;
@@ -199,14 +240,28 @@ class Zheader extends React.Component {
                 <Menu.Item key="3">
                     <span onClick={this.showlayoutModal.bind(this)}>&nbsp;&nbsp;&nbsp;&nbsp;首页布局&nbsp;&nbsp;&nbsp;&nbsp;</span>
                 </Menu.Item>
-                {/*<Menu.Item key="3">*/}
-                    {/*<span>&nbsp;&nbsp;&nbsp;&nbsp;系统设置&nbsp;&nbsp;&nbsp;&nbsp;</span>*/}
-                {/*</Menu.Item>*/}
                 <Menu.Divider />
                 <Menu.Item key="5"><span>&nbsp;&nbsp;&nbsp;&nbsp;退出</span></Menu.Item>
             </Menu>
         );
-
+        const itemMenuOne =this.state.itemsOne.map((item,index) => {
+                      return  <Menu.Item key={index} style={{textAlign:'left',width:'130px'}}>
+                              {item.hrefType === 'login' ? <a target="_blank" href={item.href}>{item.text}</a>:
+                              <Link to={item.href} >{item.text}</Link>}
+                            </Menu.Item>
+                    });
+        const itemMenuTwo =this.state.itemsTwo.map((item,index) => {
+            return  <Menu.Item key={index} style={{textAlign:'left',width:'130px'}}>
+                    {item.hrefType === 'login' ? <a target="_blank" href={item.href}>{item.text}</a>:
+                    <Link to={item.href} >{item.text}</Link>}
+                    </Menu.Item>
+            });
+            const itemMenuThree =this.state.itemsThree.map((item,index) => {
+            return  <Menu.Item key={index} style={{textAlign:'left',width:'130px'}}>
+                    {item.hrefType === 'login' ? <a target="_blank" href={item.href}>{item.text}</a>:
+                    <Link to={item.href} >{item.text}</Link>}
+                    </Menu.Item>
+            });
         // 消息列表
         const PoverMenu = (
             <div>
@@ -214,21 +269,42 @@ class Zheader extends React.Component {
                 </ul>
             </div>
         );
-        
+        const moreMenu = <div style={{marginTop:'16px',display:'flex',width:'100px'}}>
+                         <Menu> 
+                         {itemMenuOne}
+                         </Menu>
+                         <Menu> 
+                         {itemMenuTwo}
+                         </Menu>
+                         <Menu> 
+                         {itemMenuThree}
+                         </Menu>
+                         </div>;                 
         return (
-            <div className="z-header">
+            <div className="z-header" style={{backgroundColor:themeColor.topColor.backgroundColor}}>
                 <div className="top">
                     <div className="left" onClick={this.goBackIndex.bind(this)}>
-                        <span className="name" style={{color:themeColor.textColor.color}}>{userInfo.sysname}</span>
+                         <img src={logo} alt="logo" className="logo" onClick={this.goBackIndex.bind(this)}/>
+                         {/* <span className="name" style={{color:'#fff'}}>{userInfo.sysname}</span> */}
                     </div>
                     <div className="right">
-                        <div className="search">
-                            <Search placeholder="搜索" style={{ width: 200 }} onSearch={this.handleSearchContent.bind(this)} />
-                        </div>
-                        {/* <div className="qq" onClick={() => {window.open('tencent://message/?uin=601703164&')}}>
-                            <i className="fa fa-qq" aria-hidden="true" style={{color:themeColor.textColor.color}}/>
-                        </div> */}
-                        <div className="notify">
+                        <ul className="nav-bar">
+                          <li onClick={this.changeNav.bind(this,'home')} className={this.state.type !== 'home' ?'normal':'active'}><Link to="/home">首页</Link></li>
+                          <li onClick={this.changeNav.bind(this,'allopinion')} className={this.state.type !== 'allopinion' ?'normal':'active'}><Link to="/allopinion/allopiniondetail">舆情监测</Link></li>
+                          {/* <li onClick={this.changeNav.bind(this,'evidence')} className={this.state.type !== 'evidence' ?'normal':'active'}><Link to="/evidence">互联网取证</Link></li>
+                          <li onClick={this.changeNav.bind(this,'upreport')} className={this.state.type !== 'upreport' ?'normal':'active'}><Link to="/upreport">上报平台</Link></li>
+                          <li onClick={this.changeNav.bind(this,'guide')} className={this.state.type !== 'guide' ?'normal':'active'}><Link to="/guide">网评管理</Link></li>
+                          <li onClick={this.changeNav.bind(this,'more')} className={this.state.type !== 'more' ?'normal':'active'}>
+                            <Dropdown overlay={moreMenu} trigger={['click']} placement={'bottomCenter'}
+                             getPopupContainer={() => document.querySelector('.z-header')}
+                            >
+                              <a>更多</a>
+                            </Dropdown> 
+                          </li> */}
+                          <li onClick={this.changeNav.bind(this,'appcenter')} className={this.state.type !== 'appcenter' ?'normal':'active'}> <Link to="/appcenter">应用中心</Link></li>
+                          <li onClick={this.changeNav.bind(this,'message')} className={this.state.type !== 'message' ?'normal':'active'}><a>消息</a></li>
+                        </ul>
+                        {/* <div className="notify">
                             <Popover
                                 content={PoverMenu}
                                 title="暂无通知"
@@ -240,9 +316,11 @@ class Zheader extends React.Component {
                                     <Icon type="mail" style={{color:themeColor.textColor.color}}/>
                                 </Badge>
                             </Popover>
-                        </div>
+                        </div> */}
                         <div className="user-info">
-                            <Dropdown overlay={menu} trigger={['click']} placement={'bottomCenter'}>
+                            <Dropdown overlay={menu} trigger={['click']}  placement={'bottomLeft'}
+                            getPopupContainer={() => document.querySelector('.z-header')}
+                            >
                                 <div className="avatar">
                                     <Avatar src={user} />
                                 </div>
@@ -269,14 +347,6 @@ class Zheader extends React.Component {
                            width={320}
                     >
                         <ChangeTheme onChangeTheme={onChangeTheme}/>
-                    </Modal>
-                    <Modal title="首页布局"
-                           visible={this.state.layoutVisible}
-                           footer={null}
-                           onCancel={this.handleLayoutCancel.bind(this)}
-                           width='90%'
-                    >
-                          <NewHome type="homeLayout"/>
                     </Modal>
                 </div>
             </div>

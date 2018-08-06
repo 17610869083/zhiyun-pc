@@ -97,3 +97,5 @@ export const INFORMS_STATE='INFORMS_STATE';
 
 //分类文件夹状态
 export const CLF_CAT_STATE = 'CLF_CAT_STATE';
+//生成简报选择数据
+export const BRIEFING_SWITCH_DATA = 'BRIEFING_SWITCH_DATA';

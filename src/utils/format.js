@@ -45,14 +45,22 @@ export function formatTodayOpinion(data) {
 
 // 热搜媒体排行
 export function formatMediaChart(data) {
+    let colors = ['#5bcf3c','#ffa000','#e64a19','#5a8bff'];
+    data.xAxis[0].axisLine= {lineStyle:{
+         color:'#787878'
+    }}
     const mediaChartOption = {
         tooltip: {
             trigger: 'axis'
         },
         legend: {
             //data:['常规', '关注', '重点','特推'],
-            data:['正面', '中性', '负面','预警'],
-            top: 30
+            data:[{name:'正面',icon:'circle'},{name:'中性',icon:'circle'},{name:'负面',icon:'circle'},{name:'预警',icon:'circle'}],
+            top: 30,
+            textStyle:{
+                color:'#787878'
+            },
+            x:'right'
         },
         grid: {
             left: '6%',
@@ -60,11 +68,16 @@ export function formatMediaChart(data) {
             // top:20,
             bottom: 20
         },
-        color: ['#20aafc','#ff5858','#e70000','#ffbc34','#91c7ae','#749f83',  '#ca8622', '#bda29a','#6e7074', '#546570', '#c4ccd3'],
+        color:colors, 
         xAxis: data.xAxis[0],
         yAxis: [
             {
-                type: 'value'
+                type: 'value',
+                axisLine:{
+                    lineStyle:{
+                        color:'#787878'
+                    }
+                }
             }
         ],
         series: [
@@ -73,28 +86,32 @@ export function formatMediaChart(data) {
                 //name: '常规',
                 type: 'line',
                 smooth: true,
-                data: data.series[0].data
+                data: data.series[0].data,
+                areaStyle: {normal: {}}
             },
             {
                 name: '中性',
                 //name: '关注',
                 type: 'line',
                 smooth: true,
-                data: data.series[1].data
+                data: data.series[1].data,
+                areaStyle: {normal: {}}
             },
             {
                 name: '负面',
                 //name: '重点',
                 type: 'line',
                 smooth: true,
-                data: data.series[2].data
+                data: data.series[2].data,
+                areaStyle: {normal: {}}
             },
             {
                 name: '预警',
                 //name: '特推',
                 type: 'line',
                 smooth: true,
-                data: data.series[3].data
+                data: data.series[3].data,
+                areaStyle: { normal: {}}
             }
         ]
     };
@@ -158,10 +175,8 @@ export function formatOpinionCount(data) {
 
         opinionCountArr.push(arr);
     });
-    return {opinionCountArr};
+    return opinionCountArr;
 }
-
-
 
 /* ------------------------------------  */
 // 舆情负面类型
@@ -292,7 +307,7 @@ export function urlTokey() {
     const hash = window.location.hash;
     let url = 'home';
     if (hash.match(/^(#\/)(\w+)/)) {
-        url = hash.match(/^(#\/)(\w+)/)[2];
+        url = hash.match(/^(#\/)(\w+)/);
     }
     let key = '0';
     switch (url)
@@ -306,13 +321,13 @@ export function urlTokey() {
         case 'bigscreen':
             key = '3';
             break;
-        case 'allopinion':
+        case 'allopinion/topic/topiclist':
             key = '4';
             break;
         case 'warningopinion':
             key = '5';
             break;
-        case 'topic':
+        case 'allopinion/topic/topiclist':
             key = '7';
             break;
         case 'sortedopinion':
@@ -327,8 +342,8 @@ export function urlTokey() {
         case 'collectionopinion':
             key = 'collectionopinion';
             break;
-        case 'historyopinion':
-            key = 'historyopinion';
+        case 'myreport':
+            key = 'myreport';
             break;
         case 'noticesetting':
             key = 'noticesetting';
@@ -479,3 +494,21 @@ export function topicLengend (data){
       })
       return legend;
 }
+// 报告模板类型排序
+export function templateTypeSort (data){
+     let arr = data.map( item => {
+           return parseInt(item,10)
+     })
+     let sortArr = arr.sort().map( item => {
+         return  item<10? `0${item}` : item.toString();
+     })
+     return sortArr;
+}
+//选中状态的sid
+export function checkedTrueSid(data){
+    const arr = [];
+    data.forEach((item) => {
+    if(item) arr.push(item)
+    })
+    return arr;
+    }

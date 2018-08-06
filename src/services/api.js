@@ -1,15 +1,16 @@
 // host
-//const host = 'http://119.90.61.155/om3/webpart/';
+const host = 'http://119.90.61.155/om32/webpart/';   
 //const host = 'http://web.is8.com.cn/om/webpart/';
-const host = './';
+//const host = './';
+
 //-------------------登录
 //export const api_login = 'http://web.is8.com.cn/om/common/login/loginDo?action=login2';
-//export const api_login = 'http://119.90.61.155/om3/common/login/loginDo?action=login2';
-export const api_login = '../common/login/loginDo?action=login2';
+export const api_login = 'http://119.90.61.155/om32/common/login/loginDo?action=login2';
+//export const api_login = '../common/login/loginDo?action=login2';
 
 //export const api_logout = 'http://web.is8.com.cn/om/common/login/loginDo?action=loginOut';
-//export const api_logout = 'http://119.90.61.155/om3/common/login/loginDo?action=loginOut';
-export const api_logout ='../common/login/loginDo?action=loginOut';
+export const api_logout = 'http://119.90.61.155/om32/common/login/loginDo?action=loginOut';
+//export const api_logout ='../common/login/loginDo?action=loginOut';
 /**
  * 首页模块
  */
@@ -37,7 +38,7 @@ const api_media_opinion = host + 'echart/echartDo?action=yqzc_month_Chart';
 // 热搜媒体排行旁边的舆情统计
 const api_media_count = host + 'echart/echartDo?action=zfmtjChart';
 //新首页载体分布饼图
-const api_carrier_pie = host + '/echart/echartDo?action=ztfb';
+const api_carrier_pie = host + 'echart/echartDo?action=ztfb';
 // 最新舆情
 const api_newest_opinion = host + 'homePage/docSearchListDo?action=getDocListEchart';
 // 最新负面舆情
@@ -136,8 +137,8 @@ const api_topic_message=host+'oTopic/TopicDo?action=getTopicAndRule';
 // 获取素材库列表
 const api_material_opinion_list = host + 'oWork/reportDo?action=reportCatList';
 // 获取素材库素材详细信息
-// const api_material_opinion_detail = host + 'oWork/reportDo?action=getResourceInCatAll';
-const api_material_opinion_detail = host + 'oWork/reportDo?action=catDocList';
+ const api_material_opinion_detail = host + 'oWork/reportDo?action=getResourceInCatAll';
+//const api_material_opinion_detail = host + 'oWork/reportDo?action=catDocList';
 
 
 //专题修改
@@ -165,6 +166,7 @@ export const api_add_doc_from_top = host + 'oWork/reportDo?action=catMoveToTop';
 export const api_add_doc_from_mat = host + 'oWork/reportDo?action=oDataAdd';
 // 素材库收藏
 export const api_res_fav_cat= host + 'oWork/reportDo?action=resAddFavCat';
+
 export {
     api_newest_warning_opinion,
     api_today_opinion,
@@ -353,4 +355,78 @@ export const api_export_small=host+'exp/ExportData?action=getListBySource';
 //报告列表页
 export const api_get_all_report = host + 'Report?action=getAllReport';
 //报告模板
-export const api_get_template_report = host + 'reportDo?action=getAllForm';
+export const api_get_template_report = host + 'Report?action=getAllForm';
+//预览模板
+export const api_get_template_report_preview = host + 'Report?action=previewTemplate';
+//修改报告名称
+export const api_update_report_name = host + 'Report?action=updateReportName';
+//搜索报告
+export const api_search_report = host + 'Report?action=searchReport';
+//删除报告
+export const api_new_delete_report = host + 'Report?action=deleteReport'; 
+//查询模板
+export const api_search_template = host +'Report?action=getFormByReportType';
+//删除报告
+export const api_new_preview_report = host + 'Report?action=previewTemplate'; 
+//预览模板的hmtl
+export const api_get_preview_html = host + 'Report?action=previewHtml';
+//报告下载
+export const api_download_report = host +'report/exportReport?action=downloadReport';         
+
+// 修改报告标题
+export const api_update_report = host + 'Report?action=updateTitle';
+// 简报分析数据预览
+export const api_add_brief_report = host + 'Report?action=briefReport';
+//获取简报素材修改页面数据
+export const api_get_brief_item = host + 'Report?action=getBriefItem';
+//修改简报素材
+export const api_update_brief_item = host + 'Report?action=updateBriefItem'; 
+//简报编辑素材后刷新列表
+export const api_refresh_brief = host +'Report?action=refreshBrief';
+// 日期选择
+export const api_get_data_daily_preview = host +'Report?action=dailyPreview';
+//日报50条编辑
+export const api_edit_excerpt = host +'Report?action=editExcerpt';
+//日报刷新数据
+export const api_get_excerpt = host +'Report?action=getExcerpt';
+// 专题请求
+export const api_get_special_preview = host +'Report?action=specialReport';
+// 生成报告
+export const api_get_generate_report = host +'report/exportReport?action=generateReport';
+//简报再编辑
+export const api_rebuild_report = host +'Report?action=reBuildReport'; 
+//首页舆情统计图表 
+export const api_count_charts= host +'main/DocSearchDo?action=mainCountPic';
+// export const api_get_template_report = host + 'reportDo?action=getAllForm';
+// 多语种删除
+export const api_delete_multilingual= host+'docDetail/docDetailDo?action=docDel'
+// 多语种详情
+export const api_get_DetailForeign= host+'docDetail/docDetailDo?action=getDetailForeign'
+// 招投标主题文件文件夹列表
+export const api_get_BiddingFolderList = host+ 'oClf/BidDo?action=getGradeMemu'
+// 招投标主题文件夹添加
+export const api_get_BiddingddGradeC = host+ 'oClf/BidDo?action=addGradeCat'
+// 招投标主题文件夹重命名
+export const api_get_BiddingeditGradeCat = host+ 'oClf/BidDo?action=editGradeCat'
+// 招投标主题文件夹删除
+export const api_get_BiddingdelCat = host+ 'oClf/BidDo?action=delCat'
+// 招投标分类及规则
+export const api_get_BiddingetGradeAndRule = host+ 'oClf/BidDo?action=getGradeAndRule'
+// 招投标类型文件夹列表
+export const api_get_BiddingetgradeCatList = host+ 'oClf/BidDo?action=gradeCatList'
+// 招投标分类添加
+export const api_get_BiddingaddGrade = host+ 'oClf/BidDo?action=addGrade'
+// 招投标主题删除
+export const api_get_BiddingdelGrade = host+ 'oClf/BidDo?action=delGrade'
+// 招投标主题获取分类及规则
+export const api_get_BiddinggetGradeAndRule = host+ 'oClf/BidDo?action=getGradeAndRule'
+// 招投标规则修改
+export const api_get_BiddinggetEditRule = host + 'oClf/BidDo?action=editGrade'
+// 招投标删除
+export const api_get_BiddinggetDelRule = host + 'oClf/BidDo?action=delRule'
+// 招投标文章列表
+export const api_bidding_message_list = host + 'oClf/BidDo?action=docList'
+// 招投标文章删除
+export const api_bidding_message_del = host + 'oClf/BidDo?action=docDel'
+// 招投标导出
+export const api_bidding_export = host + 'exp/ExportData?action=exportDataList'

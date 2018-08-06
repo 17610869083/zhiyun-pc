@@ -248,7 +248,7 @@ class TopicReportEcharts extends React.Component {
                                                                         headers: {
                                                                                "Content-Type": "application/x-www-form-urlencoded"
                                                                         },
-                                                                        body:`a=${base64}&f=twzqsChart&topicid=${this.state.topicId}`    
+                                                                        body:`a=${base64}&f=twzqsChart&topicid=${this.state.topicId}`   
                                                                      })
                                                                  }
                                                             })

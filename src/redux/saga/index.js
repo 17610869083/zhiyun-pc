@@ -133,7 +133,6 @@ function* getMaterialOpinionListSaga() {
 function* getMaterialOpinionDetail(action) {
     try {
         const result = yield call(apiGetMaterialOpinionDetail, action.payload);
-        console.log(result);
         yield put(getMaterialOpinionDetailSucceeded(result));
     } catch(e) {
         console.log(e);

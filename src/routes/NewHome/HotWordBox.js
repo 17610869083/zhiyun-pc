@@ -1,8 +1,9 @@
 import React from 'react';
+import {connect} from 'react-redux';
 import IconFont from '../../components/IconFont';
 import './HotWordBox.less';
 import {Icon} from 'antd';
-import {GRAY,BLACK,BLUES} from '../../utils/colors';
+import {BLUES} from '../../utils/colors';
 import 'TagCloud';
 class HotWordBox extends React.Component{
     delHotWordBox(){
@@ -23,14 +24,14 @@ class HotWordBox extends React.Component{
         }
     }
     render(){
-        const {data} = this.props;
+        const {data,themeColor} = this.props;
          return(
-            <div className="hotWord-box">
+            <div className="hotWord-box" style={{background:themeColor.bottomColor.backgroundColor}}>
                     <div className="container">
-                    <div className="top" style={{background:GRAY}}>
+                    <div className="top" style={{borderBottom: `1px solid ${themeColor.borderColor.color}`}}>
                         <div className="title">
                             <IconFont type="icon-recigengxin" style={{fontSize: '21px',color:BLUES}}/>
-                            <span className="txt" style={{color:BLACK}}>相关热词</span>
+                            <span className="txt" style={{color:themeColor.textColor.color}}>相关热词</span>
                         </div>
                         <div className="more">
                         <Icon type="close-circle" className="delModule"
@@ -49,4 +50,9 @@ class HotWordBox extends React.Component{
           )
     }
 }
-export default HotWordBox;
+const mapStateToProps = state => {
+    return {
+      themeColor: state.changeThemeReducer
+    }
+  };
+export default  connect(mapStateToProps, null)(HotWordBox);

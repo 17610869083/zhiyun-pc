@@ -1,7 +1,9 @@
 .my-report{
-    margin: 34px 0 0 20px;
+    margin: 10px 0 0 20px;
     width: 86%;
     font-size: 18px;
+    position: relative;
+    height: 100%;
     .my-report-top{
         background: #f0f2fb;
         display: flex;
@@ -55,13 +57,14 @@
         margin-top: 20px;
         p{
             background: #f0f2fb;
-            svg{
+            i{
                 margin-left: 32px;
+                cursor: pointer;
             }
         }
         .content{
             background: #fff;
-            padding:0 68px;
+            padding:0 68px 20px 68px;
             .cont{
                 width: 200px;
                 border-radius:6px;
@@ -93,6 +96,24 @@
             .active{
                 border:2px solid #6893ff;
             }
+            .pagination{
+                display: flex;
+                justify-content: center;
+                margin-top:20px;
+            }
         }
+    }
+}  
+.down-load-cell{
+    display: flex;
+    justify-content: space-between;
+    .down-load{
+        width: 60px;
+        height: 30px;
+        line-height: 30px;
+        border-radius:6px;
+        color:#fff;
+        text-align: center;
+        background: #5a8bff;
     }
 }

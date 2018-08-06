@@ -8,7 +8,7 @@ import {connect} from 'react-redux';
 import {setlocationPathname} from '../../redux/actions/createActions';
 import request from '../../utils/request';
 import {api_main_topic_opinion} from '../../services/api';
-import {GRAY,BLACK,BLUES} from '../../utils/colors';
+import {BLUES} from '../../utils/colors';
 const TabPane = Tabs.TabPane;
 
 class TopicOpinionBox extends React.PureComponent {
@@ -25,7 +25,7 @@ class TopicOpinionBox extends React.PureComponent {
     goTopicOpinion() {
         this.props.setlocationPathname(this.state.topicid)
         history.push({
-            pathname: '/topic/topiclist'
+            pathname: '/allopinion/topic/topiclist'
         });
     }
     delTopicOpinionBox(){
@@ -46,36 +46,39 @@ class TopicOpinionBox extends React.PureComponent {
          })
     }
     render() {  
-         const {topicOpinion} = this.state;
-        const more = this.props.status!=='setting'?<span style={{color:BLACK}} onClick={this.goTopicOpinion.bind(this)}>更多
-        <IconFont type="icon-jiantou" style={{color: '#9b9b9b',fontSize: '16px',marginLeft:'6px'}}/>
+        const {topicOpinion} = this.state;
+        const {themeColor} = this.props;
+        const more = this.props.status!=='setting'?<span onClick={this.goTopicOpinion.bind(this)}>
+        <IconFont type="icon-gengduo" style={{color: '#9b9b9b',fontSize: '16px',marginLeft:'6px'}}/>
         </span>:<Icon type="close-circle" className="delModule" style={{fontSize: '18px',color:BLUES}}
         onClick={this.delTopicOpinionBox.bind(this)}
         ></Icon>;
+        const haverClass = themeColor.topColor.backgroundColor === '#5a8bff' ? 'white':'black';
         return (
-            <div className="topic-opinion-box">
+            <div className="topic-opinion-box" style={{background:themeColor.bottomColor.backgroundColor}}>
                 <div className="container">
-                    <div className="top" style={{background:GRAY}}>
+                    <div className="top" style={{borderBottom: `1px solid ${themeColor.borderColor.color}`}}>
                         <div className="title">
-                            <IconFont type="icon-tesezhuanti" style={{color: BLUES,fontSize: '18px'}}/>
-                            <span className="txt" style={{color:BLACK}}>专题舆情</span>
-                            {/* <span className="txt" style={{color:BLACK}}>专题信息</span> */}
+													<IconFont type="icon-tesezhuanti" style={{color: BLUES,fontSize: '18px'}}/>
+													<span className="txt" style={{color:themeColor.textColor.color}}>专题舆情</span>
+													{/* <span className="txt" style={{color:BLACK}}>专题信息</span> */}
                         </div>
                         <div className="more">
-                              {more}
+													{more}
                         </div>
                     </div>
                     <div className="bottom">
-                        <Tabs defaultActiveKey="0" onChange={this.tabClick.bind(this)}>
+                        <Tabs defaultActiveKey="0" onChange={this.tabClick.bind(this)} tabBarStyle={{color:themeColor.textColor.color,borderBottom:`1px solid ${themeColor.borderColor.color}`}}>
                             {
                                 topicOpinion.length!==0?topicOpinion.map((item,index) =>
                                     <TabPane tab={item.topicname} key={item.topicid}>
                                         <ul className="list">
                                             {item.docList!==undefined ?
                                                 item.docList.slice(0,6).map((i,index) =>
-                                                    <li key={i.sid} className="list-item" onClick={this.clickItemTitle.bind(this,i.sid)}>
+                                                    <li key={i.sid} className={`list-item ${haverClass}`} onClick={this.clickItemTitle.bind(this,i.sid)}
+                                                    >
                                                         <div className="content">
-                                                            <div className="title">{i.title}</div>
+                                                            <div className="title" style={{color:themeColor.textColor.color}}>{i.title}</div>
                                                             <div className="desc">
                                                                 <span className="time">{i.pubdate.substring(10)}</span>
                                                                 <span className="source">{i.source}</span>
@@ -95,6 +98,11 @@ class TopicOpinionBox extends React.PureComponent {
         )
     }
 }
+const mapStateToProps = state => {
+    return {
+      themeColor: state.changeThemeReducer
+    }
+  };
 const mapDispatchToProps = dispatch => {
     return {
         setlocationPathname: req => {
@@ -102,4 +110,4 @@ const mapDispatchToProps = dispatch => {
         }
     }
 }
-export default connect(null,mapDispatchToProps)(TopicOpinionBox);
+export default connect(mapStateToProps,mapDispatchToProps)(TopicOpinionBox);

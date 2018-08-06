@@ -68,14 +68,13 @@
   height: 267px;
   background: #fff;
   position: relative;
-  border:1px solid #5a8bff;
   border-radius:6px;
   -webkit-transition-property: -webkit-transform;
   transition-property: -webkit-transform;
   -o-transition-property: transform;
   transition-property: transform;
   transition-property: transform, -webkit-transform;
-  margin: 40px 0 ;
+  margin: 40px 40px 40px 0;
 }
 .swiper-invisible-blank-slide {
   visibility: hidden;

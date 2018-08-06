@@ -1,6 +1,13 @@
 import React from 'react';
+import {connect} from 'react-redux';
 import {Row, Col,Icon} from 'antd';
 import IconFont from '../../components/IconFont';
+import ReactEchartsCore from 'echarts-for-react/lib/core';
+import echarts from 'echarts/lib/echarts';
+import 'echarts/lib/component/tooltip';
+import 'echarts/lib/component/title';
+import 'echarts/lib/component/legend';
+import 'echarts/lib/chart/pie';
 import './TodayOpinionBox.less';
 import {api_today_opinion} from '../../services/api';
 import request from '../../utils/request';
@@ -13,7 +20,21 @@ class TodayOpinionBox extends React.PureComponent {
              todayAll:0,
              todayWarning:0,
              todayNegative:0,
-             ratio:0
+						 ratio:0,
+						 echartData: [
+							 {
+								 value: 0,
+								 name: '今日预警'
+							 },
+							 {
+								value: 1,
+								name: '今日负面'
+							},
+							{
+								value: 0,
+								name: '今日舆情'
+							},
+						 ]
         }
     }
     componentWillUnmount(){
@@ -22,9 +43,10 @@ class TodayOpinionBox extends React.PureComponent {
          if(this.negativeTimer) clearInterval(this.negativeTimer);
          if(this.ratioTimer) clearInterval(this.ratioTimer);
     }
-    componentDidMount(){
+    componentWillMount(){
         request(api_today_opinion)
         .then(res => {
+        if(res.data){
         const data = res.data;    
         const todayAll = data['今日舆情'] && data['今日舆情'].length!==0 ? data['今日舆情'][4]['总数'] : 0;
         const todayWarning = data['今日舆情'] && data['今日舆情'].length!==0 ? data['今日舆情'][3]['预警'] : 0;
@@ -87,94 +109,228 @@ class TodayOpinionBox extends React.PureComponent {
                     }
                 },100)  
             }
+        }    
         }) 
+        
     }
     delTodayOpinionBox(){
             this.props.delTodayBox(1);
     }
     goAllOpinion(type){
         history.push({
-            pathname: '/allopinion?datetag=today&neg=' + type
+            pathname: '/allopinion/allopiniondetail?datetag=today&neg=' + type
         });
     }
     render() {
-        const {todayAll,todayWarning,todayNegative,ratio} = this.state;
+				const {themeColor} = this.props;
+				const labelTop = {
+					normal : {
+						label : {
+							show : true,
+							position : 'center',
+							formatter : '{b}',
+							padding: [50, 0, 0, 0],
+							textStyle: {
+								baseline : 'center',
+								fontSize: 14,
+								color: "#ccc"
+							}
+						},
+						labelLine : {
+							show : false
+						}
+					}
+			  };
+				// 今日预警\n' + this.state.todayWarning
+				const mediaOption= {
+					animation: false,
+					series: [{
+						// name: '今日预警',
+						type: 'pie',
+						radius: ['50%', '65%'],
+						label: {
+							normal: {
+								position: 'center'
+							},
+						},
+						data: [
+							{
+								name:'\n今日预警\n\n' + this.state.todayWarning, 
+								value: this.state.todayWarning ===0 ? 30000:this.state.todayWarning, 
+								itemStyle : labelTop,
+								hoverAnimation: false
+							},{
+								value: 10000,
+								tooltip: {
+									show: false
+								},
+								itemStyle: {
+									normal: {
+											color: '#e1e7f0'
+									},
+									emphasis: {
+											color: '#e1e7f0'
+									}
+								},
+								hoverAnimation: false
+							},
+						],
+						color: [new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+						offset: 0,
+						color: '#5384b1'
+						}, {
+							offset: 1,
+							color: '#5bcf3c'
+						}]), "transparent"],
+					}]
+				};
+				const mediaOptionNegative= {
+					animation: false,
+					series: [{
+						// name: '今日预警',
+						type: 'pie',
+						radius: ['50%', '65%'],
+						label: {
+							normal: {
+								position: 'center'
+							},
+						},
+						data: [
+							{
+								name:'\n 今日负面\n\n' + this.state.todayNegative, 
+								value: this.state.todayNegative === 0 ?30000:this.state.todayNegative, 
+								itemStyle : labelTop,
+								hoverAnimation: false
+							},{
+								value: 10000,
+								tooltip: {
+									show: false
+								},
+								itemStyle: {
+									normal: {
+											color: '#e1e7f0'
+									},
+									emphasis: {
+											color: '#e1e7f0'
+									}
+								},
+								hoverAnimation: false
+							},
+						],
+						color: [new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+						offset: 0,
+						color: '#fe018a'
+						}, {
+							offset: 1,
+							color: '#ffa800'
+						}]), "transparent"],
+					}]
+				};
+				const mediaOptionPublic= {
+					animation: false,
+					series: [{
+						// name: '今日预警',
+						type: 'pie',
+						radius: ['50%', '65%'],
+						label: {
+							normal: {
+								position: 'center'
+							},
+						},
+						data: [
+							{
+								name:'\n 今日舆情\n\n' + this.state.todayAll, 
+								value: this.state.todayAll === 0 ? 130000 : this.state.todayAll , 
+								itemStyle : labelTop,
+								hoverAnimation: false
+							},{
+								value: 10000,
+								tooltip: {
+									show: false
+								},
+								itemStyle: {
+									normal: {
+											color: '#e1e7f0'
+									},
+									emphasis: {
+											color: '#e1e7f0'
+									}
+								},
+								hoverAnimation: false
+							},
+						],
+						color: [new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+						offset: 0,
+						color: '#5a8bff'
+						}, {
+							offset: 1,
+							color: '#00deff'
+						}]), "transparent"],
+					}]
+				};
         return (
-            <div className="today-opinion-box" draggable="true">
-                 <div className="today-opinion-top" 
+            <div className="today-opinion-box" draggable="true" style={{background:themeColor.bottomColor.backgroundColor}}>
+								<div className="today-opinion-top" 
                   style={this.props.status==='setting'?{display:'block',background:GRAY}:{display:'none'}}>
                  <Icon type="close-circle" className="delModule" style={{fontSize: '18px',color:BLUES}}
                  onClick={this.delTodayOpinionBox.bind(this)}
                  ></Icon>
                  </div>
                  <div className="container">
-                 {this.state.num}
-                     <Row gutter={60}>
-                         <Col span={6}>
-                             <div className="opinion-info" onClick = {this.goAllOpinion.bind(this,2)}>
-                                 <div className="content">
-                                     <div className="icon-wrapper" style={{backgroundColor: '#f2a200'}}>
-                                         <IconFont type="icon-shandian22-copy" style={{color: '#ffffff',fontSize: '50px'}}/>
-                                     </div>
-                                     <div className="count" style={{backgroundColor: '#ffbc34'}}>
-                                         <div className="number">{todayWarning}</div>
-                                         <div className="name">今日预警</div>
-                                         {/* <div className="name">今日特推</div> */}
-                                     </div>
-
-                                 </div>
+								 {/* {this.state.num} */}
+								 	<div className="top" style={{borderBottom: `1px solid ${themeColor.borderColor.color}`}}>
+									 	<div className="title">
+												<IconFont type="icon-tongji1" style={{fontSize: '28px',color:BLUES,verticalAlign:'-8px'}}/>
+												<span className="txt" style={{color:themeColor.textColor.color}}>今日统计</span>
+										</div>
+									</div>
+									<div className="bottom">
+										<Row gutter={60}>
+											<Col span={24}>
+												<span style={{ fontSize: 16, color: themeColor.textColor.color, float: "right", paddingRight: 30, marginTop: 15 }}>负面同比增长：{this.state.ratio}%</span>
+											</Col>
+										</Row>
+                      <Row  style={{ marginTop: 50 }}>
+                         <Col span={8} >
+														<div className="opinion-info" onClick = {this.goAllOpinion.bind(this,2)}>
+														 	<ReactEchartsCore
+																echarts={echarts}
+																option={mediaOption}
+																lazyUpdate={true}
+																style={{ height: 170, width: '100%' }}
+															/>
+														</div>
+                         </Col>
+                         <Col span={8}>
+                            <div className="opinion-info"  onClick = {this.goAllOpinion.bind(this,1)}>
+														 	<ReactEchartsCore
+																echarts={echarts}
+																option={mediaOptionNegative}
+																lazyUpdate={true}
+																style={{ height: 170, width: '100%' }}
+															/>
                              </div>
                          </Col>
-                         <Col span={6}>
-                             <div className="opinion-info"  onClick = {this.goAllOpinion.bind(this,'all')}>
-                                 <div className="content">
-                                         <div className="icon-wrapper">
-                                         <IconFont type="icon-yuqing"
-                                                   style={{color: '#FFFFFF',fontSize: '50px'}}
-                                         />
-                                     </div>
-                                     <div className="count">
-                                         <div className="number">{todayAll}</div>
-                                         <div className="name">今日舆情</div>
-                                         {/* <div className="name">今日信息</div> */}
-                                     </div>
-
-                                 </div>
-                             </div>
+                         <Col span={8} style={{ paddingLeft: 0 }}>
+														<div className="opinion-info" onClick = {this.goAllOpinion.bind(this,'all')}>
+															<ReactEchartsCore
+																echarts={echarts}
+																option={mediaOptionPublic}
+																lazyUpdate={true}
+																style={{ height: 170, width: '100%' }}
+															/>
+														</div>
                          </Col>
-                         <Col span={6}>
-                             <div className="opinion-info" onClick = {this.goAllOpinion.bind(this,1)}>
-                                 <div className="content">
-                                     <div className="icon-wrapper" style={{backgroundColor: '#e70000'}}>
-                                         <IconFont type="icon-jinggao" style={{color: '#ffffff',fontSize: '50px'}}/>
-                                     </div>
-                                     <div className="count" style={{backgroundColor: '#ff3f3f'}}>
-                                         <div className="number">{todayNegative}</div>
-                                         <div className="name">今日负面</div>
-                                         {/* <div className="name">今日重点</div> */}
-                                     </div>
-                                 </div>
-                             </div>
-                         </Col>
-                         <Col span={6}>
-                             <div className="opinion-info">
-                                 <div className="content">
-                                     <div className="icon-wrapper" style={{backgroundColor: '#f26100'}}>
-                                         <IconFont type="icon-sastaishiganzhi" style={{color: '#ffffff',fontSize: '50px'}}/>
-                                     </div>
-                                     <div className="count" style={{backgroundColor: '#ff8839'}}>
-                                         <div className="number">{ratio}%</div>
-                                         <div className="name">负面同比增长</div>
-                                         {/* <div className="name">重点信息增长</div> */}
-                                     </div>
-                                 </div>
-                             </div>
-                         </Col>
-                     </Row>
-                 </div>
+                      </Row>
+                  </div>									
+								</div>
             </div>
         )
     }
 }
-
-export default TodayOpinionBox;
+const mapStateToProps = state => {
+    return {
+      themeColor: state.changeThemeReducer
+    }
+  };
+export default  connect(mapStateToProps, null)(TodayOpinionBox);

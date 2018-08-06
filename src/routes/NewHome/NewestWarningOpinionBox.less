@@ -1,5 +1,4 @@
 .newest-warning-opinion-box {
-  margin-top: 20px;
   font-size: 14px;
   background-color: #FFFFFF;
   min-height: 492px;
@@ -14,7 +13,6 @@
       line-height: 43px;
       display: flex;
       justify-content: space-between;
-      border-bottom: 1px solid #e4ebf7;
       .title {
         font-size: 16px;
         margin-left: 20px;
@@ -44,15 +42,8 @@
           margin-top: -12px;
           .list-item {
             padding: 6px 0 0 20px;
-            &:hover {
-              background-color: #b3e5fc;
-              border-left: 2px solid #3B83E9;
-              cursor: pointer;
-            }
             display: flex;
             justify-content: space-between;
-            border-bottom: 1px solid #e4ebf7;
-            border-left: 2px solid #FFFFFF;
             height: 60px;
             .negative {
               min-width: 80px;
@@ -64,7 +55,6 @@
             .content {
               width: 94%;
               .title {
-                color: #000000;
                 overflow: hidden;
                 white-space: nowrap;
                 text-overflow: ellipsis;
@@ -86,6 +76,24 @@
               display: flex;
               justify-content: center;
               align-items: center;
+            }
+          }
+          .white{
+            border-left: 2px solid #FFFFFF;
+            border-bottom: 1px solid #e4ebf7;
+            &:hover {
+              background-color: #b3e5fc;
+              border-left: 2px solid #3B83E9;
+              cursor: pointer;
+            }
+          }
+          .black{
+            border-left: 2px solid #25283a;
+            border-bottom: 1px solid #35394f;
+            &:hover {
+              background-color: #35394f;
+              border-left: 2px solid #3B83E9;
+              cursor: pointer;
             }
           }
         }

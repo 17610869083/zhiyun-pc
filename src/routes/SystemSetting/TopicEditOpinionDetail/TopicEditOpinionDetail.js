@@ -55,7 +55,7 @@ class TopicEditOpinionDetail extends React.Component {
 	handleSubmitMat(e) {
 		e.preventDefault();
 		this.props.form.validateFields((err, values) => {
-			const ids = parseInt(values.file);
+			const ids = parseInt(values.file,10);
 			if (!err) {
 				request(api_add_doc_from_mat, {
 					method: 'POST',
@@ -97,7 +97,6 @@ class TopicEditOpinionDetail extends React.Component {
 		})
 	}
 	negtiveChange(value) {
-
 		this.setState({
 			negtiveValue: value
 		})
@@ -182,7 +181,7 @@ class TopicEditOpinionDetail extends React.Component {
 		]
 
 		return (
-			<div>
+			<div className="topicpublic-cell">
 				<div className="publicTop"></div>
 				<div className="topicpublicbox">
 					{

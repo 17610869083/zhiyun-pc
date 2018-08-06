@@ -39,8 +39,23 @@ class TopicOpinion extends React.Component {
             browserHeight:300
         };
 
-    }
+		}
+		// 添加分类
+		addHandleClick(e) {
+			this.setState({
+				current: e.key,
+				isAddTopicShow: false,
+				visible:true,
+				addClass:0,
+				addTopic:1
+			});
+			history.push({
+				pathname:`/allopinion/topic/${e.key}`,
+				search:`?topicid=${this.state.topicId}`
+			});
+		}
     handleClick(e) {
+			console.log("1");
         if(e.key==='addsort'){
             this.setState({
                 current: e.key,
@@ -52,13 +67,19 @@ class TopicOpinion extends React.Component {
             return
         }
         history.push({
-            pathname:`/topic/${e.key}`,
+            pathname:`/allopinion/topic/${e.key}`,
             search:`?topicid=${this.state.topicId}`
         });
         this.setState({
             current: e.key,
         });
-    }
+		}
+		addZhuanClick(e) {
+			history.push({
+				pathname:`/allopinion/topic/${e.key}`,
+				search:`?topicid=${this.state.topicId}`
+			});
+		}
     componentWillUnmount(){
         this.props.searchState({data:true});
         clearTimeout( this.topichomeTimer);
@@ -69,14 +90,13 @@ class TopicOpinion extends React.Component {
           let topicMessage=this.props.topicNavMessageSucceededState;
           if(topicMessage!==1){
             let firstTopicid={topicid:1,topicname:'test'};
-            topicMessage.forEach((item)=>{
-                      if(item['topicList'][0]!==undefined){
-                           firstTopicid.topicid = topicMessage[0]['topicList'][0]['topicid'];
-                           firstTopicid.topicname = topicMessage[0]['topicList'][0]['topicname'];
-                           return firstTopicid;
-                      }
-            })
-            
+            for(let i in topicMessage){
+                if(topicMessage[i]['topicList'][0]!==undefined){
+                     firstTopicid.topicid = topicMessage[i]['topicList'][0]['topicid'];
+                     firstTopicid.topicname = topicMessage[i]['topicList'][0]['topicname'];
+                     break;
+                }
+            } 
             this.props.setlocationPathname(firstTopicid);
             this.setState({
                 topicLists:topicMessage,
@@ -94,16 +114,13 @@ class TopicOpinion extends React.Component {
             addTopic:1,
             addClass:0
         });
-        history.push(`/topic/addtopic`);
+        history.push(`/allopinion/topic/addtopic`);
     }
-    delTopic(e){
-        e.stopPropagation();
-         let topicID=e.target.dataset.topicid;
-    	  this.setState({
-    	  	visibleTwo:true,
-    	  	topicId:topicID,
-    	  	childRen:e.target.parentNode.parentNode.children.length
-    	  });
+    delTopic(topicid,e){
+        this.setState({
+            topicId:topicid,
+            childRen:e.target.parentNode.parentNode.children.length
+        });
     }
     queryTopic(topicid,topicname,e){
         this.setState({
@@ -113,7 +130,7 @@ class TopicOpinion extends React.Component {
         })
           this.props.setlocationPathname({topicid:topicid,topicname:topicname});
           history.push({
-            pathname:`/topic/topiclist`,
+            pathname:`/allopinion/topic/topiclist`,
             search:`?topicId=${topicid}`
             });
 
@@ -136,7 +153,7 @@ class TopicOpinion extends React.Component {
     	 }).then(res=>{
     	 	  if(res.data.code===1){
     	 	  	   history.push({
-                    pathname:`/topic/topiclist`,
+                    pathname:`/allopinion/topic/topiclist`,
                     search:`?catid=${this.state.inputValue}`
               });
                }
@@ -174,7 +191,7 @@ class TopicOpinion extends React.Component {
     	}).then(res=>{
     		  if(res.data.code===1){
     	 	  	   history.push({
-    	 	  	   	  pathname:`/topic/topiclist`,
+    	 	  	   	  pathname:`/allopinion/topic/topiclist`,
     	 	  	   	  search:`?catid=${this.state.catid}`
     	 	  	   });
                }
@@ -200,7 +217,7 @@ class TopicOpinion extends React.Component {
     	  }).then(res=>{
     	  	   if(res.data.code===1){
     	  	   	    history.push({
-    	  	   	    	pathname:`/topic/topiclist`,
+    	  	   	    	pathname:`/allopinion/topic/topiclist`,
     	  	   	    	search:`?delTopicId=${this.state.topicId}`
     	  	   	    	});
                  }
@@ -225,7 +242,7 @@ class TopicOpinion extends React.Component {
         }).then(res=>{
               if(res.data.code===1){
                 history.push({
-                    pathname:`/topic/topiclist`,
+                    pathname:`/allopinion/topic/topiclist`,
                     search:`?catId=${this.state.catid}`
                     });
                  this.props.topicNavMessageRequested(new Date())
@@ -236,11 +253,13 @@ class TopicOpinion extends React.Component {
         this.setState({visibleThree:false})
     }
     onDelitem({key}){
-           if(key==='1'){
-           	   this.setState({visibleOne:true})
-           }else{
-            this.setState({visibleThree:true})
-           }
+			if(key==='1'){
+					this.setState({visibleOne:true})
+			} else if(key === '2'){
+			this.setState({visibleThree:true})
+			} else if(key === '3') {
+				this.handleAddTopic();
+			}
     }
     onCatid(catid){
          this.setState({
@@ -266,19 +285,36 @@ class TopicOpinion extends React.Component {
         })
         this.props.searchState({data:!this.state.isTopShow})
     }
+    onReportItem({key}){
+        if(key === '1'){
+            this.setState({
+              visibleTwo:true,
+            })
+        }else{
+            history.push(`/allopinion/special?type=02&id=4&topicid=${this.state.topicId}`)
+        }
+    }
+
     render() {
     	const delItems = (
-            <Menu onClick={this.onDelitem.bind(this)}>
-                <Menu.Item key="2">重命名</Menu.Item>
-                <Menu.Item key="1">删除</Menu.Item>
-            </Menu>
-       );
+				<Menu onClick={this.onDelitem.bind(this)}>
+					<Menu.Item key="2">重命名</Menu.Item>
+					<Menu.Item key="1">删除</Menu.Item>
+					<Menu.Item key="3">添加专题</Menu.Item>
+				</Menu>
+			);
+			// const twoItems = (
+			// 	<Menu onClick={this.onDelitem.bind(this)}>
+			// 		<Menu.Item key="1">删除</Menu.Item>
+			// 		<Menu.Item key="2">生成报告</Menu.Item>
+			// 	</Menu>
+			// );
         let {topicNavMessageSucceededState} =this.props;
         const LeftTopicLists=topicNavMessageSucceededState!==1&&topicNavMessageSucceededState.map((item,index)=>
           <div className="a-class" key={index}>
           <div className="class-name" >
           <div className="leftBox" onClick={this.dropDown.bind(this,item.catid)} data-index='1' title={item.catname}>
-            <i>< Iconfont type="icon-wenjianjia2" style={{fontSize:'18px'}}/></i><span className='mar'>{item.catname}</span>
+            <span className='mar'>{item.catname}</span>
           </div>
           <Dropdown overlay={delItems} trigger={['click']}>
             <i onClick={this.onCatid.bind(this,item.catid)}><Iconfont type="icon-icon02" className="icon-setting"/></i>
@@ -294,7 +330,12 @@ class TopicOpinion extends React.Component {
                   >
                         {iitem.topicname}
                   </span>
-                  <img src={Del} alt="删除" className="icon-delete"  data-topicid={iitem.topicid} onClick={this.delTopic.bind(this)}/>
+                  <Dropdown overlay={<Menu onClick={this.onReportItem.bind(this)}>
+                                     <Menu.Item key="1">删除</Menu.Item>
+                                     <Menu.Item key="2">加入报告</Menu.Item>
+                                     </Menu>} trigger={['click']}>
+                  <img src={Del} alt="删除" className="icon-delete" onClick={this.delTopic.bind(this,iitem.topicid)}/>
+                </Dropdown> 
                 </li>
              )}
              </ul>
@@ -326,27 +367,21 @@ class TopicOpinion extends React.Component {
                         <Menu.Item key="setting" style={{fontSize:'16px'}}>
                             修改专题设置
                         </Menu.Item>
-                        <Menu.Item key="addtopic" style={{fontSize:'16px'}}>
-                            添加专题
-                        </Menu.Item>
-                        <Menu.Item key="addsort" style={{fontSize:'16px'}} >
-                            添加分类
-                        </Menu.Item>
                     </Menu>
                     </div>
                     <div className="close"  onClick={this.triggerTopShow.bind(this)} style={this.state.current==='topiclist'?{display:'block',color:BLACK}:{display:'none'}}>
-                    <span>{this.state.isTopShow ? '显示' : '隐藏'}</span>
-                    <Icon type={this.state.isTopShow ? 'down' : 'right'} />
+                    	<span>{this.state.isTopShow ? '显示' : '隐藏'}</span>
+                    	<Icon type={this.state.isTopShow ? 'down' : 'right'} />
                     </div>
                     </div>
                     <div className="topic-wrapper">
                         <Switch>
-                            <Route path="/topic/topiclist" component={TopicList} />
-                            <Route path="/topic/addtopic" component={TopicAdd} />
-                            <Route path="/topic/report" component={TopicReport}/>
-                            <Route path="/topic/echarts" component={TopicReportEcharts}/>
-                            <Route path="/topic/count" component={TopicCount} />
-                            <Route path="/topic/setting" component={TopicSetting} />
+                            <Route path="/allopinion/topic/topiclist" component={TopicList} />
+                            <Route path="/allopinion/topic/addtopic" component={TopicAdd} />
+                            <Route path="/allopinion/topic/report" component={TopicReport}/>
+                            <Route path="/allopinion/topic/echarts" component={TopicReportEcharts}/>
+                            <Route path="/allopinion/topic/count" component={TopicCount} />
+                            <Route path="/allopinion/topic/setting" component={TopicSetting} />
                         </Switch>
                     </div>
                 </div>
@@ -354,6 +389,9 @@ class TopicOpinion extends React.Component {
                     <div className="first-box">
                         <div className="add-topic-class" style={{background:GRAY}}>
                           专题
+													<div onClick={this.addHandleClick.bind(this)} style={{ marginTop: -40, textAlign: "right", marginRight: 7 }}>
+														<Iconfont type="icon-tianjiawenjianjia" style={{ width: 20, height: 20 }} />
+													</div>
                         </div>
                         <div className="classes" style={{maxHeight:this.state.browserHeight+'px'}}>
                         {LeftTopicLists}
