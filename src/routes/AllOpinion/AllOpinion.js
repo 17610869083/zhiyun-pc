@@ -72,18 +72,6 @@ class AllOpinion extends React.Component {
       this.setState({
         flag:!this.state.flag
       })
-<<<<<<< HEAD
-   }
-  }
-
-  componentWillUnmount() {
-    this.props.paginationPage(1);
-    this.props.searchKeywordSync({
-      seltype: '',
-      keyword: '', type: 0
-    });
-=======
->>>>>>> dd7e8337f2632bbf61da0a551da2b0aa05ff7866
   }
   mouseEnterToggle = () => {
     if(this.state.collapsed){
