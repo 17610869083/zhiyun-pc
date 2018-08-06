@@ -44,7 +44,8 @@ class ModalCreateTopic extends React.Component{
             title="设置关键词"
             okText="确定"
             onCancel={this.onModelCancel.bind(this)}
-            onOk={this.onModelOk.bind(this)}          
+            onOk={this.onModelOk.bind(this)}  
+            className="report-modal"        
         >  
             <Form layout="vertical">            
                 <FormItem>

@@ -1,35 +1,69 @@
 .z-header {
+  height: 60px;
+  line-height: 60px;
+  position: fixed;
+  top:0;
+  z-index: 500;
+  width: 100%;
+  .ant-menu{
+    box-shadow: 1px 1px 1px #ccc;
+    &:first-child{
+      box-shadow: 0px 1px 1px #ccc;
+    }
+    &:last-child{
+      box-shadow: 0px 1px 1px #ccc;
+    }
+  }
   .top {
     display: flex;
-    justify-content: space-between;
+    height: 100%;
+    align-items: center;
     .left {
-      width: 30%;
+      width: 28%;
       display: flex;
       align-items: center;
       margin-left: -30px;
       cursor: pointer;
       .logo {
-        width: 60px;
+        width: 100px;
+        margin-left: 68px;
       }
       .name {
         font-size: 22px;
         margin-left: 10px;
       }
       .ant-menu-item {
-        font-size: 14px!important;
+        font-size: 16px!important;
+        a{
+          text-align: left;
+        }
       }
     }
     .right {
       position: relative;
-      width: 50%;
+      width: 71%;
       display: flex;
       justify-content: flex-end;
-      margin-right: 10px;
-      .search {
-        margin-right: 20px;
-        input{
-          border-radius:20px;
-        }
+      margin-right: 68px;
+      .nav-bar{
+         li{
+           float:left;
+           margin-right: 40px;
+           font-size: 16px;
+           cursor: pointer;
+         }
+         .normal{
+          a{
+            color:#fff;
+            text-decoration: none;
+           }
+         }
+         .active{
+           a{
+             color:#ffa000;
+             text-decoration: none;
+           }
+         }
       }
       .qq {
         margin-right: 18px;

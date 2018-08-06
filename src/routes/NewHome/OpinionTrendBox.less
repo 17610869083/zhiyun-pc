@@ -1,26 +1,24 @@
 .opinion-trend-box {
   // overflow: hidden;
   background-color: #FFFFFF;
-  margin-top: 20px;
   margin-bottom: 0;
   box-shadow: 0 3px 1px -2px rgba(0,0,0,0.2), 0 2px 2px 0 rgba(0,0,0,0.14), 0 1px 5px 0 rgba(0,0,0,0.12);
   border-radius: 4px;
-  min-height: 350px; 
+  min-height: 469px; 
   .container {
     .top {
-      margin-top: 10px;
       .title {
         font-size: 16px;
         margin: 0 20px;
         height: 44px !important;
         line-height: 43px !important;
-
+        display: flex;
+        justify-content: space-between;
         .txt {
           margin-left: 14px;
         }
 
         .btnBox {
-          margin-left: 5%;
           button {
             margin-left: 2%;
             color: #1780cc;
@@ -49,15 +47,18 @@
     }
 
     .bottom {
-      display: flex;
+      
       // justify-content: space-between;
       .total {
-        width: 22%;
+        width: 100%;
+        display: flex;
         .opinion-info {
           display: flex;
           justify-content: center;
           align-items: center;
           margin: 36px 0;
+          width: 30%;
+          text-align: center;
           .count {
             margin-left: 20px;
             width: 150px;

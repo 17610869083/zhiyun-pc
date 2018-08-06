@@ -1,5 +1,4 @@
 .newest-opinion-box {
-  margin-top: 20px;
   font-size: 14px;
   background-color: #FFFFFF;
   min-height: 492px;
@@ -33,16 +32,8 @@
       .list {
         li{
           height: 60px;
-       
         .opinion-item {
-          &:hover {
-            background-color: #b3e5fc;
-            border-left: 2px solid #3B83E9;
-            cursor: pointer;
-          }
           height: 50px;
-          border-bottom: 1px solid #e4ebf7;
-          border-left: 2px solid #FFFFFF;
           display: flex;
           padding-left: 5px;
           .index {
@@ -80,6 +71,24 @@
                 margin-left: 40px;
               }
             }
+          }
+        }
+        .white{
+          border-left: 2px solid #FFFFFF;
+          border-bottom: 1px solid #e4ebf7;
+          &:hover {
+            background-color: #b3e5fc;
+            border-left: 2px solid #3B83E9;
+            cursor: pointer;
+          }
+        }
+        .black{
+          border-left: 2px solid #25283a;
+          border-bottom: 1px solid #35394f;
+          &:hover {
+            background-color: #35394f;
+            border-left: 2px solid #3B83E9;
+            cursor: pointer;
           }
         }
       }

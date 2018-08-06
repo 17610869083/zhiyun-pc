@@ -129,6 +129,8 @@ class SortedOpinion extends React.Component {
           message.info("您取消了操作！");
         }
       });
+    } else if (e.key === 'add') {
+      history.push({pathname: '/allopinion/sortedopinion/addrule'})
     }
   }
   // 设置catid
@@ -172,18 +174,24 @@ class SortedOpinion extends React.Component {
     if (e.key === 'addsort') {
       this.setState({sortVisible: true})
     } else if (e.key === 'sortlist') {
-      history.push({pathname: `/sortedopinion/list`, search: `?cifid=${this.props.clfId.clfid}`})
+      history.push({pathname: `/allopinion/sortedopinion/list`, search: `?cifid=${this.props.clfId.clfid}`})
     } else if (e.key === 'setting') {
-      history.push({pathname: `/sortedopinion/setting`, search: `?cifid=${this.props.clfId.clfid}`})
+      history.push({pathname: `/allopinion/sortedopinion/setting`, search: `?cifid=${this.props.clfId.clfid}`})
     } else {
-      history.push({pathname: '/sortedopinion/addrule'})
+      history.push({pathname: '/allopinion/sortedopinion/addrule'})
     }
 
+  }
+  // 添加分类
+  addHandleMenuClick() {
+    // if (e.key === 'addsort') {
+      this.setState({sortVisible: true})
+    // }
   }
   // 切换分类路由
   changeSortRoute(clfId,clfname,e) {
     this.setState({clfId: clfId, current: 'sortlist'});
-    history.push({pathname: `/sortedopinion/list`, search: `?cifid=${clfId}`})
+    history.push({pathname: `/allopinion/sortedopinion/list`, search: `?cifid=${clfId}`})
     this.props.changeClfId({clfid:clfId,clfname:clfname});
     //this.props.clfCatState({state:true})
   }
@@ -204,7 +212,7 @@ class SortedOpinion extends React.Component {
     // clearTimeout(this.sortTimer);
   }
   componentDidMount() {
-    if (history.location.pathname === '/sortedopinion/list') {
+    if (history.location.pathname === '/allopinion/sortedopinion/list') {
       this.setState({current: 'sortlist'});
     }
     this.props.getSortedMenuRequested();
@@ -246,11 +254,12 @@ class SortedOpinion extends React.Component {
     const OperateItems = (<Menu onClick={this.operateItems.bind(this)}>
       <Menu.Item key="rename">重命名</Menu.Item>
       <Menu.Item key="delete">删除</Menu.Item>
+      <Menu.Item key="add">添加话题</Menu.Item>
     </Menu>);
     const SortedMenu = sortedMenu.map((item) => (<ul key={item.catid} className="sort-menu-ul">
       <li className="catname">
         <div className="name" onClick={this.toggleClfUl.bind(this, item.catid)}>
-          <i>< Iconfont type="icon-wenjianjia2" style={{fontSize:'18px'}}/></i>
+          {/* <i>< Iconfont type="icon-wenjianjia2" style={{fontSize:'18px'}}/></i> */}
           <span className='mar'>{item.catname}</span>
         </div>
         <div className="setting" style={item.cattype === 1
@@ -283,6 +292,9 @@ class SortedOpinion extends React.Component {
       <div className="sorted-menu">
         <div className="operation" style={{background:GRAY}}>
           分类
+          <div onClick={this.addHandleMenuClick.bind(this)} style={{ marginTop: -40, textAlign: "right", marginRight: 7 }}>
+            <Iconfont type="icon-tianjiawenjianjia" style={{ width: 20, height: 20 }} />
+          </div>
         </div>
         <div className="sort-conent" style={{maxHeight:this.state.browserHeight+'px'}}>
         {SortedMenu}
@@ -316,16 +328,16 @@ class SortedOpinion extends React.Component {
                 }}>
                 修改话题设置
               </Menu.Item>
-              <Menu.Item key="addtopic" style={{
+              {/* <Menu.Item key="addtopic" style={{
                   fontSize: '16px'
                 }}>
                 添加话题
-              </Menu.Item>
-              <Menu.Item key="addsort" style={{
+              </Menu.Item> */}
+              {/* <Menu.Item key="addsort" style={{
                   fontSize: '16px'
                 }}>
                 添加分类
-              </Menu.Item>
+              </Menu.Item> */}
             </Menu>
           </div>
           <div className="close" onClick={this.triggerTopShow.bind(this)} style={this.state.current === 'sortlist'?{display:'block',color:BLACK}:{display:'none'}}>
@@ -337,9 +349,9 @@ class SortedOpinion extends React.Component {
           this.state.flag
             ? <div className="topic-wrapper">
                 <Switch>
-                  <Route path="/sortedopinion/list" component={SortedList}/>
-                  <Route path="/sortedopinion/addrule" component={SortedAdd}/>
-                  <Route path="/sortedopinion/setting" component={SortedSetting}/>
+                  <Route path="/allopinion/sortedopinion/list" component={SortedList}/>
+                  <Route path="/allopinion/sortedopinion/addrule" component={SortedAdd}/>
+                  <Route path="/allopinion/sortedopinion/setting" component={SortedSetting}/>
                 </Switch>
               </div>
             : <Spin size="large"/>

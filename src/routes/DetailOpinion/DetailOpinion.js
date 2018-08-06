@@ -1,6 +1,6 @@
 import React from 'react';
 import request from '../../utils/request';
-import Kindeditor from '../../components/Kindeditor/Kindeditor.js';
+//import Kindeditor from '../../components/Kindeditor/Kindeditor.js';
 import {connect} from 'react-redux';
 import {
   getCollectionOpinionListRequested,
@@ -18,9 +18,9 @@ import {
   api_docsend_push
 } from '../../services/api';
 import EditOpinionDetail from '../../components/EditOpinionDetail/EditOpinionDetail';
-import {Tag, Popconfirm, message, Icon, Modal, Menu, Dropdown, Select, Input} from 'antd';
+import {Tag, Popconfirm, message, Icon, Modal, Menu, Dropdown, Select} from 'antd';
 import {history} from '../../utils/history';
-import {setHighlightTags, opinionTypeToColor, getMeailMessage} from '../../utils/format';
+import {setHighlightTags, opinionTypeToColor} from '../../utils/format';
 import './DetailOpinion.less';
 import Store from '../../redux/store/index'
 import IconFont from '../../components/IconFont'
@@ -283,7 +283,9 @@ class DetailOpinion extends React.Component {
 
   // 展示报告列表
   showReportMenu() {
-    this.props.getReportList({pagesize: '1000', page: '1'});
+    console.log(this.state.sid)
+    history.push('/home')
+    window.close();
   }
 
   // 加入收藏
@@ -300,18 +302,6 @@ class DetailOpinion extends React.Component {
       }
     });
   }
-
-  // 加入报告
-  clickReportMenuItem(e) {
-    const id = this.state.sid;
-    const reportId = e.key;
-    request(api_put_into_report + '&reportid=' + reportId + '&sid=["' + id + '"]', {}).then((res) => {
-      if (res.data.code === 1) {
-        message.success(res.data.msg);
-      }
-    });
-  }
-
   componentDidMount() {
     const id = this.props.location.pathname.split('detail/')[1]
     request(api_get_doc_detail + '&sid=' + id, {}).then((res) => {
@@ -422,7 +412,7 @@ class DetailOpinion extends React.Component {
         children.push(<Option key={emailAddressee[i]['id']}>{emailAddressee[i]['email']}</Option>);
       }
     }
-    const conent = getMeailMessage(this.state.emailData);
+    //const conent = getMeailMessage(this.state.emailData);
     const data = this.state.data;
     const sid = this.state.sid;
     const Keywords = this.state.keywords.map((item, index) =>
@@ -459,23 +449,7 @@ class DetailOpinion extends React.Component {
           </Menu.Item>
         )}
       </Menu>
-    );
-    // 报告列表
-    const ReportMenu = (
-      <Menu
-        selectedKeys={[this.state.current]}
-        onClick={this.clickReportMenuItem.bind(this)}
-      >
-        {this.props.reportData.map(item =>
-          <Menu.Item key={item.id}>
-            <Icon type="folder-add"/>&nbsp;
-            <span>{item.name}</span>
-          </Menu.Item>
-        )}
-
-      </Menu>
-    );
-      
+    ); 
         return (            
             <div className="detail-opinion">
                {/* <Icon type="rollback" className="arrowLeft" title="回到上一页" onClick={this.preUrl.bind(this)}/> */}
@@ -546,6 +520,21 @@ class DetailOpinion extends React.Component {
                             <div className="operation-item" title="修改" onClick={this.showEditModal.bind(this)}>
                                <IconFont type="icon-xiugai"/>
                             </div>
+                            <Popconfirm title="确定要上报这条信息吗？"  onCancel={this.deleteCancel.bind(this)} okText="是" cancelText="否">
+                                <div className="operation-item" title="上报">
+                                <IconFont type="icon-shangbao-copy"/>
+                                </div>
+                                </Popconfirm>
+                                <Popconfirm title="确定要取证这条信息吗？"  onCancel={this.deleteCancel.bind(this)} okText="是" cancelText="否">
+                                <div className="operation-item" title="取证">
+                                <IconFont type="icon-zhengjucailiao-copy"/>
+                                </div>
+                                </Popconfirm>
+                                <Popconfirm title="确定要引导这条信息吗？" onCancel={this.deleteCancel.bind(this)} okText="是" cancelText="否">
+                                <div className="operation-item" title="引导">
+                                <IconFont type="icon-xinshouyindao-copy"/>
+                                </div>
+                                </Popconfirm>
                                 {/* <div className="operation-item" title="推送" onClick={this.searchEmail.bind(this)}>
                                 <IconFont type="icon-tuisongguize"/> 
                                 </div> */}
@@ -559,14 +548,10 @@ class DetailOpinion extends React.Component {
                                         <span>加入收藏</span>
                                     </div>
                                 </Dropdown>
-                                <Dropdown overlay={ReportMenu} trigger={['click']}
-                                getPopupContainer={ () => document.querySelector('.detail-opinion')}
-                                >
-                                    <div className="watch" onClick={this.showReportMenu.bind(this)}>
+                                    {/* <div className="watch" onClick={this.showReportMenu.bind(this)}>
                                         <Icon type="file-text" className="star" />
                                         <span>加入报告</span>
-                                    </div>
-                                </Dropdown>
+                                    </div> */}
                             </div>
                         </div>
                     </div>

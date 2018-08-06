@@ -198,8 +198,7 @@ class TopicSetting extends React.Component {
            }else if(this.state.addType===2){
                rules=JSON.stringify(this.state.preciseTopicRule.length===0?
                 topicData(this.state.topicAlldata.rulearr,this.state.addType):this.state.preciseTopicRule);     
-           }
-           console.log(JSON.parse(rules)) 
+           } 
            let rulelist = JSON.parse(rules)[0];
            if( rulelist.rule1 ===''){
             message.error('主题词不能为空');
@@ -216,7 +215,7 @@ class TopicSetting extends React.Component {
                     return ;
                 }
             request(api_topic_revise,{
-        	   method: 'POST',
+        	method: 'POST',
             headers: {
                   "Content-Type": "application/x-www-form-urlencoded"
             },
@@ -226,7 +225,7 @@ class TopicSetting extends React.Component {
                   message.success('关键词修改成功');
                   this.props.topicNavMessageRequested(new Date())
           	      history.push({
-                   pathname: '/topic/topiclist'
+                   pathname: '/allopinion/topic/topiclist'
                    })
         	}
         })

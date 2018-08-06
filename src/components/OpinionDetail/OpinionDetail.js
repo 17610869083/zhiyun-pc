@@ -20,8 +20,10 @@ import {
   // getMaterialOpinionListRequested,
   // getCollectionOpinionListRequested,
   exportSkip,
-  paginationPage
+  paginationPage,
+  briefingSwitch
 } from '../../redux/actions/createActions';
+import IconFont from '../IconFont';
 import Store from '../../redux/store/index';
 import weixin from '../../assets/icon-img/weixin.png';
 import news from '../../assets/icon-img/news.png';
@@ -212,12 +214,17 @@ class OpinionDetail extends React.Component {
   // -----------批量操作
   checkedTrue() {
     const arr = [];
-    this.props.docList.forEach((item, index) => {
-      if (this.state.checkedArray[index] === true && item.sid) {
-        arr.push(item.sid);
-      }
-    });
-    return arr;
+    if(this.props.docList==='[]'){
+      return [];
+    }else{
+      this.props.docList.forEach((item, index) => {
+        if (this.state.checkedArray[index] === true && item.sid) {
+          arr.push(item.sid);
+        }
+      });
+      return arr;
+    }
+
   }
 
   // 批量设为正面
@@ -351,7 +358,7 @@ class OpinionDetail extends React.Component {
   }
   keyDown(e){
      if(e.keyCode === 13){
-      const docList = this.props.docList ? this.props.docList : [{carry: '新闻'}];
+      //const docList = this.props.docList ? this.props.docList : [{carry: '新闻'}];
       const param = {
         seltype: this.state.seltype,
         keyword: this.state.searchInputValue,
@@ -490,20 +497,16 @@ class OpinionDetail extends React.Component {
         page: pagenumber
       });
       this.props.opinionSearchRequest(param);
-      console.log(1)
     } else if (this.props.searchKeyword.type === 1) {
       this.props.opinionSearchRequest({
         seltype: this.state.seltype, keyword: this.props.searchKeyword.keyword,
         page: pagenumber
       });
-      console.log(2)
     }
     else if (this.props.propsType === 'AllopinionList') {
       this.props.opinionSearchRequest(param);
-      console.log(3)
     } else {
       this.props.onDataChange(pagenumber);
-      console.log(4)
     }
   }
 
@@ -546,10 +549,12 @@ class OpinionDetail extends React.Component {
         },
         body: `page=${propsParamData.page}&sids=${propsParamData.sid}&pagesize=${propsParamData.pagesize}&datetag=${propsParamData.datetag}&taskname=${this.state.fileName}&documenttype=excel&createdate=${time}&taskstate=0&source=monitor&order=${propsParamData.order}&begin=${propsParamData.begin}&end=${propsParamData.end}&neg=${propsParamData.neg}&carry=${propsParamData.carry}&similer=${propsParamData.similer}&seltype=conten&keyword=`
       }).then(res => {
-            this.setState({
-              downloadFlag:false
-            })
-            window.location.href = res.data.downloadUrl
+        this.setState({
+          downloadFlag:false
+        })
+          if(res.data.code !==0){
+              window.location.href = res.data.downloadUrl
+          } 
       })
 
     } else if (propsType === 'TopicList') {
@@ -613,9 +618,7 @@ class OpinionDetail extends React.Component {
   //单条加入素材库
   materialConfirm(sid, e) {
     request(api_push_material + '&catid=' + e.key + '&sid=["' + sid + '"]').then((res) => {
-      if (res.data.code === 1) {
         message.success(res.data.msg);
-      }
     });
   }
 
@@ -645,6 +648,30 @@ class OpinionDetail extends React.Component {
           })
     })
   }
+  //跳转到报告页
+  goReport(){
+     if(this.checkedTrue().length !== 0) {
+          this.props.briefingSwitch(this.checkedTrue());
+          history.push('/allopinion/choosetemplate?reportType=01')   
+     }else{
+          history.push('/allopinion/choosetemplate')   
+     }
+    
+  }
+    //单条跳转到报告页
+    goReportItem(sid){
+      if(this.checkedTrue().length === 0 ){
+        this.props.briefingSwitch([sid]);
+        history.push('/allopinion/choosetemplate?reportType=01') ;  
+      }else if(this.checkedTrue().length >1) {
+         message.error('此处按钮只对当前这条数据有效');
+         return;
+      }else{
+        this.props.briefingSwitch(this.checkedTrue());
+        history.push('/allopinion/choosetemplate?reportType=01')     
+      }
+     
+   }
   render() {
     const {page} = this.props;
     const flag = this.props.docList&& this.props.docList.length === 0?true:false;
@@ -704,7 +731,7 @@ class OpinionDetail extends React.Component {
               >
                 {
                   (() => {
-                    if (this.state.isSearch && this.state.seltype === 'title') {
+                    if (this.state.isSearch) {
                       return <span dangerouslySetInnerHTML={{__html: (item.title && item.title.length > 35) ? setHighlightTags(item.title.slice(0, 35), Array(this.state.searchInputValue).concat([''])) + '...' : setHighlightTags(item.title, Array(this.state.searchInputValue).concat(['']))}}></span>
                     } else {
                       return (item.title && item.title.length > 35) ? item.title.slice(0, 35) + '...' : item.title
@@ -716,7 +743,7 @@ class OpinionDetail extends React.Component {
             <div className="item-middle">
               <div className="left" style={this.state.isSummaryShow ? {display: 'block'} : {display: 'none'}}>
                 <div>
-                    { 
+                    {
                       (() => {
                         if (this.state.isSearch) {
                             if (this.state.seltype === 'content') {
@@ -828,6 +855,13 @@ class OpinionDetail extends React.Component {
                         </Dropdown>
                       </Tooltip>
                     </div>
+                    <div>
+                    <Tooltip title='生成报告' placement="bottom">
+                      <span className="add-report" onClick={this.goReportItem.bind(this,item.sid)}>
+                      <IconFont type="icon-icon-shengchengbaogao" />  
+                      </span>
+                    </Tooltip>
+                    </div>
                   </div>
               </div>
             </div>
@@ -921,6 +955,11 @@ class OpinionDetail extends React.Component {
                 <img src={Collection} alt="收藏"  style={{height:'18px'}}/>
                 </div>
               </Dropdown>
+            </Tooltip>
+            <Tooltip title='生成报告' placement="bottom">
+               <div className="operate-all" onClick={this.goReport.bind(this)}>
+               <IconFont type="icon-icon-shengchengbaogao"></IconFont>  
+               </div>
             </Tooltip>
           </div>
           <Pagination
@@ -1018,17 +1057,14 @@ const mapDispatchToProps = dispatch => {
     setOpinionType: type => {
       dispatch(setOpinionTypeRequested(type));
     },
-    // getCollectionOpinionListRequested: () => {
-    //   dispatch(getCollectionOpinionListRequested());
-    // },
-    // getMaterialOpinionListRequested: () => {
-    //   dispatch(getMaterialOpinionListRequested());
-    // },
     exportSkip: key => {
       dispatch(exportSkip(key));
     },
     paginationPage: req => {
       dispatch(paginationPage(req));
+    },
+    briefingSwitch: req => {
+      dispatch(briefingSwitch(req))
     }
   }
 };

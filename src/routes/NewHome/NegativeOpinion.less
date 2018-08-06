@@ -1,5 +1,4 @@
 .negative-opinion-box {
-  margin-top: 20px;
   border-radius: 4px;
   font-size: 14px;
   min-height: 492px;
@@ -13,7 +12,6 @@
       line-height: 43px;
       display: flex;
       justify-content: space-between;
-      border-bottom: 1px solid #e4ebf7;
       .title {
         font-size: 16px;
         margin-left: 20px;
@@ -52,8 +50,6 @@
             display: flex;
             justify-content: space-between;
             height: 60px;
-            border-bottom: 1px solid #e4ebf7;
-            border-left: 2px solid #FFFFFF;
             padding: 6px 0 0 20px;
             .negative {
               min-width: 80px;
@@ -73,7 +69,6 @@
             .content {
               width: 94%;
               .title {
-                color: #000000;
                 overflow: hidden;
                 white-space: nowrap;
                 text-overflow: ellipsis;
@@ -83,11 +78,30 @@
                 display: flex;
                 // justify-content: space-between;
                 font-size: 14px;
-                 margin-top: 4px;
+                margin-top: 4px;
+                color: #a6b7bf;
               }
               .source {
                 margin-left: 40px;
               }
+            }
+          }
+          .white{
+            border-left: 2px solid #FFFFFF;
+            border-bottom: 1px solid #e4ebf7;
+            &:hover {
+              background-color: #b3e5fc;
+              border-left: 2px solid #3B83E9;
+              cursor: pointer;
+            }
+          }
+          .black{
+            border-left: 2px solid #25283a;
+            border-bottom: 1px solid #35394f;
+            &:hover {
+              background-color: #35394f;
+              border-left: 2px solid #3B83E9;
+              cursor: pointer;
             }
           }
       }
