@@ -1,12 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
-<<<<<<< HEAD
-import {Layout, Menu,Button} from 'antd';
-import {Route, Switch, Link} from 'react-router-dom';
-=======
 import {Layout,Button} from 'antd';
 import {Route, Switch} from 'react-router-dom';
->>>>>>> dd7e8337f2632bbf61da0a551da2b0aa05ff7866
 import './Index.less';
 import {exportSkip} from '../../redux/actions/createActions';
 import CRcode from '../LoginPage/crcode.jpg';
@@ -128,118 +123,9 @@ class Index extends React.Component {
   }
   render() {
     // 统计报告-舆情报告   
-<<<<<<< HEAD
-    const {themeColor} = this.props;
-    let menuList = [];
-    this.state.channelList.map((item, index) => {
-      if (item.channelurl === '/reportopinion/list') {
-        menuList.push(<SubMenu
-          key={item.key}
-          title={<Link to="/historyopinion"><span>
-            <i className="anticon"><Iconfont type={item.type} style={{fontSize: '16px'}}/></i>
-            <span
-              style={{fontSize: '16px'}}>舆情报告</span>
-            </span></Link>}>
-          <Menu.Item key="reportopinion" style={{fontSize: '16px'}}>
-            <Link to="/reportopinion/list">
-              <span>简报列表</span>
-            </Link>
-          </Menu.Item>
-          <Menu.Item key="materiaopinion" style={{fontSize: '16px'}}>
-            <Link to="/materiaopinion">
-              <span>素材库</span>
-            </Link>
-          </Menu.Item>
-          <Menu.Item key="collectionopinion" style={{fontSize: '16px'}}>
-            <Link to="/collectionopinion">
-              <span>我的收藏</span>
-            </Link>
-          </Menu.Item>
-          <Menu.Item key="historyopinion" style={{fontSize: '16px'}}>
-            <Link to="/historyopinion">
-              <span>我的报告库</span>
-            </Link>
-          </Menu.Item>
-        </SubMenu>)
-      } else if (item.channelurl === '../systemMan/systemManDo?action=userList') {
-        menuList.push(<SubMenu key={item.key} 
-                               title={<Link to="/noticesetting"><span><i className="anticon"><Iconfont type={item.type}
-                                 style={{fontSize: '16px'}}/></i><span
-                                 style={{fontSize: '16px'}}>系统设置</span></span> </Link>}>
-          <Menu.Item key="noticesetting" style={{fontSize: '16px'}}>
-            <Link to="/noticesetting">
-              <span>通知设置</span>
-            </Link>
-          </Menu.Item>
-          
-          <Menu.Item key="warnsetting" style={{fontSize: '16px'}}>
-            <Link to="/warnsetting">
-              <span>预警设置</span>
-            </Link>
-          </Menu.Item>
-          <Menu.Item key="excludesetting" style={{fontSize: '16px'}}>
-            <Link to="/excludesetting">
-              <span>排除停用</span>
-            </Link>
-          </Menu.Item>
-          <Menu.Item key="publicopinion" style={{fontSize: '16px'}}>
-            <Link to="/publicopinion">
-              <span>舆情录入</span>
-            </Link>
-          </Menu.Item>
-        </SubMenu>)
-      } else {
-        menuList.push(<Menu.Item key={item.key} style={{fontSize: '16px'}}>
-          {item.channelurl.indexOf('http') !== -1 ?
-            <a href={item.channelurl} target="blank">
-              <i className="anticon"><Iconfont type={item.type} style={{fontSize: '16px'}}/></i>
-              <span>{item.channelname}</span>
-            </a> : <Link to={item.channelurl}>
-            <i className="anticon"><Iconfont type={item.type} style={{fontSize: '16px'}}/></i>
-              <span>{item.channelname}</span>
-            </Link>
-          }
-        </Menu.Item>)
-      }
-      return 3
-    })
-    return (
-      <div className="root-container">
-        <Layout className="layout">
-          <Sider
-            className="sider siders"
-            trigger={null}
-            collapsible
-            style={{backgroundColor: '#fff'}}
-            collapsed={this.state.collapsed && this.state.flag}
-            onMouseEnter={this.mouseEnterToggle} 
-            onMouseLeave={this.mouseLeaveToggle}
-          >
-            <div>
-              <div className="logo-wrapper">
-                <img src={logo} alt="logo" className="logo" onClick={this.goBackIndex.bind(this)}/>
-              </div>
-              <div className="trigger-wrapper" onClick={this.toggle} >
-                <i className="fa fa-bars" aria-hidden="true" style={{fontSize: '14px', color: '#5a8bff'}}/>
-              </div>
-            </div>
-            <Menu
-              defaultSelectedKeys={['1']}
-              mode="inline"
-              theme="dark"
-              // inlineCollapsed={this.state.collapsed && this.state.flag}
-              style={ {backgroundColor: '#fff', overflow: 'auto',maxHeight: '600px'}}
-              className="selectMenu"
-              selectedKeys={[urlTokey()]}
-            >
-              {menuList}
-            </Menu>
-          </Sider>
-=======
     return (
       <div className="root-container">
        <ZHeader/> 
->>>>>>> dd7e8337f2632bbf61da0a551da2b0aa05ff7866
           <Layout className="right-layout">
             <Content className="main" ref={(main) => {
               this.main = main
