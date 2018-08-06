@@ -156,9 +156,10 @@ class MaterialOpinion extends React.Component {
 
 	// --------------在素材库内搜索
 	handleSearchBtn(keyword) {
-		// console.log(this.props.docList);
 		if (keyword !== '') {
-			this.props.getMaterialOpinionDetailRequested(`catid=${this.state.current}&pagesize=${this.state.pageSize}&q=${keyword}`);
+			this.props.getMaterialOpinionDetailRequested(`catid=${this.state.current}&pagesize=1&q=${keyword}`);
+		}else{
+			this.props.getMaterialOpinionDetailRequested(`catid=${this.state.current}`);
 		}
 	}
 
@@ -252,7 +253,7 @@ class MaterialOpinion extends React.Component {
 			const sidList = JSON.stringify(arr);
 			request(api_del_doc_from_cat + '&id=' + sidList, {}).then((res) => {
 				if (res.data.code === 1) {
-					getMaterialDetail(`catid=${current}`);
+					getMaterialDetail(`catid=${current}&page=${this.state.currentPage}&pagesize=${this.state.pageSize}`);
 					message.success(res.data.msg);
 					this.setState({
 						checkedAll: false,
