@@ -57,9 +57,6 @@ class MyReport extends React.Component{
         }
         })
     }
-    componentDidMount(){
-        console.log(document.querySelector('.my-report').scrollTop)
-    }
     changeType(type){ 
        this.setState({
            type:type,
@@ -150,7 +147,9 @@ class MyReport extends React.Component{
          .then( res => {
               if(res.data.code === 1){
                   this.setState({
-                    contentList:res.data.data.content
+                    contentList:res.data.data.content,
+                    recordTotal:res.data.data.recordTotal,
+                    current:1
                   })
               }else{
                   message.error('未搜索到该报告，请换个条件试试')
@@ -204,20 +203,27 @@ class MyReport extends React.Component{
     }
     //删除
     delete = () => {
-        request(api_new_delete_report + `&reportId=${this.state.checkId}`)
-        .then( res => {
-           if(res.data.code === 1){
-                message.success('删除成功')
-                request(api_search_report + `&reportType=${this.state.type}`)
-                .then( res => {
-                    if(res.data.code === 1){
+        if(this.state.checkId === ''){
+            message.error('请选择报告');
+        }else{
+            request(api_new_delete_report + `&reportId=${this.state.checkId}`)
+            .then( res => {
+               if(res.data.code === 1){
+                    message.success('删除成功');
                     this.setState({
-                        contentList:res.data.data.content
-                    })        
-                    }
-                })
-           }
-        })
+                        checkId:''
+                    })
+                    request(api_search_report + `&reportType=${this.state.type}`)
+                    .then( res => {
+                        if(res.data.code === 1){
+                        this.setState({
+                            contentList:res.data.data.content
+                        })        
+                        }
+                    })
+               }
+            })
+        }
     }
     //下载
     downLoad(type){

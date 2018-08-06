@@ -25,7 +25,6 @@ class Zheader extends React.Component {
             userInfoVisible: false,
             themeVisible: false,
             visible: false,
-            layoutVisible:false,
             userInfoMessage:{},
             type:'',
             itemsOne: [
@@ -204,15 +203,10 @@ class Zheader extends React.Component {
     }
 
     showlayoutModal(){
-          this.setState({
-              layoutVisible:true
-          })
+         history.push('/allopinion/customhome')
     }
 
     handleLayoutCancel(){
-          this.setState({
-            layoutVisible:false
-          })
           request(api_homepage_message)
           .then(res => {
              if(res.data){
@@ -243,9 +237,9 @@ class Zheader extends React.Component {
                 <Menu.Item key="2">
                     <span onClick={this.showThemeModal.bind(this)}>&nbsp;&nbsp;&nbsp;&nbsp;颜色设置&nbsp;&nbsp;&nbsp;&nbsp;</span>
                 </Menu.Item>
-                {/* <Menu.Item key="3">
+                <Menu.Item key="3">
                     <span onClick={this.showlayoutModal.bind(this)}>&nbsp;&nbsp;&nbsp;&nbsp;首页布局&nbsp;&nbsp;&nbsp;&nbsp;</span>
-                </Menu.Item> */}
+                </Menu.Item>
                 <Menu.Divider />
                 <Menu.Item key="5"><span>&nbsp;&nbsp;&nbsp;&nbsp;退出</span></Menu.Item>
             </Menu>
@@ -353,14 +347,6 @@ class Zheader extends React.Component {
                            width={320}
                     >
                         <ChangeTheme onChangeTheme={onChangeTheme}/>
-                    </Modal>
-                    <Modal title="首页布局"
-                           visible={this.state.layoutVisible}
-                           footer={null}
-                           onCancel={this.handleLayoutCancel.bind(this)}
-                           width='90%'
-                    >
-                          <NewHome type="homeLayout"/>
                     </Modal>
                 </div>
             </div>
