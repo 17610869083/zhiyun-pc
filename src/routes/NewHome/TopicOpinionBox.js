@@ -34,11 +34,12 @@ class TopicOpinionBox extends React.PureComponent {
     componentDidMount(){
         request(api_main_topic_opinion)
         .then(res => {
-            if(res.data && res.data.code === 1){
+            if(res.data ){
                 this.setState({
                     topicid:res.data.topic_0.topicid ,
                     topicOpinion:Object.values(res.data)            
                   })
+                  console.log(Object.values(res.data))
             }
         })
     }
@@ -88,14 +89,14 @@ class TopicOpinionBox extends React.PureComponent {
                                                             </div>
                                                         </div>
                                                     </li>
-                                                ) : <BlankPage status={blankFlag} desc='<span>空空如也，赶紧去<a href="index.html#/topic/addtopic">添加</a>关键词</span>'/>
+                                                ) : <BlankPage status={blankFlag} desc='<span>空空如也，赶紧去<a href="index.html#/allopinion/topic/addtopic">添加</a>关键词</span>'/>
                                             }
                                         </ul>
                                     </TabPane>
                                 ): ''
                             }
                         </Tabs>
-                    </div>:<BlankPage status={blankFlag} desc='<span>空空如也，赶紧去<a href="index.html#/topic/addtopic">添加</a>关键词</span>'/>}
+                    </div>:<BlankPage status={blankFlag} desc='<span>空空如也，赶紧去<a href="index.html#/allopinion/topic/addtopic">添加</a>关键词</span>'/>}
                 </div>
             </div>
         )

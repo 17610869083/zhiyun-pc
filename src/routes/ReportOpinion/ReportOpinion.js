@@ -68,7 +68,7 @@ class TopicReport extends React.Component {
                             record.type='2';
                             this.props.reportMessage(record);
                             history.push({
-                                pathname:'/historyopinion',
+                                pathname:'/allopinion/historyopinion',
                                 search:'type=2'
                             });
                                     }
@@ -245,7 +245,7 @@ class TopicReport extends React.Component {
         e.preventDefault();
         this.props.exportSkip(record.name)
         history.push({
-            pathname: '/reportopinion/detail',
+            pathname: '/allopinion/reportopinion/detail',
             search: `?id=${record.id}`
         });
     }
@@ -330,7 +330,7 @@ class TopicReport extends React.Component {
     }
     downloadHandleOk(){
         history.push({
-           pathname:'/historyopinion',
+           pathname:'/allopinion/historyopinion',
            search:'type=2'
           });
         this.setState({

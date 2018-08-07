@@ -38,7 +38,7 @@ class ReportOpinionDetail extends React.Component {
 
     // 返回报告列表页
     goBackReportOpinionList() {
-        history.push("/reportopinion/list");
+        history.push("/allopinion/reportopinion/list");
     }
 
     // 跳转到素材库
@@ -163,7 +163,7 @@ class ReportOpinionDetail extends React.Component {
             downloadVisible:false
          })
          history.push({
-            pathname:'/historyopinion',
+            pathname:'/allopinion/historyopinion',
             search:'type=2'
          });
     }

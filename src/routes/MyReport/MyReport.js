@@ -177,7 +177,8 @@ class MyReport extends React.Component{
         .then( res => {
              if(res.data.code === 1){
              this.setState({
-                 contentList:res.data.data.content
+                 contentList:res.data.data.content,
+                 flag:false
              })        
             }
         })
@@ -211,7 +212,8 @@ class MyReport extends React.Component{
                if(res.data.code === 1){
                     message.success('删除成功');
                     this.setState({
-                        checkId:''
+                        checkId:'',
+                        flag:false
                     })
                     request(api_search_report + `&reportType=${this.state.type}`)
                     .then( res => {
@@ -279,9 +281,6 @@ class MyReport extends React.Component{
 
     //      }
     // }
-    onScroll = () => {
-        console.log('gun')
-    }
     cancel = () => {
         message.warning('已取消当前操作')
     }
@@ -300,7 +299,7 @@ class MyReport extends React.Component{
              this.state.editReprotName === item.id ? <Input  value={this.state.inputValue} onChange={this.changeReportName.bind(this)} onBlur = {this.blur.bind(this,item.id)}/>:
              <p title="双击可修改名称" onDoubleClick={this.editReportName.bind(this,item.id,item.reportName)} style={{userSelect:'none',height:'28px'}} >{item.reportName}</p>
              }
-             {item.updateTime && item.updateTime!=='' ?<p style={{marginBottom:'6px'}}>{item.updateTime}
+             {item.updateTime && item.updateTime!=='' ?<p style={{marginBottom:'6px',display:'flex',justifyContent:'space-between'}}>{item.updateTime}
              {item.status === '2' ?<IconFont className="status" type="icon-queren"/>:<IconFont className="status" type="icon-weiwancheng"/>}
              </p>:<p style={{textAlign:'center',color:'#ff0000',marginBottom:'6px'}}>该报告未完成</p>
             }
