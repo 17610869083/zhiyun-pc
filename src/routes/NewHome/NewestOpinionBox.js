@@ -22,7 +22,7 @@ class NewestOpinionBox extends React.Component {
 
     goAllOpinion() {
         history.push({
-            pathname: '/allopinion/allopiniondetail?datetag=today'
+            pathname: '/allopinion/allopiniondetail'
         });
     }
      delNewestOpinionBox(){
@@ -68,7 +68,7 @@ class NewestOpinionBox extends React.Component {
                                   </div>
                                 </div>
                                 </li>
-                            ) : <BlankPage  status={blankFlag} desc='<span>空空如也，赶紧去<a href="index.html#/sortedopinion/addrule">添加</a>关键词</span>'/>
+                            ) : <BlankPage  status={blankFlag} desc='<span>空空如也，赶紧去<a href="index.html#/allopinion/sortedopinion/addrule">添加</a>关键词</span>'/>
                         }
                        </ul>
                     </div>

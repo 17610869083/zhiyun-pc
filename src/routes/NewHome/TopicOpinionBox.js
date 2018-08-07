@@ -67,7 +67,7 @@ class TopicOpinionBox extends React.PureComponent {
 													{more}
                         </div>
                     </div>
-                    <div className="bottom">
+                    { topicOpinion.length!==0?<div className="bottom">
                         <Tabs defaultActiveKey="0" onChange={this.tabClick.bind(this)} tabBarStyle={{color:themeColor.textColor.color,borderBottom:`1px solid ${themeColor.borderColor.color}`}}>
                             {
                                 topicOpinion.length!==0?topicOpinion.map((item,index) =>
@@ -85,14 +85,14 @@ class TopicOpinionBox extends React.PureComponent {
                                                             </div>
                                                         </div>
                                                     </li>
-                                                ) : <BlankPage desc='<span>空空如也，赶紧去<a href="index.html#/topic/addtopic">添加</a>关键词</span>'/>
+                                                ) : <BlankPage desc='<span>空空如也，赶紧去<a href="index.html#/allopinion/topic/addtopic">添加</a>关键词</span>'/>
                                             }
                                         </ul>
                                     </TabPane>
                                 ):''
                             }
                         </Tabs>
-                    </div>
+                    </div>:<BlankPage desc='<span>空空如也，赶紧去<a href="index.html#/allopinion/topic/addtopic">添加</a>关键词</span>'/>}
                 </div>
             </div>
         )

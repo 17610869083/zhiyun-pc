@@ -74,7 +74,7 @@ class NagetiveOpinion extends React.Component {
                                              </div>
                                              </div>
                                             </li>
-                                        ) : <BlankPage  status={blankFlag} desc='<span>空空如也，赶紧去<a href="index.html#/warnsetting?type=601">添加</a>关键词</span>'/>
+                                        ) : <BlankPage  status={blankFlag} desc='<span>空空如也，赶紧去<a href="index.html#/allopinion/warnsetting?type=601">添加</a>关键词</span>'/>
                                     }
                                 </ul>
                             </TabPane>
@@ -91,7 +91,7 @@ class NagetiveOpinion extends React.Component {
                                             </div>
                                             </div>
                                             </li>
-                                        ) : <BlankPage desc='<span>空空如也，赶紧去<a href="index.html#/warnsetting?type=601">添加</a>关键词</span>'/>
+                                        ) : <BlankPage desc='<span>空空如也，赶紧去<a href="index.html#/allopinion/warnsetting?type=601">添加</a>关键词</span>'/>
                                     }
                                 </ul>
                             </TabPane>

@@ -44,7 +44,7 @@ class OpinionCountBox extends React.PureComponent {
         }
     }
     render() {
-        const {themeColor,opinionCount,data,legend,series} = this.props;
+        const {themeColor,data,legend,series} = this.props;
         const more = this.props.status!=='setting'?<span onClick={this.goAllOpinion.bind(this)}> 
         <IconFont type="icon-gengduo" style={{color: '#9b9b9b',fontSize: '16px',marginLeft:'6px'}}/>
         </span>:<Icon type="close-circle" className="delModule" style={{fontSize: '18px',color:BLUES}}
@@ -108,7 +108,7 @@ class OpinionCountBox extends React.PureComponent {
                                     <td title="点击可查看具体数据" style={{cursor:'pointer',borderRight: `1px solid  ${themeColor.borderColor.color}`,borderBottom: `1px solid  ${themeColor.borderColor.color}`}} onClick = {this.goMedia.bind(this,item[0],'7day','week')}>{item[2]}</td>
                                     <td title="点击可查看具体数据" style={{cursor:'pointer',borderRight: `1px solid  ${themeColor.borderColor.color}`,borderBottom: `1px solid  ${themeColor.borderColor.color}`}} onClick = {this.goMedia.bind(this,item[0],'30day','month')}>{item[3]}</td>
                                     <td title="点击可查看具体数据" style={{cursor:'pointer',borderRight: `1px solid  ${themeColor.borderColor.color}`,borderBottom: `1px solid  ${themeColor.borderColor.color}`}} onClick = {this.goMedia.bind(this,item[0],'all','all')}>{item[4]}</td>
-                                </tr>) : <tr><td><BlankPage desc='<span>空空如也，赶紧去<a href="index.html#/sortedopinion/addrule">添加</a>关键词</span>'/></td></tr>
+                                </tr>) : <tr><td><BlankPage desc='<span>空空如也，赶紧去<a href="index.html#/allopinion/sortedopinion/addrule">添加</a>关键词</span>'/></td></tr>
                             }
                             </tbody>
                         </table>

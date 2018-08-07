@@ -306,9 +306,10 @@ export function reportToTableData(data) {
 export function urlTokey() {
     const hash = window.location.hash;
     let url = 'home';
-    if (hash.match(/^(#\/)(\w+)/)) {
-        url = hash.match(/^(#\/)(\w+)/);
-    }
+    // if (hash.match(/^(#\/)(\w+)/)) {
+    //     url = hash.match(/^(#\/)(\w+)/);
+    // }
+    url = hash.split('#/allopinion/')[1]
     let key = '0';
     switch (url)
     {
@@ -321,16 +322,16 @@ export function urlTokey() {
         case 'bigscreen':
             key = '3';
             break;
-        case 'allopinion/topic/topiclist':
+        case 'allopiniondetail':
             key = '4';
             break;
         case 'warningopinion':
             key = '5';
             break;
-        case 'allopinion/topic/topiclist':
+        case 'topic/topiclist':
             key = '7';
             break;
-        case 'sortedopinion':
+        case 'sortedopinion/list':
             key = '6';
             break;
         case 'reportopinion':
@@ -359,6 +360,9 @@ export function urlTokey() {
             break;
         case 'topicreportlist':
             key = 'topicreportlist';
+            break;
+        case 'historyopinion':
+            key = 'history';
             break;
         default:
             break;

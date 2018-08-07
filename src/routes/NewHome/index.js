@@ -75,7 +75,7 @@ class NewHome extends React.Component {
             request(api_newest_opinion)
               .then((res) => {
                 if (res.data && res.data.code === 1) {
-                  const opinionList = res.data.doclist.slice(0,7);
+                  const opinionList = res.data.doclist;
                   opinionList.forEach((item, index) => {
                     item.key = index + 1
                   })
@@ -171,6 +171,7 @@ class NewHome extends React.Component {
     const {opinionList,todayOpinionArr, alldayOpinion,todayWarningOpinion, alldayWarningOpinion, 
       weiboAll, weiboNegative,opinionCountArr,homeMessage,hotWordData} = this.state;
     const {userInfo,themeColor} = this.props;
+    const innerHeight = window.innerHeight;
       const Notification = (state,size) => {
           switch (state) {
             case 'TodayOpinionBox':
@@ -198,7 +199,7 @@ class NewHome extends React.Component {
           }
         }  
     return (
-      <div style={{backgroundColor: themeColor.grounding.color}}>
+      <div style={{backgroundColor: themeColor.grounding.color,minHeight:`${innerHeight}px`}}>
         <div className="informs" style={userInfo.alerMsg === '' ? {display: 'none'} : {display: 'flex'}}>
           <span> {userInfo.alerMsg}</span>
           <Icon type="close" onClick={this.informs.bind(this)} style={{color: '#fff'}}/>
@@ -206,7 +207,7 @@ class NewHome extends React.Component {
         <div className="home-pages" >
           <div className="container" style={this.props.type !== undefined ? {width: '92%'} : {width: '100%',display:'flex',flexWrap:'wrap'}}>
          { homeMessage.map((item,index) => {
-            return <div key={index} style={{width:`${item.defaultSize-2}%`,margin:'1%'}}>{Notification(item.name,item.defaultSize)}</div>
+            return <div key={index} style={{width:`${item.defaultSize-1}%`,margin:'10px 0.5%'}}>{Notification(item.name,item.defaultSize)}</div>
           })
          }
           </div>

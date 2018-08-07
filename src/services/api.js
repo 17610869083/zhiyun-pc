@@ -430,3 +430,23 @@ export const api_bidding_message_list = host + 'oClf/BidDo?action=docList'
 export const api_bidding_message_del = host + 'oClf/BidDo?action=docDel'
 // 招投标导出
 export const api_bidding_export = host + 'exp/ExportData?action=exportDataList'
+//重点网站首页展示模块
+export const api_show_key_website = host +'keyWebsite?action=showKeyWebsite';
+//获取所有重点网站的标签
+export const api_list_key_website_tag = host +'keyWebsite?action=listKeyWebsiteTag';
+//保存重点网站标签
+export const api_save_key_website_tag = host +'keyWebsite?action=saveKeyWebsiteTag';
+//修改重点网站标签
+export const api_update_key_website_tag = host +'keyWebsite?action=updateKeyWebsiteTag';
+//删除重点网站标签
+export const api_remove_key_website_tag = host +'keyWebsite?action=removeKeyWebsiteTag';
+//根据标签ID，获取标签下的所有网站
+export const api_list_key_website_name = host+'keyWebsite?action=listKeyWebsiteName';
+//根据标签ID，添加网站名称
+export const api_save_key_website_name = host +'keyWebsite?action=saveKeyWebsiteName';
+//根据网站名称ID，修改网站名称
+export const api_update_key_website_name = host +'keyWebsite?action=updateKeyWebsiteName';
+//根据网站名称ID，删除网站名称
+export const api_remove_key_website_name = host +'keyWebsite?action=removeKeyWebsiteName';
+//调整标签顺序
+export const api_key_website_sort = host +'keyWebsite?action=keyWebsiteSort';

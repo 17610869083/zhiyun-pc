@@ -61,7 +61,8 @@ class CustomHome extends React.Component{
          firstSize:0,
          result:0,
          allList:[],
-         groupName:'2'
+         groupName:'2',
+         isEnter:false
         }
     }
     componentDidMount(){
@@ -78,9 +79,8 @@ class CustomHome extends React.Component{
       e.preventDefault();
     }
     drop = (e) => { 
-        this.refs.audio.play();
+            this.refs.audio.play();
             let {isDrag} = this.state;
-           
             this.setState({
                 isDrag:true
             },()=>{
@@ -90,14 +90,13 @@ class CustomHome extends React.Component{
                 this.setState({
                     moduleList: applyDrag(this.state.moduleList, e),
                     allList:this.state.allList.concat(e.payload),
-                    isDragend:true,
-                    
+                    isDragend:true
                 })
             })
-
     }
 
     drop1 = (type,e) => {
+        if(this.state.isEnter){
         let sNum = 0;let bNum=0;let num = 0;
         let moduleCont0 =  applyDrag(this.state.moduleCont0, e);
         moduleCont0.forEach(item => {
@@ -124,7 +123,7 @@ class CustomHome extends React.Component{
         }
         if(sNum>=3){
             moduleCont0.forEach(item => {
-               item.defaultSize = 33;   
+               item.defaultSize = 33.3;   
           })
         }else if(moduleCont0.length === 2){
                 moduleCont0[0]['defaultSize'] =  moduleCont0[0]['size'] ;
@@ -133,9 +132,11 @@ class CustomHome extends React.Component{
         this.setState({
             moduleCont0: moduleCont0
         })
+       }
     }
 
     drop2 = (e) => {
+        if(this.state.isEnter){
         let sNum = 0;let bNum = 0;let num = 0;
         let moduleCont1 =  applyDrag(this.state.moduleCont1, e);
         moduleCont1.forEach(item => {
@@ -161,7 +162,7 @@ class CustomHome extends React.Component{
         }
         if(sNum>=3){
             moduleCont1.forEach(item => {
-               item.defaultSize = 33;   
+               item.defaultSize = 33.3;   
           })
         }else if(moduleCont1.length === 2){
 
@@ -171,8 +172,10 @@ class CustomHome extends React.Component{
         this.setState({
             moduleCont1: moduleCont1
        })
+      }
     }
     drop3 = (e) => {
+        if(this.state.isEnter){
         let sNum = 0;let bNum = 0;let num = 0;
         let moduleCont2 =  applyDrag(this.state.moduleCont2, e);
         moduleCont2.forEach(item => {
@@ -198,7 +201,7 @@ class CustomHome extends React.Component{
         }
         if(sNum>=3){
             moduleCont2.forEach(item => {
-               item.defaultSize = 33;   
+               item.defaultSize = 33.3;   
           })
         }else if(moduleCont2.length === 2){
             moduleCont2[0]['defaultSize'] =  moduleCont2[0]['size'] ;
@@ -207,8 +210,10 @@ class CustomHome extends React.Component{
         this.setState({
             moduleCont2: moduleCont2
        })
+       }
     }
     drop4 = (e) => {
+        if(this.state.isEnter){
         let sNum = 0;let bNum = 0;let num = 0;
         let moduleCont3 =  applyDrag(this.state.moduleCont3, e);
         moduleCont3.forEach(item => {
@@ -234,7 +239,7 @@ class CustomHome extends React.Component{
         }
         if(sNum>=3){
             moduleCont3.forEach(item => {
-               item.defaultSize = 33;   
+               item.defaultSize = 33.3;   
           })
         }else if(moduleCont3.length === 2){
             moduleCont3[0]['defaultSize'] =  moduleCont3[0]['size'] ;
@@ -244,7 +249,9 @@ class CustomHome extends React.Component{
             moduleCont3: moduleCont3
        })
     }
+    }
     drop5 = (e) => {
+        if(this.state.isEnter){
         let sNum = 0;let bNum = 0;let num = 0;
         let moduleCont4 =  applyDrag(this.state.moduleCont4, e);
         moduleCont4.forEach(item => {
@@ -270,7 +277,7 @@ class CustomHome extends React.Component{
         }
         if(sNum>=3){
             moduleCont4.forEach(item => {
-               item.defaultSize = 33;   
+               item.defaultSize = 33.3;   
           })
         }else if(moduleCont4.length === 2){
             moduleCont4[0]['defaultSize'] =  moduleCont4[0]['size'] ;
@@ -279,6 +286,7 @@ class CustomHome extends React.Component{
         this.setState({
             moduleCont4: moduleCont4
        })
+      }
     }
     //删除模块
     closeModule(index,type){
@@ -297,18 +305,14 @@ class CustomHome extends React.Component{
           moduleCont.forEach(item => {
               item.defaultSize = 50;
           })
-       }else{
+       }else if(moduleCont.length !== 0){
         moduleCont[0]['defaultSize'] = moduleCont[0]['size'];
        }
         this.setState({
             [type]:moduleCont,
-            firstSize:moduleCont[0]['defaultSize']?moduleCont[0]['defaultSize']:0,
+            firstSize:moduleCont[0]?moduleCont[0]['defaultSize']:0,
             allList:allList
         })
-    }
-    DragEnter = (e) => {
-         console.log(e)
-
     }
     confim = () => {
         request(api_save_widget, {
@@ -323,11 +327,40 @@ class CustomHome extends React.Component{
               }
           })
     }
+    leave = () => {
+        this.setState({
+            isEnter:true
+        })
+    }
+    remove = () => {
+       const list= [
+            {name:'TodayOpinionBox',defaultSize:40},
+            {name:'OpinionTrendBox',defaultSize:60},
+            {name:'OpinionCountBox',defaultSize:100},
+            {name:'HotWordBox',defaultSize:33.3},
+            {name:'NewestWarningOpinionBox',defaultSize:33.3},
+            {name:'NegativeOpinionBox',defaultSize:33.3},
+            {name:'NewestOpinionBox',defaultSize:50},
+            {name:'WeiboOpinionBox',defaultSize:50},
+            {name:'MediaDistribution',defaultSize:50},
+            {name:'TopicOpinionBox',defaultSize:50},
+        ];
+        request(api_save_widget, {
+            method: 'POST',
+            headers: {
+              "Content-Type": "application/x-www-form-urlencoded"
+            },
+            body: `widget=${JSON.stringify(list)}`
+          }).then(res => {
+              if(res.data.code === '1'){
+                 history.push('/home')
+              }
+          })
+    }
     render(){
-        
         let {browserHeight,flag,isDragend,moduleList,moduleCont0,moduleCont1,moduleCont2,moduleCont3,moduleCont4} = this.state;
         let num = (browserHeight+110)/3;
-        let confimStyle = flag && isDragend ?{display:'block'}:{display:'none'}
+        let confimStyle = flag && isDragend ?{display:'flex',justifyContent:'center',alignItems:'center'}:{display:'none'};
         let moduleListItems = moduleList.map ((item,index) => {
             return  <Draggable key={index}>
                     <div>
@@ -382,8 +415,7 @@ class CustomHome extends React.Component{
         您的浏览器不支持 audio 元素。
       </audio>                
                 <div className="custom-title">首页布局设置</div>
-                <div style={{height:`${browserHeight}px`,overflowY: 'auto',padding:'20px'}}
-                >   
+                <div style={{height:`${browserHeight}px`,overflowY: 'auto',padding:'20px'}}>   
                 <Container groupName="1" orientation='horizontal'
                         data-id='1'
                         onDrop={ this.drop1.bind(this,'moduleCont0') }
@@ -424,13 +456,17 @@ class CustomHome extends React.Component{
                 </div>  
                 <div className="slider-module"
                 style={ flag&& isDragend ?{bottom:'0px',height:'72px'}:flag?{bottom:'0px',height:'32px'}:{bottom:'0px',height:num+'px'}}>
-                <p  className="custom-confim" style={confimStyle} onClick={this.confim}>确定</p>   
+                <div style={confimStyle}>
+                <p className="custom-confim"  onClick={this.confim}>确定</p>  
+                <span onClick={this.remove}>恢复默认</span> 
+                </div>
                 <div className="slider-switch" onClick = {this.showList}>
                     <IcontFont type="icon-caidanshousuoicon" ></IcontFont>
                 </div>
                    <Container groupName='1' orientation='horizontal'
                    onDrop={ this.drop }
                    getChildPayload={i => this.state.moduleList[i]}
+                   onDragLeave = {this.leave}
                    >
                    {moduleListItems}
                    </Container>

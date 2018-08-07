@@ -74,7 +74,7 @@ class WeiboOpinionBox extends React.PureComponent {
                                                     </div>
                                                 </div>
                                             </li>
-                                        ) : <BlankPage status={blankFlag}  desc='<span>空空如也，赶紧去<a href="index.html#/warnsetting">添加</a>关键词</span>'/>
+                                        ) : <BlankPage status={blankFlag}  desc='<span>空空如也，赶紧去<a href="index.html#/allopinion/warnsetting">添加</a>关键词</span>'/>
                                     }
                                 </ul>
                             </TabPane>
@@ -92,7 +92,7 @@ class WeiboOpinionBox extends React.PureComponent {
                                                     </div>
                                                 </div>
                                             </li>
-                                        ) : <BlankPage status={blankFlag}  desc='<span>空空如也，赶紧去<a href="index.html#/warnsetting">添加</a>关键词</span>'/>
+                                        ) : <BlankPage status={blankFlag}  desc='<span>空空如也，赶紧去<a href="index.html#/allopinion/warnsetting">添加</a>关键词</span>'/>
                                     }
                                 </ul>
                             </TabPane>
