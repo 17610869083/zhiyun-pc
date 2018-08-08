@@ -43,8 +43,8 @@ class BiddingOpinion extends React.Component {
             topicNavMessage: [],
             language: ['cn', 'kr', 'jp', 'uygur', 'zang', 'en'],
             CHlan: ['中文', '한국어', '日本語', 'ئۇيغۇر يېزىقى', 'བོད་ཡིག། ', 'English'],
-            infoList: ['信息列表', '信息列表', '信息列表', '信息列表', '信息列表'],
-            schemeSetting: ['方案设置', '方案设置', '方案设置', '方案设置', '方案设置'],
+            infoList: ['信息列表', '정보 목록', '情報リスト', 'ئۇچۇر جەدۋىلى ', 'ཆ་འཕྲིན་རེའུ་མིག་', 'Information list'],
+            schemeSetting: ['方案设置', '방안 설치', '案設定', 'لايىھەسىنى بەلگىلەش ', 'བྱ་རྒྱུའི་འཆར་གཞིའི་ནང་ཆ་', 'Solution set'],
             theme: ['主题', '테마', 'テーマ', 'تېما ', 'ཁ་བྱང་གཙོ་བོ་', 'theme'],
             addTheme: ['添加主题', '주제 추가', 'トピックを追加', 'تېما قوشۇش ', 'སྦྱོར་རྟ་བྱེད་པ་། བརྗོད་བྱ་གཙོ་བོ་', 'Add topic'],
             InputThem: ['请输入主题名称', '제목을 입력하십시오.', '件名を入力してください', 'تېمىنى كىرگۈزۈڭ نامى ', 'བརྗོད་བྱ་གཙོ་བོའི་མིང་འབྲི་རོགས་།', 'Please enter a subject name'],
@@ -52,7 +52,26 @@ class BiddingOpinion extends React.Component {
             cancel: ['取消', '취소', 'キャンセル', 'ئەمەلدىن قالدۇرماق ', 'མི་དགོས་པར་བཟོ་བ་', 'cancel'],
             rename: ['重命名', '이름 바꾸기', '名前を変更する', 'قايتا ناملاش ', 'མིང་བསྐྱར་འངོགས་', 'Rename'],
             del: ['删除', '삭제', '削除', 'ئۆچۈرۈش ', '“ སུབ་པ་” ཞེས་པ་', 'delete'],
-            add: ['添加','添加','添加','添加','添加','添加']
+            add: ['添加','락 토 페 린 을 첨가','添加','قوشماق ','ཁ་སྣོན་','add'],
+            calssNamelen: ['专题名称请不要超过28个字符', '특집 명칭 하지 마 세요. 이상 28 개 문자', '名前は28文字を超えないでください。', 'مەخسۇس نامى قىلماڭ ھەرپ - بەلگە ', 'ཆེད་དོན་མིང་ཡིག་རྟགས་མ་བྱེད་རོགས་།', 'The project name should not exceed 28 characters'],
+            modal: {
+                delclass: {
+                    title: ['删除分类', '분류를 삭제하다', '分類を削除する', 'ئۆچۈرۈش تۈرلىرى', 'བསུབ་རིགས་དབྱེ་', 'Delete the classification'],
+                    tip: ['确认删除此主题吗?', '확인 을 삭제 주제?', 'このテーマの削除を確認しますか?', 'ئۆچۈرەمسىز ئاساسىي تېمىسىنى ئېيتىپ بەرسىڭىز بولامدۇ ؟', 'གཏན་འཁེལ་འདི་ནི་གསུབ་ནས་བརྗོད་བྱ་གཙོ་བོ་དམ་།', 'Are you sure to delete this topic?']
+                },
+                delspecial: {
+                    title: ['删除专题', '주제를 삭제하다', 'テーマを削除する', 'ئۆچۈرۈش مەخسۇس', 'ཆེད་དོན་སྐོར་བསུབས་ཡོད་པ་བཅས་', 'Delete the project'],
+                    tip: ['确定删除此专题吗', '이 주제를 삭제하겠습니까?', 'このパネルを削除しますか?', 'ئۆچۈرەمسىز بۇ مەخسۇس ماس كېلىدۇ ؟', 'གཏན་འཁེལ་འདི་ནི་གསུབ་ནས་ཆེད་དོན་ཡོད་དམ་།', 'Are you sure to delete this topic']
+                },
+                rnameclass: {
+                    title: ['重命名分类', '이름을 새로 명명하다.', '命名分類', 'قايتا نام بېرىش تۈرگە ئايرىش', 'མིང་བསྐྱར་འདོགས་རིགས་དབྱེ་', 'renaming'],
+                    tip: ['输入新的分类名', '새로 운 분류 명을 입력하다.', '新しい分類名を入力する。', 'كىرگۈزۈش يېڭى تۈرگە ئايرىش نامى', 'རིགས་དགར་མིང་གསར་པ་ནང་འཇུག་', 'Enter a new category name']
+                }
+            },
+            delsuccess: ['删除成功', '성공을 지우다', '削除成功', 'ئۆچۈرۈلدى. ئۆچۈرۈلدى', 'སྐོར་བསུབས་ཡོད་པ་བཅས་གྲུབ་འབྲས་ཐོབ་པའི་ངང་', 'successfully deleted'],
+            subjectName: ['请输入主题名称', '제목을 입력하십시오.', '件名を入力', 'してください', 'تېمىنى كىرگۈزۈڭ نامى', 'བརྗོད་བྱ་གཙོ་བོའི་མིང་འབྲི་རོགས་།', 'Please enter a subject name'],
+            systemPrompt: ['系统提示', '시스템 제시', 'システムヒント', 'سىستېما كۆرسەتمىسى', 'མ་ལག་གིས་སྟོན་པ་ནི་', 'The system prompt'],
+            delalltopic: ['请先删除该分类下的所有专题', '우선이 분류 된 모든 문제를 삭제 해 주십시오.', 'この分類下の全ての全てを削除しなさい。', 'ئالدى بىلەن بۇ تۈرنىڭ ئىچىدە بارلىق تېما', 'རིགས་དབྱེ་བའི་སྔོན་ལ་གསུབ་རོགས་ལ་དབང་བའི་ཆེད་དོན་', 'Please delete all topics under this category first']
         };
 
     }
@@ -207,7 +226,7 @@ class BiddingOpinion extends React.Component {
     onChange(e){
           const {value} = e.target;
           if(value.length>=28){
-            message.error('分类名称请不要超过28个字符');
+            message.error(this.state.calssNamelen[this.props.languages]);
             return;
           } 
     	  this.setState({inputValue:e.target.value})
@@ -279,7 +298,7 @@ class BiddingOpinion extends React.Component {
     // 确认文件夹添加
     handleOk(e){
         if(this.state.inputValue.trim() === '' ) {
-            message.error('请输入主题名!')
+            message.error(this.state.subjectName[this.props.languages])
             return
         }
         request(api_sorted_cat_add,{
@@ -336,10 +355,10 @@ class BiddingOpinion extends React.Component {
         this.setState({visibleOne:false});
     	if(this.state.childRen!==0){
                 Modal.info({
-                   title: '系统提示',
+                   title: this.state.systemPrompt[this.props.languages],
                    content: (
                    <div>
-                   <p>请先删除该分类下的所有专题</p>
+                   <p>{this.state.delalltopic[this.props.languages]}</p>
                    </div>
                     ),
                     onOk() {},
@@ -353,7 +372,7 @@ class BiddingOpinion extends React.Component {
                 body:`catid=${this.state.catid}&lang=${this.state.language[this.props.match.params.languages]}`
             }).then((res)=>{
                 if(res.data.code === 1) {
-                    message.success('删除成功')
+                    message.success(this.state.delsuccess[this.props.languages])
                 }
                 this.initCard()
     	    })
@@ -381,7 +400,7 @@ class BiddingOpinion extends React.Component {
                     // history.push({
                     //     pathname:`/bidding/information/`
                     // });
-                    message.success('删除成功')
+                    message.success(this.state.delsuccess[this.props.languages])
                 }
                 this.initCard()
          });
@@ -497,33 +516,33 @@ class BiddingOpinion extends React.Component {
                     />
                     </Modal>
                     <Modal
-                    title="删除分类"
+                    title={this.state.modal.delclass.title[this.props.languages]}
                     visible={this.state.visibleOne}
                     onOk={this.delOkOne.bind(this)}
                     onCancel={this.delCancelOne.bind(this)}
                     footer={modalFooter(this.delCancelOne, this.delOkOne, this)}
                     >
-                    <p className="textCenter">确认删除此主题吗?</p>
+                    <p className="textCenter">{this.state.modal.delclass.tip[this.props.languages]}?</p>
                     </Modal>
                     <Modal
-                    title="删除专题"
+                    title={this.state.modal.delspecial.title[this.props.languages]}
                     visible={this.state.visibleTwo}
                     onOk={this.delOkTwo.bind(this)}
                     onCancel={this.delCancelTwo.bind(this)}
                     footer={modalFooter(this.delCancelTwo, this.delOkTwo, this)}
                     >
-                    <p className="textCenter">确认删除此专题吗?</p>
+                    <p className="textCenter">{this.state.modal.delspecial.tip[this.props.languages]}?</p>
                     {/* <Button onClick={this.delCancelTwo.bind(this)}>取消123</Button>
                     <Button onClick={this.delOkTwo.bind(this)}>确定123</Button> */}
                     </Modal>
                     <Modal
-                    title="重命名分类"
+                    title={this.state.modal.rnameclass.title[this.props.languages]}
                     visible={this.state.visibleThree}
                     onOk={this.delOkThree.bind(this)}
                     onCancel={this.delCancelThree.bind(this)}
                     footer={modalFooter(this.delCancelThree, this.delOkThree, this)}
                     >
-                    <p className="textCenter">输入新的分类名</p>
+                    <p className="textCenter">{this.state.modal.rnameclass.tip[this.props.languages]}</p>
                     <Input className="gapInput" onChange={this.onChange.bind(this)}  
                      value={this.state.inputValue}  maxLength={'28'}/>
                 </Modal>

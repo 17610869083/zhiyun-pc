@@ -7,6 +7,7 @@ class BiddingCreate extends React.Component {
     constructor(props){
         super(props);
         this.state = {
+            lang: 0,
             visible: false,
             visible1: false,
             prevhash: '',
@@ -36,7 +37,13 @@ class BiddingCreate extends React.Component {
             },
             addrule: ['添加规则+', '규칙 추가+', 'ルールを追加する+', '+ قوشۇش قائىدىسى', 'སྦྱོར་རྟ་བྱེད་པ་། སྒྲིག་སྲོལ་+', 'Add rules+'],
             confirm: ['确认', '확인', '確認', 'بېكىتىش ', 'ཁས་ལེན་གསལ་ཐག་ཆོད་པ་', 'confirm'],
-            cancel: ['取消', '취소', 'キャンセル', 'ئەمەلدىن قالدۇرماق ', 'མི་དགོས་པར་བཟོ་བ་', 'cancel']
+            cancel: ['取消', '취소', 'キャンセル', 'ئەمەلدىن قالدۇرماق ', 'མི་དགོས་པར་བཟོ་བ་', 'cancel'],
+            prevRule: ['请添加上一条规则', '규칙을 하나 더 해 주세요.', 'ルールを添付してください。', 'قوشۇپ بىر قائىدىسى', 'སྒྲིག་ལམ་གང་ལའང་རོགས་སྟེང་དུ་བསྣན་', 'Please add the previous rule'],
+            subjectEmpty: ['主题词不能为空！', '제목 단어는 비워 둘 수 없습니다!', '件名は空にできません！', 'تېما قۇرۇق بولسا بولمايدۇ .', 'མཇུག་ཏུ་སྟོང་མི་ཆོག་', 'Subject words cannot be empty!'],
+            specialCharacters: ['请不要带有特殊字符', '특별 한 단어를 가지고 있지 마세요.', '特殊文字を持たないで下さい。', 'قىلماڭ تۈسىنى ئالغان ئالاھىدە ھەرپ - بەلگە ', 'མ་བྱེད་རོགས་དང་འདྲེས་། དམིགས་བསལ་ཡིག་རྟགས་', 'Please do not carry special characters'],
+            confirm: ['确认', '확인', '確認', 'بېكىتىش ', 'ཁས་ལེན་གསལ་ཐག་ཆོད་པ་', 'confirm'],
+            cancel: ['取消', '취소', 'キャンセル', 'ئەمەلدىن قالدۇرماق ', 'མི་དགོས་པར་བཟོ་བ་', 'cancel'],
+            keywordGroup: ['确定要删除这个关键词组吗?', '이 키워드 그룹을 삭제 하시겠습니까?', 'このキーワードグループを削除してもよろしいですか？', 'ئۆچۈرەمسىز بۇ ئاچقۇچلۇق سۆز بىرىكمىسى بارمۇ ؟ ', 'གནད་ཚིག་དེ་བསུབ་རོགས་། གཏན་འཁེལ་ཚོགས་ཆུང་ཡོད་དམ་།', 'Are you sure you want to delete this keyword group?']
         }
     }
 
@@ -100,7 +107,7 @@ class BiddingCreate extends React.Component {
         // console.log(this.state.modalinput)
         // console.log(this.state.editRoleId)
         if (this.state.modalinput['rule1'].trim() === '') {
-            message.error('主题词不能为空！')
+            message.error(this.state.subjectEmpty[this.state.lang])
             return false
         }
         this.state.num1[this.state.editRoleId]['rule1'] = this.state.modalinput['rule1']
@@ -115,7 +122,7 @@ class BiddingCreate extends React.Component {
     }
     addRole() {
         if (this.state.num1[this.state.num1.length - 1]['rule1'].trim() === '') {
-            message.error('请添加上一条规则')
+            message.error(this.state.prevRule[this.state.lang])
             return false
         }
         let newRole = [{
@@ -164,7 +171,7 @@ class BiddingCreate extends React.Component {
         let reg = /~|!|@|#|\$|\^|&|\*|=|\?|！|￥|-|（|）|%|【|】|\{|\}|；|;|%|,|，|。|\./g
         if(reg.test(value)){
             newValue  = value.replace(reg,'')
-            message.warning('请不要带有特殊字符');
+            message.warning(this.state.specialCharacters[this.state.lang]);
         } else {
             newValue  = value
         }
@@ -232,7 +239,7 @@ class BiddingCreate extends React.Component {
         <Modal
             visible={this.state.visible}
             title={this.state.settingWord[this.state.lang]}
-            okText="确定"
+            okText={this.state.confirm[this.state.lang]}
             onCancel={this.onModelCancel.bind(this)}
             onOk={this.onModelOk.bind(this)}
             footer={modalFooter(this.onModelCancel, this.onModelOk, this)}
@@ -331,9 +338,9 @@ class BiddingCreate extends React.Component {
           onCancel={this.handleCancel1.bind(this)}
           footer={null}
         >
-          <p className="textCenter">确定要删除这个关键词组吗?</p>
-          <Button onClick={this.handleCancel1.bind(this)}>取消123123</Button>
-          <Button onClick={this.handleOk1.bind(this)}>确认1231231</Button>
+          <p className="textCenter">{this.state.keywordGroup[this.state.lang]}</p>
+          <Button onClick={this.handleCancel1.bind(this)}>{this.state.cancel[this.state.lang]}</Button>
+          <Button onClick={this.handleOk1.bind(this)}>{this.state.confirm[this.state.lang]}</Button>
         </Modal></Row>
                 </div></div>);
         return (

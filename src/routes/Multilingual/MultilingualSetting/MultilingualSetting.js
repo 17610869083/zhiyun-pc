@@ -59,10 +59,10 @@ class BiddingSetting extends React.Component {
             fastSetting: ['快速设置', '빠른 설정', 'クイックセットアップ', 'تېز سۈرئەتتە بەلگىلەش ', 'མགྱོགས་མྱུར་ངང་སྒྲིག་འགོད་', 'Quick Setup'],
             seniorSetting: ['高级设置', '고급 설정', '詳細設定', 'تەپسىلىي تەڭشەكلەر ', 'མཐོ་རིམ་སྒྲིག་འགོད་', 'advanced settings'],
             thematicName: ['方案名称', '프로그램 이름', 'プログラム名', 'لايىھە نامى ', 'ཇུས་གཞིའི་མིང་', 'Program name'],
-            type: ['类型', '类型', '类型', '类型', '类型', '类型'],
+            type: ['类型', '유형', 'タイプ', 'ھۆججەت تىپى ', 'རིགས་དབྱེ་', 'type'],
             fastKeyWord: ['匹配关键词组合', '키워드 조합 일치', '一致するキーワードの組み合わせ', 'ئاچقۇچلۇق سۆز ماس كېلىدىغان بىرىكمە ', 'ངང་གནད་ཚིག་དག་སྒྲིག་སྡེབ་སྒྲིག་', 'Matching keyword combination'],
             fastKeyWordTip: ['关键词组合由主题词、关联词1、关联词2和排除词共4组词组成。', '키워드 조합은 주제 단어, 관련 단어 1, 관련 단어 2 및 제외 단어의 총 4 세트로 구성됩니다.', 'キーワードの組み合わせは、件名、関連語1、関連語2、除外語の合計4組のキーワードで構成されます。', 'ئاچقۇچلۇق سۆز گۇرپىدا باش تېما قىلىپ ، مۇناسىۋەتلىك سۆز 1 ، 2 ۋە سۆز جەمئىي تۆت سۆز بىرىكمىسى تەركىبىدىكى باغلىغۇچى . ', 'གནད་ཚིག་ཚན་སྡེབ་དེ་རེ་རེའི་1 ལ་བཀོད་པའི་ཕྲད་དང་2 ལ་བཀོད་པའི་ཕྲད་དང་ཚིག་གྲུབ་བྱེད་ཀྱི་ཚིག་4 ལས་གྲུབ་པ་ཞིག་རེད་།', 'The keyword combination consists of a total of four sets of keywords: subject words, related words 1, related words 2 and excluded words.'],
-            seniorWord: ['匹配关键词', '匹配关键词', '匹配关键词', '匹配关键词', '匹配关键词', '匹配关键词'],
+            seniorWord: ['匹配关键词', '정합 키워드.', 'キーワードに合う', 'ئاچقۇچلۇق سۆز ماس كېلىدىغان ', 'ཟླ་སྒྲིག་གནད་ཚིག་', 'Set keywords'],
             seniorWordTip: {
                 row1: ['关键词组合：关键词之间用“+”、“-”或者“*”连接，符号均为英文状态。', '키워드 조합 : 키워드는 "+", "-"또는 "*"로 연결되며 기호는 영어로 표시됩니다.', '"キーワードの組み合わせ：キーワードは" + "、" - "、" * "で結ばれ、記号は英語で表示されます。', 'ئاچقۇچلۇق سۆز بىرىكمىسى : ھالقىلىق سۆز ئوتتۇرىسىدىكى « + » ، « - » ياكى « * » ئارقىلىق تۇتاشتۇرۇلۇپ ، بەلگىسى «?放米 ئىنگلىزچە ھالىتى .', 'གནད་ཚིག་ལ་སྒྲིག་སྟངས་གནད་ཚིག་བར་གྱི་“ + ” དང་” སྟེ་“ ཡང་ན་” “ འབྲེལ་མཐུད་རྟགས་ཚང་མ་དབྱིན་ཡིག་གི་གནས་སུ་གྱར་ཡོད་།', 'Keyword combination: Keywords are connected by "+", "-" or "*", and the symbols are in English.'],
                 row2: ['①“+”代表或(或者)','①"+"는 또는 (또는)', '①"+"は、または（または）', '① « + » ۋەكىللىرى ياكى ( ياكى )', '① “ + ” ཀྱི་འཐུས་མིའམ་ཡང་ན་（ ཡང་ན་）', '①"+" stands for or (or)'],
@@ -74,7 +74,18 @@ class BiddingSetting extends React.Component {
             },
             addrule: ['添加规则+', '규칙 추가+', 'ルールを追加する+', '+ قوشۇش قائىدىسى', 'སྦྱོར་རྟ་བྱེད་པ་། སྒྲིག་སྲོལ་+', 'Add rules+'],
             save: ['保存', '保存', '保存', '保存', '保存', '保存'],
-            cancel: ['取消', '취소', 'キャンセル', 'ئەمەلدىن قالدۇرماق ', 'མི་དགོས་པར་བཟོ་བ་', 'cancel']
+            cancel: ['取消', '취소', 'キャンセル', 'ئەمەلدىن قالدۇرماق ', 'མི་དགོས་པར་བཟོ་བ་', 'cancel'],
+            calssNamelen: ['专题名称请不要超过28个字符', '특집 명칭 하지 마 세요. 이상 28 개 문자', '名前は28文字を超えないでください。', 'مەخسۇس نامى قىلماڭ ھەرپ - بەلگە ', 'ཆེད་དོན་མིང་ཡིག་རྟགས་མ་བྱེད་རོགས་།', 'The project name should not exceed 28 characters'],
+            delsuccess: ['删除成功', '성공을 지우다', '削除成功', 'ئۆچۈرۈلدى. ئۆچۈرۈلدى', 'སྐོར་བསུབས་ཡོད་པ་བཅས་གྲུབ་འབྲས་ཐོབ་པའི་ངང་', 'successfully deleted'],
+            completeRules: ['请把规则填写完整', '규칙을 완전하게 써 주십시오.', 'ルールを完全に記入してください。', 'ماڭا قائىدە مۇكەممەل', 'སྒྲིག་སྲོལ་ཆ་ཚང་བ་ཞིག་འབྲི་རོགས་།', 'Please complete the rules'],
+            prevRule: ['请添加上一条规则', '규칙을 하나 더 해 주세요.', 'ルールを添付してください。', 'قوشۇپ بىر قائىدىسى', 'སྒྲིག་ལམ་གང་ལའང་རོགས་སྟེང་དུ་བསྣན་', 'Please add the previous rule'],
+            topicEmpty: ['专题名称不能为空', '특정 한 제목의 명칭은 비어 있을 수 없다.', '件名は空ではない。', 'مەخسۇس نامى قۇرۇق بولسا بولمايدۇ ', 'ཆེད་དོན་མིང་སྟོང་', 'The topic name cannot be empty'],
+            keyword: {
+                addsuccess: ['关键词添加成功', '키워드 첨가 성공 했 다', 'キーワードが成功する。', 'ئاچقۇچلۇق سۆز قوشۇش مۇۋەپپەقىيەت ', 'གནད་ཚིག་སྦྱོར་རྟ་བྱེད་པ་ལེགས་འགྲུབ་བྱུང་', 'Keywords added successfully'],
+                editsuccess: ['关键词修改成功', '키워드 개정 에 성공 했 다', 'キーワードが修正に成功した。', 'ئاچقۇچلۇق سۆز مۇۋەپپەقىيەتلىك ئۆزگەرتىلدى .', 'གནད་ཚིག་བཟོ་བཅོས་ལེགས་འགྲུབ་བྱུང་', 'Successful keyword modification'],
+                editerror: ['关键词修改失败', '키워드 수정 에 실패 했 다', 'キーワードが改正に失敗した。', 'ئاچقۇچلۇق سۆز تۈزىتىش كىرگۈزۈش مەغلۇپ بولدى', 'གནད་ཚིག་བཟོ་བཅོས་ཕམ་', 'Keyword modification failed']
+            },
+            keywordCombination: ['关键词组合', '키워드 조합', 'キーワード組合', 'ئاچقۇچلۇق سۆز بىرىكمىسى', 'བརྡ་ཆད་གཙོ་བོ་སྡེབ་སྒྲིག་', 'Keyword combination']
         }
     }
     componentWillReceiveProps(nextprops){
@@ -183,7 +194,7 @@ class BiddingSetting extends React.Component {
      seniorRule(e){
          
         if(this.state.num3.length < 0 || this.state.num3[this.state.num3.length-1].rule.trim() === '' || this.state.num3[this.state.num3.length-1].rule.trim() === undefined ) {
-            message.error('请添加上一条规则')
+            message.error(this.state.prevRule[this.props.languages])
             return false
         }
         this.setState({num3:this.state.num3.concat([{"rule": "", "rule1":"","rulecode1":"","id":"","rule2":"",
@@ -325,7 +336,7 @@ class BiddingSetting extends React.Component {
         //     }               
         // });
         if (this.state.topicNameValue.trim() === '') {
-            message.error('专题名称不能为空!')
+            message.error(this.state.topicEmpty[this.props.languages])
             return false
         }
         let rules = this.state.roleArr.length === 0 ? JSON.stringify(this.state.num1) : JSON.stringify(this.state.roleArr)
@@ -333,19 +344,19 @@ class BiddingSetting extends React.Component {
         if(this.state.addType === 1) {
             if(this.search2Obj(this.props.location.search).type === 'add') {
                 if(ruleArr.length === 0 || ruleArr[ruleArr.length-1]['rule1'].trim() === '') {
-                    message.error('请把规则填写完整!')
+                    message.error(this.state.completeRules[this.props.languages])
                     return false
                 }
             } else {
                 
                 if(ruleArr.length > 0) {
                     if(ruleArr[ruleArr.length-1].rule1.trim() === '') {
-                        message.error('请把规则填写完整!')
+                        message.error(this.state.completeRules[this.props.languages])
                         return false
                     }
                 } else{
                     if(!this.isLegitimate(this.state.num1)) {
-                        message.error('请把规则填写完整!')
+                        message.error(this.state.completeRules[this.props.languages])
                         return false
                     }
                 }
@@ -356,7 +367,7 @@ class BiddingSetting extends React.Component {
 
 
         if(this.state.addType === 3 && this.state.num3[this.state.num3.length-1]['rule'].trim() === '' ) {
-            message.error('请把规则添加完整!')
+            message.error(this.state.completeRules[this.props.languages])
             return false
         }
         
@@ -369,7 +380,7 @@ class BiddingSetting extends React.Component {
                 body:`action=addGrade&addtype=${this.state.addtype}&lang=${this.state.language[this.props.match.params.languages]}&clfname=${this.state.topicNameValue}&catid=${this.state.select}&rule=${this.state.addType-0 === 3 ? encodeURIComponent(JSON.stringify(this.state.num3)) :encodeURIComponent(rules)}`
             }).then((res) => {
                 if(res.data.code===1){
-                    message.success('关键词添加成功');
+                    message.success(this.state.keyword.addsuccess[this.props.languages]);
                     history.push({
                         pathname: 'multilingual/'+ this.props.match.params.languages +'/multilingual'
                     })
@@ -387,14 +398,14 @@ class BiddingSetting extends React.Component {
             }).then((res) => {
 
                 if(res.data.code===1){
-                    message.success('关键词修改成功');
+                    message.success(this.state.keyword.editsuccess[this.props.languages]);
                     this.props.setlocationPathname({topicid:this.props.getRouter.topicid});
                     
                     history.push({
                         pathname: `/multilingual/${this.props.match.params.languages}/multilingual`,
                     })
                 } else {
-                    message.error('关键词修改失败')
+                    message.error(this.state.keyword.editerror[this.props.languages])
                 }
             })
         }
@@ -448,7 +459,7 @@ class BiddingSetting extends React.Component {
   TopicNameChange(e){
         const {value} = e.target;
         if(value.length>=28){
-              message.error('专题名称请不要超过28个字符');
+              message.error(this.state.calssNamelen[this.props.languages]);
               return;
         }
         this.setState({
@@ -506,7 +517,7 @@ class BiddingSetting extends React.Component {
         body: `&ruleid=${delrole[0].id}&lang=${this.state.language[this.props.match.params.languages]}`
     }).then((res) => {
         if(res.code === 1) {
-            message.success('删除成功');
+            message.success(this.state.delsuccess[this.props.languages]);
         }
     })
     }
@@ -525,7 +536,7 @@ class BiddingSetting extends React.Component {
                 body: `&ruleid=${this.state.num3[index].id}`
         }).then((res) => {
             if(res.code === 1) {
-                message.success('删除成功');
+                message.success(this.state.delsuccess[this.props.languages]);
             }
         })
     }
@@ -722,7 +733,7 @@ class BiddingSetting extends React.Component {
                                 </div>
                                 <FormItem
                                     {...formItemLayout}
-                                    label="关键词组合"
+                                    label={this.state.keywordCombination[this.props.languages]}
                                 >
                                 {/* <SettingSeniorTopic num3={this.state.num3}  
                                     onDelrule={this.onDelrule.bind(this)}
@@ -734,6 +745,7 @@ class BiddingSetting extends React.Component {
                                 <BiddingSeniorCreate num3={this.state.num3}
                                     onroleChange={this.onroleChange.bind(this)}
                                     ondelrole={this.ondelrole.bind(this)}
+                                    type='mul'
                                 />
                                 </FormItem>
                                 
