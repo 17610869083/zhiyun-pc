@@ -1,6 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {Row, Col,Icon} from 'antd';
+import {Row, Col,Icon,Progress} from 'antd';
 import IconFont from '../../components/IconFont';
 import ReactEchartsCore from 'echarts-for-react/lib/core';
 import echarts from 'echarts/lib/echarts';
@@ -43,76 +43,76 @@ class TodayOpinionBox extends React.PureComponent {
          if(this.negativeTimer) clearInterval(this.negativeTimer);
          if(this.ratioTimer) clearInterval(this.ratioTimer);
     }
-    componentWillMount(){
-        request(api_today_opinion)
-        .then(res => {
-        if(res.data){
-        const data = res.data;    
-        const todayAll = data['今日舆情'] && data['今日舆情'].length!==0 ? data['今日舆情'][4]['总数'] : 0;
-        const todayWarning = data['今日舆情'] && data['今日舆情'].length!==0 ? data['今日舆情'][3]['预警'] : 0;
-        const todayNegative = data['今日舆情'] && data['今日舆情'].length!==0? data['今日舆情'][2]['负面'] : 0;
-        const yesterdayNegative = data['昨日舆情'] && data['昨日舆情'].length!==0? data['昨日舆情'][2]['负面'] : 0;
-        const ratio = yesterdayNegative === 0 ? 0 : Number.parseInt((todayNegative - yesterdayNegative)/yesterdayNegative*100, 10);  
-        if(todayAll !==0){
-            this.allTimer=setInterval(()=>{
-                if(this.state.todayAll>=todayAll){
-                    this.setState({
-                        todayAll:todayAll
-                    })
-                    clearInterval(this.allTimer)
-                }else{
-                    this.setState({
-                        todayAll:this.state.todayAll+(Math.floor(todayAll/10))
-                    })
-                }
-            },100)  
-            }
-            if(todayWarning !==0){
-                this.warningTimer=setInterval(()=>{
-                    if(this.state.todayWarning>=todayWarning){
-                        this.setState({
-                            todayWarning:todayWarning
-                        })
-                        clearInterval(this.warningTimer)
-                    }else{
-                        this.setState({
-                            todayWarning:this.state.todayWarning+(Math.floor(todayWarning/10))
-                        })
-                    }
-                },100)  
-            }
-            if(todayNegative !==0){
-                this.negativeTimer=setInterval(()=>{
-                    if(this.state.todayNegative>=todayNegative){
-                        this.setState({
-                            todayNegative:todayNegative
-                        })
-                        clearInterval(this.negativeTimer)
-                    }else{
-                        this.setState({
-                            todayNegative:this.state.todayNegative+(Math.floor(todayNegative/10))
-                        })
-                    }
-                },100)  
-            }
-            if(ratio !==0){
-                this.ratioTimer=setInterval(()=>{
-                    if(this.state.ratio>=ratio){
-                        this.setState({
-                            ratio:ratio
-                        })
-                        clearInterval(this.ratioTimer)
-                    }else{
-                        this.setState({
-                            ratio:this.state.ratio+(Math.floor(ratio/10))
-                        })
-                    }
-                },100)  
-            }
-        }    
-        }) 
+    // componentDidMount(){
+    //     request(api_today_opinion)
+    //     .then(res => {
+    //     if(res.data){
+    //     const data = res.data;    
+    //     const todayAll = data['今日舆情'] && data['今日舆情'].length!==0 ? data['今日舆情'][4]['总数'] : 0;
+	// 	const todayWarning = data['今日舆情'] && data['今日舆情'].length!==0 ? data['今日舆情'][3]['预警'] : 0;
+    //     const todayNegative = data['今日舆情'] && data['今日舆情'].length!==0? data['今日舆情'][2]['负面'] : 0;
+    //     const yesterdayNegative = data['昨日舆情'] && data['昨日舆情'].length!==0? data['昨日舆情'][2]['负面'] : 0;
+    //     const ratio = yesterdayNegative === 0 ? 0 : Number.parseInt((todayNegative - yesterdayNegative)/yesterdayNegative*100, 10);  
+    //     if(todayAll !==0){
+    //         this.allTimer=setInterval(()=>{
+    //             if(this.state.todayAll>=todayAll){
+    //                 this.setState({
+    //                     todayAll:todayAll
+    //                 })
+    //                 clearInterval(this.allTimer)
+    //             }else{
+    //                 this.setState({
+    //                     todayAll:this.state.todayAll+(Math.floor(todayAll/10))
+    //                 })
+    //             }
+    //         },100)  
+    //         }
+    //         if(todayWarning !==0){
+    //             this.warningTimer=setInterval(()=>{
+    //                 if(this.state.todayWarning>=todayWarning){
+    //                     this.setState({
+    //                         todayWarning:todayWarning
+    //                     })
+    //                     clearInterval(this.warningTimer)
+    //                 }else{
+    //                     this.setState({
+    //                         todayWarning:this.state.todayWarning+(Math.floor(todayWarning/10))
+    //                     })
+    //                 }
+    //             },100)  
+    //         }
+    //         if(todayNegative !==0){
+    //             this.negativeTimer=setInterval(()=>{
+    //                 if(this.state.todayNegative>=todayNegative){
+    //                     this.setState({
+    //                         todayNegative:todayNegative
+    //                     })
+    //                     clearInterval(this.negativeTimer)
+    //                 }else{
+    //                     this.setState({
+    //                         todayNegative:this.state.todayNegative+(Math.floor(todayNegative/10))
+    //                     })
+    //                 }
+    //             },100)  
+    //         }
+    //         if(ratio !==0){
+    //             this.ratioTimer=setInterval(()=>{
+    //                 if(this.state.ratio>=ratio){
+    //                     this.setState({
+    //                         ratio:ratio
+    //                     })
+    //                     clearInterval(this.ratioTimer)
+    //                 }else{
+    //                     this.setState({
+    //                         ratio:this.state.ratio+(Math.floor(ratio/10))
+    //                     })
+    //                 }
+    //             },100)  
+    //         }
+    //     }    
+    //     }) 
         
-    }
+    // }
     delTodayOpinionBox(){
             this.props.delTodayBox(1);
     }
@@ -120,10 +120,11 @@ class TodayOpinionBox extends React.PureComponent {
         history.push({
             pathname: '/allopinion/allopiniondetail?datetag=today&neg=' + type
         });
-    }
+	}
+	
     render() {
-				const {themeColor} = this.props;
-				const labelTop = {
+			const {themeColor,todayOpinion} = this.props;
+			const labelTop = {
 					normal : {
 						label : {
 							show : true,
@@ -155,12 +156,12 @@ class TodayOpinionBox extends React.PureComponent {
 						},
 						data: [
 							{
-								name:'\n今日预警\n\n' + this.state.todayWarning, 
-								value: this.state.todayWarning ===0 ? 30000:this.state.todayWarning, 
+								name:'\n今日预警\n\n' + (todayOpinion['今日舆情']?todayOpinion['今日舆情'][3]['预警']:0), 
+								value:todayOpinion['今日舆情']?todayOpinion['今日舆情'][3]['预警']:300, 
 								itemStyle : labelTop,
 								hoverAnimation: false
 							},{
-								value: 10000,
+								value: 100,
 								tooltip: {
 									show: false
 								},
@@ -197,12 +198,12 @@ class TodayOpinionBox extends React.PureComponent {
 						},
 						data: [
 							{
-								name:'\n 今日负面\n\n' + this.state.todayNegative, 
-								value: this.state.todayNegative === 0 ?30000:this.state.todayNegative, 
+								name:'\n 今日负面\n\n' + (todayOpinion['今日舆情']?todayOpinion['今日舆情'][2]['负面']:0), 
+								value:todayOpinion['今日舆情']?todayOpinion['今日舆情'][2]['负面']:300, 
 								itemStyle : labelTop,
 								hoverAnimation: false
 							},{
-								value: 10000,
+								value: 100,
 								tooltip: {
 									show: false
 								},
@@ -239,12 +240,12 @@ class TodayOpinionBox extends React.PureComponent {
 						},
 						data: [
 							{
-								name:'\n 今日舆情\n\n' + this.state.todayAll, 
-								value: this.state.todayAll === 0 ? 130000 : this.state.todayAll , 
+								name:'\n 今日舆情\n\n' + (todayOpinion['今日舆情']?todayOpinion['今日舆情'][4]['总数']:0), 
+								value: todayOpinion['今日舆情']?todayOpinion['今日舆情'][4]['总数']:300, 
 								itemStyle : labelTop,
 								hoverAnimation: false
 							},{
-								value: 10000,
+								value: 100,
 								tooltip: {
 									show: false
 								},

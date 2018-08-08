@@ -71,7 +71,7 @@ class TopicOpinionBox extends React.PureComponent {
                         <Tabs defaultActiveKey="0" onChange={this.tabClick.bind(this)} tabBarStyle={{color:themeColor.textColor.color,borderBottom:`1px solid ${themeColor.borderColor.color}`}}>
                             {
                                 topicOpinion.length!==0?topicOpinion.map((item,index) =>
-                                    <TabPane tab={item.topicname} key={item.topicid}>
+                                    <TabPane tab={item.topicname} key={index}>
                                         <ul className="list">
                                             {item.docList!==undefined ?
                                                 item.docList.slice(0,6).map((i,index) =>

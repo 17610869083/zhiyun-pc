@@ -56,9 +56,7 @@ class NewestOpinionBox extends React.Component {
                     >
                         {opinionList.length > 0 ?
                             opinionList.map((item,index) =>
-                                <li key={item.sid}>
-                                <div className={`opinion-item ${haverClass}`}  onClick={this.clickItemTitle.bind(this,item.sid)}
-                                >
+                                <li key={item.sid} className={`opinion-item ${haverClass}`}  onClick={this.clickItemTitle.bind(this,item.sid)}>
                                   <div className="content"> 
                                       <div className="title" style={{color:themeColor.textColor.color}}>{item.title}</div>
                                       <div className="desc">
@@ -66,7 +64,6 @@ class NewestOpinionBox extends React.Component {
                                           <span className="source">{item.source}</span>
                                       </div>
                                   </div>
-                                </div>
                                 </li>
                             ) : <BlankPage  status={blankFlag} desc='<span>空空如也，赶紧去<a href="index.html#/allopinion/sortedopinion/addrule">添加</a>关键词</span>'/>
                         }

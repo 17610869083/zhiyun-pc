@@ -41,21 +41,19 @@ class TopicOpinion extends React.Component {
 
 		}
 		// 添加分类
-		addHandleClick(e) {
+		addHandleClick() {
 			this.setState({
-				current: e.key,
 				isAddTopicShow: false,
 				visible:true,
 				addClass:0,
 				addTopic:1
 			});
 			history.push({
-				pathname:`/allopinion/topic/${e.key}`,
+				pathname:`/allopinion/topic/${this.state.current}`,
 				search:`?topicid=${this.state.topicId}`
 			});
 		}
     handleClick(e) {
-			console.log("1");
         if(e.key==='addsort'){
             this.setState({
                 current: e.key,
@@ -154,7 +152,7 @@ class TopicOpinion extends React.Component {
     	 	  if(res.data.code===1){
     	 	  	   history.push({
                     pathname:`/allopinion/topic/topiclist`,
-                    search:`?catid=${this.state.inputValue}`
+                    // search:`?catid=${this.state.inputValue}`
               });
                }
                this.props.topicNavMessageRequested(new Date())

@@ -12,7 +12,7 @@ import NewestWarningOpinionBox from './NewestWarningOpinionBox';
 import WeiboOpinionBox from './WeiboOpinionBox';
 import OpinionCountBox from './OpinionCountBox';
 import TopicOpinionBox from './TopicOpinionBox';
-import HotWordBox from './HotWordBox';
+import HotWordBox from './HotWordBox'; 
 import MediaDistribution from './MediaDistribution';
 import {
   api_newest_opinion,
@@ -23,7 +23,8 @@ import {
   api_hot_word,
   api_carrier_pie,
   api_homepage_message,
-  api_count_charts
+  api_count_charts,
+  api_today_opinion
 } from '../../services/api';
 import {formatOpinionCount} from '../../utils/format';
 
@@ -44,6 +45,7 @@ class NewHome extends React.Component {
       opinionCountArr:[],
       opinionCount:{},
       data:[],
+      todayOpinion:[],
       delMoudleList: {
         'todayOpinion': '今日舆情',
         'opinionTrend': '舆情走势',
@@ -71,6 +73,13 @@ class NewHome extends React.Component {
             homeMessage: res.data
           })
         }
+        request(api_today_opinion)
+        .then(res => {
+           if(res.data){
+             this.setState({
+              todayOpinion:res.data
+             })
+           } 
             // 最新舆情
             request(api_newest_opinion)
               .then((res) => {
@@ -152,6 +161,7 @@ class NewHome extends React.Component {
                       });
                   });
                 });
+              });
   }
   informs() {
     this.props.informsState({data: false})
@@ -167,15 +177,18 @@ class NewHome extends React.Component {
       }
     })
   }
+  delHotWordBox(){
+    
+  }
   render() {
     const {opinionList,todayOpinionArr, alldayOpinion,todayWarningOpinion, alldayWarningOpinion, 
-      weiboAll, weiboNegative,opinionCountArr,homeMessage,hotWordData} = this.state;
+      weiboAll, weiboNegative,homeMessage} = this.state;
     const {userInfo,themeColor} = this.props;
     const innerHeight = window.innerHeight;
-      const Notification = (state,size) => {
+      const Notification = (state) => {
           switch (state) {
             case 'TodayOpinionBox':
-              return <TodayOpinionBox />;
+              return <TodayOpinionBox todayOpinion={this.state.todayOpinion} />;
             case 'OpinionTrendBox':
               return <OpinionTrendBox />;
             case 'NewestOpinionBox':
@@ -187,11 +200,18 @@ class NewHome extends React.Component {
             case 'WeiboOpinionBox':
               return <WeiboOpinionBox weiboAll={weiboAll} weiboNegative={weiboNegative}/>;
             case 'OpinionCountBox':
-              return <OpinionCountBox data={opinionCountArr}/>;
+              return <OpinionCountBox  data={this.state.data} opinionCount={this.state.opinionCount}
+              legend={this.state.legend}
+              series={this.state.series}
+              changeChart={this.changeChart.bind(this)}
+              />;
             case 'TopicOpinionBox':
               return <TopicOpinionBox />;
             case 'HotWordBox':
-              return <HotWordBox data={hotWordData}/>;
+              return                 <HotWordBox data={this.state.hotWordData}
+              status={this.props.type !== undefined ? 'setting' : ''}
+              delHotWordBox={this.delHotWordBox.bind(this)}
+  />;
             case 'MediaDistribution':
               return <MediaDistribution data={this.state.mediaDistributionArr}/>;
             default:
@@ -207,7 +227,7 @@ class NewHome extends React.Component {
         <div className="home-pages" >
           <div className="container" style={this.props.type !== undefined ? {width: '92%'} : {width: '100%',display:'flex',flexWrap:'wrap'}}>
          { homeMessage.map((item,index) => {
-            return <div key={index} style={{width:`${item.defaultSize-1}%`,margin:'10px 0.5%'}}>{Notification(item.name,item.defaultSize)}</div>
+            return <div key={index} style={{width:`${item.defaultSize-1}%`,margin:'10px 0.5%'}}>{Notification(item.name)}</div>
           })
          }
           </div>

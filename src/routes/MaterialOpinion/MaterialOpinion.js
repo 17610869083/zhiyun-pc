@@ -964,6 +964,7 @@ class MaterialOpinion extends React.Component {
 										<div>确定将这 <b>{this.state.checkedLength}</b> 项从素材库移出吗？</div>
 									</Modal>
 								</div>
+								<Tooltip title="生成报告">
 								<div className="operate-all" onClick={this.getReportListRequested.bind(this)}>
 									<Dropdown overlay={addMultipleReportMenu} trigger={['click']}
 										getPopupContainer={() => document.querySelector('.materia-opinion-wrapper')}
@@ -971,6 +972,7 @@ class MaterialOpinion extends React.Component {
 										<Iconfont type="icon-shengchengbaogao1" style={{ width: 16, height: 16 }} />
 									</Dropdown>
 								</div>
+								</Tooltip>
 								<div className="operate-all">
 									<Tooltip title="舆情录入">
 										<i

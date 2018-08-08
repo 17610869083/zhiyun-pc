@@ -86,7 +86,7 @@ class TopicAdd extends React.Component {
     // }
 
     goTopiclist(){
-         history.push('/topic/topiclist')
+         history.push('/allopinion/topic/topiclist')
     }
     onAddtype(){
     	 this.setState({addtype:1})
@@ -215,8 +215,7 @@ class TopicAdd extends React.Component {
                 this.props.topicNavMessageRequested(new Date())
                 message.success('专题添加成功');
              	history.push({
-                   pathname: '/allopinion/topic/topiclist',
-                   search:''
+                   pathname: '/allopinion/topic/topiclist'
                    })
         	    }else{
                 message.error(res.data.msg);  

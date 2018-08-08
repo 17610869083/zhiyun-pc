@@ -5,12 +5,13 @@ import './HotWordBox.less';
 import {Icon} from 'antd';
 import {BLUES} from '../../utils/colors';
 import 'TagCloud';
+import BlankPage from '../../base/Exception/BlankPage';
 class HotWordBox extends React.Component{
     delHotWordBox(){
           this.props.delHotWordBox(1)
     }
  
-    componentDidUpdate(nextProps){
+    componentWillReceiveProps(nextProps){
         if(nextProps.data.length !== 0){
            window.tagcloud({
               selector: ".tagcloud",  // 元素选择器
@@ -25,6 +26,7 @@ class HotWordBox extends React.Component{
     }
     render(){
         const {data,themeColor} = this.props;
+        const blankFlag = themeColor.topColor.backgroundColor === '#5a8bff' ? true:false;
          return(
             <div className="hotWord-box" style={{background:themeColor.bottomColor.backgroundColor}}>
                     <div className="container">
@@ -40,11 +42,11 @@ class HotWordBox extends React.Component{
                         ></Icon>
                         </div>
                     </div>
-                    <div className="wordCloud">
+                    {data.length !== 0 ?<div className="wordCloud">
                     <div className="tagcloud tagcloud-light">
                         {data.map((item,index) => <span className="textcloud" key={index}>{item.text}</span>)}
                     </div>
-                    </div>
+                    </div>:<BlankPage status={blankFlag} desc='<span>空空如也，赶紧去添加关键词</span>'/>}
                     </div>
             </div>
           )
