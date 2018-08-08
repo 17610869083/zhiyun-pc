@@ -36,6 +36,7 @@ const Daily = AsyncComponent(() => import('../Daily/Daily'))
 const Special = AsyncComponent(() => import('../Special/Special'))
 const Multilingual= AsyncComponent(() => import('../Multilingual/Multilingual'))
 const BiddingOpinion = AsyncComponent(() => import('../BiddingOpinion/BiddingOpinion'))
+const Evidadmin = AsyncComponent(() => import('../Evidadmin/Evidadmin'))
 const { Sider, Content} = Layout;
 const SubMenu = Menu.SubMenu;
 class AllOpinion extends React.Component {
@@ -253,6 +254,7 @@ class AllOpinion extends React.Component {
                 <Route path="/allopinion/multilingual/:languages" component={Multilingual}/>
                 <Route path="/allopinion/bidding/information" component={BiddingOpinion}/>
                 <Route path="/allopinion/bidding" component={BiddingOpinion}/>
+                <Route path="/allopinion/evidadmin" component={Evidadmin}/>
               </Switch>
               </Content>
               </Layout>

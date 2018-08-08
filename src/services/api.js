@@ -1,15 +1,15 @@
 // host
-const host = 'http://119.90.61.155/om32/webpart/';   
+const host = 'http://119.90.61.155/om31/webpart/';   
 //const host = 'http://web.is8.com.cn/om/webpart/';
 //const host = './';
 
 //-------------------登录
 //export const api_login = 'http://web.is8.com.cn/om/common/login/loginDo?action=login2';
-export const api_login = 'http://119.90.61.155/om32/common/login/loginDo?action=login2';
+export const api_login = 'http://119.90.61.155/om31/common/login/loginDo?action=login2';
 //export const api_login = '../common/login/loginDo?action=login2';
 
 //export const api_logout = 'http://web.is8.com.cn/om/common/login/loginDo?action=loginOut';
-export const api_logout = 'http://119.90.61.155/om32/common/login/loginDo?action=loginOut';
+export const api_logout = 'http://119.90.61.155/om31/common/login/loginDo?action=loginOut';
 //export const api_logout ='../common/login/loginDo?action=loginOut';
 /**
  * 首页模块
@@ -430,3 +430,5 @@ export const api_bidding_message_list = host + 'oClf/BidDo?action=docList'
 export const api_bidding_message_del = host + 'oClf/BidDo?action=docDel'
 // 招投标导出
 export const api_bidding_export = host + 'exp/ExportData?action=exportDataList'
+// 取证 案件类型列表
+export const api_evidadmin_typeList = host + 'Evidence?action=getAllCaseType'
