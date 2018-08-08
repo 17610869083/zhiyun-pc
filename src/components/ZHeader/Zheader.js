@@ -284,8 +284,8 @@ class Zheader extends React.Component {
             <div className="z-header" style={{backgroundColor:themeColor.topColor.backgroundColor}}>
                 <div className="top">
                     <div className="left" onClick={this.goBackIndex.bind(this)}>
-                         <img src={logo} alt="logo" className="logo" onClick={this.goBackIndex.bind(this)}/>
-                         {/* <span className="name" style={{color:'#fff'}}>{userInfo.sysname}</span> */}
+                         {/* <img src={logo} alt="logo" className="logo" onClick={this.goBackIndex.bind(this)}/> */}
+                         <span className="name" style={{color:'#fff'}}>网信管理与态势感知云平台</span>
                     </div>
                     <div className="right">
                         <ul className="nav-bar">

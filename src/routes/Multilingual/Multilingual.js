@@ -525,7 +525,6 @@ class AllOpinion extends React.Component {
   }
   render() {
     let {docList, carryCount=[{count: 0, key: "all", value: "全部"}], pageInfo={count:0}, page} = this.props;
-    console.log(docList)
     if (!(carryCount instanceof Array)) carryCount = [{count: 0, key: "all", value: "全部"}]
     const {getFieldDecorator} = this.props.form;
     const formItemLayout = {
