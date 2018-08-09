@@ -164,7 +164,6 @@ class reportHeader extends React.Component{
 		})
 	}
 	onOkDate(value) {
-
 			const myDate = new Date();
 			const starttimeHaoMiao = (new Date(myDate)).getTime();
 			if (this.state.startMsDate > starttimeHaoMiao && this.state.endMsDate > starttimeHaoMiao) {
@@ -192,6 +191,7 @@ class reportHeader extends React.Component{
 	}
 	//专报生成报告
 	specialReport = () => {
+		console.log(123)
 		this.setState({
 			reportNameVisible:true
 		})
@@ -208,15 +208,15 @@ class reportHeader extends React.Component{
 		request(api_update_report_name +`&reportId=${this.props.reportId}&reportName=${this.state.reportNameValue}`)
 		.then(res => {
 			if(res.data.code === 1){
-				this.setState({
-					repeatFlag:false,
-					reportNameVisible:false,
-					finishVisible:true
-				})
 				if (this.props.type === "01") {
 					request(api_get_generate_report + '&reportId=' + this.props.reportId).then(res=>{
 						if (res.data.code === 1) {
-							message.success(res.data.msg)
+							message.success(res.data.msg);
+							this.setState({
+								repeatFlag:false,
+								reportNameVisible:false,
+								finishVisible:true
+							})
 						} else if (res.data.code === 0) {
 							message.error(res.data.msg)
 						}
@@ -247,7 +247,12 @@ class reportHeader extends React.Component{
 						body:`reportId=${this.props.reportId}&charts=${JSON.stringify(charts)}`
 					}).then(res => {
 						if (res.data.code === 1) {
-							message.success(res.data.msg)
+							message.success(res.data.msg);
+							this.setState({
+								repeatFlag:false,
+								reportNameVisible:false,
+								finishVisible:true
+							})
 						} else if (res.data.code === 0) {
 							message.error(res.data.msg)
 						}
@@ -271,7 +276,12 @@ class reportHeader extends React.Component{
 								body:`reportId=${this.props.reportId}&charts=${chart}`    
 								}).then(res=>{
 								if (res.data.code === 1) {
-									message.success(res.data.msg)
+									message.success(res.data.msg);
+									this.setState({
+										repeatFlag:false,
+										reportNameVisible:false,
+										finishVisible:true
+									})
 								} else if (res.data.code === 0) {
 									message.error(res.data.msg)
 								}
@@ -280,6 +290,7 @@ class reportHeader extends React.Component{
 					}
 				}
 			} else {
+
 				this.setState({
 					repeatFlag:true
 				})

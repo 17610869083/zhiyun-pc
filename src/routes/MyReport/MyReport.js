@@ -38,7 +38,8 @@ class MyReport extends React.Component{
             previewVisible:false,
             popoverVisible:false,
             reportType:'01',
-            reportFormId:2
+            reportFormId:2,
+            isSearch:false
          }
      }
      componentWillMount(){
@@ -60,7 +61,9 @@ class MyReport extends React.Component{
     changeType(type){ 
        this.setState({
            type:type,
-           current:1
+           current:1,
+           isSearch:false,
+           reportName:''
        })
        request(api_search_report + `&reportType=${type}`)
        .then( res => {
@@ -145,11 +148,12 @@ class MyReport extends React.Component{
          }
          request(api_search_report + str)
          .then( res => {
-              if(res.data.code === 1){
+              if(res.data.code === 1){ 
                   this.setState({
                     contentList:res.data.data.content,
                     recordTotal:res.data.data.recordTotal,
-                    current:1
+                    current:1,
+                    isSearch:true
                   })
               }else{
                   message.error('未搜索到该报告，请换个条件试试')
@@ -173,13 +177,21 @@ class MyReport extends React.Component{
         this.setState({
              current:current
         })
-        request(api_search_report + `&reportType=${this.state.type}&page=${current}`)
+        let str = this.state.isSearch?`&reportType=${this.state.type}&page=${current}&reportName=${this.state.inputSearchValue}&starttime=${this.state.startTime}&endtime=${this.state.endTime}`:`&reportType=${this.state.type}&page=${current}`;
+        request(api_search_report + str )
         .then( res => {
              if(res.data.code === 1){
              this.setState({
                  contentList:res.data.data.content,
-                 flag:false
+                 flag:false,
+                 visible:false
              })        
+            }else{
+                this.setState({
+                    contentList:[],
+                    flag:false,
+                    visible:false
+                })   
             }
         })
     }
@@ -260,30 +272,6 @@ class MyReport extends React.Component{
     addReport = () => {
         history.push('/allopinion/choosetemplate');
     }
-    //报告预览
-    // reportPreview = (type) => {
-    //      this.setState({
-    //         popoverVisible:false
-    //      })
-    //      if(type==='preview'){
-    //         request(api_download_report +`&reportId=${this.state.checkId}&dType=html`)
-    //         .then(res =>{
-    //              if(res.data.code ===1){
-    //                this.setState({
-    //                    hmtlUrl:res.data.fileAddress,
-    //                    previewVisible:true
-    //                })
-    //              }else{
-    //                message.error(res.data.msg)
-    //              }
-    //          } )
-    //      }else{
-
-    //      }
-    // }
-    onScroll = () => {
-        console.log('gun')
-    }
     cancel = () => {
         message.warning('已取消当前操作')
     }
@@ -309,7 +297,7 @@ class MyReport extends React.Component{
              </li> 
          }) 
          return (
-             <div className="my-report" onScroll={this.onScroll}>
+             <div className="my-report" >
              <div className="my-report-top">
              <div className="my-add-report">
                  <span onClick={this.addReport}>+&nbsp;&nbsp;新建报告</span>
@@ -332,7 +320,7 @@ class MyReport extends React.Component{
                   {typeList}
               </ul>
              </div>
-             <div className="my-report-content"  style={this.state.contentList.length === 0 ?{display:'none'}:{display:'block'}}>
+             <div className="my-report-content">
              <p>
              {/* <Tooltip title="复制" placement="bottom">
                 <Popconfirm title="确定要复制该报告吗？" onConfirm={this.copy} okText="是" cancelText="否"
@@ -347,7 +335,7 @@ class MyReport extends React.Component{
                 content={
                 <div>
                     <Button type="primary" size="small" style={{marginLeft: '10px'}} onClick={this.downLoad.bind(this,'word')}>word</Button>
-                    {/* <Button type="primary" size="small" style={{marginLeft: '46px'}} onClick={this.downLoad.bind(this,'excel')}>excel</Button> */}
+                    <Button type="primary" size="small" style={{marginLeft: '46px'}} onClick={this.downLoad.bind(this,'excel')}>excel</Button>
                 </div>
                 }
                 title="选择下载的报告类型"
@@ -377,7 +365,7 @@ class MyReport extends React.Component{
               </ul>
               <div className="pagination">      
               <Pagination total={this.state.recordTotal} onChange={this.paginationChange}
-               current={this.state.current}/>    
+               current={this.state.current} pageSize={12}/>    
               </div>
              </div>
              </div>

@@ -25,7 +25,8 @@ class FocusSetting extends React.Component{
         this.state = {
             tagList :[],
             flag:false,
-            tagName:''
+            tagName:'',
+            id:'1'
         }
     }
     componentWillMount(){
@@ -84,23 +85,31 @@ class FocusSetting extends React.Component{
         })
     }
     drop = (e) => {
+         let arrList = applyDrag(this.state.tagList,e).map(item => {
+              return item.id
+         });
+         request(api_key_website_sort,{
+            method: 'POST',
+            headers: {
+              "Content-Type": "application/x-www-form-urlencoded"
+            },
+            body: `sort=${arrList.join(',')}`
+         })
          this.setState({
             tagList:applyDrag(this.state.tagList,e)
          })
-         console.log(applyDrag(this.state.tagList,e))
-         let arr 
-        //  request(api_key_website_sort,{
-        //     method: 'POST',
-        //     headers: {
-        //       "Content-Type": "application/x-www-form-urlencoded"
-        //     },
-        //     body: `sort=${JSON.stringify(this.state.allList)}`
-        //  })
+
+    }
+    //点击标签获取内容
+    checkName (id) {
+        this.setState({
+            id:id
+        })
     }
     render(){
-        const {tagList,flag,tagName} =this.state;
+        const {tagList,flag,tagName,id} =this.state;
         const tagNav = tagList.map((item,index) => {
-            return <Draggable key={index} className="tag-name">{item.tagName}</Draggable>
+            return <Draggable key={index} className={id === item.id ?'tag-name active':'tag-name'} onClick={this.checkName.bind(this,item.id)}>{item.tagName}</Draggable>
         })
         return(
             <div className="focus-setting">

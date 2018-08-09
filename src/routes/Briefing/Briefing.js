@@ -84,47 +84,80 @@ class Briefing extends React.Component{
 		this.props.briefingSwitch([]);
 	}
 	handleChange(value) {
-		console.log(`selected ${value}`);
 	}
 	onChange(dates, dateStrings) {
-		console.log('From: ', dates[0], ', to: ', dates[1]);
-		console.log('From: ', dateStrings[0], ', to: ', dateStrings[1]);
 	}
 	onOkData() {
 
 	}
 	onChangeCellTitle(e) {
+		let {date} = this.state;
     request(api_update_report + '&reportId=' + this.state.reportId + '&reportTitle=' + e + '&moduleId=' + this.state.dataID).then((res) => {
 			if(res.data.code === 1) {
 				message.success(res.data.msg);
+				Object.keys(date).forEach(item => {
+					 if(date[item]['date']){
+                           date[item]['reportTitle'] = e
+					 }
+				})
+				this.setState({
+					date:date
+				})
 			} else {
 				message.error(res.data.msg);
 			}
  		})
 	}
 	onChangeCellEditor(e) {
+		let {date} = this.state;
 		request(api_update_report + '&reportId=' + this.state.reportId + '&editor=' + e + '&moduleId=' + this.state.dataID).then((res) => {
 			if(res.data.code === 1) {
 				message.success(res.data.msg);
+				Object.keys(date).forEach(item => {
+					if(date[item]['date']){
+						  date[item]['editor'] = e
+					}
+			   })
+			   this.setState({
+				   date:date
+			   })
 			} else {
 				message.error(res.data.msg);
 			}
  		})
 	}
 	onChangeCellDate(e) {
+		let {date} = this.state;
 		request(api_update_report + '&reportId=' + this.state.reportId + '&date=' + e + '&moduleId=' + this.state.dataID).then((res) => {
 			if(res.data.code === 1) {
 				message.success(res.data.msg);
+				Object.keys(date).forEach(item => {
+					if(date[item]['date']){
+						  date[item]['date'] = e
+					}
+			   })
+			   this.setState({
+				   date:date
+			   })
 			} else {
 				message.error(res.data.msg);
 			}
  		})
 	}
 	onChangeCellPeriods(e) {
+		let {date} = this.state;
 		const num = e.replace(/[^0-9]/ig,"");
 		request(api_update_report + '&reportId=' + this.state.reportId + '&periods=' + num + '&moduleId=' + this.state.dataID).then((res) => {
 			if(res.data.code === 1) {
 				message.success(res.data.msg);
+				Object.keys(date).forEach(item => {
+					if(date[item]['date']){
+						  date[item]['periods'] = e
+					}
+			   })
+			   this.setState({
+				   date:date
+			   })
 			} else {
 				message.error(res.data.msg);
 			}
@@ -139,15 +172,20 @@ class Briefing extends React.Component{
 				if(date[item]['briefing']!==undefined){
 				   date[item]['briefing'] = data.data[item]['briefing'];
 				}
+				if(date[item]['date']!==undefined){
+					date[item]= data.data[item];
+				 }
 		    })
 			this.setState({
-				reportId:data.reportId
+				reportId:data.reportId,
+				dataID:data.component[0]
 			})
 		}else{
 			Object.keys(date).forEach((item,index) => {
 				if(date[item]['briefing']!==undefined){
 				   date[item]['briefing'] = data.briefing;
 				}
+
 		   })
 		}
 		this.setState({
