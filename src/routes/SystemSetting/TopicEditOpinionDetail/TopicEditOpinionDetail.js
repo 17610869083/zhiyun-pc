@@ -36,6 +36,10 @@ class TopicEditOpinionDetail extends React.Component {
 		e.preventDefault();
 		this.props.form.validateFields((err, values) => {
 			if (!err) {
+				if(values.title.trim() === ''){
+					message.error('标题不可为空');
+					return ;
+				}
 				request(public_opinion_entry, {
 					method: 'POST',
 					headers: {
@@ -57,6 +61,10 @@ class TopicEditOpinionDetail extends React.Component {
 		this.props.form.validateFields((err, values) => {
 			const ids = parseInt(values.file,10);
 			if (!err) {
+				if(values.title.trim() === ''){
+					message.error('标题不可为空');
+					return ;
+				}
 				request(api_add_doc_from_mat, {
 					method: 'POST',
 					headers: {

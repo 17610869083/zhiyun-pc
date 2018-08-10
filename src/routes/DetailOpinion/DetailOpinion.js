@@ -331,42 +331,42 @@ class DetailOpinion extends React.Component {
     })
   }
 
-  handleOkOne() {
-    let idArr = [];
-    let emailArr = [];
-    for (let i in this.state.selectValue) {
-      idArr.push(this.state.selectValue[i]['key']);
-      emailArr.push(this.state.selectValue[i]['label']);
-    }
-    let idStr = idArr.join(',');
-    let emailStr = emailArr.join(',');
-    if (idStr === '' && this.state.emailInput !== '') {
-      emailStr += `${this.state.emailInput}`;
-      idStr += 'noid';
-    } else if (idStr !== '' && this.state.emailInput !== '') {
-      emailStr += `,${this.state.emailInput}`;
-      idStr += ',noid';
-    }
-    if (emailStr === '') {
-      message.success('请添加或选择要推送的邮箱')
-      return;
-    }
-    let subject = this.state.emailData.simpleEmail[0]['title'];
-    let sid = this.state.emailData.simpleEmail[0]['sid'];
-    this.setState({
-      visibleOne: false
-    })
-    request(api_docsend_push, {
-      method: 'POST',
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded"
-      },
-      body: `sid=${sid}&emailmsgUid=${idStr}&emailmsgUemail=${emailStr}&subject=${subject}&content=${this.state.contents}`
-    }).then(res => {
-      message.success(res.data.message)
-    })
+  // handleOkOne() {
+  //   let idArr = [];
+  //   let emailArr = [];
+  //   for (let i in this.state.selectValue) {
+  //     idArr.push(this.state.selectValue[i]['key']);
+  //     emailArr.push(this.state.selectValue[i]['label']);
+  //   }
+  //   let idStr = idArr.join(',');
+  //   let emailStr = emailArr.join(',');
+  //   if (idStr === '' && this.state.emailInput !== '') {
+  //     emailStr += `${this.state.emailInput}`;
+  //     idStr += 'noid';
+  //   } else if (idStr !== '' && this.state.emailInput !== '') {
+  //     emailStr += `,${this.state.emailInput}`;
+  //     idStr += ',noid';
+  //   }
+  //   if (emailStr === '') {
+  //     message.success('请添加或选择要推送的邮箱')
+  //     return;
+  //   }
+  //   let subject = this.state.emailData.simpleEmail[0]['title'];
+  //   let sid = this.state.emailData.simpleEmail[0]['sid'];
+  //   this.setState({
+  //     visibleOne: false
+  //   })
+  //   request(api_docsend_push, {
+  //     method: 'POST',
+  //     headers: {
+  //       "Content-Type": "application/x-www-form-urlencoded"
+  //     },
+  //     body: `sid=${sid}&emailmsgUid=${idStr}&emailmsgUemail=${emailStr}&subject=${subject}&content=${this.state.contents}`
+  //   }).then(res => {
+  //     message.success(res.data.message)
+  //   })
 
-  }
+  // }
 
   handleCancelOne() {
     this.setState({

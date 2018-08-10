@@ -90,6 +90,8 @@ class MaterialOpinion extends React.Component {
     handleSearchBtn(keyword) {
         if (keyword !== '') {
             this.props.getMaterialOpinionDetailRequested(`${this.state.current}&q=${keyword}`);
+        }else{
+            this.props.getMaterialOpinionDetailRequested(`${this.state.current}`);
         }
     }
 
@@ -125,6 +127,9 @@ class MaterialOpinion extends React.Component {
                     if (res.data.code === 1) {
                         message.success(res.data.msg);
                         getDetail(`${current}&page=${_this.state.currentPage}`);
+                        _this.setState({
+                            arr:new Array(_this.state.pageSize).fill(false)
+                        })
                     }
                 });
             },
@@ -305,13 +310,10 @@ class MaterialOpinion extends React.Component {
         })
     }
     onClickMaterialListItemDelete({key}) {
-	    console.log(this.state.materialListItemId)
         if (key === 'delete') {
             this.deleteMaterial(this.state.materialListItemId);
         } else if (key === 'rename') {
             this.setState({ renameMaterialVisible: true })
-        } else {
-            console.log(key);
         }
     }
     deleteMaterial(id) {

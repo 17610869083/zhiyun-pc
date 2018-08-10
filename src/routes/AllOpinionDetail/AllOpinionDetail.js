@@ -480,43 +480,44 @@ class AllOpinionDetail extends React.Component {
   }
 
   homepageMore(pathname) {
-    if (pathname === '#/allopinion?datetag=today') {
+    if (pathname === '#/allopinion/allopiniondetail?datetag=today') {
       this.setState({
         timeValue: 'today'
       })
-    } else if (pathname === '#/allopinion?datetag=today&neg=1') {
+    } else if (pathname === '#/allopinion/allopiniondetail?datetag=today&neg=1') {
       this.setState({
         timeValue: 'today',
         trendValue: 1
       })
-    } else if (pathname === '#/allopinion?datetag=all&neg=1') {
+    } else if (pathname === '#/allopinion/allopiniondetail?datetag=all&neg=1') {
+
       this.setState({
         timeValue: 'all',
         trendValue: 1
       })
     }
-    else if (pathname === '#/allopinion?datetag=today&neg=2') {
+    else if (pathname === '#/allopinion/allopiniondetail?datetag=today&neg=2') {
       this.setState({
         timeValue: 'today',
         trendValue: 2
       })
-    }else if (pathname === '#/allopinion?datetag=today&neg=all') {
+    }else if (pathname === '#/allopinion/allopiniondetail?datetag=today&neg=all') {
       this.setState({
         timeValue: 'today',
         trendValue: 'all'
       })
-    }else if (pathname === '#/allopinion?datetag=all&neg=2') {
+    }else if (pathname === '#/allopinion/allopiniondetail?datetag=all&neg=2') {
       this.setState({
         timeValue: 'all',
         trendValue: 2
       })
     } 
-    else if (pathname === '#/allopinion?carry=weibo&neg=all') {
+    else if (pathname === '#/allopinion/allopiniondetail?carry=weibo&neg=all') {
       this.setState({
         mediaValue: '微博',
         trendValue: 'all'
       })
-    } else if (pathname === '#/allopinion?carry=weibo&neg=1') {
+    } else if (pathname === '#/allopinion/allopiniondetail?carry=weibo&neg=1') {
       this.setState({
         mediaValue: '微博',
         trendValue: 1
@@ -528,6 +529,21 @@ class AllOpinionDetail extends React.Component {
         mediaValue: this.state.mediaList[media],
         timeValue: day
        })
+       const obj = {carry:this.state.mediaList[media],datetag:day};
+       const param = {
+         datetag: this.state.timeValue,
+         neg: this.state.trendValue,
+         order: this.state.sortValue,
+         similer: this.state.filterValue,
+         carry: this.state.mediaValue,
+         begin: this.state.begin,
+         end: this.state.end,
+         page: this.state.page,
+         pagesize: this.state.pagesize
+       };
+       const newParam = Object.assign(param, obj);
+       this.props.opinionSearchRequest(newParam);
+       return;
     } else {
       this.setState({
         timeValue: 'all'

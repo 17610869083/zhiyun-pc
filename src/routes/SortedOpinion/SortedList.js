@@ -284,8 +284,7 @@ class SortedList extends React.Component {
       this.setState({
         begin: begin,
         end: end,
-        timeValue: 'custom',
-        timeIndex: 0
+        timeValue: 'custom'
       });
       const param = this.props.clfCat.state ? {
         clfid: this.props.clfId.clfid,

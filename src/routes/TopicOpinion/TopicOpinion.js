@@ -41,21 +41,19 @@ class TopicOpinion extends React.Component {
 
 		}
 		// 添加分类
-		addHandleClick(e) {
+		addHandleClick() {
 			this.setState({
-				current: e.key,
 				isAddTopicShow: false,
 				visible:true,
 				addClass:0,
 				addTopic:1
 			});
 			history.push({
-				pathname:`/allopinion/topic/${e.key}`,
+				pathname:`/allopinion/topic/${this.state.current}`,
 				search:`?topicid=${this.state.topicId}`
 			});
 		}
     handleClick(e) {
-			console.log("1");
         if(e.key==='addsort'){
             this.setState({
                 current: e.key,
@@ -154,7 +152,7 @@ class TopicOpinion extends React.Component {
     	 	  if(res.data.code===1){
     	 	  	   history.push({
                     pathname:`/allopinion/topic/topiclist`,
-                    search:`?catid=${this.state.inputValue}`
+                    // search:`?catid=${this.state.inputValue}`
               });
                }
                this.props.topicNavMessageRequested(new Date())
@@ -303,6 +301,12 @@ class TopicOpinion extends React.Component {
 					<Menu.Item key="3">添加专题</Menu.Item>
 				</Menu>
 			);
+			// const twoItems = (
+			// 	<Menu onClick={this.onDelitem.bind(this)}>
+			// 		<Menu.Item key="1">删除</Menu.Item>
+			// 		<Menu.Item key="2">生成报告</Menu.Item>
+			// 	</Menu>
+			// );
         let {topicNavMessageSucceededState} =this.props;
         const LeftTopicLists=topicNavMessageSucceededState!==1&&topicNavMessageSucceededState.map((item,index)=>
           <div className="a-class" key={index}>
@@ -326,7 +330,7 @@ class TopicOpinion extends React.Component {
                   </span>
                   <Dropdown overlay={<Menu onClick={this.onReportItem.bind(this)}>
                                      <Menu.Item key="1">删除</Menu.Item>
-                                     {/* <Menu.Item key="2">加入报告</Menu.Item> */}
+                                     <Menu.Item key="2">加入报告</Menu.Item>
                                      </Menu>} trigger={['click']}>
                   <img src={Del} alt="删除" className="icon-delete" onClick={this.delTopic.bind(this,iitem.topicid)}/>
                 </Dropdown> 

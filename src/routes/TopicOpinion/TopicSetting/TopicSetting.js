@@ -275,7 +275,7 @@ class TopicSetting extends React.Component {
   }
  
   goTopiclist(){
-        history.push('/topic/topiclist')
+        history.push('/allopinion/topic/topiclist')
   }
   startTime(date,dateString){
            this.setState({
