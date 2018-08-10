@@ -1,16 +1,16 @@
 // host
-//const host = 'http://119.90.61.155/om32/webpart/';   
+const host = 'http://119.90.61.155/om32/webpart/';   
 //const host = 'http://web.is8.com.cn/om/webpart/';
-const host = './';
+//const host = './';
 
 //-------------------登录
 //export const api_login = 'http://web.is8.com.cn/om/common/login/loginDo?action=login2';
-//export const api_login = 'http://119.90.61.155/om32/common/login/loginDo?action=login2';
-export const api_login = '../common/login/loginDo?action=login2';
+export const api_login = 'http://119.90.61.155/om32/common/login/loginDo?action=login2';
+//export const api_login = '../common/login/loginDo?action=login2';
 
 //export const api_logout = 'http://web.is8.com.cn/om/common/login/loginDo?action=loginOut';
-//export const api_logout = 'http://119.90.61.155/om32/common/login/loginDo?action=loginOut';
-export const api_logout ='../common/login/loginDo?action=loginOut';
+export const api_logout = 'http://119.90.61.155/om32/common/login/loginDo?action=loginOut';
+//export const api_logout ='../common/login/loginDo?action=loginOut';
 /**
  * 首页模块
  */

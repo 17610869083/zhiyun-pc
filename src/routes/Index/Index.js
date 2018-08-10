@@ -11,27 +11,8 @@ const TopicReportList = AsyncComponent(() => import('../TopicReportList/TopicRep
 const AllOpinion = AsyncComponent(() => import('../AllOpinion/AllOpinion'))
 const TrendFeeling = AsyncComponent(() => import('../TopicOpinion/TrendFeeling/TrendFeeling'))
 const ZHeader = AsyncComponent(() => import('../../components/ZHeader/Zheader'))
-const Evidence = AsyncComponent(() => import('../Evidence/Evidence'))
-const UpReport = AsyncComponent(() => import('../UpReport/UpReport'))
-const Guide = AsyncComponent(() => import('../Guide/Guide'))
-const Situational = AsyncComponent(() => import('../Situational/Situational'))
 const AppCenter= AsyncComponent(() => import('../AppCenter/AppCenter'))
-const Guard= AsyncComponent(() => import('../Guard/Guard'))
-const MonitoringWarning = AsyncComponent(() => import('../MonitoringWarning/MonitoringWarning'))
-const SecurityGovernance = AsyncComponent(() => import('../SecurityGovernance/SecurityGovernance'))
-const SpaceExploration = AsyncComponent(() => import('../SpaceExploration/SpaceExploration'))
-const SafetyProtection = AsyncComponent(() => import('../SafetyProtection/SafetyProtection'))
-const AlertNotifications = AsyncComponent(() => import('../AlertNotifications/AlertNotifications'))
-const FmEngine = AsyncComponent(() => import('../FmEngine/FmEngine'))
-const FmLgScreen = AsyncComponent(() => import('../FmLgScreen/FmLgScreen'))
-const Disposal = AsyncComponent(() => import('../Disposal/Disposal'))
-const PartyBuilding = AsyncComponent(() => import('../PartyBuilding/PartyBuilding'))
-const IndustryInformation = AsyncComponent(() => import('../IndustryInformation/IndustryInformation'))
-const CompetitiveIntelligence = AsyncComponent(() => import('../CompetitiveIntelligence/CompetitiveIntelligence'))
-const WeChatFence = AsyncComponent(() => import('../WeChatFence/WeChatFence'))
-const CloudDisk = AsyncComponent(() => import('../CloudDisk/CloudDisk'))
-const CloudPlatform = AsyncComponent(() => import('../CloudPlatform/CloudPlatform'))
-const DeadwoodCreep = AsyncComponent(() => import('../DeadwoodCreep/DeadwoodCreep'))
+const Application = AsyncComponent(() => import('../Application/Application'))
 const { Content} = Layout;
 class Index extends React.Component {
   constructor() {
@@ -135,27 +116,9 @@ class Index extends React.Component {
                 <Route path="/allopinion" component={AllOpinion}/>
                 <Route path="/home" exact component={NewHome}/>
                 <Route path="/topicreportlist" component={TopicReportList}/>
-                <Route path="/evidence" component={Evidence}/>
-                <Route path="/upreport" component={UpReport}/>
-                <Route path="/guide" component={Guide}/>
-                <Route path="/situational" component={Situational}/>
                 <Route path="/appcenter" component={AppCenter}  onEnter={this.onEnter}/> 
-                <Route path="/Guard" component={Guard}/>
-                <Route path="/monitoringwarning" component={MonitoringWarning}/>
-                <Route path="/securitygovernance" component={SecurityGovernance}/>
-                <Route path="/spaceexploration" component={SpaceExploration}/>
-                <Route path="/safetyprotection" component={SafetyProtection}/>
-                <Route path="/alertnotifications" component={AlertNotifications}/>
-                <Route path="/fmengine" component={FmEngine}/>
-                <Route path="/fmlgscreen" component={FmLgScreen}/>
-                <Route path="/disposal" component={Disposal}/>
-                <Route path="/partybuilding" component={PartyBuilding}/>
-                <Route path="/industryinformation" component={IndustryInformation}/>
-                <Route path="/competitiveintelligence" component={CompetitiveIntelligence}/>
-                <Route path="/wechatfence" component={WeChatFence}/>
-                <Route path="/clouddisk" component={CloudDisk}/>
-                <Route path="/cloudplatform" component={CloudPlatform}/>
-                <Route path="/deadwoodcreep" component={DeadwoodCreep}/>
+                <Route path="/application/:src" component={Application}/>
+                
               </Switch>
               <div className="suspensionBox" style={{display:"none"}}>
                 <div>

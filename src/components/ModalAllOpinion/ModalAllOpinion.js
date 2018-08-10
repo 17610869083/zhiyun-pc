@@ -567,7 +567,8 @@ class ModalAllOpinion extends React.Component{
           }
       }
       this.setState({
-        checkedArray:this.state.checkedArray.fill(false)
+        checkedArray:this.state.checkedArray.fill(false),
+        checkedAll:false
       })
      }
      render(){

@@ -7,6 +7,8 @@ import {opinionSearchRequested, searchKeywordSync, paginationPage} from '../../r
 import {URLToObject, getSecondTime} from '../../utils/format';
 import {GRAY} from '../../utils/colors';
 import './AllOpinionDetail.less';
+import request from '../../utils/request';
+import {api_show_key_website} from '../../services/api';
 const FormItem = Form.Item;
 class AllOpinionDetail extends React.Component {
   constructor() {
@@ -115,7 +117,8 @@ class AllOpinionDetail extends React.Component {
         'weibo':'微博',
         'news':'新闻',
         'forum':'论坛'
-     }
+     },
+     sources:''
     }
   }
 
@@ -140,7 +143,8 @@ class AllOpinionDetail extends React.Component {
         order: this.state.sortValue,
         similer: this.state.filterValue,
         carry: this.state.mediaValue,
-        pagesize: this.state.pagesize
+        pagesize: this.state.pagesize,
+        sources:this.state.sources
       };
       this.props.opinionSearchRequest(param);
       this.props.paginationPage(1);
@@ -156,7 +160,8 @@ class AllOpinionDetail extends React.Component {
         carry: this.state.mediaValue,
         begin: this.state.begin,
         end: this.state.end,
-        pagesize: this.state.pagesize
+        pagesize: this.state.pagesize,
+        sources:this.state.sources
       };
       this.props.opinionSearchRequest(param);
       this.props.paginationPage(1);
@@ -206,7 +211,8 @@ class AllOpinionDetail extends React.Component {
           carry: this.state.mediaValue,
           begin: begin,
           end: end,
-          pagesize: this.state.pagesize
+          pagesize: this.state.pagesize,
+          sources:this.state.sources
         };
         this.props.opinionSearchRequest(param);
         this.props.paginationPage(1);
@@ -222,7 +228,8 @@ class AllOpinionDetail extends React.Component {
           carry: this.state.mediaValue,
           begin: begin,
           end: end,
-          pagesize: this.state.pagesize
+          pagesize: this.state.pagesize,
+          sources:this.state.sources
         };
         this.props.opinionSearchRequest(param);
         this.props.paginationPage(1);
@@ -243,7 +250,8 @@ class AllOpinionDetail extends React.Component {
         carry: this.state.mediaValue,
         begin: this.state.begin,
         end: this.state.end,
-        pagesize: this.state.pagesize
+        pagesize: this.state.pagesize,
+        sources:this.state.sources
       };
       this.props.opinionSearchRequest(param);
       this.props.paginationPage(1);
@@ -259,7 +267,8 @@ class AllOpinionDetail extends React.Component {
         carry: this.state.mediaValue,
         begin: this.state.begin,
         end: this.state.end,
-        pagesize: this.state.pagesize
+        pagesize: this.state.pagesize,
+        sources:this.state.sources
       };
       this.props.opinionSearchRequest(param);
       this.props.paginationPage(1);
@@ -279,7 +288,8 @@ class AllOpinionDetail extends React.Component {
         carry: this.state.mediaValue,
         begin: this.state.begin,
         end: this.state.end,
-        pagesize: this.state.pagesize
+        pagesize: this.state.pagesize,
+        sources:this.state.sources
       };
       this.props.opinionSearchRequest(param);
       this.props.paginationPage(1);
@@ -295,7 +305,8 @@ class AllOpinionDetail extends React.Component {
         carry: this.state.mediaValue,
         begin: this.state.begin,
         end: this.state.end,
-        pagesize: this.state.pagesize
+        pagesize: this.state.pagesize,
+        sources:this.state.sources
       };
       this.props.opinionSearchRequest(param);
       this.props.paginationPage(1);
@@ -315,7 +326,8 @@ class AllOpinionDetail extends React.Component {
         carry: this.state.mediaValue,
         begin: this.state.begin,
         end: this.state.end,
-        pagesize: this.state.pagesize
+        pagesize: this.state.pagesize,
+        sources:this.state.sources
       };
       this.props.opinionSearchRequest(param);
       this.props.paginationPage(1);
@@ -331,7 +343,8 @@ class AllOpinionDetail extends React.Component {
         carry: this.state.mediaValue,
         begin: this.state.begin,
         end: this.state.end,
-        pagesize: this.state.pagesize
+        pagesize: this.state.pagesize,
+        sources:this.state.sources    
       };
       this.props.opinionSearchRequest(param);
       this.props.paginationPage(1);
@@ -351,7 +364,8 @@ class AllOpinionDetail extends React.Component {
         carry: value,
         begin: this.state.begin,
         end: this.state.end,
-        pagesize: this.state.pagesize
+        pagesize: this.state.pagesize,
+        sources:this.state.sources
       };
       this.props.opinionSearchRequest(param);
       this.props.paginationPage(1);
@@ -367,7 +381,8 @@ class AllOpinionDetail extends React.Component {
         carry: value,
         begin: this.state.begin,
         end: this.state.end,
-        pagesize: this.state.pagesize
+        pagesize: this.state.pagesize,
+        sources:this.state.sources
       };
       this.props.opinionSearchRequest(param);
       this.props.paginationPage(1);
@@ -388,7 +403,8 @@ class AllOpinionDetail extends React.Component {
         carry: this.state.mediaValue,
         begin: this.state.begin,
         end: this.state.end,
-        pagesize: pageSize
+        pagesize: pageSize,
+        sources:this.state.sources
       };
       this.props.opinionSearchRequest(param);
       this.props.paginationPage(1);
@@ -404,7 +420,8 @@ class AllOpinionDetail extends React.Component {
         carry: this.state.mediaValue,
         begin: this.state.begin,
         end: this.state.end,
-        pagesize: pageSize
+        pagesize: pageSize,
+        sources:this.state.sources
       };
       this.props.opinionSearchRequest(param);
       this.props.paginationPage(1);
@@ -426,14 +443,16 @@ class AllOpinionDetail extends React.Component {
       begin: this.state.begin,
       end: this.state.end,
       page: pagenumber,
-      pagesize: this.state.pagesize
+      pagesize: this.state.pagesize,
+      sources:this.state.sources
     };
    }else{
       param = {
       seltype: this.props.ks.seltype,
       keyword:this.props.ks.keyword,
       page:pagenumber,
-      similer:1
+      similer:1,
+      sources:this.state.sources
      }
    }
     this.props.opinionSearchRequest(param);
@@ -460,7 +479,8 @@ class AllOpinionDetail extends React.Component {
         begin: this.state.begin,
         end: this.state.end,
         page: this.props.page,
-        pagesize: this.state.pagesize
+        pagesize: this.state.pagesize,
+        sources:this.state.sources
       };
       this.props.opinionSearchRequest(param);
     } else {
@@ -472,7 +492,8 @@ class AllOpinionDetail extends React.Component {
         neg:this.state.trendValue,
         order:this.state.sortValue,
         carry:this.state.mediaValue,
-        page:this.props.page
+        page:this.props.page,
+        sources:this.state.sources
       };
       this.props.opinionSearchRequest(param);
       this.props.paginationPage(1);
@@ -528,12 +549,37 @@ class AllOpinionDetail extends React.Component {
         mediaValue: this.state.mediaList[media],
         timeValue: day
        })
+    }else if(pathname.indexOf('sources') !== -1){
+       let source= parseInt(this.props.location.search.split('=')[1],10);
+        request(api_show_key_website)
+        .then(res => {
+           if(res.data){
+               this.setState({
+                  sources:res.data[source]['sources']
+               })
+               const obj ={ sources:res.data[source]['sources']};
+               const param = {
+                 datetag: this.state.timeValue,
+                 neg: this.state.trendValue,
+                 order: this.state.sortValue,
+                 similer: this.state.filterValue,
+                 carry: this.state.mediaValue,
+                 begin: this.state.begin,
+                 end: this.state.end,
+                 page: this.state.page,
+                 pagesize: this.state.pagesize
+               };
+               const newParam = Object.assign(param, obj);
+               this.props.opinionSearchRequest(newParam);
+           }
+        })
+        return;
     } else {
       this.setState({
         timeValue: 'all'
       })
     }
-    const obj = URLToObject(pathname);
+    const obj =URLToObject(pathname);
     const param = {
       datetag: this.state.timeValue,
       neg: this.state.trendValue,
@@ -553,7 +599,6 @@ class AllOpinionDetail extends React.Component {
     if (this.props.location && this.props.location.search !== "?type=search") {
       this.homepageMore(window.location.hash);
     }
-
   }
 
   componentDidMount() {
@@ -590,7 +635,8 @@ class AllOpinionDetail extends React.Component {
        trendValue:'all' ,
        filterValue:1,
        mediaValue:'全部',
-       sortValue:'timedown'
+       sortValue:'timedown',
+       sources:'' 
     })
   }
   render() {
@@ -664,7 +710,8 @@ class AllOpinionDetail extends React.Component {
       begin: this.state.begin,
       end: this.state.end,
       page: this.state.page,
-      pagesize: this.state.pagesize
+      pagesize: this.state.pagesize,
+      sources:this.state.sources
     };
     return (
       <div className="all-opinion" id="anchor">

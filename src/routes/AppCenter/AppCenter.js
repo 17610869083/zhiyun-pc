@@ -20,12 +20,12 @@ class AppCenter extends React.Component{
                         // {type: 'icon-logoxinjiang1-copy', text: '维语监测', color: '#6296f1', href: '/multilingual/3', hrefType: 'history'},
                         // {type: 'icon-xicanga-copy', text: '藏语监测', color: '#4ba9eb', href: '/multilingual/4', hrefType: 'history'},
                         // {type: 'icon-yingyu', text: '英语监测', color: '#04c0b3'},
-                        {type: 'icon-zhengjucailiao', text: '互联网取证', color: '#6296f1', href: '/evidence', hrefType: 'http'},
-                        {type: 'icon-shangbao', text: '上报管理', color: '#4ba9eb', href: '/upreport', hrefType: 'http'},
-                        {type: 'icon-minshengminqing', text: '民情管理', color: '#4ba9eb',href:'/allopinion/allopiniondetail',hrefType:'http'},
-                        {type: 'icon-pinglun', text: '网评管理', color: '#4ba9eb', href: '/guide', hrefType: 'http'}
+                        {type: 'icon-zhengjucailiao', text: '互联网取证', color: '#6296f1', href: '/evidence',src:'1', hrefType: 'http'},
+                        {type: 'icon-shangbao', text: '上报管理', color: '#4ba9eb', href: '/upreport',src:'2', hrefType: 'http'},
+                        {type: 'icon-minshengminqing', text: '民情管理', color: '#4ba9eb',href:'/allopinion/allopiniondetail',hrefType:'history'},
+                        {type: 'icon-pinglun', text: '网评管理', color: '#4ba9eb', href: '/guide',src:'3', hrefType: 'http'}
                     ]
-                },
+                },                   
                 {
                     title: '安全应用',
                     items: [
@@ -33,34 +33,34 @@ class AppCenter extends React.Component{
                         {type: 'icon-jiance', text: '网站监测预警', color: '#4ba9eb', href: 'https://114.242.25.234:38447/', hrefType: 'login'},
                         {type: 'icon--shujuzhiligongju', text: '网站安全治理', color: '#6296f1', href: 'https://119.88.190.68', hrefType: 'login'}, // ***
                         {type: 'icon-leidatance', text: '网站空间探测', color: '#04c0b3', href: 'https://119.88.190.71/', hrefType: 'login'},
-                        {type: 'icon-fanghu', text: '网站安全防护', color: '#4ba9eb', href: '/competitiveIntelligence', hrefType: 'http'},
-                        // {type: 'icon-jiangmurubingdugongji-copy', text: '僵木蠕监测', color: '#4ba9eb', href: '/safetyprotection', hrefType: 'http'},
-                        {type: 'icon-zonghetongbao', text: '预警通报', color: '#f7b55d', href: '/alertnotifications', hrefType: 'http'},
+                        {type: 'icon-fanghu', text: '网站安全防护', color: '#4ba9eb', href: '/competitiveIntelligence',src:'4', hrefType: 'http'},
+                        // {type: 'icon-jiangmurubingdugongji-copy', text: '僵木蠕监测', color: '#4ba9eb', href: '/safetyprotection', src:'10',hrefType: 'http'},
+                        {type: 'icon-zonghetongbao', text: '预警通报', color: '#f7b55d', href: '/alertnotifications', src:'5',hrefType: 'http'},
                         // {type: 'icon-huandunicon-', text: '威胁情报', color: '#4ba9eb'},
                         // {type: 'icon-zidong', text: '自动通报', color: '#4ba9eb'},
                         // {type: 'icon-wangluofangcuangai', text: '网站防篡改', color: '#6296f1'},
                         {type: 'icon-zidong', text: '流量监测引擎', color: '#4ba9eb', href: 'https://119.88.190.68/', hrefType: 'login'}, // 图标   
                         {type: 'icon-zidong', text: '流量监测大屏', color: '#4ba9eb', href: 'http://119.88.190.68:3000/', hrefType: 'login'}, // 图标
-                        {type: 'icon-zidong', text: '通报处置', color: '#4ba9eb', href: '/disposal', hrefType: 'http'} // 图标
+                        {type: 'icon-zidong', text: '通报处置', color: '#4ba9eb', href: '/disposal',src:'6', hrefType: 'http'} // 图标
                     ]
                 },
                 {
                     title: '行业应用',
                     items: [
-                        {type: 'icon-md-part-outline', text: '智慧党建', color: '#4ba9eb', href: '/partybuilding', hrefType: 'http'},
+                        {type: 'icon-md-part-outline', text: '智慧党建', color: '#4ba9eb', href: '/partybuilding',src:'7', hrefType: 'http'},
                         {type: 'icon-zixun', text: '行业资讯', color: '#4ba9eb', href: 'http://119.90.61.155/om3', hrefType: 'login'},
                         {type: 'icon-qingbao', text: '竞争情报', color: '#f7b55d', href: 'http://119.90.61.155/om3', hrefType: 'login'},
                         //{type: 'icon-yupanjingzhengweixie', text: '决策预判', color: '#4ba9eb',href: 'http://119.90.61.155/om3', hrefType: 'login'},
                         // {type: 'icon-zhaotoubiao1', text: '招投标', color: '#6296f1', href: '/bidding/information', hrefType: 'http'},
                         // {type: 'icon-qiyehuaxiang', text: '企业画像', color: '#4ba9eb', href: 'http://119.90.61.155/om3', hrefType: 'login'},
                         //{type: 'icon-huaxiang', text: '人物画像', color: '#6296f1', href: 'http://119.90.61.155/om3', hrefType: 'login'},
-                        {type: 'icon-dianziweilanxitong', text: '微信围栏', color: '#4ba9eb', href: '/wechatfence', hrefType: 'http'}
+                        {type: 'icon-dianziweilanxitong', text: '微信围栏', color: '#4ba9eb', href: '/wechatfence',src:'8', hrefType: 'http'}
                     ]
                 },
                 {
                     title: '基础平台',
                     items: [
-                        {type: 'icon-icon-siyouyuncunchu-', text: '私有云盘', color: '#04c0b3', href: '/clouddisk', hrefType: 'http'},
+                        {type: 'icon-icon-siyouyuncunchu-', text: '私有云盘', color: '#04c0b3', href: '/clouddisk',src:'9', hrefType: 'http'},
                         {type: 'icon-yunpingtaianquan', text: '华知云平台', color: '#6296f1', href: 'http://119.90.158.98:8888/auth/login/', hrefType: 'login'}
                     ]
                 }
@@ -73,7 +73,7 @@ class AppCenter extends React.Component{
         通报处置     http://114.242.25.234:30005/gxwhongce2/sec/toBulletinWarning
     
     */
-    hrefTo(href, hrefType) {
+    hrefTo(href, hrefType,src) {
         // history.push('http://www.ruanyifeng.com/blog/2015/07/flex-grammar.html')
         // console.log(window.location) //origin pathname
         // if(hrefType === 'login') {
@@ -89,7 +89,10 @@ class AppCenter extends React.Component{
         // }
         if(hrefType === 'login'){
             window.open(href)
-        }else{
+        }else if (hrefType === 'http'){
+            history.push(`application/${src}`)
+        }
+        else{
             history.push(href)
         }
         
@@ -103,7 +106,7 @@ class AppCenter extends React.Component{
                                         <div className="items">
                                             {item.items.map((iitem, ii) => {
                                                 return <dd key={ii}>
-                                                            <div className="content" onClick={this.hrefTo.bind(this, iitem.href, iitem.hrefType)}>
+                                                            <div className="content" onClick={this.hrefTo.bind(this, iitem.href, iitem.hrefType,iitem.src)}>
                                                                 <div className="icon">
                                                                     <div className="icon-font" style={{backgroundColor: iitem.color}}>
                                                                         <IconFont type={iitem.type} style={{width: '100%', fontSize: '20px'}}></IconFont>

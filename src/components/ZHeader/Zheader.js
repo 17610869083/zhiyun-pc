@@ -33,31 +33,31 @@ class Zheader extends React.Component {
                 // { text: '维语监测', color: '#6296f1', href: '/multilingual/3', hrefType: 'history'},
                 // { text: '藏语监测', color: '#4ba9eb', href: '/multilingual/4', hrefType: 'history'},
                 // {text: '英语监测', color: '#04c0b3',href:'javascript();'},
-                { text: '民情管理', color: '#4ba9eb',href:'/allopinion/allopiniondetail',hrefType:'http'},
+                { text: '民情管理', color: '#4ba9eb',href:'/allopinion/allopiniondetail',hrefType:'history'},
                 { text: '网站监测预警', color: '#4ba9eb', href: 'https://114.242.25.234:38447/', hrefType: 'login'},
                 { text: '网站安全治理', color: '#6296f1', href: 'https://119.88.190.68', hrefType: 'login'}, // ***
                 { text: '网站空间探测', color: '#04c0b3', href: 'https://119.88.190.71/', hrefType: 'login'},
-                {text: '网站安全防护', color: '#4ba9eb', href: '/competitiveIntelligence', hrefType: 'http'},
-                { text: '僵木蠕监测', color: '#4ba9eb', href: '/safetyprotection', hrefType: 'http'},
-                { text: '预警通报', color: '#f7b55d', href: '/alertnotifications', hrefType: 'http'}
+                {text: '网站安全防护', color: '#4ba9eb', href: '/competitiveIntelligence',src:'4', hrefType: 'http'},
+                { text: '僵木蠕监测', color: '#4ba9eb', href: '/safetyprotection',src:'10', hrefType: 'http'},
+                { text: '预警通报', color: '#f7b55d', href: '/alertnotifications',src:'5', hrefType: 'http'}
                 
             ],
             itemsTwo: [
                 {text: '流量监测引擎', color: '#4ba9eb', href: 'https://119.88.190.68/', hrefType: 'login'}, // 图标   
                 { text: '流量监测大屏', color: '#4ba9eb', href: 'http://119.88.190.68:3000/', hrefType: 'login'}, // 图标
-                { text: '通报处置', color: '#4ba9eb', href: '/disposal', hrefType: 'http'} ,
-                { text: '智慧党建', color: '#4ba9eb', href: '/partybuilding', hrefType: 'http'},
+                { text: '通报处置', color: '#4ba9eb', href: '/disposal',src:'6', hrefType: 'http'} ,
+                { text: '智慧党建', color: '#4ba9eb', href: '/partybuilding',src:'7', hrefType: 'http'},
                 { text: '行业资讯', color: '#4ba9eb', href: 'http://119.90.61.155/om3', hrefType: 'login'},
                 { text: '竞争情报', color: '#f7b55d', href: 'http://119.90.61.155/om3', hrefType: 'login'},
                 {text: '决策预判', color: '#4ba9eb',href: 'http://119.90.61.155/om3', hrefType: 'login'}
          
             ],
             itemsThree: [
-                // { text: '招投标', color: '#6296f1', href: '/bidding/information', hrefType: 'http'},
+                // { text: '招投标', color: '#6296f1', href: '/bidding/information', hrefType: 'history'},
                 { text: '企业画像', color: '#4ba9eb', href: 'http://119.90.61.155/om3', hrefType: 'login'},
                 { text: '人物画像', color: '#6296f1', href: 'http://119.90.61.155/om3', hrefType: 'login'},
-                { text: '微信围栏', color: '#4ba9eb', href: '/wechatfence', hrefType: 'http'},
-                { text: '私有云盘', color: '#04c0b3', href: '/clouddisk', hrefType: 'http'},
+                { text: '微信围栏', color: '#4ba9eb', href: '/wechatfence',src:'8', hrefType: 'http'},
+                { text: '私有云盘', color: '#04c0b3', href: '/clouddisk',src:'9', hrefType: 'http'},
                 { text: '华知云平台', color: '#6296f1', href: 'http://119.90.158.98:8888/auth/login/', hrefType: 'login'}
             ]
         }
@@ -247,18 +247,21 @@ class Zheader extends React.Component {
         const itemMenuOne =this.state.itemsOne.map((item,index) => {
                       return  <Menu.Item key={index} style={{textAlign:'left',width:'130px'}}>
                               {item.hrefType === 'login' ? <a target="_blank" href={item.href}>{item.text}</a>:
+                              item.hrefType === 'http'?<Link to={`/application/${item.src}`} >{item.text}</Link>:
                               <Link to={item.href} >{item.text}</Link>}
                             </Menu.Item>
                     });
         const itemMenuTwo =this.state.itemsTwo.map((item,index) => {
             return  <Menu.Item key={index} style={{textAlign:'left',width:'130px'}}>
                     {item.hrefType === 'login' ? <a target="_blank" href={item.href}>{item.text}</a>:
+                    item.hrefType === 'http'?<Link to={`/application/${item.src}`} >{item.text}</Link>:
                     <Link to={item.href} >{item.text}</Link>}
                     </Menu.Item>
             });
             const itemMenuThree =this.state.itemsThree.map((item,index) => {
             return  <Menu.Item key={index} style={{textAlign:'left',width:'130px'}}>
                     {item.hrefType === 'login' ? <a target="_blank" href={item.href}>{item.text}</a>:
+                    item.hrefType === 'http'?<Link to={`/application/${item.src}`} >{item.text}</Link>:
                     <Link to={item.href} >{item.text}</Link>}
                     </Menu.Item>
             });
@@ -291,9 +294,9 @@ class Zheader extends React.Component {
                         <ul className="nav-bar">
                           <li onClick={this.changeNav.bind(this,'home')} className={this.state.type !== 'home' ?'normal':'active'}><Link to="/home">首页</Link></li>
                           <li onClick={this.changeNav.bind(this,'allopinion')} className={this.state.type !== 'allopinion' ?'normal':'active'}><Link to="/allopinion/allopiniondetail">舆情监测</Link></li>
-                          {/* <li onClick={this.changeNav.bind(this,'evidence')} className={this.state.type !== 'evidence' ?'normal':'active'}><Link to="/evidence">互联网取证</Link></li>
-                          <li onClick={this.changeNav.bind(this,'upreport')} className={this.state.type !== 'upreport' ?'normal':'active'}><Link to="/upreport">上报平台</Link></li>
-                          <li onClick={this.changeNav.bind(this,'guide')} className={this.state.type !== 'guide' ?'normal':'active'}><Link to="/guide">网评管理</Link></li>
+                          {/* <li onClick={this.changeNav.bind(this,'evidence')} className={this.state.type !== 'evidence' ?'normal':'active'}><Link to="/application/1">互联网取证</Link></li>
+                          <li onClick={this.changeNav.bind(this,'upreport')} className={this.state.type !== 'upreport' ?'normal':'active'}><Link to="/application/2">上报平台</Link></li>
+                          <li onClick={this.changeNav.bind(this,'guide')} className={this.state.type !== 'guide' ?'normal':'active'}><Link to="/application/3">网评管理</Link></li>
                           <li onClick={this.changeNav.bind(this,'more')} className={this.state.type !== 'more' ?'normal':'active'}>
                             <Dropdown overlay={moreMenu} trigger={['click']} placement={'bottomCenter'}
                              getPopupContainer={() => document.querySelector('.z-header')}

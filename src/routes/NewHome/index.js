@@ -14,6 +14,7 @@ import OpinionCountBox from './OpinionCountBox';
 import TopicOpinionBox from './TopicOpinionBox';
 import HotWordBox from './HotWordBox'; 
 import MediaDistribution from './MediaDistribution';
+import Leitmedium from './Leitmedium';
 import {
   api_newest_opinion,
   api_newest_negative_opinion,
@@ -24,7 +25,8 @@ import {
   api_carrier_pie,
   api_homepage_message,
   api_count_charts,
-  api_today_opinion
+  api_today_opinion,
+  api_show_key_website
 } from '../../services/api';
 import {formatOpinionCount} from '../../utils/format';
 
@@ -45,6 +47,7 @@ class NewHome extends React.Component {
       opinionCountArr:[],
       opinionCount:{},
       data:[],
+      keyWebsite:[],
       todayOpinion:[],
       delMoudleList: {
         'todayOpinion': '今日舆情',
@@ -152,6 +155,14 @@ class NewHome extends React.Component {
                                             this.setState({
                                               mediaDistributionArr: res.data
                                             })
+                                            request(api_show_key_website)
+                                             .then(res => {
+                                                 if(res.data){
+                                                    this.setState({
+                                                      keyWebsite:res.data
+                                                    })
+                                                 }
+                                             })
                                           })
                                       })
                                   });
@@ -182,7 +193,7 @@ class NewHome extends React.Component {
   }
   render() {
     const {opinionList,todayOpinionArr, alldayOpinion,todayWarningOpinion, alldayWarningOpinion, 
-      weiboAll, weiboNegative,homeMessage} = this.state;
+      weiboAll, weiboNegative,homeMessage,keyWebsite} = this.state;
     const {userInfo,themeColor} = this.props;
     const innerHeight = window.innerHeight;
       const Notification = (state) => {
@@ -208,12 +219,13 @@ class NewHome extends React.Component {
             case 'TopicOpinionBox':
               return <TopicOpinionBox />;
             case 'HotWordBox':
-              return                 <HotWordBox data={this.state.hotWordData}
+              return <HotWordBox data={this.state.hotWordData}
               status={this.props.type !== undefined ? 'setting' : ''}
-              delHotWordBox={this.delHotWordBox.bind(this)}
-  />;
+              delHotWordBox={this.delHotWordBox.bind(this)}/>;
             case 'MediaDistribution':
               return <MediaDistribution data={this.state.mediaDistributionArr}/>;
+            case 'Leitmedium':
+              return <Leitmedium data={keyWebsite}/>;
             default:
               return null;
           }

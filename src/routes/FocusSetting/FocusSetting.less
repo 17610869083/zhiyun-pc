@@ -10,10 +10,47 @@
     .focus-content{
         margin-top: 20px;
         font-size: 14px;
+        display: flex;
+        .right{
+            margin-left: 30px;
+            width: 50%;
+            background: #fff;
+            min-height: 300px;
+            .media-setting{
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 0 70px 0 44px;
+                height: 52px;
+                border-bottom: 1px solid #e4ebf7;
+                .ant-input{
+                    width: 230px;
+                }
+                span:last-child{
+                    font-size: 12px;
+                    width: 80px;
+                    height: 26px;
+                    line-height: 26px;
+                    background: #f0f2fb;
+                    text-align: center;
+                    border-radius:6px;
+                    cursor: pointer;
+                }
+             }
+            .website-name{
+                display: flex;
+                height: 44px;
+                justify-content: space-between;
+                align-items: center;
+                padding: 0 100px 0 44px;
+                border-bottom: 1px solid #e4ebf7;
+            }
+        }
         .focus-tag{
             width: 300px;
             background: #fff;
             box-shadow: 0 0 10px #dce2ee;
+            height: 350px;
             .media-setting{
                display: flex;
                justify-content: space-between;
@@ -33,14 +70,16 @@
                }
             }
             .tag-name{
-               padding-left: 24px;
+               padding:0 48px 0 24px;
                height: 50px;
-               line-height: 50px;
                border-bottom: 1px solid #e4ebf7;
                cursor: pointer;
+               display:flex;
+               justify-content: space-between;
+               align-items: center; 
+               user-select: none;
               .ant-input{
                   width: 160px;
-                  margin-right: 42px;
               }
             }
             .active{
