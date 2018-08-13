@@ -16,6 +16,7 @@ import {
 } from '../../services/api';
 import { opinionTrend, opinionColor } from '../../utils/format';
 import AllOpinion from '../AllOpinionDetail/AllOpinionDetail'
+import Briefing from '../../components/Briefing/Briefing'
 import TopicEditOpinionDetail from '../SystemSetting/TopicEditOpinionDetail/TopicEditOpinionDetail'
 import {
 	opinionSearchRequested,
@@ -89,7 +90,8 @@ class MaterialOpinion extends React.Component {
 			checkedArray: new Array(40).fill(false),
 			type: 0,
 			array: [],
-			indeterminate: true
+			indeterminate: true,
+			brieVisible: false
 		};
 	}
 
@@ -636,6 +638,13 @@ class MaterialOpinion extends React.Component {
 	// 拖拽
 	dragstart(sid, e) {
 		e.dataTransfer.setData("sid", sid);
+		if(this.checkedTrue().length === 0) {
+			e.dataTransfer.setData('briefingsid', sid)
+			e.dataTransfer.setData('a', 'drop')
+		  }else {
+			e.dataTransfer.setData('briefingsid', this.checkedTrue())
+			e.dataTransfer.setData('a', 'drop')
+		  }
 	}
 	dragenter(e) {
 		e.preventDefault()
@@ -670,7 +679,16 @@ class MaterialOpinion extends React.Component {
 			});
 		}
 	}
-
+	briefingCancel() {
+		this.setState({
+			brieVisible: false
+		})
+	}
+	addbriefing() {
+		this.setState({
+			brieVisible: true
+		})
+	}
 	render() {
 		const { pageInfo, reportData } = this.props;
 		const { getFieldDecorator } = this.props.form;
@@ -762,7 +780,8 @@ class MaterialOpinion extends React.Component {
 															<img src={this.state.carryAll[items.carry]}
 																alt=""
 																className="carryImg"
-																style={{ cursor: "pointer", width: 38, height: 38, display: "block" }}/>
+																style={{ cursor: "pointer", width: 38, height: 38, display: "block" }}
+																draggable="false"/>
 														</div>
 														<p className="docsummary" style={{ marginLeft: 67, marginTop: -50, height: 45, overflow: "hidden" }}>{items.docsummary}</p>						
 														<div className="item-bottom">
@@ -770,7 +789,7 @@ class MaterialOpinion extends React.Component {
 																{items.pubdate}
 															</div>
 															<div className="resource">
-																<a href="">
+																<a href="" draggable="false">
 																	<span className="source">{items.source}</span>
 																</a>
 															</div>
@@ -814,6 +833,14 @@ class MaterialOpinion extends React.Component {
 																			< Iconfont type="icon-shoucang-copy" style={{ width: 17, height: 17, marginBottom: 2, marginLeft: 20 }} />
 																		</i>
 																	</Dropdown>
+																</Tooltip>
+																<Tooltip title="加入简报">
+																	<i
+																		aria-hidden="true"
+																		onClick={this.addbriefing.bind(this)}
+																	>
+																		< Iconfont type="icon-qingbaogongzuojianbao" style={{ width: 20, height: 20, marginLeft: 20 }} />
+																	</i>
 																</Tooltip>
 															</div>
 														</div>
@@ -1019,6 +1046,14 @@ class MaterialOpinion extends React.Component {
 											</i>
 										</Dropdown>
 									</Tooltip>
+									<Tooltip title="加入简报">
+										<i
+											aria-hidden="true"
+											onClick={this.addbriefing.bind(this)}
+										>
+											<Iconfont type="icon-qingbaogongzuojianbao" style={{ width: 17, height: 17, marginLeft: 20 }} />
+										</i>
+									</Tooltip>
 								</div>
 							</div>
 							<div className="inputSearch">
@@ -1161,6 +1196,7 @@ class MaterialOpinion extends React.Component {
 						</div>
 					</div>
 				</div>
+				<Briefing visible={this.state.brieVisible} onCancel={this.briefingCancel.bind(this)}></Briefing>
 			</div>
 		)
 	}

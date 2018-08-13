@@ -193,6 +193,7 @@ class DetailOpinion extends React.Component {
 
   editModalHandleOk() {
     let editData = Store.getState().addMessageReducer;
+
     const id = this.state.sid;
     request(api_docedit_save, {
       method: 'POST',

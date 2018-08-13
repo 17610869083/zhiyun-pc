@@ -5,6 +5,7 @@ import {history} from '../../utils/history';
 import TopicList from '../TopicOpinion/TopicList/TopicList';
 import Information from './BiddingInformation/BiddingInformation';
 import Setting from './BiddingSetting/BiddingSetting'
+import Briefing from '../../components/Briefing/Briefing'
 import {
         api_get_BiddingFolderList,
         api_get_BiddingddGradeC,
@@ -40,7 +41,7 @@ class BiddingOpinion extends React.Component {
             addClass:1,
             isTopShow:true,
             browserHeight:300,
-            topicNavMessage: [],
+            topicNavMessage: []
         };
 
     }
@@ -343,7 +344,6 @@ class BiddingOpinion extends React.Component {
    delCancelTwo(){
        this.setState({visibleTwo:false})
    }
-  
     render() {
         const delItems = item => {
             return <Menu onClick={this.onDelitem.bind(this,item.catid)}>
