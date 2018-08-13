@@ -493,10 +493,13 @@ class AllOpinionDetail extends React.Component {
         order:this.state.sortValue,
         carry:this.state.mediaValue,
         page:this.props.page,
+        pagesize: this.state.pagesize,
+        begin: this.state.begin,
+        end: this.state.end,
         sources:this.state.sources
       };
       this.props.opinionSearchRequest(param);
-      this.props.paginationPage(1);
+      //this.props.paginationPage(1);
     }
   }
 
