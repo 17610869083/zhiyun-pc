@@ -28,7 +28,7 @@ class EditOpinionDetail extends React.Component {
             }, 
             body:`sid=${this.props.titleSid}`
           }).then(res=>{
-                let nztagsStr=res.data.singleData[0].nztags.join(' ');
+                let nztagsStr=res.data.singleData[0].nztags?res.data.singleData[0].nztags.join(' '):res.data.singleData[0].nrtags.join(' ') ;
                 let keywordStr=res.data.singleData[0].keyword!==undefined? res.data.singleData[0].keyword.join(' '):'';
                 this.setState({
                     singleData:res.data.singleData[0],
