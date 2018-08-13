@@ -99,9 +99,6 @@ class Index extends React.Component {
   backTop() {
     document.querySelector('.main').scrollTop = 0;
   }
-  onEnter = () => {
-    console.log('进来了')
-  }
   render() {
     // 统计报告-舆情报告   
     return (
@@ -116,7 +113,7 @@ class Index extends React.Component {
                 <Route path="/allopinion" component={AllOpinion}/>
                 <Route path="/home" exact component={NewHome}/>
                 <Route path="/topicreportlist" component={TopicReportList}/>
-                <Route path="/appcenter" component={AppCenter}  onEnter={this.onEnter}/> 
+                <Route path="/appcenter" component={AppCenter} /> 
                 <Route path="/application/:src" component={Application}/>
                 
               </Switch>

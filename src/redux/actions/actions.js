@@ -8,7 +8,8 @@ import {
     EXPORT_SKIP,
     REPORT_MESSAGE,
     TOPIC_REPORT_EXPORT,
-    ADD_MESSAGE_REMOVE
+    ADD_MESSAGE_REMOVE,
+    MUL_LANGUAGES_TOGGLE
 } from './actionTypes';
 
 // 改变主题颜色
@@ -70,4 +71,8 @@ export const addMessageRemove=(data)=>({
      payload:data
 })
 
-
+//多语种文字切换
+export const mulLanToggle=(languages)=>({
+    type:MUL_LANGUAGES_TOGGLE,
+    payload:languages
+})

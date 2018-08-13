@@ -34,7 +34,7 @@ const Briefing= AsyncComponent(() => import('../Briefing/Briefing'))
 const BriefingSecond = AsyncComponent(() => import('../BriefingSecond/BriefingSecond'))
 const Daily = AsyncComponent(() => import('../Daily/Daily'))
 const Special = AsyncComponent(() => import('../Special/Special'))
-const Multilingual= AsyncComponent(() => import('../Multilingual/Multilingual'))
+const Multilingual= AsyncComponent(() => import('../Multilingual/MultilingualInfo'))
 const BiddingOpinion = AsyncComponent(() => import('../BiddingOpinion/BiddingOpinion'))
 const FocusSetting = AsyncComponent(() => import('../FocusSetting/FocusSetting'))
 const { Sider, Content} = Layout;

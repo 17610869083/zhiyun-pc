@@ -5,6 +5,7 @@ import {
   Checkbox, Input, Menu, Dropdown, Popconfirm, message, Popover, Button,
   Spin, Alert, Select, Pagination, Modal,Tooltip
 } from 'antd';
+
 import {history} from '../../../utils/history';
 import './MultilingualDetail.less';
 import {opinionColor, setHighlightTags, formatDateTime} from '../../../utils/format';
@@ -70,6 +71,7 @@ class OpinionDetail extends React.Component {
       downloadFlag:false,
       materialList:[],
       isSearch: false,
+      loadFlag: false,
       negText: {
         positive: ['正面', '정면', '正面', 'ئۇدۇل.', 'དྲང་ཕྱོགས་', 'positive'],
         neutral: ['中性', '중성', '中性', 'نېيترال ', 'མ་ནིང།', 'neutral'],
@@ -134,6 +136,11 @@ class OpinionDetail extends React.Component {
          checkedArray:this.state.checkedArray.fill(false)
        })
     }
+  }
+  componentWillReceiveProps(nextprops) {
+    this.setState({
+       loadFlag : nextprops.docListCode  === undefined ? true:false
+    })
   }
   // ------全选
   chooseAllOnChange(e) {
@@ -602,7 +609,8 @@ class OpinionDetail extends React.Component {
   }
   render() {
     const {page} = this.props;
-    const flag = this.props.docList&& this.props.docList.length === 0?true:false;
+    // debugger
+    
     const docList = this.props.docList ? this.props.docList : [];
     const OpinionDetailItems = docList[0] !== undefined && docList[0]['negative'] !== undefined ? docList.map((item, index) =>
         <li key={item.sid} className="opinion-detail-item">
@@ -768,7 +776,6 @@ class OpinionDetail extends React.Component {
       </Spin>
     );
     const left = () => {
-      // console.log(this.props.lang, this.props.languageType)
       if(this.props.languageType-0 === 3) {
         return <div className="left">
             <Dropdown overlay={ChangeTrendMenu} trigger={['click']}
@@ -898,7 +905,7 @@ class OpinionDetail extends React.Component {
         </div>
         <div className="bottom">
           { this.state.downloadFlag?downLoading:(null)}
-          {flag ? Loading : (null)}
+          {this.state.loadFlag ? Loading : (null)}
           <ul className="opinion-detail-wrapper">
             {OpinionDetailItems}
           </ul>
@@ -944,7 +951,9 @@ const mapStateToProps = state => {
     getTopicMessageSucceeded: state.getTopicMessageSucceeded.data,
     getRouterReducer: state.getRouterReducer,
     page: state.paginationPageReducer,
-    searchKeyword: state.searchKeywordSyncReducer.ks
+    searchKeyword: state.searchKeywordSyncReducer.ks,
+    docList:  state.getSortedContentSucceeded.data.docList,
+    docListCode:  state.getSortedContentSucceeded.data.code,
   }
 };
 

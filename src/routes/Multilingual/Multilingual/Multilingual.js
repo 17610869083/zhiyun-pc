@@ -2,10 +2,9 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import {connect} from 'react-redux';
 import {Pagination, DatePicker, Form, message, Button} from 'antd';
-import OpinionDetail from './MultilingualDetail/MultilingualDetail';
-import {opinionSearchRequested, searchKeywordSync, paginationPage,opinionSearchSucceeded} from '../../redux/actions/createActions';
-import {URLToObject, getSecondTime} from '../../utils/format';
-import {GRAY} from '../../utils/colors';
+import OpinionDetail from '../MultilingualDetail/MultilingualDetail';
+import { getSecondTime} from '../../../utils/format';
+import {searchKeywordSync, paginationPage, getSortedContentRequested, mulLanToggle, emptyList} from '../../../redux/actions/createActions';
 import './Multilingual.less';
 const FormItem = Form.Item;
 class AllOpinion extends React.Component {
@@ -146,11 +145,13 @@ class AllOpinion extends React.Component {
         startBigToNow: ['开始时间请不要大于当前时间', '시작 시간은 현재의 시간보다 더 크게 하지 마세요', '開始時間は、現在の時間より大きくないでください。', 'باشلىنىش ۋاقتى قىلماڭ كۈندىكى ۋاقىت', 'མ་བྱེད་རོགས་། སྐབས་དེའི་དུས་ཚོད་ལས་ཆེ་བ་འགོ་ཚུགས་པའི་དུས་ཚོད་།', 'Please do not start more than the current time'],
         endBigToNow: ['结束时间请不要大于当前时间', '마감 시간은 현재의 시간보다 크게 마시지 마세요', '終了時間は、現在の時間より大きくないでください。', 'ئاخىرلاشقان ۋاقىت قىلماڭ كۈندىكى ۋاقىت ', 'དུས་ཚོད་མཇུག་རྫོགས་སྐབས་དེའི་དུས་ཚོད་ལས་ཆེ་བ་མ་བྱེད་རོགས་།', 'Please do not exceed the current time at the end time']
       },
-      prevhash: ''
+      prevhash: '',
+      prevlan: ''
     }
     
   }
   timeClick(value) {
+    this.props.emptyList()
     this.setState({
       timeValue: value
     });
@@ -164,24 +165,25 @@ class AllOpinion extends React.Component {
         timePickerShow: false
       })
     }
-
       const param = {
-        lang:this.state.language[this.props.match.params.languages],
         pagesize: this.state.pagesize,
         datetag: value,
         neg: this.state.trendValue,
         order: this.state.sortValue,
         similer: this.state.filterValue,
         page:this.props.page,
-        carry: this.state.mediaValue
+        carry: this.state.mediaValue,
+        lang: this.state.language[this.props.match.params.languages],
+        clfid: this.props.getRouter.topicid
       };
-      this.props.opinionSearchRequest(param);
+      this.props.getSortedContentRequest(param);
       this.props.paginationPage(1);
   }
 
   // 选择具体时间
   handleSubmit(event) {
     event.preventDefault();
+    this.props.emptyList()
     this.props.form.validateFields((err, fieldsValue) => {
       if (err) {
         return;
@@ -215,7 +217,6 @@ class AllOpinion extends React.Component {
         timeValue: 'custom',
       });
         const param = {
-          lang:this.state.language[this.props.match.params.languages],
           pagesize: this.state.pagesize,
           datetag: timeValue,
           neg: this.state.trendValue,
@@ -224,14 +225,17 @@ class AllOpinion extends React.Component {
           page:this.props.page,
           carry: this.state.mediaValue,
           begin: begin,
-          end: end
+          end: end,
+          clfid: this.props.getRouter.topicid,
+          lang:this.state.language[this.props.match.params.languages]
         }
-        this.props.opinionSearchRequest(param);
+        this.props.getSortedContentRequest(param);
         this.props.paginationPage(1);
     });
   } 
 
   trendClick(value) {
+    this.props.emptyList()
     this.setState({
       trendValue: value
     });
@@ -243,18 +247,20 @@ class AllOpinion extends React.Component {
       order: this.state.sortValue,
       similer: this.state.filterValue,
       page:this.props.page,
-      carry: this.state.mediaValue
+      carry: this.state.mediaValue,
+      clfid: this.props.getRouter.topicid
     };
     if (this.state.timeValue === 'custom') {
       param.begin = this.state.begin
       param.end = this.state.end
     }
     
-    this.props.opinionSearchRequest(param);
+    this.props.getSortedContentRequest(param);
     this.props.paginationPage(1);
   }
 
   sortClick(value) {
+    this.props.emptyList()
     this.setState({
       sortValue: value
     });
@@ -266,18 +272,20 @@ class AllOpinion extends React.Component {
       order: value,
       similer: this.state.filterValue,
       page:this.props.page,
-      carry: this.state.mediaValue
+      carry: this.state.mediaValue,
+      clfid: this.props.getRouter.topicid
     };
     if (this.state.timeValue === 'custom') {
       param.begin = this.state.begin
       param.end = this.state.end
     }
-    this.props.opinionSearchRequest(param);
+    this.props.getSortedContentRequest(param);
     this.props.paginationPage(1);
       
   }
 
   filterClick(value) {
+    this.props.emptyList()
     this.setState({
       filterValue: value
     });
@@ -289,18 +297,20 @@ class AllOpinion extends React.Component {
         order: this.state.sortValue,
         similer: value,
         page:this.props.page,
-        carry: this.state.mediaValue
+        carry: this.state.mediaValue,
+        clfid: this.props.getRouter.topicid
       };
       if (this.state.timeValue === 'custom') {
         param.begin = this.state.begin
         param.end = this.state.end
       }
-      this.props.opinionSearchRequest(param);
+      this.props.getSortedContentRequest(param);
       this.props.paginationPage(1);
       
   }
 
   mediaClick(value) {
+    this.props.emptyList()
     this.setState({
       mediaValue: value
     });
@@ -312,18 +322,20 @@ class AllOpinion extends React.Component {
       order: this.state.sortValue,
       similer: this.state.filterValue,
       page:this.props.page,
-      carry: value
+      carry: value,
+      clfid: this.props.getRouter.topicid
     };
     if (this.state.timeValue === 'custom') {
       param.begin = this.state.begin
       param.end = this.state.end
     }
-    this.props.opinionSearchRequest(param);
+    this.props.getSortedContentRequest(param);
     this.props.paginationPage(1);
   }
 
 
   onPaginationChange(pagenumber) {
+    this.props.emptyList()
     this.setState({
       page: pagenumber
     });
@@ -338,9 +350,10 @@ class AllOpinion extends React.Component {
       end: this.state.end,
       page: pagenumber,
       pagesize: this.state.pagesize,
-      lang:this.state.language[this.props.match.params.languages]
+      lang:this.state.language[this.props.match.params.languages],
+      clfid: this.props.getRouter.topicid
     };
-    this.props.opinionSearchRequest(param);
+    this.props.getSortedContentRequest(param);
     this.props.paginationPage(pagenumber);
     ReactDOM.findDOMNode(this).scrollIntoView();
   }
@@ -357,7 +370,8 @@ class AllOpinion extends React.Component {
     }
   }
 
-    dataChanged(pagenum) {
+  dataChanged(pagenum) {
+    this.props.emptyList()
       const param = {
         datetag: this.state.timeValue,
         neg: this.state.trendValue,
@@ -368,105 +382,32 @@ class AllOpinion extends React.Component {
         end: this.state.end,
         page: pagenum,
         pagesize: this.state.pagesize,
-        lang: this.state.language[this.props.match.params.languages]
+        lang: this.state.language[this.props.match.params.languages],
+        clfid: this.props.getRouter.topicid
       };
-      this.props.opinionSearchRequest(param);
+      this.props.getSortedContentRequest(param);
   }
 
-  homepageMore(pathname) {
-    if (pathname === '#/allopinion?datetag=today') {
-      this.setState({
-        timeValue: 'today'
-      })
-    } else if (pathname === '#/allopinion?datetag=today&neg=1') {
-      this.setState({
-        timeValue: 'today',
-        trendValue: 1
-      })
-    } else if (pathname === '#/allopinion?datetag=all&neg=1') {
-      this.setState({
-        timeValue: 'all',
-        trendValue: 1
-      })
-    }
-    else if (pathname === '#/allopinion?datetag=today&neg=2') {
-      this.setState({
-        timeValue: 'today',
-        trendValue: 2
-      })
-    }else if (pathname === '#/allopinion?datetag=today&neg=all') {
-      this.setState({
-        timeValue: 'today',
-        trendValue: 'all'
-      })
-    }else if (pathname === '#/allopinion?datetag=all&neg=2') {
-      this.setState({
-        timeValue: 'all',
-        trendValue: 2
-      })
-    } 
-    else if (pathname === '#/allopinion?carry=weibo&neg=all') {
-      this.setState({
-        mediaValue: '微博',
-        trendValue: 'all'
-      })
-    } else if (pathname === '#/allopinion?carry=weibo&neg=1') {
-      this.setState({
-        mediaValue: '微博',
-        trendValue: 1
-      })
-    }else if (pathname.indexOf('media') !== -1){
-       let media =  pathname.split('&')[0].split('=')[1];
-       let day =  pathname.split('&')[1].split('=')[1];
-       this.setState({
-        mediaValue: this.state.mediaList[media],
-        timeValue: day
-       })
-    } else {
-      this.setState({
-        timeValue: 'all'
-      })
-    }
-    const obj = URLToObject(pathname);
-    const param = {
-      lang:this.state.language[this.props.match.params.languages],
-      pagesize: this.state.pagesize,
-      datetag: this.state.timeValue,
-      neg: this.state.trendValue,
-      order: this.state.sortValue,
-      similer: this.state.filterValue,
-      page:this.props.page
-    }  
-    const newParam = Object.assign(param, obj);
-    this.props.opinionSearchRequest(newParam);
-  }
 
   componentWillMount() {
+    window.onload = () => {this.props.mulLanToggle(this.props.match.params.languages)}
+      this.props.mulLanToggle(this.props.match.params.languages)
       let reg = /^[0-5]$/
       if(reg.test(this.props.match.params.languages)) {
         this.setState({
           languageType: parseInt(this.props.match.params.languages,10) 
         })
       }
-    if (this.props.location && this.props.location.search !== "?type=search") {
-      this.homepageMore(window.location.hash);
-    }
   }
-
   componentWillReceiveProps(newProps){
-    if( this.state.prevhash !== window.location.hash ) {
-      let reg = /^[0-5]$/
-      if(reg.test(newProps.match.params.languages)) {
-        this.setState({
-          languageType: newProps.match.params.languages
-        })
-      }
-    }
+    this.setState({
+        languageType: newProps.languages
+    })
     this.setState({
       prevhash: window.location.hash
     })
     if(newProps.match.params.languages !== this.props.match.params.languages){
-      this.props.opinionSearchSucceeded({docList: [], pageInfo: {count:0}, carryCount: [{count:0, value: "全部", key: "docApp"}]});
+      newProps.mulLanToggle(newProps.match.params.languages)
       this.setState({
         timeValue: 'all',
         trendValue: 'all',
@@ -488,11 +429,10 @@ class AllOpinion extends React.Component {
       page: this.state.page,
       pagesize: this.state.pagesize,
       lang: this.state.language[newProps.match.params.languages],
+      clfid: newProps.getRouter.topicid
     }
-    // console.log(this.props.match.params.languages, newProps.match.params.languages)
-    // debugger
-    if (this.props.match.params.languages === newProps.match.params.languages) return false;
-    this.props.opinionSearchRequest(param);
+    if (this.props.location.search === newProps.location.search) return false;
+    this.props.getSortedContentRequest(param);
     this.props.paginationPage(1);
   }
 
@@ -693,8 +633,8 @@ class AllOpinion extends React.Component {
     }
     // 搜索数据数量  //      -ماددا سانلىق مەلۇمات
     const searchNum = (num) => {
-      let leftarr = ['根据您的条件，为您筛选出','님이 지정한 조건에 부합되는', 'あなたの条件によると、', ' ！ماددا سانلىق مەلۇمات'+ '-' , 'ལ་གཞིགས་ནས་ཁྱེད་ཀྱི་ཆ་རྐྱེན་ཁྱེད་འདེམས་སྒྲུག་ཐོན་', 'Filter'];
-      let rightarr = ['条数据！', '개의 데이터를 검색하였습니다！', '件のデータをピックアップします!', 'سىزنىڭ شەرتىڭىز ئاساسەن ، سىز ئۈچۈن تاللاپ چىقىلغان','དོན་ཚན་གཞི་གྲངས།！', 'data for you based on your criteria！']
+      let leftarr = ['根据您的条件，为您筛选出','님이 지정한 조건에 부합되는', 'あなたの条件によると、', '! ماددا سانلىق مەلۇمات'+ '-' , 'ལ་གཞིགས་ནས་ཁྱེད་ཀྱི་ཆ་རྐྱེན་ཁྱེད་འདེམས་སྒྲུག་ཐོན་', 'Filter'];
+      let rightarr = ['条数据!', '개의 데이터를 검색하였습니다!', '件のデータをピックアップします!', 'سىزنىڭ شەرتىڭىز ئاساسەن ، سىز ئۈچۈن تاللاپ چىقىلغان','དོན་ཚན་གཞི་གྲངས།!', 'data for you based on your criteria!']
       return `<span style=float:left>${leftarr[this.state.languageType]}</span><span class="number">${num}</span><span>${rightarr[this.state.languageType]}</span>`
     }
     const param = {
@@ -710,12 +650,12 @@ class AllOpinion extends React.Component {
     };
     return (
       <div className="all-opinion2" id="anchor">
-        <div className="close-open" style={{background:GRAY}}>
+        {/* <div className="close-open" style={{background:GRAY}}>
           <div className="count">{this.state.infoList[this.state.languageType]}</div>
           <div className="close" onClick={this.triggerTopShow.bind(this)}>
             <span className="closeBtn">{this.state.languageType === 0 ? this.state.CHlan[this.props.match.params.languages] : '中文'}</span>
           </div>
-        </div>
+        </div> */}
         <div className="sort-top" style={this.state.isTopShow ? {display: 'block'} : {display: 'none'}}>
           <div className={this.state.languageType-0 === 3? 'uygur sort-items' : 'sort-items'}>
             <div className="left">{this.state.OptiionTitle.time[this.state.languageType]}</div>
@@ -812,18 +752,21 @@ class AllOpinion extends React.Component {
 const mapStateToProps = state => {
   return {
     themeColor: state.changeThemeReducer,
-    docList: state.opinionSearchSucceededReducer.data.docList,
-    carryCount: state.opinionSearchSucceededReducer.data.carryCount,
-    pageInfo: state.opinionSearchSucceededReducer.data.pageInfo,
+    docList: state.getSortedContentSucceeded.data.docList,
+    carryCount: state.getSortedContentSucceeded.data.carryCount,
+    // pageInfo: state.opinionSearchSucceededReducer.data.pageInfo,
     ks: state.searchKeywordSyncReducer.ks,
-    page: state.paginationPageReducer
+    page: state.paginationPageReducer,
+    pageInfo: state.getSortedContentSucceeded.data.pageInfo,
+    languages: state.mulLanToggleReducer,
+    getRouter: state.getRouterReducer,
   }
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    opinionSearchRequest: req => {
-      dispatch(opinionSearchRequested(req));
+    getSortedContentRequest: req => {
+      dispatch(getSortedContentRequested(req));
     },
     searchKeywordSync: ks => {
       dispatch(searchKeywordSync(ks));
@@ -831,8 +774,11 @@ const mapDispatchToProps = dispatch => {
     paginationPage: req => {
       dispatch(paginationPage(req));
     },
-    opinionSearchSucceeded:req => {
-      dispatch(opinionSearchSucceeded(req));
+    mulLanToggle: req => {
+      dispatch(mulLanToggle(req))
+    },
+    emptyList: () => {
+      dispatch(emptyList())
     }
   }
 };
