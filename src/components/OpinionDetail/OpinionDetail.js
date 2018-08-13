@@ -504,6 +504,7 @@ class OpinionDetail extends React.Component {
       });
     }
     else if (this.props.propsType === 'AllopinionList') {
+      
       this.props.opinionSearchRequest(param);
     } else {
       this.props.onDataChange(pagenumber);
@@ -674,6 +675,7 @@ class OpinionDetail extends React.Component {
    }
   render() {
     const {page} = this.props;
+    console.log(this.props.type)
     const flag = this.props.docList&& this.props.docList.length === 0?true:false;
     const docList = this.props.docList ? this.props.docList : [];
     // 素材库的目录

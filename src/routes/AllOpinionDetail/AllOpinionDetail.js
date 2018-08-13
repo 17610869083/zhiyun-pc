@@ -433,7 +433,8 @@ class AllOpinionDetail extends React.Component {
       seltype: this.props.ks.seltype,
       keyword:this.props.ks.keyword,
       page:pagenumber,
-      similer:1
+      similer:1,
+      pagesize: this.state.pagesize
      }
    }
     this.props.opinionSearchRequest(param);
@@ -472,10 +473,13 @@ class AllOpinionDetail extends React.Component {
         neg:this.state.trendValue,
         order:this.state.sortValue,
         carry:this.state.mediaValue,
-        page:this.props.page
+        page:this.props.page,
+        pagesize: this.state.pagesize,
+        begin: this.state.begin,
+        end: this.state.end
       };
       this.props.opinionSearchRequest(param);
-      this.props.paginationPage(1);
+      //this.props.paginationPage(1);
     }
   }
 
