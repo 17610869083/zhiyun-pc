@@ -2,7 +2,7 @@ import React from 'react';
 import './MyReport.less';
 import {Input,DatePicker,Button,message,Pagination,Tooltip,Popconfirm,Popover,Modal} from 'antd';
 import {api_get_all_report,api_update_report_name,api_search_report,
-        api_new_delete_report,api_download_report,api_app_report} from '../../services/api';
+        api_new_delete_report,api_download_report,api_app_report,api_download_OldDoc} from '../../services/api';
 import request from '../../utils/request';
 import IconFont from '../../components/IconFont';
 import {getSecondTime,templateTypeSort} from '../../utils/format';
@@ -40,7 +40,9 @@ class MyReport extends React.Component{
             reportType:'01',
             reportFormId:2,
             isSearch:false,
-            isnew:'1'
+            isnew:'1',
+            reportName:'',
+            updateTime:''
          }
      }
      componentWillMount(){
@@ -80,13 +82,15 @@ class MyReport extends React.Component{
            }
        })
     }
-    changeReport(id,status,reportType,reportFormId,isnew){
+    changeReport(id,status,reportType,reportFormId,isnew,reportName,updateTime){
             this.setState({
                 checkId:id,
                 flag:true,
                 reportType:reportType,
                 reportFormId: reportFormId,
-                isnew:isnew
+                isnew:isnew,
+                reportName:reportName,
+                updateTime:updateTime
                 //flag: status === 2 ?true :false
             })
     }
@@ -177,7 +181,8 @@ class MyReport extends React.Component{
     //翻页
     paginationChange = (current) => {
         this.setState({
-             current:current
+             current:current,
+             visible:false
         })
         let str = this.state.isSearch?`&reportType=${this.state.type}&page=${current}&reportName=${this.state.inputSearchValue}&starttime=${this.state.startTime}&endtime=${this.state.endTime}`:`&reportType=${this.state.type}&page=${current}`;
         request(api_search_report + str )
@@ -256,26 +261,37 @@ class MyReport extends React.Component{
     }
     //下载
     downLoad(type){
-        if(this.state.isnew === '0'){
-          
-        }else{
             request(api_download_report +`&reportId=${this.state.checkId}&dType=${type}`)
             .then(res =>{
                  if(res.data.code ===1){
-                   window.location.href = './../'+res.data.fileAddress;
+                    window.location.href = './../'+res.data.fileAddress;
                  }else{
                    message.error(res.data.msg)
                  }
             })
-        }
          this.setState({
             visible:false
          })
-    }
+    }     
     handleVisibleChange = () => {
-        this.setState({
-            visible:true
-         })
+        let {checkId,reportName,updateTime} = this.state;
+        if(this.state.isnew === '0'){
+             request(api_download_OldDoc,{
+                    method: 'POST',
+                    headers: {
+                          "Content-Type": "application/x-www-form-urlencoded"
+                    },
+                    body:`reportId=${checkId}&reportName=${reportName}&createdate=${updateTime}`
+                }).then(res => {
+                    if(res.data.code ===1){
+                        window.location.href = './..'+res.data.downloadUrl;
+                    }
+                })
+        }else{
+            this.setState({
+                visible:true
+             })
+        }
     }
     //复制 
     copy = () => {
@@ -325,7 +341,7 @@ class MyReport extends React.Component{
          const contentList = this.state.contentList.map( (item,index) => {
              return <li key = {index} 
              className={this.state.checkId === item.id ?'cont active':'cont normal'}> 
-             <img src={'./../'+item.imagepath} alt="" onClick = {this.changeReport.bind(this,item.id,item.status,item.reportType,item.reportFormId,item.new)}/>
+             <img src={'./../'+item.imagepath} alt="" onClick = {this.changeReport.bind(this,item.id,item.status,item.reportType,item.reportFormId,item.new,item.reportName,item.updateTime)}/>
              {
              this.state.editReprotName === item.id ? <Input  value={this.state.inputValue} onChange={this.changeReportName.bind(this)} onBlur = {this.blur.bind(this,item.id)}/>:
              <p title="双击可修改名称" onDoubleClick={this.editReportName.bind(this,item.id,item.reportName)} style={{userSelect:'none',height:'28px',textAlign:'center'}} >{item.reportName}</p>
@@ -336,7 +352,7 @@ class MyReport extends React.Component{
              <p style={{marginBottom:'6px',display:'flex',justifyContent:'space-between',alignItems:'center'}}>{item.updateTime}
              <IconFont className="status" type="icon-queren"/></p>}
              </li> 
-         }) 
+         })
          return (
              <div className="my-report" >
              <div className="my-report-top">
@@ -414,7 +430,7 @@ class MyReport extends React.Component{
              width="60%" height="60%"
              >
                 <iframe  title="模板预览" frameBorder="0"  width="100%" height="600px"
-                src={"http://119.90.61.155/om31" + this.state.hmtlUrl} />  
+                src={"./../" + this.state.hmtlUrl} />  
              </Modal>
              </div>
          )

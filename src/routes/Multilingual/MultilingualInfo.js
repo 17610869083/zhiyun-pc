@@ -192,16 +192,6 @@ class BiddingOpinion extends React.Component {
           }
           },600)
     }
-
-    // 添加专题
-    handleAddTopic() {
-        this.setState({
-            current: 'addtopic',
-            addTopic:1,
-            addClass:0
-        });
-        history.push(`/topic/addtopic`);
-    }
     delTopic(e){
         e.stopPropagation();
          let topicID=e.target.dataset.clfid;
@@ -219,7 +209,7 @@ class BiddingOpinion extends React.Component {
         })
         this.props.setlocationPathname({topicid:topicid,topicname:topicname});
           history.push({
-            pathname:`/multilingual/${this.props.match.params.languages}/multilingual`,
+            pathname:`/allopinion/multilingual/${this.props.match.params.languages}/multilingual`,
             search:`?topicId=${topicid}&date=${Date.now()}`
         });
     }
@@ -243,7 +233,7 @@ class BiddingOpinion extends React.Component {
                this.setState({visibleThree:true})
            }else {
                 history.push({
-                    pathname:`/multilingual/${this.props.match.params.languages}/setting`,
+                    pathname:`/allopinion/multilingual/${this.props.match.params.languages}/setting`,
                     search: `?type=add&catid=${catid}`,
                 })
                 this.setState({
