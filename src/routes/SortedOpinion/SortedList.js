@@ -284,8 +284,7 @@ class SortedList extends React.Component {
       this.setState({
         begin: begin,
         end: end,
-        timeValue: 'custom',
-        timeIndex: 0
+        timeValue: 'custom'
       });
       const param = this.props.clfCat.state ? {
         clfid: this.props.clfId.clfid,
@@ -449,7 +448,7 @@ class SortedList extends React.Component {
       ><span className="item-inner">{item.name}</span></div>
     );
     // 媒体类型
-    const carryRender = carryCount ? carryCount : carryArray;
+    const carryRender = carryCount && carryCount!=='[]' ? carryCount : carryArray;
     const Media = carryRender.map((item) =>
       <div
         key={item.value}

@@ -78,11 +78,9 @@ const apiGetMaterialOpinionDetail = (param) => {
         headers: {
             "Content-Type": "application/x-www-form-urlencoded"
         },
-        // body: param
-        body: param
+        body: 'catid=' + param
     })
 };
-
 // 获取收藏夹详细列表
 const apiGetCollectionOpinionList = () => {
     return request(api_collection_opinion_list)

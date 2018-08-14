@@ -1241,4 +1241,4 @@ const mapDispatchToProps = dispatch => {
 		}
 	}
 };
-export default connect(mapStateToProps, mapDispatchToProps)(Form.create()(MaterialOpinion));
+export default connect(mapStateToProps, mapDispatchToProps)(Form.create()(MaterialOpinion))

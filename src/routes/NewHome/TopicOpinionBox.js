@@ -31,13 +31,16 @@ class TopicOpinionBox extends React.PureComponent {
     delTopicOpinionBox(){
          this.props.delTopicBox(1);
     }
-    componentWillMount(){
+    componentDidMount(){
         request(api_main_topic_opinion)
         .then(res => {
-              this.setState({
-                topicid:res.data.topic_0.topicid ,
-                topicOpinion:Object.values(res.data)            
-              })
+            if(res.data ){
+                this.setState({
+                    topicid:res.data.topic_0.topicid ,
+                    topicOpinion:Object.values(res.data)            
+                  })
+                  console.log(Object.values(res.data))
+            }
         })
     }
     tabClick(key){
@@ -54,6 +57,7 @@ class TopicOpinionBox extends React.PureComponent {
         onClick={this.delTopicOpinionBox.bind(this)}
         ></Icon>;
         const haverClass = themeColor.topColor.backgroundColor === '#5a8bff' ? 'white':'black';
+        const blankFlag = themeColor.topColor.backgroundColor === '#5a8bff' ? true:false;
         return (
             <div className="topic-opinion-box" style={{background:themeColor.bottomColor.backgroundColor}}>
                 <div className="container">
@@ -89,7 +93,7 @@ class TopicOpinionBox extends React.PureComponent {
                                             }
                                         </ul>
                                     </TabPane>
-                                ):''
+                                ): ''
                             }
                         </Tabs>
                     </div>:<BlankPage desc='<span>空空如也，赶紧去<a href="index.html#/allopinion/topic/addtopic">添加</a>关键词</span>'/>}

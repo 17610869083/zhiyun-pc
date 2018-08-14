@@ -208,7 +208,7 @@ class TopicReport extends React.Component {
            
         })
         history.push({
-            pathname:'/allopinion/myreport',
+            pathname:'/allopinion/historyopinion',
             search:'type=1'
         });
     }
@@ -261,7 +261,7 @@ class TopicReport extends React.Component {
             downloadVisible:false
         })
         history.push({
-            pathname:'/allopinion/myreport',
+            pathname:'/allopinion/historyopinion',
             search:'type=1'
         });
     }

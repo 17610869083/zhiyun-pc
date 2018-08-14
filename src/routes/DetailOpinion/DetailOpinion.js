@@ -11,7 +11,6 @@ import {
   api_del_doc,
   api_get_doc_detail,
   api_get_doc_similar,
-  api_put_into_report,
   api_push_collection,
   api_docedit_save,
   api_email_push,
@@ -333,42 +332,42 @@ class DetailOpinion extends React.Component {
     })
   }
 
-  handleOkOne() {
-    let idArr = [];
-    let emailArr = [];
-    for (let i in this.state.selectValue) {
-      idArr.push(this.state.selectValue[i]['key']);
-      emailArr.push(this.state.selectValue[i]['label']);
-    }
-    let idStr = idArr.join(',');
-    let emailStr = emailArr.join(',');
-    if (idStr === '' && this.state.emailInput !== '') {
-      emailStr += `${this.state.emailInput}`;
-      idStr += 'noid';
-    } else if (idStr !== '' && this.state.emailInput !== '') {
-      emailStr += `,${this.state.emailInput}`;
-      idStr += ',noid';
-    }
-    if (emailStr === '') {
-      message.success('请添加或选择要推送的邮箱')
-      return;
-    }
-    let subject = this.state.emailData.simpleEmail[0]['title'];
-    let sid = this.state.emailData.simpleEmail[0]['sid'];
-    this.setState({
-      visibleOne: false
-    })
-    request(api_docsend_push, {
-      method: 'POST',
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded"
-      },
-      body: `sid=${sid}&emailmsgUid=${idStr}&emailmsgUemail=${emailStr}&subject=${subject}&content=${this.state.contents}`
-    }).then(res => {
-      message.success(res.data.message)
-    })
+  // handleOkOne() {
+  //   let idArr = [];
+  //   let emailArr = [];
+  //   for (let i in this.state.selectValue) {
+  //     idArr.push(this.state.selectValue[i]['key']);
+  //     emailArr.push(this.state.selectValue[i]['label']);
+  //   }
+  //   let idStr = idArr.join(',');
+  //   let emailStr = emailArr.join(',');
+  //   if (idStr === '' && this.state.emailInput !== '') {
+  //     emailStr += `${this.state.emailInput}`;
+  //     idStr += 'noid';
+  //   } else if (idStr !== '' && this.state.emailInput !== '') {
+  //     emailStr += `,${this.state.emailInput}`;
+  //     idStr += ',noid';
+  //   }
+  //   if (emailStr === '') {
+  //     message.success('请添加或选择要推送的邮箱')
+  //     return;
+  //   }
+  //   let subject = this.state.emailData.simpleEmail[0]['title'];
+  //   let sid = this.state.emailData.simpleEmail[0]['sid'];
+  //   this.setState({
+  //     visibleOne: false
+  //   })
+  //   request(api_docsend_push, {
+  //     method: 'POST',
+  //     headers: {
+  //       "Content-Type": "application/x-www-form-urlencoded"
+  //     },
+  //     body: `sid=${sid}&emailmsgUid=${idStr}&emailmsgUemail=${emailStr}&subject=${subject}&content=${this.state.contents}`
+  //   }).then(res => {
+  //     message.success(res.data.message)
+  //   })
 
-  }
+  // }
 
   handleCancelOne() {
     this.setState({
@@ -523,13 +522,13 @@ class DetailOpinion extends React.Component {
                                 <div className="operation-item" title="上报">
                                 <IconFont type="icon-shangbao-copy"/>
                                 </div>
-                                </Popconfirm>
-                                <Popconfirm title="确定要取证这条信息吗？"  onCancel={this.deleteCancel.bind(this)} okText="是" cancelText="否">
+                                </Popconfirm> */}
+                                {/* <Popconfirm title="确定要取证这条信息吗？"  onCancel={this.deleteCancel.bind(this)} okText="是" cancelText="否">
                                 <div className="operation-item" title="取证">
                                 <IconFont type="icon-zhengjucailiao-copy"/>
                                 </div>
-                                </Popconfirm>
-                                <Popconfirm title="确定要引导这条信息吗？" onCancel={this.deleteCancel.bind(this)} okText="是" cancelText="否">
+                                </Popconfirm> */}
+                                {/* <Popconfirm title="确定要引导这条信息吗？" onCancel={this.deleteCancel.bind(this)} okText="是" cancelText="否">
                                 <div className="operation-item" title="引导">
                                 <IconFont type="icon-xinshouyindao-copy"/>
                                 </div>

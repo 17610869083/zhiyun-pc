@@ -313,7 +313,7 @@ class TopicReportEcharts extends React.Component {
             }).then(res=>{
                   this.props.reportMessage({id:1,type:'2'});
                   history.push({
-                      pathname:'/historyopinion',
+                      pathname:'/allopinion/historyopinion',
                       search:'type=2'
                   });
             })

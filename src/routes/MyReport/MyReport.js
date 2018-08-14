@@ -183,8 +183,7 @@ class MyReport extends React.Component{
              if(res.data.code === 1){
              this.setState({
                  contentList:res.data.data.content,
-                 flag:false,
-                 visible:false
+                 flag:false
              })        
             }else{
                 this.setState({
@@ -272,6 +271,27 @@ class MyReport extends React.Component{
     addReport = () => {
         history.push('/allopinion/choosetemplate');
     }
+    //报告预览
+    // reportPreview = (type) => {
+    //      this.setState({
+    //         popoverVisible:false
+    //      })
+    //      if(type==='preview'){
+    //         request(api_download_report +`&reportId=${this.state.checkId}&dType=html`)
+    //         .then(res =>{
+    //              if(res.data.code ===1){
+    //                this.setState({
+    //                    hmtlUrl:res.data.fileAddress,
+    //                    previewVisible:true
+    //                })
+    //              }else{
+    //                message.error(res.data.msg)
+    //              }
+    //          } )
+    //      }else{
+
+    //      }
+    // }
     cancel = () => {
         message.warning('已取消当前操作')
     }

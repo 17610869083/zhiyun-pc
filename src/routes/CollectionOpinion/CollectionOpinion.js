@@ -141,6 +141,7 @@ class CollectionOpinion extends React.Component {
     deleteThisFormCollection(itemId) {
         const current = this.state.current;
         const getDetail = this.props.getCollectionOpinionDetailRequested;
+        const _this = this;
         confirm({
             title: '确定将这条舆情移出收藏夹?',
             content: '移出收藏夹',
@@ -148,7 +149,7 @@ class CollectionOpinion extends React.Component {
                 request(api_del_doc_from_collection + '&id=[' + itemId + ']', {}).then((res) => {
                     if (res.data.code === 1) {
                         message.success(res.data.msg);
-                        getDetail(current);
+                        getDetail(`${current}&page=${_this.state.currentPage}`);
                     }
                 });
             },
@@ -191,13 +192,14 @@ class CollectionOpinion extends React.Component {
         const size = arr.length;
         const getMaterialDetail = this.props.getCollectionOpinionDetailRequested;
         const current = this.state.current;
+        const _this = this;
         if (size === 0) {
             message.warning("至少选择一项！");
         } else {
             const sidList = JSON.stringify(arr);
             request(api_del_doc_from_collection + '&id=' + sidList, {}).then((res) => {
                 if (res.data.code === 1) {
-                    getMaterialDetail(current);
+                    getMaterialDetail(`${current}&page=${_this.state.currentPage}`);
                     message.success(res.data.msg);
                     this.setState({
                         checkedAll: false,

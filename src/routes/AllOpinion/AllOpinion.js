@@ -89,6 +89,7 @@ class AllOpinion extends React.Component {
   }
  }
   render() {
+    console.log()
     const {themeColor} = this.props;
     const haverClass = themeColor.topColor.backgroundColor === '#5a8bff' ? 'white':'black'; 
     let menuList = [];
@@ -102,11 +103,11 @@ class AllOpinion extends React.Component {
               style={{fontSize: '16px'}} className={haverClass}>舆情报告</span>
             </span>
           }>
-          {/* <Menu.Item key="reportopinion" style={{fontSize: '16px'}}>
+          <Menu.Item key="reportopinion" style={{fontSize: '16px'}}>
             <Link to="/allopinion/reportopinion/list">
               <span>简报列表</span>
             </Link>
-          </Menu.Item> */}
+          </Menu.Item>
           <Menu.Item key="materiaopinion" style={{fontSize: '16px'}}>
             <Link to="/allopinion/materiaopinion">
               <span>素材库</span>
@@ -118,7 +119,7 @@ class AllOpinion extends React.Component {
             </Link>
           </Menu.Item>
           <Menu.Item key="myreport" style={{fontSize: '16px'}}>
-            <Link to="/allopinion/myreport">
+            <Link to="/allopinion/historyopinion">
               <span>我的报告库</span>
             </Link>
           </Menu.Item>

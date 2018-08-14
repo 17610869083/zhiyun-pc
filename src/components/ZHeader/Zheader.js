@@ -11,13 +11,9 @@ import UserInfo from '../UserInfo/UserInfo';
 import {changeTheme,  getUserInfo} from '../../redux/actions/actions';
 import {opinionSearchRequested,searchKeywordSync,homeModule} from '../../redux/actions/createActions';
 import ChangeTheme from '../ChangeTheme/ChangeTheme';
-import NewHome from '../../routes/NewHome';
 import logo from '../../assets/img/newLogo.png';
 import {Link} from 'react-router-dom';
-const Search = Input.Search;
 const confirm = Modal.confirm;
-const SubMenu = Menu.SubMenu;
-const MenuItemGroup = Menu.ItemGroup;
 class Zheader extends React.Component {
     constructor() {
         super();

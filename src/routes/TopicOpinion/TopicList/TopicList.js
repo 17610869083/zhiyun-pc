@@ -174,8 +174,7 @@ class TopicList extends React.Component {
       this.setState({
         begin: begin,
         end: end,
-        timeValue: 'custom',
-        timeIndex: 0
+        timeValue: 'custom'
       });
 
       request(api_topic_message_list + `&pagesize=${this.state.pagesize}&topicid=${this.state.topicID}&datetag=${timeValue}&neg=${this.state.trendValue}&order=${this.state.sortValue}&similer=${this.state.filterValue}&carry=${this.state.mediaValue}&begin=${begin}&end=${end}`)
@@ -355,7 +354,6 @@ class TopicList extends React.Component {
         let topicID=this.props.getRouter;  
         if(topicID.topicid){
                 request(api_topic_message_list + '&topicid=' + topicID.topicid).then(res => {
-                    console.log(res)
                     if(res.data.code === 1){
                     this.setState({
                         docList: res.data.docList,
