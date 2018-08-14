@@ -78,29 +78,31 @@ class BriefingSecond extends React.Component{
 	}
 	componentDidMount(){
 		let _this = this;
-		window.addEventListener('scroll', () =>{
-		if( document.documentElement.scrollTop+ window.innerHeight-60 >= document.body.scrollHeight){
-			request(api_refresh_brief + `&reportId=${this.state.reportId}&page=${this.state.page+1}`)
-			.then(res => {
-				if(res.data.code === 1){	
-					let date = _this.state.date;
-					Object.keys(date).forEach((item,index) => {
-						if(date[item]['briefing']!==undefined){
-						   date[item]['briefing'] = date[item]['briefing'].concat(res.data.data.briefing);
-						}
-				   })			
-				   _this.setState({
-					   date: date,
-					   page:_this.state.page+1
-				    })
-			    }
-			})
-		}
-	    }
-	  )
+		this.upload = () =>{
+			if( document.documentElement.scrollTop+ window.innerHeight-60 >= document.body.scrollHeight){
+				request(api_refresh_brief + `&reportId=${this.state.reportId}&page=${this.state.page+1}`)
+				.then(res => {
+					if(res.data.code === 1){	
+						let date = _this.state.date;
+						Object.keys(date).forEach((item,index) => {
+							if(date[item]['briefing']!==undefined){
+							   date[item]['briefing'] = date[item]['briefing'].concat(res.data.data.briefing);
+							}
+					   })			
+					   _this.setState({
+						   date: date,
+						   page:_this.state.page+1
+						})
+					}
+				})
+			}
+		};
+		window.addEventListener('scroll',_this.upload)
 	}
 	componentWillUnmount(){
+		let _this = this;
 		this.props.briefingSwitch([]);
+		window.removeEventListener('scroll',_this.upload)
 	}
 	handleChange(value) {
 		console.log(`selected ${value}`);

@@ -13,7 +13,7 @@ class Application extends React.Component{
                     '5':'http://114.242.25.234:30005/gxwhongce2/sec/toAutoBulletin',
                     '6':'http://114.242.25.234:30005/gxwhongce2/sec/toBulletinWarning',
                     '7':'http://dj.meiguansoft.cn/admin/login.html',
-                    '8':'http://221.221.144.87:8888/#/',
+                    '8':'http://221.221.152.240:8888',
                     '9':'http://pan.ryc360.com:108/kass/basic/login/page_login.jsp',
                     '10':'http://59.108.229.36:3000/'
                 }

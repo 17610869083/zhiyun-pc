@@ -454,3 +454,6 @@ export const api_key_website_sort = host +'keyWebsite?action=keyWebsiteSort';
 export const api_briefing_list = host + 'Report?action=getReportByUid'
 // 加入简报 列表
 export const api_briefing_add = host + 'Report?action=addToReport'
+//app预览报告
+//export const api_app_report = './../mpart/exp/PreviewAction?action=previewWorkApp'
+export const api_app_report = 'http://119.90.61.155/om31/mpart/exp/PreviewAction?action=previewWorkApp'

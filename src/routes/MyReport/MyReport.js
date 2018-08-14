@@ -2,7 +2,7 @@ import React from 'react';
 import './MyReport.less';
 import {Input,DatePicker,Button,message,Pagination,Tooltip,Popconfirm,Popover,Modal} from 'antd';
 import {api_get_all_report,api_update_report_name,api_search_report,
-        api_new_delete_report,api_download_report} from '../../services/api';
+        api_new_delete_report,api_download_report,api_app_report} from '../../services/api';
 import request from '../../utils/request';
 import IconFont from '../../components/IconFont';
 import {getSecondTime,templateTypeSort} from '../../utils/format';
@@ -39,7 +39,8 @@ class MyReport extends React.Component{
             popoverVisible:false,
             reportType:'01',
             reportFormId:2,
-            isSearch:false
+            isSearch:false,
+            isnew:'1'
          }
      }
      componentWillMount(){
@@ -79,12 +80,13 @@ class MyReport extends React.Component{
            }
        })
     }
-    changeReport(id,status,reportType,reportFormId){
+    changeReport(id,status,reportType,reportFormId,isnew){
             this.setState({
                 checkId:id,
                 flag:true,
                 reportType:reportType,
-                reportFormId: reportFormId
+                reportFormId: reportFormId,
+                isnew:isnew
                 //flag: status === 2 ?true :false
             })
     }
@@ -196,21 +198,35 @@ class MyReport extends React.Component{
     }
     //预览
     preview = () => {
-        if(this.state.reportType === '01'){
-            this.state.reportFormId === '1'?history.push(`/briefing?type=${this.state.reportType}&id=${this.state.checkId}&type=rebuild`):
-            history.push(`/allopinion/briefingsecond?type=${this.state.reportType}&id=${this.state.checkId}&type=rebuild`)
-        }else{
-            request(api_download_report +`&reportId=${this.state.checkId}&dType=html`)
-            .then(res =>{
-                 if(res.data.code ===1){
-                   this.setState({
-                       hmtlUrl:res.data.fileAddress,
-                       previewVisible:true
-                   })
+        if(this.state.isnew === '0'){
+            request(api_app_report+`&reportid=${this.state.checkId}`)
+            .then(res => {
+                 if(res.data.code === 1){
+                    this.setState({
+                        hmtlUrl:res.data.downloadUrl,
+                        previewVisible:true
+                    })
                  }else{
-                   message.error(res.data.msg)
+                    message.error(res.data.msg) 
                  }
-             } )
+            })
+        }else{
+            if(this.state.reportType === '01'){
+                this.state.reportFormId === '1'?history.push(`/briefing?type=${this.state.reportType}&id=${this.state.checkId}&type=rebuild`):
+                history.push(`/allopinion/briefingsecond?type=${this.state.reportType}&id=${this.state.checkId}&type=rebuild`)
+            }else{
+                request(api_download_report +`&reportId=${this.state.checkId}&dType=html`)
+                .then(res =>{
+                     if(res.data.code ===1){
+                       this.setState({
+                           hmtlUrl:res.data.fileAddress,
+                           previewVisible:true
+                       })
+                     }else{
+                       message.error(res.data.msg)
+                     }
+                 } )
+            }
         }
     }
     //删除
@@ -240,14 +256,18 @@ class MyReport extends React.Component{
     }
     //下载
     downLoad(type){
-         request(api_download_report +`&reportId=${this.state.checkId}&dType=${type}`)
-         .then(res =>{
-              if(res.data.code ===1){
-                window.location.href = './../'+res.data.fileAddress;
-              }else{
-                message.error(res.data.msg)
-              }
-         } )
+        if(this.state.isnew === '0'){
+          
+        }else{
+            request(api_download_report +`&reportId=${this.state.checkId}&dType=${type}`)
+            .then(res =>{
+                 if(res.data.code ===1){
+                   window.location.href = './../'+res.data.fileAddress;
+                 }else{
+                   message.error(res.data.msg)
+                 }
+            })
+        }
          this.setState({
             visible:false
          })
@@ -305,15 +325,16 @@ class MyReport extends React.Component{
          const contentList = this.state.contentList.map( (item,index) => {
              return <li key = {index} 
              className={this.state.checkId === item.id ?'cont active':'cont normal'}> 
-             <img src={'./../'+item.imagepath} alt="" onClick = {this.changeReport.bind(this,item.id,item.status,item.reportType,item.reportFormId)}/>
+             <img src={'./../'+item.imagepath} alt="" onClick = {this.changeReport.bind(this,item.id,item.status,item.reportType,item.reportFormId,item.new)}/>
              {
              this.state.editReprotName === item.id ? <Input  value={this.state.inputValue} onChange={this.changeReportName.bind(this)} onBlur = {this.blur.bind(this,item.id)}/>:
              <p title="双击可修改名称" onDoubleClick={this.editReportName.bind(this,item.id,item.reportName)} style={{userSelect:'none',height:'28px',textAlign:'center'}} >{item.reportName}</p>
              }
-             {item.updateTime && item.updateTime!=='' ?<p style={{marginBottom:'6px',display:'flex',justifyContent:'space-between',alignItems:'center'}}>{item.updateTime}
+             {item.new === '1' ?item.updateTime && item.updateTime!=='' ?<p style={{marginBottom:'6px',display:'flex',justifyContent:'space-between',alignItems:'center'}}>{item.updateTime}
              {item.status === '2' ?<IconFont className="status" type="icon-queren"/>:<IconFont className="status" type="icon-weiwancheng"/>}
-             </p>:<p style={{textAlign:'center',color:'#ff0000',marginBottom:'6px'}}>该报告未完成</p>
-            }
+             </p>:<p style={{textAlign:'center',color:'#ff0000',marginBottom:'6px'}}>该报告未完成</p>:
+             <p style={{marginBottom:'6px',display:'flex',justifyContent:'space-between',alignItems:'center'}}>{item.updateTime}
+             <IconFont className="status" type="icon-queren"/></p>}
              </li> 
          }) 
          return (
@@ -393,7 +414,7 @@ class MyReport extends React.Component{
              width="60%" height="60%"
              >
                 <iframe  title="模板预览" frameBorder="0"  width="100%" height="600px"
-                src={"./../" + this.state.hmtlUrl} />  
+                src={"http://119.90.61.155/om31" + this.state.hmtlUrl} />  
              </Modal>
              </div>
          )

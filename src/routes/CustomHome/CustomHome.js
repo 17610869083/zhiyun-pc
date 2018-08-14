@@ -47,10 +47,10 @@ class CustomHome extends React.Component{
              {name:'TopicOpinionBox',defaultSize:50,size:50,type:'s',img:TopicOpinionBox},
              {name:'WeiboOpinionBox',defaultSize:50,size:50,type:'s',img:WeiboOpinionBox},
              {name:'TodayOpinionBox',defaultSize:40,size:40,type:'s',img:TodayOpinionBox},
+             {name:'OpinionCountBox',defaultSize:100,size:60,type:'b',img:OpinionCountBox},
+             {name:'OpinionTrendBox',defaultSize:60,size:60,type:'b',img:OpinionTrendBox},
              {name:'MediaDistribution',defaultSize:40,size:40,type:'s',img:MediaDistribution},
              {name:'HotWordBox',defaultSize:40,size:40,type:'s',img:hotword},
-             {name:'OpinionTrendBox',defaultSize:60,size:60,type:'b',img:OpinionTrendBox},
-             {name:'OpinionCountBox',defaultSize:100,size:60,type:'b',img:OpinionCountBox},
          ],
          moduleCont0:[],
          moduleCont1:[],
@@ -75,26 +75,26 @@ class CustomHome extends React.Component{
             flag:!this.state.flag
         })       
     }
-    dragover(e) {
-      e.preventDefault();
-    }
     drop = (e) => { 
             this.refs.audio.play();
-            let {isDrag} = this.state;
-            this.setState({
-                isDrag:true
-            },()=>{
-                if(!isDrag){
-                    return ;
-                }
+            let {isDrag,isEnter} = this.state;
+            if(isEnter){
                 this.setState({
-                    moduleList: applyDrag(this.state.moduleList, e),
-                    allList:this.state.allList.concat(e.payload),
-                    isDragend:true
+                    isDrag:true
+                },()=>{
+                    if(!isDrag){
+                        return ;
+                    }
+                    this.setState({
+                        moduleList: applyDrag(this.state.moduleList, e),
+                        allList:this.state.allList.concat(e.payload),
+                        isDragend:true,
+                        isEnter:false
+                    })
                 })
-            })
-    }
+            }
 
+    }
     drop1 = (type,e) => {
         if(this.state.isEnter){
         let sNum = 0;let bNum=0;let num = 0;
@@ -134,7 +134,6 @@ class CustomHome extends React.Component{
         })
        }
     }
-
     drop2 = (e) => {
         if(this.state.isEnter){
         let sNum = 0;let bNum = 0;let num = 0;
@@ -357,6 +356,11 @@ class CustomHome extends React.Component{
               }
           })
     }
+    MouseEnter = () => {
+        this.setState({
+            isEnter:true
+        })
+    }
     render(){
         let {browserHeight,flag,isDragend,moduleList,moduleCont0,moduleCont1,moduleCont2,moduleCont3,moduleCont4} = this.state;
         let num = (browserHeight+110)/3;
@@ -370,7 +374,7 @@ class CustomHome extends React.Component{
         });
         let moduleContItems0 = moduleCont0.map ((item,index) => {
             return <Draggable key={index} style={{width:`${item.defaultSize-2}%`,margin:'1%'}}> 
-                   <div className="moduleCont">
+                   <div className="moduleCont" onMouseEnter={this.MouseEnter}>
                    <img src={item.img} alt='' style={{width:'100%',height:'365px'}}/>
                    <Icon type="close-circle" onClick={this.closeModule.bind(this,index,'moduleCont0')}/>
                    </div>
@@ -378,7 +382,7 @@ class CustomHome extends React.Component{
         })
         let moduleContItems1 = moduleCont1.map ((item,index) => {
             return <Draggable key={index} style={{width:`${item.defaultSize-2}%`,margin:'1%'}}> 
-                   <div className="moduleCont">
+                   <div className="moduleCont" onMouseEnter={this.MouseEnter}>
                    <img src={item.img} alt='' style={{width:'100%',height:'365px'}}/>
                    <Icon type="close-circle" onClick={this.closeModule.bind(this,index,'moduleCont1')}/>
                    </div>
@@ -386,7 +390,7 @@ class CustomHome extends React.Component{
         })
         let moduleContItems2 = moduleCont2.map ((item,index) => {
             return <Draggable key={index} style={{width:`${item.defaultSize-2}%`,margin:'1%'}}> 
-                   <div className="moduleCont">
+                   <div className="moduleCont" onMouseEnter={this.MouseEnter}>
                    <img src={item.img} alt='' style={{width:'100%',height:'365px'}}/>
                    <Icon type="close-circle" onClick={this.closeModule.bind(this,index,'moduleCont2')}/>
                    </div>
@@ -394,7 +398,7 @@ class CustomHome extends React.Component{
         })
         let moduleContItems3 = moduleCont3.map ((item,index) => {
             return <Draggable key={index} style={{width:`${item.defaultSize-2}%`,margin:'1%'}}> 
-                   <div className="moduleCont">
+                   <div className="moduleCont" onMouseEnter={this.MouseEnter}>
                    <img src={item.img} alt='' style={{width:'100%',height:'365px'}}/>
                    <Icon type="close-circle" onClick={this.closeModule.bind(this,index,'moduleCont3')}/>
                    </div>
@@ -402,7 +406,7 @@ class CustomHome extends React.Component{
         })
         let moduleContItems4 = moduleCont4.map ((item,index) => {
             return <Draggable key={index} style={{width:`${item.defaultSize-2}%`,margin:'1%'}}> 
-                   <div className="moduleCont">
+                   <div className="moduleCont" onMouseEnter={this.MouseEnter}>
                    <img src={item.img} alt='' style={{width:'100%',height:'365px'}}/>
                    <Icon type="close-circle" onClick={this.closeModule.bind(this,index,'moduleCont4')}/>
                    </div>
@@ -414,7 +418,10 @@ class CustomHome extends React.Component{
         <source src={audio} type="audio/mpeg" />
         您的浏览器不支持 audio 元素。
       </audio>                
-                <div className="custom-title">首页布局设置</div>
+                <div className="custom-title">
+                <span>首页布局设置</span>
+                <span onClick={this.remove}>恢复默认</span> 
+                </div>
                 <div style={{height:`${browserHeight}px`,overflowY: 'auto',padding:'20px'}}>   
                 <Container groupName="1" orientation='horizontal'
                         data-id='1'
@@ -458,7 +465,6 @@ class CustomHome extends React.Component{
                 style={ flag&& isDragend ?{bottom:'0px',height:'72px'}:flag?{bottom:'0px',height:'32px'}:{bottom:'0px',height:num+'px'}}>
                 <div style={confimStyle}>
                 <p className="custom-confim"  onClick={this.confim}>确定</p>  
-                <span onClick={this.remove}>恢复默认</span> 
                 </div>
                 <div className="slider-switch" onClick = {this.showList}>
                     <IcontFont type="icon-caidanshousuoicon" ></IcontFont>
