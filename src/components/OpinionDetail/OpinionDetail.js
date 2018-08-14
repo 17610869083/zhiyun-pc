@@ -675,7 +675,6 @@ class OpinionDetail extends React.Component {
    }
   render() {
     const {page} = this.props;
-    console.log(this.props.type)
     const flag = this.props.docList&& this.props.docList.length === 0?true:false;
     const docList = this.props.docList ? this.props.docList : [];
     // 素材库的目录

@@ -124,6 +124,7 @@ class TodayOpinionBox extends React.PureComponent {
 	
     render() {
 			const {themeColor,todayOpinion} = this.props;
+			let ratio = todayOpinion['今日舆情'] && todayOpinion['今日舆情'][4]['总数'] !== 0? Number.parseInt((todayOpinion['今日舆情'][4]['总数'] - todayOpinion['昨日舆情'][4]['总数'])/todayOpinion['今日舆情'][4]['总数']*100,10):0
 			const labelTop = {
 					normal : {
 						label : {
@@ -157,7 +158,7 @@ class TodayOpinionBox extends React.PureComponent {
 						data: [
 							{
 								name:'\n今日预警\n\n' + (todayOpinion['今日舆情']?todayOpinion['今日舆情'][3]['预警']:0), 
-								value:todayOpinion['今日舆情']?todayOpinion['今日舆情'][3]['预警']:300, 
+								value:todayOpinion['今日舆情']?todayOpinion['今日舆情'][3]['预警'] === 0 ? 200 :todayOpinion['今日舆情'][3]['预警']:300, 
 								itemStyle : labelTop,
 								hoverAnimation: false
 							},{
@@ -199,7 +200,7 @@ class TodayOpinionBox extends React.PureComponent {
 						data: [
 							{
 								name:'\n 今日负面\n\n' + (todayOpinion['今日舆情']?todayOpinion['今日舆情'][2]['负面']:0), 
-								value:todayOpinion['今日舆情']?todayOpinion['今日舆情'][2]['负面']:300, 
+								value:todayOpinion['今日舆情']?todayOpinion['今日舆情'][2]['负面'] === 0 ? 200 :todayOpinion['今日舆情'][2]['负面']:300, 
 								itemStyle : labelTop,
 								hoverAnimation: false
 							},{
@@ -241,7 +242,7 @@ class TodayOpinionBox extends React.PureComponent {
 						data: [
 							{
 								name:'\n 今日舆情\n\n' + (todayOpinion['今日舆情']?todayOpinion['今日舆情'][4]['总数']:0), 
-								value: todayOpinion['今日舆情']?todayOpinion['今日舆情'][4]['总数']:300, 
+								value: todayOpinion['今日舆情']?todayOpinion['今日舆情'][4]['总数'] === 0 ?200 :todayOpinion['今日舆情'][4]['总数']:300, 
 								itemStyle : labelTop,
 								hoverAnimation: false
 							},{
@@ -288,7 +289,8 @@ class TodayOpinionBox extends React.PureComponent {
 									<div className="bottom">
 										<Row gutter={60}>
 											<Col span={24}>
-												<span style={{ fontSize: 16, color: themeColor.textColor.color, float: "right", paddingRight: 30, marginTop: 15 }}>负面同比增长：{this.state.ratio}%</span>
+												<span style={{ fontSize: 16, color: themeColor.textColor.color, float: "right", paddingRight: 30, marginTop: 15 }}>
+												负面同比增长：{ratio}%</span>
 											</Col>
 										</Row>
                       <Row  style={{ marginTop: 50 }}>

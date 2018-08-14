@@ -39,7 +39,6 @@ class TopicOpinionBox extends React.PureComponent {
                     topicid:res.data.topic_0.topicid ,
                     topicOpinion:Object.values(res.data)            
                   })
-                  console.log(Object.values(res.data))
             }
         })
     }

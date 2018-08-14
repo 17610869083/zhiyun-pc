@@ -63,11 +63,10 @@ class SortedSetting extends React.Component {
     }
     this.props.form.validateFields((err, values) => {
       if (!err) {
-        if (this.state.sortedNameValue === '') {
+        if (this.state.sortedNameValue.trim()=== '') {
           message.error('话题名称请不要为空');
           return;
         }
-        console.log(rules)
         request(api_sorted_rule_edit, {
           method: 'POST',
           headers: {
