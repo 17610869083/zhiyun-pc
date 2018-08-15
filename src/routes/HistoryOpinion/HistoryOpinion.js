@@ -163,7 +163,7 @@ class HistoryOpinion extends React.Component {
       body: `taskid=${this.state.delId}`
     }).then(res => {
       if (this.state.type === '1') {
-        request(public_sentiment_report + '&documenttype=excel').then(res => {
+        request(public_sentiment_report + '&documenttype=excel&page=' + this.state.page).then(res => {
           this.setState({
             tasklist: res.data.taskList,
             pageCount: parseInt(res.data.pageCount, 10),
@@ -171,7 +171,7 @@ class HistoryOpinion extends React.Component {
           })
         })
       } else {
-        request(public_sentiment_report + '&documenttype=doc').then(res => {
+        request(public_sentiment_report + '&documenttype=doc&page=' + this.state.page).then(res => {
           this.setState({
             reportTaskList: res.data.taskList,
             pageCount: parseInt(res.data.pageCount, 10),

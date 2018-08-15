@@ -147,7 +147,7 @@ class CollectionOpinion extends React.Component {
                 request(api_del_doc_from_collection + '&id=[' + itemId + ']', {}).then((res) => {
                     if (res.data.code === 1) {
                         message.success(res.data.msg);
-                        getDetail(`${current}&page=${_this.state.currentPage}`);
+                        getDetail(`${current}&page=${_this.state.currentPage}&pagesize=${_this.state.pageSize}`);
                     }
                 });
             },
@@ -197,7 +197,7 @@ class CollectionOpinion extends React.Component {
             const sidList = JSON.stringify(arr);
             request(api_del_doc_from_collection + '&id=' + sidList, {}).then((res) => {
                 if (res.data.code === 1) {
-                    getMaterialDetail(`${current}&page=${_this.state.currentPage}`);
+                    getMaterialDetail(`${current}&page=${_this.state.currentPage}&pagesize=${_this.state.pageSize}`);
                     message.success(res.data.msg);
                     this.setState({
                         checkedAll: false,

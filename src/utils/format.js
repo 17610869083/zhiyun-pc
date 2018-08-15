@@ -45,7 +45,7 @@ export function formatTodayOpinion(data) {
 
 // 热搜媒体排行
 export function formatMediaChart(data) {
-    let colors = ['#5bcf3c','#ffa000','#e64a19','#5a8bff'];
+    let colors = ['#5a8bff','#5bcf3c','#e64a19','#ffa000'];
     data.xAxis[0].axisLine= {lineStyle:{
          color:'#787878'
     }}
