@@ -42,7 +42,9 @@ import {opinionSearchRequestedReducer,
     getTopicMessageSucceeded,
     informsstate,
     clfCatState,
-    briefingSwitchDataReducer
+    briefingSwitchDataReducer,
+    getevidListRequested,
+    getevidListSucceeded
 } from './opinionReducer';
 
 const reducer = combineReducers({
@@ -90,7 +92,9 @@ const reducer = combineReducers({
     searchStateReducer,
     informsstate,
     clfCatState,
-    briefingSwitchDataReducer
+    briefingSwitchDataReducer,
+    getevidListRequested,
+    getevidListSucceeded
 });
 
 export default reducer;

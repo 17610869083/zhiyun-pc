@@ -1,0 +1,164 @@
+.interent{
+    .head{
+        display: flex;
+        align-items: center;
+        height: 40px;
+        border-bottom: 1px solid #ccc;
+        background-color: #fff;
+        li{
+            width: 11%;
+            text-align: center;
+            &:first-child{
+                width: 15%;
+            }
+            &:nth-child(2) {
+                width: 30%;
+
+            }
+        }
+        .operation-icon{
+            display: flex;
+            span{
+                margin-left: 10px;
+            }
+        }
+    }
+    .content {
+        background-color: #fff;
+        >.eviddata{
+            >li{
+                display: flex;
+                align-items: center;
+                text-align: center;
+                height: 100px;
+                border-bottom: 1px solid #ccc;
+                span{
+                    &:first-child{
+                        width: 12%;
+                    }
+                }
+                .article{
+                    width: 15%;
+                }
+                .item-icon{
+                    span{
+                        margin-left: 10px;
+                    }
+                }
+                .eviditem{
+                    display: flex;
+                    width: 100%;
+                    >li{
+                        width: 11%;
+                        text-align: center;
+                        position: relative;
+                        height: 60px;
+                        line-height: 60px;
+                        &:first-child{
+                            width: 15%;
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+                            img{
+                                margin-left: 120px;
+                            }
+                        }
+                        &:nth-child(2) {
+                            width: 30%;
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+                            line-height: 30px;
+                            div{
+                                text-align: left;
+                                width: 264px;
+                                span{
+                                    &:first-child{
+                                        display: block;
+                                        width: 300px;
+                                    }
+                                    &:last-child{
+                                        margin-left: 20px;
+                                    }
+                                }
+                            }
+                        }
+                        &:nth-child(5), &:nth-child(4){
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+                        }
+                        h4{
+                            display: block;
+                            width: 100%;
+                        }
+                        .type-input{
+                            position: absolute;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+.evidcheck{
+    li{
+        div{
+            display: flex;
+            align-items: center;
+            span{
+                width: 2px;
+                height: 20px;
+                background-color:  #2fdce0;
+                display: block;
+                margin-right: 10px;
+            }
+            .info{
+                font-size: 14px;
+                font-weight: 500;
+            }
+        }
+        span{
+            font-weight: 600;
+        }
+    }
+    >ul{
+        >li{
+            border-bottom: 1px solid #ccc;
+            padding-bottom: 10px;
+        }
+        >li:last-child{
+            margin-top: 20px;
+            li{
+                font-weight: 600;
+            }
+        }
+    }
+    .footer{
+        margin-top: 10px;
+        h5{
+            font-size: 14px;
+            font-weight: 500;
+        }
+        .adopt{
+            display: block;
+            margin: 10px 0 10px 20px
+        }
+        .btn{
+            width: 0;
+            padding: 0;
+            border: 0;
+            transition: all 2s linear;
+        }
+        .btnanimation{
+            width: 150px !important;
+        }
+    }
+    // @keyframes btn {
+    //     form {
+    //         width: 0px;
+    //     }to{
+    //         width: 200px;
+    //     }
+    // }
+}

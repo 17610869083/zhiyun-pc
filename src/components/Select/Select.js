@@ -5,7 +5,7 @@ class Select extends React.Component {
   constructor(props) {
       super(props)
       this.state = {
-        inputvalue: ''
+        inputvalue: this.props.defaultValut || ''
       }
   }
   onMouseOver(e) {
@@ -14,37 +14,49 @@ class Select extends React.Component {
   onMouseOut(e) {
     e.target.className = ''
   }
-  onBlur(type, value) {
-    document.querySelector('.showSelect').style.maxHeight = 0
-    type === 'click' ?  this.props.onOk(value) : this.props.onOk(this.state.inputvalue)
+  onBlur(type, value, e) {
+    // console.log(e.target.nextSibling)
+    // document.querySelector('.showSelect').style.maxHeight = 0
+    // console.log(arguments)
+    if(type === 'click') {
+      this.props.onOk(value)
+      document.querySelector('.input-' + e).style.maxHeight = 0
+      document.querySelector('.input-' + e).style.boxShadow = 'none'
+    } else{
+      this.props.onOk(this.state.inputvalue)
+      document.querySelector('.input-' + type).style.maxHeight = 0
+      document.querySelector('.input-' + type).style.boxShadow = 'none'
+    }
+    // this.setState({
+    //     inputvalue: this.props.defaultValut
+    // })
   }
-  onFocus() {
-    document.querySelector('.showSelect').style.maxHeight = '132px'
-    this.setState({
-      inputvalue: ''
-    })
+  onFocus(key) {
+    // document.querySelector('.showSelect').style.maxHeight = '132px'
+    document.querySelector('.input-' + key).style.maxHeight = '132px'
+    document.querySelector('.input-' + key).style.boxShadow = '0px 1px 2px 2px #eeeeee'
   }
   onChange(e) {
     this.setState({
       inputvalue: e.target.value
     })
   }
-  onClick(e) {
+  onClick(key, e) {
     this.setState({
       inputvalue: e.target.innerText
     }, () => {
-      this.onBlur('click', this.state.inputvalue)
+      // console.log(e.target)
+      this.onBlur('click', this.state.inputvalue, key)
     })
-    
     
   }
   render() {
     return (
-      <div className='Select'>
-        <Input type="text" onBlur={this.onBlur.bind(this)} onFocus={this.onFocus.bind(this)} onChange={this.onChange.bind(this)} value={this.state.inputvalue}/>
-        <ul className="showSelect">
+      <div className={this.props.className ? 'Select ' + this.props.className : 'Select'} style={this.props.style || {}}>
+        <Input type="text" onBlur={this.onBlur.bind(this, this.props.fkey)} onFocus={this.onFocus.bind(this, this.props.fkey)} onChange={this.onChange.bind(this)} value={this.state.inputvalue}/>
+        <ul className={"showSelect input-" + this.props.fkey} >
             {this.props.list.map((item, index) => {
-              return <li onMouseOver={this.onMouseOver.bind(this)} onMouseOut={this.onMouseOut.bind(this)} onClick={this.onClick.bind(this)} key={index}>{item.caseType}</li>
+              return <li onMouseOver={this.onMouseOver.bind(this)} onMouseOut={this.onMouseOut.bind(this)} onClick={this.onClick.bind(this, this.props.fkey)} key={index}>{item.caseType}</li>
             })}
         </ul>
       </div>

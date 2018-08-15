@@ -33,7 +33,9 @@ import {
   PAGINATION_PAGE,
   INFORMS_STATE,
   CLF_CAT_STATE,
-  BRIEFING_SWITCH_DATA
+  BRIEFING_SWITCH_DATA,
+  GET_INTERENTEVID_LIST_REQUESTED,
+  GET_INTERENTEVID_LIST_SUCCEEDED
 } from '../actions/actionTypes';
 
 const opinionSearchSucceededReducer = handleAction(OPINION_SEARCH_SUCCEEDED, (state, action) => ({
@@ -196,6 +198,14 @@ export const clfCatState = handleAction(CLF_CAT_STATE, (state, action) => ({
 export const briefingSwitchDataReducer = handleAction(BRIEFING_SWITCH_DATA, (state,action) => ({
   data:action.payload
 }),{data:[]})
+
+//取证 互联网取证列表
+export const getevidListRequested = handleAction(GET_INTERENTEVID_LIST_REQUESTED, (state, action) => ({
+  data: action.payload
+}),'1')
+export const getevidListSucceeded = handleAction(GET_INTERENTEVID_LIST_SUCCEEDED, (state, action) => ({
+  data: action.payload
+}),{data: {}})
 export {
   opinionSearchRequestedReducer,
   searchKeywordSyncReducer,

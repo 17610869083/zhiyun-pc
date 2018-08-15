@@ -42,7 +42,9 @@ import {
   SEARCH_STATE,
   INFORMS_STATE,
   CLF_CAT_STATE,
-  BRIEFING_SWITCH_DATA
+  BRIEFING_SWITCH_DATA,
+  GET_INTERENTEVID_LIST_REQUESTED,
+  GET_INTERENTEVID_LIST_SUCCEEDED
 } from './actionTypes';
 
 
@@ -128,3 +130,7 @@ export const clfCatState = createAction(CLF_CAT_STATE);
 
 //生成简报选择数据
 export const briefingSwitch = createAction(BRIEFING_SWITCH_DATA);
+
+//取证 互联网取证列表
+export const evidListRequested = createAction(GET_INTERENTEVID_LIST_REQUESTED)
+export const evidListSucceeded = createAction(GET_INTERENTEVID_LIST_SUCCEEDED)
