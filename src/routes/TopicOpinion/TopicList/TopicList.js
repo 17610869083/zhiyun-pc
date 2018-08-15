@@ -375,7 +375,9 @@ class TopicList extends React.Component {
        },700)   
     }
   componentDidUpdate(prevProps, prevState) {
+    
     if (prevProps.location.search !== this.props.location.search) {
+      this.props.paginationPage(1);
       let topicID = this.props.getRouter;
       if (topicID.topicid) {
         request(api_topic_message_list +`&topicid=${topicID.topicid}`).then( res => {

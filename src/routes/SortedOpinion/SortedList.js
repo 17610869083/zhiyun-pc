@@ -165,6 +165,8 @@ class SortedList extends React.Component {
       carry: this.state.carry,
       page: 1,
       pagesize: this.state.pagesize,
+      begin:this.state.begin,
+      end:this.state.end
     } :{
       catid: this.props.clfCat.catid,
       datetag: this.state.datetag,
@@ -174,6 +176,8 @@ class SortedList extends React.Component {
       carry: this.state.carry,
       page: 1,
       pagesize: this.state.pagesize,
+      begin:this.state.begin,
+      end:this.state.end
     };
     this.props.getSortedContentRequested(param);
     this.props.paginationPage(1);
@@ -192,6 +196,8 @@ class SortedList extends React.Component {
       carry:  value,
       page: 1,
       pagesize: this.state.pagesize,
+      begin:this.state.begin,
+      end:this.state.end
     } :{
       catid: this.props.clfCat.catid,
       datetag: this.state.datetag,
@@ -201,6 +207,8 @@ class SortedList extends React.Component {
       carry: value,
       page: 1,
       pagesize: this.state.pagesize,
+      begin:this.state.begin,
+      end:this.state.end
     };
     this.props.getSortedContentRequested(param);
     this.props.paginationPage(1);
@@ -219,6 +227,8 @@ class SortedList extends React.Component {
       carry:  this.state.carry,
       page: 1,
       pagesize: this.state.pagesize,
+      begin:this.state.begin,
+      end:this.state.end
     } :{
       catid: this.props.clfCat.catid,
       datetag: this.state.datetag,
@@ -228,6 +238,8 @@ class SortedList extends React.Component {
       carry: this.state.carry,
       page: 1,
       pagesize: this.state.pagesize,
+      begin:this.state.begin,
+      end:this.state.end
     };
     this.props.getSortedContentRequested(param);
     this.props.paginationPage(1);
@@ -246,6 +258,8 @@ class SortedList extends React.Component {
       carry:  this.state.carry,
       page: 1,
       pagesize: this.state.pagesize,
+      begin:this.state.begin,
+      end:this.state.end
     } :{
       catid: this.props.clfCat.catid,
       datetag: this.state.datetag,
@@ -255,6 +269,8 @@ class SortedList extends React.Component {
       carry: this.state.carry,
       page: 1,
       pagesize: this.state.pagesize,
+      begin:this.state.begin,
+      end:this.state.end
     };
     this.props.getSortedContentRequested(param);
     this.props.paginationPage(1);
@@ -326,7 +342,9 @@ class SortedList extends React.Component {
       similer: this.state.similer,
       carry:  this.state.carry,
       page: value,
-      pagesize: this.state.pagesize
+      pagesize: this.state.pagesize,
+      begin:this.state.begin,
+      end:this.state.end
     } :{
       catid: this.props.clfCat.catid,
       datetag: this.state.datetag,
@@ -335,7 +353,9 @@ class SortedList extends React.Component {
       similer: this.state.similer,
       carry: this.state.carry,
       page: value,
-      pagesize: this.state.pagesize
+      pagesize: this.state.pagesize,
+      begin:this.state.begin,
+      end:this.state.end
     };
     this.props.getSortedContentRequested(param);
     this.props.paginationPage(value);
@@ -355,7 +375,9 @@ class SortedList extends React.Component {
       similer: this.state.similer,
       carry:  this.state.carry,
       page: this.state.page,
-      pagesize: pageSize
+      pagesize: pageSize,
+      begin:this.state.begin,
+      end:this.state.end
     } :{
       catid: this.props.clfCat.catid,
       datetag: this.state.datetag,
@@ -364,7 +386,9 @@ class SortedList extends React.Component {
       similer: this.state.similer,
       carry: this.state.carry,
       page: this.state.page,
-      pagesize: pageSize
+      pagesize: pageSize,
+      begin:this.state.begin,
+      end:this.state.end
     };
     this.props.getSortedContentRequested(param);
   }
@@ -379,7 +403,9 @@ class SortedList extends React.Component {
         similer: this.state.similer,
         carry:  this.state.carry,
         page: this.props.page,
-        pagesize: this.state.pagesize
+        pagesize: this.state.pagesize,
+        begin:this.state.begin,
+        end:this.state.end
       } :{
         catid: this.props.clfCat.catid,
         datetag: this.state.datetag,
@@ -388,7 +414,9 @@ class SortedList extends React.Component {
         similer: this.state.similer,
         carry: this.state.carry,
         page: this.props.page,
-        pagesize: this.state.pagesize
+        pagesize: this.state.pagesize,
+        begin:this.state.begin,
+        end:this.state.end
       };
       this.props.getSortedContentRequested(param);
     },10)

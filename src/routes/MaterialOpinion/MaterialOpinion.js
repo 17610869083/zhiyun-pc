@@ -187,20 +187,27 @@ class MaterialOpinion extends React.Component {
 	// 删除单项
 	deleteThisFormMaterial(itemId) {
 		const getDetail = this.props.getMaterialOpinionDetailRequested;
-		const {current,currentPage,pageSize }= this.state;
-		confirm({
-			title: '确定将这条舆情移出素材库?',
-			content: '移出素材库',
-			onOk() {
-				request(api_del_doc_from_cat + '&id=[' + itemId + ']', {}).then((res) => {
-					if (res.data.code === 1) {
-						getDetail(`catid=${current}&page=${currentPage}&pagesize=${pageSize}`);
-						message.success(res.data.msg);
-					}
-				});
-			}
-		});
-	}
+		const _this = this;
+        confirm({
+            title: '确定将这条舆情移出素材库?',
+            content: '移出素材库',
+            onOk() {
+                request(api_del_doc_from_cat + '&id=[' + itemId + ']', {}).then((res) => {
+                    if (res.data.code === 1) {
+                        message.success(res.data.msg);
+                        getDetail(`${current}&page=${_this.state.currentPage}&pagesize=${_this.state.pageSize}`);
+                        _this.setState({
+                            arr:new Array(_this.state.pageSize).fill(false)
+                        })
+                    }
+                });
+            },
+            onCancel() {
+                console.log('取消');
+            },
+        });
+    }
+
 
 
 	// -----------------移除多项

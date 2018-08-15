@@ -199,7 +199,7 @@ class TopicAdd extends React.Component {
                 if(getSecondTime(startTime)>=getSecondTime(endTime)){
                           message.error('开始时间请不要大于或等于结束时间');
                           return ;
-                }else if (this.state.topicNameValue.length===0){
+                }else if (this.state.topicNameValue.trim()===''){
                           message.error('专题名称请不要为空');
                           return ;
                 }

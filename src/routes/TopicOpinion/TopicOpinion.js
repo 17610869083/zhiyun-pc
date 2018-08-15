@@ -330,7 +330,7 @@ class TopicOpinion extends React.Component {
                   </span>
                   <Dropdown overlay={<Menu onClick={this.onReportItem.bind(this)}>
                                      <Menu.Item key="1">删除</Menu.Item>
-                                     <Menu.Item key="2">加入报告</Menu.Item>
+                                     {/* <Menu.Item key="2">加入报告</Menu.Item> */}
                                      </Menu>} trigger={['click']}>
                   <img src={Del} alt="删除" className="icon-delete" onClick={this.delTopic.bind(this,iitem.topicid)}/>
                 </Dropdown> 
