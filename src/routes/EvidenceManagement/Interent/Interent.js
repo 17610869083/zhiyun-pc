@@ -38,16 +38,16 @@ class componentName extends React.Component {
       editnamevisible: false,
       allname: '',
       page: 1,
-      pagesize: 10, 
-      defaultparame: {
-        state: this.props.match.params.current,
-        page: 1,
-        pagesize: 10
-      }
+      pagesize: 10
     }
   }
   componentDidMount() {
-    this.props.evidListRequest(this.state.defaultparame)
+    const param =  {
+      state: this.props.match.params.current,
+      page: 1,
+      pagesize: 10
+    }
+    this.props.evidListRequest(this.state.param)
     
     this.timerreq = setInterval( () => {
       const param = {
@@ -157,7 +157,12 @@ class componentName extends React.Component {
     const idarr = []
     idarr.push(id)
     request(api_interent_deitPackage + `&ids=${JSON.stringify(idarr)}&packageName=${e.target.value}`).then(res => {
-      this.props.evidListRequest(this.state.defaultparame)
+      const param =  {
+        state: this.props.match.params.current,
+        page: 1,
+        pagesize: 10
+      }
+      this.props.evidListRequest(param)
     })
   }
   valueChange(e) {
@@ -198,7 +203,12 @@ class componentName extends React.Component {
     const jsonFileId = JSON.stringify(fileIdArr)
     const jsonId = JSON.stringify(idArr)
     request(api_interent_delete + `&ids=${jsonId}&fileIDs=${jsonFileId}`).then(res => {
-      this.props.evidListRequest(this.state.defaultparame)
+      const param =  {
+        state: this.props.match.params.current,
+        page: 1,
+        pagesize: 10
+      }
+      this.props.evidListRequest(param)
     })
 
   }
@@ -214,7 +224,12 @@ class componentName extends React.Component {
     let idArr = []
     idArr.push(id)
     request(api_interent_deitcasetype + `&ids=${JSON.stringify(idArr)}&caseType=${value}`).then(res => {
-      this.props.evidListRequest(this.state.defaultparame)
+      const param =  {
+        state: this.props.match.params.current,
+        page: 1,
+        pagesize: 10
+      }
+      this.props.evidListRequest(param)
     })
   }
   // 批量删除
@@ -230,7 +245,12 @@ class componentName extends React.Component {
       filesidarr.push(item.fileId)
     })
     request(api_interent_delete + `&ids=${JSON.stringify(idsarr)}&fileIDs=${JSON.stringify(filesidarr)}`).then(res => {
-      this.props.evidListRequest(this.state.defaultparame)
+      const param =  {
+        state: this.props.match.params.current,
+        page: 1,
+        pagesize: 10
+      }
+      this.props.evidListRequest(param)
     })
   }
 
@@ -260,7 +280,12 @@ class componentName extends React.Component {
       idsarr.push(item.id)
     })
     request(api_interent_deitcasetype + `&ids=${JSON.stringify(idsarr)}&caseType=${this.state.allCaseType}`).then(res => {
-      this.props.evidListRequest(this.state.defaultparame)
+      const param =  {
+        state: this.props.match.params.current,
+        page: 1,
+        pagesize: 10
+      }
+      this.props.evidListRequest(param)
     })
   }
 
@@ -291,7 +316,12 @@ class componentName extends React.Component {
       idsarr.push(item.id)
     })
     request(api_interent_deitPackage + `&ids=${JSON.stringify(idsarr)}&packageName=${this.state.allname}`).then(res => {
-      this.props.evidListRequest(this.state.defaultparame)
+      const param =  {
+        state: this.props.match.params.current,
+        page: 1,
+        pagesize: 10
+      }
+      this.props.evidListRequest(param)
     })
   }
   onItemClick(fileName) {
@@ -304,7 +334,12 @@ class componentName extends React.Component {
   // 重新取证 
   retakeEvid(url, id, fileID) {
     request(api_interent_reObtainEvidence + `&id=${id}&fileID=${fileID}&url=${url}`).then(res => {
-      this.props.evidListRequest(this.state.defaultparame)
+      const param =  {
+        state: this.props.match.params.current,
+        page: 1,
+        pagesize: 10
+      }
+      this.props.evidListRequest(param)
     })
   }
   retakeEvid
