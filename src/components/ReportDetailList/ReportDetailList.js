@@ -34,7 +34,7 @@ class ReportDetailList extends React.Component{
 
     //下拉加载
     loading(e){
-    var bScrollH = e.target.scrollHeight; 
+    let bScrollH = e.target.scrollHeight; 
     if(e.target.scrollTop + 600 >= bScrollH){
         this.props.dropDown? this.props.dropDown():'';
       }

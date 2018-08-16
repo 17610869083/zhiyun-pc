@@ -137,8 +137,8 @@ const api_topic_message=host+'oTopic/TopicDo?action=getTopicAndRule';
 // 获取素材库列表
 const api_material_opinion_list = host + 'oWork/reportDo?action=reportCatList';
 // 获取素材库素材详细信息
- //const api_material_opinion_detail = host + 'oWork/reportDo?action=getResourceInCatAll';
-const api_material_opinion_detail = host + 'oWork/reportDo?action=catDocList';
+const api_material_opinion_detail = host + 'oWork/reportDo?action=getResourceInCatAll';
+//const api_material_opinion_detail = host + 'oWork/reportDo?action=catDocList';
 
 
 //专题修改

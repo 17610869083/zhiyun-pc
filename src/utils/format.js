@@ -357,6 +357,9 @@ export function urlTokey() {
         case 'excludesetting':
             key = 'excludesetting';
             break;
+        case 'focus':
+            key = 'focus';
+            break;
         case 'publicopinion':
             key = 'publicopinion';
             break;

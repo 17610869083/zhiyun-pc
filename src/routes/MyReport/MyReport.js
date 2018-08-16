@@ -413,7 +413,6 @@ class MyReport extends React.Component{
              <Tooltip title="预览" placement="bottom">
 
              <i onClick = {this.preview} style={this.state.flag ? {opacity:1,transition:'all 0.5s ease-in 0.5s'}:{opacity:0}}><IconFont type="icon-Dashboard-card-SQLchakan"/></i>
-
              </Tooltip>
              </p>
              <div className="content">

@@ -150,6 +150,12 @@ class AllOpinion extends React.Component {
               <span>舆情录入</span>
             </Link>
           </Menu.Item>
+          <Menu.Item key="focus" style={{fontSize: '16px'}}>
+            <Link to="/allopinion/focus">
+              <span>重点关注媒体</span>
+            </Link>
+          </Menu.Item>
+          
         </SubMenu>)
       } else if (item.channelurl === '/multilingual') {
         menuList.push(<SubMenu key={item.key}  className={haverClass}

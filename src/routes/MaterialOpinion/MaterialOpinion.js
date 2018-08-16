@@ -195,7 +195,7 @@ class MaterialOpinion extends React.Component {
                 request(api_del_doc_from_cat + '&id=[' + itemId + ']', {}).then((res) => {
                     if (res.data.code === 1) {
                         message.success(res.data.msg);
-                        getDetail(`${current}&page=${_this.state.currentPage}&pagesize=${_this.state.pageSize}`);
+                        getDetail(`${_this.state.current}&page=${_this.state.currentPage}&pagesize=${_this.state.pageSize}`);
                         _this.setState({
                             arr:new Array(_this.state.pageSize).fill(false)
                         })
@@ -746,7 +746,7 @@ class MaterialOpinion extends React.Component {
 			</Menu>
 		);
 		const datelist = this.props.datelist ? this.props.datelist : [{ carry: '新闻' ,datelist:[]}];
-		// console.log(datelist)
+		console.log(datelist)
 		const OpinionDetailItems = datelist.length !== 0 ? datelist.map((item, index) => 
 			<div key={index}>
 				<div className="item_file" style={{paddingLeft: 12, borderBottom: "1px solid #fff" }}>
