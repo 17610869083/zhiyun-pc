@@ -347,11 +347,11 @@ class BiddingOpinion extends React.Component {
                 Modal.info({
                    title: this.state.systemPrompt[this.props.languages],
                    content: (
-                   <div>
-                   <p>{this.state.delalltopic[this.props.languages]}</p>
-                   </div>
+                    <div>
+                    <p>{this.state.delalltopic[this.props.languages]}</p>
+                    </div>
                     ),
-                    onOk() {},
+                    onOk() {}
                    });
     	}else{
             request(api_sorted_cat_delete,{
@@ -504,8 +504,8 @@ class BiddingOpinion extends React.Component {
                     value={this.state.inputValue}
                     maxLength={'28'}
                     />
-                    </Modal>
-                    <Modal
+                </Modal>
+                <Modal
                     title={this.state.modal.delclass.title[this.props.languages]}
                     visible={this.state.visibleOne}
                     onOk={this.delOkOne.bind(this)}
@@ -513,8 +513,8 @@ class BiddingOpinion extends React.Component {
                     footer={modalFooter(this.delCancelOne, this.delOkOne, this)}
                     >
                     <p className="textCenter">{this.state.modal.delclass.tip[this.props.languages]}?</p>
-                    </Modal>
-                    <Modal
+                </Modal>
+                <Modal
                     title={this.state.modal.delspecial.title[this.props.languages]}
                     visible={this.state.visibleTwo}
                     onOk={this.delOkTwo.bind(this)}
@@ -524,8 +524,8 @@ class BiddingOpinion extends React.Component {
                     <p className="textCenter">{this.state.modal.delspecial.tip[this.props.languages]}?</p>
                     {/* <Button onClick={this.delCancelTwo.bind(this)}>取消123</Button>
                     <Button onClick={this.delOkTwo.bind(this)}>确定123</Button> */}
-                    </Modal>
-                    <Modal
+                </Modal>
+                <Modal
                     title={this.state.modal.rnameclass.title[this.props.languages]}
                     visible={this.state.visibleThree}
                     onOk={this.delOkThree.bind(this)}
@@ -536,6 +536,11 @@ class BiddingOpinion extends React.Component {
                     <Input className="gapInput" onChange={this.onChange.bind(this)}  
                      value={this.state.inputValue}  maxLength={'28'}/>
                 </Modal>
+                {/* <Modal
+                    title={this.stat}
+                >
+
+                </Modal> */}
             </div>
         )
     }

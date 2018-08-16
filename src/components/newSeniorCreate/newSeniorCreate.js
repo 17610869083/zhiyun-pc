@@ -24,9 +24,15 @@ class BiddingSeniorCreate extends React.Component {
             enterKeyWords: ['请输入关键词', '입력 하세요 키워드', 'キーワードを入力してください', 'ئاچقۇچلۇق سۆزنى كىرگۈزۈڭ', 'རོགས་གནད་ཚིག་ནང་འཇུག་།', 'Please enter key words']
         }
     }
+    componentDidMount() {
+        if(this.props.type === 'mul'){
+            this.setState({
+                lang: this.props.languages
+            })
+        }
+    }
     componentWillReceiveProps(nextprops) {
         if(nextprops.type === 'mul'){
-            // console.log(this.props.languages)
             this.setState({
                 lang: nextprops.languages
             })

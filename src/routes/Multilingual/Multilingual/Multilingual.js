@@ -151,7 +151,6 @@ class AllOpinion extends React.Component {
     
   }
   timeClick(value) {
-    this.props.emptyList()
     this.setState({
       timeValue: value
     });
@@ -165,6 +164,7 @@ class AllOpinion extends React.Component {
         timePickerShow: false
       })
     }
+    this.props.emptyList()
       const param = {
         pagesize: this.state.pagesize,
         datetag: value,
@@ -391,7 +391,10 @@ class AllOpinion extends React.Component {
 
   componentWillMount() {
     window.onload = () => {this.props.mulLanToggle(this.props.match.params.languages)}
+    console.log()
+    if(!this.props.location.search.includes('cancel')) {
       this.props.mulLanToggle(this.props.match.params.languages)
+    }
       let reg = /^[0-5]$/
       if(reg.test(this.props.match.params.languages)) {
         this.setState({
