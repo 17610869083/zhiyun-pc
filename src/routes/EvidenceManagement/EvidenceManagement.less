@@ -1,0 +1,35 @@
+.evidence-management {
+    padding: 20px;
+    .title{
+        display: flex;  -ms-flex-pack: justify;
+        justify-content: space-between;
+        align-items: center;
+        color: #fff;
+        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+        height: 44px;
+        padding: 0 30px 10px 20px;
+        .ant-menu-item-selected{
+            background-color: #5a8bff;  color: #fff;
+            border-bottom: none;
+            border-radius: 20px;
+        }
+        .ant-menu-horizontal > .ant-menu-item {
+            border: none;
+            border-radius: 20px;
+        }
+        .fifter{
+            display: flex;
+            .ant-select-selection{
+                border-right: none;
+                border-radius: 0;
+                .ant-select-selection__rendered{
+                    margin-right: 0;
+                }
+            }
+            .ant-input{
+                border-left: none;
+                border-radius: 0;
+            }
+        }
+    }
+}

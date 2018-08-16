@@ -15,7 +15,8 @@ import {
     getTopicSucceeded,
     getCollectionLocationSucceeded,
     getSortedMenuSucceeded,
-    topicNavMessageSucceeded
+    topicNavMessageSucceeded,
+    evidListSucceeded
 } from '../actions/createActions';
 
 import {userinfoApi} from '../../services/homeServices';
@@ -32,7 +33,8 @@ import {apiTotalOpinion,
     apiTopicList,
     apiGetCollectionLocation,
     apiGetSortedMenu,
-    apiTopicNavMesage
+    apiTopicNavMesage,
+    apiInterentEvidList
 } from '../../services/opinionServices';
 
 // const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
@@ -236,6 +238,18 @@ function* getTopicMessageSaga() {
     yield takeLatest("TOPIC_NAV_MESSAGE_REQUESTED", getTopicMessage);
 }
 
+// 取证 互联网取证列表
+function* getInterentEvidList(action) {
+    try {
+        const result = yield call(apiInterentEvidList, action.payload);
+        yield put(evidListSucceeded(result));
+    } catch (e) {
+        console.log(e)
+    }
+}
+function* getInterentEvidListSaga() {
+    yield takeLatest("GET_INTERENTEVID_LIST_REQUESTED", getInterentEvidList);
+}
 export default function* root() {
     yield all([
         fork(mySaga),
@@ -252,6 +266,7 @@ export default function* root() {
         fork(topicListSaga),
         fork(getCollectioncLocationSaga),
         fork(getSortedMenuSaga),
-        fork(getTopicMessageSaga)
+        fork(getTopicMessageSaga),
+        fork(getInterentEvidListSaga)
     ])
 }

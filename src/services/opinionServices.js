@@ -13,7 +13,8 @@ import {api_total_opinion,
     api_topic_showlist,
     api_sorted_rule_list,
     api_sorted_menu_list,
-    api_top_nav
+    api_top_nav,
+    api_interent_evidList
 } from './api';
 
 
@@ -134,6 +135,12 @@ const apiGetSortedMenu = () => {
 const apiTopicNavMesage=()=>{
     return request(api_top_nav)
 }
+
+//取证 互联网取证列表
+const apiInterentEvidList=(param)=>{
+    return request(api_interent_evidList + '&' + objectToURL(param))
+}
+
 export {apiTotalOpinion,
     apiSetOpinionType,
     apiGetTopicLocation,
@@ -147,5 +154,6 @@ export {apiTotalOpinion,
     apiTopicList,
     apiGetCollectionLocation,
     apiGetSortedMenu,
-    apiTopicNavMesage
+    apiTopicNavMesage,
+    apiInterentEvidList
 };

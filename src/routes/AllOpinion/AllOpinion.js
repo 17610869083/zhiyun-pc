@@ -37,6 +37,9 @@ const Special = AsyncComponent(() => import('../Special/Special'))
 const Multilingual= AsyncComponent(() => import('../Multilingual/MultilingualInfo'))
 const BiddingOpinion = AsyncComponent(() => import('../BiddingOpinion/BiddingOpinion'))
 const FocusSetting = AsyncComponent(() => import('../FocusSetting/FocusSetting'))
+const Evidadmin = AsyncComponent(() => import('../Evidadmin/Evidadmin'))
+const EvidenceManagement = AsyncComponent(() => import('../EvidenceManagement/EvidenceManagement'))
+const Evideinfo = AsyncComponent(() => import('../Evideinfo/Evideinfo'))
 const { Sider, Content} = Layout;
 const SubMenu = Menu.SubMenu;
 class AllOpinion extends React.Component {
@@ -262,6 +265,9 @@ class AllOpinion extends React.Component {
                 <Route path="/allopinion/bidding/information" component={BiddingOpinion}/>
                 <Route path="/allopinion/bidding" component={BiddingOpinion}/>
                 <Route path="/allopinion/focus" component={FocusSetting}/>
+                <Route path="/allopinion/evidadmin" component={Evidadmin}/>
+                <Route path="/allopinion/evidencemanagement" component={EvidenceManagement}/>
+                <Route path="/allopinion/evidinfo" component={Evideinfo}/>
               </Switch>
               </Content>
               </Layout>

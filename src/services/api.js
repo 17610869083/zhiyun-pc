@@ -1,16 +1,16 @@
 // host
-const host = 'http://119.90.61.155/om31/webpart/';   
-// const host = 'http://web.is8.com.cn/om/webpart/';
-//const host = './';
+//const host = 'http://119.90.61.155/om31/webpart/';   
+//const host = 'http://web.is8.com.cn/om/webpart/';
+const host = './';
 
 //-------------------登录
 //export const api_login = 'http://web.is8.com.cn/om/common/login/loginDo?action=login2';
-export const api_login = 'http://119.90.61.155/om31/common/login/loginDo?action=login2';
-//export const api_login = '../common/login/loginDo?action=login2';
+//export const api_login = 'http://119.90.61.155/om31/common/login/loginDo?action=login2';
+export const api_login = '../common/login/loginDo?action=login2';
 
 //export const api_logout = 'http://web.is8.com.cn/om/common/login/loginDo?action=loginOut';
-export const api_logout = 'http://119.90.61.155/om31/common/login/loginDo?action=loginOut';
-//export const api_logout ='../common/login/loginDo?action=loginOut';
+//export const api_logout = 'http://119.90.61.155/om31/common/login/loginDo?action=loginOut';
+export const api_logout ='../common/login/loginDo?action=loginOut';
 /**
  * 首页模块
  */
@@ -458,3 +458,23 @@ export const api_briefing_add = host + 'Report?action=addToReport'
 export const api_app_report = './../mpart/exp/PreviewAction?action=previewWorkApp'
 //下载app老版报告接口
 export const api_download_OldDoc = host+ 'Report?action=downloadOldDoc'
+// 取证 案件类型列表
+export const api_evidadmin_typeList = host + 'Evidence?action=getAllCaseType'
+// 取证 互联网取证搜索
+export const api_interent_evidList = host + 'Evidence?action=searchEvidence'
+// 取证 校验证据
+export const api_interent_check = host + 'Evidence?action=verifyEvidence'
+// 取证 证据删除
+export const api_interent_delete = host + 'Evidence?action=deleteEvidence'
+// 取证 修改案件性质
+export const api_interent_deitcasetype = host + 'Evidence?action=updateCaseType'
+// 取证 修改证据包名
+export const api_interent_deitPackage = host + 'Evidence?action=updatePackage'
+// 取证详情 底层数据
+export const api_interent_info_http = host + 'Evidence?action=showHttp'
+// 取证详情 路由
+export const api_interent_info_route = host + 'Evidence?action=showRoute'
+// 取证 舆情取证 
+export const api_interent_oponionEvid = host + 'Evidence?action=oponionEvidence'
+// 取证 重新取证
+export const api_interent_reObtainEvidence = host + 'Evidence?action=reObtainEvidence'

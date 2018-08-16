@@ -44,7 +44,9 @@ import {
   CLF_CAT_STATE,
   BRIEFING_SWITCH_DATA,
   MUL_LANGUAGES_TOGGLE,
-  EMPTY_MATERIAL_OPINION_DETAIL
+  EMPTY_MATERIAL_OPINION_DETAIL,
+  GET_INTERENTEVID_LIST_REQUESTED,
+  GET_INTERENTEVID_LIST_SUCCEEDED
 } from './actionTypes';
 
 
@@ -135,3 +137,6 @@ export const briefingSwitch = createAction(BRIEFING_SWITCH_DATA);
 
 // 多语种语言切换
 export const mulLanToggle = createAction(MUL_LANGUAGES_TOGGLE)
+//取证 互联网取证列表
+export const evidListRequested = createAction(GET_INTERENTEVID_LIST_REQUESTED)
+export const evidListSucceeded = createAction(GET_INTERENTEVID_LIST_SUCCEEDED)

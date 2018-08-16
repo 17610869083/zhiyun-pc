@@ -14,10 +14,11 @@ import {
   api_push_collection,
   api_docedit_save,
   api_email_push,
-  api_docsend_push
+  api_docsend_push,
+  api_interent_oponionEvid
 } from '../../services/api';
 import EditOpinionDetail from '../../components/EditOpinionDetail/EditOpinionDetail';
-import {Tag, Popconfirm, message, Icon, Modal, Menu, Dropdown, Select} from 'antd';
+import {Tag, Popconfirm, message, Icon, Modal, Menu, Dropdown, Select, Button} from 'antd';
 import {history} from '../../utils/history';
 import {setHighlightTags, opinionTypeToColor} from '../../utils/format';
 import './DetailOpinion.less';
@@ -44,7 +45,8 @@ class DetailOpinion extends React.Component {
       selectValue: [],
       emailInput: '',
       contents: '',
-      sid: ''
+      sid: '',
+      evidflag: false
     }
   }
 
@@ -319,7 +321,9 @@ class DetailOpinion extends React.Component {
       })
     });
   }
-
+  componentWillUnmount() {
+    clearInterval(this.timer)
+  }
   handleChange = (value) => {
     this.setState({
       contents: value
@@ -401,7 +405,27 @@ class DetailOpinion extends React.Component {
       emailData: emailData
     })
   }
-
+  ontakeEvid() {
+    this.setState({
+      evidflag: true
+    })
+    if(!this.state.evidflag) {
+      const id = this.props.location.pathname.split('detail/')[1]
+      request(api_interent_oponionEvid + '&sid=' + id).then(res => {
+        if(res.data.code === 1) {
+          message.success('正在取证，请到证据管理页查看')
+        }
+      })
+      this.timer = setTimeout(() => {
+        this.setState({
+          evidflag: false
+        })
+      }, 300000)
+    }else{
+      message.error('5分钟内不能重复取证')
+    }
+    
+  }
   render() {
     const children = [];
     if (this.state.emailData.emailAddressee) {
@@ -527,12 +551,13 @@ class DetailOpinion extends React.Component {
                                 <div className="operation-item" title="取证">
                                 <IconFont type="icon-zhengjucailiao-copy"/>
                                 </div>
-                                </Popconfirm> */}
+                                </Popconfirm>
                                 {/* <Popconfirm title="确定要引导这条信息吗？" onCancel={this.deleteCancel.bind(this)} okText="是" cancelText="否">
                                 <div className="operation-item" title="引导">
                                 <IconFont type="icon-xinshouyindao-copy"/>
                                 </div>
                                 </Popconfirm> */}
+                                <div className="operation-item"><Button type="primary" onClick={this.ontakeEvid.bind(this)}>取证</Button></div>
                                 {/* <div className="operation-item" title="推送" onClick={this.searchEmail.bind(this)}>
                                 <IconFont type="icon-tuisongguize"/> 
                                 </div> */}
