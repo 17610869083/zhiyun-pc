@@ -195,7 +195,7 @@ class MaterialOpinion extends React.Component {
                 request(api_del_doc_from_cat + '&id=[' + itemId + ']', {}).then((res) => {
                     if (res.data.code === 1) {
                         message.success(res.data.msg);
-                        getDetail(`${current}&page=${_this.state.currentPage}&pagesize=${_this.state.pageSize}`);
+                        getDetail(`${_this.state.current}&page=${_this.state.currentPage}&pagesize=${_this.state.pageSize}`);
                         _this.setState({
                             arr:new Array(_this.state.pageSize).fill(false)
                         })
